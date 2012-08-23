@@ -65,7 +65,7 @@
             <!-- começo menu -->
             <div class="top">
             <?php
-			include "menu.php";
+			include "menu2.php";
 			?>
             </div>
             <!-- fim menu -->
