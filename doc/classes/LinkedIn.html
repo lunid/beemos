@@ -1,0 +1,1692 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \LinkedIn</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Namespaces</a></li>
+<li><a href="../namespaces/app.html"><i class="icon-th"></i> app</a></li>
+<li><a href="../namespaces/global.html"><i class="icon-th"></i> global</a></li>
+<li><a>Packages</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">386</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">2</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__construct" title="__construct :: Create a LinkedIn object, used for OAuth-based authentication and
+communication with the LinkedIn API."><span class="description">Create a LinkedIn object, used for OAuth-based authentication and
+communication with the LinkedIn API.</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#__destruct" title="__destruct :: The class destructor."><span class="description">The class destructor.</span><pre>__destruct()</pre></a></li>
+<li class="method public "><a href="#bookmarkJob" title="bookmarkJob :: Bookmark a job."><span class="description">Bookmark a job.</span><pre>bookmarkJob()</pre></a></li>
+<li class="method public "><a href="#bookmarkedJobs" title="bookmarkedJobs :: Get list of jobs you have bookmarked."><span class="description">Get list of jobs you have bookmarked.</span><pre>bookmarkedJobs()</pre></a></li>
+<li class="method public "><a href="#closeJob" title="closeJob :: Close a job."><span class="description">Close a job.</span><pre>closeJob()</pre></a></li>
+<li class="method public "><a href="#comment" title="comment :: Share comment posting method."><span class="description">Share comment posting method.</span><pre>comment()</pre></a></li>
+<li class="method public "><a href="#comments" title="comments :: Share comment retrieval."><span class="description">Share comment retrieval.</span><pre>comments()</pre></a></li>
+<li class="method public "><a href="#company" title="company :: Company profile retrieval function."><span class="description">Company profile retrieval function.</span><pre>company()</pre></a></li>
+<li class="method public "><a href="#companyProducts" title="companyProducts :: Company products and their associated recommendations."><span class="description">Company products and their associated recommendations.</span><pre>companyProducts()</pre></a></li>
+<li class="method public "><a href="#connections" title="connections :: Connection retrieval function."><span class="description">Connection retrieval function.</span><pre>connections()</pre></a></li>
+<li class="method public "><a href="#createPost" title="createPost :: This creates a post in the specified group with the specified title and specified summary."><span class="description">This creates a post in the specified group with the specified title and specified summary.</span><pre>createPost()</pre></a></li>
+<li class="method public "><a href="#deletePost" title="deletePost :: This deletes the specified post if you are the owner or moderator that post."><span class="description">This deletes the specified post if you are the owner or moderator that post.</span><pre>deletePost()</pre></a></li>
+<li class="method public "><a href="#editJob" title="editJob :: Edit a job."><span class="description">Edit a job.</span><pre>editJob()</pre></a></li>
+<li class="method public "><a href="#flagPost" title="flagPost :: This flags a specified post as specified by type."><span class="description">This flags a specified post as specified by type.</span><pre>flagPost()</pre></a></li>
+<li class="method public "><a href="#followCompany" title="followCompany :: Follow a company."><span class="description">Follow a company.</span><pre>followCompany()</pre></a></li>
+<li class="method public "><a href="#followPost" title="followPost :: Follows/Unfollows the specified post."><span class="description">Follows/Unfollows the specified post.</span><pre>followPost()</pre></a></li>
+<li class="method public "><a href="#followedCompanies" title="followedCompanies :: Get list of companies you follow."><span class="description">Get list of companies you follow.</span><pre>followedCompanies()</pre></a></li>
+<li class="method public "><a href="#getApplicationKey" title="getApplicationKey :: Get the application_key property."><span class="description">Get the application_key property.</span><pre>getApplicationKey()</pre></a></li>
+<li class="method public "><a href="#getApplicationSecret" title="getApplicationSecret :: Get the application_secret property."><span class="description">Get the application_secret property.</span><pre>getApplicationSecret()</pre></a></li>
+<li class="method public "><a href="#getCallbackUrl" title="getCallbackUrl :: Get the callback property."><span class="description">Get the callback property.</span><pre>getCallbackUrl()</pre></a></li>
+<li class="method public "><a href="#getResponseFormat" title="getResponseFormat :: Get the response_format property."><span class="description">Get the response_format property.</span><pre>getResponseFormat()</pre></a></li>
+<li class="method public "><a href="#getToken" title="getToken :: Get the token_access property."><span class="description">Get the token_access property.</span><pre>getToken()</pre></a></li>
+<li class="method public "><a href="#getTokenAccess" title="getTokenAccess :: [DEPRECATED] Get the token_access property."><span class="description">[DEPRECATED] Get the token_access property.</span><pre>getTokenAccess()</pre></a></li>
+<li class="method public "><a href="#group" title="group :: Get information about a specific group."><span class="description">Get information about a specific group.</span><pre>group()</pre></a></li>
+<li class="method public "><a href="#groupMemberships" title="groupMemberships :: This returns all the groups the user is a member of."><span class="description">This returns all the groups the user is a member of.</span><pre>groupMemberships()</pre></a></li>
+<li class="method public "><a href="#groupPost" title="groupPost :: This gets a specified post made within a group."><span class="description">This gets a specified post made within a group.</span><pre>groupPost()</pre></a></li>
+<li class="method public "><a href="#groupPostComments" title="groupPostComments :: This returns all the comments made on the specified post within a group."><span class="description">This returns all the comments made on the specified post within a group.</span><pre>groupPostComments()</pre></a></li>
+<li class="method public "><a href="#groupPosts" title="groupPosts :: This returns all the posts within a group."><span class="description">This returns all the posts within a group.</span><pre>groupPosts()</pre></a></li>
+<li class="method public "><a href="#groupSettings" title="groupSettings :: This returns the group settings of the specified group"><span class="description">This returns the group settings of the specified group</span><pre>groupSettings()</pre></a></li>
+<li class="method public "><a href="#invite" title="invite :: Send connection invitations."><span class="description">Send connection invitations.</span><pre>invite()</pre></a></li>
+<li class="method public "><a href="#isId" title="isId :: LinkedIn ID validation."><span class="description">LinkedIn ID validation.</span><pre>isId()</pre></a></li>
+<li class="method public "><a href="#isThrottled" title="isThrottled :: Throttling check."><span class="description">Throttling check.</span><pre>isThrottled()</pre></a></li>
+<li class="method public "><a href="#job" title="job :: Job posting detail info retrieval function."><span class="description">Job posting detail info retrieval function.</span><pre>job()</pre></a></li>
+<li class="method public "><a href="#joinGroup" title="joinGroup :: Join the specified group, per:"><span class="description">Join the specified group, per:</span><pre>joinGroup()</pre></a></li>
+<li class="method public "><a href="#lastRequestHeader" title="lastRequestHeader :: Returns the last request header from the previous call to the
+LinkedIn API."><span class="description">Returns the last request header from the previous call to the
+LinkedIn API.</span><pre>lastRequestHeader()</pre></a></li>
+<li class="method public "><a href="#lastRequestUrl" title="lastRequestUrl :: Returns the last request url from the previous call to the
+LinkedIn API."><span class="description">Returns the last request url from the previous call to the
+LinkedIn API.</span><pre>lastRequestUrl()</pre></a></li>
+<li class="method public "><a href="#leaveGroup" title="leaveGroup :: Leave the specified group, per:."><span class="description">Leave the specified group, per:.</span><pre>leaveGroup()</pre></a></li>
+<li class="method public "><a href="#like" title="like :: Like another user's network update, per:"><span class="description">Like another user's network update, per:</span><pre>like()</pre></a></li>
+<li class="method public "><a href="#likePost" title="likePost :: Likes/unlikes the specified post, per:"><span class="description">Likes/unlikes the specified post, per:</span><pre>likePost()</pre></a></li>
+<li class="method public "><a href="#likes" title="likes :: Retrieve network update likes."><span class="description">Retrieve network update likes.</span><pre>likes()</pre></a></li>
+<li class="method public "><a href="#message" title="message :: Connection messaging method."><span class="description">Connection messaging method.</span><pre>message()</pre></a></li>
+<li class="method public "><a href="#postJob" title="postJob :: Job posting method."><span class="description">Job posting method.</span><pre>postJob()</pre></a></li>
+<li class="method public "><a href="#profile" title="profile :: General profile retrieval function."><span class="description">General profile retrieval function.</span><pre>profile()</pre></a></li>
+<li class="method public "><a href="#raw" title="raw :: Manual API call method, allowing for support for un-implemented API
+functionality to be supported."><span class="description">Manual API call method, allowing for support for un-implemented API
+functionality to be supported.</span><pre>raw()</pre></a></li>
+<li class="method public "><a href="#removeSuggestedGroup" title="removeSuggestedGroup :: This removes the specified group from the group suggestions, per:"><span class="description">This removes the specified group from the group suggestions, per:</span><pre>removeSuggestedGroup()</pre></a></li>
+<li class="method public "><a href="#renewJob" title="renewJob :: Renew a job."><span class="description">Renew a job.</span><pre>renewJob()</pre></a></li>
+<li class="method public "><a href="#retrieveTokenAccess" title="retrieveTokenAccess :: Access token retrieval."><span class="description">Access token retrieval.</span><pre>retrieveTokenAccess()</pre></a></li>
+<li class="method public "><a href="#retrieveTokenRequest" title="retrieveTokenRequest :: Request token retrieval."><span class="description">Request token retrieval.</span><pre>retrieveTokenRequest()</pre></a></li>
+<li class="method public "><a href="#revoke" title="revoke :: User authorization revocation."><span class="description">User authorization revocation.</span><pre>revoke()</pre></a></li>
+<li class="method public "><a href="#search" title="search :: [DEPRECATED] General people search function."><span class="description">[DEPRECATED] General people search function.</span><pre>search()</pre></a></li>
+<li class="method public "><a href="#searchCompanies" title="searchCompanies :: Company search."><span class="description">Company search.</span><pre>searchCompanies()</pre></a></li>
+<li class="method public "><a href="#searchJobs" title="searchJobs :: Jobs search."><span class="description">Jobs search.</span><pre>searchJobs()</pre></a></li>
+<li class="method public "><a href="#searchPeople" title="searchPeople :: General people search function."><span class="description">General people search function.</span><pre>searchPeople()</pre></a></li>
+<li class="method public "><a href="#setApplicationKey" title="setApplicationKey :: Set the application_key property."><span class="description">Set the application_key property.</span><pre>setApplicationKey()</pre></a></li>
+<li class="method public "><a href="#setApplicationSecret" title="setApplicationSecret :: Set the application_secret property."><span class="description">Set the application_secret property.</span><pre>setApplicationSecret()</pre></a></li>
+<li class="method public "><a href="#setCallbackUrl" title="setCallbackUrl :: Set the callback property."><span class="description">Set the callback property.</span><pre>setCallbackUrl()</pre></a></li>
+<li class="method public "><a href="#setGroupSettings" title="setGroupSettings :: This sets the group settings of the specified group."><span class="description">This sets the group settings of the specified group.</span><pre>setGroupSettings()</pre></a></li>
+<li class="method public "><a href="#setResponseFormat" title="setResponseFormat :: Set the response_format property."><span class="description">Set the response_format property.</span><pre>setResponseFormat()</pre></a></li>
+<li class="method public "><a href="#setToken" title="setToken :: Set the token property."><span class="description">Set the token property.</span><pre>setToken()</pre></a></li>
+<li class="method public "><a href="#setTokenAccess" title="setTokenAccess :: [DEPRECATED] Set the token_access property."><span class="description">[DEPRECATED] Set the token_access property.</span><pre>setTokenAccess()</pre></a></li>
+<li class="method public "><a href="#share" title="share :: Post a share."><span class="description">Post a share.</span><pre>share()</pre></a></li>
+<li class="method public "><a href="#statistics" title="statistics :: Network statistics."><span class="description">Network statistics.</span><pre>statistics()</pre></a></li>
+<li class="method public "><a href="#suggestedCompanies" title="suggestedCompanies :: Companies you may want to follow."><span class="description">Companies you may want to follow.</span><pre>suggestedCompanies()</pre></a></li>
+<li class="method public "><a href="#suggestedGroups" title="suggestedGroups :: Retrieves suggested groups for the user, per:"><span class="description">Retrieves suggested groups for the user, per:</span><pre>suggestedGroups()</pre></a></li>
+<li class="method public "><a href="#suggestedJobs" title="suggestedJobs :: Jobs you may be interested in."><span class="description">Jobs you may be interested in.</span><pre>suggestedJobs()</pre></a></li>
+<li class="method public "><a href="#unbookmarkJob" title="unbookmarkJob :: Unbookmark a job."><span class="description">Unbookmark a job.</span><pre>unbookmarkJob()</pre></a></li>
+<li class="method public "><a href="#unfollowCompany" title="unfollowCompany :: Unfollow a company."><span class="description">Unfollow a company.</span><pre>unfollowCompany()</pre></a></li>
+<li class="method public "><a href="#unlike" title="unlike :: Unlike a network update."><span class="description">Unlike a network update.</span><pre>unlike()</pre></a></li>
+<li class="method public "><a href="#updateNetwork" title="updateNetwork :: Post network update."><span class="description">Post network update.</span><pre>updateNetwork()</pre></a></li>
+<li class="method public "><a href="#updates" title="updates :: General network update retrieval function."><span class="description">General network update retrieval function.</span><pre>updates()</pre></a></li>
+<li class="method public "><a href="#xmlToArray" title="xmlToArray :: Converts passed XML data to an array."><span class="description">Converts passed XML data to an array.</span><pre>xmlToArray()</pre></a></li>
+<li class="nav-header protected">» Protected</li>
+<li class="method protected "><a href="#fetch" title="fetch :: General data send/request method."><span class="description">General data send/request method.</span><pre>fetch()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#checkResponse" title="checkResponse :: Used to check whether a response LinkedIn object has the required http_code or not and
+returns an appropriate LinkedIn object."><span class="description">Used to check whether a response LinkedIn object has the required http_code or not and
+returns an appropriate LinkedIn object.</span><pre>checkResponse()</pre></a></li>
+<li class="method private "><a href="#intWalker" title="intWalker :: Custom addition to make code compatible with PHP 5.2"><span class="description">Custom addition to make code compatible with PHP 5.2</span><pre>intWalker()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24last_request_headers" title="$last_request_headers :: "><span class="description">$last_request_headers</span><pre>$last_request_headers</pre></a></li>
+<li class="property public "><a href="#%24last_request_url" title="$last_request_url :: "><span class="description">$last_request_url</span><pre>$last_request_url</pre></a></li>
+<li class="nav-header protected">» Protected</li>
+<li class="property protected "><a href="#%24application_key" title="$application_key :: "><span class="description">$application_key</span><pre>$application_key</pre></a></li>
+<li class="property protected "><a href="#%24application_secret" title="$application_secret :: "><span class="description">$application_secret</span><pre>$application_secret</pre></a></li>
+<li class="property protected "><a href="#%24callback" title="$callback :: "><span class="description">$callback</span><pre>$callback</pre></a></li>
+<li class="property protected "><a href="#%24response_format" title="$response_format :: "><span class="description">$response_format</span><pre>$response_format</pre></a></li>
+<li class="property protected "><a href="#%24token" title="$token :: "><span class="description">$token</span><pre>$token</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-constant"></i> Constants</li>
+<li class="constant  "><a href="#_API_OAUTH_REALM" title="_API_OAUTH_REALM :: "><span class="description">_API_OAUTH_REALM</span><pre>_API_OAUTH_REALM</pre></a></li>
+<li class="constant  "><a href="#_API_OAUTH_VERSION" title="_API_OAUTH_VERSION :: "><span class="description">_API_OAUTH_VERSION</span><pre>_API_OAUTH_VERSION</pre></a></li>
+<li class="constant  "><a href="#_DEFAULT_RESPONSE_FORMAT" title="_DEFAULT_RESPONSE_FORMAT :: "><span class="description">_DEFAULT_RESPONSE_FORMAT</span><pre>_DEFAULT_RESPONSE_FORMAT</pre></a></li>
+<li class="constant  "><a href="#_GET_RESPONSE" title="_GET_RESPONSE :: "><span class="description">_GET_RESPONSE</span><pre>_GET_RESPONSE</pre></a></li>
+<li class="constant  "><a href="#_GET_TYPE" title="_GET_TYPE :: "><span class="description">_GET_TYPE</span><pre>_GET_TYPE</pre></a></li>
+<li class="constant  "><a href="#_INV_BODY_LENGTH" title="_INV_BODY_LENGTH :: "><span class="description">_INV_BODY_LENGTH</span><pre>_INV_BODY_LENGTH</pre></a></li>
+<li class="constant  "><a href="#_INV_SUBJECT" title="_INV_SUBJECT :: "><span class="description">_INV_SUBJECT</span><pre>_INV_SUBJECT</pre></a></li>
+<li class="constant  "><a href="#_METHOD_TOKENS" title="_METHOD_TOKENS :: "><span class="description">_METHOD_TOKENS</span><pre>_METHOD_TOKENS</pre></a></li>
+<li class="constant  "><a href="#_NETWORK_HTML" title="_NETWORK_HTML :: "><span class="description">_NETWORK_HTML</span><pre>_NETWORK_HTML</pre></a></li>
+<li class="constant  "><a href="#_NETWORK_LENGTH" title="_NETWORK_LENGTH :: "><span class="description">_NETWORK_LENGTH</span><pre>_NETWORK_LENGTH</pre></a></li>
+<li class="constant  "><a href="#_RESPONSE_JSON" title="_RESPONSE_JSON :: "><span class="description">_RESPONSE_JSON</span><pre>_RESPONSE_JSON</pre></a></li>
+<li class="constant  "><a href="#_RESPONSE_JSONP" title="_RESPONSE_JSONP :: "><span class="description">_RESPONSE_JSONP</span><pre>_RESPONSE_JSONP</pre></a></li>
+<li class="constant  "><a href="#_RESPONSE_XML" title="_RESPONSE_XML :: "><span class="description">_RESPONSE_XML</span><pre>_RESPONSE_XML</pre></a></li>
+<li class="constant  "><a href="#_SHARE_COMMENT_LENGTH" title="_SHARE_COMMENT_LENGTH :: "><span class="description">_SHARE_COMMENT_LENGTH</span><pre>_SHARE_COMMENT_LENGTH</pre></a></li>
+<li class="constant  "><a href="#_SHARE_CONTENT_DESC_LENGTH" title="_SHARE_CONTENT_DESC_LENGTH :: "><span class="description">_SHARE_CONTENT_DESC_LENGTH</span><pre>_SHARE_CONTENT_DESC_LENGTH</pre></a></li>
+<li class="constant  "><a href="#_SHARE_CONTENT_TITLE_LENGTH" title="_SHARE_CONTENT_TITLE_LENGTH :: "><span class="description">_SHARE_CONTENT_TITLE_LENGTH</span><pre>_SHARE_CONTENT_TITLE_LENGTH</pre></a></li>
+<li class="constant  "><a href="#_URL_ACCESS" title="_URL_ACCESS :: "><span class="description">_URL_ACCESS</span><pre>_URL_ACCESS</pre></a></li>
+<li class="constant  "><a href="#_URL_API" title="_URL_API :: "><span class="description">_URL_API</span><pre>_URL_API</pre></a></li>
+<li class="constant  "><a href="#_URL_AUTH" title="_URL_AUTH :: "><span class="description">_URL_AUTH</span><pre>_URL_AUTH</pre></a></li>
+<li class="constant  "><a href="#_URL_REQUEST" title="_URL_REQUEST :: "><span class="description">_URL_REQUEST</span><pre>_URL_REQUEST</pre></a></li>
+<li class="constant  "><a href="#_URL_REVOKE" title="_URL_REVOKE :: "><span class="description">_URL_REVOKE</span><pre>_URL_REVOKE</pre></a></li>
+<li class="constant  "><a href="#_VERSION" title="_VERSION :: "><span class="description">_VERSION</span><pre>_VERSION</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CLinkedIn" id="\LinkedIn"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/LinkedIn.html">LinkedIn</a>
+</li>
+</ul>
+<div href="../classes/LinkedIn.html" class="element class">
+<p class="short_description">'LinkedIn' class declaration.</p>
+<div class="details">
+<p class="long_description"><p>This class provides generalized LinkedIn oauth functionality.</p></p>
+<table class="table table-bordered">
+<tr>
+<th>access</th>
+<td>public</td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="../packages/classpackage.html">classpackage</a></td>
+</tr>
+</table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>Create a LinkedIn object, used for OAuth-based authentication and
+communication with the LinkedIn API.</h2>
+<pre>__construct(\arr $config) : \obj</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$config</h4>
+<code>\arr</code><p>The 'start-up' object properties: - appKey => The application's API key - appSecret => The application's secret key - callbackUrl => [OPTIONAL] the callback URL</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\obj</code>A new LinkedIn object.</div>
+</div></div>
+</div>
+<a name="__destruct" id="__destruct"></a><div class="element clickable method public __destruct" data-toggle="collapse" data-target=".__destruct .collapse">
+<h2>The class destructor.</h2>
+<pre>__destruct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"><p>Explicitly clears LinkedIn object from memory upon destruction.</p></p></div></div>
+</div>
+<a name="bookmarkJob" id="bookmarkJob"></a><div class="element clickable method public bookmarkJob" data-toggle="collapse" data-target=".bookmarkJob .collapse">
+<h2>Bookmark a job.</h2>
+<pre>bookmarkJob(\str $jid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Calling this method causes the current user to add a bookmark for the
+specified job:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1323</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$jid</h4>
+<code>\str</code><p>Job ID you want to bookmark.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="bookmarkedJobs" id="bookmarkedJobs"></a><div class="element clickable method public bookmarkedJobs" data-toggle="collapse" data-target=".bookmarkedJobs .collapse">
+<h2>Get list of jobs you have bookmarked.</h2>
+<pre>bookmarkedJobs() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Returns a list of jobs the current user has bookmarked, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1323</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="closeJob" id="closeJob"></a><div class="element clickable method public closeJob" data-toggle="collapse" data-target=".closeJob .collapse">
+<h2>Close a job.</h2>
+<pre>closeJob(\str $jid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Calling this method causes the passed job to be closed, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1151</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$jid</h4>
+<code>\str</code><p>Job ID you want to close.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="comment" id="comment"></a><div class="element clickable method public comment" data-toggle="collapse" data-target=".comment .collapse">
+<h2>Share comment posting method.</h2>
+<pre>comment(\str $uid, \str $comment) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Post a comment on an existing connections shared content. API details can
+be found here:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1043</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uid</h4>
+<code>\str</code><p>The LinkedIn update ID.</p></div>
+<div class="subelement argument">
+<h4>$comment</h4>
+<code>\str</code><p>The share comment to be posted.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="comments" id="comments"></a><div class="element clickable method public comments" data-toggle="collapse" data-target=".comments .collapse">
+<h2>Share comment retrieval.</h2>
+<pre>comments(\str $uid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Return all comments associated with a given network update:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1043</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uid</h4>
+<code>\str</code><p>The LinkedIn update ID.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="company" id="company"></a><div class="element clickable method public company" data-toggle="collapse" data-target=".company .collapse">
+<h2>Company profile retrieval function.</h2>
+<pre>company(\str $options, bool $by_email) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Takes a string of parameters as input and requests company profile data
+from the LinkedIn Company Profile API. See the official documentation for
+$options 'field selector' formatting:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1014
+  http://developer.linkedin.com/docs/DOC-1259</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>Data retrieval options.</p></div>
+<div class="subelement argument">
+<h4>$by_email</h4>
+<code>bool</code><p>[OPTIONAL] Search by email domain?</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="companyProducts" id="companyProducts"></a><div class="element clickable method public companyProducts" data-toggle="collapse" data-target=".companyProducts .collapse">
+<h2>Company products and their associated recommendations.</h2>
+<pre>companyProducts(\str $cid, \str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>The product data type contains details about a company's product or
+service, including recommendations from LinkedIn members, and replies from
+company representatives.</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1327</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$cid</h4>
+<code>\str</code><p>Company ID you want the producte for.</p></div>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="connections" id="connections"></a><div class="element clickable method public connections" data-toggle="collapse" data-target=".connections .collapse">
+<h2>Connection retrieval function.</h2>
+<pre>connections(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Takes a string of parameters as input and requests connection-related data
+from the Linkedin Connections API. See the official documentation for
+$options 'field selector' formatting:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1014</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="createPost" id="createPost"></a><div class="element clickable method public createPost" data-toggle="collapse" data-target=".createPost .collapse">
+<h2>This creates a post in the specified group with the specified title and specified summary.</h2>
+<pre>createPost(\str $gid, \str $title, \str $summary) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<div class="subelement argument">
+<h4>$title</h4>
+<code>\str</code><p>The title of the post. This must be non-empty.</p>
+</div>
+<div class="subelement argument">
+<h4>$summary</h4>
+<code>\str</code><p>[OPTIONAL] The content or summary of the post. This can be empty.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="deletePost" id="deletePost"></a><div class="element clickable method public deletePost" data-toggle="collapse" data-target=".deletePost .collapse">
+<h2>This deletes the specified post if you are the owner or moderator that post.</h2>
+<pre>deletePost(\str $pid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Otherwise, it just flags the post as inappropriate.</p>
+
+<p>https://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pid</h4>
+<code>\str</code><p>The post id.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="editJob" id="editJob"></a><div class="element clickable method public editJob" data-toggle="collapse" data-target=".editJob .collapse">
+<h2>Edit a job.</h2>
+<pre>editJob(\str $jid, \str $xml) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Calling this method causes the passed job to be edited, with the passed
+XML instructing which fields to change, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1154
+  http://developer.linkedin.com/docs/DOC-1142</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$jid</h4>
+<code>\str</code><p>Job ID you want to renew.</p></div>
+<div class="subelement argument">
+<h4>$xml</h4>
+<code>\str</code><p>The XML containing the job fields to edit.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="flagPost" id="flagPost"></a><div class="element clickable method public flagPost" data-toggle="collapse" data-target=".flagPost .collapse">
+<h2>This flags a specified post as specified by type.</h2>
+<pre>flagPost(\str $pid, \str $type) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pid</h4>
+<code>\str</code><p>The post id.</p></div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>\str</code><p>The type to flag the post as.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="followCompany" id="followCompany"></a><div class="element clickable method public followCompany" data-toggle="collapse" data-target=".followCompany .collapse">
+<h2>Follow a company.</h2>
+<pre>followCompany(\str $cid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Calling this method causes the current user to start following the
+specified company, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1324</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$cid</h4>
+<code>\str</code><p>Company ID you want to follow.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="followPost" id="followPost"></a><div class="element clickable method public followPost" data-toggle="collapse" data-target=".followPost .collapse">
+<h2>Follows/Unfollows the specified post.</h2>
+<pre>followPost(\str $pid, bool $follow) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>https://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pid</h4>
+<code>\str</code><p>The post id.</p></div>
+<div class="subelement argument">
+<h4>$follow</h4>
+<code>bool</code><p>Determines whether to follow or unfollow the post. TRUE = follow, FALSE = unfollow</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="followedCompanies" id="followedCompanies"></a><div class="element clickable method public followedCompanies" data-toggle="collapse" data-target=".followedCompanies .collapse">
+<h2>Get list of companies you follow.</h2>
+<pre>followedCompanies() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Returns a list of companies the current user is currently following, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1324</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="getApplicationKey" id="getApplicationKey"></a><div class="element clickable method public getApplicationKey" data-toggle="collapse" data-target=".getApplicationKey .collapse">
+<h2>Get the application_key property.</h2>
+<pre>getApplicationKey() : \str</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\str</code>The application key.</div>
+</div></div>
+</div>
+<a name="getApplicationSecret" id="getApplicationSecret"></a><div class="element clickable method public getApplicationSecret" data-toggle="collapse" data-target=".getApplicationSecret .collapse">
+<h2>Get the application_secret property.</h2>
+<pre>getApplicationSecret() : \str</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\str</code>The application secret.</div>
+</div></div>
+</div>
+<a name="getCallbackUrl" id="getCallbackUrl"></a><div class="element clickable method public getCallbackUrl" data-toggle="collapse" data-target=".getCallbackUrl .collapse">
+<h2>Get the callback property.</h2>
+<pre>getCallbackUrl() : \str</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\str</code>The callback url.</div>
+</div></div>
+</div>
+<a name="getResponseFormat" id="getResponseFormat"></a><div class="element clickable method public getResponseFormat" data-toggle="collapse" data-target=".getResponseFormat .collapse">
+<h2>Get the response_format property.</h2>
+<pre>getResponseFormat() : \str</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\str</code>The response format.</div>
+</div></div>
+</div>
+<a name="getToken" id="getToken"></a><div class="element clickable method public getToken" data-toggle="collapse" data-target=".getToken .collapse">
+<h2>Get the token_access property.</h2>
+<pre>getToken() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>The access token.</div>
+</div></div>
+</div>
+<a name="getTokenAccess" id="getTokenAccess"></a><div class="element clickable method public getTokenAccess" data-toggle="collapse" data-target=".getTokenAccess .collapse">
+<h2>[DEPRECATED] Get the token_access property.</h2>
+<pre>getTokenAccess() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>The access token.</div>
+</div></div>
+</div>
+<a name="group" id="group"></a><div class="element clickable method public group" data-toggle="collapse" data-target=".group .collapse">
+<h2>Get information about a specific group.</h2>
+<pre>group(\str $gid, \str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Field selectors for the group.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="groupMemberships" id="groupMemberships"></a><div class="element clickable method public groupMemberships" data-toggle="collapse" data-target=".groupMemberships .collapse">
+<h2>This returns all the groups the user is a member of.</h2>
+<pre>groupMemberships(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Field selectors for the groups.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="groupPost" id="groupPost"></a><div class="element clickable method public groupPost" data-toggle="collapse" data-target=".groupPost .collapse">
+<h2>This gets a specified post made within a group.</h2>
+<pre>groupPost(\str $pid, \str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pid</h4>
+<code>\str</code><p>The post id.</p></div>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Field selectors for the post.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="groupPostComments" id="groupPostComments"></a><div class="element clickable method public groupPostComments" data-toggle="collapse" data-target=".groupPostComments .collapse">
+<h2>This returns all the comments made on the specified post within a group.</h2>
+<pre>groupPostComments(\str $pid, \str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pid</h4>
+<code>\str</code><p>The post id.</p></div>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Field selectors for the post comments.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="groupPosts" id="groupPosts"></a><div class="element clickable method public groupPosts" data-toggle="collapse" data-target=".groupPosts .collapse">
+<h2>This returns all the posts within a group.</h2>
+<pre>groupPosts(\str $gid, $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<div class="subelement argument"><h4>$options</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="groupSettings" id="groupSettings"></a><div class="element clickable method public groupSettings" data-toggle="collapse" data-target=".groupSettings .collapse">
+<h2>This returns the group settings of the specified group</h2>
+<pre>groupSettings(\str $gid, \str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Field selectors for the group.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="invite" id="invite"></a><div class="element clickable method public invite" data-toggle="collapse" data-target=".invite .collapse">
+<h2>Send connection invitations.</h2>
+<pre>invite(\str $method, \str $recipient, \str $subject, \str $body, \str $type) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Send an invitation to connect to your network, either by email address or
+by LinkedIn ID. Details on the API here:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1012</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$method</h4>
+<code>\str</code><p>The invitation method to process.</p></div>
+<div class="subelement argument">
+<h4>$recipient</h4>
+<code>\str</code><p>The email/id to send the invitation to.</p>
+</div>
+<div class="subelement argument">
+<h4>$subject</h4>
+<code>\str</code><p>The subject of the invitation to send.</p></div>
+<div class="subelement argument">
+<h4>$body</h4>
+<code>\str</code><p>The body of the invitation to send.</p></div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>\str</code><p>[OPTIONAL] The invitation request type (only friend is supported at this time by the Invite API).</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="isId" id="isId"></a><div class="element clickable method public isId" data-toggle="collapse" data-target=".isId .collapse">
+<h2>LinkedIn ID validation.</h2>
+<pre>isId(\str $id) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Checks the passed string $id to see if it has a valid LinkedIn ID format,
+which is, as of October 15th, 2010:</p>
+
+<p>10 alpha-numeric mixed-case characters, plus underscores and dashes.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>\str</code><p>A possible LinkedIn ID.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>TRUE/FALSE depending on valid ID format determination.</div>
+</div></div>
+</div>
+<a name="isThrottled" id="isThrottled"></a><div class="element clickable method public isThrottled" data-toggle="collapse" data-target=".isThrottled .collapse">
+<h2>Throttling check.</h2>
+<pre>isThrottled(\arr $response) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Checks the passed LinkedIn response to see if we have hit a throttling
+limit:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1112</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$response</h4>
+<code>\arr</code><p>The LinkedIn response.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>TRUE/FALSE depending on content of response.</div>
+</div></div>
+</div>
+<a name="job" id="job"></a><div class="element clickable method public job" data-toggle="collapse" data-target=".job .collapse">
+<h2>Job posting detail info retrieval function.</h2>
+<pre>job(\str $jid, \str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>The Jobs API returns detailed information about job postings on LinkedIn.
+Find the job summary, description, location, and apply our professional graph
+to present the relationship between the current member and the job poster or
+hiring manager.</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1322</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$jid</h4>
+<code>\str</code><p>ID of the job you want to look up.</p></div>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="joinGroup" id="joinGroup"></a><div class="element clickable method public joinGroup" data-toggle="collapse" data-target=".joinGroup .collapse">
+<h2>Join the specified group, per:</h2>
+<pre>joinGroup(\str $gid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="lastRequestHeader" id="lastRequestHeader"></a><div class="element clickable method public lastRequestHeader" data-toggle="collapse" data-target=".lastRequestHeader .collapse">
+<h2>Returns the last request header from the previous call to the
+LinkedIn API.</h2>
+<pre>lastRequestHeader() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>returns</th>
+<td>str
+The header, in string format.</td>
+</tr></table>
+</div></div>
+</div>
+<a name="lastRequestUrl" id="lastRequestUrl"></a><div class="element clickable method public lastRequestUrl" data-toggle="collapse" data-target=".lastRequestUrl .collapse">
+<h2>Returns the last request url from the previous call to the
+LinkedIn API.</h2>
+<pre>lastRequestUrl() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>returns</th>
+<td>str
+The url, in string format.</td>
+</tr></table>
+</div></div>
+</div>
+<a name="leaveGroup" id="leaveGroup"></a><div class="element clickable method public leaveGroup" data-toggle="collapse" data-target=".leaveGroup .collapse">
+<h2>Leave the specified group, per:.</h2>
+<pre>leaveGroup(\str $gid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="like" id="like"></a><div class="element clickable method public like" data-toggle="collapse" data-target=".like .collapse">
+<h2>Like another user's network update, per:</h2>
+<pre>like(\str $uid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/docs/DOC-1043</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uid</h4>
+<code>\str</code><p>The LinkedIn update ID.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="likePost" id="likePost"></a><div class="element clickable method public likePost" data-toggle="collapse" data-target=".likePost .collapse">
+<h2>Likes/unlikes the specified post, per:</h2>
+<pre>likePost(\str $pid, bool $like) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pid</h4>
+<code>\str</code><p>The post id.</p></div>
+<div class="subelement argument">
+<h4>$like</h4>
+<code>bool</code><p>Determines whether to like or unlike. TRUE = like, FALSE = unlike.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="likes" id="likes"></a><div class="element clickable method public likes" data-toggle="collapse" data-target=".likes .collapse">
+<h2>Retrieve network update likes.</h2>
+<pre>likes(\str $uid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Return all likes associated with a given network update:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1043</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uid</h4>
+<code>\str</code><p>The LinkedIn update ID.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="message" id="message"></a><div class="element clickable method public message" data-toggle="collapse" data-target=".message .collapse">
+<h2>Connection messaging method.</h2>
+<pre>message(\arr $recipients, \str $subject, \str $body, bool $copy_self) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Send a message to your network connection(s), optionally copying yourself.
+Full details from LinkedIn on this functionality can be found here:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1044</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$recipients</h4>
+<code>\arr</code><p>The connection(s) to send the message to.</p>
+</div>
+<div class="subelement argument">
+<h4>$subject</h4>
+<code>\str</code><p>The subject of the message to send.</p></div>
+<div class="subelement argument">
+<h4>$body</h4>
+<code>\str</code><p>The body of the message to send.</p></div>
+<div class="subelement argument">
+<h4>$copy_self</h4>
+<code>bool</code><p>[OPTIONAL] Also update the teathered Twitter account.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="postJob" id="postJob"></a><div class="element clickable method public postJob" data-toggle="collapse" data-target=".postJob .collapse">
+<h2>Job posting method.</h2>
+<pre>postJob(\str $xml) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Post a job to LinkedIn, assuming that you have access to this feature.
+Full details from LinkedIn on this functionality can be found here:</p>
+
+<p>http://developer.linkedin.com/community/jobs?view=documents</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$xml</h4>
+<code>\str</code><p>The XML defining a job to post.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="profile" id="profile"></a><div class="element clickable method public profile" data-toggle="collapse" data-target=".profile .collapse">
+<h2>General profile retrieval function.</h2>
+<pre>profile(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Takes a string of parameters as input and requests profile data from the
+Linkedin Profile API. See the official documentation for $options
+'field selector' formatting:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1014
+  http://developer.linkedin.com/docs/DOC-1002</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="raw" id="raw"></a><div class="element clickable method public raw" data-toggle="collapse" data-target=".raw .collapse">
+<h2>Manual API call method, allowing for support for un-implemented API
+functionality to be supported.</h2>
+<pre>raw(\str $method, \str $url, \str $body) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$method</h4>
+<code>\str</code><p>The data communication method.</p></div>
+<div class="subelement argument">
+<h4>$url</h4>
+<code>\str</code><p>The Linkedin API endpoint to connect with - should NOT include the leading https://api.linkedin.com/v1.</p>
+</div>
+<div class="subelement argument">
+<h4>$body</h4>
+<code>\str</code><p>[OPTIONAL] The URL-encoded body data to send to LinkedIn with the request.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval information, LinkedIn response. Note that you must manually check the return code and compare this to the expected API response to determine if the raw call was successful.</div>
+</div></div>
+</div>
+<a name="removeSuggestedGroup" id="removeSuggestedGroup"></a><div class="element clickable method public removeSuggestedGroup" data-toggle="collapse" data-target=".removeSuggestedGroup .collapse">
+<h2>This removes the specified group from the group suggestions, per:</h2>
+<pre>removeSuggestedGroup(\str $gid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="renewJob" id="renewJob"></a><div class="element clickable method public renewJob" data-toggle="collapse" data-target=".renewJob .collapse">
+<h2>Renew a job.</h2>
+<pre>renewJob(\str $jid, \str $cid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Calling this method causes the passed job to be renewed, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1154</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$jid</h4>
+<code>\str</code><p>Job ID you want to renew.</p></div>
+<div class="subelement argument">
+<h4>$cid</h4>
+<code>\str</code><p>Contract ID that covers the passed Job ID.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="retrieveTokenAccess" id="retrieveTokenAccess"></a><div class="element clickable method public retrieveTokenAccess" data-toggle="collapse" data-target=".retrieveTokenAccess .collapse">
+<h2>Access token retrieval.</h2>
+<pre>retrieveTokenAccess(\str $token, \str $secret, \str $verifier) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Request the user's access token from the Linkedin API.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$token</h4>
+<code>\str</code><p>The token returned from the user authorization stage.</p></div>
+<div class="subelement argument">
+<h4>$secret</h4>
+<code>\str</code><p>The secret returned from the request token stage.</p></div>
+<div class="subelement argument">
+<h4>$verifier</h4>
+<code>\str</code><p>The verification value from LinkedIn.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>The Linkedin OAuth/http response, in array format.</div>
+</div></div>
+</div>
+<a name="retrieveTokenRequest" id="retrieveTokenRequest"></a><div class="element clickable method public retrieveTokenRequest" data-toggle="collapse" data-target=".retrieveTokenRequest .collapse">
+<h2>Request token retrieval.</h2>
+<pre>retrieveTokenRequest() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Get the request token from the Linkedin API.</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>The Linkedin OAuth/http response, in array format.</div>
+</div></div>
+</div>
+<a name="revoke" id="revoke"></a><div class="element clickable method public revoke" data-toggle="collapse" data-target=".revoke .collapse">
+<h2>User authorization revocation.</h2>
+<pre>revoke() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Revoke the current user's access token, clear the access token's from
+current LinkedIn object. The current documentation for this feature is
+found in a blog entry from April 29th, 2010:</p>
+
+<p>http://developer.linkedin.com/community/apis/blog/2010/04/29/oauth--now-for-authentication</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="search" id="search"></a><div class="element clickable method public search" data-toggle="collapse" data-target=".search .collapse">
+<h2>[DEPRECATED] General people search function.</h2>
+<pre>search(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Takes a string of parameters as input and requests profile data from the
+Linkedin People Search API.  See the official documentation for $options
+querystring formatting:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1191</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="searchCompanies" id="searchCompanies"></a><div class="element clickable method public searchCompanies" data-toggle="collapse" data-target=".searchCompanies .collapse">
+<h2>Company search.</h2>
+<pre>searchCompanies(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Uses the Company Search API to find companies using keywords, industry,
+location, or some other criteria. It returns a collection of matching
+companies.</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1325</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Search options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="searchJobs" id="searchJobs"></a><div class="element clickable method public searchJobs" data-toggle="collapse" data-target=".searchJobs .collapse">
+<h2>Jobs search.</h2>
+<pre>searchJobs(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Use the Job Search API to find jobs using keywords, company, location,
+or some other criteria. It returns a collection of matching jobs. Each
+entry can contain much of the information available on the job listing.</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1321</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="searchPeople" id="searchPeople"></a><div class="element clickable method public searchPeople" data-toggle="collapse" data-target=".searchPeople .collapse">
+<h2>General people search function.</h2>
+<pre>searchPeople(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Takes a string of parameters as input and requests profile data from the
+Linkedin People Search API.  See the official documentation for $options
+querystring formatting:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1191</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="setApplicationKey" id="setApplicationKey"></a><div class="element clickable method public setApplicationKey" data-toggle="collapse" data-target=".setApplicationKey .collapse">
+<h2>Set the application_key property.</h2>
+<pre>setApplicationKey(\str $key) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$key</h4>
+<code>\str</code><p>The application key.</p></div>
+</div></div>
+</div>
+<a name="setApplicationSecret" id="setApplicationSecret"></a><div class="element clickable method public setApplicationSecret" data-toggle="collapse" data-target=".setApplicationSecret .collapse">
+<h2>Set the application_secret property.</h2>
+<pre>setApplicationSecret(\str $secret) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$secret</h4>
+<code>\str</code><p>The application secret.</p></div>
+</div></div>
+</div>
+<a name="setCallbackUrl" id="setCallbackUrl"></a><div class="element clickable method public setCallbackUrl" data-toggle="collapse" data-target=".setCallbackUrl .collapse">
+<h2>Set the callback property.</h2>
+<pre>setCallbackUrl(\str $url) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$url</h4>
+<code>\str</code><p>The callback url.</p></div>
+</div></div>
+</div>
+<a name="setGroupSettings" id="setGroupSettings"></a><div class="element clickable method public setGroupSettings" data-toggle="collapse" data-target=".setGroupSettings .collapse">
+<h2>This sets the group settings of the specified group.</h2>
+<pre>setGroupSettings(\str $gid, \str $xml) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$gid</h4>
+<code>\str</code><p>The group id.</p></div>
+<div class="subelement argument">
+<h4>$xml</h4>
+<code>\str</code><p>The group settings to set. The settings are: -<show-group-logo-in-profle> -<contact-email> -<email-digest-frequency> -<email-annoucements-from-managers> -<allow-messages-from-members> -<email-for-every-new-post></p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="setResponseFormat" id="setResponseFormat"></a><div class="element clickable method public setResponseFormat" data-toggle="collapse" data-target=".setResponseFormat .collapse">
+<h2>Set the response_format property.</h2>
+<pre>setResponseFormat(\str $format) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$format</h4>
+<code>\str</code><p>[OPTIONAL] The response format to specify to LinkedIn.</p>
+</div>
+</div></div>
+</div>
+<a name="setToken" id="setToken"></a><div class="element clickable method public setToken" data-toggle="collapse" data-target=".setToken .collapse">
+<h2>Set the token property.</h2>
+<pre>setToken($token) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$token</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>$token The LinkedIn OAuth token.</div>
+</div></div>
+</div>
+<a name="setTokenAccess" id="setTokenAccess"></a><div class="element clickable method public setTokenAccess" data-toggle="collapse" data-target=".setTokenAccess .collapse">
+<h2>[DEPRECATED] Set the token_access property.</h2>
+<pre>setTokenAccess($token_access) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$token_access</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>$token_access [OPTIONAL] The LinkedIn OAuth access token.</div>
+</div></div>
+</div>
+<a name="share" id="share"></a><div class="element clickable method public share" data-toggle="collapse" data-target=".share .collapse">
+<h2>Post a share.</h2>
+<pre>share(\str $action, \str $content, bool $private, bool $twitter) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Create a new or reshare another user's shared content. Full details from
+LinkedIn on this functionality can be found here:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1212</p>
+
+<p>$action values: ('new', 'reshare')
+  $content format:
+    $action = 'new'; $content => ('comment' => 'xxx', 'title' => 'xxx', 'submitted-url' => 'xxx', 'submitted-image-url' => 'xxx', 'description' => 'xxx')
+    $action = 'reshare'; $content => ('comment' => 'xxx', 'id' => 'xxx')</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$action</h4>
+<code>\str</code><p>The sharing action to perform.</p></div>
+<div class="subelement argument">
+<h4>$content</h4>
+<code>\str</code><p>The share content.</p></div>
+<div class="subelement argument">
+<h4>$private</h4>
+<code>bool</code><p>[OPTIONAL] Should we restrict this shared item to connections only?</p>
+</div>
+<div class="subelement argument">
+<h4>$twitter</h4>
+<code>bool</code><p>[OPTIONAL] Also update the teathered Twitter account.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="statistics" id="statistics"></a><div class="element clickable method public statistics" data-toggle="collapse" data-target=".statistics .collapse">
+<h2>Network statistics.</h2>
+<pre>statistics() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>General network statistics retrieval function, returns the number of connections,
+second-connections an authenticated user has. More information here:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1006</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="suggestedCompanies" id="suggestedCompanies"></a><div class="element clickable method public suggestedCompanies" data-toggle="collapse" data-target=".suggestedCompanies .collapse">
+<h2>Companies you may want to follow.</h2>
+<pre>suggestedCompanies() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Returns a list of companies the current user may want to follow, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1324</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="suggestedGroups" id="suggestedGroups"></a><div class="element clickable method public suggestedGroups" data-toggle="collapse" data-target=".suggestedGroups .collapse">
+<h2>Retrieves suggested groups for the user, per:</h2>
+<pre>suggestedGroups() : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>http://developer.linkedin.com/documents/groups-api</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="suggestedJobs" id="suggestedJobs"></a><div class="element clickable method public suggestedJobs" data-toggle="collapse" data-target=".suggestedJobs .collapse">
+<h2>Jobs you may be interested in.</h2>
+<pre>suggestedJobs(\str $options) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Returns a list of jobs the current user may be interested in, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1323</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="unbookmarkJob" id="unbookmarkJob"></a><div class="element clickable method public unbookmarkJob" data-toggle="collapse" data-target=".unbookmarkJob .collapse">
+<h2>Unbookmark a job.</h2>
+<pre>unbookmarkJob(\str $jid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Calling this method causes the current user to remove a bookmark for the
+specified job:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1323</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$jid</h4>
+<code>\str</code><p>Job ID you want to unbookmark.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="unfollowCompany" id="unfollowCompany"></a><div class="element clickable method public unfollowCompany" data-toggle="collapse" data-target=".unfollowCompany .collapse">
+<h2>Unfollow a company.</h2>
+<pre>unfollowCompany(\str $cid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Calling this method causes the current user to stop following the specified
+company, per:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1324</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$cid</h4>
+<code>\str</code><p>Company ID you want to unfollow.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="unlike" id="unlike"></a><div class="element clickable method public unlike" data-toggle="collapse" data-target=".unlike .collapse">
+<h2>Unlike a network update.</h2>
+<pre>unlike(\str $uid) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Unlike another user's network update:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1043</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$uid</h4>
+<code>\str</code><p>The LinkedIn update ID.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="updateNetwork" id="updateNetwork"></a><div class="element clickable method public updateNetwork" data-toggle="collapse" data-target=".updateNetwork .collapse">
+<h2>Post network update.</h2>
+<pre>updateNetwork(\str $update) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Update the user's Linkedin network status. Full details from LinkedIn
+on this functionality can be found here:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1009
+  http://developer.linkedin.com/docs/DOC-1009#comment-1077</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$update</h4>
+<code>\str</code><p>The network update.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="updates" id="updates"></a><div class="element clickable method public updates" data-toggle="collapse" data-target=".updates .collapse">
+<h2>General network update retrieval function.</h2>
+<pre>updates(\str $options, \str $id) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Takes a string of parameters as input and requests update-related data
+from the Linkedin Network Updates API. See the official documentation for
+$options parameter formatting:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1006</p>
+
+<p>For getting more comments, likes, etc, see here:</p>
+
+<p>http://developer.linkedin.com/docs/DOC-1043</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$options</h4>
+<code>\str</code><p>[OPTIONAL] Data retrieval options.</p>
+</div>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>\str</code><p>[OPTIONAL] The LinkedIn ID to restrict the updates for.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing retrieval success, LinkedIn response.</div>
+</div></div>
+</div>
+<a name="xmlToArray" id="xmlToArray"></a><div class="element clickable method public xmlToArray" data-toggle="collapse" data-target=".xmlToArray .collapse">
+<h2>Converts passed XML data to an array.</h2>
+<pre>xmlToArray(\str $xml) : \arr: bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$xml</h4>
+<code>\str</code><p>The XML to convert to an array.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing the XML data.</div>
+<div class="subelement response">
+<code>bool</code>FALSE if passed data cannot be parsed to an array.</div>
+</div></div>
+</div>
+<a name="fetch" id="fetch"></a><div class="element clickable method protected fetch" data-toggle="collapse" data-target=".fetch .collapse">
+<h2>General data send/request method.</h2>
+<pre>fetch(\str $method, \str $url, \str $data, \arr $parameters) : \arr</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$method</h4>
+<code>\str</code><p>The data communication method.</p></div>
+<div class="subelement argument">
+<h4>$url</h4>
+<code>\str</code><p>The Linkedin API endpoint to connect with.</p></div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\str</code><p>[OPTIONAL] The data to send to LinkedIn.</p>
+</div>
+<div class="subelement argument">
+<h4>$parameters</h4>
+<code>\arr</code><p>[OPTIONAL] Addition OAuth parameters to send to LinkedIn.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\arr</code>Array containing: array( 'info' => Connection information, 'linkedin' => LinkedIn response, 'oauth' => The OAuth request string that was sent to LinkedIn )</div>
+</div></div>
+</div>
+<a name="checkResponse" id="checkResponse"></a><div class="element clickable method private checkResponse" data-toggle="collapse" data-target=".checkResponse .collapse">
+<h2>Used to check whether a response LinkedIn object has the required http_code or not and
+returns an appropriate LinkedIn object.</h2>
+<pre>checkResponse(\var $http_code_required, \arr $response) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$http_code_required</h4>
+<code>\var</code><p>The required http response from LinkedIn, passed in either as an integer, or an array of integers representing the expected values.</p></div>
+<div class="subelement argument">
+<h4>$response</h4>
+<code>\arr</code><p>An array containing a LinkedIn response.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>TRUE or FALSE depending on if the passed LinkedIn response matches the expected response.</div>
+</div></div>
+</div>
+<a name="intWalker" id="intWalker"></a><div class="element clickable method private intWalker" data-toggle="collapse" data-target=".intWalker .collapse">
+<h2>Custom addition to make code compatible with PHP 5.2</h2>
+<pre>intWalker($value, $key) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$value</h4></div>
+<div class="subelement argument"><h4>$key</h4></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24last_request_headers" id="$last_request_headers"> </a><div class="element clickable property public $last_request_headers" data-toggle="collapse" data-target=".$last_request_headers .collapse">
+<h2>$last_request_headers</h2>
+<pre>$last_request_headers </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24last_request_url" id="$last_request_url"> </a><div class="element clickable property public $last_request_url" data-toggle="collapse" data-target=".$last_request_url .collapse">
+<h2>$last_request_url</h2>
+<pre>$last_request_url </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24application_key" id="$application_key"> </a><div class="element clickable property protected $application_key" data-toggle="collapse" data-target=".$application_key .collapse">
+<h2>$application_key</h2>
+<pre>$application_key </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24application_secret" id="$application_secret"> </a><div class="element clickable property protected $application_secret" data-toggle="collapse" data-target=".$application_secret .collapse">
+<h2>$application_secret</h2>
+<pre>$application_secret </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24callback" id="$callback"> </a><div class="element clickable property protected $callback" data-toggle="collapse" data-target=".$callback .collapse">
+<h2>$callback</h2>
+<pre>$callback </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24response_format" id="$response_format"> </a><div class="element clickable property protected $response_format" data-toggle="collapse" data-target=".$response_format .collapse">
+<h2>$response_format</h2>
+<pre>$response_format </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24token" id="$token"> </a><div class="element clickable property protected $token" data-toggle="collapse" data-target=".$token .collapse">
+<h2>$token</h2>
+<pre>$token </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<h3>
+<i class="icon-custom icon-constant"></i> Constants</h3>
+<a name="_API_OAUTH_REALM" id="_API_OAUTH_REALM"> </a><div class="element clickable constant  _API_OAUTH_REALM" data-toggle="collapse" data-target="._API_OAUTH_REALM .collapse">
+<h2>_API_OAUTH_REALM</h2>
+<pre>_API_OAUTH_REALM </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_API_OAUTH_VERSION" id="_API_OAUTH_VERSION"> </a><div class="element clickable constant  _API_OAUTH_VERSION" data-toggle="collapse" data-target="._API_OAUTH_VERSION .collapse">
+<h2>_API_OAUTH_VERSION</h2>
+<pre>_API_OAUTH_VERSION </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_DEFAULT_RESPONSE_FORMAT" id="_DEFAULT_RESPONSE_FORMAT"> </a><div class="element clickable constant  _DEFAULT_RESPONSE_FORMAT" data-toggle="collapse" data-target="._DEFAULT_RESPONSE_FORMAT .collapse">
+<h2>_DEFAULT_RESPONSE_FORMAT</h2>
+<pre>_DEFAULT_RESPONSE_FORMAT </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_GET_RESPONSE" id="_GET_RESPONSE"> </a><div class="element clickable constant  _GET_RESPONSE" data-toggle="collapse" data-target="._GET_RESPONSE .collapse">
+<h2>_GET_RESPONSE</h2>
+<pre>_GET_RESPONSE </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_GET_TYPE" id="_GET_TYPE"> </a><div class="element clickable constant  _GET_TYPE" data-toggle="collapse" data-target="._GET_TYPE .collapse">
+<h2>_GET_TYPE</h2>
+<pre>_GET_TYPE </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_INV_BODY_LENGTH" id="_INV_BODY_LENGTH"> </a><div class="element clickable constant  _INV_BODY_LENGTH" data-toggle="collapse" data-target="._INV_BODY_LENGTH .collapse">
+<h2>_INV_BODY_LENGTH</h2>
+<pre>_INV_BODY_LENGTH </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_INV_SUBJECT" id="_INV_SUBJECT"> </a><div class="element clickable constant  _INV_SUBJECT" data-toggle="collapse" data-target="._INV_SUBJECT .collapse">
+<h2>_INV_SUBJECT</h2>
+<pre>_INV_SUBJECT </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_METHOD_TOKENS" id="_METHOD_TOKENS"> </a><div class="element clickable constant  _METHOD_TOKENS" data-toggle="collapse" data-target="._METHOD_TOKENS .collapse">
+<h2>_METHOD_TOKENS</h2>
+<pre>_METHOD_TOKENS </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_NETWORK_HTML" id="_NETWORK_HTML"> </a><div class="element clickable constant  _NETWORK_HTML" data-toggle="collapse" data-target="._NETWORK_HTML .collapse">
+<h2>_NETWORK_HTML</h2>
+<pre>_NETWORK_HTML </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_NETWORK_LENGTH" id="_NETWORK_LENGTH"> </a><div class="element clickable constant  _NETWORK_LENGTH" data-toggle="collapse" data-target="._NETWORK_LENGTH .collapse">
+<h2>_NETWORK_LENGTH</h2>
+<pre>_NETWORK_LENGTH </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_RESPONSE_JSON" id="_RESPONSE_JSON"> </a><div class="element clickable constant  _RESPONSE_JSON" data-toggle="collapse" data-target="._RESPONSE_JSON .collapse">
+<h2>_RESPONSE_JSON</h2>
+<pre>_RESPONSE_JSON </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_RESPONSE_JSONP" id="_RESPONSE_JSONP"> </a><div class="element clickable constant  _RESPONSE_JSONP" data-toggle="collapse" data-target="._RESPONSE_JSONP .collapse">
+<h2>_RESPONSE_JSONP</h2>
+<pre>_RESPONSE_JSONP </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_RESPONSE_XML" id="_RESPONSE_XML"> </a><div class="element clickable constant  _RESPONSE_XML" data-toggle="collapse" data-target="._RESPONSE_XML .collapse">
+<h2>_RESPONSE_XML</h2>
+<pre>_RESPONSE_XML </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_SHARE_COMMENT_LENGTH" id="_SHARE_COMMENT_LENGTH"> </a><div class="element clickable constant  _SHARE_COMMENT_LENGTH" data-toggle="collapse" data-target="._SHARE_COMMENT_LENGTH .collapse">
+<h2>_SHARE_COMMENT_LENGTH</h2>
+<pre>_SHARE_COMMENT_LENGTH </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_SHARE_CONTENT_DESC_LENGTH" id="_SHARE_CONTENT_DESC_LENGTH"> </a><div class="element clickable constant  _SHARE_CONTENT_DESC_LENGTH" data-toggle="collapse" data-target="._SHARE_CONTENT_DESC_LENGTH .collapse">
+<h2>_SHARE_CONTENT_DESC_LENGTH</h2>
+<pre>_SHARE_CONTENT_DESC_LENGTH </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_SHARE_CONTENT_TITLE_LENGTH" id="_SHARE_CONTENT_TITLE_LENGTH"> </a><div class="element clickable constant  _SHARE_CONTENT_TITLE_LENGTH" data-toggle="collapse" data-target="._SHARE_CONTENT_TITLE_LENGTH .collapse">
+<h2>_SHARE_CONTENT_TITLE_LENGTH</h2>
+<pre>_SHARE_CONTENT_TITLE_LENGTH </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_URL_ACCESS" id="_URL_ACCESS"> </a><div class="element clickable constant  _URL_ACCESS" data-toggle="collapse" data-target="._URL_ACCESS .collapse">
+<h2>_URL_ACCESS</h2>
+<pre>_URL_ACCESS </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_URL_API" id="_URL_API"> </a><div class="element clickable constant  _URL_API" data-toggle="collapse" data-target="._URL_API .collapse">
+<h2>_URL_API</h2>
+<pre>_URL_API </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_URL_AUTH" id="_URL_AUTH"> </a><div class="element clickable constant  _URL_AUTH" data-toggle="collapse" data-target="._URL_AUTH .collapse">
+<h2>_URL_AUTH</h2>
+<pre>_URL_AUTH </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_URL_REQUEST" id="_URL_REQUEST"> </a><div class="element clickable constant  _URL_REQUEST" data-toggle="collapse" data-target="._URL_REQUEST .collapse">
+<h2>_URL_REQUEST</h2>
+<pre>_URL_REQUEST </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_URL_REVOKE" id="_URL_REVOKE"> </a><div class="element clickable constant  _URL_REVOKE" data-toggle="collapse" data-target="._URL_REVOKE .collapse">
+<h2>_URL_REVOKE</h2>
+<pre>_URL_REVOKE </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_VERSION" id="_VERSION"> </a><div class="element clickable constant  _VERSION" data-toggle="collapse" data-target="._VERSION .collapse">
+<h2>_VERSION</h2>
+<pre>_VERSION </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a10</a> and<br>
+            generated on 2012-08-22T12:02:24-03:00.<br></footer></div>
+</div>
+</body>
+</html>

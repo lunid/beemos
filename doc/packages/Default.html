@@ -1,0 +1,530 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » Default</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Namespaces</a></li>
+<li><a href="../namespaces/app.html"><i class="icon-th"></i> app</a></li>
+<li><a href="../namespaces/global.html"><i class="icon-th"></i> global</a></li>
+<li><a>Packages</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">386</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">2</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-map-marker"></i> Packages</li>
+<li>
+<a href="../packages/Default.html" title="Default"><i class="icon-folder-open"></i>Default</a><ul class="nav nav-list nav-packages"></ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-function"></i> Functions</li>
+<li class="function  "><a href="#getCurrentUrl" title="getCurrentUrl :: Utility function, return the current url"><span class="description">Utility function, return the current url</span><pre>getCurrentUrl</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-class"></i> Classes</li>
+<li><a href="#Form" title="Minha classe Form">Form</a></li>
+<li><a href="#Hybrid_Auth" title="Hybrid_Auth class">Hybrid_Auth</a></li>
+<li><a href="#Hybrid_Endpoint" title="Hybrid_Endpoint class">Hybrid_Endpoint</a></li>
+<li><a href="#Hybrid_Error" title="Errors manager">Hybrid_Error</a></li>
+<li><a href="#Hybrid_Logger" title="Debugging and Logging manager">Hybrid_Logger</a></li>
+<li><a href="#Hybrid_Providers_AOL" title="Hybrid_Providers_AOL provider adapter based on OpenID protocol">Hybrid_Providers_AOL</a></li>
+<li><a href="#Hybrid_Providers_Facebook" title="Hybrid_Providers_Facebook provider adapter based on OAuth2 protocol">Hybrid_Providers_Facebook</a></li>
+<li><a href="#Hybrid_Providers_Foursquare" title="Hybrid_Providers_Foursquare provider adapter based on OAuth2 protocol">Hybrid_Providers_Foursquare</a></li>
+<li><a href="#Hybrid_Providers_Google" title="Hybrid_Providers_Google provider adapter based on OAuth2 protocol">Hybrid_Providers_Google</a></li>
+<li><a href="#Hybrid_Providers_Google" title="To replace the default google adapter, we should use this config instead:">Hybrid_Providers_Google</a></li>
+<li><a href="#Hybrid_Providers_LinkedIn" title="Hybrid_Providers_LinkedIn provider adapter based on OAuth1 protocol">Hybrid_Providers_LinkedIn</a></li>
+<li><a href="#Hybrid_Providers_Live" title="Hybrid_Providers_Live provider adapter based on OAuth1 protocol">Hybrid_Providers_Live</a></li>
+<li><a href="#Hybrid_Providers_MySpace" title="Hybrid_Providers_MySpace provider adapter based on OAuth1 protocol">Hybrid_Providers_MySpace</a></li>
+<li><a href="#Hybrid_Providers_OpenID" title="Hybrid_Providers_OpenID provider adapter for any idp openid based">Hybrid_Providers_OpenID</a></li>
+<li><a href="#Hybrid_Providers_Twitter" title="Hybrid_Providers_Twitter provider adapter based on OAuth1 protocol">Hybrid_Providers_Twitter</a></li>
+<li><a href="#Hybrid_Providers_Yahoo" title="Hybrid_Providers_Yahoo provider adapter based on OAuth1 protocol">Hybrid_Providers_Yahoo</a></li>
+<li><a href="#Hybrid_Provider_Adapter" title="Hybrid_Provider_Adapter is the basic class which Hybrid_Auth will use
+to connect users to a given provider.">Hybrid_Provider_Adapter</a></li>
+<li><a href="#Hybrid_Provider_Model" title="Hybrid_Provider_Model provide a common interface for supported IDps on HybridAuth.">Hybrid_Provider_Model</a></li>
+<li><a href="#Hybrid_Provider_Model_OAuth1" title="To implement an OAuth 1 based service provider, Hybrid_Provider_Model_OAuth1
+can be used to save the hassle of the authentication flow.">Hybrid_Provider_Model_OAuth1</a></li>
+<li><a href="#Hybrid_Provider_Model_OAuth2" title="To implement an OAuth 2 based service provider, Hybrid_Provider_Model_OAuth2
+can be used to save the hassle of the authentication flow.">Hybrid_Provider_Model_OAuth2</a></li>
+<li><a href="#Hybrid_Provider_Model_OpenID" title="To implement an OpenID based service provider, Hybrid_Provider_Model_OpenID
+can be used to save the hassle of the authentication flow.">Hybrid_Provider_Model_OpenID</a></li>
+<li><a href="#Hybrid_Storage" title="HybridAuth storage manager">Hybrid_Storage</a></li>
+<li><a href="#FacebookApiException" title="Thrown when an API call returns an exception.">FacebookApiException</a></li>
+<li><a href="#BaseFacebook" title="Provides access to the Facebook Platform.">BaseFacebook</a></li>
+<li><a href="#Facebook" title="Extends the BaseFacebook class with the intent of using
+PHP sessions to store user ids and access tokens.">Facebook</a></li>
+<li><a href="#OAuthException" title="">OAuthException</a></li>
+<li><a href="#OAuthConsumer" title="">OAuthConsumer</a></li>
+<li><a href="#OAuthToken" title="">OAuthToken</a></li>
+<li><a href="#OAuthSignatureMethod" title='A class for implementing a Signature Method
+See section 9 ("Signing Requests") in the spec'>OAuthSignatureMethod</a></li>
+<li><a href="#OAuthSignatureMethod_HMAC_SHA1" title="The HMAC-SHA1 signature method uses the HMAC-SHA1 signature algorithm as defined in [RFC2104]
+where the Signature Base String is the text and the key is the concatenated values (each first
+encoded per Parameter Encoding) of the Consumer Secret and Token Secret, separated by an '&amp;'
+character (ASCII code 38) even if empty.">OAuthSignatureMethod_HMAC_SHA1</a></li>
+<li><a href="#OAuthSignatureMethod_PLAINTEXT" title="The PLAINTEXT method does not provide any security protection and SHOULD only be used
+over a secure channel such as HTTPS.">OAuthSignatureMethod_PLAINTEXT</a></li>
+<li><a href="#OAuthSignatureMethod_RSA_SHA1" title="The RSA-SHA1 signature method uses the RSASSA-PKCS1-v1_5 signature algorithm as defined in
+[RFC3447] section 8.2 (more simply known as PKCS#1), using SHA-1 as the hash function for
+EMSA-PKCS1-v1_5.">OAuthSignatureMethod_RSA_SHA1</a></li>
+<li><a href="#OAuthRequest" title="">OAuthRequest</a></li>
+<li><a href="#OAuthServer" title="">OAuthServer</a></li>
+<li><a href="#OAuthDataStore" title="">OAuthDataStore</a></li>
+<li><a href="#OAuthUtil" title="">OAuthUtil</a></li>
+<li><a href="#OAuth1Client" title="">OAuth1Client</a></li>
+<li><a href="#OAuth2Client" title="">OAuth2Client</a></li>
+<li><a href="#LightOpenID" title="This class provides a simple interface for OpenID (1.1 and 2.0) authentication.">LightOpenID</a></li>
+<li><a href="#OAuthWrapHandler" title="FILE:        OAuthWrapHandler.php">OAuthWrapHandler</a></li>
+<li><a href="#Hybrid_User" title="The Hybrid_User class represents the current loggedin user">Hybrid_User</a></li>
+<li><a href="#Hybrid_User_Activity" title="Hybrid_User_Activity">Hybrid_User_Activity</a></li>
+<li><a href="#Hybrid_User_Contact" title="Hybrid_User_Contact">Hybrid_User_Contact</a></li>
+<li><a href="#Hybrid_User_Profile" title="Hybrid_User_Profile object represents the current logged in user profile.">Hybrid_User_Profile</a></li>
+<li class="nav-header">
+<i class="icon-custom icon-constant"></i> Constants</li>
+<li class="constant  "><a href="#WRAP_ACCESS_URL" title="WRAP_ACCESS_URL :: "><span class="description">WRAP_ACCESS_URL</span><pre>WRAP_ACCESS_URL</pre></a></li>
+<li class="constant  "><a href="#WRAP_CALLBACK" title="WRAP_CALLBACK :: "><span class="description">WRAP_CALLBACK</span><pre>WRAP_CALLBACK</pre></a></li>
+<li class="constant  "><a href="#WRAP_CHANNEL_URL" title="WRAP_CHANNEL_URL :: "><span class="description">WRAP_CHANNEL_URL</span><pre>WRAP_CHANNEL_URL</pre></a></li>
+<li class="constant  "><a href="#WRAP_CLIENT_ID" title="WRAP_CLIENT_ID :: "><span class="description">WRAP_CLIENT_ID</span><pre>WRAP_CLIENT_ID</pre></a></li>
+<li class="constant  "><a href="#WRAP_CLIENT_SECRET" title="WRAP_CLIENT_SECRET :: "><span class="description">WRAP_CLIENT_SECRET</span><pre>WRAP_CLIENT_SECRET</pre></a></li>
+<li class="constant  "><a href="#WRAP_CONSENT_URL" title="WRAP_CONSENT_URL :: "><span class="description">WRAP_CONSENT_URL</span><pre>WRAP_CONSENT_URL</pre></a></li>
+<li class="constant  "><a href="#WRAP_REFRESH_URL" title="WRAP_REFRESH_URL :: "><span class="description">WRAP_REFRESH_URL</span><pre>WRAP_REFRESH_URL</pre></a></li>
+</ul>
+</div>
+<div class="span8 package-contents">
+<ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-folder-open"></i></a><span class="divider">\</span>
+</li>
+<li class="active"><a href="../packages/Default.html">Default</a></li>
+</ul>
+<div class="package-indent">
+<h3>
+<i class="icon-custom icon-function"></i> Functions</h3>
+<a name="getCurrentUrl" id="getCurrentUrl"></a><div class="element clickable function  getCurrentUrl" data-toggle="collapse" data-target=".getCurrentUrl .collapse">
+<h2>Utility function, return the current url</h2>
+<pre>getCurrentUrl() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<h3>
+<i class="icon-custom icon-class"></i> Classes and interfaces</h3>
+<a name="BaseFacebook" id="BaseFacebook"></a><div class="element ajax clickable class" href="../classes/BaseFacebook.html">
+<h1>BaseFacebook<a href="../classes/BaseFacebook.html">¶</a>
+</h1>
+<p class="short_description">Provides access to the Facebook Platform.</p>
+<div class="details collapse"></div>
+<a href="../classes/BaseFacebook.html" class="more">« More »</a>
+</div>
+<a name="Facebook" id="Facebook"></a><div class="element ajax clickable class" href="../classes/Facebook.html">
+<h1>Facebook<a href="../classes/Facebook.html">¶</a>
+</h1>
+<p class="short_description">Extends the BaseFacebook class with the intent of using
+PHP sessions to store user ids and access tokens.</p>
+<div class="details collapse"></div>
+<a href="../classes/Facebook.html" class="more">« More »</a>
+</div>
+<a name="FacebookApiException" id="FacebookApiException"></a><div class="element ajax clickable class" href="../classes/FacebookApiException.html">
+<h1>FacebookApiException<a href="../classes/FacebookApiException.html">¶</a>
+</h1>
+<p class="short_description">Thrown when an API call returns an exception.</p>
+<div class="details collapse"></div>
+<a href="../classes/FacebookApiException.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Auth" id="Hybrid_Auth"></a><div class="element ajax clickable class" href="../classes/Hybrid_Auth.html">
+<h1>Hybrid_Auth<a href="../classes/Hybrid_Auth.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Auth class</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Auth.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Endpoint" id="Hybrid_Endpoint"></a><div class="element ajax clickable class" href="../classes/Hybrid_Endpoint.html">
+<h1>Hybrid_Endpoint<a href="../classes/Hybrid_Endpoint.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Endpoint class</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Endpoint.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Error" id="Hybrid_Error"></a><div class="element ajax clickable class" href="../classes/Hybrid_Error.html">
+<h1>Hybrid_Error<a href="../classes/Hybrid_Error.html">¶</a>
+</h1>
+<p class="short_description">Errors manager</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Error.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Logger" id="Hybrid_Logger"></a><div class="element ajax clickable class" href="../classes/Hybrid_Logger.html">
+<h1>Hybrid_Logger<a href="../classes/Hybrid_Logger.html">¶</a>
+</h1>
+<p class="short_description">Debugging and Logging manager</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Logger.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Provider_Adapter" id="Hybrid_Provider_Adapter"></a><div class="element ajax clickable class" href="../classes/Hybrid_Provider_Adapter.html">
+<h1>Hybrid_Provider_Adapter<a href="../classes/Hybrid_Provider_Adapter.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Provider_Adapter is the basic class which Hybrid_Auth will use
+to connect users to a given provider.</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Provider_Adapter.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Provider_Model" id="Hybrid_Provider_Model"></a><div class="element ajax clickable class" href="../classes/Hybrid_Provider_Model.html">
+<h1>Hybrid_Provider_Model<a href="../classes/Hybrid_Provider_Model.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Provider_Model provide a common interface for supported IDps on HybridAuth.</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Provider_Model.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Provider_Model_OAuth1" id="Hybrid_Provider_Model_OAuth1"></a><div class="element ajax clickable class" href="../classes/Hybrid_Provider_Model_OAuth1.html">
+<h1>Hybrid_Provider_Model_OAuth1<a href="../classes/Hybrid_Provider_Model_OAuth1.html">¶</a>
+</h1>
+<p class="short_description">To implement an OAuth 1 based service provider, Hybrid_Provider_Model_OAuth1
+can be used to save the hassle of the authentication flow.</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Provider_Model_OAuth1.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Provider_Model_OAuth2" id="Hybrid_Provider_Model_OAuth2"></a><div class="element ajax clickable class" href="../classes/Hybrid_Provider_Model_OAuth2.html">
+<h1>Hybrid_Provider_Model_OAuth2<a href="../classes/Hybrid_Provider_Model_OAuth2.html">¶</a>
+</h1>
+<p class="short_description">To implement an OAuth 2 based service provider, Hybrid_Provider_Model_OAuth2
+can be used to save the hassle of the authentication flow.</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Provider_Model_OAuth2.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Provider_Model_OpenID" id="Hybrid_Provider_Model_OpenID"></a><div class="element ajax clickable class" href="../classes/Hybrid_Provider_Model_OpenID.html">
+<h1>Hybrid_Provider_Model_OpenID<a href="../classes/Hybrid_Provider_Model_OpenID.html">¶</a>
+</h1>
+<p class="short_description">To implement an OpenID based service provider, Hybrid_Provider_Model_OpenID
+can be used to save the hassle of the authentication flow.</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Provider_Model_OpenID.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_AOL" id="Hybrid_Providers_AOL"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_AOL.html">
+<h1>Hybrid_Providers_AOL<a href="../classes/Hybrid_Providers_AOL.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_AOL provider adapter based on OpenID protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_AOL.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_Facebook" id="Hybrid_Providers_Facebook"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_Facebook.html">
+<h1>Hybrid_Providers_Facebook<a href="../classes/Hybrid_Providers_Facebook.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_Facebook provider adapter based on OAuth2 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_Facebook.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_Foursquare" id="Hybrid_Providers_Foursquare"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_Foursquare.html">
+<h1>Hybrid_Providers_Foursquare<a href="../classes/Hybrid_Providers_Foursquare.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_Foursquare provider adapter based on OAuth2 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_Foursquare.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_Google" id="Hybrid_Providers_Google"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_Google.html">
+<h1>Hybrid_Providers_Google<a href="../classes/Hybrid_Providers_Google.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_Google provider adapter based on OAuth2 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_Google.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_Google" id="Hybrid_Providers_Google"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_Google.html">
+<h1>Hybrid_Providers_Google<a href="../classes/Hybrid_Providers_Google.html">¶</a>
+</h1>
+<p class="short_description">To replace the default google adapter, we should use this config instead:</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_Google.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_LinkedIn" id="Hybrid_Providers_LinkedIn"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_LinkedIn.html">
+<h1>Hybrid_Providers_LinkedIn<a href="../classes/Hybrid_Providers_LinkedIn.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_LinkedIn provider adapter based on OAuth1 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_LinkedIn.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_Live" id="Hybrid_Providers_Live"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_Live.html">
+<h1>Hybrid_Providers_Live<a href="../classes/Hybrid_Providers_Live.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_Live provider adapter based on OAuth1 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_Live.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_MySpace" id="Hybrid_Providers_MySpace"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_MySpace.html">
+<h1>Hybrid_Providers_MySpace<a href="../classes/Hybrid_Providers_MySpace.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_MySpace provider adapter based on OAuth1 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_MySpace.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_OpenID" id="Hybrid_Providers_OpenID"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_OpenID.html">
+<h1>Hybrid_Providers_OpenID<a href="../classes/Hybrid_Providers_OpenID.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_OpenID provider adapter for any idp openid based</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_OpenID.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_Twitter" id="Hybrid_Providers_Twitter"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_Twitter.html">
+<h1>Hybrid_Providers_Twitter<a href="../classes/Hybrid_Providers_Twitter.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_Twitter provider adapter based on OAuth1 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_Twitter.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Providers_Yahoo" id="Hybrid_Providers_Yahoo"></a><div class="element ajax clickable class" href="../classes/Hybrid_Providers_Yahoo.html">
+<h1>Hybrid_Providers_Yahoo<a href="../classes/Hybrid_Providers_Yahoo.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_Providers_Yahoo provider adapter based on OAuth1 protocol</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Providers_Yahoo.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_Storage" id="Hybrid_Storage"></a><div class="element ajax clickable class" href="../classes/Hybrid_Storage.html">
+<h1>Hybrid_Storage<a href="../classes/Hybrid_Storage.html">¶</a>
+</h1>
+<p class="short_description">HybridAuth storage manager</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_Storage.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_User" id="Hybrid_User"></a><div class="element ajax clickable class" href="../classes/Hybrid_User.html">
+<h1>Hybrid_User<a href="../classes/Hybrid_User.html">¶</a>
+</h1>
+<p class="short_description">The Hybrid_User class represents the current loggedin user</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_User.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_User_Activity" id="Hybrid_User_Activity"></a><div class="element ajax clickable class" href="../classes/Hybrid_User_Activity.html">
+<h1>Hybrid_User_Activity<a href="../classes/Hybrid_User_Activity.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_User_Activity</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_User_Activity.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_User_Contact" id="Hybrid_User_Contact"></a><div class="element ajax clickable class" href="../classes/Hybrid_User_Contact.html">
+<h1>Hybrid_User_Contact<a href="../classes/Hybrid_User_Contact.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_User_Contact</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_User_Contact.html" class="more">« More »</a>
+</div>
+<a name="Hybrid_User_Profile" id="Hybrid_User_Profile"></a><div class="element ajax clickable class" href="../classes/Hybrid_User_Profile.html">
+<h1>Hybrid_User_Profile<a href="../classes/Hybrid_User_Profile.html">¶</a>
+</h1>
+<p class="short_description">Hybrid_User_Profile object represents the current logged in user profile.</p>
+<div class="details collapse"></div>
+<a href="../classes/Hybrid_User_Profile.html" class="more">« More »</a>
+</div>
+<a name="LightOpenID" id="LightOpenID"></a><div class="element ajax clickable class" href="../classes/LightOpenID.html">
+<h1>LightOpenID<a href="../classes/LightOpenID.html">¶</a>
+</h1>
+<p class="short_description">This class provides a simple interface for OpenID (1.1 and 2.0) authentication.</p>
+<div class="details collapse"></div>
+<a href="../classes/LightOpenID.html" class="more">« More »</a>
+</div>
+<a name="OAuth1Client" id="OAuth1Client"></a><div class="element ajax clickable class" href="../classes/OAuth1Client.html">
+<h1>OAuth1Client<a href="../classes/OAuth1Client.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuth1Client.html" class="more">« More »</a>
+</div>
+<a name="OAuth2Client" id="OAuth2Client"></a><div class="element ajax clickable class" href="../classes/OAuth2Client.html">
+<h1>OAuth2Client<a href="../classes/OAuth2Client.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuth2Client.html" class="more">« More »</a>
+</div>
+<a name="OAuthConsumer" id="OAuthConsumer"></a><div class="element ajax clickable class" href="../classes/OAuthConsumer.html">
+<h1>OAuthConsumer<a href="../classes/OAuthConsumer.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthConsumer.html" class="more">« More »</a>
+</div>
+<a name="OAuthDataStore" id="OAuthDataStore"></a><div class="element ajax clickable class" href="../classes/OAuthDataStore.html">
+<h1>OAuthDataStore<a href="../classes/OAuthDataStore.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthDataStore.html" class="more">« More »</a>
+</div>
+<a name="OAuthException" id="OAuthException"></a><div class="element ajax clickable class" href="../classes/OAuthException.html">
+<h1>OAuthException<a href="../classes/OAuthException.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthException.html" class="more">« More »</a>
+</div>
+<a name="OAuthRequest" id="OAuthRequest"></a><div class="element ajax clickable class" href="../classes/OAuthRequest.html">
+<h1>OAuthRequest<a href="../classes/OAuthRequest.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthRequest.html" class="more">« More »</a>
+</div>
+<a name="OAuthServer" id="OAuthServer"></a><div class="element ajax clickable class" href="../classes/OAuthServer.html">
+<h1>OAuthServer<a href="../classes/OAuthServer.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthServer.html" class="more">« More »</a>
+</div>
+<a name="OAuthSignatureMethod" id="OAuthSignatureMethod"></a><div class="element ajax clickable class" href="../classes/OAuthSignatureMethod.html">
+<h1>OAuthSignatureMethod<a href="../classes/OAuthSignatureMethod.html">¶</a>
+</h1>
+<p class="short_description">A class for implementing a Signature Method
+See section 9 ("Signing Requests") in the spec</p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthSignatureMethod.html" class="more">« More »</a>
+</div>
+<a name="OAuthSignatureMethod_HMAC_SHA1" id="OAuthSignatureMethod_HMAC_SHA1"></a><div class="element ajax clickable class" href="../classes/OAuthSignatureMethod_HMAC_SHA1.html">
+<h1>OAuthSignatureMethod_HMAC_SHA1<a href="../classes/OAuthSignatureMethod_HMAC_SHA1.html">¶</a>
+</h1>
+<p class="short_description">The HMAC-SHA1 signature method uses the HMAC-SHA1 signature algorithm as defined in [RFC2104]
+where the Signature Base String is the text and the key is the concatenated values (each first
+encoded per Parameter Encoding) of the Consumer Secret and Token Secret, separated by an '&'
+character (ASCII code 38) even if empty.</p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthSignatureMethod_HMAC_SHA1.html" class="more">« More »</a>
+</div>
+<a name="OAuthSignatureMethod_PLAINTEXT" id="OAuthSignatureMethod_PLAINTEXT"></a><div class="element ajax clickable class" href="../classes/OAuthSignatureMethod_PLAINTEXT.html">
+<h1>OAuthSignatureMethod_PLAINTEXT<a href="../classes/OAuthSignatureMethod_PLAINTEXT.html">¶</a>
+</h1>
+<p class="short_description">The PLAINTEXT method does not provide any security protection and SHOULD only be used
+over a secure channel such as HTTPS.</p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthSignatureMethod_PLAINTEXT.html" class="more">« More »</a>
+</div>
+<a name="OAuthSignatureMethod_RSA_SHA1" id="OAuthSignatureMethod_RSA_SHA1"></a><div class="element ajax clickable class" href="../classes/OAuthSignatureMethod_RSA_SHA1.html">
+<h1>OAuthSignatureMethod_RSA_SHA1<a href="../classes/OAuthSignatureMethod_RSA_SHA1.html">¶</a>
+</h1>
+<p class="short_description">The RSA-SHA1 signature method uses the RSASSA-PKCS1-v1_5 signature algorithm as defined in
+[RFC3447] section 8.2 (more simply known as PKCS#1), using SHA-1 as the hash function for
+EMSA-PKCS1-v1_5.</p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthSignatureMethod_RSA_SHA1.html" class="more">« More »</a>
+</div>
+<a name="OAuthToken" id="OAuthToken"></a><div class="element ajax clickable class" href="../classes/OAuthToken.html">
+<h1>OAuthToken<a href="../classes/OAuthToken.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthToken.html" class="more">« More »</a>
+</div>
+<a name="OAuthUtil" id="OAuthUtil"></a><div class="element ajax clickable class" href="../classes/OAuthUtil.html">
+<h1>OAuthUtil<a href="../classes/OAuthUtil.html">¶</a>
+</h1>
+<p class="short_description"></p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthUtil.html" class="more">« More »</a>
+</div>
+<a name="OAuthWrapHandler" id="OAuthWrapHandler"></a><div class="element ajax clickable class" href="../classes/OAuthWrapHandler.html">
+<h1>OAuthWrapHandler<a href="../classes/OAuthWrapHandler.html">¶</a>
+</h1>
+<p class="short_description">FILE:        OAuthWrapHandler.php</p>
+<div class="details collapse"></div>
+<a href="../classes/OAuthWrapHandler.html" class="more">« More »</a>
+</div>
+<a name="Form" id="Form"></a><div class="element ajax clickable class" href="../classes/app.lib.ecomm.Form.html">
+<h1>Form<a href="../classes/app.lib.ecomm.Form.html">¶</a>
+</h1>
+<p class="short_description">Minha classe Form</p>
+<div class="details collapse"></div>
+<a href="../classes/app.lib.ecomm.Form.html" class="more">« More »</a>
+</div>
+<h3>
+<i class="icon-custom icon-constant"></i> Constants</h3>
+<a name="WRAP_ACCESS_URL" id="WRAP_ACCESS_URL"> </a><div class="element clickable constant  WRAP_ACCESS_URL" data-toggle="collapse" data-target=".WRAP_ACCESS_URL .collapse">
+<h2>WRAP_ACCESS_URL</h2>
+<pre>WRAP_ACCESS_URL </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="WRAP_CALLBACK" id="WRAP_CALLBACK"> </a><div class="element clickable constant  WRAP_CALLBACK" data-toggle="collapse" data-target=".WRAP_CALLBACK .collapse">
+<h2>WRAP_CALLBACK</h2>
+<pre>WRAP_CALLBACK </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="WRAP_CHANNEL_URL" id="WRAP_CHANNEL_URL"> </a><div class="element clickable constant  WRAP_CHANNEL_URL" data-toggle="collapse" data-target=".WRAP_CHANNEL_URL .collapse">
+<h2>WRAP_CHANNEL_URL</h2>
+<pre>WRAP_CHANNEL_URL </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="WRAP_CLIENT_ID" id="WRAP_CLIENT_ID"> </a><div class="element clickable constant  WRAP_CLIENT_ID" data-toggle="collapse" data-target=".WRAP_CLIENT_ID .collapse">
+<h2>WRAP_CLIENT_ID</h2>
+<pre>WRAP_CLIENT_ID </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="WRAP_CLIENT_SECRET" id="WRAP_CLIENT_SECRET"> </a><div class="element clickable constant  WRAP_CLIENT_SECRET" data-toggle="collapse" data-target=".WRAP_CLIENT_SECRET .collapse">
+<h2>WRAP_CLIENT_SECRET</h2>
+<pre>WRAP_CLIENT_SECRET </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="WRAP_CONSENT_URL" id="WRAP_CONSENT_URL"> </a><div class="element clickable constant  WRAP_CONSENT_URL" data-toggle="collapse" data-target=".WRAP_CONSENT_URL .collapse">
+<h2>WRAP_CONSENT_URL</h2>
+<pre>WRAP_CONSENT_URL </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="WRAP_REFRESH_URL" id="WRAP_REFRESH_URL"> </a><div class="element clickable constant  WRAP_REFRESH_URL" data-toggle="collapse" data-target=".WRAP_REFRESH_URL .collapse">
+<h2>WRAP_REFRESH_URL</h2>
+<pre>WRAP_REFRESH_URL </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a10</a> and<br>
+            generated on 2012-08-22T12:02:23-03:00.<br></footer></div>
+</div>
+</body>
+</html>
