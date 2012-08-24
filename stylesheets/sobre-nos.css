@@ -70,17 +70,18 @@
 }
 
 #animation-1 li a {
-	font-size:16px;
+	font-size:10px;
  	display: block;
 	padding:  5px 9px;
 	width:190px;
 	height:15px;
 	text-decoration:none;
 	margin-top: -9px;
+	text-shadow: 1px 1px #2188a0;
 }
 
 #animation-1 li a:hover {
-	font-size:16px;
+	font-size:10px;
 	color:#FFFFFF;
  	display: block;
 	padding:  5px 9px;

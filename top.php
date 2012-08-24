@@ -4,8 +4,14 @@
                     <div class="container">
                         <div class="sub_top">
                             <span>Fone: 11 3549-3988</span>
-                            <span>Atendimento on-line</span>
-                            <span>Idiomas </span>
+                            <span><a href="#">Atendimento on-line</a></span>
+                            <span>
+                            <select class="bordas" style="width:70px; height:20px;" name="select">
+<option value="comentarios">Idiomas</option>
+<option value="duvidas">	PT</option>
+<option value="sugestoes">	US</option>
+</select>
+                       	   </span>
                         </div>
                     </div>
                     <div class="logo"><a href="index.php"><img src="images/logo_spweb2.png"></a></div>

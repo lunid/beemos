@@ -93,7 +93,7 @@
                 <div class="five columns">
                     <div class="experimente">
                         <h1>Experimente Já</h1><h2></h2>
-                        <span>Grátis</span>
+                        <span>Grátis!</span>
                     </div>
                 </div>
                 <div class="five columns">

@@ -2,6 +2,10 @@
 	width:177px;
 	height:auto;
 	float:left;
+	background-image:url(../images/sombra.png);
+	background-position: 165px 2px;
+	background-repeat:no-repeat;
+	margin-top: -13px;
 	}
 
 #tit{
@@ -42,12 +46,13 @@
 .titulo-menu{
 	width:120px;
 	height:30px;
-	font-size:26px;
+	font-size:23px;
 	font-family:"Decker Bold";
 	color:#071f25;
 	float:left;
 	margin-left:7px;
 	margin-top:25px;
+	text-shadow: 1px 1px #77d6ef; 
 	}	
 
 
@@ -89,17 +94,19 @@
 }
 
 #animation-1 li a {
-	font-size:16px;
+	font-size:11px;
+	font-weight:bold;
  	display: block;
 	padding:  5px 9px;
 	width:190px;
 	height:15px;
 	text-decoration:none;
 	margin-top: -9px;
+	text-shadow: 1px 1px #84dbef;
 }
 
 #animation-1 li a:hover {
-	font-size:16px;
+	font-size:11px;
 	color:#FFFFFF;
  	display: block;
 	padding:  5px 9px;
@@ -115,16 +122,13 @@
 	width:700px;
 	height:auto;
 	margin-top:-20px;
-	margin-left:10px;
+	margin-left:1px;
 	padding:5px 5px 5px 8px;
 	background-color:#FFFFFF;
 	float:left;
 	-moz-border-radius: 8px 8px 0px 0px;
 	-webkit-border-radius: 8px 8px 0px 0px;
 	 border-radius: 8px 8px 0px 0px;
-	 -moz-box-shadow: -3px -1px 4px #20788d;
-	-webkit-box-shadow: -3px -1px 4px #20788d;
-	box-shadow: -3px -1px 4px #20788d;
 	}
 
 .testeira{

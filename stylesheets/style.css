@@ -3,7 +3,6 @@
 /* fontface */
 
 
-
  @font-face {font-family:"Decker Bold";src:url("DeckerB.eot?") format("eot"),url("DeckerB.woff") format("woff"),url("DeckerB.ttf") format("truetype"),url("DeckerB.svg#") format("svg");font-weight:normal;font-style:normal;}
 
 
@@ -27,7 +26,7 @@ body{
 /* class estrutural do site */
 
 #bg{
-	background-image:url(../images/bg.jpg);
+	background-image:url(../images/bg.png);
 	background-position:center top;
 	margin-top:0px;
 	}
@@ -36,6 +35,8 @@ body{
 	text-align:right;
 	color:#fff;
 	height:40px;
+	text-shadow: 1px 1px #666;
+	
 	}
 
 .sub_top span{
@@ -43,6 +44,24 @@ body{
 	height:40px;
 	}
 
+.sub_top span a{
+	text-decoration:none;
+	color:#FFF;
+	}
+
+.sub_top span select{
+	background-color:#165b6f;
+	border:0px;
+	color:#FFF;
+	float:right;
+	}
+
+.sub_top span option{
+	background-color:#165b6f;
+	border:#165b6f;
+	color:#ccc;
+	arrow-color:#fff;
+	}
 
 	.sub{
 		width:100%;
@@ -54,7 +73,7 @@ body{
 		width:100%;
 		height:auto;
 		background-color:#08212a;
-		color: #666666;
+		color: #ccc;
 	}
 
 	.azul_rodape_superior{
@@ -157,6 +176,7 @@ float: left;
 	width:230px;
 	height:113px;
 	float:right;
+	text-shadow: 1px 1px #2188a0; 
 	}	
 
 .area_aluno{
@@ -601,7 +621,7 @@ float:left;
 	  border-radius: 10px;
 	  display: inline-block;
 	  font-size: 13px;
-	  color:#00e4f3;
+	  color:#4f9fc2;
 	  text-decoration: none;
 	  text-shadow: 0 1px rgba(0, 0, 0, .75);
 	  cursor: pointer;
@@ -705,7 +725,7 @@ float:left;
 	}		
 
 .experimente h1{
-	font-size:20px;
+	font-size:21px;
 	width:150px;
 	height:20px;
 	float:left;
@@ -734,6 +754,8 @@ float:left;
     position: relative; 
     width: 683px;
 	float:left; 
+	text-shadow: 1px 1px #77d6ef; 
+	color:black;
 }
 #top-menu li { 
     display: inline-block;	
@@ -744,6 +766,7 @@ float:left;
     float: left;
     padding: 6px 10px 4px 10px;
     text-decoration: none;
+	
 }
 
 #top-menu a:hover { 

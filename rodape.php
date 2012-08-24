@@ -42,9 +42,9 @@
                             Comercial: (11) 3549-3982<br/>
                             Fone PABX: (11) 3549-3988
                         </div>
-                        <div class="midias"></div>
-                        <div class="midias2"></div>
-                        <div class="midias3"></div>
+                        <div class="midias"><a href="#"><img src="images/click.png"></a></div>
+                        <div class="midias2"><a href="#"><img src="images/click.png"></a></div>
+                        <div class="midias3"><a href="#"><img src="images/click.png"></a></div>
 
 
 
