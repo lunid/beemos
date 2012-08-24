@@ -105,6 +105,8 @@ class Suporte{
     
     /**
      * Função para salvar os dados do formulário de SUPORTE e disparar o e-mail ao setor resposável
+     * 
+     * @return boolean
      */
     public function save(){
         try{

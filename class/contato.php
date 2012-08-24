@@ -31,7 +31,7 @@ class Contato{
     }
     
     /**
-     * Função para iniciar o valor da propriedade ID
+     * Função para iniciar o valor da propriedade NOME
      * 
      * @param string $nome
      */
@@ -40,7 +40,7 @@ class Contato{
     }
     
     /**
-     * Função que retorna o valor da propriedade N)OME
+     * Função que retorna o valor da propriedade NOME
      * 
      * @return string $nome
      */
@@ -103,9 +103,8 @@ class Contato{
     }
     
     /**
-     * Function to SAVE caontac information
+     * Função que salva os dados do formulário de contato e dispara o e-mail com informações ao setor responsável
      * 
-     * The function will INSERT and send a e-mail.
      */
     public function save(){
         try{

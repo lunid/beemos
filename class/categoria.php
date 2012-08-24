@@ -67,6 +67,7 @@ class Categoria{
      * Função que lista todas as categorias cadastradas. 
      * Caso seja enviado o parâmetro CATEGORIA_ID, será listada apenas a categoria desejada
      * 
+     * @return boolean
      */
     public function listaCategorias($categoria_id = null){
         try{

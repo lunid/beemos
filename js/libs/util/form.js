@@ -35,6 +35,10 @@ Form.prototype = {
             $("#" + form_id + " .email").each(function(){
                 $(this).after("<span id='msg_error_email_" + this.id + "' style='display:none;' class='msg_error'>" + Dic.loadMsg("Form", "FIELD_EMAIL", "init") + "</span>");
             });
+            
+            $("#" + form_id + " .phone").each(function(){
+                $(this).mask("(99)9999-9999?9");
+            });
         }catch(err){
             alert(Dic.loadMsg("Form", "CATCH", "init") + " " + err.message);
         }

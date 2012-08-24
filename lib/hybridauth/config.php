@@ -37,7 +37,7 @@ return
 
 			"Facebook" => array ( 
 				"enabled" => true,
-				"keys"    => array ( "id" => "114481438663751", "secret" => "12c4f0f234f39ab3ea1871177ad86ffd" ),
+				"keys"    => array ( "id" => "514528098573528", "secret" => "42b8ed58d8523ac43a7c40a4c4b42a4d" ),
 
 				// A comma-separated list of permissions you want to request from the user. See the Facebook docs for a full list of available permissions: http://developers.facebook.com/docs/reference/api/permissions.
 				"scope"   => "", 
