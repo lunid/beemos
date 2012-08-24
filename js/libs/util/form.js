@@ -45,7 +45,7 @@ Form.prototype = {
             var validate = true;
             
             $(form).find(".required").each(function(){
-                if($.trim(this.value) == '' || this.value == null){
+                if($.trim(this.value) == '' || this.value == null || parseInt(this.value) == 0){
                     $("#msg_error_" + this.id).show('normal');
                     this.focus();
                     validate = false;

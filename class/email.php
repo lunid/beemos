@@ -71,6 +71,61 @@ class Email{
         }
     }
     
+    public function enviaSuporte($para, $nome, $email, $mensagem){
+        try{
+            $html = "
+                <html>
+                    <body>
+                        <table width='100%' cellpadding='2' cellspacing='1' style='border:1px solid #CCC;'> 
+                        <tr>
+                            <td nowrap='nowrap' width='1%'>
+                                <b>
+                                    Nome:
+                                </b>
+                            </td>
+                            <td nowrap='nowrap' width='99%'>
+                                ".$nome."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' width='1%'>
+                                <b>
+                                    E-mail:
+                                </b>
+                            </td>
+                            <td nowrap='nowrap'>
+                                ".$email."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' width='1%' colspan='2'>
+                                <b>
+                                    Mensagem:
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' colspan='2'>
+                                ".$mensagem."
+                            </td>
+                        </tr>
+                        </table>
+                    </body>
+                <html>
+            ";
+            
+            $this->de       = $email;
+            $this->nome_de  = $nome;
+            $this->para     = $para;
+            $this->assunto  = "[E-MAIL DE SUPORTE] SuperProWeb";
+            $this->html_msg = $html;
+            
+            return $this->enviaEmail();
+        }catch(Exception $e){
+            throw $e;
+        }
+    }
+    
     private function enviaEmail(){
         try{
             $from           = $this->de;
