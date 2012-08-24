@@ -50,6 +50,29 @@
                 home.init();
             });
         </script>
+
+
+<?
+    require_once 'class/suporte.php';
+    
+    if($_POST){
+        $suporte = new Suporte();
+        
+        $suporte->setNome($_POST['nome']);
+        $suporte->setEmail($_POST['email']);
+        $suporte->setCategoriaId($_POST['categoria_id']); 
+        $suporte->setMensagem($_POST['msg']);
+        
+        if($suporte->save()){
+            echo "E-mail enviado com sucesso!<br /><br />";
+        }
+    }
+    
+    $categoria  = new Categoria();
+    $rs         = $categoria->listaCategorias();
+?>
+
+
         
        
     </head>
@@ -94,14 +117,59 @@
                      	<div class="testeira"><img src="images/testeira.jpg"></div>
                         <div class="migalha">Ajuda >> Fale com o Suporte</div>
                         <div class="titulo">Fale com o Suporte</div>
-                        <div class="texto-full">
-                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,</p></div>
-                  		<div class=".six.columns">
-                        	
-                        
+                        <div class=".six.columns">
+                        <div class="formulario-contato">
+                         <form id="form_suporte" name="form_suporte" action="form_suporte.php" method="post" onsubmit="return form.validate(this);">
+                        <p>Nome:</p>
+                        <input type="text" id="nome" name="nome" class="input_text required" field_name="Nome" tip="Aqui você preenche seu nome completo" />
+                        <p>E-mail:</p>
+                        <input type="text" id="email" name="email" class="input_text required email" field_name="E-mail" tip="Utilize um e-mail válido" />
+                        <p>Categoria:</p>
+                         <?
+                            if($rs){
+                        ?>
+                        <select id="categoria_id" name="categoria_id" class="required" field_name="Categoria">
+                            <option value="0">Selecione uma categoria</option>
+                            <?
+                                while ($row = mysql_fetch_object($rs)) {
+                            ?>
+                            <option value="<?=$row->CATEGORIA_ID?>"><?=$row->DESCRICAO?></option>
+                            <?
+                                }
+                            ?>
+                        </select>
+                        <?
+                            }
+                        ?>
+                        <p>Mensagem:</p>
+                        <br />
+                        <textarea id="msg" name="msg" class="textarea required" field_name="Mensagem"></textarea>
+                        <p><input type="submit" value="Enviar" /></p>
+        				</form>
+        				</div>
+             <script type="text/javascript">
+            $(document).ready(function() {
+                $.post(
+                    "dic/pt/javascript.xml",
+                    null,
+                    function(xml){
+                        xml_dic = xml;
+                        form = new Form();
+                        form.init('form_suporte');
+                    },
+                    'xml'
+                );                
+            });
+        </script>
+
                         
                         </div>
-                        <div class=".six.columns"></div>
+                        <div class=".six.columns">
+                        <div class="foto-inter"><img src="images/foto_inter.png"></div>
+                        <div class="texto-pequeno">
+                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,</p></div>
+                        
+                        </div>
                    </div>
                   </div>
                 </div>

@@ -44,6 +44,11 @@
         <script type="text/javascript" src="js/libs/util/slider.js"></script>
         <script type="text/javascript" src="js/home.js"></script>
         
+        <script type="text/javascript" src="js/libs/tooltip/jquery_qtip_100_min.js"></script> 
+        <script type="text/javascript" src="js/libs/util/dictionary.js"></script>
+        <script type="text/javascript" src="js/libs/util/form.js"></script>
+        
+        
         <script type="text/javascript">
             $(document).ready(function() {
                 home = new Home();
@@ -94,10 +99,45 @@
                      	<div class="testeira"><img src="images/testeira.jpg"></div>
                         <div class="migalha">Sobre Nós >> Contato</div>
                         <div class="titulo">Contato</div>
-                        <div class="texto-full">
+                        
+                  		<div class=".six.columns">
+                        <div class="formulario-contato">
+                         <form id="form_contact" name="form_contact" action="form_contact.php" method="post" onsubmit="return form.validate(this);">
+                        <p>Nome:</p>
+                        <input type="text" id="nome" name="nome" class="input_text required" field_name="Nome" tip="Aqui você preenche seu nome completo" />
+                        <p>E-mail:</p>
+                        <input type="text" id="email" name="email" class="input_text required email" field_name="E-mail" tip="Utilize um e-mail válido" />
+                        <p>Assunto:</p>
+                        <input type="text" id="assunto" name="assunto" class="input_text required" field_name="Assunto" tip="Assunto sobre o qual você quer atendimento" />
+                        <p>Mensagem:</p>
+                        <br />
+                        <textarea id="msg" name="msg" class="textarea required" field_name="Mensagem"></textarea>
+                        <p><input  type="submit" value="Enviar" /></p>
+        				</form>
+        				</div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $.post(
+                    "dic/pt/javascript.xml",
+                    null,
+                    function(xml){
+                        xml_dic = xml;
+                        form = new Form();
+                        form.init('form_contact');
+                    },
+                    'xml'
+                );                
+            });
+        </script>
+
+                        
+                        </div>
+                        <div class=".six.columns">
+                        <div class="foto-inter"><img src="images/foto_inter.png"></div>
+                        <div class="texto-pequeno">
                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,</p></div>
-                  		<div class=".six.columns"></div>
-                        <div class=".six.columns"></div>
+                        
+                        </div>
                    </div>
                   </div>
                 </div>
