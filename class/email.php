@@ -126,6 +126,61 @@ class Email{
         }
     }
     
+    public function reenviaSenha($nome, $email, $senha){
+        try{
+            $html = "
+                <html>
+                    <body>
+                        <table width='100%' cellpadding='2' cellspacing='1' style='border:1px solid #CCC;'> 
+                        <tr>
+                            <td nowrap='nowrap' width='1%'>
+                                <b>
+                                    Nome:
+                                </b>
+                            </td>
+                            <td nowrap='nowrap' width='99%'>
+                                ".$nome."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' width='1%'>
+                                <b>
+                                    E-mail:
+                                </b>
+                            </td>
+                            <td nowrap='nowrap'>
+                                ".$email."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' width='1%' colspan='2'>
+                                <b>
+                                    Nova Senha:
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' colspan='2'>
+                                ".$senha."
+                            </td>
+                        </tr>
+                        </table>
+                    </body>
+                <html>
+            ";
+            
+            $this->de       = 'tecnologia@interbits.com.br';
+            $this->nome_de  = 'SuperProfessorWeb';
+            $this->para     = $email;
+            $this->assunto  = "SuperProfessorWeb - Sua senha foi modificada";
+            $this->html_msg = $html;
+            
+            return $this->enviaEmail();
+        }catch(Exception $e){
+            throw $e;
+        }
+    }
+    
     private function enviaEmail(){
         try{
             $from           = $this->de;

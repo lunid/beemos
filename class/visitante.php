@@ -254,7 +254,7 @@ class Visitante{
     /**
      * Função que geradinamicamente a senha do visitante
      * 
-     * @return boolean
+     * @return string $senha
      */
     public function geraSenha($nome){
         try{
