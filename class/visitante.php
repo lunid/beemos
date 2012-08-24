@@ -39,7 +39,7 @@ class Visitante{
      * @param string $nome
      */
     public function setNome($nome){
-        $this->nome = mysql_real_escape_string($nome);
+        $this->nome = mysql_escape_string($nome);
     }
     
     /**
@@ -57,7 +57,7 @@ class Visitante{
      * @param string $email
      */
     public function setEmail($email){
-        $this->email = mysql_real_escape_string($email);
+        $this->email = mysql_escape_string($email);
     }
     
     /**
@@ -214,8 +214,11 @@ class Visitante{
             if(!$rs){
                 throw new Exception("Falha ao inserir o visitante na base de dados.");
             }else{
+                $email = new Email();
+                $email->enviaCadastroVisitante($this->nome, $this->email, $this->senha);
+                
                 $ret['status']  = 0;
-                $ret['msg']     = "Usuário cadastrado com sucesso ({$this->senha})";
+                $ret['msg']     = "Usuário cadastrado com sucesso! Confirme seu cadastro por e-mail";
                 return $ret;
             }
         }catch(Exception $e){
@@ -233,7 +236,7 @@ class Visitante{
      */
     public function validaVisitante(){
         try{
-            $sql = "SELECT VISITANTE_ID FROM SPRO_VISITANTE WHERE EMAIL = '{$this->email}';";
+            $sql = "SELECT ID_VISITANTE FROM SPRO_VISITANTE WHERE EMAIL = '{$this->email}';";
             
             MySQL::connect();
             $rs = MySQL::executeQuery($sql);

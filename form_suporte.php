@@ -6,7 +6,7 @@
         
         $suporte->setNome($_POST['nome']);
         $suporte->setEmail($_POST['email']);
-        $suporte->setCategoriaId($_POST['categoria_id']); 
+        $suporte->setIdCategoria($_POST['id_categoria']); 
         $suporte->setMensagem($_POST['msg']);
         
         if($suporte->save()){
@@ -65,12 +65,12 @@
                         <?
                             if($rs){
                         ?>
-                        <select id="categoria_id" name="categoria_id" class="required" field_name="Categoria">
+                        <select id="id_categoria" name="id_categoria" class="required" field_name="Categoria">
                             <option value="0">Selecione uma categoria</option>
                             <?
                                 while ($row = mysql_fetch_object($rs)) {
                             ?>
-                            <option value="<?=$row->CATEGORIA_ID?>"><?=$row->DESCRICAO?></option>
+                            <option value="<?=$row->ID_CATEGORIA?>"><?=$row->DESCRICAO?></option>
                             <?
                                 }
                             ?>

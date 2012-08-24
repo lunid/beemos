@@ -33,7 +33,7 @@ class Categoria{
      * @param string $descricao
      */
     public function setDescricao($descricao){
-        $this->descricao = mysql_real_escape_string($descricao);
+        $this->descricao = mysql_escape_string($descricao);
     }
     
     /**
@@ -51,7 +51,7 @@ class Categoria{
      * @param string $email_contato
      */
     public function setEmailContato($email_contato){
-        $this->email_contato = mysql_real_escape_string($email_contato);
+        $this->email_contato = mysql_escape_string($email_contato);
     }
     
     /**
@@ -72,7 +72,7 @@ class Categoria{
     public function listaCategorias($categoria_id = null){
         try{
             $sql = "SELECT 
-                        CATEGORIA_ID,
+                        ID_CATEGORIA,
                         DESCRICAO,
                         EMAIL_CONTATO
                     FROM 
@@ -80,7 +80,7 @@ class Categoria{
                     ";
             
             if((int)$categoria_id > 0){
-                $sql .= " WHERE CATEGORIA_ID = {$categoria_id} ;";
+                $sql .= " WHERE ID_CATEGORIA = {$categoria_id} ;";
             }
             
             MySQL::connect();

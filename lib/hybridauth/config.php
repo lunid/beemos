@@ -13,7 +13,7 @@
 
 return 
 	array(
-		"base_url" => "http://localhost/home/lib/hybridauth/", 
+		"base_url" => "http://interbits.provisorio.ws/eduardo/lib/hybridauth/", 
 
 		"providers" => array ( 
 			// openid providers
@@ -31,7 +31,7 @@ return
 
 			"Google" => array ( 
 				"enabled" => true,
-				"keys"    => array ( "id" => "830321440557.apps.googleusercontent.com", "secret" => "xnsa_TuVci83t61Rkh9OxFjI" ),
+				"keys"    => array ( "id" => "830321440557-5rmbuuf7k0o6l6mi8smi5f9c5e7va94q.apps.googleusercontent.com", "secret" => "ZgSIKWloKax2GKVrrOekiA2D" ),
 				"scope"   => ""
 			),
 

@@ -181,6 +181,59 @@ class Email{
         }
     }
     
+    public function enviaCadastroVisitante($nome, $email, $senha){
+        try{
+            $html = "
+                <html>
+                    <body>
+                        <table width='100%' cellpadding='2' cellspacing='1' style='border:1px solid #CCC;'> 
+                        <tr>
+                            <td nowrap='nowrap' width='1%'>
+                                <b>
+                                    Nome:
+                                </b>
+                            </td>
+                            <td nowrap='nowrap' width='99%'>
+                                ".$nome."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' width='1%'>
+                                <b>
+                                    E-mail:
+                                </b>
+                            </td>
+                            <td nowrap='nowrap'>
+                                ".$email."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td nowrap='nowrap' width='1%'>
+                                <b>
+                                    Sua senha de acesso é:
+                                </b>
+                            </td>
+                            <td nowrap='nowrap'>
+                                ".$senha."
+                            </td>
+                        </tr>
+                        </table>
+                    </body>
+                <html>
+            ";
+            
+            $this->de       = 'contato@sprweb.com.br';
+            $this->nome_de  = 'SuperProfessorWeb';
+            $this->para     = $email;
+            $this->assunto  = "SuperProfessorWeb - Cadastro confirmado com sucesso!";
+            $this->html_msg = $html;
+            
+            return $this->enviaEmail();
+        }catch(Exception $e){
+            throw $e;
+        }
+    }
+    
     private function enviaEmail(){
         try{
             $from           = $this->de;

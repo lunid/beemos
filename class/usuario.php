@@ -35,7 +35,7 @@ class Usuario{
      * @param string $nome
      */
     public function setNome($nome){
-        $this->nome = mysql_real_escape_string($nome);
+        $this->nome = mysql_escape_string($nome);
     }
     
     /**
@@ -53,7 +53,7 @@ class Usuario{
      * @param string $email
      */
     public function setEmail($email){
-        $this->email = mysql_real_escape_string($email);
+        $this->email = mysql_escape_string($email);
     }
     
     /**

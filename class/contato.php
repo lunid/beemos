@@ -36,7 +36,7 @@ class Contato{
      * @param string $nome
      */
     public function setNome($nome){
-        $this->nome = mysql_real_escape_string($nome);
+        $this->nome = mysql_escape_string($nome);
     }
     
     /**
@@ -54,7 +54,7 @@ class Contato{
      * @param string $email
      */
     public function setEmail($email){
-        $this->email = mysql_real_escape_string($email);
+        $this->email = mysql_escape_string($email);
     }
     
     /**
@@ -72,7 +72,7 @@ class Contato{
      * @param string $assunto
      */
     public function setAssunto($assunto){
-        $this->assunto = mysql_real_escape_string($assunto);
+        $this->assunto = mysql_escape_string($assunto);
     }
     
     /**
@@ -90,7 +90,7 @@ class Contato{
      * @param string $msg
      */
     public function setMensagem($msg){
-        $this->msg = mysql_real_escape_string($msg);
+        $this->msg = mysql_escape_string($msg);
     }
     
     /**

@@ -10,7 +10,7 @@ class Suporte{
     private $id;
     private $nome;
     private $email;
-    private $categoria_id;
+    private $id_categoria;
     private $msg;
     
     /**
@@ -37,7 +37,7 @@ class Suporte{
      * @param string $nome
      */
     public function setNome($nome){
-        $this->nome = mysql_real_escape_string($nome);
+        $this->nome = mysql_escape_string($nome);
     }
     
     /**
@@ -55,7 +55,7 @@ class Suporte{
      * @param string $email
      */
     public function setEmail($email){
-        $this->email = mysql_real_escape_string($email);
+        $this->email = mysql_escape_string($email);
     }
     
     /**
@@ -72,8 +72,8 @@ class Suporte{
      * 
      * @param int $id
      */
-    public function setCategoriaId($id){
-        $this->categoria_id = (int)$id;
+    public function setIdCategoria($id){
+        $this->id_categoria = (int)$id;
     }
     
     /**
@@ -81,7 +81,7 @@ class Suporte{
      * 
      * @return int $categoria_id
      */
-    public function getAssunto(){
+    public function getIdCategoria(){
         return $this->categoria_id;
     }
     
@@ -91,7 +91,7 @@ class Suporte{
      * @param string $msg
      */
     public function setMensagem($msg){
-        $this->msg = mysql_real_escape_string($msg);
+        $this->msg = mysql_escape_string($msg);
     }
     
     /**
@@ -115,7 +115,7 @@ class Suporte{
                         (
                             NOME,
                             EMAIL,
-                            CATEGORIA_ID,
+                            ID_CATEGORIA,
                             MENSAGEM,
                             DATA_ENVIO,
                             EMAIL_PARA
@@ -136,13 +136,13 @@ class Suporte{
                 $sql .= " '{$this->email}', ";
             }
             
-            if($this->categoria_id == '' || $this->categoria_id == null){
+            if($this->id_categoria == '' || $this->id_categoria == null){
                 throw new Exception("O campo CATEGORIA é obrigatório");
             }else{
-                $sql .= " '{$this->categoria_id}', ";
+                $sql .= " '{$this->id_categoria}', ";
                 
                 $cat    = new Categoria();
-                $rs_cat = $cat->listaCategorias($this->categoria_id);
+                $rs_cat = $cat->listaCategorias($this->id_categoria);
                 if($rs_cat != null){
                     $email_suporte = mysql_result($rs_cat, 0, 'EMAIL_CONTATO');
                     if($email_suporte == ''){

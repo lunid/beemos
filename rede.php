@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-$config = dirname(__FILE__) . '\lib\hybridauth\config.php';
-require_once( dirname(__FILE__) . "\lib\hybridauth\Hybrid\Auth.php" );
+$config = dirname(__FILE__) . '/lib/hybridauth/config.php';
+require_once( dirname(__FILE__) . "/lib/hybridauth/Hybrid/Auth.php" );
 
 $rede = @$_GET["rede"];
 
