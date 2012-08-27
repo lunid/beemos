@@ -36,6 +36,12 @@ Form.prototype = {
                 $(this).after("<span id='msg_error_email_" + this.id + "' style='display:none;' class='msg_error'>" + Dic.loadMsg("Form", "FIELD_EMAIL", "init") + "</span>");
             });
             
+            $("#" + form_id + " .repeat").each(function(){
+                var name = this.id.split('_');
+                
+                $(this).after("<span id='msg_error_repeat_" + this.id + "' style='display:none;' class='msg_error'>" + Dic.loadMsg("Form", "FIELD_REPEAT", "init").replace("%%NAME%%", $.trim($(this).attr('field_name'))).replace("%%NAME_ORIGIN%%", $("#" + name[1]).attr('field_name')) + "</span>");
+            });
+            
             $("#" + form_id + " .phone").each(function(){
                 $(this).mask("(99)9999-9999?9");
             });
@@ -71,6 +77,18 @@ Form.prototype = {
                     validate = false;
                 }else{
                     $("#msg_error_email_" + this.id).hide('fast');
+                }
+            });
+            
+            $(form).find(".repeat").each(function(){
+                var name = this.id.split('_');
+                
+                if(this.value != $("#" + name[1]).val()){
+                    $("#msg_error_repeat_" + this.id).show('normal');
+                    this.focus();
+                    validate = false;
+                }else{
+                    $("#msg_error_repeat_" + this.id).hide('fast');
                 }
             });
             

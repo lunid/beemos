@@ -1,11 +1,51 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
+<?
+    session_start();
+    
+    require_once 'class/usuario.php';
+    
+    if(isset($_SESSION['ADM_USUARIO'])){
+        //Valida permissão de acesso ao Usuário
+        $ret = Usuario::validaAcesso(unserialize($_SESSION['ADM_USUARIO']));
+        
+        if($ret->status){
+            //Redirecionando para Home do ADM
+            header("Location: home.php");
+        }else{
+            echo "{$ret->msg}<br /><br />";
+        }
+    }else{
+        if($_POST){
+            $usuario = new Usuario();
+
+            $usuario->setEmail($_POST['adm_login']);
+            $usuario->setSenha($_POST['adm_senha']);
+
+            if($usuario->efetuaLogin()){
+                //Valida permissão de acesso ao Usuário
+                $ret = Usuario::validaAcesso($usuario);
+
+                if($ret->status){
+                    $usuario->atualizaUltimoAcesso();
+
+                    $_SESSION['ADM_USUARIO'] = $usuario;
+                    
+                    //Redirecionando para Home do ADM
+                    header("Location: home.php");
+                }else{
+                    echo "{$ret->msg}<br /><br />";
+                }
+
+                $_SESSION['ADM_USUARIO'] = serialize($usuario);
+            }else{
+                echo "Login e Senha inválidos!<br /><br />";
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ADM Interbits</title>
+        <title>ADM Interbits | Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
         <script type="text/javascript" src="../js/libs/jquery_171.js"></script>

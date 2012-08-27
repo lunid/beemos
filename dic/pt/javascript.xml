@@ -24,6 +24,7 @@
             <msg id="ERROR_ID">ID do formulário inválido ou nulo</msg>
             <msg id="FIELD_REQUIRED">O campo %%NAME%% é obrigatório</msg>
             <msg id="FIELD_EMAIL">Digite um e-mail válido</msg>
+            <msg id="FIELD_REPEAT">O campo %%NAME%% deve ser igual ao campo %%NAME_ORIGIN%%</msg>
         </init>
         <validate>
             <msg id="CATCH">Erro na validação do Formulário:</msg>
