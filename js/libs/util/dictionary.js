@@ -1,13 +1,13 @@
 xml_dic = null;
 
-$.post(
-    "dic/en/javascript.xml",
-    null,
-    function(xml){
-        xml_dic = xml;
-    },
-    'xml'
-);
+//$.post(
+//    "dic/en/javascript.xml",
+//    null,
+//    function(xml){
+//        xml_dic = xml;
+//    },
+//    'xml'
+//);
                 
 Dic = function(){};
 

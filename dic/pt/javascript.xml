@@ -2,31 +2,31 @@
 <root>
     <Slider>
         <init>
-            <msg id="CATCH"><![CDATA[Erro ao iniciar Slider:]]></msg>
-            <msg id="ERROR_ID"><![CDATA[ID do objeto slider não definido!]]></msg>
+            <msg id="CATCH">Erro ao iniciar Slider:</msg>
+            <msg id="ERROR_ID">ID do objeto slider não definido!</msg>
         </init>
     </Slider>
     <Menu>
         <default>
-            <msg id="ERROR_ID_MENU"><![CDATA[ID do objeto menu não definido!]]></msg>
+            <msg id="ERROR_ID_MENU">ID do objeto menu não definido!</msg>
         </default>
         <init>
-            <msg id="CATCH"><![CDATA[Erro ao iniciar menu:]]></msg>
+            <msg id="CATCH">Erro ao iniciar menu:</msg>
         </init>
         <changeMenu>
-            <msg id="CATCH"><![CDATA[Erro ao selecionar menu:]]></msg>
-            <msg id="ERROR_ID_ITEM"><![CDATA[ID do item de menu não definido!]]></msg>
+            <msg id="CATCH">Erro ao selecionar menu:</msg>
+            <msg id="ERROR_ID_ITEM">ID do item de menu não definido!</msg>
         </changeMenu>
     </Menu>
     <Form>
         <init>
-            <msg id="CATCH"><![CDATA[Erro ao iniciar Formulário:]]></msg>
-            <msg id="ERROR_ID"><![CDATA[ID do formulário inválido ou nulo]]></msg>
-            <msg id="FIELD_REQUIRED"><![CDATA[O campo %%NAME%% é obrigatório]]></msg>
-            <msg id="FIELD_EMAIL"><![CDATA[Digite um e-mail válido]]></msg>
+            <msg id="CATCH">Erro ao iniciar Formulário:</msg>
+            <msg id="ERROR_ID">ID do formulário inválido ou nulo</msg>
+            <msg id="FIELD_REQUIRED">O campo %%NAME%% é obrigatório</msg>
+            <msg id="FIELD_EMAIL">Digite um e-mail válido</msg>
         </init>
         <validate>
-            <msg id="CATCH"><![CDATA[Erro na validação do Formulário:]]></msg>
+            <msg id="CATCH">Erro na validação do Formulário:</msg>
         </validate>
     </Form>    
 </root>
