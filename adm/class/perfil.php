@@ -114,7 +114,7 @@ class Perfil{
     /**
      * Função que lista todos os Perfis cadastrados no sistema
      * 
-     * @return Perfil[]
+     * @return array Array de Objetos stdClass
      */
     public function carregaPerfis(){
         try{

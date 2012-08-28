@@ -20,6 +20,10 @@
         header("Location: index.php");
     }
     
+    //Carrega usuário
+    $usuario = unserialize($_SESSION['ADM_USUARIO']);
+    $rs      = $usuario->carregaMateriasUsuario();
+    
     //====================================================================================================================//
     //======================================== Valida Acesso do Usuário na Página ========================================//
     //====================================================================================================================//
@@ -27,27 +31,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ADM Interbits | Usuários</title>
+        <title>ADM Interbits | Avaliar Questões</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
         <script type="text/javascript" src="../js/libs/jquery_171.js"></script>
-        
-        <link rel="stylesheet" type="text/css" media="screen" href="../js/libs/jqgrid/themes/redmond/jquery-ui-custom.css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="../js/libs/jqgrid/themes/ui.jqgrid.css" />
-
-        <script src="../js/libs/jqgrid/js/i18n/grid.locale-pt-br.js" type="text/javascript"></script>
-        <script src="../js/libs/jqgrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <h1>
-            Usuários
-        </h1>
-        <table align="center" style="width:920px;">
-            <tr>
-                <td align="center">
-                    <?php include 'datagrid.php'; ?>
-                </td>
-            </tr>
-        </table>
+        <? 
+            if($rs->status){ 
+        ?>
+        <? 
+            }else{ 
+        ?>
+            <h1><?=$rs->msg?></h1>
+        <? 
+            } 
+        ?>
     </body>
 </html>

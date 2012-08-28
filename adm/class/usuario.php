@@ -197,6 +197,83 @@ class Usuario{
     }
     
     /**
+     * Funcção que efetua INSERÇÃO ou ou UPDATE do dados do Usuário.
+     * Se o ID_USUARIO for iniciado, a função fará o UPDATE de dados.
+     * Caso contrário, será feita a INSERÇÃO dos dados com uma validação de E-MAIL existente.
+     * 
+     * @return \stdClass Objeto com o retorno final da operação. Propriedade status e msg.
+     */
+    public function save(){
+        try{
+            //Variável de retorno
+            $ret = new stdClass();
+            
+            if($this->id_usuario == 0 || $this->id_usuario == null){
+                if($this->validaEmailUsuario()){
+                    $ret->status    = false;
+                    $ret->msg       = "Esse e-mail ({$this->email}) já está cadastrado!";
+                    return $ret;
+                }
+                
+                $sql = "INSERT INTO
+                            SPRO_ADM_USUARIO
+                            (
+                                NOME,
+                                EMAIL,
+                                ID_PERFIL,
+                                SENHA,
+                                DATA_REGISTRO
+                            )
+                        VALUES
+                            (
+                                '{$this->nome}',
+                                '{$this->email}',
+                                '{$this->id_perfil}',
+                                '".md5($this->senha)."',
+                                NOW()
+                            )
+                        ;";
+                
+                MySQL::connect();
+                MySQL::executeQuery($sql);
+                
+                $ret->status    = true;
+                $ret->msg       = "Usuário cadastrado com sucesso!";
+                return $ret;
+            }else{
+                $sql = "UPDATE
+                            SPRO_ADM_USUARIO
+                        SET
+                            nome = '{$this->nome}',
+                            id_perfil = {$this->id_perfil}
+                        ";
+               
+                if(trim($this->senha) != ''){
+                    $sql .= " ,senha = '".md5(trim($this->senha))."' ";
+                }
+                
+                $sql .= " WHERE 
+                            ID_USUARIO = {$this->id_usuario}
+                         AND
+                            EMAIL = '{$this->email}'
+                       ;";
+                            
+                MySQL::connect();
+                MySQL::executeQuery($sql);
+                
+                $ret->status    = true;
+                $ret->msg       = "Usuário alterado com sucesso!";
+                return $ret;
+            }
+        }catch(Exception $e){
+            echo "Erro salvar dados do Usuário<br />\n";
+            echo $e->getMessage() . "<br />\n";
+            echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
+            die;
+        }
+    }
+    
+    /**
      * Função que valida o usuário e senha da tela de LOGIN do painel administrativo.
      * É necessário iniciar os valor de EMAIL e SENHA para que a função seja executada
      * 
@@ -332,7 +409,119 @@ class Usuario{
             
             return $ret;
         }catch(Exception $e){
+            echo "Erro ao validar acesso do Usuário<br />\n";
+            echo $e->getMessage() . "<br />\n";
+            echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
+            die;
+        }
+    }
+    
+    /**
+     * Função para validação de existência do E-MAIL de usuário.
+     * 
+     * @return boolean
+     */
+    public function validaEmailUsuario(){
+        try{
+            if($this->email == '' || $this->email == null){
+                throw new Exception("O campo EMAIL é obrigatório para efetuar a validação do Usuário");
+            }
+            
+            $sql = "SELECT ID_USUARIO FROM SPRO_ADM_USUARIO WHERE EMAIL = '{$this->email}' LIMIT 1 ;";
+            
+            MySQL::connect();
+            $rs = MySQL::executeQuery($sql);
+            
+            if(mysql_num_rows($rs) == 1){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(Exception $e){
             echo "Erro ao validar Usuário<br />\n";
+            echo $e->getMessage() . "<br />\n";
+            echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
+            die;
+        }
+    }
+    
+    /**
+     * Função para validação de existência do E-MAIL de usuário.
+     * 
+     * @return boolean
+     */
+    public function carregaUsuario($id_usuario){
+        try{
+            if((int)$id_usuario == 0){
+                throw new Exception("O campo ID_USUARIO é obrigatório para carregar os dados do Usuário");
+            }
+            
+            $sql = "SELECT
+                        *
+                    FROM
+                        SPRO_ADM_USUARIO
+                    WHERE
+                        ID_USUARIO = {$id_usuario}
+                    LIMIT
+                        1
+                    ;";
+            
+            MySQL::connect();
+            $rs = MySQL::executeQuery($sql);
+            
+            if(mysql_num_rows($rs) == 1){
+                $this->id_usuario       = mysql_result($rs, 0, 'ID_USUARIO');
+                $this->nome             = mysql_result($rs, 0, 'NOME');
+                $this->email            = mysql_result($rs, 0, 'EMAIL');
+                $this->id_perfil        = mysql_result($rs, 0, 'ID_PERFIL');
+                $this->status           = mysql_result($rs, 0, 'STATUS');
+                $this->data_registro    = mysql_result($rs, 0, 'DATA_REGISTRO');
+                $this->ultimo_acesso    = mysql_result($rs, 0, 'ULTIMO_ACESSO');
+                
+                return true;
+            }else{
+                return false;
+            }
+        }catch(Exception $e){
+            echo "Erro ao validar Usuário<br />\n";
+            echo $e->getMessage() . "<br />\n";
+            echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
+            die;
+        }
+    }
+    
+    public function carregaMateriasUsuario(){
+        try{
+            //Variável de retorno
+            $ret = new stdClass();
+            
+            if($this->id_usuario == 0){
+                throw new Exception("O campo ID_USUARIO é obrigatório para carregar suas Matérias");
+            }
+            
+            $sql = "SELECT
+                        ID_MATERIA
+                    FROM
+                        SPRO_ADM_USUARIO_MATERIA
+                    WHERE
+                        ID_USUARIO = {$this->id_usuario}
+                    ;";
+            
+            MySQL::connect();
+            $rs = MySQL::executeQuery($sql);
+            
+            if(mysql_num_rows($rs) > 0){
+                $ret->status = true;
+                
+                return $ret;
+            }else{
+                $ret->status    = false;
+                $ret->msg       = "Nenhuma Matéria encontrada";
+                
+                return $ret;
+            }
+        }catch(Exception $e){
+            echo "Erro ao carregar Matérias do Usuário<br />\n";
             echo $e->getMessage() . "<br />\n";
             echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
             die;
