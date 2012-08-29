@@ -22,7 +22,7 @@
     
     //Carrega usuário
     $usuario = unserialize($_SESSION['ADM_USUARIO']);
-    $rs      = $usuario->validaUsuarioAvaliacao((int)@$_GET['id_materia']);
+    $rs      = $usuario->carregaMateriasUsuarioAvaliacao();
     
     //====================================================================================================================//
     //======================================== Valida Acesso do Usuário na Página ========================================//

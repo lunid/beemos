@@ -24,11 +24,14 @@
     //Armazena instância do objeto usuário
     $usuario = unserialize($_SESSION['ADM_USUARIO']);
     
-    //Inicia a instância do objeto Questoes
-    $questoes = new Questoes();
-    
-    //Inicia valor de id_materia enviado via GET
+    //Inicia o valor de id_materia enviado via GET
     $id_materia = @(int)$_GET['id_materia'];
+    
+    //Inicia o valor de id_materia enviado via GET
+    $id_questao = @(int)$_GET['id_questao'];
+    
+    //Inicia a instância do objeto Questoes
+    $questoes = new Questoes($id_questao);
     
     //====================================================================================================================//
     //======================================== Valida Acesso do Usuário na Página ========================================//
@@ -37,7 +40,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ADM Interbits | Avaliar Questões</title>
+        <title>ADM Interbits | TOP 10 | Avaliar Questões</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
         <script type="text/javascript" src="../js/libs/jquery_171.js"></script>
@@ -49,10 +52,10 @@
         <script src="../js/libs/jqgrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <h1>Questões a serem avaliadas</h1>
+        <h1>Questão</h1>
         <? 
-            if($usuario->validaUsuarioAvaliacao($id_materia)){ 
-                $rs = $questoes->listaQuestoesTop10Materia($id_materia);
+            if($usuario->validaUsuarioAvaliacao(@(int)$_GET['id_materia'])){ 
+                $rs = $questoes->listaQuestoesTop10Materia((int)$_GET['id_materia']);
                 
                 if(sizeof($rs) > 0){
                     $pos=1;
@@ -85,7 +88,7 @@
                     <?=$questao->getTotalUso()?>
                 </td>
                 <td>
-                    <a href="top10_avaliar_questao.php?id_questao=<?=$questao->getIdBcoQuestao()?>&id_materia=<?=$id_materia?>" target="_blank">
+                    <a href="top10_avaliar_questao.php?id_questao=<?=$questao->getIdBcoQuestao()?>" target="_blank">
                         <img src="../img/icone_avaliar.gif" border="0" style="width:23px;height:23px;" />
                     </a>
                 </td>
