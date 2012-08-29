@@ -20,9 +20,8 @@
         header("Location: index.php");
     }
     
-    //Carrega usuário
+    //Armazena instância do objeto usuário
     $usuario = unserialize($_SESSION['ADM_USUARIO']);
-    $rs      = $usuario->validaUsuarioAvaliacao((int)@$_GET['id_materia']);
     
     //====================================================================================================================//
     //======================================== Valida Acesso do Usuário na Página ========================================//
@@ -35,25 +34,21 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
         <script type="text/javascript" src="../js/libs/jquery_171.js"></script>
+        
+        <link rel="stylesheet" type="text/css" media="screen" href="../js/libs/jqgrid/themes/redmond/jquery-ui-custom.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../js/libs/jqgrid/themes/ui.jqgrid.css" />
+
+        <script src="../js/libs/jqgrid/js/i18n/grid.locale-pt-br.js" type="text/javascript"></script>
+        <script src="../js/libs/jqgrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <h1>Matérias a serem avaliadas:</h1>
+        <h1>Questões a serem avaliadas</h1>
         <? 
-            if(sizeof($rs) > 0){ 
-        ?>
-        <ul>
-            <?
-                foreach($rs as $row){
-            ?>
-            <li><a href="top10_avaliar_questoes.php?id_materia=<?=$row->ID_MATERIA?>"><?=$row->MATERIA?></a></li>
-            <?
-                }
-            ?>
-        </ul>
-        <? 
+            if($usuario->validaUsuarioAvaliacao(@(int)$_GET['id_materia'])){ 
+                include 'grid_questoes_avaliacao.php';
             }else{ 
         ?>
-            <h1>Você não possui nenhuma indicação de avaliação no momento</h1>
+            <h1>Você não possui permissão para avaliar as questões desta matéria</h1>
         <? 
             } 
         ?>

@@ -490,38 +490,95 @@ class Usuario{
         }
     }
     
-    public function carregaMateriasUsuario(){
+    /**
+     * Função que carrega as matérias que o usuário possui pendentes de avaliação no TOP 10
+     * 
+     * @return array Array com o resultado da busca SQL
+     */
+    public function carregaMateriasUsuarioAvaliacao(){
         try{
             //Variável de retorno
-            $ret = new stdClass();
+            $ret = array();
             
             if($this->id_usuario == 0){
                 throw new Exception("O campo ID_USUARIO é obrigatório para carregar suas Matérias");
             }
             
             $sql = "SELECT
-                        ID_MATERIA
+                        UM.ID_MATERIA,
+                        MQ.MATERIA
                     FROM
-                        SPRO_ADM_USUARIO_MATERIA
+                        SPRO_ADM_USUARIO_MATERIA UM
+                    INNER JOIN
+                        SPRO_MATERIA_QUESTAO MQ ON MQ.ID_MATERIA = UM.ID_MATERIA
+                    INNER JOIN
+                        SPRO_USUARIO_AVALIA_MATERIA AM ON AM.ID_MATERIA = UM.ID_MATERIA AND AM.ID_USUARIO = UM.ID_USUARIO
                     WHERE
-                        ID_USUARIO = {$this->id_usuario}
+                        UM.ID_USUARIO = {$this->id_usuario}
                     ;";
             
             MySQL::connect();
             $rs = MySQL::executeQuery($sql);
             
             if(mysql_num_rows($rs) > 0){
-                $ret->status = true;
-                
-                return $ret;
+                while ($row = mysql_fetch_object($rs)) {
+                    $ret[] = $row;
+                }
+            }
+            
+            return $ret;
+        }catch(Exception $e){
+            echo "Erro ao carregar Matérias para avaliação do Usuário<br />\n";
+            echo $e->getMessage() . "<br />\n";
+            echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
+            die;
+        }
+    }
+    
+    /**
+     * Função responsável em validar a permissão de avalição de questões ao usuário logado.
+     * 
+     * @param int $id_materia Código da matéria a ser validada
+     * 
+     * @return boolean
+     */
+    public function validaUsuarioAvaliacao($id_materia){
+        try{
+            if($this->id_usuario == 0){
+                throw new Exception("O campo ID_USUARIO é obrigatório para efertuar a validação de acesso");
+            }
+            
+            if((int)$id_materia == 0){
+                throw new Exception("O campo ID_MATERIA é obrigatório para efertuar a validação de acesso");
+            }
+            
+            $sql = "SELECT
+                        UM.ID_MATERIA,
+                        MQ.MATERIA
+                    FROM
+                        SPRO_ADM_USUARIO_MATERIA UM
+                    INNER JOIN
+                        SPRO_MATERIA_QUESTAO MQ ON MQ.ID_MATERIA = UM.ID_MATERIA
+                    INNER JOIN
+                        SPRO_USUARIO_AVALIA_MATERIA AM ON AM.ID_MATERIA = UM.ID_MATERIA AND AM.ID_USUARIO = UM.ID_USUARIO
+                    WHERE
+                        UM.ID_USUARIO = {$this->id_usuario}
+                    AND
+                        UM.ID_USUARIO = {$id_materia}
+                    LIMIT 
+                        1
+                    ;";
+            
+            MySQL::connect();
+            $rs = MySQL::executeQuery($sql);
+            
+            if(mysql_num_rows($rs) == 1){
+                return true;
             }else{
-                $ret->status    = false;
-                $ret->msg       = "Nenhuma Matéria encontrada";
-                
-                return $ret;
+                return false;
             }
         }catch(Exception $e){
-            echo "Erro ao carregar Matérias do Usuário<br />\n";
+            echo "Erro ao validar a permissão de avalições do Usuário<br />\n";
             echo $e->getMessage() . "<br />\n";
             echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
             die;
