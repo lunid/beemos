@@ -21,7 +21,7 @@ class MySQL{
             MySQL::connect();
         }
         
-        $rs = mysql_query($query)or die("Falha ao executar query MySQL > " . mysql_error());
+        $rs = mysql_query($query)or die(">>> Falha ao executar query MySQL <br />>>> {$query}<br />>>> " . mysql_error());
         return $rs;
     }
 }

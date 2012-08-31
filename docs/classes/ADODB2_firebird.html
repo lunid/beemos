@@ -1,0 +1,941 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \ADODB2_firebird</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Auth.html"><i class="icon-folder-open"></i> Auth</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/axmls.html"><i class="icon-folder-open"></i> axmls</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+<li><a href="../packages/com.html"><i class="icon-folder-open"></i> com</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">4445</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">7</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">14</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#ActualType" title="ActualType :: Returns the actual type given a character code."><span class="description">Returns the actual type given a character code.</span><pre>ActualType()</pre></a></li>
+<li class="method public inherited"><a href="#AddColumnSQL" title="AddColumnSQL :: "><span class="description">AddColumnSQL()
+        </span><pre>AddColumnSQL()</pre></a></li>
+<li class="method public inherited"><a href="#AlterColumnSQL" title="AlterColumnSQL :: Change the definition of one column"><span class="description">Change the definition of one column</span><pre>AlterColumnSQL()</pre></a></li>
+<li class="method public inherited"><a href="#ChangeTableSQL" title='ChangeTableSQL :: "Florian Buzin [ easywe ]" &lt;florian.buzin#easywe.de&gt;'><span class="description">"Florian Buzin [ easywe ]" &lt;florian.buzin#easywe.de&gt;</span><pre>ChangeTableSQL()</pre></a></li>
+<li class="method public "><a href="#CreateDatabase" title="CreateDatabase :: "><span class="description">CreateDatabase()
+        </span><pre>CreateDatabase()</pre></a></li>
+<li class="method public inherited"><a href="#CreateIndexSQL" title="CreateIndexSQL :: "><span class="description">CreateIndexSQL()
+        </span><pre>CreateIndexSQL()</pre></a></li>
+<li class="method public inherited"><a href="#CreateTableSQL" title="CreateTableSQL :: Generate the SQL to create table."><span class="description">Generate the SQL to create table.</span><pre>CreateTableSQL()</pre></a></li>
+<li class="method public inherited"><a href="#DropColumnSQL" title="DropColumnSQL :: Drop one column"><span class="description">Drop one column</span><pre>DropColumnSQL()</pre></a></li>
+<li class="method public inherited"><a href="#DropIndexSQL" title="DropIndexSQL :: "><span class="description">DropIndexSQL()
+        </span><pre>DropIndexSQL()</pre></a></li>
+<li class="method public inherited"><a href="#DropTableSQL" title="DropTableSQL :: "><span class="description">DropTableSQL()
+        </span><pre>DropTableSQL()</pre></a></li>
+<li class="method public inherited"><a href="#ExecuteSQLArray" title="ExecuteSQLArray :: "><span class="description">ExecuteSQLArray()
+        </span><pre>ExecuteSQLArray()</pre></a></li>
+<li class="method public inherited"><a href="#GetCommentSQL" title="GetCommentSQL :: "><span class="description">GetCommentSQL()
+        </span><pre>GetCommentSQL()</pre></a></li>
+<li class="method public inherited"><a href="#MetaColumns" title="MetaColumns :: "><span class="description">MetaColumns()
+        </span><pre>MetaColumns()</pre></a></li>
+<li class="method public inherited"><a href="#MetaIndexes" title="MetaIndexes :: "><span class="description">MetaIndexes()
+        </span><pre>MetaIndexes()</pre></a></li>
+<li class="method public inherited"><a href="#MetaPrimaryKeys" title="MetaPrimaryKeys :: "><span class="description">MetaPrimaryKeys()
+        </span><pre>MetaPrimaryKeys()</pre></a></li>
+<li class="method public inherited"><a href="#MetaTables" title="MetaTables :: "><span class="description">MetaTables()
+        </span><pre>MetaTables()</pre></a></li>
+<li class="method public inherited"><a href="#MetaType" title="MetaType :: "><span class="description">MetaType()
+        </span><pre>MetaType()</pre></a></li>
+<li class="method public "><a href="#NameQuote" title="NameQuote :: "><span class="description">NameQuote()
+        </span><pre>NameQuote()</pre></a></li>
+<li class="method public inherited"><a href="#RenameColumnSQL" title="RenameColumnSQL :: Rename one column"><span class="description">Rename one column</span><pre>RenameColumnSQL()</pre></a></li>
+<li class="method public inherited"><a href="#RenameTableSQL" title="RenameTableSQL :: "><span class="description">RenameTableSQL()
+        </span><pre>RenameTableSQL()</pre></a></li>
+<li class="method public inherited"><a href="#SetCommentSQL" title="SetCommentSQL :: "><span class="description">SetCommentSQL()
+        </span><pre>SetCommentSQL()</pre></a></li>
+<li class="method public inherited"><a href="#SetSchema" title="SetSchema :: "><span class="description">SetSchema()
+        </span><pre>SetSchema()</pre></a></li>
+<li class="method public inherited"><a href="#TableName" title="TableName :: "><span class="description">TableName()
+        </span><pre>TableName()</pre></a></li>
+<li class="method public "><a href="#_CreateSuffix" title="_CreateSuffix :: "><span class="description">_CreateSuffix()
+        </span><pre>_CreateSuffix()</pre></a></li>
+<li class="method public "><a href="#_DropAutoIncrement" title="_DropAutoIncrement :: "><span class="description">_DropAutoIncrement()
+        </span><pre>_DropAutoIncrement()</pre></a></li>
+<li class="method public inherited"><a href="#_GenFields" title="_GenFields :: "><span class="description">_GenFields()
+        </span><pre>_GenFields()</pre></a></li>
+<li class="method public inherited"><a href="#_GetSize" title="_GetSize :: GENERATE THE SIZE PART OF THE DATATYPE
+$ftype is the actual type
+$ty is the type defined originally in the DDL"><span class="description">GENERATE THE SIZE PART OF THE DATATYPE
+$ftype is the actual type
+$ty is the type defined originally in the DDL</span><pre>_GetSize()</pre></a></li>
+<li class="method public inherited"><a href="#_IndexSQL" title="_IndexSQL :: "><span class="description">_IndexSQL()
+        </span><pre>_IndexSQL()</pre></a></li>
+<li class="method public inherited"><a href="#_Options" title="_Options :: Sanitize options, so that array elements with no keys are promoted to keys"><span class="description">Sanitize options, so that array elements with no keys are promoted to keys</span><pre>_Options()</pre></a></li>
+<li class="method public inherited"><a href="#_TableSQL" title="_TableSQL :: "><span class="description">_TableSQL()
+        </span><pre>_TableSQL()</pre></a></li>
+<li class="method public "><a href="#_Triggers" title="_Triggers :: GENERATE TRIGGERS IF NEEDED
+used when table has auto-incrementing field that is emulated using triggers"><span class="description">GENERATE TRIGGERS IF NEEDED
+used when table has auto-incrementing field that is emulated using triggers</span><pre>_Triggers()</pre></a></li>
+<li class="method public inherited"><a href="#_getSizePrec" title="_getSizePrec :: "><span class="description">_getSizePrec()
+        </span><pre>_getSizePrec()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public inherited"><a href="#%24addCol" title="$addCol :: "><span class="description">$addCol</span><pre>$addCol</pre></a></li>
+<li class="property public inherited"><a href="#%24alterCol" title="$alterCol :: "><span class="description">$alterCol</span><pre>$alterCol</pre></a></li>
+<li class="property public inherited"><a href="#%24autoIncrement" title="$autoIncrement :: "><span class="description">$autoIncrement</span><pre>$autoIncrement</pre></a></li>
+<li class="property public "><a href="#%24blobSize" title="$blobSize :: "><span class="description">$blobSize</span><pre>$blobSize</pre></a></li>
+<li class="property public inherited"><a href="#%24connection" title="$connection :: "><span class="description">$connection</span><pre>$connection</pre></a></li>
+<li class="property public inherited"><a href="#%24dataProvider" title="$dataProvider :: "><span class="description">$dataProvider</span><pre>$dataProvider</pre></a></li>
+<li class="property public "><a href="#%24databaseType" title="$databaseType :: "><span class="description">$databaseType</span><pre>$databaseType</pre></a></li>
+<li class="property public inherited"><a href="#%24debug" title="$debug :: "><span class="description">$debug</span><pre>$debug</pre></a></li>
+<li class="property public inherited"><a href="#%24dropCol" title="$dropCol :: "><span class="description">$dropCol</span><pre>$dropCol</pre></a></li>
+<li class="property public inherited"><a href="#%24dropIndex" title="$dropIndex :: "><span class="description">$dropIndex</span><pre>$dropIndex</pre></a></li>
+<li class="property public inherited"><a href="#%24dropTable" title="$dropTable :: "><span class="description">$dropTable</span><pre>$dropTable</pre></a></li>
+<li class="property public inherited"><a href="#%24invalidResizeTypes4" title="$invalidResizeTypes4 :: "><span class="description">$invalidResizeTypes4</span><pre>$invalidResizeTypes4</pre></a></li>
+<li class="property public inherited"><a href="#%24nameRegex" title="$nameRegex :: "><span class="description">$nameRegex</span><pre>$nameRegex</pre></a></li>
+<li class="property public inherited"><a href="#%24nameRegexBrackets" title="$nameRegexBrackets :: "><span class="description">$nameRegexBrackets</span><pre>$nameRegexBrackets</pre></a></li>
+<li class="property public inherited"><a href="#%24renameColumn" title="$renameColumn :: "><span class="description">$renameColumn</span><pre>$renameColumn</pre></a></li>
+<li class="property public inherited"><a href="#%24renameTable" title="$renameTable :: "><span class="description">$renameTable</span><pre>$renameTable</pre></a></li>
+<li class="property public inherited"><a href="#%24schema" title="$schema :: "><span class="description">$schema</span><pre>$schema</pre></a></li>
+<li class="property public "><a href="#%24seqField" title="$seqField :: "><span class="description">$seqField</span><pre>$seqField</pre></a></li>
+<li class="property public "><a href="#%24seqPrefix" title="$seqPrefix :: "><span class="description">$seqPrefix</span><pre>$seqPrefix</pre></a></li>
+<li class="property public inherited"><a href="#%24serverInfo" title="$serverInfo :: "><span class="description">$serverInfo</span><pre>$serverInfo</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CADODB2_firebird" id="\ADODB2_firebird"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/ADODB2_firebird.html">ADODB2_firebird</a>
+</li>
+</ul>
+<div href="../classes/ADODB2_firebird.html" class="element class">
+<p class="short_description">V5.17 17 May 2012  (c) 2000-2012 John Lim (jlim#natsoft.com).</p>
+<div class="details">
+<p class="long_description"><p>All rights reserved.
+Released under both BSD license and Lesser GPL library license.
+Whenever there is any discrepancy between the two licenses,
+the BSD license will take precedence.</p>
+
+<p>Set tabs to 4 for best viewing.</p></p>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="ActualType" id="ActualType"></a><div class="element clickable method public ActualType" data-toggle="collapse" data-target=".ActualType .collapse">
+<h2>Returns the actual type given a character code.</h2>
+<pre>ActualType($meta) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>C:  varchar
+X:  CLOB (character large object) or largest varchar size if CLOB is not supported
+C2: Multibyte varchar
+X2: Multibyte CLOB</p>
+
+<p>B:  BLOB (binary large object)</p>
+
+<p>D:  Date
+T:  Date-time
+L:  Integer field suitable for storing booleans (0 or 1)
+I:  Integer
+F:  Floating point number
+N:  Numeric or decimal number</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$meta</h4></div>
+</div></div>
+</div>
+<a name="AddColumnSQL" id="AddColumnSQL"></a><div class="element clickable method public AddColumnSQL" data-toggle="collapse" data-target=".AddColumnSQL .collapse">
+<h2>AddColumnSQL()
+        </h2>
+<pre>AddColumnSQL($tabname, $flds) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::AddColumnSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tabname</h4></div>
+<div class="subelement argument"><h4>$flds</h4></div>
+</div></div>
+</div>
+<a name="AlterColumnSQL" id="AlterColumnSQL"></a><div class="element clickable method public AlterColumnSQL" data-toggle="collapse" data-target=".AlterColumnSQL .collapse">
+<h2>Change the definition of one column</h2>
+<pre>AlterColumnSQL(string $tabname, string $flds, $tableflds, $tableoptions) : array</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>As some DBM's can't do that on there own, you need to supply the complete defintion of the new table,
+to allow, recreating the table and copying the content over to the new table</p></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::AlterColumnSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$tabname</h4>
+<code>string</code><p>table-name</p>
+</div>
+<div class="subelement argument">
+<h4>$flds</h4>
+<code>string</code><p>column-name and type for the changed column</p>
+</div>
+<div class="subelement argument"><h4>$tableflds</h4></div>
+<div class="subelement argument"><h4>$tableoptions</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>with SQL strings</div>
+</div></div>
+</div>
+<a name="ChangeTableSQL" id="ChangeTableSQL"></a><div class="element clickable method public ChangeTableSQL" data-toggle="collapse" data-target=".ChangeTableSQL .collapse">
+<h2>"Florian Buzin [ easywe ]" &lt;florian.buzin#easywe.de&gt;</h2>
+<pre>ChangeTableSQL($tablename, $flds, $tableoptions, $dropOldFlds) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>This function changes/adds new fields to your table. You don't
+have to know if the col is new or not. It will check on its own.</p></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::ChangeTableSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tablename</h4></div>
+<div class="subelement argument"><h4>$flds</h4></div>
+<div class="subelement argument"><h4>$tableoptions</h4></div>
+<div class="subelement argument"><h4>$dropOldFlds</h4></div>
+</div></div>
+</div>
+<a name="CreateDatabase" id="CreateDatabase"></a><div class="element clickable method public CreateDatabase" data-toggle="collapse" data-target=".CreateDatabase .collapse">
+<h2>CreateDatabase()
+        </h2>
+<pre>CreateDatabase($dbname, $options) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$dbname</h4></div>
+<div class="subelement argument"><h4>$options</h4></div>
+</div></div>
+</div>
+<a name="CreateIndexSQL" id="CreateIndexSQL"></a><div class="element clickable method public CreateIndexSQL" data-toggle="collapse" data-target=".CreateIndexSQL .collapse">
+<h2>CreateIndexSQL()
+        </h2>
+<pre>CreateIndexSQL($idxname, $tabname, $flds, $idxoptions) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::CreateIndexSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$idxname</h4></div>
+<div class="subelement argument"><h4>$tabname</h4></div>
+<div class="subelement argument"><h4>$flds</h4></div>
+<div class="subelement argument"><h4>$idxoptions</h4></div>
+</div></div>
+</div>
+<a name="CreateTableSQL" id="CreateTableSQL"></a><div class="element clickable method public CreateTableSQL" data-toggle="collapse" data-target=".CreateTableSQL .collapse">
+<h2>Generate the SQL to create table.</h2>
+<pre>CreateTableSQL($tabname, $flds, $tableoptions) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Returns an array of sql strings.</p></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::CreateTableSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tabname</h4></div>
+<div class="subelement argument"><h4>$flds</h4></div>
+<div class="subelement argument"><h4>$tableoptions</h4></div>
+</div></div>
+</div>
+<a name="DropColumnSQL" id="DropColumnSQL"></a><div class="element clickable method public DropColumnSQL" data-toggle="collapse" data-target=".DropColumnSQL .collapse">
+<h2>Drop one column</h2>
+<pre>DropColumnSQL(string $tabname, string $flds, $tableflds, $tableoptions) : array</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Some DBM's can't do that on there own, you need to supply the complete defintion of the new table,
+to allow, recreating the table and copying the content over to the new table</p></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::DropColumnSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$tabname</h4>
+<code>string</code><p>table-name</p>
+</div>
+<div class="subelement argument">
+<h4>$flds</h4>
+<code>string</code><p>column-name and type for the changed column</p>
+</div>
+<div class="subelement argument"><h4>$tableflds</h4></div>
+<div class="subelement argument"><h4>$tableoptions</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>with SQL strings</div>
+</div></div>
+</div>
+<a name="DropIndexSQL" id="DropIndexSQL"></a><div class="element clickable method public DropIndexSQL" data-toggle="collapse" data-target=".DropIndexSQL .collapse">
+<h2>DropIndexSQL()
+        </h2>
+<pre>DropIndexSQL($idxname, $tabname) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::DropIndexSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$idxname</h4></div>
+<div class="subelement argument"><h4>$tabname</h4></div>
+</div></div>
+</div>
+<a name="DropTableSQL" id="DropTableSQL"></a><div class="element clickable method public DropTableSQL" data-toggle="collapse" data-target=".DropTableSQL .collapse">
+<h2>DropTableSQL()
+        </h2>
+<pre>DropTableSQL($tabname) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::DropTableSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tabname</h4></div>
+</div></div>
+</div>
+<a name="ExecuteSQLArray" id="ExecuteSQLArray"></a><div class="element clickable method public ExecuteSQLArray" data-toggle="collapse" data-target=".ExecuteSQLArray .collapse">
+<h2>ExecuteSQLArray()
+        </h2>
+<pre>ExecuteSQLArray($sql, $continueOnError) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::ExecuteSQLArray()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$sql</h4></div>
+<div class="subelement argument"><h4>$continueOnError</h4></div>
+</div></div>
+</div>
+<a name="GetCommentSQL" id="GetCommentSQL"></a><div class="element clickable method public GetCommentSQL" data-toggle="collapse" data-target=".GetCommentSQL .collapse">
+<h2>GetCommentSQL()
+        </h2>
+<pre>GetCommentSQL($table, $col) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::GetCommentSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$col</h4></div>
+</div></div>
+</div>
+<a name="MetaColumns" id="MetaColumns"></a><div class="element clickable method public MetaColumns" data-toggle="collapse" data-target=".MetaColumns .collapse">
+<h2>MetaColumns()
+        </h2>
+<pre>MetaColumns($tab, $upper, $schema) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::MetaColumns()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tab</h4></div>
+<div class="subelement argument"><h4>$upper</h4></div>
+<div class="subelement argument"><h4>$schema</h4></div>
+</div></div>
+</div>
+<a name="MetaIndexes" id="MetaIndexes"></a><div class="element clickable method public MetaIndexes" data-toggle="collapse" data-target=".MetaIndexes .collapse">
+<h2>MetaIndexes()
+        </h2>
+<pre>MetaIndexes($table, $primary, $owner) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::MetaIndexes()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$primary</h4></div>
+<div class="subelement argument"><h4>$owner</h4></div>
+</div></div>
+</div>
+<a name="MetaPrimaryKeys" id="MetaPrimaryKeys"></a><div class="element clickable method public MetaPrimaryKeys" data-toggle="collapse" data-target=".MetaPrimaryKeys .collapse">
+<h2>MetaPrimaryKeys()
+        </h2>
+<pre>MetaPrimaryKeys($tab, $owner, $intkey) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::MetaPrimaryKeys()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tab</h4></div>
+<div class="subelement argument"><h4>$owner</h4></div>
+<div class="subelement argument"><h4>$intkey</h4></div>
+</div></div>
+</div>
+<a name="MetaTables" id="MetaTables"></a><div class="element clickable method public MetaTables" data-toggle="collapse" data-target=".MetaTables .collapse">
+<h2>MetaTables()
+        </h2>
+<pre>MetaTables() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::MetaTables()</td>
+</tr></table>
+</div></div>
+</div>
+<a name="MetaType" id="MetaType"></a><div class="element clickable method public MetaType" data-toggle="collapse" data-target=".MetaType .collapse">
+<h2>MetaType()
+        </h2>
+<pre>MetaType($t, $len, $fieldobj) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::MetaType()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$t</h4></div>
+<div class="subelement argument"><h4>$len</h4></div>
+<div class="subelement argument"><h4>$fieldobj</h4></div>
+</div></div>
+</div>
+<a name="NameQuote" id="NameQuote"></a><div class="element clickable method public NameQuote" data-toggle="collapse" data-target=".NameQuote .collapse">
+<h2>NameQuote()
+        </h2>
+<pre>NameQuote($name) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$name</h4></div>
+</div></div>
+</div>
+<a name="RenameColumnSQL" id="RenameColumnSQL"></a><div class="element clickable method public RenameColumnSQL" data-toggle="collapse" data-target=".RenameColumnSQL .collapse">
+<h2>Rename one column</h2>
+<pre>RenameColumnSQL(string $tabname, string $oldcolumn, string $newcolumn, $flds) : array</pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Some DBM's can only do this together with changeing the type of the column (even if that stays the same, eg. mysql)</p></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::RenameColumnSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$tabname</h4>
+<code>string</code><p>table-name</p>
+</div>
+<div class="subelement argument">
+<h4>$oldcolumn</h4>
+<code>string</code><p>column-name to be renamed</p>
+</div>
+<div class="subelement argument">
+<h4>$newcolumn</h4>
+<code>string</code><p>new column-name</p>
+</div>
+<div class="subelement argument"><h4>$flds</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>with SQL strings</div>
+</div></div>
+</div>
+<a name="RenameTableSQL" id="RenameTableSQL"></a><div class="element clickable method public RenameTableSQL" data-toggle="collapse" data-target=".RenameTableSQL .collapse">
+<h2>RenameTableSQL()
+        </h2>
+<pre>RenameTableSQL($tabname, $newname) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::RenameTableSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tabname</h4></div>
+<div class="subelement argument"><h4>$newname</h4></div>
+</div></div>
+</div>
+<a name="SetCommentSQL" id="SetCommentSQL"></a><div class="element clickable method public SetCommentSQL" data-toggle="collapse" data-target=".SetCommentSQL .collapse">
+<h2>SetCommentSQL()
+        </h2>
+<pre>SetCommentSQL($table, $col, $cmt) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::SetCommentSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$col</h4></div>
+<div class="subelement argument"><h4>$cmt</h4></div>
+</div></div>
+</div>
+<a name="SetSchema" id="SetSchema"></a><div class="element clickable method public SetSchema" data-toggle="collapse" data-target=".SetSchema .collapse">
+<h2>SetSchema()
+        </h2>
+<pre>SetSchema($schema) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::SetSchema()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$schema</h4></div>
+</div></div>
+</div>
+<a name="TableName" id="TableName"></a><div class="element clickable method public TableName" data-toggle="collapse" data-target=".TableName .collapse">
+<h2>TableName()
+        </h2>
+<pre>TableName($name) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::TableName()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$name</h4></div>
+</div></div>
+</div>
+<a name="_CreateSuffix" id="_CreateSuffix"></a><div class="element clickable method public _CreateSuffix" data-toggle="collapse" data-target="._CreateSuffix .collapse">
+<h2>_CreateSuffix()
+        </h2>
+<pre>_CreateSuffix($fname, $ftype, $fnotnull, $fdefault, $fautoinc, $fconstraint, $funsigned) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$fname</h4></div>
+<div class="subelement argument"><h4>$ftype</h4></div>
+<div class="subelement argument"><h4>$fnotnull</h4></div>
+<div class="subelement argument"><h4>$fdefault</h4></div>
+<div class="subelement argument"><h4>$fautoinc</h4></div>
+<div class="subelement argument"><h4>$fconstraint</h4></div>
+<div class="subelement argument"><h4>$funsigned</h4></div>
+</div></div>
+</div>
+<a name="_DropAutoIncrement" id="_DropAutoIncrement"></a><div class="element clickable method public _DropAutoIncrement" data-toggle="collapse" data-target="._DropAutoIncrement .collapse">
+<h2>_DropAutoIncrement()
+        </h2>
+<pre>_DropAutoIncrement($t) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$t</h4></div>
+</div></div>
+</div>
+<a name="_GenFields" id="_GenFields"></a><div class="element clickable method public _GenFields" data-toggle="collapse" data-target="._GenFields .collapse">
+<h2>_GenFields()
+        </h2>
+<pre>_GenFields($flds, $widespacing) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::_GenFields()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$flds</h4></div>
+<div class="subelement argument"><h4>$widespacing</h4></div>
+</div></div>
+</div>
+<a name="_GetSize" id="_GetSize"></a><div class="element clickable method public _GetSize" data-toggle="collapse" data-target="._GetSize .collapse">
+<h2>GENERATE THE SIZE PART OF THE DATATYPE
+$ftype is the actual type
+$ty is the type defined originally in the DDL</h2>
+<pre>_GetSize($ftype, $ty, $fsize, $fprec) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::_GetSize()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$ftype</h4></div>
+<div class="subelement argument"><h4>$ty</h4></div>
+<div class="subelement argument"><h4>$fsize</h4></div>
+<div class="subelement argument"><h4>$fprec</h4></div>
+</div></div>
+</div>
+<a name="_IndexSQL" id="_IndexSQL"></a><div class="element clickable method public _IndexSQL" data-toggle="collapse" data-target="._IndexSQL .collapse">
+<h2>_IndexSQL()
+        </h2>
+<pre>_IndexSQL($idxname, $tabname, $flds, $idxoptions) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::_IndexSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$idxname</h4></div>
+<div class="subelement argument"><h4>$tabname</h4></div>
+<div class="subelement argument"><h4>$flds</h4></div>
+<div class="subelement argument"><h4>$idxoptions</h4></div>
+</div></div>
+</div>
+<a name="_Options" id="_Options"></a><div class="element clickable method public _Options" data-toggle="collapse" data-target="._Options .collapse">
+<h2>Sanitize options, so that array elements with no keys are promoted to keys</h2>
+<pre>_Options($opts) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::_Options()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$opts</h4></div>
+</div></div>
+</div>
+<a name="_TableSQL" id="_TableSQL"></a><div class="element clickable method public _TableSQL" data-toggle="collapse" data-target="._TableSQL .collapse">
+<h2>_TableSQL()
+        </h2>
+<pre>_TableSQL($tabname, $lines, $pkey, $tableoptions) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::_TableSQL()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tabname</h4></div>
+<div class="subelement argument"><h4>$lines</h4></div>
+<div class="subelement argument"><h4>$pkey</h4></div>
+<div class="subelement argument"><h4>$tableoptions</h4></div>
+</div></div>
+</div>
+<a name="_Triggers" id="_Triggers"></a><div class="element clickable method public _Triggers" data-toggle="collapse" data-target="._Triggers .collapse">
+<h2>GENERATE TRIGGERS IF NEEDED
+used when table has auto-incrementing field that is emulated using triggers</h2>
+<pre>_Triggers($tabname, $tableoptions) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tabname</h4></div>
+<div class="subelement argument"><h4>$tableoptions</h4></div>
+</div></div>
+</div>
+<a name="_getSizePrec" id="_getSizePrec"></a><div class="element clickable method public _getSizePrec" data-toggle="collapse" data-target="._getSizePrec .collapse">
+<h2>_getSizePrec()
+        </h2>
+<pre>_getSizePrec($size) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::_getSizePrec()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$size</h4></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24addCol" id="$addCol"> </a><div class="element clickable property public $addCol" data-toggle="collapse" data-target=".$addCol .collapse">
+<h2>$addCol</h2>
+<pre>$addCol </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$addCol</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24alterCol" id="$alterCol"> </a><div class="element clickable property public $alterCol" data-toggle="collapse" data-target=".$alterCol .collapse">
+<h2>$alterCol</h2>
+<pre>$alterCol </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$alterCol</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24autoIncrement" id="$autoIncrement"> </a><div class="element clickable property public $autoIncrement" data-toggle="collapse" data-target=".$autoIncrement .collapse">
+<h2>$autoIncrement</h2>
+<pre>$autoIncrement </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$autoIncrement</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24blobSize" id="$blobSize"> </a><div class="element clickable property public $blobSize" data-toggle="collapse" data-target=".$blobSize .collapse">
+<h2>$blobSize</h2>
+<pre>$blobSize </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24connection" id="$connection"> </a><div class="element clickable property public $connection" data-toggle="collapse" data-target=".$connection .collapse">
+<h2>$connection</h2>
+<pre>$connection </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$connection</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24dataProvider" id="$dataProvider"> </a><div class="element clickable property public $dataProvider" data-toggle="collapse" data-target=".$dataProvider .collapse">
+<h2>$dataProvider</h2>
+<pre>$dataProvider </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$dataProvider</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24databaseType" id="$databaseType"> </a><div class="element clickable property public $databaseType" data-toggle="collapse" data-target=".$databaseType .collapse">
+<h2>$databaseType</h2>
+<pre>$databaseType </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24debug" id="$debug"> </a><div class="element clickable property public $debug" data-toggle="collapse" data-target=".$debug .collapse">
+<h2>$debug</h2>
+<pre>$debug </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$debug</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24dropCol" id="$dropCol"> </a><div class="element clickable property public $dropCol" data-toggle="collapse" data-target=".$dropCol .collapse">
+<h2>$dropCol</h2>
+<pre>$dropCol </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$dropCol</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24dropIndex" id="$dropIndex"> </a><div class="element clickable property public $dropIndex" data-toggle="collapse" data-target=".$dropIndex .collapse">
+<h2>$dropIndex</h2>
+<pre>$dropIndex </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$dropIndex</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24dropTable" id="$dropTable"> </a><div class="element clickable property public $dropTable" data-toggle="collapse" data-target=".$dropTable .collapse">
+<h2>$dropTable</h2>
+<pre>$dropTable </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$dropTable</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24invalidResizeTypes4" id="$invalidResizeTypes4"> </a><div class="element clickable property public $invalidResizeTypes4" data-toggle="collapse" data-target=".$invalidResizeTypes4 .collapse">
+<h2>$invalidResizeTypes4</h2>
+<pre>$invalidResizeTypes4 </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$invalidResizeTypes4</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24nameRegex" id="$nameRegex"> </a><div class="element clickable property public $nameRegex" data-toggle="collapse" data-target=".$nameRegex .collapse">
+<h2>$nameRegex</h2>
+<pre>$nameRegex </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$nameRegex</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24nameRegexBrackets" id="$nameRegexBrackets"> </a><div class="element clickable property public $nameRegexBrackets" data-toggle="collapse" data-target=".$nameRegexBrackets .collapse">
+<h2>$nameRegexBrackets</h2>
+<pre>$nameRegexBrackets </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$nameRegexBrackets</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24renameColumn" id="$renameColumn"> </a><div class="element clickable property public $renameColumn" data-toggle="collapse" data-target=".$renameColumn .collapse">
+<h2>$renameColumn</h2>
+<pre>$renameColumn </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$renameColumn</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24renameTable" id="$renameTable"> </a><div class="element clickable property public $renameTable" data-toggle="collapse" data-target=".$renameTable .collapse">
+<h2>$renameTable</h2>
+<pre>$renameTable </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$renameTable</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24schema" id="$schema"> </a><div class="element clickable property public $schema" data-toggle="collapse" data-target=".$schema .collapse">
+<h2>$schema</h2>
+<pre>$schema </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$schema</td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24seqField" id="$seqField"> </a><div class="element clickable property public $seqField" data-toggle="collapse" data-target=".$seqField .collapse">
+<h2>$seqField</h2>
+<pre>$seqField </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24seqPrefix" id="$seqPrefix"> </a><div class="element clickable property public $seqPrefix" data-toggle="collapse" data-target=".$seqPrefix .collapse">
+<h2>$seqPrefix</h2>
+<pre>$seqPrefix </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24serverInfo" id="$serverInfo"> </a><div class="element clickable property public $serverInfo" data-toggle="collapse" data-target=".$serverInfo .collapse">
+<h2>$serverInfo</h2>
+<pre>$serverInfo </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\ADODB_DataDict::$$serverInfo</td>
+</tr></table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a9</a> and<br>
+            generated on 2012-08-30T17:35:53-03:00.<br></footer></div>
+</div>
+</body>
+</html>

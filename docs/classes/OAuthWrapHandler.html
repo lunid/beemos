@@ -1,0 +1,219 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \OAuthWrapHandler</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Auth.html"><i class="icon-folder-open"></i> Auth</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/axmls.html"><i class="icon-folder-open"></i> axmls</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+<li><a href="../packages/com.html"><i class="icon-folder-open"></i> com</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">4445</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">7</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">14</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#ExpireCookies" title="ExpireCookies :: "><span class="description">ExpireCookies()
+        </span><pre>ExpireCookies()</pre></a></li>
+<li class="method public "><a href="#GET" title="GET :: "><span class="description">GET()
+        </span><pre>GET()</pre></a></li>
+<li class="method public "><a href="#MakeUrl" title="MakeUrl :: "><span class="description">MakeUrl()
+        </span><pre>MakeUrl()</pre></a></li>
+<li class="method public "><a href="#ProcessRequest" title="ProcessRequest :: "><span class="description">ProcessRequest()
+        </span><pre>ProcessRequest()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#convertParamsToCookies" title="convertParamsToCookies :: "><span class="description">convertParamsToCookies()
+        </span><pre>convertParamsToCookies()</pre></a></li>
+<li class="method private "><a href="#getAuthorizationToken" title="getAuthorizationToken :: "><span class="description">getAuthorizationToken()
+        </span><pre>getAuthorizationToken()</pre></a></li>
+<li class="method private "><a href="#parseWRAPResponse" title="parseWRAPResponse :: "><span class="description">parseWRAPResponse()
+        </span><pre>parseWRAPResponse()</pre></a></li>
+<li class="method private "><a href="#postWRAPRequest" title="postWRAPRequest :: "><span class="description">postWRAPRequest()
+        </span><pre>postWRAPRequest()</pre></a></li>
+<li class="method private "><a href="#setAuthCookies" title="setAuthCookies :: "><span class="description">setAuthCookies()
+        </span><pre>setAuthCookies()</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5COAuthWrapHandler" id="\OAuthWrapHandler"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/OAuthWrapHandler.html">OAuthWrapHandler</a>
+</li>
+</ul>
+<div href="../classes/OAuthWrapHandler.html" class="element class">
+<p class="short_description">FILE:        OAuthWrapHandler.php</p>
+<div class="details">
+<p class="long_description"><p>DESCRIPTION: Sample implementation of OAuth WRAP Authentication protocol.</p>
+
+<p>VERSION:     1.1</p>
+
+<p>Copyright (c) Microsoft Corporation. All rights reserved.</p>
+
+<p>OAuthWrapHandler
+This handler is used to both process the raw HTTP requests that generate the
+required cookies for the Windows Live javascript control to work within a
+php applicaiton.</p></p>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="ExpireCookies" id="ExpireCookies"></a><div class="element clickable method public ExpireCookies" data-toggle="collapse" data-target=".ExpireCookies .collapse">
+<h2>ExpireCookies()
+        </h2>
+<pre>ExpireCookies() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="GET" id="GET"></a><div class="element clickable method public GET" data-toggle="collapse" data-target=".GET .collapse">
+<h2>GET()
+        </h2>
+<pre>GET($url, $params, $auth) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$url</h4></div>
+<div class="subelement argument"><h4>$params</h4></div>
+<div class="subelement argument"><h4>$auth</h4></div>
+</div></div>
+</div>
+<a name="MakeUrl" id="MakeUrl"></a><div class="element clickable method public MakeUrl" data-toggle="collapse" data-target=".MakeUrl .collapse">
+<h2>MakeUrl()
+        </h2>
+<pre>MakeUrl($url, $params) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$url</h4></div>
+<div class="subelement argument"><h4>$params</h4></div>
+</div></div>
+</div>
+<a name="ProcessRequest" id="ProcessRequest"></a><div class="element clickable method public ProcessRequest" data-toggle="collapse" data-target=".ProcessRequest .collapse">
+<h2>ProcessRequest()
+        </h2>
+<pre>ProcessRequest() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="convertParamsToCookies" id="convertParamsToCookies"></a><div class="element clickable method private convertParamsToCookies" data-toggle="collapse" data-target=".convertParamsToCookies .collapse">
+<h2>convertParamsToCookies()
+        </h2>
+<pre>convertParamsToCookies($array) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$array</h4></div>
+</div></div>
+</div>
+<a name="getAuthorizationToken" id="getAuthorizationToken"></a><div class="element clickable method private getAuthorizationToken" data-toggle="collapse" data-target=".getAuthorizationToken .collapse">
+<h2>getAuthorizationToken()
+        </h2>
+<pre>getAuthorizationToken($authUrl, $appId, $appSecret, $callbackUrl, $verificationCode) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$authUrl</h4></div>
+<div class="subelement argument"><h4>$appId</h4></div>
+<div class="subelement argument"><h4>$appSecret</h4></div>
+<div class="subelement argument"><h4>$callbackUrl</h4></div>
+<div class="subelement argument"><h4>$verificationCode</h4></div>
+</div></div>
+</div>
+<a name="parseWRAPResponse" id="parseWRAPResponse"></a><div class="element clickable method private parseWRAPResponse" data-toggle="collapse" data-target=".parseWRAPResponse .collapse">
+<h2>parseWRAPResponse()
+        </h2>
+<pre>parseWRAPResponse($response) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$response</h4></div>
+</div></div>
+</div>
+<a name="postWRAPRequest" id="postWRAPRequest"></a><div class="element clickable method private postWRAPRequest" data-toggle="collapse" data-target=".postWRAPRequest .collapse">
+<h2>postWRAPRequest()
+        </h2>
+<pre>postWRAPRequest($posturl, $postvars) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$posturl</h4></div>
+<div class="subelement argument"><h4>$postvars</h4></div>
+</div></div>
+</div>
+<a name="setAuthCookies" id="setAuthCookies"></a><div class="element clickable method private setAuthCookies" data-toggle="collapse" data-target=".setAuthCookies .collapse">
+<h2>setAuthCookies()
+        </h2>
+<pre>setAuthCookies($cookies) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$cookies</h4></div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a9</a> and<br>
+            generated on 2012-08-30T17:36:06-03:00.<br></footer></div>
+</div>
+</body>
+</html>

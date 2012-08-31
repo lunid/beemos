@@ -542,8 +542,13 @@ class Usuario{
      * 
      * @return boolean
      */
-    public function validaUsuarioAvaliacao($id_materia){
+    public function validaUsuarioAvaliacao($id_materia = 0){
         try{
+            //Se ADM...
+            if($this->id_perfil == 1){
+                return true;
+            }
+            
             if($this->id_usuario == 0){
                 throw new Exception("O campo ID_USUARIO é obrigatório para efertuar a validação de acesso");
             }
@@ -564,7 +569,7 @@ class Usuario{
                     WHERE
                         UM.ID_USUARIO = {$this->id_usuario}
                     AND
-                        UM.ID_USUARIO = {$id_materia}
+                        UM.ID_MATERIA = {$id_materia}
                     LIMIT 
                         1
                     ;";

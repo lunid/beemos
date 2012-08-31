@@ -85,9 +85,13 @@
                     <?=$questao->getTotalUso()?>
                 </td>
                 <td>
+                    <? if($questao->ID_AVALIACAO_QUESTAO > 0){ ?>
+                        <img src="../img/avaliacao-concluida.jpg" border="0" style="width:23px;height:23px;" />
+                    <? }else{ ?>
                     <a href="top10_avaliar_questao.php?id_questao=<?=$questao->getIdBcoQuestao()?>&id_materia=<?=$id_materia?>" target="_blank">
                         <img src="../img/icone_avaliar.gif" border="0" style="width:23px;height:23px;" />
                     </a>
+                    <? } ?>
                 </td>
             </tr>
             <? $pos++; } ?>

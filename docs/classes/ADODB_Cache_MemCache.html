@@ -1,0 +1,233 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \ADODB_Cache_MemCache</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Auth.html"><i class="icon-folder-open"></i> Auth</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/axmls.html"><i class="icon-folder-open"></i> axmls</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+<li><a href="../packages/com.html"><i class="icon-folder-open"></i> com</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">4445</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">7</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">14</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#ADODB_Cache_MemCache" title="ADODB_Cache_MemCache :: "><span class="description">ADODB_Cache_MemCache()
+        </span><pre>ADODB_Cache_MemCache()</pre></a></li>
+<li class="method public "><a href="#connect" title="connect :: "><span class="description">connect()
+        </span><pre>connect()</pre></a></li>
+<li class="method public "><a href="#createdir" title="createdir :: "><span class="description">createdir()
+        </span><pre>createdir()</pre></a></li>
+<li class="method public "><a href="#flushall" title="flushall :: "><span class="description">flushall()
+        </span><pre>flushall()</pre></a></li>
+<li class="method public "><a href="#flushcache" title="flushcache :: "><span class="description">flushcache()
+        </span><pre>flushcache()</pre></a></li>
+<li class="method public "><a href="#readcache" title="readcache :: "><span class="description">readcache()
+        </span><pre>readcache()</pre></a></li>
+<li class="method public "><a href="#writecache" title="writecache :: "><span class="description">writecache()
+        </span><pre>writecache()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24_connected" title="$_connected :: "><span class="description">$_connected</span><pre>$_connected</pre></a></li>
+<li class="property public "><a href="#%24_memcache" title="$_memcache :: "><span class="description">$_memcache</span><pre>$_memcache</pre></a></li>
+<li class="property public "><a href="#%24compress" title="$compress :: "><span class="description">$compress</span><pre>$compress</pre></a></li>
+<li class="property public "><a href="#%24createdir" title="$createdir :: "><span class="description">$createdir</span><pre>$createdir</pre></a></li>
+<li class="property public "><a href="#%24hosts" title="$hosts :: "><span class="description">$hosts</span><pre>$hosts</pre></a></li>
+<li class="property public "><a href="#%24port" title="$port :: "><span class="description">$port</span><pre>$port</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CADODB_Cache_MemCache" id="\ADODB_Cache_MemCache"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/ADODB_Cache_MemCache.html">ADODB_Cache_MemCache</a>
+</li>
+</ul>
+<div href="../classes/ADODB_Cache_MemCache.html" class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="ADODB_Cache_MemCache" id="ADODB_Cache_MemCache"></a><div class="element clickable method public ADODB_Cache_MemCache" data-toggle="collapse" data-target=".ADODB_Cache_MemCache .collapse">
+<h2>ADODB_Cache_MemCache()
+        </h2>
+<pre>ADODB_Cache_MemCache($obj) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$obj</h4></div>
+</div></div>
+</div>
+<a name="connect" id="connect"></a><div class="element clickable method public connect" data-toggle="collapse" data-target=".connect .collapse">
+<h2>connect()
+        </h2>
+<pre>connect($err) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$err</h4></div>
+</div></div>
+</div>
+<a name="createdir" id="createdir"></a><div class="element clickable method public createdir" data-toggle="collapse" data-target=".createdir .collapse">
+<h2>createdir()
+        </h2>
+<pre>createdir($dir, $hash) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$dir</h4></div>
+<div class="subelement argument"><h4>$hash</h4></div>
+</div></div>
+</div>
+<a name="flushall" id="flushall"></a><div class="element clickable method public flushall" data-toggle="collapse" data-target=".flushall .collapse">
+<h2>flushall()
+        </h2>
+<pre>flushall($debug) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$debug</h4></div>
+</div></div>
+</div>
+<a name="flushcache" id="flushcache"></a><div class="element clickable method public flushcache" data-toggle="collapse" data-target=".flushcache .collapse">
+<h2>flushcache()
+        </h2>
+<pre>flushcache($filename, $debug) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$filename</h4></div>
+<div class="subelement argument"><h4>$debug</h4></div>
+</div></div>
+</div>
+<a name="readcache" id="readcache"></a><div class="element clickable method public readcache" data-toggle="collapse" data-target=".readcache .collapse">
+<h2>readcache()
+        </h2>
+<pre>readcache($filename, $err, $secs2cache, $rsClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$filename</h4></div>
+<div class="subelement argument"><h4>$err</h4></div>
+<div class="subelement argument"><h4>$secs2cache</h4></div>
+<div class="subelement argument"><h4>$rsClass</h4></div>
+</div></div>
+</div>
+<a name="writecache" id="writecache"></a><div class="element clickable method public writecache" data-toggle="collapse" data-target=".writecache .collapse">
+<h2>writecache()
+        </h2>
+<pre>writecache($filename, $contents, $debug, $secs2cache) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$filename</h4></div>
+<div class="subelement argument"><h4>$contents</h4></div>
+<div class="subelement argument"><h4>$debug</h4></div>
+<div class="subelement argument"><h4>$secs2cache</h4></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24_connected" id="$_connected"> </a><div class="element clickable property public $_connected" data-toggle="collapse" data-target=".$_connected .collapse">
+<h2>$_connected</h2>
+<pre>$_connected </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_memcache" id="$_memcache"> </a><div class="element clickable property public $_memcache" data-toggle="collapse" data-target=".$_memcache .collapse">
+<h2>$_memcache</h2>
+<pre>$_memcache </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24compress" id="$compress"> </a><div class="element clickable property public $compress" data-toggle="collapse" data-target=".$compress .collapse">
+<h2>$compress</h2>
+<pre>$compress </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24createdir" id="$createdir"> </a><div class="element clickable property public $createdir" data-toggle="collapse" data-target=".$createdir .collapse">
+<h2>$createdir</h2>
+<pre>$createdir </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24hosts" id="$hosts"> </a><div class="element clickable property public $hosts" data-toggle="collapse" data-target=".$hosts .collapse">
+<h2>$hosts</h2>
+<pre>$hosts </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24port" id="$port"> </a><div class="element clickable property public $port" data-toggle="collapse" data-target=".$port .collapse">
+<h2>$port</h2>
+<pre>$port </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a9</a> and<br>
+            generated on 2012-08-30T17:35:51-03:00.<br></footer></div>
+</div>
+</body>
+</html>

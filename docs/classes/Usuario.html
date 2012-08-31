@@ -1,0 +1,650 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \Usuario</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Auth.html"><i class="icon-folder-open"></i> Auth</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/axmls.html"><i class="icon-folder-open"></i> axmls</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+<li><a href="../packages/com.html"><i class="icon-folder-open"></i> com</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">4445</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">7</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">14</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#atualizaUltimoAcesso" title="atualizaUltimoAcesso :: Função que atualiza a data de ULTIMO_ACESSO do Usuário."><span class="description">Função que atualiza a data de ULTIMO_ACESSO do Usuário.</span><pre>atualizaUltimoAcesso()</pre></a></li>
+<li class="method public "><a href="#carregaMateriasUsuarioAvaliacao" title="carregaMateriasUsuarioAvaliacao :: Função que carrega as matérias que o usuário possui pendentes de avaliação no TOP 10"><span class="description">Função que carrega as matérias que o usuário possui pendentes de avaliação no TOP 10</span><pre>carregaMateriasUsuarioAvaliacao()</pre></a></li>
+<li class="method public "><a href="#carregaUsuario" title="carregaUsuario :: Função para validação de existência do E-MAIL de usuário."><span class="description">Função para validação de existência do E-MAIL de usuário.</span><pre>carregaUsuario()</pre></a></li>
+<li class="method public "><a href="#efetuaLogin" title="efetuaLogin :: Função que valida o usuário e senha da tela de LOGIN do painel administrativo."><span class="description">Função que valida o usuário e senha da tela de LOGIN do painel administrativo.</span><pre>efetuaLogin()</pre></a></li>
+<li class="method public "><a href="#getDataRegistro" title="getDataRegistro :: Função que retorna o valor da propriedade DATA_REGISTRO"><span class="description">Função que retorna o valor da propriedade DATA_REGISTRO</span><pre>getDataRegistro()</pre></a></li>
+<li class="method public "><a href="#getDescricaoStatus" title="getDescricaoStatus :: Função que retorna o valor da propriedade DESCRICAO_STATUS"><span class="description">Função que retorna o valor da propriedade DESCRICAO_STATUS</span><pre>getDescricaoStatus()</pre></a></li>
+<li class="method public "><a href="#getEmail" title="getEmail :: Função que retorna o valor da propriedade EMAIL"><span class="description">Função que retorna o valor da propriedade EMAIL</span><pre>getEmail()</pre></a></li>
+<li class="method public "><a href="#getIdPerfil" title="getIdPerfil :: Função que retorna o valor da propriedade ID_PERFIL"><span class="description">Função que retorna o valor da propriedade ID_PERFIL</span><pre>getIdPerfil()</pre></a></li>
+<li class="method public "><a href="#getIdUsuario" title="getIdUsuario :: Função para iniciar o valor da propriedade ID_USUARIO"><span class="description">Função para iniciar o valor da propriedade ID_USUARIO</span><pre>getIdUsuario()</pre></a></li>
+<li class="method public "><a href="#getNome" title="getNome :: Função que retorna o valor da propriedade NOME"><span class="description">Função que retorna o valor da propriedade NOME</span><pre>getNome()</pre></a></li>
+<li class="method public "><a href="#getPerfil" title="getPerfil :: Função que retorna o valor do Objeto Perfil"><span class="description">Função que retorna o valor do Objeto Perfil</span><pre>getPerfil()</pre></a></li>
+<li class="method public "><a href="#getSenha" title="getSenha :: Função que retorna o valor da propriedade SENHA"><span class="description">Função que retorna o valor da propriedade SENHA</span><pre>getSenha()</pre></a></li>
+<li class="method public "><a href="#getStatus" title="getStatus :: Função que retorna o valor da propriedade STATUS"><span class="description">Função que retorna o valor da propriedade STATUS</span><pre>getStatus()</pre></a></li>
+<li class="method public "><a href="#getUltimoAcesso" title="getUltimoAcesso :: Função que retorna o valor da propriedade ULTIMO_ACESSO"><span class="description">Função que retorna o valor da propriedade ULTIMO_ACESSO</span><pre>getUltimoAcesso()</pre></a></li>
+<li class="method public "><a href="#save" title="save :: Funcção que efetua INSERÇÃO ou ou UPDATE do dados do Usuário."><span class="description">Funcção que efetua INSERÇÃO ou ou UPDATE do dados do Usuário.</span><pre>save()</pre></a></li>
+<li class="method public "><a href="#setDataRegistro" title="setDataRegistro :: Função para iniciar o valor da propriedade DATA_REGISTRO"><span class="description">Função para iniciar o valor da propriedade DATA_REGISTRO</span><pre>setDataRegistro()</pre></a></li>
+<li class="method public "><a href="#setEmail" title="setEmail :: Função para iniciar o valor da propriedade EMAIL"><span class="description">Função para iniciar o valor da propriedade EMAIL</span><pre>setEmail()</pre></a></li>
+<li class="method public "><a href="#setIdPerfil" title="setIdPerfil :: Função para iniciar o valor da propriedade ID_PERFIL"><span class="description">Função para iniciar o valor da propriedade ID_PERFIL</span><pre>setIdPerfil()</pre></a></li>
+<li class="method public "><a href="#setIdUsuario" title="setIdUsuario :: Função para iniciar o valor da propriedade ID_USUARIO"><span class="description">Função para iniciar o valor da propriedade ID_USUARIO</span><pre>setIdUsuario()</pre></a></li>
+<li class="method public "><a href="#setNome" title="setNome :: Função para iniciar o valor da propriedade NOME"><span class="description">Função para iniciar o valor da propriedade NOME</span><pre>setNome()</pre></a></li>
+<li class="method public "><a href="#setSenha" title="setSenha :: Função para iniciar o valor da propriedade SENHA"><span class="description">Função para iniciar o valor da propriedade SENHA</span><pre>setSenha()</pre></a></li>
+<li class="method public "><a href="#setStatus" title="setStatus :: Função para iniciar o valor da propriedade STATUS"><span class="description">Função para iniciar o valor da propriedade STATUS</span><pre>setStatus()</pre></a></li>
+<li class="method public "><a href="#setUltimoAcesso" title="setUltimoAcesso :: Função para iniciar o valor da propriedade ULTIMO_ACESSO"><span class="description">Função para iniciar o valor da propriedade ULTIMO_ACESSO</span><pre>setUltimoAcesso()</pre></a></li>
+<li class="method public "><a href="#validaAcesso" title="validaAcesso :: Função que valida o objeto Usuario carregado para cesso ao sistema"><span class="description">Função que valida o objeto Usuario carregado para cesso ao sistema</span><pre>validaAcesso()</pre></a></li>
+<li class="method public "><a href="#validaEmailUsuario" title="validaEmailUsuario :: Função para validação de existência do E-MAIL de usuário."><span class="description">Função para validação de existência do E-MAIL de usuário.</span><pre>validaEmailUsuario()</pre></a></li>
+<li class="method public "><a href="#validaUsuarioAvaliacao" title="validaUsuarioAvaliacao :: Função responsável em validar a permissão de avalição de questões ao usuário logado."><span class="description">Função responsável em validar a permissão de avalição de questões ao usuário logado.</span><pre>validaUsuarioAvaliacao()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24data_registro" title="$data_registro :: "><span class="description">$data_registro</span><pre>$data_registro</pre></a></li>
+<li class="property private "><a href="#%24descricao_status" title="$descricao_status :: "><span class="description">$descricao_status</span><pre>$descricao_status</pre></a></li>
+<li class="property private "><a href="#%24email" title="$email :: "><span class="description">$email</span><pre>$email</pre></a></li>
+<li class="property private "><a href="#%24id_perfil" title="$id_perfil :: "><span class="description">$id_perfil</span><pre>$id_perfil</pre></a></li>
+<li class="property private "><a href="#%24id_usuario" title="$id_usuario :: "><span class="description">$id_usuario</span><pre>$id_usuario</pre></a></li>
+<li class="property private "><a href="#%24nome" title="$nome :: "><span class="description">$nome</span><pre>$nome</pre></a></li>
+<li class="property private "><a href="#%24obj_perfil" title="$obj_perfil :: "><span class="description">$obj_perfil</span><pre>$obj_perfil</pre></a></li>
+<li class="property private "><a href="#%24senha" title="$senha :: "><span class="description">$senha</span><pre>$senha</pre></a></li>
+<li class="property private "><a href="#%24status" title="$status :: "><span class="description">$status</span><pre>$status</pre></a></li>
+<li class="property private "><a href="#%24ultimo_acesso" title="$ultimo_acesso :: "><span class="description">$ultimo_acesso</span><pre>$ultimo_acesso</pre></a></li>
+</ul>
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#geraSenha" title="geraSenha :: Função que geradinamicamente a senha do visitante"><span class="description">Função que geradinamicamente a senha do visitante</span><pre>geraSenha()</pre></a></li>
+<li class="method public "><a href="#getEmail" title="getEmail :: Função que retorna o valor da propriedade E_MAIL"><span class="description">Função que retorna o valor da propriedade E_MAIL</span><pre>getEmail()</pre></a></li>
+<li class="method public "><a href="#getId" title="getId :: Função para iniciar o valor da propriedade ID"><span class="description">Função para iniciar o valor da propriedade ID</span><pre>getId()</pre></a></li>
+<li class="method public "><a href="#getNome" title="getNome :: Função que retorna o valor da propriedade NOME"><span class="description">Função que retorna o valor da propriedade NOME</span><pre>getNome()</pre></a></li>
+<li class="method public "><a href="#reenviarSenha" title="reenviarSenha :: Função busca os dados do usuário e reenvia a senha dele"><span class="description">Função busca os dados do usuário e reenvia a senha dele</span><pre>reenviarSenha()</pre></a></li>
+<li class="method public "><a href="#setEmail" title="setEmail :: Função para iniciar o valor da propriedade E-MAIL"><span class="description">Função para iniciar o valor da propriedade E-MAIL</span><pre>setEmail()</pre></a></li>
+<li class="method public "><a href="#setId" title="setId :: Função para iniciar o valor da propriedade ID"><span class="description">Função para iniciar o valor da propriedade ID</span><pre>setId()</pre></a></li>
+<li class="method public "><a href="#setNome" title="setNome :: Função para iniciar o valor da propriedade NOME"><span class="description">Função para iniciar o valor da propriedade NOME</span><pre>setNome()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24email" title="$email :: "><span class="description">$email</span><pre>$email</pre></a></li>
+<li class="property private "><a href="#%24id" title="$id :: "><span class="description">$id</span><pre>$id</pre></a></li>
+<li class="property private "><a href="#%24nome" title="$nome :: "><span class="description">$nome</span><pre>$nome</pre></a></li>
+<li class="property private "><a href="#%24senha" title="$senha :: "><span class="description">$senha</span><pre>$senha</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CUsuario" id="\Usuario"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/Usuario.html">Usuario</a>
+</li>
+</ul>
+<div href="../classes/Usuario.html" class="element class">
+<p class="short_description">Classe para controle de dados de ADM_USUARIO</p>
+<div class="details">
+<p class="long_description"></p>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="atualizaUltimoAcesso" id="atualizaUltimoAcesso"></a><div class="element clickable method public atualizaUltimoAcesso" data-toggle="collapse" data-target=".atualizaUltimoAcesso .collapse">
+<h2>Função que atualiza a data de ULTIMO_ACESSO do Usuário.</h2>
+<pre>atualizaUltimoAcesso() : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="carregaMateriasUsuarioAvaliacao" id="carregaMateriasUsuarioAvaliacao"></a><div class="element clickable method public carregaMateriasUsuarioAvaliacao" data-toggle="collapse" data-target=".carregaMateriasUsuarioAvaliacao .collapse">
+<h2>Função que carrega as matérias que o usuário possui pendentes de avaliação no TOP 10</h2>
+<pre>carregaMateriasUsuarioAvaliacao() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>Array com o resultado da busca SQL</div>
+</div></div>
+</div>
+<a name="carregaUsuario" id="carregaUsuario"></a><div class="element clickable method public carregaUsuario" data-toggle="collapse" data-target=".carregaUsuario .collapse">
+<h2>Função para validação de existência do E-MAIL de usuário.</h2>
+<pre>carregaUsuario($id_usuario) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$id_usuario</h4></div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="efetuaLogin" id="efetuaLogin"></a><div class="element clickable method public efetuaLogin" data-toggle="collapse" data-target=".efetuaLogin .collapse">
+<h2>Função que valida o usuário e senha da tela de LOGIN do painel administrativo.</h2>
+<pre>efetuaLogin() : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>É necessário iniciar os valor de EMAIL e SENHA para que a função seja executada</p></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="getDataRegistro" id="getDataRegistro"></a><div class="element clickable method public getDataRegistro" data-toggle="collapse" data-target=".getDataRegistro .collapse">
+<h2>Função que retorna o valor da propriedade DATA_REGISTRO</h2>
+<pre>getDataRegistro() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="getDescricaoStatus" id="getDescricaoStatus"></a><div class="element clickable method public getDescricaoStatus" data-toggle="collapse" data-target=".getDescricaoStatus .collapse">
+<h2>Função que retorna o valor da propriedade DESCRICAO_STATUS</h2>
+<pre>getDescricaoStatus() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="getEmail" id="getEmail"></a><div class="element clickable method public getEmail" data-toggle="collapse" data-target=".getEmail .collapse">
+<h2>Função que retorna o valor da propriedade EMAIL</h2>
+<pre>getEmail() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="getIdPerfil" id="getIdPerfil"></a><div class="element clickable method public getIdPerfil" data-toggle="collapse" data-target=".getIdPerfil .collapse">
+<h2>Função que retorna o valor da propriedade ID_PERFIL</h2>
+<pre>getIdPerfil() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>int</code></div>
+</div></div>
+</div>
+<a name="getIdUsuario" id="getIdUsuario"></a><div class="element clickable method public getIdUsuario" data-toggle="collapse" data-target=".getIdUsuario .collapse">
+<h2>Função para iniciar o valor da propriedade ID_USUARIO</h2>
+<pre>getIdUsuario() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>int</code></div>
+</div></div>
+</div>
+<a name="getNome" id="getNome"></a><div class="element clickable method public getNome" data-toggle="collapse" data-target=".getNome .collapse">
+<h2>Função que retorna o valor da propriedade NOME</h2>
+<pre>getNome() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="getPerfil" id="getPerfil"></a><div class="element clickable method public getPerfil" data-toggle="collapse" data-target=".getPerfil .collapse">
+<h2>Função que retorna o valor do Objeto Perfil</h2>
+<pre>getPerfil() : <a href="../classes/Perfil.html">\Perfil</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="../classes/Perfil.html">\Perfil</a></code></div>
+</div></div>
+</div>
+<a name="getSenha" id="getSenha"></a><div class="element clickable method public getSenha" data-toggle="collapse" data-target=".getSenha .collapse">
+<h2>Função que retorna o valor da propriedade SENHA</h2>
+<pre>getSenha() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="getStatus" id="getStatus"></a><div class="element clickable method public getStatus" data-toggle="collapse" data-target=".getStatus .collapse">
+<h2>Função que retorna o valor da propriedade STATUS</h2>
+<pre>getStatus() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="getUltimoAcesso" id="getUltimoAcesso"></a><div class="element clickable method public getUltimoAcesso" data-toggle="collapse" data-target=".getUltimoAcesso .collapse">
+<h2>Função que retorna o valor da propriedade ULTIMO_ACESSO</h2>
+<pre>getUltimoAcesso() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
+<a name="save" id="save"></a><div class="element clickable method public save" data-toggle="collapse" data-target=".save .collapse">
+<h2>Funcção que efetua INSERÇÃO ou ou UPDATE do dados do Usuário.</h2>
+<pre>save() : <a href="http://php.net/manual/en/class.stdclass.php">\stdClass</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Se o ID_USUARIO for iniciado, a função fará o UPDATE de dados.
+Caso contrário, será feita a INSERÇÃO dos dados com uma validação de E-MAIL existente.</p></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code><a href="http://php.net/manual/en/class.stdclass.php">\stdClass</a></code>Objeto com o retorno final da operação. Propriedade status e msg.</div>
+</div></div>
+</div>
+<a name="setDataRegistro" id="setDataRegistro"></a><div class="element clickable method public setDataRegistro" data-toggle="collapse" data-target=".setDataRegistro .collapse">
+<h2>Função para iniciar o valor da propriedade DATA_REGISTRO</h2>
+<pre>setDataRegistro(string $data_registro) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$data_registro</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<a name="setEmail" id="setEmail"></a><div class="element clickable method public setEmail" data-toggle="collapse" data-target=".setEmail .collapse">
+<h2>Função para iniciar o valor da propriedade EMAIL</h2>
+<pre>setEmail(string $email) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$email</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<a name="setIdPerfil" id="setIdPerfil"></a><div class="element clickable method public setIdPerfil" data-toggle="collapse" data-target=".setIdPerfil .collapse">
+<h2>Função para iniciar o valor da propriedade ID_PERFIL</h2>
+<pre>setIdPerfil(int $id_perfil) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id_perfil</h4>
+<code>int</code>
+</div>
+</div></div>
+</div>
+<a name="setIdUsuario" id="setIdUsuario"></a><div class="element clickable method public setIdUsuario" data-toggle="collapse" data-target=".setIdUsuario .collapse">
+<h2>Função para iniciar o valor da propriedade ID_USUARIO</h2>
+<pre>setIdUsuario(int $id) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>int</code>
+</div>
+</div></div>
+</div>
+<a name="setNome" id="setNome"></a><div class="element clickable method public setNome" data-toggle="collapse" data-target=".setNome .collapse">
+<h2>Função para iniciar o valor da propriedade NOME</h2>
+<pre>setNome($nome) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$nome</h4></div>
+</div></div>
+</div>
+<a name="setSenha" id="setSenha"></a><div class="element clickable method public setSenha" data-toggle="collapse" data-target=".setSenha .collapse">
+<h2>Função para iniciar o valor da propriedade SENHA</h2>
+<pre>setSenha(string $senha) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$senha</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<a name="setStatus" id="setStatus"></a><div class="element clickable method public setStatus" data-toggle="collapse" data-target=".setStatus .collapse">
+<h2>Função para iniciar o valor da propriedade STATUS</h2>
+<pre>setStatus(string $status) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$status</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<a name="setUltimoAcesso" id="setUltimoAcesso"></a><div class="element clickable method public setUltimoAcesso" data-toggle="collapse" data-target=".setUltimoAcesso .collapse">
+<h2>Função para iniciar o valor da propriedade ULTIMO_ACESSO</h2>
+<pre>setUltimoAcesso(string $ultimo_acesso) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$ultimo_acesso</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<a name="validaAcesso" id="validaAcesso"></a><div class="element clickable method public validaAcesso" data-toggle="collapse" data-target=".validaAcesso .collapse">
+<h2>Função que valida o objeto Usuario carregado para cesso ao sistema</h2>
+<pre>validaAcesso(\Usuario $usuario) : <a href="http://php.net/manual/en/class.stdclass.php">\stdClass</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$usuario</h4>
+<code><a href="../classes/Usuario.html">\Usuario</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="http://php.net/manual/en/class.stdclass.php">\stdClass</a></code></div>
+</div></div>
+</div>
+<a name="validaEmailUsuario" id="validaEmailUsuario"></a><div class="element clickable method public validaEmailUsuario" data-toggle="collapse" data-target=".validaEmailUsuario .collapse">
+<h2>Função para validação de existência do E-MAIL de usuário.</h2>
+<pre>validaEmailUsuario() : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a name="validaUsuarioAvaliacao" id="validaUsuarioAvaliacao"></a><div class="element clickable method public validaUsuarioAvaliacao" data-toggle="collapse" data-target=".validaUsuarioAvaliacao .collapse">
+<h2>Função responsável em validar a permissão de avalição de questões ao usuário logado.</h2>
+<pre>validaUsuarioAvaliacao(int $id_materia) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id_materia</h4>
+<code>int</code><p>Código da matéria a ser validada</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24data_registro" id="$data_registro"> </a><div class="element clickable property private $data_registro" data-toggle="collapse" data-target=".$data_registro .collapse">
+<h2>$data_registro</h2>
+<pre>$data_registro </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24descricao_status" id="$descricao_status"> </a><div class="element clickable property private $descricao_status" data-toggle="collapse" data-target=".$descricao_status .collapse">
+<h2>$descricao_status</h2>
+<pre>$descricao_status </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24email" id="$email"> </a><div class="element clickable property private $email" data-toggle="collapse" data-target=".$email .collapse">
+<h2>$email</h2>
+<pre>$email </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24id_perfil" id="$id_perfil"> </a><div class="element clickable property private $id_perfil" data-toggle="collapse" data-target=".$id_perfil .collapse">
+<h2>$id_perfil</h2>
+<pre>$id_perfil </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24id_usuario" id="$id_usuario"> </a><div class="element clickable property private $id_usuario" data-toggle="collapse" data-target=".$id_usuario .collapse">
+<h2>$id_usuario</h2>
+<pre>$id_usuario </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24nome" id="$nome"> </a><div class="element clickable property private $nome" data-toggle="collapse" data-target=".$nome .collapse">
+<h2>$nome</h2>
+<pre>$nome </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24obj_perfil" id="$obj_perfil"> </a><div class="element clickable property private $obj_perfil" data-toggle="collapse" data-target=".$obj_perfil .collapse">
+<h2>$obj_perfil</h2>
+<pre>$obj_perfil </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24senha" id="$senha"> </a><div class="element clickable property private $senha" data-toggle="collapse" data-target=".$senha .collapse">
+<h2>$senha</h2>
+<pre>$senha </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24status" id="$status"> </a><div class="element clickable property private $status" data-toggle="collapse" data-target=".$status .collapse">
+<h2>$status</h2>
+<pre>$status </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24ultimo_acesso" id="$ultimo_acesso"> </a><div class="element clickable property private $ultimo_acesso" data-toggle="collapse" data-target=".$ultimo_acesso .collapse">
+<h2>$ultimo_acesso</h2>
+<pre>$ultimo_acesso </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+<a name="%5CUsuario" id="\Usuario"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/Usuario.html">Usuario</a>
+</li>
+</ul>
+<div href="../classes/Usuario.html" class="element class">
+<p class="short_description">Classe para manipulação dos dados de Usuário</p>
+<div class="details">
+<p class="long_description"></p>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="geraSenha" id="geraSenha"></a><div class="element clickable method public geraSenha" data-toggle="collapse" data-target=".geraSenha .collapse">
+<h2>Função que geradinamicamente a senha do visitante</h2>
+<pre>geraSenha($nome) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$nome</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>$senha</div>
+</div></div>
+</div>
+<a name="getEmail" id="getEmail"></a><div class="element clickable method public getEmail" data-toggle="collapse" data-target=".getEmail .collapse">
+<h2>Função que retorna o valor da propriedade E_MAIL</h2>
+<pre>getEmail() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>$email</div>
+</div></div>
+</div>
+<a name="getId" id="getId"></a><div class="element clickable method public getId" data-toggle="collapse" data-target=".getId .collapse">
+<h2>Função para iniciar o valor da propriedade ID</h2>
+<pre>getId() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>$id</div>
+</div></div>
+</div>
+<a name="getNome" id="getNome"></a><div class="element clickable method public getNome" data-toggle="collapse" data-target=".getNome .collapse">
+<h2>Função que retorna o valor da propriedade NOME</h2>
+<pre>getNome() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>$nome</div>
+</div></div>
+</div>
+<a name="reenviarSenha" id="reenviarSenha"></a><div class="element clickable method public reenviarSenha" data-toggle="collapse" data-target=".reenviarSenha .collapse">
+<h2>Função busca os dados do usuário e reenvia a senha dele</h2>
+<pre>reenviarSenha() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>$ret</div>
+</div></div>
+</div>
+<a name="setEmail" id="setEmail"></a><div class="element clickable method public setEmail" data-toggle="collapse" data-target=".setEmail .collapse">
+<h2>Função para iniciar o valor da propriedade E-MAIL</h2>
+<pre>setEmail(string $email) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$email</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<a name="setId" id="setId"></a><div class="element clickable method public setId" data-toggle="collapse" data-target=".setId .collapse">
+<h2>Função para iniciar o valor da propriedade ID</h2>
+<pre>setId(int $id) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>int</code>
+</div>
+</div></div>
+</div>
+<a name="setNome" id="setNome"></a><div class="element clickable method public setNome" data-toggle="collapse" data-target=".setNome .collapse">
+<h2>Função para iniciar o valor da propriedade NOME</h2>
+<pre>setNome(string $nome) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$nome</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24email" id="$email"> </a><div class="element clickable property private $email" data-toggle="collapse" data-target=".$email .collapse">
+<h2>$email</h2>
+<pre>$email </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24id" id="$id"> </a><div class="element clickable property private $id" data-toggle="collapse" data-target=".$id .collapse">
+<h2>$id</h2>
+<pre>$id </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24nome" id="$nome"> </a><div class="element clickable property private $nome" data-toggle="collapse" data-target=".$nome .collapse">
+<h2>$nome</h2>
+<pre>$nome </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24senha" id="$senha"> </a><div class="element clickable property private $senha" data-toggle="collapse" data-target=".$senha .collapse">
+<h2>$senha</h2>
+<pre>$senha </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a9</a> and<br>
+            generated on 2012-08-30T17:35:51-03:00.<br></footer></div>
+</div>
+</body>
+</html>

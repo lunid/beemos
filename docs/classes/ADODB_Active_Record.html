@@ -1,0 +1,1248 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \ADODB_Active_Record</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Auth.html"><i class="icon-folder-open"></i> Auth</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/axmls.html"><i class="icon-folder-open"></i> axmls</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+<li><a href="../packages/com.html"><i class="icon-folder-open"></i> com</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">4445</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">7</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">14</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#ClassBelongsTo" title="ClassBelongsTo :: "><span class="description">ClassBelongsTo()
+        </span><pre>ClassBelongsTo()</pre></a></li>
+<li class="method public "><a href="#ClassHasMany" title="ClassHasMany :: "><span class="description">ClassHasMany()
+        </span><pre>ClassHasMany()</pre></a></li>
+<li class="method public "><a href="#DB" title="DB :: "><span class="description">DB()
+        </span><pre>DB()</pre></a></li>
+<li class="method public "><a href="#Delete" title="Delete :: "><span class="description">Delete()
+        </span><pre>Delete()</pre></a></li>
+<li class="method public "><a href="#Error" title="Error :: "><span class="description">Error()
+        </span><pre>Error()</pre></a></li>
+<li class="method public "><a href="#ErrorMsg" title="ErrorMsg :: "><span class="description">ErrorMsg()
+        </span><pre>ErrorMsg()</pre></a></li>
+<li class="method public "><a href="#ErrorNo" title="ErrorNo :: "><span class="description">ErrorNo()
+        </span><pre>ErrorNo()</pre></a></li>
+<li class="method public "><a href="#Find" title="Find :: "><span class="description">Find()
+        </span><pre>Find()</pre></a></li>
+<li class="method public "><a href="#GenWhere" title="GenWhere :: "><span class="description">GenWhere()
+        </span><pre>GenWhere()</pre></a></li>
+<li class="method public "><a href="#GetAttributeNames" title="GetAttributeNames :: "><span class="description">GetAttributeNames()
+        </span><pre>GetAttributeNames()</pre></a></li>
+<li class="method public "><a href="#GetPrimaryKeys" title="GetPrimaryKeys :: "><span class="description">GetPrimaryKeys()
+        </span><pre>GetPrimaryKeys()</pre></a></li>
+<li class="method public "><a href="#Insert" title="Insert :: "><span class="description">Insert()
+        </span><pre>Insert()</pre></a></li>
+<li class="method public "><a href="#LastInsertID" title="LastInsertID :: "><span class="description">LastInsertID()
+        </span><pre>LastInsertID()</pre></a></li>
+<li class="method public "><a href="#Load" title="Load :: "><span class="description">Load()
+        </span><pre>Load()</pre></a></li>
+<li class="method public "><a href="#LoadLocked" title="LoadLocked :: "><span class="description">LoadLocked()
+        </span><pre>LoadLocked()</pre></a></li>
+<li class="method public "><a href="#LoadRelations" title="LoadRelations :: "><span class="description">LoadRelations()
+        </span><pre>LoadRelations()</pre></a></li>
+<li class="method public "><a href="#Reload" title="Reload :: "><span class="description">Reload()
+        </span><pre>Reload()</pre></a></li>
+<li class="method public "><a href="#Replace" title="Replace :: "><span class="description">Replace()
+        </span><pre>Replace()</pre></a></li>
+<li class="method public "><a href="#Reset" title="Reset :: "><span class="description">Reset()
+        </span><pre>Reset()</pre></a></li>
+<li class="method public "><a href="#Save" title="Save :: "><span class="description">Save()
+        </span><pre>Save()</pre></a></li>
+<li class="method public "><a href="#Set" title="Set :: "><span class="description">Set()
+        </span><pre>Set()</pre></a></li>
+<li class="method public "><a href="#SetDatabaseAdapter" title="SetDatabaseAdapter :: "><span class="description">SetDatabaseAdapter()
+        </span><pre>SetDatabaseAdapter()</pre></a></li>
+<li class="method public "><a href="#TableBelongsTo" title="TableBelongsTo :: "><span class="description">TableBelongsTo()
+        </span><pre>TableBelongsTo()</pre></a></li>
+<li class="method public "><a href="#TableHasMany" title="TableHasMany :: "><span class="description">TableHasMany()
+        </span><pre>TableHasMany()</pre></a></li>
+<li class="method public "><a href="#TableInfo" title="TableInfo :: "><span class="description">TableInfo()
+        </span><pre>TableInfo()</pre></a></li>
+<li class="method public "><a href="#TableKeyBelongsTo" title="TableKeyBelongsTo :: "><span class="description">TableKeyBelongsTo()
+        </span><pre>TableKeyBelongsTo()</pre></a></li>
+<li class="method public "><a href="#TableKeyHasMany" title="TableKeyHasMany :: "><span class="description">TableKeyHasMany()
+        </span><pre>TableKeyHasMany()</pre></a></li>
+<li class="method public "><a href="#Update" title="Update :: "><span class="description">Update()
+        </span><pre>Update()</pre></a></li>
+<li class="method public "><a href="#UpdateActiveTable" title="UpdateActiveTable :: "><span class="description">UpdateActiveTable()
+        </span><pre>UpdateActiveTable()</pre></a></li>
+<li class="method public "><a href="#UseDefaultValues" title="UseDefaultValues :: "><span class="description">UseDefaultValues()
+        </span><pre>UseDefaultValues()</pre></a></li>
+<li class="method public "><a href="#_QName" title="_QName :: "><span class="description">_QName()
+        </span><pre>_QName()</pre></a></li>
+<li class="method public "><a href="#__construct" title="__construct :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#__get" title="__get :: __get Access properties - used for lazy loading"><span class="description">__get Access properties - used for lazy loading</span><pre>__get()</pre></a></li>
+<li class="method public "><a href="#__set" title="__set :: "><span class="description">__set()
+        </span><pre>__set()</pre></a></li>
+<li class="method public "><a href="#__wakeup" title="__wakeup :: "><span class="description">__wakeup()
+        </span><pre>__wakeup()</pre></a></li>
+<li class="method public "><a href="#_pluralize" title="_pluralize :: "><span class="description">_pluralize()
+        </span><pre>_pluralize()</pre></a></li>
+<li class="method public "><a href="#_singularize" title="_singularize :: "><span class="description">_singularize()
+        </span><pre>_singularize()</pre></a></li>
+<li class="method public "><a href="#belongsTo" title="belongsTo :: "><span class="description">belongsTo()
+        </span><pre>belongsTo()</pre></a></li>
+<li class="method public "><a href="#doquote" title="doquote :: "><span class="description">doquote()
+        </span><pre>doquote()</pre></a></li>
+<li class="method public "><a href="#hasMany" title="hasMany :: "><span class="description">hasMany()
+        </span><pre>hasMany()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24_changeNames" title="$_changeNames :: "><span class="description">$_changeNames</span><pre>$_changeNames</pre></a></li>
+<li class="property public "><a href="#%24_dbat" title="$_dbat :: "><span class="description">$_dbat</span><pre>$_dbat</pre></a></li>
+<li class="property public "><a href="#%24_foreignSuffix" title="$_foreignSuffix :: "><span class="description">$_foreignSuffix</span><pre>$_foreignSuffix</pre></a></li>
+<li class="property public "><a href="#%24_lasterr" title="$_lasterr :: "><span class="description">$_lasterr</span><pre>$_lasterr</pre></a></li>
+<li class="property public "><a href="#%24_original" title="$_original :: "><span class="description">$_original</span><pre>$_original</pre></a></li>
+<li class="property public "><a href="#%24_quoteNames" title="$_quoteNames :: "><span class="description">$_quoteNames</span><pre>$_quoteNames</pre></a></li>
+<li class="property public "><a href="#%24_saved" title="$_saved :: "><span class="description">$_saved</span><pre>$_saved</pre></a></li>
+<li class="property public "><a href="#%24_table" title="$_table :: "><span class="description">$_table</span><pre>$_table</pre></a></li>
+<li class="property public "><a href="#%24_tableat" title="$_tableat :: "><span class="description">$_tableat</span><pre>$_tableat</pre></a></li>
+<li class="property public "><a href="#%24_where" title="$_where :: "><span class="description">$_where</span><pre>$_where</pre></a></li>
+<li class="property public "><a href="#%24foreignName" title="$foreignName :: "><span class="description">$foreignName</span><pre>$foreignName</pre></a></li>
+<li class="property public "><a href="#%24lockMode" title="$lockMode :: "><span class="description">$lockMode</span><pre>$lockMode</pre></a></li>
+</ul>
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#DB" title="DB :: "><span class="description">DB()
+        </span><pre>DB()</pre></a></li>
+<li class="method public "><a href="#Delete" title="Delete :: "><span class="description">Delete()
+        </span><pre>Delete()</pre></a></li>
+<li class="method public "><a href="#Dirty" title="Dirty :: "><span class="description">Dirty()
+        </span><pre>Dirty()</pre></a></li>
+<li class="method public "><a href="#Error" title="Error :: "><span class="description">Error()
+        </span><pre>Error()</pre></a></li>
+<li class="method public "><a href="#ErrorMsg" title="ErrorMsg :: "><span class="description">ErrorMsg()
+        </span><pre>ErrorMsg()</pre></a></li>
+<li class="method public "><a href="#ErrorNo" title="ErrorNo :: "><span class="description">ErrorNo()
+        </span><pre>ErrorNo()</pre></a></li>
+<li class="method public "><a href="#Find" title="Find :: "><span class="description">Find()
+        </span><pre>Find()</pre></a></li>
+<li class="method public "><a href="#GenWhere" title="GenWhere :: "><span class="description">GenWhere()
+        </span><pre>GenWhere()</pre></a></li>
+<li class="method public "><a href="#GetAttributeNames" title="GetAttributeNames :: "><span class="description">GetAttributeNames()
+        </span><pre>GetAttributeNames()</pre></a></li>
+<li class="method public "><a href="#GetPrimaryKeys" title="GetPrimaryKeys :: "><span class="description">GetPrimaryKeys()
+        </span><pre>GetPrimaryKeys()</pre></a></li>
+<li class="method public "><a href="#Insert" title="Insert :: "><span class="description">Insert()
+        </span><pre>Insert()</pre></a></li>
+<li class="method public "><a href="#LastInsertID" title="LastInsertID :: "><span class="description">LastInsertID()
+        </span><pre>LastInsertID()</pre></a></li>
+<li class="method public "><a href="#Load" title="Load :: "><span class="description">Load()
+        </span><pre>Load()</pre></a></li>
+<li class="method public "><a href="#LoadRelations" title="LoadRelations :: "><span class="description">LoadRelations()
+        </span><pre>LoadRelations()</pre></a></li>
+<li class="method public "><a href="#Reload" title="Reload :: "><span class="description">Reload()
+        </span><pre>Reload()</pre></a></li>
+<li class="method public "><a href="#Replace" title="Replace :: "><span class="description">Replace()
+        </span><pre>Replace()</pre></a></li>
+<li class="method public "><a href="#Save" title="Save :: "><span class="description">Save()
+        </span><pre>Save()</pre></a></li>
+<li class="method public "><a href="#Set" title="Set :: "><span class="description">Set()
+        </span><pre>Set()</pre></a></li>
+<li class="method public "><a href="#SetDatabaseAdapter" title="SetDatabaseAdapter :: "><span class="description">SetDatabaseAdapter()
+        </span><pre>SetDatabaseAdapter()</pre></a></li>
+<li class="method public "><a href="#TableInfo" title="TableInfo :: "><span class="description">TableInfo()
+        </span><pre>TableInfo()</pre></a></li>
+<li class="method public "><a href="#Update" title="Update :: "><span class="description">Update()
+        </span><pre>Update()</pre></a></li>
+<li class="method public "><a href="#UpdateActiveTable" title="UpdateActiveTable :: "><span class="description">UpdateActiveTable()
+        </span><pre>UpdateActiveTable()</pre></a></li>
+<li class="method public "><a href="#UseDefaultValues" title="UseDefaultValues :: "><span class="description">UseDefaultValues()
+        </span><pre>UseDefaultValues()</pre></a></li>
+<li class="method public "><a href="#__construct" title="__construct :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#__get" title="__get :: __get Access properties - used for lazy loading"><span class="description">__get Access properties - used for lazy loading</span><pre>__get()</pre></a></li>
+<li class="method public "><a href="#__set" title="__set :: "><span class="description">__set()
+        </span><pre>__set()</pre></a></li>
+<li class="method public "><a href="#__wakeup" title="__wakeup :: "><span class="description">__wakeup()
+        </span><pre>__wakeup()</pre></a></li>
+<li class="method public "><a href="#_pluralize" title="_pluralize :: "><span class="description">_pluralize()
+        </span><pre>_pluralize()</pre></a></li>
+<li class="method public "><a href="#_singularize" title="_singularize :: "><span class="description">_singularize()
+        </span><pre>_singularize()</pre></a></li>
+<li class="method public "><a href="#belongsTo" title="belongsTo :: ar-&gt;foreignName will contain the name of the tables associated with this table because
+this table's rows may also be referenced by those tables using thistable_id or the provided
+foreign keys (this index name is stored in ar-&gt;foreignKey)"><span class="description">ar-&gt;foreignName will contain the name of the tables associated with this table because
+this table's rows may also be referenced by those tables using thistable_id or the provided
+foreign keys (this index name is stored in ar-&gt;foreignKey)</span><pre>belongsTo()</pre></a></li>
+<li class="method public "><a href="#doquote" title="doquote :: "><span class="description">doquote()
+        </span><pre>doquote()</pre></a></li>
+<li class="method public "><a href="#hasMany" title="hasMany :: "><span class="description">hasMany()
+        </span><pre>hasMany()</pre></a></li>
+<li class="method public "><a href="#packageFind" title="packageFind :: "><span class="description">packageFind()
+        </span><pre>packageFind()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="property public "><a href="#%24IrregularP" title="$IrregularP :: "><span class="description">$IrregularP</span><pre>$IrregularP</pre></a></li>
+<li class="property public "><a href="#%24IrregularS" title="$IrregularS :: "><span class="description">$IrregularS</span><pre>$IrregularS</pre></a></li>
+<li class="property public "><a href="#%24WeIsI" title="$WeIsI :: "><span class="description">$WeIsI</span><pre>$WeIsI</pre></a></li>
+<li class="property public "><a href="#%24_changeNames" title="$_changeNames :: "><span class="description">$_changeNames</span><pre>$_changeNames</pre></a></li>
+<li class="property public "><a href="#%24_dbat" title="$_dbat :: "><span class="description">$_dbat</span><pre>$_dbat</pre></a></li>
+<li class="property public "><a href="#%24_foreignSuffix" title="$_foreignSuffix :: "><span class="description">$_foreignSuffix</span><pre>$_foreignSuffix</pre></a></li>
+<li class="property public "><a href="#%24_lasterr" title="$_lasterr :: "><span class="description">$_lasterr</span><pre>$_lasterr</pre></a></li>
+<li class="property public "><a href="#%24_original" title="$_original :: "><span class="description">$_original</span><pre>$_original</pre></a></li>
+<li class="property public "><a href="#%24_pTable" title="$_pTable :: "><span class="description">$_pTable</span><pre>$_pTable</pre></a></li>
+<li class="property public "><a href="#%24_sTable" title="$_sTable :: "><span class="description">$_sTable</span><pre>$_sTable</pre></a></li>
+<li class="property public "><a href="#%24_saved" title="$_saved :: "><span class="description">$_saved</span><pre>$_saved</pre></a></li>
+<li class="property public "><a href="#%24_table" title="$_table :: "><span class="description">$_table</span><pre>$_table</pre></a></li>
+<li class="property public "><a href="#%24_tableat" title="$_tableat :: "><span class="description">$_tableat</span><pre>$_tableat</pre></a></li>
+<li class="property public "><a href="#%24_where" title="$_where :: "><span class="description">$_where</span><pre>$_where</pre></a></li>
+<li class="property public "><a href="#%24foreignName" title="$foreignName :: "><span class="description">$foreignName</span><pre>$foreignName</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CADODB_Active_Record" id="\ADODB_Active_Record"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/ADODB_Active_Record.html">ADODB_Active_Record</a>
+</li>
+</ul>
+<div href="../classes/ADODB_Active_Record.html" class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="ClassBelongsTo" id="ClassBelongsTo"></a><div class="element clickable method public ClassBelongsTo" data-toggle="collapse" data-target=".ClassBelongsTo .collapse">
+<h2>ClassBelongsTo()
+        </h2>
+<pre>ClassBelongsTo($class, $foreignRef, $foreignKey, $parentKey, $parentClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$class</h4></div>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$parentKey</h4></div>
+<div class="subelement argument"><h4>$parentClass</h4></div>
+</div></div>
+</div>
+<a name="ClassHasMany" id="ClassHasMany"></a><div class="element clickable method public ClassHasMany" data-toggle="collapse" data-target=".ClassHasMany .collapse">
+<h2>ClassHasMany()
+        </h2>
+<pre>ClassHasMany($parentclass, $foreignRef, $foreignKey, $foreignClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$parentclass</h4></div>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$foreignClass</h4></div>
+</div></div>
+</div>
+<a name="DB" id="DB"></a><div class="element clickable method public DB" data-toggle="collapse" data-target=".DB .collapse">
+<h2>DB()
+        </h2>
+<pre>DB() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Delete" id="Delete"></a><div class="element clickable method public Delete" data-toggle="collapse" data-target=".Delete .collapse">
+<h2>Delete()
+        </h2>
+<pre>Delete() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Error" id="Error"></a><div class="element clickable method public Error" data-toggle="collapse" data-target=".Error .collapse">
+<h2>Error()
+        </h2>
+<pre>Error($err, $fn) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$err</h4></div>
+<div class="subelement argument"><h4>$fn</h4></div>
+</div></div>
+</div>
+<a name="ErrorMsg" id="ErrorMsg"></a><div class="element clickable method public ErrorMsg" data-toggle="collapse" data-target=".ErrorMsg .collapse">
+<h2>ErrorMsg()
+        </h2>
+<pre>ErrorMsg() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="ErrorNo" id="ErrorNo"></a><div class="element clickable method public ErrorNo" data-toggle="collapse" data-target=".ErrorNo .collapse">
+<h2>ErrorNo()
+        </h2>
+<pre>ErrorNo() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Find" id="Find"></a><div class="element clickable method public Find" data-toggle="collapse" data-target=".Find .collapse">
+<h2>Find()
+        </h2>
+<pre>Find($whereOrderBy, $bindarr, $pkeysArr, $extra) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$whereOrderBy</h4></div>
+<div class="subelement argument"><h4>$bindarr</h4></div>
+<div class="subelement argument"><h4>$pkeysArr</h4></div>
+<div class="subelement argument"><h4>$extra</h4></div>
+</div></div>
+</div>
+<a name="GenWhere" id="GenWhere"></a><div class="element clickable method public GenWhere" data-toggle="collapse" data-target=".GenWhere .collapse">
+<h2>GenWhere()
+        </h2>
+<pre>GenWhere($db, $table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a name="GetAttributeNames" id="GetAttributeNames"></a><div class="element clickable method public GetAttributeNames" data-toggle="collapse" data-target=".GetAttributeNames .collapse">
+<h2>GetAttributeNames()
+        </h2>
+<pre>GetAttributeNames() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="GetPrimaryKeys" id="GetPrimaryKeys"></a><div class="element clickable method public GetPrimaryKeys" data-toggle="collapse" data-target=".GetPrimaryKeys .collapse">
+<h2>GetPrimaryKeys()
+        </h2>
+<pre>GetPrimaryKeys($db, $table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a name="Insert" id="Insert"></a><div class="element clickable method public Insert" data-toggle="collapse" data-target=".Insert .collapse">
+<h2>Insert()
+        </h2>
+<pre>Insert() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="LastInsertID" id="LastInsertID"></a><div class="element clickable method public LastInsertID" data-toggle="collapse" data-target=".LastInsertID .collapse">
+<h2>LastInsertID()
+        </h2>
+<pre>LastInsertID($db, $fieldname) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$fieldname</h4></div>
+</div></div>
+</div>
+<a name="Load" id="Load"></a><div class="element clickable method public Load" data-toggle="collapse" data-target=".Load .collapse">
+<h2>Load()
+        </h2>
+<pre>Load($where, $bindarr, $lock) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$where</h4></div>
+<div class="subelement argument"><h4>$bindarr</h4></div>
+<div class="subelement argument"><h4>$lock</h4></div>
+</div></div>
+</div>
+<a name="LoadLocked" id="LoadLocked"></a><div class="element clickable method public LoadLocked" data-toggle="collapse" data-target=".LoadLocked .collapse">
+<h2>LoadLocked()
+        </h2>
+<pre>LoadLocked($where, $bindarr) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$where</h4></div>
+<div class="subelement argument"><h4>$bindarr</h4></div>
+</div></div>
+</div>
+<a name="LoadRelations" id="LoadRelations"></a><div class="element clickable method public LoadRelations" data-toggle="collapse" data-target=".LoadRelations .collapse">
+<h2>LoadRelations()
+        </h2>
+<pre>LoadRelations(string $name, string $whereOrderBy, $offset, $limit) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code>
+</div>
+<div class="subelement argument">
+<h4>$whereOrderBy</h4>
+<code>string</code><p>: eg. ' AND field1 = value ORDER BY field2'</p>
+</div>
+<div class="subelement argument">
+<h4>$offset</h4><p>offset</p></div>
+<div class="subelement argument">
+<h4>$limit</h4><p>limit</p></div>
+<h3>Returns</h3>
+<div class="subelement response"><code>mixed</code></div>
+</div></div>
+</div>
+<a name="Reload" id="Reload"></a><div class="element clickable method public Reload" data-toggle="collapse" data-target=".Reload .collapse">
+<h2>Reload()
+        </h2>
+<pre>Reload() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Replace" id="Replace"></a><div class="element clickable method public Replace" data-toggle="collapse" data-target=".Replace .collapse">
+<h2>Replace()
+        </h2>
+<pre>Replace() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Reset" id="Reset"></a><div class="element clickable method public Reset" data-toggle="collapse" data-target=".Reset .collapse">
+<h2>Reset()
+        </h2>
+<pre>Reset() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Save" id="Save"></a><div class="element clickable method public Save" data-toggle="collapse" data-target=".Save .collapse">
+<h2>Save()
+        </h2>
+<pre>Save() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Set" id="Set"></a><div class="element clickable method public Set" data-toggle="collapse" data-target=".Set .collapse">
+<h2>Set()
+        </h2>
+<pre>Set($row) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$row</h4></div>
+</div></div>
+</div>
+<a name="SetDatabaseAdapter" id="SetDatabaseAdapter"></a><div class="element clickable method public SetDatabaseAdapter" data-toggle="collapse" data-target=".SetDatabaseAdapter .collapse">
+<h2>SetDatabaseAdapter()
+        </h2>
+<pre>SetDatabaseAdapter($db, $index) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a name="TableBelongsTo" id="TableBelongsTo"></a><div class="element clickable method public TableBelongsTo" data-toggle="collapse" data-target=".TableBelongsTo .collapse">
+<h2>TableBelongsTo()
+        </h2>
+<pre>TableBelongsTo($table, $foreignRef, $foreignKey, $parentKey, $parentClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$parentKey</h4></div>
+<div class="subelement argument"><h4>$parentClass</h4></div>
+</div></div>
+</div>
+<a name="TableHasMany" id="TableHasMany"></a><div class="element clickable method public TableHasMany" data-toggle="collapse" data-target=".TableHasMany .collapse">
+<h2>TableHasMany()
+        </h2>
+<pre>TableHasMany($table, $foreignRef, $foreignKey, $foreignClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$foreignClass</h4></div>
+</div></div>
+</div>
+<a name="TableInfo" id="TableInfo"></a><div class="element clickable method public TableInfo" data-toggle="collapse" data-target=".TableInfo .collapse">
+<h2>TableInfo()
+        </h2>
+<pre>TableInfo() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="TableKeyBelongsTo" id="TableKeyBelongsTo"></a><div class="element clickable method public TableKeyBelongsTo" data-toggle="collapse" data-target=".TableKeyBelongsTo .collapse">
+<h2>TableKeyBelongsTo()
+        </h2>
+<pre>TableKeyBelongsTo($table, $tablePKey, $foreignRef, $foreignKey, $parentKey, $parentClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$tablePKey</h4></div>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$parentKey</h4></div>
+<div class="subelement argument"><h4>$parentClass</h4></div>
+</div></div>
+</div>
+<a name="TableKeyHasMany" id="TableKeyHasMany"></a><div class="element clickable method public TableKeyHasMany" data-toggle="collapse" data-target=".TableKeyHasMany .collapse">
+<h2>TableKeyHasMany()
+        </h2>
+<pre>TableKeyHasMany($table, $tablePKey, $foreignRef, $foreignKey, $foreignClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$tablePKey</h4></div>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$foreignClass</h4></div>
+</div></div>
+</div>
+<a name="Update" id="Update"></a><div class="element clickable method public Update" data-toggle="collapse" data-target=".Update .collapse">
+<h2>Update()
+        </h2>
+<pre>Update() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="UpdateActiveTable" id="UpdateActiveTable"></a><div class="element clickable method public UpdateActiveTable" data-toggle="collapse" data-target=".UpdateActiveTable .collapse">
+<h2>UpdateActiveTable()
+        </h2>
+<pre>UpdateActiveTable($pkeys, $forceUpdate) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$pkeys</h4></div>
+<div class="subelement argument"><h4>$forceUpdate</h4></div>
+</div></div>
+</div>
+<a name="UseDefaultValues" id="UseDefaultValues"></a><div class="element clickable method public UseDefaultValues" data-toggle="collapse" data-target=".UseDefaultValues .collapse">
+<h2>UseDefaultValues()
+        </h2>
+<pre>UseDefaultValues($bool) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bool</h4></div>
+</div></div>
+</div>
+<a name="_QName" id="_QName"></a><div class="element clickable method public _QName" data-toggle="collapse" data-target="._QName .collapse">
+<h2>_QName()
+        </h2>
+<pre>_QName($n, $db) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$n</h4></div>
+<div class="subelement argument"><h4>$db</h4></div>
+</div></div>
+</div>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>__construct()
+        </h2>
+<pre>__construct($table, $pkeyarr, $db) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$pkeyarr</h4></div>
+<div class="subelement argument"><h4>$db</h4></div>
+</div></div>
+</div>
+<a name="__get" id="__get"></a><div class="element clickable method public __get" data-toggle="collapse" data-target=".__get .collapse">
+<h2>__get Access properties - used for lazy loading</h2>
+<pre>__get(mixed $name) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>access</th>
+<td>protected</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>mixed</code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>mixed</code></div>
+</div></div>
+</div>
+<a name="__set" id="__set"></a><div class="element clickable method public __set" data-toggle="collapse" data-target=".__set .collapse">
+<h2>__set()
+        </h2>
+<pre>__set($name, $value) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$name</h4></div>
+<div class="subelement argument"><h4>$value</h4></div>
+</div></div>
+</div>
+<a name="__wakeup" id="__wakeup"></a><div class="element clickable method public __wakeup" data-toggle="collapse" data-target=".__wakeup .collapse">
+<h2>__wakeup()
+        </h2>
+<pre>__wakeup() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_pluralize" id="_pluralize"></a><div class="element clickable method public _pluralize" data-toggle="collapse" data-target="._pluralize .collapse">
+<h2>_pluralize()
+        </h2>
+<pre>_pluralize($table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a name="_singularize" id="_singularize"></a><div class="element clickable method public _singularize" data-toggle="collapse" data-target="._singularize .collapse">
+<h2>_singularize()
+        </h2>
+<pre>_singularize($tables) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$tables</h4></div>
+</div></div>
+</div>
+<a name="belongsTo" id="belongsTo"></a><div class="element clickable method public belongsTo" data-toggle="collapse" data-target=".belongsTo .collapse">
+<h2>belongsTo()
+        </h2>
+<pre>belongsTo($foreignRef, $foreignKey, $parentKey, $parentClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$parentKey</h4></div>
+<div class="subelement argument"><h4>$parentClass</h4></div>
+</div></div>
+</div>
+<a name="doquote" id="doquote"></a><div class="element clickable method public doquote" data-toggle="collapse" data-target=".doquote .collapse">
+<h2>doquote()
+        </h2>
+<pre>doquote($db, $val, $t) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$val</h4></div>
+<div class="subelement argument"><h4>$t</h4></div>
+</div></div>
+</div>
+<a name="hasMany" id="hasMany"></a><div class="element clickable method public hasMany" data-toggle="collapse" data-target=".hasMany .collapse">
+<h2>hasMany()
+        </h2>
+<pre>hasMany($foreignRef, $foreignKey, $foreignClass) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+<div class="subelement argument"><h4>$foreignClass</h4></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24_changeNames" id="$_changeNames"> </a><div class="element clickable property public $_changeNames" data-toggle="collapse" data-target=".$_changeNames .collapse">
+<h2>$_changeNames</h2>
+<pre>$_changeNames </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_dbat" id="$_dbat"> </a><div class="element clickable property public $_dbat" data-toggle="collapse" data-target=".$_dbat .collapse">
+<h2>$_dbat</h2>
+<pre>$_dbat </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_foreignSuffix" id="$_foreignSuffix"> </a><div class="element clickable property public $_foreignSuffix" data-toggle="collapse" data-target=".$_foreignSuffix .collapse">
+<h2>$_foreignSuffix</h2>
+<pre>$_foreignSuffix </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_lasterr" id="$_lasterr"> </a><div class="element clickable property public $_lasterr" data-toggle="collapse" data-target=".$_lasterr .collapse">
+<h2>$_lasterr</h2>
+<pre>$_lasterr </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_original" id="$_original"> </a><div class="element clickable property public $_original" data-toggle="collapse" data-target=".$_original .collapse">
+<h2>$_original</h2>
+<pre>$_original </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_quoteNames" id="$_quoteNames"> </a><div class="element clickable property public $_quoteNames" data-toggle="collapse" data-target=".$_quoteNames .collapse">
+<h2>$_quoteNames</h2>
+<pre>$_quoteNames </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_saved" id="$_saved"> </a><div class="element clickable property public $_saved" data-toggle="collapse" data-target=".$_saved .collapse">
+<h2>$_saved</h2>
+<pre>$_saved </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_table" id="$_table"> </a><div class="element clickable property public $_table" data-toggle="collapse" data-target=".$_table .collapse">
+<h2>$_table</h2>
+<pre>$_table </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_tableat" id="$_tableat"> </a><div class="element clickable property public $_tableat" data-toggle="collapse" data-target=".$_tableat .collapse">
+<h2>$_tableat</h2>
+<pre>$_tableat </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_where" id="$_where"> </a><div class="element clickable property public $_where" data-toggle="collapse" data-target=".$_where .collapse">
+<h2>$_where</h2>
+<pre>$_where </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24foreignName" id="$foreignName"> </a><div class="element clickable property public $foreignName" data-toggle="collapse" data-target=".$foreignName .collapse">
+<h2>$foreignName</h2>
+<pre>$foreignName </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24lockMode" id="$lockMode"> </a><div class="element clickable property public $lockMode" data-toggle="collapse" data-target=".$lockMode .collapse">
+<h2>$lockMode</h2>
+<pre>$lockMode </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div></div>
+<a name="%5CADODB_Active_Record" id="\ADODB_Active_Record"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/ADODB_Active_Record.html">ADODB_Active_Record</a>
+</li>
+</ul>
+<div href="../classes/ADODB_Active_Record.html" class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="DB" id="DB"></a><div class="element clickable method public DB" data-toggle="collapse" data-target=".DB .collapse">
+<h2>DB()
+        </h2>
+<pre>DB() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Delete" id="Delete"></a><div class="element clickable method public Delete" data-toggle="collapse" data-target=".Delete .collapse">
+<h2>Delete()
+        </h2>
+<pre>Delete() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Dirty" id="Dirty"></a><div class="element clickable method public Dirty" data-toggle="collapse" data-target=".Dirty .collapse">
+<h2>Dirty()
+        </h2>
+<pre>Dirty() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Error" id="Error"></a><div class="element clickable method public Error" data-toggle="collapse" data-target=".Error .collapse">
+<h2>Error()
+        </h2>
+<pre>Error($err, $fn) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$err</h4></div>
+<div class="subelement argument"><h4>$fn</h4></div>
+</div></div>
+</div>
+<a name="ErrorMsg" id="ErrorMsg"></a><div class="element clickable method public ErrorMsg" data-toggle="collapse" data-target=".ErrorMsg .collapse">
+<h2>ErrorMsg()
+        </h2>
+<pre>ErrorMsg() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="ErrorNo" id="ErrorNo"></a><div class="element clickable method public ErrorNo" data-toggle="collapse" data-target=".ErrorNo .collapse">
+<h2>ErrorNo()
+        </h2>
+<pre>ErrorNo() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Find" id="Find"></a><div class="element clickable method public Find" data-toggle="collapse" data-target=".Find .collapse">
+<h2>Find()
+        </h2>
+<pre>Find($whereOrderBy, $bindarr, $pkeysArr, $extra) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$whereOrderBy</h4></div>
+<div class="subelement argument"><h4>$bindarr</h4></div>
+<div class="subelement argument"><h4>$pkeysArr</h4></div>
+<div class="subelement argument"><h4>$extra</h4></div>
+</div></div>
+</div>
+<a name="GenWhere" id="GenWhere"></a><div class="element clickable method public GenWhere" data-toggle="collapse" data-target=".GenWhere .collapse">
+<h2>GenWhere()
+        </h2>
+<pre>GenWhere($db, $table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a name="GetAttributeNames" id="GetAttributeNames"></a><div class="element clickable method public GetAttributeNames" data-toggle="collapse" data-target=".GetAttributeNames .collapse">
+<h2>GetAttributeNames()
+        </h2>
+<pre>GetAttributeNames() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="GetPrimaryKeys" id="GetPrimaryKeys"></a><div class="element clickable method public GetPrimaryKeys" data-toggle="collapse" data-target=".GetPrimaryKeys .collapse">
+<h2>GetPrimaryKeys()
+        </h2>
+<pre>GetPrimaryKeys($db, $table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a name="Insert" id="Insert"></a><div class="element clickable method public Insert" data-toggle="collapse" data-target=".Insert .collapse">
+<h2>Insert()
+        </h2>
+<pre>Insert() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="LastInsertID" id="LastInsertID"></a><div class="element clickable method public LastInsertID" data-toggle="collapse" data-target=".LastInsertID .collapse">
+<h2>LastInsertID()
+        </h2>
+<pre>LastInsertID($db, $fieldname) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$fieldname</h4></div>
+</div></div>
+</div>
+<a name="Load" id="Load"></a><div class="element clickable method public Load" data-toggle="collapse" data-target=".Load .collapse">
+<h2>Load()
+        </h2>
+<pre>Load($where, $bindarr) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$where</h4></div>
+<div class="subelement argument"><h4>$bindarr</h4></div>
+</div></div>
+</div>
+<a name="LoadRelations" id="LoadRelations"></a><div class="element clickable method public LoadRelations" data-toggle="collapse" data-target=".LoadRelations .collapse">
+<h2>LoadRelations()
+        </h2>
+<pre>LoadRelations($name, $whereOrderBy, $offset, $limit) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$name</h4></div>
+<div class="subelement argument"><h4>$whereOrderBy</h4></div>
+<div class="subelement argument"><h4>$offset</h4></div>
+<div class="subelement argument"><h4>$limit</h4></div>
+</div></div>
+</div>
+<a name="Reload" id="Reload"></a><div class="element clickable method public Reload" data-toggle="collapse" data-target=".Reload .collapse">
+<h2>Reload()
+        </h2>
+<pre>Reload() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Replace" id="Replace"></a><div class="element clickable method public Replace" data-toggle="collapse" data-target=".Replace .collapse">
+<h2>Replace()
+        </h2>
+<pre>Replace() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Save" id="Save"></a><div class="element clickable method public Save" data-toggle="collapse" data-target=".Save .collapse">
+<h2>Save()
+        </h2>
+<pre>Save() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Set" id="Set"></a><div class="element clickable method public Set" data-toggle="collapse" data-target=".Set .collapse">
+<h2>Set()
+        </h2>
+<pre>Set($row) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$row</h4></div>
+</div></div>
+</div>
+<a name="SetDatabaseAdapter" id="SetDatabaseAdapter"></a><div class="element clickable method public SetDatabaseAdapter" data-toggle="collapse" data-target=".SetDatabaseAdapter .collapse">
+<h2>SetDatabaseAdapter()
+        </h2>
+<pre>SetDatabaseAdapter($db) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+</div></div>
+</div>
+<a name="TableInfo" id="TableInfo"></a><div class="element clickable method public TableInfo" data-toggle="collapse" data-target=".TableInfo .collapse">
+<h2>TableInfo()
+        </h2>
+<pre>TableInfo() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="Update" id="Update"></a><div class="element clickable method public Update" data-toggle="collapse" data-target=".Update .collapse">
+<h2>Update()
+        </h2>
+<pre>Update() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="UpdateActiveTable" id="UpdateActiveTable"></a><div class="element clickable method public UpdateActiveTable" data-toggle="collapse" data-target=".UpdateActiveTable .collapse">
+<h2>UpdateActiveTable()
+        </h2>
+<pre>UpdateActiveTable($pkeys, $forceUpdate) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$pkeys</h4></div>
+<div class="subelement argument"><h4>$forceUpdate</h4></div>
+</div></div>
+</div>
+<a name="UseDefaultValues" id="UseDefaultValues"></a><div class="element clickable method public UseDefaultValues" data-toggle="collapse" data-target=".UseDefaultValues .collapse">
+<h2>UseDefaultValues()
+        </h2>
+<pre>UseDefaultValues($bool) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bool</h4></div>
+</div></div>
+</div>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>__construct()
+        </h2>
+<pre>__construct($table, $pkeyarr, $db, $options) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+<div class="subelement argument"><h4>$pkeyarr</h4></div>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$options</h4></div>
+</div></div>
+</div>
+<a name="__get" id="__get"></a><div class="element clickable method public __get" data-toggle="collapse" data-target=".__get .collapse">
+<h2>__get Access properties - used for lazy loading</h2>
+<pre>__get(mixed $name) : void</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>access</th>
+<td>protected</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>mixed</code>
+</div>
+</div></div>
+</div>
+<a name="__set" id="__set"></a><div class="element clickable method public __set" data-toggle="collapse" data-target=".__set .collapse">
+<h2>__set()
+        </h2>
+<pre>__set($name, $value) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$name</h4></div>
+<div class="subelement argument"><h4>$value</h4></div>
+</div></div>
+</div>
+<a name="__wakeup" id="__wakeup"></a><div class="element clickable method public __wakeup" data-toggle="collapse" data-target=".__wakeup .collapse">
+<h2>__wakeup()
+        </h2>
+<pre>__wakeup() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="_pluralize" id="_pluralize"></a><div class="element clickable method public _pluralize" data-toggle="collapse" data-target="._pluralize .collapse">
+<h2>_pluralize()
+        </h2>
+<pre>_pluralize($table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a name="_singularize" id="_singularize"></a><div class="element clickable method public _singularize" data-toggle="collapse" data-target="._singularize .collapse">
+<h2>_singularize()
+        </h2>
+<pre>_singularize($table) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a name="belongsTo" id="belongsTo"></a><div class="element clickable method public belongsTo" data-toggle="collapse" data-target=".belongsTo .collapse">
+<h2>ar-&gt;foreignName will contain the name of the tables associated with this table because
+this table's rows may also be referenced by those tables using thistable_id or the provided
+foreign keys (this index name is stored in ar-&gt;foreignKey)</h2>
+<pre>belongsTo($foreignRef, $foreignKey) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>this-table.other-table_id = other-table.id</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+</div></div>
+</div>
+<a name="doquote" id="doquote"></a><div class="element clickable method public doquote" data-toggle="collapse" data-target=".doquote .collapse">
+<h2>doquote()
+        </h2>
+<pre>doquote($db, $val, $t) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$db</h4></div>
+<div class="subelement argument"><h4>$val</h4></div>
+<div class="subelement argument"><h4>$t</h4></div>
+</div></div>
+</div>
+<a name="hasMany" id="hasMany"></a><div class="element clickable method public hasMany" data-toggle="collapse" data-target=".hasMany .collapse">
+<h2>hasMany()
+        </h2>
+<pre>hasMany($foreignRef, $foreignKey) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$foreignRef</h4></div>
+<div class="subelement argument"><h4>$foreignKey</h4></div>
+</div></div>
+</div>
+<a name="packageFind" id="packageFind"></a><div class="element clickable method public packageFind" data-toggle="collapse" data-target=".packageFind .collapse">
+<h2>packageFind()
+        </h2>
+<pre>packageFind($whereOrderBy, $bindarr, $pkeysArr, $extra) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$whereOrderBy</h4></div>
+<div class="subelement argument"><h4>$bindarr</h4></div>
+<div class="subelement argument"><h4>$pkeysArr</h4></div>
+<div class="subelement argument"><h4>$extra</h4></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24IrregularP" id="$IrregularP"> </a><div class="element clickable property public $IrregularP" data-toggle="collapse" data-target=".$IrregularP .collapse">
+<h2>$IrregularP</h2>
+<pre>$IrregularP </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24IrregularS" id="$IrregularS"> </a><div class="element clickable property public $IrregularS" data-toggle="collapse" data-target=".$IrregularS .collapse">
+<h2>$IrregularS</h2>
+<pre>$IrregularS </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24WeIsI" id="$WeIsI"> </a><div class="element clickable property public $WeIsI" data-toggle="collapse" data-target=".$WeIsI .collapse">
+<h2>$WeIsI</h2>
+<pre>$WeIsI </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_changeNames" id="$_changeNames"> </a><div class="element clickable property public $_changeNames" data-toggle="collapse" data-target=".$_changeNames .collapse">
+<h2>$_changeNames</h2>
+<pre>$_changeNames </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_dbat" id="$_dbat"> </a><div class="element clickable property public $_dbat" data-toggle="collapse" data-target=".$_dbat .collapse">
+<h2>$_dbat</h2>
+<pre>$_dbat </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_foreignSuffix" id="$_foreignSuffix"> </a><div class="element clickable property public $_foreignSuffix" data-toggle="collapse" data-target=".$_foreignSuffix .collapse">
+<h2>$_foreignSuffix</h2>
+<pre>$_foreignSuffix </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_lasterr" id="$_lasterr"> </a><div class="element clickable property public $_lasterr" data-toggle="collapse" data-target=".$_lasterr .collapse">
+<h2>$_lasterr</h2>
+<pre>$_lasterr </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_original" id="$_original"> </a><div class="element clickable property public $_original" data-toggle="collapse" data-target=".$_original .collapse">
+<h2>$_original</h2>
+<pre>$_original </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_pTable" id="$_pTable"> </a><div class="element clickable property public $_pTable" data-toggle="collapse" data-target=".$_pTable .collapse">
+<h2>$_pTable</h2>
+<pre>$_pTable </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_sTable" id="$_sTable"> </a><div class="element clickable property public $_sTable" data-toggle="collapse" data-target=".$_sTable .collapse">
+<h2>$_sTable</h2>
+<pre>$_sTable </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_saved" id="$_saved"> </a><div class="element clickable property public $_saved" data-toggle="collapse" data-target=".$_saved .collapse">
+<h2>$_saved</h2>
+<pre>$_saved </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_table" id="$_table"> </a><div class="element clickable property public $_table" data-toggle="collapse" data-target=".$_table .collapse">
+<h2>$_table</h2>
+<pre>$_table </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_tableat" id="$_tableat"> </a><div class="element clickable property public $_tableat" data-toggle="collapse" data-target=".$_tableat .collapse">
+<h2>$_tableat</h2>
+<pre>$_tableat </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24_where" id="$_where"> </a><div class="element clickable property public $_where" data-toggle="collapse" data-target=".$_where .collapse">
+<h2>$_where</h2>
+<pre>$_where </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24foreignName" id="$foreignName"> </a><div class="element clickable property public $foreignName" data-toggle="collapse" data-target=".$foreignName .collapse">
+<h2>$foreignName</h2>
+<pre>$foreignName </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a9</a> and<br>
+            generated on 2012-08-30T17:35:51-03:00.<br></footer></div>
+</div>
+</body>
+</html>

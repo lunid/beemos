@@ -1,0 +1,2514 @@
+<!DOCTYPE html><html xmlns:date="http://exslt.org/dates-and-times" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \QRcode</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/Auth.html"><i class="icon-folder-open"></i> Auth</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/axmls.html"><i class="icon-folder-open"></i> axmls</a></li>
+<li><a href="../packages/classpackage.html"><i class="icon-folder-open"></i> classpackage</a></li>
+<li><a href="../packages/com.html"><i class="icon-folder-open"></i> com</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">4445</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">7</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">14</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods</li>
+<li class="method public "><a href="#__construct" title="__construct :: This is the class constructor."><span class="description">This is the class constructor.</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#getBarcodeArray" title="getBarcodeArray :: Returns a barcode array which is readable by TCPDF"><span class="description">Returns a barcode array which is readable by TCPDF</span><pre>getBarcodeArray()</pre></a></li>
+<li class="nav-header protected">» Protected</li>
+<li class="method protected "><a href="#allocate" title="allocate :: Return an array with zeros"><span class="description">Return an array with zeros</span><pre>allocate()</pre></a></li>
+<li class="method protected "><a href="#appendBitstream" title="appendBitstream :: Append one bitstream to another"><span class="description">Append one bitstream to another</span><pre>appendBitstream()</pre></a></li>
+<li class="method protected "><a href="#appendBytes" title="appendBytes :: Append one bitstream created from bytes to another"><span class="description">Append one bitstream created from bytes to another</span><pre>appendBytes()</pre></a></li>
+<li class="method protected "><a href="#appendNewInputItem" title="appendNewInputItem :: Append data to an input object."><span class="description">Append data to an input object.</span><pre>appendNewInputItem()</pre></a></li>
+<li class="method protected "><a href="#appendNum" title="appendNum :: Append one bitstream created from number to another"><span class="description">Append one bitstream created from number to another</span><pre>appendNum()</pre></a></li>
+<li class="method protected "><a href="#appendPaddingBit" title="appendPaddingBit :: Append Padding Bit to bitstream"><span class="description">Append Padding Bit to bitstream</span><pre>appendPaddingBit()</pre></a></li>
+<li class="method protected "><a href="#binarize" title="binarize :: Convert the frame in binary form"><span class="description">Convert the frame in binary form</span><pre>binarize()</pre></a></li>
+<li class="method protected "><a href="#bitstreamToByte" title="bitstreamToByte :: Convert bitstream to bytes"><span class="description">Convert bitstream to bytes</span><pre>bitstreamToByte()</pre></a></li>
+<li class="method protected "><a href="#calcN1N3" title="calcN1N3 :: calcN1N3"><span class="description">calcN1N3</span><pre>calcN1N3()</pre></a></li>
+<li class="method protected "><a href="#calcParity" title="calcParity :: calcParity"><span class="description">calcParity</span><pre>calcParity()</pre></a></li>
+<li class="method protected "><a href="#check" title="check :: Validate the input data."><span class="description">Validate the input data.</span><pre>check()</pre></a></li>
+<li class="method protected "><a href="#checkModeAn" title="checkModeAn :: checkModeAn"><span class="description">checkModeAn</span><pre>checkModeAn()</pre></a></li>
+<li class="method protected "><a href="#checkModeKanji" title="checkModeKanji :: checkModeKanji"><span class="description">checkModeKanji</span><pre>checkModeKanji()</pre></a></li>
+<li class="method protected "><a href="#checkModeNum" title="checkModeNum :: checkModeNum"><span class="description">checkModeNum</span><pre>checkModeNum()</pre></a></li>
+<li class="method protected "><a href="#convertData" title="convertData :: convertData"><span class="description">convertData</span><pre>convertData()</pre></a></li>
+<li class="method protected "><a href="#createBitStream" title="createBitStream :: createBitStream"><span class="description">createBitStream</span><pre>createBitStream()</pre></a></li>
+<li class="method protected "><a href="#createFrame" title="createFrame :: Return a copy of initialized frame."><span class="description">Return a copy of initialized frame.</span><pre>createFrame()</pre></a></li>
+<li class="method protected "><a href="#eat8" title="eat8 :: eat8"><span class="description">eat8</span><pre>eat8()</pre></a></li>
+<li class="method protected "><a href="#eatAn" title="eatAn :: eatAn"><span class="description">eatAn</span><pre>eatAn()</pre></a></li>
+<li class="method protected "><a href="#eatKanji" title="eatKanji :: eatKanji"><span class="description">eatKanji</span><pre>eatKanji()</pre></a></li>
+<li class="method protected "><a href="#eatNum" title="eatNum :: eatNum"><span class="description">eatNum</span><pre>eatNum()</pre></a></li>
+<li class="method protected "><a href="#encodeBitStream" title="encodeBitStream :: encodeBitStream"><span class="description">encodeBitStream</span><pre>encodeBitStream()</pre></a></li>
+<li class="method protected "><a href="#encodeMask" title="encodeMask :: Encode mask"><span class="description">Encode mask</span><pre>encodeMask()</pre></a></li>
+<li class="method protected "><a href="#encodeMode8" title="encodeMode8 :: encodeMode8"><span class="description">encodeMode8</span><pre>encodeMode8()</pre></a></li>
+<li class="method protected "><a href="#encodeModeAn" title="encodeModeAn :: encodeModeAn"><span class="description">encodeModeAn</span><pre>encodeModeAn()</pre></a></li>
+<li class="method protected "><a href="#encodeModeKanji" title="encodeModeKanji :: encodeModeKanji"><span class="description">encodeModeKanji</span><pre>encodeModeKanji()</pre></a></li>
+<li class="method protected "><a href="#encodeModeNum" title="encodeModeNum :: encodeModeNum"><span class="description">encodeModeNum</span><pre>encodeModeNum()</pre></a></li>
+<li class="method protected "><a href="#encodeModeStructure" title="encodeModeStructure :: encodeModeStructure"><span class="description">encodeModeStructure</span><pre>encodeModeStructure()</pre></a></li>
+<li class="method protected "><a href="#encodeString" title="encodeString :: Encode the input string to QR code"><span class="description">Encode the input string to QR code</span><pre>encodeString()</pre></a></li>
+<li class="method protected "><a href="#encode_rs_char" title="encode_rs_char :: Encode a Reed-Solomon codec and returns the parity array"><span class="description">Encode a Reed-Solomon codec and returns the parity array</span><pre>encode_rs_char()</pre></a></li>
+<li class="method protected "><a href="#estimateBitStreamSize" title="estimateBitStreamSize :: estimateBitStreamSize"><span class="description">estimateBitStreamSize</span><pre>estimateBitStreamSize()</pre></a></li>
+<li class="method protected "><a href="#estimateBitsMode8" title="estimateBitsMode8 :: estimateBitsMode8"><span class="description">estimateBitsMode8</span><pre>estimateBitsMode8()</pre></a></li>
+<li class="method protected "><a href="#estimateBitsModeAn" title="estimateBitsModeAn :: estimateBitsModeAn"><span class="description">estimateBitsModeAn</span><pre>estimateBitsModeAn()</pre></a></li>
+<li class="method protected "><a href="#estimateBitsModeKanji" title="estimateBitsModeKanji :: estimateBitsModeKanji"><span class="description">estimateBitsModeKanji</span><pre>estimateBitsModeKanji()</pre></a></li>
+<li class="method protected "><a href="#estimateBitsModeNum" title="estimateBitsModeNum :: estimateBitsModeNum"><span class="description">estimateBitsModeNum</span><pre>estimateBitsModeNum()</pre></a></li>
+<li class="method protected "><a href="#estimateVersion" title="estimateVersion :: estimateVersion"><span class="description">estimateVersion</span><pre>estimateVersion()</pre></a></li>
+<li class="method protected "><a href="#evaluateSymbol" title="evaluateSymbol :: evaluateSymbol"><span class="description">evaluateSymbol</span><pre>evaluateSymbol()</pre></a></li>
+<li class="method protected "><a href="#generateMaskNo" title="generateMaskNo :: Return bitmask"><span class="description">Return bitmask</span><pre>generateMaskNo()</pre></a></li>
+<li class="method protected "><a href="#getBitStream" title="getBitStream :: Returns a stream of bits."><span class="description">Returns a stream of bits.</span><pre>getBitStream()</pre></a></li>
+<li class="method protected "><a href="#getByteStream" title="getByteStream :: Pack all bit streams padding bits into a byte array."><span class="description">Pack all bit streams padding bits into a byte array.</span><pre>getByteStream()</pre></a></li>
+<li class="method protected "><a href="#getCode" title="getCode :: Return Reed-Solomon block code."><span class="description">Return Reed-Solomon block code.</span><pre>getCode()</pre></a></li>
+<li class="method protected "><a href="#getDataLength" title="getDataLength :: Return maximum data code length (bytes) for the version."><span class="description">Return maximum data code length (bytes) for the version.</span><pre>getDataLength()</pre></a></li>
+<li class="method protected "><a href="#getECCLength" title="getECCLength :: Return maximum error correction code length (bytes) for the version."><span class="description">Return maximum error correction code length (bytes) for the version.</span><pre>getECCLength()</pre></a></li>
+<li class="method protected "><a href="#getEccSpec" title="getEccSpec :: Return an array of ECC specification."><span class="description">Return an array of ECC specification.</span><pre>getEccSpec()</pre></a></li>
+<li class="method protected "><a href="#getFormatInfo" title="getFormatInfo :: Return BCH encoded format information pattern."><span class="description">Return BCH encoded format information pattern.</span><pre>getFormatInfo()</pre></a></li>
+<li class="method protected "><a href="#getFrameAt" title="getFrameAt :: Get frame value at specified position"><span class="description">Get frame value at specified position</span><pre>getFrameAt()</pre></a></li>
+<li class="method protected "><a href="#getMinimumVersion" title="getMinimumVersion :: Return a version number that satisfies the input code length."><span class="description">Return a version number that satisfies the input code length.</span><pre>getMinimumVersion()</pre></a></li>
+<li class="method protected "><a href="#getNextPosition" title="getNextPosition :: Return the next frame position"><span class="description">Return the next frame position</span><pre>getNextPosition()</pre></a></li>
+<li class="method protected "><a href="#getRemainder" title="getRemainder :: Return the numer of remainder bits."><span class="description">Return the numer of remainder bits.</span><pre>getRemainder()</pre></a></li>
+<li class="method protected "><a href="#getVersionPattern" title="getVersionPattern :: Return BCH encoded version information pattern that is used for the symbol of version 7 or greater."><span class="description">Return BCH encoded version information pattern that is used for the symbol of version 7 or greater.</span><pre>getVersionPattern()</pre></a></li>
+<li class="method protected "><a href="#getWidth" title="getWidth :: Return the width of the symbol for the version."><span class="description">Return the width of the symbol for the version.</span><pre>getWidth()</pre></a></li>
+<li class="method protected "><a href="#identifyMode" title="identifyMode :: identifyMode"><span class="description">identifyMode</span><pre>identifyMode()</pre></a></li>
+<li class="method protected "><a href="#init" title="init :: Initialize code."><span class="description">Initialize code.</span><pre>init()</pre></a></li>
+<li class="method protected "><a href="#init_rs" title="init_rs :: Initialize a Reed-Solomon codec and add it to existing rsitems"><span class="description">Initialize a Reed-Solomon codec and add it to existing rsitems</span><pre>init_rs()</pre></a></li>
+<li class="method protected "><a href="#init_rs_char" title="init_rs_char :: Initialize a Reed-Solomon codec and returns an array of values."><span class="description">Initialize a Reed-Solomon codec and returns an array of values.</span><pre>init_rs_char()</pre></a></li>
+<li class="method protected "><a href="#insertStructuredAppendHeader" title="insertStructuredAppendHeader :: insertStructuredAppendHeader"><span class="description">insertStructuredAppendHeader</span><pre>insertStructuredAppendHeader()</pre></a></li>
+<li class="method protected "><a href="#isalnumat" title="isalnumat :: Return true if the character at specified position is an alphanumeric character"><span class="description">Return true if the character at specified position is an alphanumeric character</span><pre>isalnumat()</pre></a></li>
+<li class="method protected "><a href="#isdigitat" title="isdigitat :: Return true if the character at specified position is a number"><span class="description">Return true if the character at specified position is a number</span><pre>isdigitat()</pre></a></li>
+<li class="method protected "><a href="#lengthIndicator" title="lengthIndicator :: Return the size of length indicator for the mode and version."><span class="description">Return the size of length indicator for the mode and version.</span><pre>lengthIndicator()</pre></a></li>
+<li class="method protected "><a href="#lengthOfCode" title="lengthOfCode :: lengthOfCode"><span class="description">lengthOfCode</span><pre>lengthOfCode()</pre></a></li>
+<li class="method protected "><a href="#lookAnTable" title="lookAnTable :: Look up the alphabet-numeric convesion table (see JIS X0510:2004, pp.19)."><span class="description">Look up the alphabet-numeric convesion table (see JIS X0510:2004, pp.19).</span><pre>lookAnTable()</pre></a></li>
+<li class="method protected "><a href="#makeMask" title="makeMask :: makeMask"><span class="description">makeMask</span><pre>makeMask()</pre></a></li>
+<li class="method protected "><a href="#makeMaskNo" title="makeMaskNo :: makeMaskNo"><span class="description">makeMaskNo</span><pre>makeMaskNo()</pre></a></li>
+<li class="method protected "><a href="#mask" title="mask :: mask"><span class="description">mask</span><pre>mask()</pre></a></li>
+<li class="method protected "><a href="#mask0" title="mask0 :: mask0"><span class="description">mask0</span><pre>mask0()</pre></a></li>
+<li class="method protected "><a href="#mask1" title="mask1 :: mask1"><span class="description">mask1</span><pre>mask1()</pre></a></li>
+<li class="method protected "><a href="#mask2" title="mask2 :: mask2"><span class="description">mask2</span><pre>mask2()</pre></a></li>
+<li class="method protected "><a href="#mask3" title="mask3 :: mask3"><span class="description">mask3</span><pre>mask3()</pre></a></li>
+<li class="method protected "><a href="#mask4" title="mask4 :: mask4"><span class="description">mask4</span><pre>mask4()</pre></a></li>
+<li class="method protected "><a href="#mask5" title="mask5 :: mask5"><span class="description">mask5</span><pre>mask5()</pre></a></li>
+<li class="method protected "><a href="#mask6" title="mask6 :: mask6"><span class="description">mask6</span><pre>mask6()</pre></a></li>
+<li class="method protected "><a href="#mask7" title="mask7 :: mask7"><span class="description">mask7</span><pre>mask7()</pre></a></li>
+<li class="method protected "><a href="#maximumWords" title="maximumWords :: Return the maximum length for the mode and version."><span class="description">Return the maximum length for the mode and version.</span><pre>maximumWords()</pre></a></li>
+<li class="method protected "><a href="#mergeBitStream" title="mergeBitStream :: mergeBitStream"><span class="description">mergeBitStream</span><pre>mergeBitStream()</pre></a></li>
+<li class="method protected "><a href="#modnn" title="modnn :: modnn"><span class="description">modnn</span><pre>modnn()</pre></a></li>
+<li class="method protected "><a href="#newFrame" title="newFrame :: Set new frame for the specified version."><span class="description">Set new frame for the specified version.</span><pre>newFrame()</pre></a></li>
+<li class="method protected "><a href="#newFromBytes" title="newFromBytes :: Return new bitstream from bytes"><span class="description">Return new bitstream from bytes</span><pre>newFromBytes()</pre></a></li>
+<li class="method protected "><a href="#newFromNum" title="newFromNum :: Return new bitstream from number"><span class="description">Return new bitstream from number</span><pre>newFromNum()</pre></a></li>
+<li class="method protected "><a href="#newInputItem" title="newInputItem :: newInputItem"><span class="description">newInputItem</span><pre>newInputItem()</pre></a></li>
+<li class="method protected "><a href="#putAlignmentMarker" title="putAlignmentMarker :: Put an alignment marker."><span class="description">Put an alignment marker.</span><pre>putAlignmentMarker()</pre></a></li>
+<li class="method protected "><a href="#putAlignmentPattern" title="putAlignmentPattern :: Put an alignment pattern."><span class="description">Put an alignment pattern.</span><pre>putAlignmentPattern()</pre></a></li>
+<li class="method protected "><a href="#putFinderPattern" title="putFinderPattern :: Put a finder pattern."><span class="description">Put a finder pattern.</span><pre>putFinderPattern()</pre></a></li>
+<li class="method protected "><a href="#qrstrset" title="qrstrset :: Replace a value on the array at the specified position"><span class="description">Replace a value on the array at the specified position</span><pre>qrstrset()</pre></a></li>
+<li class="method protected "><a href="#rsBlockNum" title="rsBlockNum :: Return block number 0"><span class="description">Return block number 0</span><pre>rsBlockNum()</pre></a></li>
+<li class="method protected "><a href="#rsBlockNum1" title="rsBlockNum1 :: Return block number 1"><span class="description">Return block number 1</span><pre>rsBlockNum1()</pre></a></li>
+<li class="method protected "><a href="#rsBlockNum2" title="rsBlockNum2 :: Return block number 2"><span class="description">Return block number 2</span><pre>rsBlockNum2()</pre></a></li>
+<li class="method protected "><a href="#rsDataCodes1" title="rsDataCodes1 :: Return data codes 1"><span class="description">Return data codes 1</span><pre>rsDataCodes1()</pre></a></li>
+<li class="method protected "><a href="#rsDataCodes2" title="rsDataCodes2 :: Return data codes 2"><span class="description">Return data codes 2</span><pre>rsDataCodes2()</pre></a></li>
+<li class="method protected "><a href="#rsDataLength" title="rsDataLength :: Return data length"><span class="description">Return data length</span><pre>rsDataLength()</pre></a></li>
+<li class="method protected "><a href="#rsEccCodes1" title="rsEccCodes1 :: Return ecc codes 1"><span class="description">Return ecc codes 1</span><pre>rsEccCodes1()</pre></a></li>
+<li class="method protected "><a href="#rsEccCodes2" title="rsEccCodes2 :: Return ecc codes 2"><span class="description">Return ecc codes 2</span><pre>rsEccCodes2()</pre></a></li>
+<li class="method protected "><a href="#rsEccLength" title="rsEccLength :: Return ecc length"><span class="description">Return ecc length</span><pre>rsEccLength()</pre></a></li>
+<li class="method protected "><a href="#setFrameAt" title="setFrameAt :: Set frame value at specified position"><span class="description">Set frame value at specified position</span><pre>setFrameAt()</pre></a></li>
+<li class="method protected "><a href="#splitString" title="splitString :: splitString"><span class="description">splitString</span><pre>splitString()</pre></a></li>
+<li class="method protected "><a href="#toUpper" title="toUpper :: toUpper"><span class="description">toUpper</span><pre>toUpper()</pre></a></li>
+<li class="method protected "><a href="#writeFormatInformation" title="writeFormatInformation :: Write Format Information on frame and returns the number of black bits"><span class="description">Write Format Information on frame and returns the number of black bits</span><pre>writeFormatInformation()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header protected">» Protected</li>
+<li class="property protected "><a href="#%24alignmentPattern" title="$alignmentPattern :: Array Positions of alignment patterns."><span class="description">Array Positions of alignment patterns.</span><pre>$alignmentPattern</pre></a></li>
+<li class="property protected "><a href="#%24anTable" title="$anTable :: Alphabet-numeric convesion table."><span class="description">Alphabet-numeric convesion table.</span><pre>$anTable</pre></a></li>
+<li class="property protected "><a href="#%24b1" title="$b1 :: Value b1."><span class="description">Value b1.</span><pre>$b1</pre></a></li>
+<li class="property protected "><a href="#%24barcode_array" title="$barcode_array :: Barcode array to be returned which is readable by TCPDF."><span class="description">Barcode array to be returned which is readable by TCPDF.</span><pre>$barcode_array</pre></a></li>
+<li class="property protected "><a href="#%24bit" title="$bit :: Single bit value."><span class="description">Single bit value.</span><pre>$bit</pre></a></li>
+<li class="property protected "><a href="#%24blocks" title="$blocks :: Blocks."><span class="description">Blocks.</span><pre>$blocks</pre></a></li>
+<li class="property protected "><a href="#%24capacity" title="$capacity :: Array Table of the capacity of symbols."><span class="description">Array Table of the capacity of symbols.</span><pre>$capacity</pre></a></li>
+<li class="property protected "><a href="#%24casesensitive" title="$casesensitive :: Boolean flag, if true the input string will be converted to uppercase."><span class="description">Boolean flag, if true the input string will be converted to uppercase.</span><pre>$casesensitive</pre></a></li>
+<li class="property protected "><a href="#%24count" title="$count :: Counter."><span class="description">Counter.</span><pre>$count</pre></a></li>
+<li class="property protected "><a href="#%24data" title="$data :: Mask data."><span class="description">Mask data.</span><pre>$data</pre></a></li>
+<li class="property protected "><a href="#%24dataLength" title="$dataLength :: Data length."><span class="description">Data length.</span><pre>$dataLength</pre></a></li>
+<li class="property protected "><a href="#%24dataStr" title="$dataStr :: Input data string."><span class="description">Input data string.</span><pre>$dataStr</pre></a></li>
+<li class="property protected "><a href="#%24datacode" title="$datacode :: Data code."><span class="description">Data code.</span><pre>$datacode</pre></a></li>
+<li class="property protected "><a href="#%24dir" title="$dir :: Direction."><span class="description">Direction.</span><pre>$dir</pre></a></li>
+<li class="property protected "><a href="#%24eccLength" title="$eccLength :: Error correction length."><span class="description">Error correction length.</span><pre>$eccLength</pre></a></li>
+<li class="property protected "><a href="#%24eccTable" title="$eccTable :: Array Table of the error correction code (Reed-Solomon block)."><span class="description">Array Table of the error correction code (Reed-Solomon block).</span><pre>$eccTable</pre></a></li>
+<li class="property protected "><a href="#%24ecccode" title="$ecccode :: Error correction code."><span class="description">Error correction code.</span><pre>$ecccode</pre></a></li>
+<li class="property protected "><a href="#%24formatInfo" title="$formatInfo :: Array Format information"><span class="description">Array Format information</span><pre>$formatInfo</pre></a></li>
+<li class="property protected "><a href="#%24frame" title="$frame :: Frame."><span class="description">Frame.</span><pre>$frame</pre></a></li>
+<li class="property protected "><a href="#%24frames" title="$frames :: Array of frames."><span class="description">Array of frames.</span><pre>$frames</pre></a></li>
+<li class="property protected "><a href="#%24hint" title="$hint :: Encoding mode."><span class="description">Encoding mode.</span><pre>$hint</pre></a></li>
+<li class="property protected "><a href="#%24items" title="$items :: Input items."><span class="description">Input items.</span><pre>$items</pre></a></li>
+<li class="property protected "><a href="#%24lengthTableBits" title="$lengthTableBits :: Array Length indicator."><span class="description">Array Length indicator.</span><pre>$lengthTableBits</pre></a></li>
+<li class="property protected "><a href="#%24level" title="$level :: Levels of error correction."><span class="description">Levels of error correction.</span><pre>$level</pre></a></li>
+<li class="property protected "><a href="#%24rsblocks" title="$rsblocks :: Reed-Solomon blocks."><span class="description">Reed-Solomon blocks.</span><pre>$rsblocks</pre></a></li>
+<li class="property protected "><a href="#%24rsitems" title="$rsitems :: Reed-Solomon items."><span class="description">Reed-Solomon items.</span><pre>$rsitems</pre></a></li>
+<li class="property protected "><a href="#%24runLength" title="$runLength :: Run length."><span class="description">Run length.</span><pre>$runLength</pre></a></li>
+<li class="property protected "><a href="#%24structured" title="$structured :: Structured QR code (not supported yet)."><span class="description">Structured QR code (not supported yet).</span><pre>$structured</pre></a></li>
+<li class="property protected "><a href="#%24version" title="$version :: QR code version."><span class="description">QR code version.</span><pre>$version</pre></a></li>
+<li class="property protected "><a href="#%24versionPattern" title="$versionPattern :: Array Version information pattern (BCH coded)."><span class="description">Array Version information pattern (BCH coded).</span><pre>$versionPattern</pre></a></li>
+<li class="property protected "><a href="#%24width" title="$width :: Width."><span class="description">Width.</span><pre>$width</pre></a></li>
+<li class="property protected "><a href="#%24x" title="$x :: X position of bit."><span class="description">X position of bit.</span><pre>$x</pre></a></li>
+<li class="property protected "><a href="#%24y" title="$y :: Y position of bit."><span class="description">Y position of bit.</span><pre>$y</pre></a></li>
+</ul>
+</div>
+<div class="span8">
+<a name="%5CQRcode" id="\QRcode"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/QRcode.html">QRcode</a>
+</li>
+</ul>
+<div href="../classes/QRcode.html" class="element class">
+<p class="short_description"></p>
+<div class="details">
+<p class="long_description"></p>
+<table class="table table-bordered">
+<tr>
+<th>class</th>
+<td>QRcode
+Class to create QR-code arrays for TCPDF class.
+QR Code symbol is a 2D barcode that can be scanned by handy terminals such as a mobile phone with CCD.
+The capacity of QR Code is up to 7000 digits or 4000 characters, and has high robustness.
+This class supports QR Code model 2, described in JIS (Japanese Industrial Standards) X0510:2004 or ISO/IEC 18004.
+Currently the following features are not supported: ECI and FNC1 mode, Micro QR Code, QR Code model 1, Structured mode.
+This class is derived from "PHP QR Code encoder" by Dominik Dzienia (http://phpqrcode.sourceforge.net/) based on "libqrencode C library 3.1.1." by Kentaro Fukuchi (http://megaui.net/fukuchi/works/qrencode/index.en.html), contains Reed-Solomon code written by Phil Karn, KA9Q. QR Code is registered trademark of DENSO WAVE INCORPORATED (http://www.denso-wave.com/qrcode/index-e.html).
+Please read comments on this class source file for full copyright and license information.</td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="../packages/com.tecnick.tcpdf.html">com.tecnick.tcpdf</a></td>
+</tr>
+<tr>
+<th>author</th>
+<td><a href="">Nicola Asuni</a></td>
+</tr>
+<tr>
+<th>version</th>
+<td>1.0.009</td>
+</tr>
+</table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
+<h2>This is the class constructor.</h2>
+<pre>__construct(\$code $code, \$eclevel $eclevel) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Creates a QRcode object</p></p>
+<table class="table table-bordered">
+<tr>
+<th>public</th>
+<td></td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.0.000</td>
+</tr>
+</table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$code</h4>
+<code>\$code</code><p>(string) code to represent using QRcode</p>
+</div>
+<div class="subelement argument">
+<h4>$eclevel</h4>
+<code>\$eclevel</code><p>(string) error level:</p>
+
+<ul><li>L : About 7% or less errors can be corrected.</li><li>M : About 15% or less errors can be corrected.</li><li>Q : About 25% or less errors can be corrected.</li><li>H : About 30% or less errors can be corrected.</li></ul>
+</div>
+</div></div>
+</div>
+<a name="getBarcodeArray" id="getBarcodeArray"></a><div class="element clickable method public getBarcodeArray" data-toggle="collapse" data-target=".getBarcodeArray .collapse">
+<h2>Returns a barcode array which is readable by TCPDF</h2>
+<pre>getBarcodeArray() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>public</th>
+<td></td>
+</tr></table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>barcode array readable by TCPDF;</div>
+</div></div>
+</div>
+<a name="allocate" id="allocate"></a><div class="element clickable method protected allocate" data-toggle="collapse" data-target=".allocate .collapse">
+<h2>Return an array with zeros</h2>
+<pre>allocate(\$setLength $setLength) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$setLength</h4>
+<code>\$setLength</code><p>(int) array size</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="appendBitstream" id="appendBitstream"></a><div class="element clickable method protected appendBitstream" data-toggle="collapse" data-target=".appendBitstream .collapse">
+<h2>Append one bitstream to another</h2>
+<pre>appendBitstream(\$bitstream $bitstream, \$append $append) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$bitstream</h4>
+<code>\$bitstream</code><p>(array) original bitstream</p>
+</div>
+<div class="subelement argument">
+<h4>$append</h4>
+<code>\$append</code><p>(array) bitstream to append</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitstream</div>
+</div></div>
+</div>
+<a name="appendBytes" id="appendBytes"></a><div class="element clickable method protected appendBytes" data-toggle="collapse" data-target=".appendBytes .collapse">
+<h2>Append one bitstream created from bytes to another</h2>
+<pre>appendBytes(\$bitstream $bitstream, \$size $size, \$data $data) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$bitstream</h4>
+<code>\$bitstream</code><p>(array) original bitstream</p>
+</div>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int) size</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array) bytes</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitstream</div>
+</div></div>
+</div>
+<a name="appendNewInputItem" id="appendNewInputItem"></a><div class="element clickable method protected appendNewInputItem" data-toggle="collapse" data-target=".appendNewInputItem .collapse">
+<h2>Append data to an input object.</h2>
+<pre>appendNewInputItem(\$items $items, \$mode $mode, \$size $size, \$data $data) : \items</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>The data is copied and appended to the input object.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(arrray) input items</p>
+</div>
+<div class="subelement argument">
+<h4>$mode</h4>
+<code>\$mode</code><p>(int) encoding mode.</p>
+</div>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int) size of data (byte).</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array) array of input data.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>\items</code></div>
+</div></div>
+</div>
+<a name="appendNum" id="appendNum"></a><div class="element clickable method protected appendNum" data-toggle="collapse" data-target=".appendNum .collapse">
+<h2>Append one bitstream created from number to another</h2>
+<pre>appendNum(\$bitstream $bitstream, \$bits $bits, \$num $num) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$bitstream</h4>
+<code>\$bitstream</code><p>(array) original bitstream</p>
+</div>
+<div class="subelement argument">
+<h4>$bits</h4>
+<code>\$bits</code><p>(int) number of bits</p>
+</div>
+<div class="subelement argument">
+<h4>$num</h4>
+<code>\$num</code><p>(int) number</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitstream</div>
+</div></div>
+</div>
+<a name="appendPaddingBit" id="appendPaddingBit"></a><div class="element clickable method protected appendPaddingBit" data-toggle="collapse" data-target=".appendPaddingBit .collapse">
+<h2>Append Padding Bit to bitstream</h2>
+<pre>appendPaddingBit(\$bstream $bstream) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$bstream</h4>
+<code>\$bstream</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitstream</div>
+</div></div>
+</div>
+<a name="binarize" id="binarize"></a><div class="element clickable method protected binarize" data-toggle="collapse" data-target=".binarize .collapse">
+<h2>Convert the frame in binary form</h2>
+<pre>binarize(\$frame $frame) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array) array to binarize</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>frame in binary form</div>
+</div></div>
+</div>
+<a name="bitstreamToByte" id="bitstreamToByte"></a><div class="element clickable method protected bitstreamToByte" data-toggle="collapse" data-target=".bitstreamToByte .collapse">
+<h2>Convert bitstream to bytes</h2>
+<pre>bitstreamToByte(\$bstream $bstream) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$bstream</h4>
+<code>\$bstream</code><p>(array) original bitstream</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>of bytes</div>
+</div></div>
+</div>
+<a name="calcN1N3" id="calcN1N3"></a><div class="element clickable method protected calcN1N3" data-toggle="collapse" data-target=".calcN1N3 .collapse">
+<h2>calcN1N3</h2>
+<pre>calcN1N3(\$length $length) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$length</h4>
+<code>\$length</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>demerit</div>
+</div></div>
+</div>
+<a name="calcParity" id="calcParity"></a><div class="element clickable method protected calcParity" data-toggle="collapse" data-target=".calcParity .collapse">
+<h2>calcParity</h2>
+<pre>calcParity(\$items $items) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>parity</div>
+</div></div>
+</div>
+<a name="check" id="check"></a><div class="element clickable method protected check" data-toggle="collapse" data-target=".check .collapse">
+<h2>Validate the input data.</h2>
+<pre>check(\$mode $mode, \$size $size, \$data $data) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mode</h4>
+<code>\$mode</code><p>(int) encoding mode.</p>
+</div>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int) size of data (byte).</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array) data to validate</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>true in case of valid data, false otherwise</div>
+</div></div>
+</div>
+<a name="checkModeAn" id="checkModeAn"></a><div class="element clickable method protected checkModeAn" data-toggle="collapse" data-target=".checkModeAn .collapse">
+<h2>checkModeAn</h2>
+<pre>checkModeAn(\$size $size, \$data $data) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>true or false</div>
+</div></div>
+</div>
+<a name="checkModeKanji" id="checkModeKanji"></a><div class="element clickable method protected checkModeKanji" data-toggle="collapse" data-target=".checkModeKanji .collapse">
+<h2>checkModeKanji</h2>
+<pre>checkModeKanji(\$size $size, \$data $data) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>true or false</div>
+</div></div>
+</div>
+<a name="checkModeNum" id="checkModeNum"></a><div class="element clickable method protected checkModeNum" data-toggle="collapse" data-target=".checkModeNum .collapse">
+<h2>checkModeNum</h2>
+<pre>checkModeNum(\$size $size, \$data $data) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>true or false</div>
+</div></div>
+</div>
+<a name="convertData" id="convertData"></a><div class="element clickable method protected convertData" data-toggle="collapse" data-target=".convertData .collapse">
+<h2>convertData</h2>
+<pre>convertData(\$items $items) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>items</div>
+</div></div>
+</div>
+<a name="createBitStream" id="createBitStream"></a><div class="element clickable method protected createBitStream" data-toggle="collapse" data-target=".createBitStream .collapse">
+<h2>createBitStream</h2>
+<pre>createBitStream(\$items $items) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>of items and total bits</div>
+</div></div>
+</div>
+<a name="createFrame" id="createFrame"></a><div class="element clickable method protected createFrame" data-toggle="collapse" data-target=".createFrame .collapse">
+<h2>Return a copy of initialized frame.</h2>
+<pre>createFrame(\$version $version) : Array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>Array</code>of unsigned char.</div>
+</div></div>
+</div>
+<a name="eat8" id="eat8"></a><div class="element clickable method protected eat8" data-toggle="collapse" data-target=".eat8 .collapse">
+<h2>eat8</h2>
+<pre>eat8() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>run</div>
+</div></div>
+</div>
+<a name="eatAn" id="eatAn"></a><div class="element clickable method protected eatAn" data-toggle="collapse" data-target=".eatAn .collapse">
+<h2>eatAn</h2>
+<pre>eatAn() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>run</div>
+</div></div>
+</div>
+<a name="eatKanji" id="eatKanji"></a><div class="element clickable method protected eatKanji" data-toggle="collapse" data-target=".eatKanji .collapse">
+<h2>eatKanji</h2>
+<pre>eatKanji() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>run</div>
+</div></div>
+</div>
+<a name="eatNum" id="eatNum"></a><div class="element clickable method protected eatNum" data-toggle="collapse" data-target=".eatNum .collapse">
+<h2>eatNum</h2>
+<pre>eatNum() : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>run</div>
+</div></div>
+</div>
+<a name="encodeBitStream" id="encodeBitStream"></a><div class="element clickable method protected encodeBitStream" data-toggle="collapse" data-target=".encodeBitStream .collapse">
+<h2>encodeBitStream</h2>
+<pre>encodeBitStream(\$inputitem $inputitem, \$version $version) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$inputitem</h4>
+<code>\$inputitem</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>input item</div>
+</div></div>
+</div>
+<a name="encodeMask" id="encodeMask"></a><div class="element clickable method protected encodeMask" data-toggle="collapse" data-target=".encodeMask .collapse">
+<h2>Encode mask</h2>
+<pre>encodeMask(\$mask $mask) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mask</h4>
+<code>\$mask</code><p>(int) masking mode</p>
+</div>
+</div></div>
+</div>
+<a name="encodeMode8" id="encodeMode8"></a><div class="element clickable method protected encodeMode8" data-toggle="collapse" data-target=".encodeMode8 .collapse">
+<h2>encodeMode8</h2>
+<pre>encodeMode8(\$inputitem $inputitem, \$version $version) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$inputitem</h4>
+<code>\$inputitem</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>input item</div>
+</div></div>
+</div>
+<a name="encodeModeAn" id="encodeModeAn"></a><div class="element clickable method protected encodeModeAn" data-toggle="collapse" data-target=".encodeModeAn .collapse">
+<h2>encodeModeAn</h2>
+<pre>encodeModeAn(\$inputitem $inputitem, \$version $version) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$inputitem</h4>
+<code>\$inputitem</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>input item</div>
+</div></div>
+</div>
+<a name="encodeModeKanji" id="encodeModeKanji"></a><div class="element clickable method protected encodeModeKanji" data-toggle="collapse" data-target=".encodeModeKanji .collapse">
+<h2>encodeModeKanji</h2>
+<pre>encodeModeKanji(\$inputitem $inputitem, \$version $version) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$inputitem</h4>
+<code>\$inputitem</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>input item</div>
+</div></div>
+</div>
+<a name="encodeModeNum" id="encodeModeNum"></a><div class="element clickable method protected encodeModeNum" data-toggle="collapse" data-target=".encodeModeNum .collapse">
+<h2>encodeModeNum</h2>
+<pre>encodeModeNum(\$inputitem $inputitem, \$version $version) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$inputitem</h4>
+<code>\$inputitem</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>input item</div>
+</div></div>
+</div>
+<a name="encodeModeStructure" id="encodeModeStructure"></a><div class="element clickable method protected encodeModeStructure" data-toggle="collapse" data-target=".encodeModeStructure .collapse">
+<h2>encodeModeStructure</h2>
+<pre>encodeModeStructure(\$inputitem $inputitem) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$inputitem</h4>
+<code>\$inputitem</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>input item</div>
+</div></div>
+</div>
+<a name="encodeString" id="encodeString"></a><div class="element clickable method protected encodeString" data-toggle="collapse" data-target=".encodeString .collapse">
+<h2>Encode the input string to QR code</h2>
+<pre>encodeString(\$string $string) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$string</h4>
+<code>\$string</code><p>(string) input string to encode</p>
+</div>
+</div></div>
+</div>
+<a name="encode_rs_char" id="encode_rs_char"></a><div class="element clickable method protected encode_rs_char" data-toggle="collapse" data-target=".encode_rs_char .collapse">
+<h2>Encode a Reed-Solomon codec and returns the parity array</h2>
+<pre>encode_rs_char(\$rs $rs, \$data $data, \$parity $parity) : \parity</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$rs</h4>
+<code>\$rs</code><p>(array) RS values</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array) data</p>
+</div>
+<div class="subelement argument">
+<h4>$parity</h4>
+<code>\$parity</code><p>(array) parity</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\parity</code>array</div>
+</div></div>
+</div>
+<a name="estimateBitStreamSize" id="estimateBitStreamSize"></a><div class="element clickable method protected estimateBitStreamSize" data-toggle="collapse" data-target=".estimateBitStreamSize .collapse">
+<h2>estimateBitStreamSize</h2>
+<pre>estimateBitStreamSize(\$items $items, \$version $version) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>bits</div>
+</div></div>
+</div>
+<a name="estimateBitsMode8" id="estimateBitsMode8"></a><div class="element clickable method protected estimateBitsMode8" data-toggle="collapse" data-target=".estimateBitsMode8 .collapse">
+<h2>estimateBitsMode8</h2>
+<pre>estimateBitsMode8(\$size $size) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>number of bits</div>
+</div></div>
+</div>
+<a name="estimateBitsModeAn" id="estimateBitsModeAn"></a><div class="element clickable method protected estimateBitsModeAn" data-toggle="collapse" data-target=".estimateBitsModeAn .collapse">
+<h2>estimateBitsModeAn</h2>
+<pre>estimateBitsModeAn(\$size $size) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>number of bits</div>
+</div></div>
+</div>
+<a name="estimateBitsModeKanji" id="estimateBitsModeKanji"></a><div class="element clickable method protected estimateBitsModeKanji" data-toggle="collapse" data-target=".estimateBitsModeKanji .collapse">
+<h2>estimateBitsModeKanji</h2>
+<pre>estimateBitsModeKanji(\$size $size) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>number of bits</div>
+</div></div>
+</div>
+<a name="estimateBitsModeNum" id="estimateBitsModeNum"></a><div class="element clickable method protected estimateBitsModeNum" data-toggle="collapse" data-target=".estimateBitsModeNum .collapse">
+<h2>estimateBitsModeNum</h2>
+<pre>estimateBitsModeNum(\$size $size) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>number of bits</div>
+</div></div>
+</div>
+<a name="estimateVersion" id="estimateVersion"></a><div class="element clickable method protected estimateVersion" data-toggle="collapse" data-target=".estimateVersion .collapse">
+<h2>estimateVersion</h2>
+<pre>estimateVersion(\$items $items) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>version</div>
+</div></div>
+</div>
+<a name="evaluateSymbol" id="evaluateSymbol"></a><div class="element clickable method protected evaluateSymbol" data-toggle="collapse" data-target=".evaluateSymbol .collapse">
+<h2>evaluateSymbol</h2>
+<pre>evaluateSymbol(\$width $width, \$frame $frame) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$width</h4>
+<code>\$width</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>demerit</div>
+</div></div>
+</div>
+<a name="generateMaskNo" id="generateMaskNo"></a><div class="element clickable method protected generateMaskNo" data-toggle="collapse" data-target=".generateMaskNo .collapse">
+<h2>Return bitmask</h2>
+<pre>generateMaskNo(\$maskNo $maskNo, \$width $width, \$frame $frame) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$maskNo</h4>
+<code>\$maskNo</code><p>(int) mask number</p>
+</div>
+<div class="subelement argument">
+<h4>$width</h4>
+<code>\$width</code><p>(int) width</p>
+</div>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array) frame</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitmask</div>
+</div></div>
+</div>
+<a name="getBitStream" id="getBitStream"></a><div class="element clickable method protected getBitStream" data-toggle="collapse" data-target=".getBitStream .collapse">
+<h2>Returns a stream of bits.</h2>
+<pre>getBitStream(\$items $items) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>padded merged byte stream</div>
+</div></div>
+</div>
+<a name="getByteStream" id="getByteStream"></a><div class="element clickable method protected getByteStream" data-toggle="collapse" data-target=".getByteStream .collapse">
+<h2>Pack all bit streams padding bits into a byte array.</h2>
+<pre>getByteStream(\$items $items) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>padded merged byte stream</div>
+</div></div>
+</div>
+<a name="getCode" id="getCode"></a><div class="element clickable method protected getCode" data-toggle="collapse" data-target=".getCode .collapse">
+<h2>Return Reed-Solomon block code.</h2>
+<pre>getCode() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>rsblocks</div>
+</div></div>
+</div>
+<a name="getDataLength" id="getDataLength"></a><div class="element clickable method protected getDataLength" data-toggle="collapse" data-target=".getDataLength .collapse">
+<h2>Return maximum data code length (bytes) for the version.</h2>
+<pre>getDataLength(\$version $version, \$level $level) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int) error correction level</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>maximum size (bytes)</div>
+</div></div>
+</div>
+<a name="getECCLength" id="getECCLength"></a><div class="element clickable method protected getECCLength" data-toggle="collapse" data-target=".getECCLength .collapse">
+<h2>Return maximum error correction code length (bytes) for the version.</h2>
+<pre>getECCLength(\$version $version, \$level $level) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int) error correction level</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>ECC size (bytes)</div>
+</div></div>
+</div>
+<a name="getEccSpec" id="getEccSpec"></a><div class="element clickable method protected getEccSpec" data-toggle="collapse" data-target=".getEccSpec .collapse">
+<h2>Return an array of ECC specification.</h2>
+<pre>getEccSpec(\$version $version, \$level $level, \$spec $spec) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int) error correction level</p>
+</div>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array) an array of ECC specification contains as following: {# of type1 blocks, # of data code, # of ecc code, # of type2 blocks, # of data code}</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>spec</div>
+</div></div>
+</div>
+<a name="getFormatInfo" id="getFormatInfo"></a><div class="element clickable method protected getFormatInfo" data-toggle="collapse" data-target=".getFormatInfo .collapse">
+<h2>Return BCH encoded format information pattern.</h2>
+<pre>getFormatInfo(\$mask $mask, \$level $level) : \BCH</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mask</h4>
+<code>\$mask</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int) error correction level</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\BCH</code>encoded format information pattern</div>
+</div></div>
+</div>
+<a name="getFrameAt" id="getFrameAt"></a><div class="element clickable method protected getFrameAt" data-toggle="collapse" data-target=".getFrameAt .collapse">
+<h2>Get frame value at specified position</h2>
+<pre>getFrameAt(\$at $at) : \value</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$at</h4>
+<code>\$at</code><p>(array) x,y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\value</code>at specified position</div>
+</div></div>
+</div>
+<a name="getMinimumVersion" id="getMinimumVersion"></a><div class="element clickable method protected getMinimumVersion" data-toggle="collapse" data-target=".getMinimumVersion .collapse">
+<h2>Return a version number that satisfies the input code length.</h2>
+<pre>getMinimumVersion(\$size $size, \$level $level) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int) input code length (byte)</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int) error correction level</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>version number</div>
+</div></div>
+</div>
+<a name="getNextPosition" id="getNextPosition"></a><div class="element clickable method protected getNextPosition" data-toggle="collapse" data-target=".getNextPosition .collapse">
+<h2>Return the next frame position</h2>
+<pre>getNextPosition() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>of x,y coordinates</div>
+</div></div>
+</div>
+<a name="getRemainder" id="getRemainder"></a><div class="element clickable method protected getRemainder" data-toggle="collapse" data-target=".getRemainder .collapse">
+<h2>Return the numer of remainder bits.</h2>
+<pre>getRemainder(\$version $version) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>number of remainder bits</div>
+</div></div>
+</div>
+<a name="getVersionPattern" id="getVersionPattern"></a><div class="element clickable method protected getVersionPattern" data-toggle="collapse" data-target=".getVersionPattern .collapse">
+<h2>Return BCH encoded version information pattern that is used for the symbol of version 7 or greater.</h2>
+<pre>getVersionPattern(\$version $version) : \BCH</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Use lower 18 bits.</p></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\BCH</code>encoded version information pattern</div>
+</div></div>
+</div>
+<a name="getWidth" id="getWidth"></a><div class="element clickable method protected getWidth" data-toggle="collapse" data-target=".getWidth .collapse">
+<h2>Return the width of the symbol for the version.</h2>
+<pre>getWidth(\$version $version) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>width</div>
+</div></div>
+</div>
+<a name="identifyMode" id="identifyMode"></a><div class="element clickable method protected identifyMode" data-toggle="collapse" data-target=".identifyMode .collapse">
+<h2>identifyMode</h2>
+<pre>identifyMode(\$pos $pos) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pos</h4>
+<code>\$pos</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mode</div>
+</div></div>
+</div>
+<a name="init" id="init"></a><div class="element clickable method protected init" data-toggle="collapse" data-target=".init .collapse">
+<h2>Initialize code.</h2>
+<pre>init(\$spec $spec) : \global\0</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array) array of ECC specification</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\global\0</code>in case of success, -1 in case of error</div>
+</div></div>
+</div>
+<a name="init_rs" id="init_rs"></a><div class="element clickable method protected init_rs" data-toggle="collapse" data-target=".init_rs .collapse">
+<h2>Initialize a Reed-Solomon codec and add it to existing rsitems</h2>
+<pre>init_rs(\$symsize $symsize, \$gfpoly $gfpoly, \$fcr $fcr, \$prim $prim, \$nroots $nroots, \$pad $pad) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$symsize</h4>
+<code>\$symsize</code><p>(int) symbol size, bits</p>
+</div>
+<div class="subelement argument">
+<h4>$gfpoly</h4>
+<code>\$gfpoly</code><p>(int) Field generator polynomial coefficients</p>
+</div>
+<div class="subelement argument">
+<h4>$fcr</h4>
+<code>\$fcr</code><p>(int) first root of RS code generator polynomial, index form</p>
+</div>
+<div class="subelement argument">
+<h4>$prim</h4>
+<code>\$prim</code><p>(int) primitive element to generate polynomial roots</p>
+</div>
+<div class="subelement argument">
+<h4>$nroots</h4>
+<code>\$nroots</code><p>(int) RS code generator polynomial degree (number of roots)</p>
+</div>
+<div class="subelement argument">
+<h4>$pad</h4>
+<code>\$pad</code><p>(int) padding bytes at front of shortened block</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>Array of RS values:<ul><li>mm = Bits per symbol;</li><li>nn = Symbols per block;</li><li>alpha_to = log lookup table array;</li><li>index_of = Antilog lookup table array;</li><li>genpoly = Generator polynomial array;</li><li>nroots = Number of generator;</li><li>roots = number of parity symbols;</li><li>fcr = First consecutive root, index form;</li><li>prim = Primitive element, index form;</li><li>iprim = prim-th root of 1, index form;</li><li>pad = Padding bytes in shortened block;</li><li>gfpoly</ul>.</div>
+</div></div>
+</div>
+<a name="init_rs_char" id="init_rs_char"></a><div class="element clickable method protected init_rs_char" data-toggle="collapse" data-target=".init_rs_char .collapse">
+<h2>Initialize a Reed-Solomon codec and returns an array of values.</h2>
+<pre>init_rs_char(\$symsize $symsize, \$gfpoly $gfpoly, \$fcr $fcr, \$prim $prim, \$nroots $nroots, \$pad $pad) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$symsize</h4>
+<code>\$symsize</code><p>(int) symbol size, bits</p>
+</div>
+<div class="subelement argument">
+<h4>$gfpoly</h4>
+<code>\$gfpoly</code><p>(int) Field generator polynomial coefficients</p>
+</div>
+<div class="subelement argument">
+<h4>$fcr</h4>
+<code>\$fcr</code><p>(int) first root of RS code generator polynomial, index form</p>
+</div>
+<div class="subelement argument">
+<h4>$prim</h4>
+<code>\$prim</code><p>(int) primitive element to generate polynomial roots</p>
+</div>
+<div class="subelement argument">
+<h4>$nroots</h4>
+<code>\$nroots</code><p>(int) RS code generator polynomial degree (number of roots)</p>
+</div>
+<div class="subelement argument">
+<h4>$pad</h4>
+<code>\$pad</code><p>(int) padding bytes at front of shortened block</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>Array of RS values:<ul><li>mm = Bits per symbol;</li><li>nn = Symbols per block;</li><li>alpha_to = log lookup table array;</li><li>index_of = Antilog lookup table array;</li><li>genpoly = Generator polynomial array;</li><li>nroots = Number of generator;</li><li>roots = number of parity symbols;</li><li>fcr = First consecutive root, index form;</li><li>prim = Primitive element, index form;</li><li>iprim = prim-th root of 1, index form;</li><li>pad = Padding bytes in shortened block;</li><li>gfpoly</ul>.</div>
+</div></div>
+</div>
+<a name="insertStructuredAppendHeader" id="insertStructuredAppendHeader"></a><div class="element clickable method protected insertStructuredAppendHeader" data-toggle="collapse" data-target=".insertStructuredAppendHeader .collapse">
+<h2>insertStructuredAppendHeader</h2>
+<pre>insertStructuredAppendHeader(\$items $items, \$size $size, \$index $index, \$parity $parity) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$index</h4>
+<code>\$index</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$parity</h4>
+<code>\$parity</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>items</div>
+</div></div>
+</div>
+<a name="isalnumat" id="isalnumat"></a><div class="element clickable method protected isalnumat" data-toggle="collapse" data-target=".isalnumat .collapse">
+<h2>Return true if the character at specified position is an alphanumeric character</h2>
+<pre>isalnumat(\$str $str, \$pos $pos) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$str</h4>
+<code>\$str</code><p>(string) string</p>
+</div>
+<div class="subelement argument">
+<h4>$pos</h4>
+<code>\$pos</code><p>(int) characted position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>true of false</div>
+</div></div>
+</div>
+<a name="isdigitat" id="isdigitat"></a><div class="element clickable method protected isdigitat" data-toggle="collapse" data-target=".isdigitat .collapse">
+<h2>Return true if the character at specified position is a number</h2>
+<pre>isdigitat(\$str $str, \$pos $pos) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$str</h4>
+<code>\$str</code><p>(string) string</p>
+</div>
+<div class="subelement argument">
+<h4>$pos</h4>
+<code>\$pos</code><p>(int) characted position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>true of false</div>
+</div></div>
+</div>
+<a name="lengthIndicator" id="lengthIndicator"></a><div class="element clickable method protected lengthIndicator" data-toggle="collapse" data-target=".lengthIndicator .collapse">
+<h2>Return the size of length indicator for the mode and version.</h2>
+<pre>lengthIndicator(\$mode $mode, \$version $version) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mode</h4>
+<code>\$mode</code><p>(int) encoding mode</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>the size of the appropriate length indicator (bits).</div>
+</div></div>
+</div>
+<a name="lengthOfCode" id="lengthOfCode"></a><div class="element clickable method protected lengthOfCode" data-toggle="collapse" data-target=".lengthOfCode .collapse">
+<h2>lengthOfCode</h2>
+<pre>lengthOfCode(\$mode $mode, \$version $version, \$bits $bits) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mode</h4>
+<code>\$mode</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$bits</h4>
+<code>\$bits</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>size</div>
+</div></div>
+</div>
+<a name="lookAnTable" id="lookAnTable"></a><div class="element clickable method protected lookAnTable" data-toggle="collapse" data-target=".lookAnTable .collapse">
+<h2>Look up the alphabet-numeric convesion table (see JIS X0510:2004, pp.19).</h2>
+<pre>lookAnTable(\$c $c) : \value</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$c</h4>
+<code>\$c</code><p>(int) character value</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>\value</code></div>
+</div></div>
+</div>
+<a name="makeMask" id="makeMask"></a><div class="element clickable method protected makeMask" data-toggle="collapse" data-target=".makeMask .collapse">
+<h2>makeMask</h2>
+<pre>makeMask(\$width $width, \$frame $frame, \$maskNo $maskNo, \$level $level) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$width</h4>
+<code>\$width</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$maskNo</h4>
+<code>\$maskNo</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>mask</div>
+</div></div>
+</div>
+<a name="makeMaskNo" id="makeMaskNo"></a><div class="element clickable method protected makeMaskNo" data-toggle="collapse" data-target=".makeMaskNo .collapse">
+<h2>makeMaskNo</h2>
+<pre>makeMaskNo(\$maskNo $maskNo, \$width $width, \$s $s, \$d $d, \$maskGenOnly $maskGenOnly) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$maskNo</h4>
+<code>\$maskNo</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$width</h4>
+<code>\$width</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$s</h4>
+<code>\$s</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$d</h4>
+<code>\$d</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$maskGenOnly</h4>
+<code>\$maskGenOnly</code><p>(boolean)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>b</div>
+</div></div>
+</div>
+<a name="mask" id="mask"></a><div class="element clickable method protected mask" data-toggle="collapse" data-target=".mask .collapse">
+<h2>mask</h2>
+<pre>mask(\$width $width, \$frame $frame, \$level $level) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$width</h4>
+<code>\$width</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>best mask</div>
+</div></div>
+</div>
+<a name="mask0" id="mask0"></a><div class="element clickable method protected mask0" data-toggle="collapse" data-target=".mask0 .collapse">
+<h2>mask0</h2>
+<pre>mask0(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="mask1" id="mask1"></a><div class="element clickable method protected mask1" data-toggle="collapse" data-target=".mask1 .collapse">
+<h2>mask1</h2>
+<pre>mask1(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="mask2" id="mask2"></a><div class="element clickable method protected mask2" data-toggle="collapse" data-target=".mask2 .collapse">
+<h2>mask2</h2>
+<pre>mask2(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="mask3" id="mask3"></a><div class="element clickable method protected mask3" data-toggle="collapse" data-target=".mask3 .collapse">
+<h2>mask3</h2>
+<pre>mask3(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="mask4" id="mask4"></a><div class="element clickable method protected mask4" data-toggle="collapse" data-target=".mask4 .collapse">
+<h2>mask4</h2>
+<pre>mask4(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="mask5" id="mask5"></a><div class="element clickable method protected mask5" data-toggle="collapse" data-target=".mask5 .collapse">
+<h2>mask5</h2>
+<pre>mask5(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="mask6" id="mask6"></a><div class="element clickable method protected mask6" data-toggle="collapse" data-target=".mask6 .collapse">
+<h2>mask6</h2>
+<pre>mask6(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="mask7" id="mask7"></a><div class="element clickable method protected mask7" data-toggle="collapse" data-target=".mask7 .collapse">
+<h2>mask7</h2>
+<pre>mask7(\$x $x, \$y $y) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>mask</div>
+</div></div>
+</div>
+<a name="maximumWords" id="maximumWords"></a><div class="element clickable method protected maximumWords" data-toggle="collapse" data-target=".maximumWords .collapse">
+<h2>Return the maximum length for the mode and version.</h2>
+<pre>maximumWords(\$mode $mode, \$version $version) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mode</h4>
+<code>\$mode</code><p>(int) encoding mode</p>
+</div>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>the maximum length (bytes)</div>
+</div></div>
+</div>
+<a name="mergeBitStream" id="mergeBitStream"></a><div class="element clickable method protected mergeBitStream" data-toggle="collapse" data-target=".mergeBitStream .collapse">
+<h2>mergeBitStream</h2>
+<pre>mergeBitStream(\$items $items) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$items</h4>
+<code>\$items</code><p>(array) items</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitstream</div>
+</div></div>
+</div>
+<a name="modnn" id="modnn"></a><div class="element clickable method protected modnn" data-toggle="collapse" data-target=".modnn .collapse">
+<h2>modnn</h2>
+<pre>modnn(\$rs $rs, \$x $x) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$rs</h4>
+<code>\$rs</code><p>(array) RS values</p>
+</div>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>X osition</div>
+</div></div>
+</div>
+<a name="newFrame" id="newFrame"></a><div class="element clickable method protected newFrame" data-toggle="collapse" data-target=".newFrame .collapse">
+<h2>Set new frame for the specified version.</h2>
+<pre>newFrame(\$version $version) : Array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>Array</code>of unsigned char.</div>
+</div></div>
+</div>
+<a name="newFromBytes" id="newFromBytes"></a><div class="element clickable method protected newFromBytes" data-toggle="collapse" data-target=".newFromBytes .collapse">
+<h2>Return new bitstream from bytes</h2>
+<pre>newFromBytes(\$size $size, \$data $data) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int) size</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array) bytes</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitstream</div>
+</div></div>
+</div>
+<a name="newFromNum" id="newFromNum"></a><div class="element clickable method protected newFromNum" data-toggle="collapse" data-target=".newFromNum .collapse">
+<h2>Return new bitstream from number</h2>
+<pre>newFromNum(\$bits $bits, \$num $num) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$bits</h4>
+<code>\$bits</code><p>(int) number of bits</p>
+</div>
+<div class="subelement argument">
+<h4>$num</h4>
+<code>\$num</code><p>(int) number</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>bitstream</div>
+</div></div>
+</div>
+<a name="newInputItem" id="newInputItem"></a><div class="element clickable method protected newInputItem" data-toggle="collapse" data-target=".newInputItem .collapse">
+<h2>newInputItem</h2>
+<pre>newInputItem(\$mode $mode, \$size $size, \$data $data, \$bstream $bstream) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$mode</h4>
+<code>\$mode</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$size</h4>
+<code>\$size</code><p>(int)</p>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>\$data</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$bstream</h4>
+<code>\$bstream</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>input item</div>
+</div></div>
+</div>
+<a name="putAlignmentMarker" id="putAlignmentMarker"></a><div class="element clickable method protected putAlignmentMarker" data-toggle="collapse" data-target=".putAlignmentMarker .collapse">
+<h2>Put an alignment marker.</h2>
+<pre>putAlignmentMarker(\$frame $frame, \$ox $ox, \$oy $oy) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array) frame</p>
+</div>
+<div class="subelement argument">
+<h4>$ox</h4>
+<code>\$ox</code><p>(int) X center coordinate of the pattern</p>
+</div>
+<div class="subelement argument">
+<h4>$oy</h4>
+<code>\$oy</code><p>(int) Y center coordinate of the pattern</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>frame</div>
+</div></div>
+</div>
+<a name="putAlignmentPattern" id="putAlignmentPattern"></a><div class="element clickable method protected putAlignmentPattern" data-toggle="collapse" data-target=".putAlignmentPattern .collapse">
+<h2>Put an alignment pattern.</h2>
+<pre>putAlignmentPattern(\$version $version, \$frame $frame, \$width $width) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$version</h4>
+<code>\$version</code><p>(int) version</p>
+</div>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array) frame</p>
+</div>
+<div class="subelement argument">
+<h4>$width</h4>
+<code>\$width</code><p>(int) width</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>frame</div>
+</div></div>
+</div>
+<a name="putFinderPattern" id="putFinderPattern"></a><div class="element clickable method protected putFinderPattern" data-toggle="collapse" data-target=".putFinderPattern .collapse">
+<h2>Put a finder pattern.</h2>
+<pre>putFinderPattern(\$frame $frame, \$ox $ox, \$oy $oy) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array) frame</p>
+</div>
+<div class="subelement argument">
+<h4>$ox</h4>
+<code>\$ox</code><p>(int) X center coordinate of the pattern</p>
+</div>
+<div class="subelement argument">
+<h4>$oy</h4>
+<code>\$oy</code><p>(int) Y center coordinate of the pattern</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>frame</div>
+</div></div>
+</div>
+<a name="qrstrset" id="qrstrset"></a><div class="element clickable method protected qrstrset" data-toggle="collapse" data-target=".qrstrset .collapse">
+<h2>Replace a value on the array at the specified position</h2>
+<pre>qrstrset(\$srctab $srctab, \$x $x, \$y $y, \$repl $repl, \$replLen $replLen) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$srctab</h4>
+<code>\$srctab</code><p>(array)</p>
+</div>
+<div class="subelement argument">
+<h4>$x</h4>
+<code>\$x</code><p>(int) X position</p>
+</div>
+<div class="subelement argument">
+<h4>$y</h4>
+<code>\$y</code><p>(int) Y position</p>
+</div>
+<div class="subelement argument">
+<h4>$repl</h4>
+<code>\$repl</code><p>(string) value to replace</p>
+</div>
+<div class="subelement argument">
+<h4>$replLen</h4>
+<code>\$replLen</code><p>(int) length of the repl string</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>srctab</div>
+</div></div>
+</div>
+<a name="rsBlockNum" id="rsBlockNum"></a><div class="element clickable method protected rsBlockNum" data-toggle="collapse" data-target=".rsBlockNum .collapse">
+<h2>Return block number 0</h2>
+<pre>rsBlockNum(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsBlockNum1" id="rsBlockNum1"></a><div class="element clickable method protected rsBlockNum1" data-toggle="collapse" data-target=".rsBlockNum1 .collapse">
+<h2>Return block number 1</h2>
+<pre>rsBlockNum1(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsBlockNum2" id="rsBlockNum2"></a><div class="element clickable method protected rsBlockNum2" data-toggle="collapse" data-target=".rsBlockNum2 .collapse">
+<h2>Return block number 2</h2>
+<pre>rsBlockNum2(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsDataCodes1" id="rsDataCodes1"></a><div class="element clickable method protected rsDataCodes1" data-toggle="collapse" data-target=".rsDataCodes1 .collapse">
+<h2>Return data codes 1</h2>
+<pre>rsDataCodes1(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsDataCodes2" id="rsDataCodes2"></a><div class="element clickable method protected rsDataCodes2" data-toggle="collapse" data-target=".rsDataCodes2 .collapse">
+<h2>Return data codes 2</h2>
+<pre>rsDataCodes2(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsDataLength" id="rsDataLength"></a><div class="element clickable method protected rsDataLength" data-toggle="collapse" data-target=".rsDataLength .collapse">
+<h2>Return data length</h2>
+<pre>rsDataLength(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsEccCodes1" id="rsEccCodes1"></a><div class="element clickable method protected rsEccCodes1" data-toggle="collapse" data-target=".rsEccCodes1 .collapse">
+<h2>Return ecc codes 1</h2>
+<pre>rsEccCodes1(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsEccCodes2" id="rsEccCodes2"></a><div class="element clickable method protected rsEccCodes2" data-toggle="collapse" data-target=".rsEccCodes2 .collapse">
+<h2>Return ecc codes 2</h2>
+<pre>rsEccCodes2(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="rsEccLength" id="rsEccLength"></a><div class="element clickable method protected rsEccLength" data-toggle="collapse" data-target=".rsEccLength .collapse">
+<h2>Return ecc length</h2>
+<pre>rsEccLength(\$spec $spec) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$spec</h4>
+<code>\$spec</code><p>(array)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>value</div>
+</div></div>
+</div>
+<a name="setFrameAt" id="setFrameAt"></a><div class="element clickable method protected setFrameAt" data-toggle="collapse" data-target=".setFrameAt .collapse">
+<h2>Set frame value at specified position</h2>
+<pre>setFrameAt(\$at $at, \$val $val) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$at</h4>
+<code>\$at</code><p>(array) x,y position</p>
+</div>
+<div class="subelement argument">
+<h4>$val</h4>
+<code>\$val</code><p>(int) value of the character to set</p>
+</div>
+</div></div>
+</div>
+<a name="splitString" id="splitString"></a><div class="element clickable method protected splitString" data-toggle="collapse" data-target=".splitString .collapse">
+<h2>splitString</h2>
+<pre>splitString() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="toUpper" id="toUpper"></a><div class="element clickable method protected toUpper" data-toggle="collapse" data-target=".toUpper .collapse">
+<h2>toUpper</h2>
+<pre>toUpper() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="writeFormatInformation" id="writeFormatInformation"></a><div class="element clickable method protected writeFormatInformation" data-toggle="collapse" data-target=".writeFormatInformation .collapse">
+<h2>Write Format Information on frame and returns the number of black bits</h2>
+<pre>writeFormatInformation(\$width $width, \$frame $frame, \$mask $mask, \$level $level) : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$width</h4>
+<code>\$width</code><p>(int) frame width</p>
+</div>
+<div class="subelement argument">
+<h4>$frame</h4>
+<code>\$frame</code><p>(array) frame</p>
+</div>
+<div class="subelement argument">
+<h4>$mask</h4>
+<code>\$mask</code><p>(array) masking mode</p>
+</div>
+<div class="subelement argument">
+<h4>$level</h4>
+<code>\$level</code><p>(int) error correction level</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>int</code>blacks</div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24alignmentPattern" id="$alignmentPattern"> </a><div class="element clickable property protected $alignmentPattern" data-toggle="collapse" data-target=".$alignmentPattern .collapse">
+<h2>Array Positions of alignment patterns.</h2>
+<pre>$alignmentPattern </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>This array includes only the second and the third position of the alignment patterns. Rest of them can be calculated from the distance between them.
+See Table 1 in Appendix E (pp.71) of JIS X0510:2004.</p></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24anTable" id="$anTable"> </a><div class="element clickable property protected $anTable" data-toggle="collapse" data-target=".$anTable .collapse">
+<h2>Alphabet-numeric convesion table.</h2>
+<pre>$anTable </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24b1" id="$b1"> </a><div class="element clickable property protected $b1" data-toggle="collapse" data-target=".$b1 .collapse">
+<h2>Value b1.</h2>
+<pre>$b1 </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24barcode_array" id="$barcode_array"> </a><div class="element clickable property protected $barcode_array" data-toggle="collapse" data-target=".$barcode_array .collapse">
+<h2>Barcode array to be returned which is readable by TCPDF.</h2>
+<pre>$barcode_array </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24bit" id="$bit"> </a><div class="element clickable property protected $bit" data-toggle="collapse" data-target=".$bit .collapse">
+<h2>Single bit value.</h2>
+<pre>$bit </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24blocks" id="$blocks"> </a><div class="element clickable property protected $blocks" data-toggle="collapse" data-target=".$blocks .collapse">
+<h2>Blocks.</h2>
+<pre>$blocks </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24capacity" id="$capacity"> </a><div class="element clickable property protected $capacity" data-toggle="collapse" data-target=".$capacity .collapse">
+<h2>Array Table of the capacity of symbols.</h2>
+<pre>$capacity </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>See Table 1 (pp.13) and Table 12-16 (pp.30-36), JIS X0510:2004.</p></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24casesensitive" id="$casesensitive"> </a><div class="element clickable property protected $casesensitive" data-toggle="collapse" data-target=".$casesensitive .collapse">
+<h2>Boolean flag, if true the input string will be converted to uppercase.</h2>
+<pre>$casesensitive </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24count" id="$count"> </a><div class="element clickable property protected $count" data-toggle="collapse" data-target=".$count .collapse">
+<h2>Counter.</h2>
+<pre>$count </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24data" id="$data"> </a><div class="element clickable property protected $data" data-toggle="collapse" data-target=".$data .collapse">
+<h2>Mask data.</h2>
+<pre>$data </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24dataLength" id="$dataLength"> </a><div class="element clickable property protected $dataLength" data-toggle="collapse" data-target=".$dataLength .collapse">
+<h2>Data length.</h2>
+<pre>$dataLength </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24dataStr" id="$dataStr"> </a><div class="element clickable property protected $dataStr" data-toggle="collapse" data-target=".$dataStr .collapse">
+<h2>Input data string.</h2>
+<pre>$dataStr </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24datacode" id="$datacode"> </a><div class="element clickable property protected $datacode" data-toggle="collapse" data-target=".$datacode .collapse">
+<h2>Data code.</h2>
+<pre>$datacode </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24dir" id="$dir"> </a><div class="element clickable property protected $dir" data-toggle="collapse" data-target=".$dir .collapse">
+<h2>Direction.</h2>
+<pre>$dir </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24eccLength" id="$eccLength"> </a><div class="element clickable property protected $eccLength" data-toggle="collapse" data-target=".$eccLength .collapse">
+<h2>Error correction length.</h2>
+<pre>$eccLength </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24eccTable" id="$eccTable"> </a><div class="element clickable property protected $eccTable" data-toggle="collapse" data-target=".$eccTable .collapse">
+<h2>Array Table of the error correction code (Reed-Solomon block).</h2>
+<pre>$eccTable </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>See Table 12-16 (pp.30-36), JIS X0510:2004.</p></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24ecccode" id="$ecccode"> </a><div class="element clickable property protected $ecccode" data-toggle="collapse" data-target=".$ecccode .collapse">
+<h2>Error correction code.</h2>
+<pre>$ecccode </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24formatInfo" id="$formatInfo"> </a><div class="element clickable property protected $formatInfo" data-toggle="collapse" data-target=".$formatInfo .collapse">
+<h2>Array Format information</h2>
+<pre>$formatInfo </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24frame" id="$frame"> </a><div class="element clickable property protected $frame" data-toggle="collapse" data-target=".$frame .collapse">
+<h2>Frame.</h2>
+<pre>$frame </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24frames" id="$frames"> </a><div class="element clickable property protected $frames" data-toggle="collapse" data-target=".$frames .collapse">
+<h2>Array of frames.</h2>
+<pre>$frames </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24hint" id="$hint"> </a><div class="element clickable property protected $hint" data-toggle="collapse" data-target=".$hint .collapse">
+<h2>Encoding mode.</h2>
+<pre>$hint </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24items" id="$items"> </a><div class="element clickable property protected $items" data-toggle="collapse" data-target=".$items .collapse">
+<h2>Input items.</h2>
+<pre>$items </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24lengthTableBits" id="$lengthTableBits"> </a><div class="element clickable property protected $lengthTableBits" data-toggle="collapse" data-target=".$lengthTableBits .collapse">
+<h2>Array Length indicator.</h2>
+<pre>$lengthTableBits </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24level" id="$level"> </a><div class="element clickable property protected $level" data-toggle="collapse" data-target=".$level .collapse">
+<h2>Levels of error correction.</h2>
+<pre>$level </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>See definitions for possible values.</p></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24rsblocks" id="$rsblocks"> </a><div class="element clickable property protected $rsblocks" data-toggle="collapse" data-target=".$rsblocks .collapse">
+<h2>Reed-Solomon blocks.</h2>
+<pre>$rsblocks </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24rsitems" id="$rsitems"> </a><div class="element clickable property protected $rsitems" data-toggle="collapse" data-target=".$rsitems .collapse">
+<h2>Reed-Solomon items.</h2>
+<pre>$rsitems </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24runLength" id="$runLength"> </a><div class="element clickable property protected $runLength" data-toggle="collapse" data-target=".$runLength .collapse">
+<h2>Run length.</h2>
+<pre>$runLength </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24structured" id="$structured"> </a><div class="element clickable property protected $structured" data-toggle="collapse" data-target=".$structured .collapse">
+<h2>Structured QR code (not supported yet).</h2>
+<pre>$structured </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24version" id="$version"> </a><div class="element clickable property protected $version" data-toggle="collapse" data-target=".$version .collapse">
+<h2>QR code version.</h2>
+<pre>$version </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>Size of QRcode is defined as version. Version is from 1 to 40. Version 1 is 21<em>21 matrix. And 4 modules increases whenever 1 version increases. So version 40 is 177</em>177 matrix.</p></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24versionPattern" id="$versionPattern"> </a><div class="element clickable property protected $versionPattern" data-toggle="collapse" data-target=".$versionPattern .collapse">
+<h2>Array Version information pattern (BCH coded).</h2>
+<pre>$versionPattern </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"><p>See Table 1 in Appendix D (pp.68) of JIS X0510:2004.
+size: [QRSPEC_VERSION_MAX - 6]</p></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24width" id="$width"> </a><div class="element clickable property protected $width" data-toggle="collapse" data-target=".$width .collapse">
+<h2>Width.</h2>
+<pre>$width </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24x" id="$x"> </a><div class="element clickable property protected $x" data-toggle="collapse" data-target=".$x .collapse">
+<h2>X position of bit.</h2>
+<pre>$x </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a name="%24y" id="$y"> </a><div class="element clickable property protected $y" data-toggle="collapse" data-target=".$y .collapse">
+<h2>Y position of bit.</h2>
+<pre>$y </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>protected</th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a9</a> and<br>
+            generated on 2012-08-30T17:36:04-03:00.<br></footer></div>
+</div>
+</body>
+</html>
