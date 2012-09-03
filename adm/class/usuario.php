@@ -542,7 +542,7 @@ class Usuario{
      * 
      * @return boolean
      */
-    public function validaUsuarioAvaliacao($id_materia = 0){
+    public function validaUsuarioAvaliacao($id_questao = 0){
         try{
             //Se ADM...
             if($this->id_perfil == 1){
@@ -553,23 +553,21 @@ class Usuario{
                 throw new Exception("O campo ID_USUARIO é obrigatório para efertuar a validação de acesso");
             }
             
-            if((int)$id_materia == 0){
-                throw new Exception("O campo ID_MATERIA é obrigatório para efertuar a validação de acesso");
+            if((int)$id_questao == 0){
+                throw new Exception("O campo ID_BCO_QUESTAO é obrigatório para efertuar a validação de acesso");
             }
             
             $sql = "SELECT
-                        UM.ID_MATERIA,
-                        MQ.MATERIA
+                        UQ.ID_USUARIO,
+                        UQ.ID_BCO_QUESTAO
                     FROM
-                        SPRO_ADM_USUARIO_MATERIA UM
+                        SPRO_BCO_QUESTAO Q
                     INNER JOIN
-                        SPRO_MATERIA_QUESTAO MQ ON MQ.ID_MATERIA = UM.ID_MATERIA
-                    INNER JOIN
-                        SPRO_USUARIO_AVALIA_MATERIA AM ON AM.ID_MATERIA = UM.ID_MATERIA AND AM.ID_USUARIO = UM.ID_USUARIO
+                        SPRO_USUARIO_AVALIA_QUESTAO UQ ON UQ.ID_USUARIO = UQ.ID_USUARIO AND UQ.ID_BCO_QUESTAO = Q.ID_BCO_QUESTAO
                     WHERE
-                        UM.ID_USUARIO = {$this->id_usuario}
+                        UQ.ID_USUARIO = {$this->id_usuario}
                     AND
-                        UM.ID_MATERIA = {$id_materia}
+                        UQ.ID_BCO_QUESTAO = {$id_questao}
                     LIMIT 
                         1
                     ;";

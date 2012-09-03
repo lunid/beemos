@@ -7,7 +7,6 @@ require_once '../class/mysql.php';
  */
 class AvaliacaoQuestao{
     private $ID_AVALIACAO_QUESTAO;
-    private $ID_MATERIA;
     private $ID_USUARIO;
     private $ID_BCO_QUESTAO;
     private $NOTA_ENUNCIADO;
@@ -35,24 +34,6 @@ class AvaliacaoQuestao{
      */
     public function getIdAvaliacaoQuestao(){
         return $this->ID_AVALIACAO_QUESTAO;
-    }
-    
-    /**
-     * Função para iniciar o valor da propriedade ID_MATERIA
-     * 
-     * @param int $ID_MATERIA
-     */
-    public function setIdMateria($id){
-        $this->ID_MATERIA = (int)$id;
-    }
-    
-    /**
-     * Função que retorna o valor da propriedade ID_MATERIA
-     * 
-     * @return int $ID_MATERIA
-     */
-    public function getIdMateria(){
-        return $this->ID_MATERIA;
     }
     
     /**
@@ -219,11 +200,6 @@ class AvaliacaoQuestao{
     
     public function salvaAvaliacaoQuestao(){
         try{
-            //Valida valor ID_MATERIA
-            if($this->ID_MATERIA <= 0 || $this->ID_MATERIA == null){
-                throw new Exception("O campo ID_MATERIA é obrigatório para salvar a Avaliação");
-            }
-            
             //Valida valor ID_USUARIO
             if($this->ID_USUARIO <= 0 || $this->ID_USUARIO == null){
                 throw new Exception("O campo ID_USUARIO é obrigatório para salvar a Avaliação");
@@ -258,7 +234,6 @@ class AvaliacaoQuestao{
             $sql = "INSERT INTO
                         SPRO_AVALIACAO_QUESTAO
                         (
-                            ID_MATERIA,
                             ID_USUARIO,
                             ID_BCO_QUESTAO,
                             NOTA_ENUNCIADO,
@@ -271,7 +246,6 @@ class AvaliacaoQuestao{
                         )
                         VALUES
                         (
-                            '{$this->ID_MATERIA}',
                             '{$this->ID_USUARIO}',
                             '{$this->ID_BCO_QUESTAO}',
                             '{$this->NOTA_ENUNCIADO}',

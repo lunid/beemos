@@ -41,7 +41,7 @@
                 Top 10
                 <ul>
                     <li>
-                        <a href="top10_avaliacao.php">Avaliar Questão</a>
+                        <a href="top10_avaliar_questoes.php">Avaliar Questão</a>
                     </li>
                 </ul>
             </li>

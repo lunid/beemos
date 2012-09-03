@@ -12,6 +12,8 @@ class Questoes{
     private $ID_BCO_QUESTAO;
     private $ID_MATERIA;
     private $TOTAL_USO;
+    private $ID_FONTE_VESTIBULAR;
+    private $FONTE_VESTIBULAR;
     private $avaliacao;
     private $materias;
     
@@ -67,6 +69,51 @@ class Questoes{
      */
     public function getTotalUso(){
         return $this->TOTAL_USO;
+    }
+    
+    /**
+     * Função para iniciar o valor da propriedade ID_FONTE_VESTIBULAR
+     * 
+     * @param int $ID_FONTE_VESTIBULAR
+     */
+    public function setIdFonteVestibular($id){
+        $this->ID_FONTE_VESTIBULAR = (int)$id;
+    }
+    
+    /**
+     * Função que retona o valor da propriedade ID_FONTE_VESTIBULAR
+     * 
+     * @return int $ID_FONTE_VESTIBULAR
+     */
+    public function getIdFonteVestibular(){
+        return $this->ID_FONTE_VESTIBULAR;
+    }
+    
+    /**
+     * Função para iniciar o valor da propriedade FONTE_VESTIBULAR
+     * 
+     * @param string $FONTE_VESTIBULAR
+     */
+    public function setFonteVestibular($fonte){
+        $this->FONTE_VESTIBULAR = $fonte;
+    }
+    
+    /**
+     * Função que retona o valor da propriedade FONTE_VESTIBULAR
+     * 
+     * @return string $FONTE_VESTIBULAR
+     */
+    public function getFonteVestibular(){
+        return $this->FONTE_VESTIBULAR;
+    }
+    
+    /**
+     * Função que retona o valor da propriedade $materias
+     * 
+     * @return int $meterias
+     */
+    public function getMaterias(){
+        return $this->materias;
     }
     
     /**
@@ -166,7 +213,7 @@ class Questoes{
             }
             
             $sql = "SELECT
-                        AQ.ID_MATERIA
+                        AQ.ID_AVALIACAO_QUESTAO
                     FROM
                         SPRO_AVALIACAO_QUESTAO AQ
                     WHERE
@@ -200,32 +247,39 @@ class Questoes{
      */
     public function listaQuestoesTop10Materia($id_materia = 0, $id_fonte = 0){
         try{
-            $ret        = array(); //Variável de retorno
-            $id_materia = (int)$id_materia;
-            $id_fonte   = (int)$id_fonte;
-            $where      = "";
+            $ret            = array(); //Variável de retorno
+            $arr_usuarios   = array(); //Armazena usuários relacionados as questões.
+            $id_materia     = (int)$id_materia;
+            $id_fonte       = (int)$id_fonte;
+            $where          = "";
+            $count          = 0; //Contador o array $ret
             
             if($id_materia > 0){
                 $where = " WHERE CQ.ID_MATERIA = {$id_materia} ";
             }
             
-            if($id_materia > 0){
+            if($id_fonte > 0){
                 if($where != ""){
                     $where .= " AND ";
                 }else{
                     $where .= " WHERE ";
                 }
-                $where .= " CQ.ID_FONTE = {$id_fonte} ";
+                $where .= " Q.ID_FONTE_VESTIBULAR = {$id_fonte} ";
             }
             
             $sql = "SELECT
+                        DISTINCT
                         Q.ID_BCO_QUESTAO,
                         Q.TOTAL_USO,
+                        Q.ID_FONTE_VESTIBULAR,
+                        FV.FONTE_VESTIBULAR,
                         AQ.ID_AVALIACAO_QUESTAO
                     FROM 
                         SPRO_BCO_QUESTAO Q
                     INNER JOIN
                         SPRO_CLASSIFICACAO_QUESTAO CQ ON CQ.ID_BCO_QUESTAO = Q.ID_BCO_QUESTAO
+                    INNER JOIN
+                        SPRO_FONTE_VESTIBULAR FV ON FV.ID_FONTE_VESTIBULAR = Q.ID_FONTE_VESTIBULAR
                     LEFT JOIN
                         SPRO_AVALIACAO_QUESTAO AQ ON AQ.ID_BCO_QUESTAO = Q.ID_BCO_QUESTAO
                     {$where}
@@ -239,10 +293,14 @@ class Questoes{
             $rs = MySQL::executeQuery($sql);
             
             if(mysql_num_rows($rs) > 0){
+                $txt_materias   = "";
+                $in_materias    = "";
+                
                 while($row = mysql_fetch_object($rs, 'Questoes')){
                     //Concatena as matérias que fazem relação com a questão carregada
                     if($id_materia <= 0){
                         $sql = "SELECT
+                                    DISTINCT
                                     MQ.ID_MATERIA,
                                     MQ.MATERIA
                                 FROM
@@ -251,50 +309,82 @@ class Questoes{
                                     SPRO_CLASSIFICACAO_QUESTAO CQ ON CQ.ID_MATERIA = MQ.ID_MATERIA
                                 WHERE
                                     CQ.ID_BCO_QUESTAO = {$row->getIdBcoQuestao()}
-                                LIMIT 5
                                 ;";
-
+                                    
+                        MySQL::connect();
+                        $rs_materia = MySQL::executeQuery($sql);
+                        $total_rows = mysql_num_rows($rs_materia);
+                        
+                        if($total_rows <= 0){
+                            throw new Exception("Falha ao carregar matéria(s) da Questão");
+                        }else{
+                            while ($row_materia = mysql_fetch_object($rs_materia)) {
+                                if($txt_materias != ""){
+                                    $txt_materias .= ", ";
+                                }
+                                
+                                if($in_materias != ""){
+                                    $in_materias .= ",";
+                                }
+                                
+                                $txt_materias   .= $row_materia->MATERIA;
+                                $in_materias    .= $row_materia->ID_MATERIA;
+                            }
+                            
+                            //Se for uma questã orelacionada apenas com uma matéria, a propriedade ID_MATERIA é carregada.
+                            if($total_rows == 1){
+                                $row->ID_MATERIA = mysql_result($rs_materia, 0, 'ID_MATERIA');
+                            }
+                            $row->materias = $txt_materias;
+                        }
+                    }else{
+                        $sql = "SELECT
+                                    MQ.MATERIA
+                                FROM
+                                    SPRO_MATERIA_QUESTAO MQ
+                                WHERE
+                                    MQ.ID_MATERIA = {$id_materia}
+                                LIMIT
+                                    1
+                                ;";
+                                    
                         MySQL::connect();
                         $rs_materia = MySQL::executeQuery($sql);
                         
-                        if(mysql_num_rows($rs_materia) <= 0){
-                            throw new Exception("Falha ao carregar matéria(s) da Questão");
-                        }else{
-                            while ($row_materia = mysql_fetch_array($rs_materia, MYSQLI_ASSOC)) {
-                                echo "<pre style='color:#FF0000;'>";
-                                print_r($row_materia);
-                                echo "</pre>";
-                                die;
-                                $row->materias = implode(", ", $row_materia);
-                            }
-                        }
+                        $row->materias  = mysql_result($rs_materia, 0, 'MATERIA');
+                        $in_materias    = $id_materia;
                     }
                     
                     $sql = "SELECT
                                 U.ID_USUARIO,
                                 U.NOME
                             FROM
-                                SPRO_USUARIO U
+                                SPRO_ADM_USUARIO U
                             INNER JOIN
                                 SPRO_ADM_USUARIO_MATERIA UM ON UM.ID_USUARIO = U.ID_USUARIO
                             WHERE
-                                
+                                UM.ID_MATERIA IN ({$in_materias})
+                            AND
+                                ID_PERFIL = 2
                             ;";
-                    echo "<pre style='color:#FF0000;'>";
-                    print_r($row);
-                    echo "</pre>";
-                    die;
                     
-                    $sql = "SELECT 
-                                U.ID_USUARIO,
-                                U.NOME
-                            FROM
-                                SPRO_ADM_USUARIO U
-                            INNER JOIN
-                                SPRO_ADM_USUARIO_MATERIA UA ON UA.ID_USUARIO = U.ID_USUARIO
-                                ";
+                    MySQL::connect();
+                    $rs_usuario = MySQL::executeQuery($sql);
                     
-                    $ret[] = $row;
+                    if(mysql_num_rows($rs_usuario) > 0){
+                        while ($row_usuario = mysql_fetch_object($rs_usuario)) {
+                            $arr_usuarios[] = $row_usuario;
+                        }
+                    }
+                    
+                    $ret[$count]['questao']     = $row;
+                    $ret[$count]['usuarios']    = $arr_usuarios;
+                    
+                    $arr_usuarios = array();
+                    $txt_materias = "";
+                    $in_materias  = "";
+                    
+                    $count++;
                 }
             }
             
@@ -310,8 +400,11 @@ class Questoes{
     public function listaQuestoesTop10Colaborador($id_usuario){
         try{
             
-            $ret        = array(); //Variável de retorno
-            $id_usuario = (int)$id_usuario;
+            $ret            = array(); //Variável de retorno
+            $id_usuario     = (int)$id_usuario;
+            $txt_materias   = "";
+            $in_materias    = "";
+            $count          = 0;
             
             //Valida valor de id_materia
             if($id_usuario <= 0){
@@ -319,37 +412,123 @@ class Questoes{
             }
             
             $sql = "SELECT
+                        DISTINCT
                         Q.ID_BCO_QUESTAO,
                         Q.TOTAL_USO,
+                        FV.ID_FONTE_VESTIBULAR,
+                        FV.FONTE_VESTIBULAR,
                         AQ.ID_AVALIACAO_QUESTAO
                     FROM 
                         SPRO_BCO_QUESTAO Q
                     INNER JOIN
                         SPRO_CLASSIFICACAO_QUESTAO CQ ON CQ.ID_BCO_QUESTAO = Q.ID_BCO_QUESTAO
                     INNER JOIN
-                        SPRO_USUARIO_AVALIA_MATERIA AM ON AM.ID_MATERIA = CQ.ID_MATERIA
+                        SPRO_FONTE_VESTIBULAR FV ON FV.ID_FONTE_VESTIBULAR = Q.ID_FONTE_VESTIBULAR
+                    INNER JOIN
+                        SPRO_USUARIO_AVALIA_QUESTAO UQ ON UQ.ID_BCO_QUESTAO = Q.ID_BCO_QUESTAO
                     LEFT JOIN
                         SPRO_AVALIACAO_QUESTAO AQ ON AQ.ID_BCO_QUESTAO = Q.ID_BCO_QUESTAO
                     WHERE
-                        CQ.ID_MATERIA = {$id_materia}
+                        UQ.ID_USUARIO = {$id_usuario}
                     ORDER BY
                         Q.TOTAL_USO DESC
-                    LIMIT
-                        10
                     ;";
             
             MySQL::connect();
             $rs = MySQL::executeQuery($sql);
             
             if(mysql_num_rows($rs) > 0){
+                $txt_materias   = "";
+                $in_materias    = "";
+                
                 while($row = mysql_fetch_object($rs, 'Questoes')){
-                    $ret[] = $row;
+                    $sql = "SELECT
+                                DISTINCT
+                                MQ.ID_MATERIA,
+                                MQ.MATERIA
+                            FROM
+                                SPRO_MATERIA_QUESTAO MQ
+                            INNER JOIN
+                                SPRO_CLASSIFICACAO_QUESTAO CQ ON CQ.ID_MATERIA = MQ.ID_MATERIA
+                            WHERE
+                                CQ.ID_BCO_QUESTAO = {$row->getIdBcoQuestao()}
+                            ;";
+
+                    MySQL::connect();
+                    $rs_materia = MySQL::executeQuery($sql);
+                    $total_rows = mysql_num_rows($rs_materia);
+
+                    if($total_rows <= 0){
+                        throw new Exception("Falha ao carregar matéria(s) da Questão");
+                    }else{
+                        while ($row_materia = mysql_fetch_object($rs_materia)) {
+                            if($txt_materias != ""){
+                                $txt_materias .= ", ";
+                            }
+
+                            if($in_materias != ""){
+                                $in_materias .= ",";
+                            }
+
+                            $txt_materias   .= $row_materia->MATERIA;
+                            $in_materias    .= $row_materia->ID_MATERIA;
+                        }
+
+                        //Se for uma questã orelacionada apenas com uma matéria, a propriedade ID_MATERIA é carregada.
+                        if($total_rows == 1){
+                            $row->ID_MATERIA = mysql_result($rs_materia, 0, 'ID_MATERIA');
+                        }
+                        $row->materias = $txt_materias;
+                    }
+                    
+                    
+                    $ret[$count]['questao']     = $row;
+                    
+                    $txt_materias = "";
+                    $in_materias  = "";
+                    
+                    $count++;
                 }
             }
             
             return $ret;
         }catch(Exception $e){
             echo "Erro listar questão TOP 10 de Matéria<br />\n";
+            echo $e->getMessage() . "<br />\n";
+            echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
+            die;
+        }
+    }
+    
+    public function alteraUsuarioQuestao($id_questao, $id_usuario){
+        try{
+            MySQL::connect();
+            
+            $sql = "DELETE FROM SPRO_USUARIO_AVALIA_QUESTAO WHERE ID_BCO_QUESTAO = {$id_questao};";
+            MySQL::executeQuery($sql);
+            
+            $sql = "DELETE FROM SPRO_AVALIACAO_QUESTAO WHERE ID_BCO_QUESTAO = {$id_questao};";
+            MySQL::executeQuery($sql);
+            
+            $sql = "INSERT INTO 
+                        SPRO_USUARIO_AVALIA_QUESTAO
+                        (
+                            ID_BCO_QUESTAO,
+                            ID_USUARIO,
+                            DATA_INDICACAO
+                        )
+                        VALUES
+                        (
+                            {$id_questao},
+                            {$id_usuario},
+                            NOW()
+                        );";
+            
+            MySQL::executeQuery($sql);
+            
+            return true;
+        }catch(Exception $e){
+            echo "Erro alterar usuário questão<br />\n";
             echo $e->getMessage() . "<br />\n";
             echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
             die;

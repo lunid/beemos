@@ -31,7 +31,6 @@
     if($_POST){
         $avaliacao = new AvaliacaoQuestao();
         $avaliacao->setIdBcoQuestao   ($_POST['id_questao']);
-        $avaliacao->setIdMateria      ($_POST['id_materia']);
         $avaliacao->setIdUsuario      ($usuario->getIdUsuario());
         
         $avaliacao->setNotaEnunciado($_POST['nota_enunciado']);
@@ -43,9 +42,6 @@
         
         $salvar = $avaliacao->salvaAvaliacaoQuestao();
     }
-    
-    //Inicia o valor de id_materia enviado via GET
-    $id_materia = @(int)$_GET['id_materia'];
     
     //Inicia o valor de id_materia enviado via GET
     $id_questao = @(int)$_GET['id_questao'];
@@ -104,7 +100,7 @@
             }
         ?>
         <? 
-            if($questao->getIdBcoQuestao() > 0 && $usuario->validaUsuarioAvaliacao($id_materia)){
+            if($questao->getIdBcoQuestao() > 0){
         ?>
         <br />
         <div id="enunciado">
@@ -120,7 +116,7 @@
             </fieldset>
         </div>
         <div id="avaliacao">
-            <form id="form_avaliacao" method="post" action="top10_avaliar_questao.php?id_questao=<?=$id_questao?>&id_materia=<?=$id_materia?>" onsubmit="if(confirm('Tem certeza que deseja finaliza a Avaliação?')){ return form.validate(this); }else{ return false; }">
+            <form id="form_avaliacao" method="post" action="top10_avaliar_questao.php?id_questao=<?=$id_questao?>" onsubmit="if(confirm('Tem certeza que deseja finaliza a Avaliação?')){ return form.validate(this); }else{ return false; }">
                 <table>
                     <tr>
                         <td>
@@ -236,11 +232,10 @@
                         </td>
                     </tr>
                     
-                    <? if($questao->validaQuestaoAvaliacao()){ ?>
+                    <? if($questao->validaQuestaoAvaliacao() && $usuario->validaUsuarioAvaliacao($id_questao)){ ?>
                     <tr>
                         <td colspan="2">
                             <input type="hidden" id="id_questao" name="id_questao" value="<?=$id_questao?>" />
-                            <input type="hidden" id="id_materia" name="id_materia" value="<?=$id_materia?>" />
                             <input type="submit" value="Salvar Avaliação" />
                         </td>
                     </tr>
