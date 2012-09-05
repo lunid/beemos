@@ -43,6 +43,9 @@
                     <li>
                         <a href="top10_avaliar_questoes.php">Avaliar Questão</a>
                     </li>
+                    <li>
+                        <a href="grafico_top10.php">Histórico</a>
+                    </li>
                 </ul>
             </li>
         </ul>

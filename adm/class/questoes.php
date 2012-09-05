@@ -1,6 +1,6 @@
 <?php
 
-require_once '../class/mysql.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . "/interbits_dev/class/mysql.php";
 
 /**
  * Classe para controle de dados de BCO_QUESTAO
@@ -238,11 +238,11 @@ class Questoes{
         }
     }
 
-
     /**
-     * Função que lista as 10 questões mais utilizadas de uma determinada matéria
+     * Função que lista as 10 questões mais utilizadas por Matéria ou Fonte
      * 
-     * @param type $id_materia
+     * @param type $id_materia Código da matéria para filtro
+     * @param type $id_fonte Código da fonte para filtro
      * @return Questoes[] Array com os Objetos Questoes encontrados
      */
     public function listaQuestoesTop10Materia($id_materia = 0, $id_fonte = 0){
@@ -397,6 +397,12 @@ class Questoes{
         }
     }
     
+    /**
+     * Lista as questões que o colocaborador terá de avaliar
+     * 
+     * @param int $id_usuario Código do usuário logado no sistema
+     * @return Questoes[] Array com os Objetos Questoes encontrados
+     */
     public function listaQuestoesTop10Colaborador($id_usuario){
         try{
             
@@ -500,6 +506,13 @@ class Questoes{
         }
     }
     
+    /**
+     * Função que altera colaborador responsável em avaliar a questão
+     * 
+     * @param int $id_questao Código da questão
+     * @param int $id_usuario Código do usuário 
+     * @return boolean
+     */
     public function alteraUsuarioQuestao($id_questao, $id_usuario){
         try{
             MySQL::connect();

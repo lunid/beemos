@@ -1,6 +1,6 @@
 <?php
 
-require_once '../class/mysql.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . "/interbits_dev/class/mysql.php";
 
 /**
  * Classe para controle de dados de AVALIACAO_QUESTAO
