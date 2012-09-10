@@ -10,6 +10,12 @@ if($_POST){
     $id_item            = (int)$_POST['id_item'];
     $id_subitem         = (int)$_POST['id_subitem'];
     
+    $id_materia_or      = (int)$_POST['id_materia_or'];
+    $id_divisao_or      = (int)$_POST['id_divisao_or'];
+    $id_topico_or       = (int)$_POST['id_topico_or'];
+    $id_item_or         = (int)$_POST['id_item_or'];
+    $id_subitem_or      = (int)$_POST['id_subitem_or'];
+    
     if($id_questao <= 0){
         $ret['msg'] = "Código da Questão inválido!";
         echo json_encode($ret);
@@ -22,16 +28,36 @@ if($_POST){
         die;
     }
     
-    if($id_materia <= 0){
-        $ret['msg'] = "Código da Matéria inválido!";
-        echo json_encode($ret);
-        die;
-    }
-    
-    if($id_materia <= 0 && $id_divisao > 0){
+    if($id_materia <= 0 && $id_materia_or <= 0){
         $ret['msg'] = "Selecione um Matéria para continuar";
         echo json_encode($ret);
         die;
+    }else{
+        $id_materia = $id_materia == 0 ? $id_materia_or : $id_materia;
+    }
+    
+    if($id_subitem != $id_subitem_or && $id_subitem > 0){
+        $id_item    = $id_item > 0 && $id_item != $id_item_or ? $id_item : $id_item_or;
+        $id_topico  = $id_topico > 0 && $id_topico != $id_topico_or ? $id_topico : $id_topico_or;
+        $id_divisao = $id_divisao > 0 && $id_divisao != $id_divisao_or ? $id_divisao : $id_divisao_or;
+    }
+    
+    if($id_item != $id_item_or && $id_item > 0){
+        $id_subitem = $id_subitem > 0 && $id_subitem != $id_subitem_or ? $id_subitem : 0;
+        $id_topico  = $id_topico > 0 && $id_topico != $id_topico_or ? $id_topico : $id_topico_or;
+        $id_divisao = $id_divisao > 0 && $id_divisao != $id_divisao_or ? $id_divisao : $id_divisao_or;
+    }
+    
+    if($id_topico != $id_topico_or && $id_topico > 0){
+        $id_item    = $id_item > 0 && $id_item != $id_item_or ? $id_item : 0;
+        $id_subitem = $id_subitem > 0 && $id_subitem != $id_subitem_or ? $id_subitem : 0;
+        $id_divisao = $id_divisao > 0 && $id_divisao != $id_divisao_or ? $id_divisao : $id_divisao_or;
+    }
+    
+    if($id_divisao != $id_divisao && $id_divisao > 0){
+        $id_item    = $id_item > 0 && $id_item != $id_item_or ? $id_item : 0;
+        $id_subitem = $id_subitem > 0 && $id_subitem != $id_subitem_or ? $id_subitem : 0;
+        $id_topico  = $id_topico > 0 && $id_topico != $id_topico_or ? $id_topico : 0;
     }
     
     require_once '../class/classificacao.php';
@@ -49,6 +75,12 @@ if($_POST){
     if($classificacao->alterar()){
         $ret['status']  = 1;
         $ret['msg']     = "Classificação salva com sucesso!";
+        
+        $ret['id_materia']  = $id_materia;
+        $ret['id_divisao']  = $id_divisao;
+        $ret['id_topico']   = $id_topico;
+        $ret['id_item']     = $id_item;
+        $ret['id_subitem']  = $id_subitem;
     }else{
         $ret['msg'] = "Falaha ao salvar classificação. Tente mais tarde.";
     }
