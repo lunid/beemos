@@ -72,18 +72,19 @@ if($_POST){
     $classificacao->__set("ID_ITEM", $id_item);
     $classificacao->__set("ID_SUBITEM", $id_subitem);
     
-    if($classificacao->alterar()){
+    $ret_alteracao = $classificacao->alterar(1);
+    
+    if($ret_alteracao->status){
         $ret['status']  = 1;
-        $ret['msg']     = "Classificação salva com sucesso!";
         
         $ret['id_materia']  = $id_materia;
         $ret['id_divisao']  = $id_divisao;
         $ret['id_topico']   = $id_topico;
         $ret['id_item']     = $id_item;
         $ret['id_subitem']  = $id_subitem;
-    }else{
-        $ret['msg'] = "Falaha ao salvar classificação. Tente mais tarde.";
     }
+    
+    $ret['msg'] = $ret_alteracao->msg;
     
     echo json_encode($ret);
 }

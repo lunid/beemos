@@ -21,7 +21,7 @@ class Materia{
             $rs = MySQL::executeQuery($sql);
             
             if(mysql_num_rows($rs) <= 0){
-                return 'Nenhuma matéria encontrada';
+                return '';
             }
             
             while($row = mysql_fetch_object($rs)){

@@ -28,7 +28,7 @@ class Divisao{
             $rs = MySQL::executeQuery($sql);
             
             if(mysql_num_rows($rs) <= 0){
-                return 'Nenhuma divisão encontrada';
+                return '';
             }
             
             while($row = mysql_fetch_object($rs)){

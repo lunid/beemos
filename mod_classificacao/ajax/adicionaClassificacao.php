@@ -50,7 +50,7 @@ if($_POST){
     $classificacao->__set("ID_ITEM", $id_item);
     $classificacao->__set("ID_SUBITEM", $id_subitem);
     
-    $rs_adicionar = $classificacao->adicionar();
+    $rs_adicionar = $classificacao->adicionar(1);
     
     if($rs_adicionar->status){
         $ret['status']  = 1;

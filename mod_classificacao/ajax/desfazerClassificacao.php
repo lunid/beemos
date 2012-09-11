@@ -24,14 +24,13 @@ if($_POST){
     $classificacao->__set("ID_CLASSIFICACAO", $id_classificacao);
     $classificacao->__set("ID_BCO_QUESTAO", $id_questao);
     
-    $ret_excluir = $classificacao->excluir(1);
+    $ret_excluir = $classificacao->desfazer();
     
     if($ret_excluir->status){
         $ret['status']  = 1;
-        $ret['msg']     = "Classificação excluída com sucesso!";
-    }else{
-        $ret['msg'] = $ret_excluir->msg;
     }
+    
+    $ret['msg'] = $ret_excluir->msg;
     
     echo json_encode($ret);
 }

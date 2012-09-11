@@ -1,9 +1,26 @@
 <?
-    require_once 'class/questao.php';
+    require_once 'class/classificacao.php';
     
     $id_questao = 118581;
-    $questao    = new Questao($id_questao);
-    $class      = $questao->carregaClassificacao();
+    
+    $classificacao = new Classificacao();
+    $classificacao->__set("ID_BCO_QUESTAO", $id_questao);
+    
+    $class      = $classificacao->carregaClassificacao();
+    $mudancas   = $classificacao->buscaMudancas();
+    $count      = 1;
+    
+    $bt_memoria = false;
+    if(isset($_COOKIE['memoria_questao'])){
+        $bt_memoria = true;
+        $values     = explode(",", $_COOKIE['memoria_questao']);
+        
+        $m_id_materia   = $values[0];
+        $m_id_divisao   = $values[1];
+        $m_id_topico    = $values[2];
+        $m_id_item      = $values[3];
+        $m_id_subitem   = $values[4];
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,7 +85,7 @@
                         function(html){
                             var seta = "";
                             
-                            if(tipo != "id_materia"){
+                            if(tipo != "id_materia" && html != ""){
                                 seta = " >> ";
                             }
                             
@@ -130,7 +147,32 @@
             function salvaClassificacao(id, id_questao, classificacao){
                 try{
                     if(id > 0 && id_questao > 0){
-                        if(confirm("Tem certeza que deseja salvar essa alteração de Classificação?")){
+                        
+                            if($("#sel_id_materia_" + classificacao).val() == 0){
+                                alert("Selecione uma Matéria");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_divisao_" + classificacao).val() == 0){
+                                alert("Selecione uma Divisão");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_topico_" + classificacao).val() == 0){
+                                alert("Selecione um Tópico");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_item_" + classificacao).val() == 0){
+                                alert("Selecione um Item");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_subitem_" + classificacao).val() == 0){
+                                alert("Selecione um Subitem");
+                                return false;
+                            }
+                            
                             $.post(
                                 'ajax/alteraClassificacao.php',
                                 {
@@ -190,13 +232,17 @@
                                         }
                                         
                                         cancela(classificacao);
+                                        
+                                        $("#salvar_mudancas_questao").css("display", "");
+                                        $("#salvar_mudancas").css("display", "");
+                                    }else{
+                                        alert(ret.msg);
                                     }
                                     
-                                    alert(ret.msg);
                                 },
                                 'json'
                             );
-                        }
+                        
                     }else{
                         alert("Código de Classificação e/ou Questão não encontrado(s)!");
                     }
@@ -218,9 +264,12 @@
                                 function(ret){
                                     if(ret.status == 1){
                                         $("#classificacao_" + classificacao).remove();
+                                        
+                                        $("#salvar_mudancas_questao").css("display", "");
+                                        $("#salvar_mudancas").css("display", "");
+                                    }else{
+                                        alert(ret.msg);
                                     }
-                                    
-                                    alert(ret.msg);
                                 },
                                 'json'
                             );
@@ -264,6 +313,39 @@
                 }
             }
             
+            function adicionarClassificacaoMemoria(id_questao, id_materia){
+                try{
+                    var count = $("#count").val();
+                    
+                    $("#nova_classificacao").append("<div id='classificacao_" + count + "'>" + 
+                        "<span id='id_materia_" + count + "'></span>" +
+                        "<span id='id_divisao_" + count + "'></span>" +
+                        "<span id='id_topico_" + count + "'></span>" +
+                        "<span id='id_item_" + count + "'></span>" + 
+                        "<span id='id_subitem_" + count + "'></span>" +
+                        "<input type='hidden' id='id_materia_or_" + count + "' name='' value='' />" +
+                        "<input type='hidden' id='id_divisao_or_" + count + "' name='' value='' />" + 
+                        "<input type='hidden' id='id_topico_or_" + count + "' name='' value='' />" + 
+                        "<input type='hidden' id='id_item_or_" + count + "' name='' value='' />" + 
+                        "<input type='hidden' id='id_subitem_or_" + count + "' name='' value='' />" + 
+                        "<input type='hidden' id='id_questao_" + count + "' value='" + id_questao + "' />" + 
+                        "<input type='button' id='bt_adicionar_" + count + "' value='Salvar' onclick='javascript:salvaNovaClassificacao(" + count + ", " + id_questao + ");' />" + 
+                        "<input type='button' id='bt_remover_" + count + "' value='Cancelar' onclick='javascript:removeClassificacao(" + count + ");' />" + 
+                        "</div>"
+                    );
+                    
+                    montaCombo('id_materia', count);
+                    
+                    $("#sel_id_materia_" + count).val(id_materia);
+                    
+                    count++;
+                    
+                    $("#count").val(count);
+                }catch(err){
+                    alert(err.message);
+                }
+            }
+            
             function removeClassificacao(classificacao){
                 try{
                     $("#classificacao_" + classificacao).remove();
@@ -275,7 +357,31 @@
             function salvaNovaClassificacao(classificacao, id_questao){
                 try{
                     if(classificacao > 0 && id_questao > 0){
-                        if(confirm("Tem certeza que deseja salvar esta nova Classificação?")){
+                            if($("#sel_id_materia_" + classificacao).val() == 0){
+                                alert("Selecione uma Matéria");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_divisao_" + classificacao).val() == 0){
+                                alert("Selecione uma Divisão");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_topico_" + classificacao).val() == 0){
+                                alert("Selecione um Tópico");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_item_" + classificacao).val() == 0){
+                                alert("Selecione um Item");
+                                return false;
+                            }
+                            
+                            if($("#sel_id_subitem_" + classificacao).val() == 0){
+                                alert("Selecione um Subitem");
+                                return false;
+                            }
+                            
                             $.post(
                                 'ajax/adicionaClassificacao.php',
                                 {
@@ -331,21 +437,122 @@
                                         $("#bt_adicionar_" + classificacao).remove();
                                         $("#bt_remover_" + classificacao).remove();
                                         
-                                        $("#classificacao_" + classificacao).append("<input type='button' id='bt_salvar_" + classificacao + "' value='Salvar' onclick='javascript:salvaClassificacao(" + ret.id + ", " + id_questao + ", " + classificacao + ");' style='display:none;' />" + 
+                                        $("#classificacao_" + classificacao).append("&nbsp;<input type='radio' name='memo' id='memo_" + count + "' value='" + count + "' onclick='javascript:memorizar(" + ret.id_materia + "," + ret.id_divisao + "," + ret.id_topico + "," + ret.id_item + "," + ret.id_subitem + ");' /> Memorizar&nbsp;" + 
+                                            "<input type='button' id='bt_salvar_" + classificacao + "' value='Salvar' onclick='javascript:salvaClassificacao(" + ret.id + ", " + id_questao + ", " + classificacao + ");' style='display:none;' />" + 
                                             "<input type='button' id='bt_cancelar_" + classificacao + "' value='Cancelar' onclick='javascript:cancela(" + classificacao + ");' style='display:none;' />" + 
                                             "<input type='button' id='bt_excluir_" + classificacao + "' value='Excluir' onclick='javascript:excluiClassificacao(" + ret.id + ", " + id_questao + ", " + classificacao + ");' />");
                                         
                                         cancela(classificacao);
+                                        
+                                        $("#salvar_mudancas_questao").css("display", "");
+                                        $("#salvar_mudancas").css("display", "");
+                                    }else{
+                                        alert(ret.msg);
                                     }
-                                    
-                                    alert(ret.msg);
                                 },
                                 'json'
                             );
-                        }
                     }else{
                         alert("Código de Classificação e/ou Questão não encontrado(s)!");
                     }
+                }catch(err){
+                    alert(err.message);
+                }
+            }
+            
+            function memorizar(id_materia, id_divisao, id_topico, id_item, id_subitem){
+                try{
+                    $.post(
+                            'ajax/salvaMemoria.php',
+                            {
+                                id_materia: id_materia,
+                                id_divisao: id_divisao,
+                                id_topico: id_topico,
+                                id_item: id_item,
+                                id_subitem: id_subitem
+                            },
+                            function(ret){
+                                
+                            },
+                            'json'
+                    );
+                }catch(err){
+                    alert(err.message);
+                }
+            }
+            
+            function desfazerMudanca(id_classificacao, id_questao, classificacao){
+                try{
+                    $.post(
+                            'ajax/desfazerClassificacao.php',
+                            {
+                                id_questao: id_questao,
+                                id_classificacao: id_classificacao
+                            },
+                            function(ret){
+                                if(ret.status == 1){
+                                    $("#mudanca_" + classificacao).remove();
+                                    $("#label_mudanca_" + classificacao).remove();
+                                    $("#classificacao_" + classificacao).css("float", "");
+                                    $("#bt_excluir_" + classificacao).css("display", "");
+                                    
+                                    cancela(classificacao);
+                                    
+                                    $("#salvar_mudancas_questao").css("display", "");
+                                    $("#salvar_mudancas").css("display", "");
+                                }else{
+                                    alert(ret.msg);
+                                }
+                            },
+                            'json'
+                          );
+                }catch(err){
+                    alert(err.message);
+                }
+            }
+            
+            function desfazerInsercao(id_questao, classificacao){
+                try{
+                    $.post(
+                            'ajax/desfazerInsercaoClassificacao.php',
+                            {
+                                id_questao: id_questao,
+                                id_autoriza_classificacao: $("#id_autoriza_classificacao_" + classificacao).val()
+                            },
+                            function(ret){
+                                if(ret.status == 1){
+                                    $("#insercao_" + classificacao).remove();
+                                    
+                                    $("#salvar_mudancas_questao").css("display", "");
+                                    $("#salvar_mudancas").css("display", "");
+                                }else{
+                                    alert(ret.msg);
+                                }
+                            },
+                            'json'
+                          );
+                }catch(err){
+                    alert(err.message);
+                }
+            }
+            
+            function salvarMudancas(id_usuario, id_questao){
+                try{
+                    $.post(
+                            'ajax/salvarMudancas.php',
+                            {
+                                id_usuario: id_usuario,
+                                id_questao: id_questao
+                            },
+                            function(ret){
+                                alert(ret.msg);
+                                
+                                if(ret.status == 1){
+                                    window.location.reload();
+                                }
+                            },
+                            'json'
+                          );
                 }catch(err){
                     alert(err.message);
                 }
@@ -355,48 +562,96 @@
     <body>
         <?
             if(sizeof($class) > 0){
-                $count = 1;
                 foreach($class as $row){
+                    $flg_alterado   = false;
+                    $mudanca        = null;
         ?>
-        <div id="classificacao_<?=$count?>">
+        
+        <?
+            if(sizeof($mudancas) > 0){
+                foreach ($mudancas as $row_mudanca) {
+                    if($row_mudanca->ID_CLASSIFICACAO == $row->ID_CLASSIFICACAO){   
+                        $flg_alterado   = true;
+                        $mudanca        = $row_mudanca;
+                    }
+                }
+            }
+        ?>
+        
+        <div id="classificacao_<?=$count?>" <? if($flg_alterado){ ?> style="float:left;" <? } ?> >
+            <? if($flg_alterado && $mudanca->TIPO_MUDANCA == 'A'){ ?>
+            <span id="label_mudanca_<?=$count?>" style="color:#FF0000;">
+                Antiga classificação: 
+            </span>
+            <? } ?>
             <span id='id_materia_<?=$count?>'>
                 <? if($row->MATERIA != null){ ?>
+                
+                <? if(!$flg_alterado){ ?>
                 <a href="javascript:void(0);" onclick="montaCombo('id_materia', '<?=$count?>')"> 
                     <?=utf8_encode($row->MATERIA)?>
                 </a>
-                <? }    ?>
+                <? }else{ ?>
+                    <?=utf8_encode($row->MATERIA)?>
+                <? } ?>
+                
+                <? } ?>
             </span>
             <span id='id_divisao_<?=$count?>'>
                 <? if($row->ID_DIVISAO != null){ ?>
+                
                 >>
+                <? if(!$flg_alterado){ ?>
                 <a href="javascript:void(0);" onclick="montaCombo('id_divisao', '<?=$count?>')"> 
                     <?=utf8_encode($row->DIVISAO)?>
                 </a>
-                <? }    ?>
+                <? }else{ ?>
+                    <?=utf8_encode($row->DIVISAO)?>
+                <? } ?>
+                
+                <? } ?>
             </span>
             <span id='id_topico_<?=$count?>'>
                 <? if($row->ID_TOPICO != null){ ?>
+                
                 >>
+                <? if(!$flg_alterado){ ?>
                 <a href="javascript:void(0);" onclick="montaCombo('id_topico', '<?=$count?>')"> 
                     <?=utf8_encode($row->TOPICO)?>
                 </a>
-                <? }    ?>
+                <? }else{ ?>
+                    <?=utf8_encode($row->TOPICO)?>
+                <? } ?>
+                
+                <? } ?>
             </span>
             <span id='id_item_<?=$count?>'>
                 <? if($row->ID_ITEM != null){ ?>
+                
                 >>
+                <? if(!$flg_alterado){ ?>
                 <a href="javascript:void(0);" onclick="montaCombo('id_item', '<?=$count?>')"> 
                     <?=utf8_encode($row->NOME_ITEM)?>
                 </a>
-                <? }    ?>
+                <? }else{ ?>
+                    <?=utf8_encode($row->NOME_ITEM)?>
+                <? } ?>
+                
+                <? } ?>
             </span>
             <span id='id_subitem_<?=$count?>'>
                 <? if($row->ID_SUBITEM != null){ ?>
+                
+                <? if(!$flg_alterado){ ?>
                 >>
                 <a href="javascript:void(0);" onclick="montaCombo('id_subitem', '<?=$count?>')"> 
                     <?=utf8_encode($row->SUBITEM)?>
                 </a>
-                <? }    ?>
+                <? }else{ ?>
+                    <?=utf8_encode($row->SUBITEM)?>
+                <? } ?>
+                
+                <? } ?>
             </span>
             
             <input type="hidden" id="id_materia_or_<?=$count?>" name="<?=utf8_encode($row->MATERIA)?>" value="<?=utf8_encode($row->ID_MATERIA)?>" />
@@ -406,18 +661,98 @@
             <input type="hidden" id="id_subitem_or_<?=$count?>" name="<?=utf8_encode($row->SUBITEM)?>" value="<?=utf8_encode($row->ID_SUBITEM)?>" />
             <input type="hidden" id="id_questao_<?=$count?>" value="<?=$id_questao?>" />
             
-            <input type="button" id="bt_salvar_<?=$count?>" value="Salvar" onclick="javascript:salvaClassificacao(<?=$row->ID_CLASSIFICACAO?>, <?=$id_questao?>, <?=$count?>);" style="display:none;"/>
-            <input type="button" id="bt_cancelar_<?=$count?>" value="Cancelar" onclick="javascript:cancela(<?=$count?>);" style="display:none;"/>
-            <input type="button" id="bt_excluir_<?=$count?>" value="Excluir" onclick="javascript:excluiClassificacao(<?=$row->ID_CLASSIFICACAO?>, <?=$id_questao?>, <?=$count?>);"/>
+            
+            &nbsp;<input type="button" id="bt_salvar_<?=$count?>" value="Salvar" onclick="javascript:salvaClassificacao(<?=$row->ID_CLASSIFICACAO?>, <?=$id_questao?>, <?=$count?>);" style="display:none;" />
+            &nbsp;<input type="button" id="bt_cancelar_<?=$count?>" value="Cancelar" onclick="javascript:cancela(<?=$count?>);" style="display:none;" />
+            &nbsp;<input type="button" id="bt_excluir_<?=$count?>" value="Excluir" onclick="javascript:excluiClassificacao(<?=$row->ID_CLASSIFICACAO?>, <?=$id_questao?>, <?=$count?>);" <? if($flg_alterado){ ?> style="display:none;" <? } ?> />
         </div>
+        
+        <? if($flg_alterado && $mudanca->TIPO_MUDANCA == 'A'){ ?>
+        <div id="mudanca_<?=$count?>">
+            <span style="color:blue;">
+                &nbsp;
+                Nova classificação: 
+            </span>
+            <span>
+                <? if($mudanca->MATERIA != null){ ?> <?=utf8_encode($mudanca->MATERIA)?> <? } ?>
+            </span>
+            <span>
+                <? if($mudanca->DIVISAO != null){ ?> >> <?=utf8_encode($mudanca->DIVISAO)?> <? } ?>
+            </span>
+            <span>
+                <? if($mudanca->TOPICO != null){ ?> >> <?=utf8_encode($mudanca->TOPICO)?> <? } ?>
+            </span>
+            <span>
+                <? if($mudanca->NOME_ITEM != null){ ?> >> <?=utf8_encode($mudanca->NOME_ITEM)?> <? } ?>
+            </span>
+            <span>
+                <? if($mudanca->SUBITEM != null){ ?> >> <?=utf8_encode($mudanca->SUBITEM)?> <? } ?>
+            </span>
+            
+            &nbsp;<input type="button" id="bt_desfazer_<?=$count?>" value="Desfazer Mudança" onclick="javascript:desfazerMudanca(<?=$row->ID_CLASSIFICACAO?>, <?=$id_questao?>, <?=$count?>);"/>
+        </div>
+        
+        
+        <? }elseif($flg_alterado && $mudanca->TIPO_MUDANCA == 'E'){ ?>
+        <div id="mudanca_<?=$count?>">
+            <span style="color:red;">
+                &nbsp;
+                Classificação excluída
+            </span>
+            
+            &nbsp;<input type="button" id="bt_desfazer_<?=$count?>" value="Desfazer Mudança" onclick="javascript:desfazerMudanca(<?=$row->ID_CLASSIFICACAO?>, <?=$id_questao?>, <?=$count?>);"/>
+        </div>
+        <? } ?>
+        
+        <br />
         <?
                     $count++;
                 }
             }
         ?>
+        
+        <?
+            if(sizeof($mudancas) > 0){
+                foreach ($mudancas as $row_mudanca) {
+                    if($row_mudanca->ID_BCO_QUESTAO == $id_questao && $row_mudanca->TIPO_MUDANCA == 'I'){   
+        ?>
+        <div id="insercao_<?=$count?>">
+            <span style="color:green;">
+                Classificação adicionada: 
+            </span>
+            <span>
+                <? if($row_mudanca->MATERIA != null){ ?> <?=utf8_encode($row_mudanca->MATERIA)?> <? } ?>
+            </span>
+            <span>
+                <? if($row_mudanca->DIVISAO != null){ ?> >> <?=utf8_encode($row_mudanca->DIVISAO)?> <? } ?>
+            </span>
+            <span>
+                <? if($row_mudanca->TOPICO != null){ ?> >> <?=utf8_encode($row_mudanca->TOPICO)?> <? } ?>
+            </span>
+            <span>
+                <? if($row_mudanca->NOME_ITEM != null){ ?> >> <?=utf8_encode($row_mudanca->NOME_ITEM)?> <? } ?>
+            </span>
+            <span>
+                <? if($row_mudanca->SUBITEM != null){ ?> >> <?=utf8_encode($row_mudanca->SUBITEM)?> <? } ?>
+            </span>
+            
+            <input type="hidden" id="id_autoriza_classificacao_<?=$count?>" value="<?=utf8_encode($row_mudanca->ID_AUTORIZA_CLASSIFICACAO)?>" />
+            
+            &nbsp;<input type="button" id="bt_desfazer_ins_<?=$count?>" value="Desfazer Mudança" onclick="javascript:desfazerInsercao(<?=$id_questao?>, <?=$count?>);"/>
+        </div>                
+        <?
+                    }
+                }
+            }
+        ?>
+        
+        
         <div id="nova_classificacao"></div>
         <input type="hidden" id="count" value="<?=$count?>" />
         <input type="button" id="bt_adicionar" value="Adicionar" onclick="javascript:adicionarClassificacao(<?=$id_questao?>);"/>
-        
+        <? if($bt_memoria){ ?><input type="button" id="bt_adicionar_memoria" value="Adicionar Memo" onclick="javascript:adicionarClassificacaoMemoria(<?=$id_questao?>, <?=$m_id_materia?>);"/><? } ?>
+        <br /><br /><br /><br /><br />
+        <input type="button" id="salvar_mudancas_questao" value="Salvar Todas Mudanças (Questao)" onclick="javascript:salvarMudancas(1, <?=$id_questao?>);" <? if(sizeof($mudancas) <= 0){ ?> style="display:none" <? } ?> />
+        <input type="button" id="salvar_mudancas" value="Salvar Todas Mudanças" onclick="javascript:salvarMudancas(1);" <? if(sizeof($mudancas) <= 0){ ?> style="display:none" <? } ?> />
     </body>
 </html>

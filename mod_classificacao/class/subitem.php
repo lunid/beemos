@@ -55,7 +55,7 @@ class Subitem{
             $rs = MySQL::executeQuery($sql);
             
             if(mysql_num_rows($rs) <= 0){
-                return 'Nenhum subitem encontrado';
+                return '';
             }
             
             while($row = mysql_fetch_object($rs)){

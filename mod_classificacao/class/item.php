@@ -46,7 +46,7 @@ class Item{
             $rs = MySQL::executeQuery($sql);
             
             if(mysql_num_rows($rs) <= 0){
-                return 'Nenhum item encontrado';
+                return '';
             }
             
             while($row = mysql_fetch_object($rs)){
