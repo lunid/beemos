@@ -2,8 +2,9 @@
 if($_POST){
     $ret['status'] = 0;
     
-    $id_classificacao   = (int)$_POST['id_classificacao'];
-    $id_questao         = (int)$_POST['id_questao'];
+    $id_classificacao           = (int)$_POST['id_classificacao'];
+    $id_questao                 = (int)$_POST['id_questao'];
+    $id_autoriza_classificacao  = (int)$_POST['id_autoriza_classificacao'];
     
     if($id_questao <= 0){
         $ret['msg'] = "Código da Questão inválido!";
@@ -11,7 +12,7 @@ if($_POST){
         die;
     }
     
-    if($id_classificacao <= 0){
+    if($id_classificacao <= 0 && $id_autoriza_classificacao <= 0){
         $ret['msg'] = "Código da Classificação inválido!";
         echo json_encode($ret);
         die;
@@ -24,7 +25,7 @@ if($_POST){
     $classificacao->__set("ID_CLASSIFICACAO", $id_classificacao);
     $classificacao->__set("ID_BCO_QUESTAO", $id_questao);
     
-    $ret_excluir = $classificacao->excluir(1);
+    $ret_excluir = $classificacao->excluir(1, $id_autoriza_classificacao);
     
     if($ret_excluir->status){
         $ret['status']  = 1;

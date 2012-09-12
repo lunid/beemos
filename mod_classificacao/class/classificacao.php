@@ -65,7 +65,7 @@ class Classificacao{
         }
     }
     
-    public function excluir($id_usuario){
+    public function excluir($id_usuario, $id_autoriza_classificacao = 0){
         try{
             $ret            = new stdClass();
             $ret->status    = false;
@@ -107,36 +107,48 @@ class Classificacao{
                     return $ret;
                 }
                 
-                $sql = "DELETE FROM 
-                            SPRO_AUTORIZA_CLASSIFICACAO 
-                        WHERE 
-                            ID_BCO_QUESTAO = " . mysql_escape_string($this->ID_BCO_QUESTAO) . " 
-                        AND 
-                            ID_CLASSIFICACAO = " . mysql_escape_string($this->ID_CLASSIFICACAO) . "
-                        ;";
+                if($this->ID_CLASSIFICACAO > 0){
+                    $sql = "DELETE FROM 
+                                SPRO_AUTORIZA_CLASSIFICACAO 
+                            WHERE 
+                                ID_BCO_QUESTAO = " . mysql_escape_string($this->ID_BCO_QUESTAO) . " 
+                            AND 
+                                ID_CLASSIFICACAO = " . mysql_escape_string($this->ID_CLASSIFICACAO) . "
+                            ;";
+                }else if($id_autoriza_classificacao > 0){
+                    $sql = "DELETE FROM 
+                                SPRO_AUTORIZA_CLASSIFICACAO 
+                            WHERE 
+                                ID_BCO_QUESTAO = " . mysql_escape_string($this->ID_BCO_QUESTAO) . " 
+                            AND 
+                                ID_AUTORIZA_CLASSIFICACAO = " . mysql_escape_string($id_autoriza_classificacao) . "
+                            ;";
+                }
                 
                 MySQL::executeQuery($sql);
                 
-                $sql = "INSERT INTO
-                            SPRO_AUTORIZA_CLASSIFICACAO
-                            (
-                                ID_CLASSIFICACAO,
-                                ID_BCO_QUESTAO,
-                                TIPO_MUDANCA,
-                                DATA_MUDANCA,
-                                ID_USUARIO
-                            )
-                        VALUES
-                            (
-                                " . mysql_escape_string($this->ID_CLASSIFICACAO) . ",
-                                " . mysql_escape_string($this->ID_BCO_QUESTAO) . ",
-                                'E',
-                                NOW(),
-                                " . $id_usuario . "
-                            )
-                        ;";
-                
-                MySQL::executeQuery($sql);
+                if($this->ID_CLASSIFICACAO > 0){
+                    $sql = "INSERT INTO
+                                SPRO_AUTORIZA_CLASSIFICACAO
+                                (
+                                    ID_CLASSIFICACAO,
+                                    ID_BCO_QUESTAO,
+                                    TIPO_MUDANCA,
+                                    DATA_MUDANCA,
+                                    ID_USUARIO
+                                )
+                            VALUES
+                                (
+                                    " . mysql_escape_string($this->ID_CLASSIFICACAO) . ",
+                                    " . mysql_escape_string($this->ID_BCO_QUESTAO) . ",
+                                    'E',
+                                    NOW(),
+                                    " . $id_usuario . "
+                                )
+                            ;";
+
+                    MySQL::executeQuery($sql);
+                }
                 
                 $ret->status = true;
                 

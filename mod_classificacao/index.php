@@ -15,11 +15,16 @@
         $bt_memoria = true;
         $values     = explode(",", $_COOKIE['memoria_questao']);
         
-        $m_id_materia   = $values[0];
-        $m_id_divisao   = $values[1];
-        $m_id_topico    = $values[2];
-        $m_id_item      = $values[3];
-        $m_id_subitem   = $values[4];
+        $m_id_materia       = $values[0];
+        $m_txt_materia      = $values[1];
+        $m_id_divisao       = $values[2];
+        $m_txt_divisao      = $values[3];
+        $m_id_topico        = $values[4];
+        $m_txt_topico       = $values[5];
+        $m_id_item          = $values[6];
+        $m_txt_item         = $values[7];
+        $m_id_subitem       = $values[8];
+        $m_txt_subitem      = $values[9];
     }
 ?>
 <!DOCTYPE html>
@@ -31,7 +36,7 @@
         <script type="text/javascript" src="js/jquery.js"></script>
         
         <script type="text/javascript">
-            function montaCombo(tipo, classificacao){
+            function montaCombo(tipo, classificacao, valor){
                 try{
                     switch(tipo){
                         case 'id_materia':
@@ -74,7 +79,7 @@
                         'ajax/monta_combo.php',
                         {
                             tipo: tipo,
-                            valor: $("#" + tipo + "_" + classificacao).attr("value"),
+                            valor: valor,
                             classificacao: classificacao,
                             id_materia: $("#sel_id_materia_" + classificacao).val() > 0 ? $("#sel_id_materia_" + classificacao).val() : $("#id_materia_or_" + classificacao).val(),
                             id_divisao: $("#sel_id_divisao_" + classificacao).val() > 0 ? $("#sel_id_divisao_" + classificacao).val() : $("#id_divisao_or_" + classificacao).val(),
@@ -104,35 +109,35 @@
                 try{
                     $("#id_materia_" + classificacao).css("display", "");
                     if($("#id_materia_or_" + classificacao).attr("name") != ''){
-                        $("#id_materia_" + classificacao).html("<a href=\"javascript:void(0);\" onclick=\"montaCombo('id_materia', '" + classificacao + "');\">" + $("#id_materia_or_" + classificacao).attr("name") + "</a>");
+                        $("#id_materia_" + classificacao).html("<a href=\"javascript:void(0);\" onclick=\"montaCombo('id_materia', '" + classificacao + "', " + $("#id_materia_or_" + classificacao).val() + ");\">" + $("#id_materia_or_" + classificacao).attr("name") + "</a>");
                     }else{
                         $("#id_materia_" + classificacao).html("");
                     }
                     
                     $("#id_divisao_" + classificacao).css("display", "");
                     if($("#id_divisao_or_" + classificacao).attr("name") != ''){
-                        $("#id_divisao_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_divisao', '" + classificacao + "');\">" + $("#id_divisao_or_" + classificacao).attr("name") + "</a>");
+                        $("#id_divisao_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_divisao', '" + classificacao + "', " + $("#id_divisao_or_" + classificacao).val() + ");\">" + $("#id_divisao_or_" + classificacao).attr("name") + "</a>");
                     }else{
                         $("#id_divisao_" + classificacao).html("");
                     }
                     
                     $("#id_topico_" + classificacao).css("display", "");
                     if($("#id_topico_or_" + classificacao).attr("name") != ''){
-                        $("#id_topico_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_topico', '" + classificacao + "');\">" + $("#id_topico_or_" + classificacao).attr("name") + "</a>");
+                        $("#id_topico_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_topico', '" + classificacao + "', " + $("#id_topico_or_" + classificacao).val() + ");\">" + $("#id_topico_or_" + classificacao).attr("name") + "</a>");
                     }else{
                         $("#id_topico_" + classificacao).html("");
                     }
                     
                     $("#id_item_" + classificacao).css("display", "");
                     if($("#id_item_or_" + classificacao).attr("name") != ''){
-                        $("#id_item_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_item', '" + classificacao + "');\">" + $("#id_item_or_" + classificacao).attr("name") + "</a>");
+                        $("#id_item_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_item', '" + classificacao + "', " + $("#id_item_or_" + classificacao).val() + ");\">" + $("#id_item_or_" + classificacao).attr("name") + "</a>");
                     }else{
                         $("#id_item_" + classificacao).html("");
                     }
                     
                     $("#id_subitem_" + classificacao).css("display", "");
                     if($("#id_subitem_or_" + classificacao).attr("name") != ''){
-                        $("#id_subitem_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_subitem', '" + classificacao + "');\">" + $("#id_subitem_or_" + classificacao).attr("name") + "</a>");
+                        $("#id_subitem_" + classificacao).html(" >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_subitem', '" + classificacao + "', " + $("#id_subitem_or_" + classificacao).val() + ");\">" + $("#id_subitem_or_" + classificacao).attr("name") + "</a>");
                     }else{
                         $("#id_subitem_" + classificacao).html("");
                     }
@@ -251,15 +256,16 @@
                 }
             }
             
-            function excluiClassificacao(id, id_questao, classificacao){
+            function excluiClassificacao(id_classificacao, id_questao, classificacao, id_autoriza_classificacao){
                 try{
-                    if(id > 0 && id_questao > 0){
+                    if((id_classificacao > 0 || id_autoriza_classificacao > 0) && id_questao > 0){
                         if(confirm("Tem certeza que deseja excluir essa Classificação?")){
                             $.post(
                                 'ajax/excluiClassificacao.php',
                                 {
-                                    id_classificacao: id,
-                                    id_questao: id_questao
+                                    id_classificacao: id_classificacao,
+                                    id_questao: id_questao,
+                                    id_autoriza_classificacao: id_autoriza_classificacao
                                 },
                                 function(ret){
                                     if(ret.status == 1){
@@ -303,7 +309,7 @@
                         "</div>"
                     );
                     
-                    montaCombo('id_materia', count);
+                    montaCombo('id_materia', count, 0);
                     
                     count++;
                     
@@ -313,34 +319,75 @@
                 }
             }
             
-            function adicionarClassificacaoMemoria(id_questao, id_materia){
+            function adicionarClassificacaoMemoria(id_questao, id_materia, txt_materia, id_divisao, txt_divisao, id_topico, txt_topico, id_item, txt_item, id_subitem, txt_subitem){
                 try{
-                    var count = $("#count").val();
+                    $.post(
+                        'ajax/adicionaClassificacao.php',
+                        {
+                            id_questao: id_questao,
+                            id_materia: id_materia,
+                            id_divisao: id_divisao,
+                            id_topico: id_topico,
+                            id_item: id_item,
+                            id_subitem: id_subitem
+                        },
+                        function(ret){
+                            if(ret.status == 1){
+                                var count = $("#count").val();
                     
-                    $("#nova_classificacao").append("<div id='classificacao_" + count + "'>" + 
-                        "<span id='id_materia_" + count + "'></span>" +
-                        "<span id='id_divisao_" + count + "'></span>" +
-                        "<span id='id_topico_" + count + "'></span>" +
-                        "<span id='id_item_" + count + "'></span>" + 
-                        "<span id='id_subitem_" + count + "'></span>" +
-                        "<input type='hidden' id='id_materia_or_" + count + "' name='' value='' />" +
-                        "<input type='hidden' id='id_divisao_or_" + count + "' name='' value='' />" + 
-                        "<input type='hidden' id='id_topico_or_" + count + "' name='' value='' />" + 
-                        "<input type='hidden' id='id_item_or_" + count + "' name='' value='' />" + 
-                        "<input type='hidden' id='id_subitem_or_" + count + "' name='' value='' />" + 
-                        "<input type='hidden' id='id_questao_" + count + "' value='" + id_questao + "' />" + 
-                        "<input type='button' id='bt_adicionar_" + count + "' value='Salvar' onclick='javascript:salvaNovaClassificacao(" + count + ", " + id_questao + ");' />" + 
-                        "<input type='button' id='bt_remover_" + count + "' value='Cancelar' onclick='javascript:removeClassificacao(" + count + ");' />" + 
-                        "</div>"
+                                var html = "<span id='id_materia_" + count + "'><a href=\"javascript:void(0);\" onclick=\"montaCombo('id_materia', '" + count + "', " + id_materia + ")\">" + txt_materia + "</a></span>";
+
+                                if(id_divisao > 0){
+                                    html += "<span id='id_divisao_" + count + "'> >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_divisao', '" + count + "', " + id_divisao + ")\">" + txt_divisao + "</a></span>";
+                                }else{
+                                    html += "<span id='id_divisao_" + count + "'></span>";
+                                }
+
+                                if(id_topico > 0){
+                                    html += "<span id='id_topico_" + count + "'> >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_topico', '" + count + "', " + id_topico + ")\">" + txt_topico + "</a></span>";
+                                }else{
+                                    html += "<span id='id_topico_" + count + "'></span>";
+                                }
+
+                                if(id_item > 0){
+                                    html += "<span id='id_item_" + count + "'> >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_item', '" + count + "', " + id_item + ")\">" + txt_item + "</a></span>";
+                                }else{
+                                    html += "<span id='id_item_" + count + "'></span>";
+                                }
+
+                                if(id_subitem > 0){
+                                    html += "<span id='id_subitem_" + count + "'> >> <a href=\"javascript:void(0);\" onclick=\"montaCombo('id_subitem', '" + count + "', " + id_subitem + ")\">" + txt_subitem + "</a></span>";
+                                }else{
+                                    html += "<span id='id_subitem_" + count + "'></span>";
+                                }
+                                
+                                $("#nova_classificacao").append("<div id='classificacao_" + count + "'>" + html + 
+                                    "<input type='hidden' id='id_materia_or_" + count + "' name='" + txt_materia + "' value='" + id_materia + "' />" +
+                                    "<input type='hidden' id='id_divisao_or_" + count + "' name='" + txt_divisao + "' value='" + id_divisao + "' />" + 
+                                    "<input type='hidden' id='id_topico_or_" + count + "' name='" + txt_topico + "' value='" + id_topico + "' />" + 
+                                    "<input type='hidden' id='id_item_or_" + count + "' name='" + txt_item + "' value='" + id_item + "' />" + 
+                                    "<input type='hidden' id='id_subitem_or_" + count + "' name='" + txt_subitem + "' value='" + id_subitem + "' />" + 
+                                    "<input type='hidden' id='id_questao_" + count + "' value='" + id_questao + "' />" +
+                                    "<input type='hidden' id='id_autoriza_classificacao_" + count + "' value='0' />" +
+                                    "</div>"
+                                );
+                                
+                                $("#classificacao_" + count).append("&nbsp;<input type='button' id='bt_salvar_" + count + "' value='Salvar' onclick='javascript:salvaClassificacao(" + ret.id + ", " + id_questao + ", " + count + ");' style='display:none;' />" + 
+                                            "&nbsp;<input type='button' id='bt_cancelar_" + count + "' value='Cancelar' onclick='javascript:cancela(" + count + ");' style='display:none;' />" + 
+                                            "&nbsp;<input type='button' id='bt_remover_" + count + "' value='Excluir' onclick='javascript:excluiClassificacao(0, " + id_questao + ", " + count + ", " + ret.id + ");' />");
+                                
+                                $("#salvar_mudancas_questao").css("display", "");
+                                $("#salvar_mudancas").css("display", "");
+                                
+                                count++;
+                    
+                                $("#count").val(count);
+                            }else{
+                                alert(ret.msg);
+                            }
+                        },
+                        'json'
                     );
-                    
-                    montaCombo('id_materia', count);
-                    
-                    $("#sel_id_materia_" + count).val(id_materia);
-                    
-                    count++;
-                    
-                    $("#count").val(count);
                 }catch(err){
                     alert(err.message);
                 }
@@ -437,10 +484,10 @@
                                         $("#bt_adicionar_" + classificacao).remove();
                                         $("#bt_remover_" + classificacao).remove();
                                         
-                                        $("#classificacao_" + classificacao).append("&nbsp;<input type='radio' name='memo' id='memo_" + count + "' value='" + count + "' onclick='javascript:memorizar(" + ret.id_materia + "," + ret.id_divisao + "," + ret.id_topico + "," + ret.id_item + "," + ret.id_subitem + ");' /> Memorizar&nbsp;" + 
+                                        $("#classificacao_" + classificacao).append("&nbsp;<input type='radio' name='memo' id='memo_" + count + "' value='" + count + "' onclick=\"javascript:memorizar(" + ret.id_materia + ", '" + $("#sel_id_materia_" + classificacao + " :selected").text() + "', " + ret.id_divisao + ", '" + $("#sel_id_divisao_" + classificacao + " :selected").text() + "', " + ret.id_topico + ", '" + $("#sel_id_topico_" + classificacao + " :selected").text() + "', " + ret.id_item + ", '" + $("#sel_id_item_" + classificacao + " :selected").text() + "', " + ret.id_subitem + ", '" + $("#sel_id_subitem_" + classificacao + " :selected").text() + "');\" /> Memorizar&nbsp;" + 
                                             "<input type='button' id='bt_salvar_" + classificacao + "' value='Salvar' onclick='javascript:salvaClassificacao(" + ret.id + ", " + id_questao + ", " + classificacao + ");' style='display:none;' />" + 
                                             "<input type='button' id='bt_cancelar_" + classificacao + "' value='Cancelar' onclick='javascript:cancela(" + classificacao + ");' style='display:none;' />" + 
-                                            "<input type='button' id='bt_excluir_" + classificacao + "' value='Excluir' onclick='javascript:excluiClassificacao(" + ret.id + ", " + id_questao + ", " + classificacao + ");' />");
+                                            "<input type='button' id='bt_excluir_" + classificacao + "' value='Excluir' onclick='javascript:excluiClassificacao(0, " + id_questao + ", " + classificacao + ", " + ret.id + ");' />");
                                         
                                         cancela(classificacao);
                                         
@@ -460,16 +507,21 @@
                 }
             }
             
-            function memorizar(id_materia, id_divisao, id_topico, id_item, id_subitem){
+            function memorizar(id_materia, txt_materia, id_divisao, txt_divisao, id_topico, txt_topico, id_item, txt_item, id_subitem, txt_subitem){
                 try{
                     $.post(
                             'ajax/salvaMemoria.php',
                             {
                                 id_materia: id_materia,
+                                txt_materia: txt_materia,
                                 id_divisao: id_divisao,
+                                txt_divisao: txt_divisao,
                                 id_topico: id_topico,
+                                txt_topico: txt_topico,
                                 id_item: id_item,
-                                id_subitem: id_subitem
+                                txt_item: txt_item,
+                                id_subitem: id_subitem,
+                                txt_subitem: txt_subitem
                             },
                             function(ret){
                                 
@@ -588,7 +640,7 @@
                 <? if($row->MATERIA != null){ ?>
                 
                 <? if(!$flg_alterado){ ?>
-                <a href="javascript:void(0);" onclick="montaCombo('id_materia', '<?=$count?>')"> 
+                <a href="javascript:void(0);" onclick="montaCombo('id_materia', '<?=$count?>', <?=$row->ID_MATERIA?>)"> 
                     <?=utf8_encode($row->MATERIA)?>
                 </a>
                 <? }else{ ?>
@@ -602,7 +654,7 @@
                 
                 >>
                 <? if(!$flg_alterado){ ?>
-                <a href="javascript:void(0);" onclick="montaCombo('id_divisao', '<?=$count?>')"> 
+                <a href="javascript:void(0);" onclick="montaCombo('id_divisao', '<?=$count?>', <?=$row->ID_DIVISAO?>))"> 
                     <?=utf8_encode($row->DIVISAO)?>
                 </a>
                 <? }else{ ?>
@@ -616,7 +668,7 @@
                 
                 >>
                 <? if(!$flg_alterado){ ?>
-                <a href="javascript:void(0);" onclick="montaCombo('id_topico', '<?=$count?>')"> 
+                <a href="javascript:void(0);" onclick="montaCombo('id_topico', '<?=$count?>', <?=$row->ID_TOPICO?>)"> 
                     <?=utf8_encode($row->TOPICO)?>
                 </a>
                 <? }else{ ?>
@@ -630,7 +682,7 @@
                 
                 >>
                 <? if(!$flg_alterado){ ?>
-                <a href="javascript:void(0);" onclick="montaCombo('id_item', '<?=$count?>')"> 
+                <a href="javascript:void(0);" onclick="montaCombo('id_item', '<?=$count?>', <?=$row->ID_ITEM?>)"> 
                     <?=utf8_encode($row->NOME_ITEM)?>
                 </a>
                 <? }else{ ?>
@@ -644,7 +696,7 @@
                 
                 <? if(!$flg_alterado){ ?>
                 >>
-                <a href="javascript:void(0);" onclick="montaCombo('id_subitem', '<?=$count?>')"> 
+                <a href="javascript:void(0);" onclick="montaCombo('id_subitem', '<?=$count?>', <?=$row->ID_IDSUBITEM?>)"> 
                     <?=utf8_encode($row->SUBITEM)?>
                 </a>
                 <? }else{ ?>
@@ -750,7 +802,7 @@
         <div id="nova_classificacao"></div>
         <input type="hidden" id="count" value="<?=$count?>" />
         <input type="button" id="bt_adicionar" value="Adicionar" onclick="javascript:adicionarClassificacao(<?=$id_questao?>);"/>
-        <? if($bt_memoria){ ?><input type="button" id="bt_adicionar_memoria" value="Adicionar Memo" onclick="javascript:adicionarClassificacaoMemoria(<?=$id_questao?>, <?=$m_id_materia?>);"/><? } ?>
+        <? if($bt_memoria){ ?><input type="button" id="bt_adicionar_memoria" value="Adicionar Memo" onclick="javascript:adicionarClassificacaoMemoria(<?=$id_questao?>, <?=$m_id_materia?>, '<?=$m_txt_materia?>', <?=$m_id_divisao?>, '<?=$m_txt_divisao?>', <?=$m_id_topico?>, '<?=$m_txt_topico?>', <?=$m_id_item?>, '<?=$m_txt_item?>', <?=$m_id_subitem?>, '<?=$m_txt_subitem?>');"/><? } ?>
         <br /><br /><br /><br /><br />
         <input type="button" id="salvar_mudancas_questao" value="Salvar Todas Mudanças (Questao)" onclick="javascript:salvarMudancas(1, <?=$id_questao?>);" <? if(sizeof($mudancas) <= 0){ ?> style="display:none" <? } ?> />
         <input type="button" id="salvar_mudancas" value="Salvar Todas Mudanças" onclick="javascript:salvarMudancas(1);" <? if(sizeof($mudancas) <= 0){ ?> style="display:none" <? } ?> />
