@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Configura/formata o menu superior de idiomas.         
+    </descricao>
+    <config>
+        <include id='js'>jquery_dd</include>        
+        <include id='cssInc'>dd2</include>        
+    </config>
+</root>

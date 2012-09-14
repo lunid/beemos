@@ -1,0 +1,388 @@
+xml_dic = null;
+
+$.post(
+    "dic/en/javascript.xml",
+    null,
+    function(xml){
+        xml_dic = xml;
+    },
+    'xml'
+);
+                
+Dic = function(){};
+
+Dic.loadMsg = function(class_name, msg_param, method){
+    try{
+        if($.trim(method) == '' || method == null){
+            method = 'default';
+        }
+
+        var xml_class   = $(xml_dic).find(class_name);
+        var xml_method  = $(xml_class).find(method);
+
+        var msg = xml_method.find('msg[id="' + msg_param + '"]');
+
+        return msg.text();
+    }catch(err){
+        alert("Error to load message in dictionary: " + err.message);
+    }
+}
+
+
+	function security(acao,params,fn){
+		
+	}
+	
+	function setModal(msg){	
+		msg = "<div class='white14pt'>"+msg+"</div>";
+		$('#winModal').html(msg);
+		$('#winModal').modal();	
+	}	
+	
+	function unsetModal(){	
+		$.modal.close();
+	}	
+	
+	
+	function setPlano(plano){
+		if (plano == 'ALN'){
+			msg = "Este plano não está disponível no momento.\nPor favor, escolha outra opção.";
+			alert(msg);
+		} else {
+			redirectParam('COMPRA','plano:'+plano,'','');
+		}
+	}	
+	
+	function indisponivel(){
+		msg = 'A página solicitada pode estar em manutenção ou aguardando novas atualizações.';
+		extAlert('Recurso temporariamente indisponível',msg);
+	}
+	
+	function winBlog(){
+		window.open('http://www.sprweb.com.br/lab/blog/','','');	
+	}
+
+	function addFav(){
+		var url      = "http://www.sprweb.com.br/lab/";
+		var title    = "SuperPro Web";
+		if (window.sidebar) window.sidebar.addPanel(title, url,"");
+		else if(window.opera && window.print){
+			var mbm = document.createElement('a');
+			mbm.setAttribute('rel','sidebar');
+			mbm.setAttribute('href',url);
+			mbm.setAttribute('title',title);
+			mbm.click();
+		}
+		else if(document.all){window.external.AddFavorite(url, title);}
+	}
+
+	function encerraSessao(){
+		msg = "Tem certeza que deseja sair da sessão atual?";
+		if (confirm(msg)) redirectParam('HOME','','../index.php','');
+	}
+	
+	function redirect(codPage){
+		redirectParam(codPage,'','','');
+	}
+	
+	function redirectParam(codPg,params,actionForm,targetForm){
+		//FUNÇÃO PARA ENVIAR DADOS VIA POST POR MEIO DO FORMULÁRIO CONTIDO NO TEMPLATE.
+		//ESTA FUNÇÃO DEVE ESTAR DISPONÍVEL PARA TODAS AS PÁGINAS. 
+		//É UTILIZADA PARA FAZER AS CHAMADAS DOS LINKS ENTRE AS PÁGINAS DO SITE USANDO MÉTODO POST E PODENDO TER PARÂMETROS ADICIONAIS
+		
+		//O VALOR DEFAULT DE ACTION É index.php
+		idForm	= '#formControl';
+		if (actionForm != null && actionForm != 'undefined' && actionForm.length > 0) {
+			//REDEFINE O ACTION DO FORMULÁRIO
+			$(idForm).attr("action",actionForm);
+		}
+		tg = (targetForm == 'undefined' || targetForm == null || targetForm.length == 0)?'':targetForm;
+		$(idForm).attr("target",((tg.length == 0)?'_self':tg));
+		document.formControl.PG.value = codPg;//EVITA CONFLITO COM DOIS OU MAIS FORMS NA PÁGINA QUE CONTENHAM O CAMPO PG
+		$('#PARAMS').val(params);
+		$(idForm).submit();
+	}
+	
+	function redirectGet(codPg){
+		window.location.href = 'index.php?PG='+codPg;
+	}
+	
+	function getUrlProcessa(){
+		urlSsl = $('#SSL').val();
+		url = (urlSsl.length > 0)?urlSsl:'index.php';//SSL NÃO FUNCIONA COM AJAX. NÃO USAR.
+		url = 'index.php';
+		return url;
+	}
+	
+	function controlSync(params,func,divWait,url){
+		//CHAMADA SÍNCRONA
+		ajaxAsync = false;
+		controlAjax(params,func,divWait,url,ajaxAsync);
+	}
+	
+	function control(params,func,divWait,url){
+		//CHAMADA ASSÍNCRONA
+		ajaxAsync = true;
+		controlAjax(params,func,divWait,url,ajaxAsync);
+	}
+	
+	function setWait(){
+		$(document).ajaxStart($.blockUI({ 
+				message:"Por favor, aguarde...<br/><br/><img src='../imagens/loading.gif' />",		  
+				css: { 
+					border: 'none', 
+					padding: '15px', 
+					fontSize:'14px',
+					backgroundColor: '#000', 
+					'border-radius:': '10px',
+					'-moz-box-shadow': '10px',
+					'-webkit-border-radius': '10px', 
+					'-moz-border-radius': '10px', 
+					opacity: .5, 
+					color: '#fff'
+				} 
+			})
+		).ajaxStop($.unblockUI);
+	}
+	
+	function unsetWait(msg){
+		//RETIRA A MSG DE ESPERA
+		$.unblockUI();
+	}
+	
+	function controlAjax(params,func,divWait,url,ajaxAsync){
+		//EXECUTA UMA CHAMADA AJAX E RETORNA UM VALOR PARA A FUNÇÃO INFORMADA	
+		//sync = false;
+		if (url != 'undefined' && url != null && url.length == 0) url = 'index.php';
+		//safari = ( $.browser.safari && /chrome/.test(navigator.userAgent.toLowerCase()) ) ? false : true; 
+		//alert($('#PG').val());
+		//if(safari == true) sync=true;
+		divWait = divWait.toString();
+		$.ajax({
+		   type: "POST",		   
+		   url: url,
+		   async:ajaxAsync,//IMPORTANTE: SE A FUNÇÃO FOR CHAMADA NO UNLOAD DA PÁGINA NÃO FUNCIONARÁ NO CHROME E SAFARI SEM async=false
+		   data: {PG:'CONTROL',PARAMS:params},
+		   beforeSend: function(){		
+				if (divWait != null && divWait.length > 0) {
+					if (divWait == '1'){
+						Ext.Msg.wait('<b>Por favor, aguarde...</b><br>');	
+					} else {
+						$('#'+divWait).html("Aguarde, carregando...<br/><img src='../imagens/loading.gif' />");   
+					}
+				}
+		   },
+		   success: function(msg){
+			  //SE RETORNO CONTIVER HTML É PQ A SESSÃO EXPIROU
+			 posHtml = msg.indexOf('<!DOCTYPE');  
+			 if (posHtml >= 0) {
+				//PÁGINA EXPIROU 
+				window.location.href='http://www.sprweb.com.br/lab/mod_superpro/index.php?PG=FINAL_SESSION';
+			 }
+			 
+			 if (divWait != null && divWait.length > 0) {
+				if (divWait == '1'){
+					if (Ext.Msg.isVisible()) Ext.Msg.hide();
+				} else {
+					$('#'+divWait).html('');
+				}
+			 }
+			
+			if (func != null && func.length > 0) {
+				 func(msg);
+			 }
+		   },		  
+			error: function(xhr, ajaxOptions, thrownError) {		 	
+				// em caso de erro você pode dar um alert('erro');	
+				if (divWait.length > 0) {
+					$('#'+divWait).html('');
+					if (Ext.Msg.isVisible()) Ext.Msg.hide();
+				}
+				//alert('ERRO control(): Um erro inesperado ocorreu. A solicitação não pôde ser concluída.'+thrownError);
+			}
+		 });
+	}
+
+	function getToken(){
+		//RETORNA UM TOKEN RANDÔMICO
+		
+	}
+	
+	function getAuthAcesso(params,url,fn){
+		if (url == null || url.length == 0) url=getUrlProcessa();
+		$.ajax({
+			type: "POST",		   
+			url: url,
+			async:false,//IMPORTANTE: SE A FUNÇÃO FOR CHAMADA NO UNLOAD DA PÁGINA NÃO FUNCIONARÁ NO CHROME E SAFARI SEM async=false
+			data: {PG:'AUTH_ACESSO',PARAMS:params},
+			beforeSend: function(){ 
+				$('#wait').html("<div style='float:left;margin-right:5px'><img src='../imagens/carregando.gif' valign='middle' width='16' height='16' /></div><div style='float:left'>Aguarde, carregando...</div><br clear='all'/>"); 
+			},
+			success: function(msg){
+				$('#wait').html('');
+				fn(msg);
+			},		  
+			error: function(xhr, ajaxOptions, thrownError) {
+				$('#wait').html('');
+				alert(thrownError);
+			}
+		 });
+	}
+	
+	function getCheckMemoEmail(){
+		//Retorna 0 para opção memorizarEmail false ou 1 para true
+		valor = 0;
+		obj = getObjId('checkMemoEmail');
+		if (obj != null){
+			vl = obj.checked;	
+			if (vl) valor = 1;
+		}
+		return valor;
+	}
+	
+	function setMemoEmail(){
+		//FUNÇÃO CHAMADA AO CLICAR NO CHECKBOX Memorizar E-mail
+		check = getCheckMemoEmail();
+		if (check==1) {
+			//O usuário solicitou Memorizar e-mail
+			//Não faz nada. A memorização ocorrerá ao processar o acesso
+		} else {
+			//O usuário solicitou NÃO memorizar o e-mail
+			//Limpa o cookie que guarda o e-mail e grava a opção em outro cookie
+			w3cookies.create('checkMemoEmail',0,365);//Grava a opção do checkbox
+			w3cookies.create('emailLogin','',365);//Limpa o cookie que guarda o e-mail
+		}	
+	}		
+	
+	function authAcesso(){
+		//FAZ A AUTENTICAÇÃO DO ACESSO DO USUÁRIO
+		var codLista='';
+		objCodLista = getObjId('COD_LISTA');//Código da lista de exercícios, qdo houver
+		objLogin 	= getObjId('LOGIN');
+		objSenha 	= getObjId('SENHA');
+		objRedirect	= getObjId('REDIRECT');
+		objParams	= getObjId('PARAMS');
+		objAction	= getObjId('ACTION');
+		title 		= msg = '';
+		action		='../mod_app/index.php';//PÁGINA DE ACESSO APÓS O LOGON DO USUÁRIO
+		
+		ssl 		= $('#SSL').val();
+		//action 		= (ssl.length > 0)?ssl.replace('mod_superpro','mod_app'):'../mod_app/index.php';//PÁGINA DE ACESSO APÓS O LOGON DO USUÁRIO 
+		if (objLogin != null && objSenha != null){				
+			login = objLogin.value;
+			passwd = objSenha.value;
+			obrigOk = (login.length > 0 && passwd.length > 0)?1:0;
+			msg = (obrigOk == 0)?msg='Preencha corretamente os campos de login e senha para continuar.':'';
+		}
+		
+		if (objCodLista != null){
+			//ACESSO ALUNO - PARA EFETUAR O ACESSO É NECESSÁRIO INFORMAR TB O CÓDIGO DA LISTA
+			action='../mod_lista_exerc/index.php';
+			codLista = objCodLista.value;	
+			obrigOk = (codLista.length > 0 && obrigOk == 1)?1:0;
+			msg = (obrigOk == 0)?msg='Preencha corretamente os campos Código da Lista, E-mail e Senha para continuar.':'';
+		}
+		
+		if (obrigOk == 0){			
+			Ext.Msg.alert('Campo(s) obrigatório(s) não preenchido(s)',msg);				
+		} else {
+			params = 'acao:TK,setToken:'+escape(login);
+			//tk = getAuthAcesso(params);			
+			getAuthAcesso(params,'',function(tk){
+				msie = $.browser.msie;
+				msg='Não foi possível validar o acesso solicitado.<BR/>';
+				msg += 'Login e/ou senha estão incorretos. Verifique os dados informados e tente novamente.';
+				title='Login e/ou senha incorretos';
+				if (tk !== false && tk !== '0'){
+					//TUDO OK. VERIFICA A SENHA	
+					codLista = (objCodLista != null)? objCodLista.value : '';
+					params = 'acao:PWD,token:'+tk+',passwd:'+MD5(passwd)+',codLista:'+codLista;
+					//auth=getAuthAcesso(params);
+					getAuthAcesso(params,'',function(auth){
+						if (auth == '0'){
+							//ACESSO OK			
+							msg		= '';
+							codPage = 'HOME';
+							params	= '';	
+							check 	= getCheckMemoEmail();
+							if (check==1) {	
+								w3cookies.create('checkMemoEmail',check,365);//Expira em 365 dias
+								w3cookies.create('emailLogin',login,365);//Expira em 365 dias
+							} else {
+								//Usuário optou por NÃO guardar o login de acesso	
+								//Não faz nada, pois a ação já foi executada ao clicar no checkbox
+							}	
+							
+							if (objRedirect != null){
+								//REDIRECIONA O USUÁRIO PARA A PÁGINA SOLICITADA
+								codPage = objRedirect.value;
+								params	= (objParams != null)?objParams.value:'';
+								action	= (objAction != null)?objAction.value:'index.php';							
+							}
+							//if (msie) alert(codPage+'-'+params+'-'+action);
+							redirectParam(codPage,params,action,'');
+						} else if (auth == 1){
+							//LOGIN E/OU SENHA INCORRETOS
+							Ext.Msg.alert(title,msg);
+						} else if (auth == 2){
+							//USUÁRIO BLOQUEADO
+							title='Acesso não autorizado';
+							msg='O acesso informado está temporariamente bloqueado.<br/>';
+							msg += 'Caso o seu acesso esteja vinculado a uma escola entre em contato com o administrador responsável.';						
+							msg += ' Ou então, entre em contato com a Interbits para regularizar seu acesso.<br/>';
+							Ext.Msg.alert(title,msg);	
+						} else if (auth == 4){
+							title='Acesso ainda não liberado';
+							msg = 'Não identificamos a entrega do contrato de adesão referente à sua conta.<br/>';						
+							msg += 'Por favor, entre em contato com a Interbits para regularizar seu acesso.';
+							Ext.Msg.alert(title,msg);								
+						} else if (auth == 3){
+							title = 'Código da Lista inválido';
+							msg = 'O código da lista informado não foi localizado.<br/>'
+							msg += 'Verifique se o valor digitado está correto e tente novamente.';
+							Ext.Msg.alert(title,msg);	
+						} else if (auth == 15){
+							title = 'Acesso Não Autorizado';
+							msg = 'A conta informada deve efetuar o acesso em uma máquina autorizada.<br/>'
+							msg += 'Verifique quais os pontos de acesso disponíveis em sua instituição.';							
+							Ext.Msg.alert(title,msg);
+						} else {
+							Ext.Msg.alert(title,msg);	
+						}
+					});
+				} else {
+					Ext.Msg.alert(title,msg);	
+				}
+			});
+		}
+	}
+	
+	function attachEventAcesso(){
+		//DISPARA O MÉTODO autAcesso AO PRESSIONAR ENTER NOS CAMPOS DE LOGIN E SENHA
+		objLogin  	= getObjId('LOGIN');
+		objPasswd 	= getObjId('SENHA');
+		func		= authAcesso;
+		tecla		= 'ENTER'; 
+		evt			= 'keypress';
+		params		= '';
+		objAttachEvent(objLogin,evt,func,tecla,params);
+		objAttachEvent(objPasswd,evt,func,tecla,params);
+	}
+		
+	function lembrarEmail(){
+		//Verifica se a opção para memorizar e-mail está ativa
+		//Função chamada ao carregar a página (onLoad). 		
+		check = (w3cookies.read('checkMemoEmail') != null)?w3cookies.read('checkMemoEmail'):0;
+		email = (w3cookies.read('emailLogin') != null)?w3cookies.read('emailLogin'):'';
+
+		objCheck = getObjId('checkMemoEmail');		
+		if (objCheck != null){
+			resp = false;
+			objLogin = getObjId("LOGIN");
+			if (check == 1 && objLogin != null) {
+				resp = true;
+				objLogin.value = email;//Mostra o e-mail do cookie
+			}
+			objCheck.checked = resp;//Marca o checkbox Memorizar E-mail
+		}
+	}	

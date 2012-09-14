@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Faz a inclusão do menu horizontal do site. 
+        O arquivo menu.js é uma abstração do componente js.
+        O css de formatação encontra-se no arquivo css ref. à página em uso.
+    </descricao>
+    <config>
+        <include id='jsInc'>magic-line,menu</include>           
+    </config>
+</root>

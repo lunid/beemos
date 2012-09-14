@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+    <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+
+    <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+
+    <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+
+    <!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+
+   <head>
+
+        <!-- Conteúdo Básico
+
+  ================================================== -->        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>{TITLE}</title>
+
+        <meta name="description" content="{DESCRIPTION}">
+
+        <meta name="author" content="">
+
+
+
+        <!-- Meta específico para Mobile
+
+  ================================================== -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+        <!-- CSS
+
+  ================================================== -->
+
+        {INCLUDE_CSS}
+
+        
+
+        <!--[if lt IE 9]>
+
+                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
+        <![endif]-->
+
+
+
+        <!-- Favicons
+
+        ================================================== -->
+
+
+
+        <script type='text/javascript' src="sys/js/jquery/jquery_1_8_1_min.js"></script>
+
+        
+
+        {INCLUDE_JS}
+
+ 
+
+    </head>    
+
+    <body>
+
+    <div id="bg_total">
+
+        <div id="bg">
+
+
+
+            <!-- Primary Page Layout
+
+            ================================================== -->
+
+
+
+            <!-- Delete everything in this .container and get started on your own site! -->
+
+
+
+           <!-- top -->
+
+            <div class="sub">
+
+                <div class="container">
+
+                    <div class="container">
+
+                        <div class="sub_top">
+
+                            <span>Fone: 11 3549-3988</span>
+
+                            <span><a href="chat.php">Atendimento on-line</a></span>
+
+                        </div>
+
+                        <div id="idiomas">
+
+                               <select class="mydds" name="myimge">
+
+                                <option value="pt" selected="selected" title="app/views/images/br.png">Português</option>
+
+                                <option value="en" title="app/views/images/usa.png">Inglês</option>
+
+                              </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="logo"><a href="index.php"><img src="app/views/images/logo_superpro.png" width="322" height="82"></a></div>
+
+                    <div id="login">
+
+                        <div id="aba_assinante" class="loginAbaAtiva">
+
+                            <a href="javascript:void(0);" onclick="javascript:home.areaAssinante();">
+
+                                Assinante
+
+                            </a>
+
+                        </div>                         
+
+                        <div id="aba_aluno" class="loginAbaInativa">
+
+                            <a href="javascript:void(0);" onclick="javascript:home.areaAluno();">
+
+                                Aluno
+
+                            </a>
+
+                        </div>    
+
+                        <div style='clear:both'></div>
+
+                        <div id="area_assinante">
+
+                            <div id="fldLoginSenha">
+
+                                <input id="fldNome" type="text" value="Nome" name="Nome" />
+
+                                <input id="fldSenha" type="text" value="Senha" name="Senha" />
+
+                            </div>
+
+                            <div id="btnLoginSenha"></div>                             
+
+                            <div id="codigoLista" style="display:none;">                            
+
+                              <input id="fldCodigoLista" type="text" value="Código da Lista" name="codigo" />                                                        
+
+                            </div>   
+
+                            <div style='clear:both'></div>
+
+                            <div id="reenviaSenha">
+
+                                <a href="javascript:;">Esqueci minha senha</a>
+
+                            </div>
+
+                        </div>                        
+
+                        <div id="linkNovoCadastro"><a href="">Não sou Cadastrado</a></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <!-- fim top -->
+
+            <!-- começo menu -->
+
+            <div class="top">
+
+            ﻿<div class="container nav-wrap">
+
+       <ul class="group" id="top-menu">
+
+                        <li id="menu_home" class="current_page_item" onclick="javascript:menu.changeMenu(this.id);">
+
+                            <a href="index.php?pg=home">Home<p>Bem Vindo</p></a>
+
+                        </li>
+
+                        <li id="menu_sobre"  onclick="javascript:menu.changeMenu(this.id);">
+
+                            <a href="ainterbits.php?pg=sobre">Sobre Nós<p>Conheça a InterBits</p></a>
+
+                        </li>
+
+                        <li id="menu_assine"  onclick="javascript:menu.changeMenu(this.id);">
+
+                            <a href="assineja.php?pg=assine">Assine Já<p>Planos & Preços</p></a>
+
+                        </li>
+
+                         <li id="menu_super"  onclick="javascript:menu.changeMenu(this.id);">
+
+                            <a href="super.php?pg=super">SuperPro<p>Principais Recursos</p></a>
+
+                        </li>
+
+                         <li id="menu_ajuda"  onclick="javascript:menu.changeMenu(this.id);">
+
+                            <a href="ajuda.php?pg=ajuda">Ajuda<p>FAQ e Tutoriais</p></a>
+
+                        </li>
+
+     	</ul>
+
+</div>            </div>
+
+            <!-- fim menu -->
+
+            
+
+            {BODY}
+
+            <!-- espaçamento -->                        
+
+            <div id="margem"></div>
+
+            <!-- começo rodape -->
+
+            <div id="bg_rodape_links">      
+
+                <div class="container">      
+
+                    <div class="four columns">
+
+                        <div class="titRodape"><h1>Sobre Nós</h1>
+
+                            <ul>
+
+                                <li><a href="ainterbits.php">A Interbits</a></li>
+
+                                <li><a href="contato.php">Entre em contato</a></li>
+
+                                <li><a href="politica.php">Politica de Privacidade</a></li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <div class="four columns">
+
+                        <div class="titRodape"><h2>Planos & Preços</h2>
+
+                            <ul>
+
+                                <li><a href="assineja.php">Assine Já</a></li>
+
+                                <li><a href="principais.php">Principais recursos</a></li>
+
+                                <li><a href="formas.php">Formas de pagamento</a></li>
+
+                            </ul>
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="four columns">
+
+                        <div class="titRodape"><h3>Ajuda</h3>
+
+                            <ul>
+
+                                <li><a href="ajuda.php">F.A.Q</a></li>
+
+                                <li><a href="tutoriais.php">Tutóriais</a></li>
+
+                                <li><a href="fale.php">Fale com o Suporte</a></li>
+
+                                <li><a href="chat.php">Chat On-line</a></li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <div class="four columns">
+
+                        <button class="buttonSuperPro"><span>Conheça o</span>
+
+                            <span>SuperPro</span><span>® </span> WEB</button>
+
+                        <div class="end">    	
+
+                            Suporte técnico: (11) 3549-3985<br/>
+
+                            Comercial: (11) 3549-3982<br/>
+
+                            Fone PABX: (11) 3549-3988
+
+                        </div>
+
+                        <div id="btnFacebook" onclick="window.location='index.php'"></div>
+
+                        <div id="btnTwitter" onclick="window.location='index.php'"></div>
+
+                        <div id="midias3" onclick="window.location='index.php'"></div>
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+            </div><!-- final rodape -->
+
+            <div id="bg_rodape_copyright">
+
+                <div class="container" align="center">
+
+                    Copyright Interbits © 2012  -  todos os direitos reservados      
+
+                </div>
+
+            </div>
+
+            <!-- End Document
+
+            ================================================== -->
+
+        </div>
+
+     </div>   
+
+    </body>
+
+</html>
