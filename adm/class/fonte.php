@@ -1,6 +1,10 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/interbits_dev/class/mysql.php";
+if(isset($path)){
+    require_once $path . "/class/mysql.php";
+}else{
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/interbits_dev/class/mysql.php";
+}
 
 /**
  * Classe para controle de dados de SPRO_FONTE_VESTIBULAR

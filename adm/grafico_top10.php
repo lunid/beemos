@@ -33,7 +33,7 @@
         $data_inicio    = Util::formataData($_POST['data_inicio'], "AAAA-MM-DD");
         $data_final     = Util::formataData($_POST['data_final'], "AAAA-MM-DD");
     }else{
-        $data_inicio    = date("Y-m-d", mktime(0, 0, 0, date("m"), (date("d")-30), date("Y")));
+        $data_inicio    = date("Y-m-d", mktime(0, 0, 0, date("m"), (date("d")-7), date("Y")));
         $data_final     = date("Y-m-d");
     }
     

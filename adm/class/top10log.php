@@ -1,6 +1,11 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/interbits_dev/class/mysql.php";
+if(isset($path)){
+    require_once $path . "/class/mysql.php";
+}else{
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/interbits_dev/class/mysql.php";
+}
+
 
 /**
  * Classe para controle de dados de SPRO_TOP10_LOG
@@ -273,7 +278,7 @@ class Top10log{
         return $this->POS_10;
     }
     
-    public function salvaLog(){
+    public function salvaLog($data = null){
         try{
             $ret    = new stdClass(); //Classe de retorno
             $where  = "";
@@ -291,7 +296,7 @@ class Top10log{
                         FROM 
                             SPRO_ADM_TOP10_LOG 
                         WHERE 
-                            DATE(DATA_LOG) = DATE(NOW())
+                            DATE(DATA_LOG) = DATE(".($data != null ? $data : 'NOW()').")
                             {$where}
                         LIMIT
                             1
@@ -334,7 +339,7 @@ class Top10log{
                         )
                         VALUES
                         (
-                            NOW(),
+                            ".($data != null ? "'" . $data . "'" : 'NOW()').",
                             '{$this->ID_MATERIA}',
                             '{$this->ID_FONTE_VESTIBULAR}',
                             {$this->POS_1},
@@ -482,6 +487,35 @@ class Top10log{
             $c .= sprintf("%02X", mt_rand(0, 255));
         }
         return $c;
+    }
+    
+    public function consultaHistorico(){
+        try{
+            $sql = "SELECT 
+                        ITENS_SELECIONADOS, 
+                        DATE(DATA_REGISTRO) as DATA_REGISTRO
+                    FROM 
+                        SPRO_HISTORICO_GERADOC 
+                    -- WHERE
+                        -- DATE(DATA_REGISTRO) BETWEEN '2012-09-01' AND '2012-09-05'
+                    ORDER BY 
+                        DATA_REGISTRO ASC
+                    ;";
+            
+            MySQL::connect();
+            $rs = MySQL::executeQuery($sql);
+            
+            if(mysql_num_rows($rs) <= 0){
+                return null;
+            }
+            
+            return $rs;
+        }catch(Exception $e){
+            echo "Erro buscas cores TOP 10<br />\n";
+            echo $e->getMessage() . "<br />\n";
+            echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
+            die;
+        }
     }
 }
 ?>

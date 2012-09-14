@@ -11,7 +11,7 @@ class MySQL{
     
     public static function connect(){
         if(MySQL::$conn == null){
-            MySQL::$conn = mysql_connect("186.202.152.30", "interbits1", "my230812")or die("Falha ao conectar no Banco de Dados MySQL > " . mysql_error());
+            MySQL::$conn = mysql_connect("localhost", "interbits1", "my230812")or die("Falha ao conectar no Banco de Dados MySQL > " . mysql_error());
             mysql_select_db("interbits1")or die("Falha ao selecionar Banco de Dados MySQL > " . mysql_error());
         }
     }
