@@ -1,0 +1,50 @@
+<!-- começo conteudo -->
+<div id="conteudo">
+    <div class="titulo">TOP10 - Avaliar Questões</div>
+    <div id="tabbed_box_1" class="tabbed_box">
+        <div class="tabbed_area">
+            <form id="form_filtros" name="form_filtros" method="get" action="top10_avaliar_questoes.php">
+                <table>
+                    <tr>
+                        <td colspan="3">
+                            Filtrar por:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" name="tipo_filtro" value="id_materia" checked="checked" onclick="javascript:selecionaFiltro(this.value);" />
+                        </td>
+                        <td>
+                            Matérias
+                        </td>
+                        <td>
+                            {COMBO_MATERIAS}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" name="tipo_filtro" value="id_fonte_vestibular" onclick="javascript:selecionaFiltro(this.value);" />
+                        </td>
+                        <td>
+                            Fontes
+                        </td>
+                        <td>
+                            <select id="id_fonte_vestibular" name="id_fonte_vestibular" style="background-color:#DADADA;" disabled="disabled">
+                                <option value="0">Selecione uma fonte</option>
+                                <? foreach ($fontes as $row) { ?>
+                                <option value="<?=$row->getIdFonteVestibular()?>"><?=utf8_encode($row->getFonteVestibular())?></option>c
+                                <? } ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <input type="submit" value="Filtrar" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- fim conteudo -->

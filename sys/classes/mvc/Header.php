@@ -19,6 +19,7 @@ class Header {
     
     function __construct($viewAlias){        
         $this->viewAlias = $viewAlias;
+        self::$ROOT_VIEW_FILES = __APP__ . "/views";
     }
     
     /**

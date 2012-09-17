@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Configura/formata o menu superior de idiomas.         
+    </descricao>
+    <config>
+        <include id='js'>menu_slider</include>        
+        <include id='css'>menu</include>        
+    </config>
+</root>

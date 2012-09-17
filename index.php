@@ -25,6 +25,7 @@
     require_once('sys/classes/db/Meekrodb_2_0.php');
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/mvc/Controller.php');
+    require_once('sys/classes/comps/HtmlComponent.php');
     require_once('sys/classes/mvc/Model.php');    
     //require_once('app/sys/plugins/plugin.php');
     require_once($urlFile);
