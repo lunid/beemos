@@ -6,6 +6,8 @@
     $controllerClass = 'index';
     $actionMethod    = 'indexHome';
     
+    define("__APP__", "admin");
+    
     $var        = (isset($_GET['PG']))?$_GET['PG']:'';
     $arrParams  = explode('/',$var);
     if (is_array($arrParams) && count($arrParams) > 0) {       
@@ -13,7 +15,7 @@
         if (isset($arrParams[1]) && $arrParams[1] != null) $actionMethod     = $arrParams[1];
     }
 
-    $urlFile = 'app/controllers/'.ucfirst($controllerClass).'Controller.php';
+    $urlFile = __APP__ . '/controllers/'.ucfirst($controllerClass).'Controller.php';
     if (!file_exists($urlFile)) die('Arquivo de inclusão '.$urlFile.' não localizado');
 
     //require_once('lib/propel/runtime/lib/Propel.php');

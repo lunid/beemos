@@ -6,7 +6,7 @@
     use \sys\classes\mvc\Header;
     
     class View {
-        const CSS       = 'sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site';
+        const CSS       = 'site';
         const CSS_INC   = '';
         const JS        = 'sys:util.dictionary';
         const JS_INC    = '';
@@ -24,7 +24,7 @@
             $tplFile        = '';
             $viewFile       = '';
             if (strlen($viewAlias) > 0) {
-                $viewFile    = 'app/views/'.$viewAlias.'View.html';  
+                $viewFile    = __APP__ . '/views/'.$viewAlias.'.html';  
                 try {
                     //Inicializa um objeto Header e define os includes padrão (js e css)
                     $objHeader = new Header($viewAlias);            
@@ -51,7 +51,7 @@
             }
             
             $tpl     = (strlen($tplName) == 0)?'padrao':$tplName; 
-            $tplFile = 'app/views/templates/'.$tpl.'.html';  
+            $tplFile = __APP__ . '/views/templates/'.$tpl.'.html';  
             
             try {                                                 
                 $this->checkUrlFile($tplFile); 
