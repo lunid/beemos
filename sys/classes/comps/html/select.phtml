@@ -1,5 +1,8 @@
-<select>
-    <? foreach($arr_options as $option){ ?>
-        <option value="<?=$option['id']?>"><?=$option['text']?></option>
+<select name="<?=self::$id?>" id="<?=self::$id?>" <? if(self::$onchange != null){ ?> onchange="<?=self::$onchange?>" <? } ?> <? if(self::$class != null){ ?> class="<?=self::$class?>" <? } ?> <? if(self::$style != null){ ?> style="<?=$style?>" <? } ?> <? if(self::$disabled){ ?> disabled="disabled" <? } ?>>
+    <? if(self::$first_option != null){ ?>
+    <option value="0"><?=self::$first_option?></option>
+    <? } ?>
+    <? foreach(self::$sel_options as $option){ ?>
+    <option value="<?=$option['ID']?>" <? if(self::$select_option == $option['ID']){ ?> selected="selected" <? } ?>><?=$option['TEXT']?></option>
     <? } ?>
 </select>

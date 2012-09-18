@@ -1,50 +1,52 @@
-<!-- começo conteudo -->
-<div id="conteudo">
-    <div class="titulo">TOP10 - Avaliar Questões</div>
-    <div id="tabbed_box_1" class="tabbed_box">
-        <div class="tabbed_area">
-            <form id="form_filtros" name="form_filtros" method="get" action="top10_avaliar_questoes.php">
-                <table>
-                    <tr>
-                        <td colspan="3">
-                            Filtrar por:
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" name="tipo_filtro" value="id_materia" checked="checked" onclick="javascript:selecionaFiltro(this.value);" />
-                        </td>
-                        <td>
-                            Matérias
-                        </td>
-                        <td>
-                            {COMBO_MATERIAS}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="radio" name="tipo_filtro" value="id_fonte_vestibular" onclick="javascript:selecionaFiltro(this.value);" />
-                        </td>
-                        <td>
-                            Fontes
-                        </td>
-                        <td>
-                            <select id="id_fonte_vestibular" name="id_fonte_vestibular" style="background-color:#DADADA;" disabled="disabled">
-                                <option value="0">Selecione uma fonte</option>
-                                <? foreach ($fontes as $row) { ?>
-                                <option value="<?=$row->getIdFonteVestibular()?>"><?=utf8_encode($row->getFonteVestibular())?></option>c
-                                <? } ?>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <input type="submit" value="Filtrar" />
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
+<ul class="tabs">
+    <li><a href="javascript:tabSwitch('tab_1', 'content_1');" id="tab_1" class="active">Avaliar Questões</a></li>
+    <li><a href="javascript:tabSwitch('tab_2', 'content_2');" id="tab_2">Gráfico de Histórico</a></li>
+</ul>
+
+<div id="content_1" class="content">
+    <form id="form_filtros" name="form_filtros" method="post" action="/interbits_dev/index">
+        <table>
+            <tr>
+                <td colspan="3">
+                    Filtrar por:
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="radio" name="tipo_filtro" value="id_materia" checked="checked" onclick="javascript:top10.selecionaFiltro(this.value);" />
+                </td>
+                <td>
+                    Matérias
+                </td>
+                <td>
+                    {COMBO_MATERIAS}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="radio" name="tipo_filtro" value="id_fonte_vestibular" onclick="javascript:top10.selecionaFiltro(this.value);" />
+                </td>
+                <td>
+                    Fontes
+                </td>
+                <td>
+                    {COMBO_FONTES}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="submit" value="Filtrar" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div>
+        {TB_QUESTOES}
     </div>
 </div>
-<!-- fim conteudo -->
+
+<div id="content_2" class="content">
+    <div>
+        {TB_QUESTOES}
+    </div>
+</div>

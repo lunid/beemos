@@ -171,3 +171,33 @@ body{
 
 /* fim rodape
 ================================================== */
+
+/* Tabela Questoes
+================================================== */
+.table_questoes{
+    border: 1px solid #CCC;
+}
+
+.table_questoes th{
+    text-align: center;
+    background-color: #66676C;
+    color: #FFF;
+    padding: 5px;
+    font-size: 13px;
+}
+
+.table_questoes td{
+    padding: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.table_questoes tr.par{
+    background-color: #E8ECEF;
+    color: #000;
+}
+
+.table_questoes tr.impar{
+    background-color: #FFF;
+    color: #000;
+}

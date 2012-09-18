@@ -274,7 +274,7 @@ abstract class ORM {
             $msgErr     .= "SQL Query: " . $e->getQuery() . "<br>\n"; // INSERT INTO accounts...            
         }
         
-        if ($this->debug) echo \DB::getQuery();
+        if (self::$debug) echo \DB::getQuery();
         \DB::$error_handler = 'meekrodb_error_handler';
         \DB::$throw_exception_on_error = false;
         if (strlen($msgErr) > 0) throw new \Exception( $msgErr );        
@@ -1142,7 +1142,7 @@ abstract class ORM {
         }
         
         $sql       = "SELECT $fields FROM ".$joinWhere;
-        if (strlen($where) > 0) $sql .= " AND {$where}";
+        if (strlen($where) > 0) $sql .= " WHERE 1 AND {$where}";
         $sql       = $this->concatOrderByLimit($sql); 
         return self::query($sql);//Cada registro é um objeto stdClass         
     }

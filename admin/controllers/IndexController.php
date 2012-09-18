@@ -2,6 +2,7 @@
 
     use \sys\classes\mvc\Controller;    
     use \sys\classes\mvc\View;        
+    use \sys\classes\util\Request;
     use \admin\models\Top10Model;
 
 
@@ -18,9 +19,7 @@
             try{
                 //Top10
                 $m_top10 = new Top10Model();
-
-                $m_top10->listaQuestoesTop10Materia();
-
+                
                 $objView        = new View('top10_questoes');
                 $objView->TITLE = 'ADM | SuperPro';
 
@@ -29,9 +28,14 @@
                 $objView->setPlugin("menu_slider");
 
                 $objView->setMinify(TRUE);
-
-                $objView->COMBO_MATERIAS = HtmlComponent::select(array(array("id" => '1', "text" => "Du"), array("id" => '2', "text" => "DuDu"), array("id" => '3', "text" => "Edu")));
-
+                
+                $id_materia             = Request::post("id_materia", "NUMBER");
+                $id_fonte_vestibular    = Request::post("id_fonte_vestibular", "NUMBER");
+                
+                $objView->COMBO_MATERIAS    = HtmlComponent::select($m_top10->getMateriasSelectBox(), "id_materia", "Selecione uma matéria", null, $id_materia);
+                $objView->COMBO_FONTES      = HtmlComponent::select($m_top10->getFontesSelectBox(), "id_fonte_vestibular", "Selecione uma fonte", null, $id_fonte_vestibular, null, null, true);
+                $objView->TB_QUESTOES       = HtmlComponent::table($m_top10->listaQuestoesTop10($id_materia, $id_fonte_vestibular), 'table_questoes', 'table_top10');
+                
                 $objView->render();            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";

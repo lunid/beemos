@@ -1,0 +1,76 @@
+<table cellpadding="2" cellspacing="2" border="0" <? if(self::$class != null){ ?> class="<?=self::$class?>" <? } ?>>
+    <tr>
+        <th>
+            Posição
+        </th>
+        <th>
+            Questão
+        </th>
+        <th>
+            Fonte
+        </th>
+        <th>
+            Matéria(s)
+        </th>
+        <th>
+            Total / Uso
+        </th>
+        <th>
+            Usuário para Avaliar
+        </th>
+        <th>
+            &nbsp;
+        </th>  
+    </tr>
+    <?
+        $pos = 1;
+        foreach (self::$table_data as $questao) { 
+            if($pos%2==0){
+                $tr_class = "par";
+            }else{
+                $tr_class = "impar";
+            }
+    ?>
+        <tr class="<?=$tr_class?>">
+            <td>
+                <?=$pos?>&ordf;
+            </td>
+            <td>
+                <?=$questao['questao']['ID_BCO_QUESTAO']?>
+            </td>
+            <td>
+                <?=$questao['questao']['FONTE_VESTIBULAR']?>
+            </td>
+            <td>
+                <?=$questao['txt_materias']?>
+            </td>
+            <td>
+                <?=$questao['questao']['TOTAL_USO']?>
+            </td>
+            <? //if ($usuario->getIdPerfil() == 1) { ?>
+                <td>
+                    <select id="id_usuario" name="id_usuario" onchange="javascript:atualizaUsuarioQuestao(<?=$questao['questao']['ID_BCO_QUESTAO']?>, this.value);">
+                        <option value="0">Selecione um usuário</option>
+                        <? foreach ($questao['usuarios'] as $row_usuario) { ?>
+                            <option value="<?=$row_usuario['ID_USUARIO']?>"><?=$row_usuario['NOME']?></option>
+                        <? } ?>
+                    </select>
+                </td>
+            <? //} ?>
+            <td>
+                <? if ($questao['questao']['ID_AVALIACAO_QUESTAO'] > 0) { ?>
+                    <a href="top10_avaliar_questao.php?id_questao=<?=$questao['questao']['ID_BCO_QUESTAO']?>" target="_blank">
+                        <img src="<?=__APP__?>/views/images/avaliacao-concluida.jpg" border="0" style="width:23px;height:23px;" />
+                    </a>
+                <? } else { ?>
+                    <a href="top10_avaliar_questao.php?id_questao=<?=$questao['questao']['ID_BCO_QUESTAO']?>" target="_blank">
+                        <img src="<?=__APP__?>/views/images/icone_avaliar.gif" border="0" style="width:23px;height:23px;" />
+                    </a>
+                <? } ?>
+            </td>
+        </tr>
+        <?
+        $pos++;
+    }
+    ?>
+</table>
