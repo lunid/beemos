@@ -446,8 +446,9 @@ abstract class ORM {
         if (is_array($results) && count($results) > 0) {
             //Converte cada registro em objeto da classe atual
             $this->row  = array();//Zera a linha de um único registro caso esteja preenchida.
-            $arrObj     = array_map(array($this, 'getObj'), $results);  
-            return $arrObj;
+            $arrObj     = array_map(array($this, 'getObj'), $results); 
+            $objRs      = new Resultset($arrObj);
+            return $objRs;
         }
         return false;
     }

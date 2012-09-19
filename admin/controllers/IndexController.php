@@ -58,6 +58,12 @@
                 
                 $objView->TB_QUESTOES = HtmlComponent::table($m_top10->listaQuestoesTop10($id_materia, $id_fonte_vestibular), $tb_questos_opts);
                 
+                //Gráfico TOP10
+                $data_inicio    = date("Y-m-d", mktime(0, 0, 0, date("m"), (date("d")-30), date("Y")));
+                $data_final     = date("Y-m-d");
+                
+                $m_top10->graficoTop10($data_inicio, $data_final);
+                
                 $objView->render();            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";
