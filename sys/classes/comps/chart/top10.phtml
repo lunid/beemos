@@ -1,0 +1,129 @@
+<script type="text/javascript">
+    function iniciaGraficoTop10 () {
+        var chart;
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'grafico_top10',
+                    type: 'column',
+                    height: '600'
+                },
+                title: {
+                    text: 'Histórico de TOP 10'
+                },
+                xAxis: {
+                    categories: ['TOP 10']
+                },
+                yAxis: {
+                    min: 0,
+                    labels: {
+                        enabled: false
+                    },
+                    title: {
+                        text: ''
+                    },
+                    stackLabels: {
+                        enabled: true,
+                        style: {
+                            fontWeight: 'bold',
+                            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                        },
+                        formatter: function() {
+                            return this.stack;
+                        }
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    enabled: false
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000',
+                            formatter: function() {
+                                return this.series.name;
+                            }
+                        }
+                    }
+                },
+                series: [
+                <? foreach (self::$chartData->data as $row) { ?>
+                        {
+                            name: 'Pos 1 - <?=$row->POS_1;?>',
+                            data: [20],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_1]?>'
+                        },
+                        
+                        {
+                            name: 'Pos 2 - <?=$row->POS_2;?>',
+                            data: [19],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_2]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 3 - <?=$row->POS_3;?>',
+                            data: [18],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_3]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 4 - <?=$row->POS_4;?>',
+                            data: [17],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_4]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 5 - <?=$row->POS_5;?>',
+                            data: [16],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_5]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 6 - <?=$row->POS_6;?>',
+                            data: [15],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_6]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 7 - <?=$row->POS_7;?>',
+                            data: [14],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_7]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 8 - <?=$row->POS_8;?>',
+                            data: [13],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_8]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 9 - <?=$row->POS_9;?>',
+                            data: [12],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_9]?>'
+                        },                
+                        
+                        {
+                            name: 'Pos 10 - <?=$row->POS_10;?>',
+                            data: [11],
+                            stack: '<?=\sys\classes\util\Date::formatDate($row->DATA_LOG)?>',
+                            color: '#<?=self::$chartData->colors[$row->POS_10]?>'
+                        },                
+                <? } ?>
+                ]
+            });
+        }
+</script>
+<div id="grafico_top10" style="width:85%;min-height:600px;"></div>

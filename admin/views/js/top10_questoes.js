@@ -5,7 +5,11 @@ Top10 = function(){};
 
 Top10.prototype = {
     init: function(){
+        $( "#data_inicio" ).datepicker();
+        $( "#data_final" ).datepicker();
         
+        //Função inserida no ocmponente de gráfico
+        iniciaGraficoTop10();
     },
     selecionaFiltro: function(filtro){
         $("input[name=tipo_filtro]").each(function(){

@@ -3,6 +3,7 @@
     use \sys\classes\mvc\Controller;    
     use \sys\classes\mvc\View;        
     use \sys\classes\util\Request;
+    use \sys\classes\util\Date;
     use \admin\models\Top10Model;
 
 
@@ -22,11 +23,15 @@
                 
                 $objView        = new View('top10_questoes');
                 $objView->TITLE = 'ADM | SuperPro';
+                
+                $objView->setPlugin("jquery_ui");
 
                 $objView->setPlugin("abas");
                 $objView->setPlugin("drop");
                 $objView->setPlugin("menu_slider");
-
+                
+                $objView->setPlugin("highcharts");
+                
                 $objView->setMinify(TRUE);
                 
                 $id_materia             = Request::post("id_materia", "NUMBER");
@@ -59,11 +64,19 @@
                 $objView->TB_QUESTOES = HtmlComponent::table($m_top10->listaQuestoesTop10($id_materia, $id_fonte_vestibular), $tb_questos_opts);
                 
                 //Gráfico TOP10
-                $data_inicio    = date("Y-m-d", mktime(0, 0, 0, date("m"), (date("d")-30), date("Y")));
-                $data_final     = date("Y-m-d");
+                if(Request::post("hdd_acao") == 'filtar_grafico'){
+                    $data_inicio    = Date::formatDate(Request::post("data_inicio"), "AAAA-MM-DD");
+                    $data_final     = Date::formatDate(Request::post("data_final"), "AAAA-MM-DD");
+                }else{
+                    $data_inicio    = date("Y-m-d", mktime(0, 0, 0, date("m"), (date("d")-10), date("Y")));
+                    $data_final     = date("Y-m-d");
+                }
                 
-                $m_top10->graficoTop10($data_inicio, $data_final);
+                $objView->DATA_INICIO   = Date::formatDate($data_inicio);
+                $objView->DATA_FINAL    = Date::formatDate($data_final);
                 
+                $objView->GR_TOP10 = ChartComponent::gerGraficoTop10($m_top10->graficoTop10($data_inicio, $data_final));
+                                
                 $objView->render();            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";

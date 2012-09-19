@@ -47,6 +47,30 @@
 
 <div id="content_2" class="content">
     <div>
+        <form action="/interbits_dev/index" method="post">
+            <table>
+                <tr>
+                    <td>
+                        Data Início: 
+                    </td>
+                    <td>
+                        <input type="text" id="data_inicio" name="data_inicio" value="{DATA_INICIO}" />
+                    </td>
+                    <td>
+                        Data Final 
+                    </td>
+                    <td>
+                        <input type="text" id="data_final" name="data_final" value="{DATA_FINAL}" />
+                    </td>
+                    <td>
+                        <input type="hidden" name="hdd_acao" value="filtar_grafico" />
+                        <input type="submit" value="filtrar" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div>
         {GR_TOP10}
     </div>
 </div>

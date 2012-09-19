@@ -103,10 +103,10 @@
                     return $ret;
                 }
                 
-                /*if($diff->days > 15){
+                if($diff->days > 15){
                     $ret->msg = "A diferença entre as datas não pode ser superior a 15 dias";
                     return $ret;
-                }*/
+                }
                 
                 $arr_ret        = array(); //Array com objetos de retorno
                 $arr_questoes   = array(); //Array com distinct de questoes
@@ -114,44 +114,23 @@
                 $tb_top10   = new AdmTop10Log();
                 $rs         = $tb_top10->getTop10Periodo($data_inicio, $data_final);
                 
-                echo "Teste : " . $rs->count() . "<br />";
-                
                 if($rs->count() > 0){
                    foreach($rs as $row){
-                        $arr_questoes[$row->getPos1()] = '';
-                        $arr_questoes[$row->getPos2()] = '';
-                        $arr_questoes[$row->getPos3()] = '';
-                        $arr_questoes[$row->getPos4()] = '';
-                        $arr_questoes[$row->getPos5()] = '';
-                        $arr_questoes[$row->getPos6()] = '';
-                        $arr_questoes[$row->getPos7()] = '';
-                        $arr_questoes[$row->getPos8()] = '';
-                        $arr_questoes[$row->getPos9()] = '';
-                        $arr_questoes[$row->getPos10()] = '';
+                        $arr_questoes[$row->POS_1] = '';
+                        $arr_questoes[$row->POS_2] = '';
+                        $arr_questoes[$row->POS_3] = '';
+                        $arr_questoes[$row->POS_4] = '';
+                        $arr_questoes[$row->POS_5] = '';
+                        $arr_questoes[$row->POS_6] = '';
+                        $arr_questoes[$row->POS_7] = '';
+                        $arr_questoes[$row->POS_8] = '';
+                        $arr_questoes[$row->POS_9] = '';
+                        $arr_questoes[$row->POS_10] = '';
 
                         $arr_ret[] = $row;
                     } 
                 }
                 
-                
-                
-                die;
-
-                while($row = mysql_fetch_object($rs, 'Top10log')){
-                    $arr_questoes[$row->getPos1()] = '';
-                    $arr_questoes[$row->getPos2()] = '';
-                    $arr_questoes[$row->getPos3()] = '';
-                    $arr_questoes[$row->getPos4()] = '';
-                    $arr_questoes[$row->getPos5()] = '';
-                    $arr_questoes[$row->getPos6()] = '';
-                    $arr_questoes[$row->getPos7()] = '';
-                    $arr_questoes[$row->getPos8()] = '';
-                    $arr_questoes[$row->getPos9()] = '';
-                    $arr_questoes[$row->getPos10()] = '';
-
-                    $arr_ret[] = $row;
-                }
-
                 ksort($arr_questoes);
                 $arr_questoes = $this->getColor($arr_questoes);
 
@@ -166,6 +145,37 @@
                 echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
                 die;
             }
+        }
+        
+        private function getColor($arr){
+            try{
+                foreach($arr as &$row){
+                    $sel = $this->random_color();
+
+                    if(!array_search($sel, $arr)){
+                        $row = $sel;
+                    }else{
+                        while(array_search($sel, $arr)){
+                            $sel = $this->random_color();
+                        }
+
+                        $row = $sel;
+                    }
+                }
+
+                return $arr;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        private function random_color(){
+            mt_srand((double)microtime()*1000000);
+            $c = '';
+            while(strlen($c)<6){
+                $c .= sprintf("%02X", mt_rand(0, 255));
+            }
+            return $c;
         }
         
         public function alteraUsuarioQuestao($id_questao, $id_usuario){
