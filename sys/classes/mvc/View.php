@@ -32,7 +32,7 @@
                     $objHeader->addJs(self::JS);
                     $objHeader->addJsInc(self::JS_INC);                      
                     
-                    //Faz a inclusão de arquivos css e js com o mesmo nome da view atual, caso existam.
+                    //Faz a inclusão de arquivos css e js padrão.
                     try {                        
                         $objHeader->memoSetFile($objHeader::EXT_CSS,self::CSS,FALSE);
                         $objHeader->memoSetFile($objHeader::EXT_JS,self::JS,FALSE);                        
@@ -81,17 +81,15 @@
            } 
         } 
         
-        private function getIncludesCss(){
-            $objHeader  = $this->getObjHeader();
-            $inc        = $this->getIncludes($objHeader::EXT_CSS);
-            $inc        .= $this->getIncludes($objHeader::EXT_CSS_INC,FALSE);
+        private function getIncludesCss(){            
+            $inc        = $this->getIncludes(Header::EXT_CSS);
+            $inc        .= $this->getIncludes(Header::EXT_CSS_INC);
             return $inc;
         }
         
-        private function getIncludesJs(){
-            $objHeader  = $this->getObjHeader();
-            $inc        = $this->getIncludes($objHeader::EXT_JS);
-            $inc        .= $this->getIncludes($objHeader::EXT_JS_INC,FALSE);
+        private function getIncludesJs(){            
+            $inc        = $this->getIncludes(Header::EXT_JS);
+            $inc        .= $this->getIncludes(Header::EXT_JS_INC);
             return $inc;
         }
         
@@ -107,7 +105,15 @@
         }                
         
         function render($layoutName=''){            
-            if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
+            if (isset($layoutName) && strlen($layoutName) > 0) {
+                $this->layoutName   = $layoutName;
+                $objHeader          = $this->getObjHeader();
+                if (is_object($objHeader)) {
+                    //Faz a inclusão de arquivos css e js com o mesmo nome da view atual, caso existam.                
+                    $objHeader->memoSetFile(Header::EXT_CSS,$layoutName,FALSE);
+                    $objHeader->memoSetFile(Header::EXT_JS,$layoutName,FALSE);
+                }
+            }
            
             $css                       = $this->getIncludesCss();
             $js                        = $this->getIncludesJs();

@@ -53,9 +53,7 @@ class Header {
         if ($root != 'plugin'){
             if ($root == 'sys') $root = self::$ROOT_SYS_FILES;  
             $extFile    = $this->getExtFile($ext);
-            $file       = \LOCALHOST.$root.'/'.$extFile.'/'.$file;  	                                  
-	} else {
-            $file = \LOCALHOST.$file;
+            $file       = $root.'/'.$extFile.'/'.$file;  	                                  
         }
 	
         $extFile = $this->getExtFile($ext);            
@@ -330,7 +328,7 @@ class Header {
      * @return string 
      */
     private function getNameFileMin($ext){        
-        $rootOutFileMin = \LOCALHOST.self::$ROOT_VIEW_FILES.'/'.$ext.'/min/'; 
+        $rootOutFileMin = self::$ROOT_VIEW_FILES.'/'.$ext.'/min/'; 
         $outFileMin     = $rootOutFileMin.$this->layoutName.'_min.'.$ext;  
         return $outFileMin;
     }         
