@@ -36,6 +36,7 @@ class Conn {
         DB::$user       = $user;
         DB::$password   = $passwd;   
         DB::$encoding   = 'utf8';        
+        
     }
 }
 ?>
