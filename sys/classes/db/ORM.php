@@ -435,22 +435,22 @@ abstract class ORM {
      * </code>
      * 
      * @param string $where Opcional. Pode conter uma cláusula WHERE (ex: CAMPO1 = VALOR1 AND CAMPO2 = VALOR2)
-     * @return object[]|FALSE Retorna FALSE caso a operação não tenha sido executada com sucesso, ou então
-     * retorna um array de objetos da classe atual.     
+     * @return object[]
      */    
     function findAll($where=''){
         if (strlen($where) == 0) $where = '1=1';
         $sql                = "SELECT * FROM ".$this->tableName." WHERE ".$where;
-        $sql                = $this->concatOrderByLimit($sql);          
+        $sql                = $this->concatOrderByLimit($sql);  
         $results            = self::query($sql);//Cada registro é um objeto
+        $arrObj             = array();
+        
         if (is_array($results) && count($results) > 0) {
             //Converte cada registro em objeto da classe atual
             $this->row  = array();//Zera a linha de um único registro caso esteja preenchida.
-            $arrObj     = array_map(array($this, 'getObj'), $results);  
-            $rsObj      = new Resultset($arrObj);
-            return $rsObj;
-        }
-        return false;
+            $arrObj     = array_map(array($this, 'getObj'), $results);                       
+        }        
+        $rsObj = new Resultset($arrObj);  
+        return $rsObj;
     }
     
     /**

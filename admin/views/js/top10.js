@@ -55,6 +55,11 @@ Top10.prototype = {
         
         //Função inserida no ocmponente de gráfico
         iniciaGraficoTop10();
+        
+        //Adiciona função ao botão
+        $("#btGeraGrafico").bind('click', function(){
+            top10.geraGrafico();
+        });
     },
     selecionaFiltro: function(filtro){
         $("input[name=tipo_filtro]").each(function(){
@@ -66,23 +71,32 @@ Top10.prototype = {
         $("#" + filtro).css("background-color", "#FFF");
         $("#" + filtro).removeAttr("disabled");
     },
-    atualizaUsuarioQuestao: function(id_questao, id_usuario){
-        if(confirm("Tem certeza que deseja alterar o usuário.\nIsso pode limpar avaliações anteriores")){
-            $.post(
-                "top10_avaliar_questoes.php",
-                {
-                    id_questao: id_questao,
-                    id_usuario: id_usuario,
-                    hdd_acao: 'usuario_questao'
-                },
-                function(ret){
+    geraGrafico: function(){
+        $("#aguarde").show();
+        
+        $.post(
+            'top10/geraGrafico',
+            {
+                data_inicio: $("#data_inicio").val(),
+                data_final: $("#data_final").val(),
+                hdd_acao: 'filtar_grafico'
+            },
+            function(ret){
+                $("#aguarde").hide();
+                
+                if(ret.status){
+                    if(ret.html != null){
+                        $("#graphsContent").html(ret.html);
+                        iniciaGraficoTop10();
+                    }else{
+                        $("#graphsContent").html(ret.msg);
+                    }
+                }else{
                     alert(ret.msg);
-                },
-                'json'
-            );
-        }else{
-            return false;
-        }
+                }
+            },
+            'json'
+        );
     }
 };
 

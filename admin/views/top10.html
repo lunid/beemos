@@ -47,7 +47,7 @@
 
 <div id="content_2" class="content">
     <div>
-        <form action="/interbits_dev/index" method="post">
+        <form id="formGeraGrafico" name="formGeraGrafico">
             <table>
                 <tr>
                     <td>
@@ -64,13 +64,14 @@
                     </td>
                     <td>
                         <input type="hidden" name="hdd_acao" value="filtar_grafico" />
-                        <input type="submit" value="filtrar" />
+                        <input type="button" id="btGeraGrafico" name="btGeraGrafico" value="Filtrar" />
+                        <span id="aguarde" style="display:none;">Aguarde...</span>
                     </td>
                 </tr>
             </table>
         </form>
     </div>
-    <div>
+    <div id="graphsContent">
         {GR_TOP10}
     </div>
 </div>

@@ -8,7 +8,6 @@
     use \admin\models\tables\ClassificacaoQuestao;
     use \admin\models\tables\AdmUsuario;
     use \admin\models\tables\AdmTop10Log;
-    use \sys\db\ORM; 
     
     class Top10Model extends Model {
         public function listaQuestoesTop10($id_materia = 0, $id_fonte_vestibular = 0){
@@ -54,12 +53,7 @@
                 
                 return $ret;
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - Top10Model <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;
             }
         }
         
@@ -69,12 +63,7 @@
                 
                 return $t_materias->getMateriasSelectBox();
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - Top10Model <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;
             }
         }
         
@@ -84,12 +73,7 @@
                 
                 return $t_materias->getFontesSelectBox();
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - Top10Model <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;
             }
         }
         
@@ -108,14 +92,14 @@
                     return $ret;
                 }*/
                 
-                $arr_ret        = array(); //Array com objetos de retorno
-                $arrQuestoes    = array(); //Array com distinct de questoes
-                $arrQuestoesTop = array(); //Array com questões mais utilizadas
-                
                 $tb_top10   = new AdmTop10Log();
                 $rs         = $tb_top10->getTop10Periodo($data_inicio, $data_final);
                 
                 if($rs->count() > 0){
+                   $arr_ret        = array(); //Array com objetos de retorno
+                   $arrQuestoes    = array(); //Array com distinct de questoes
+                   $arrQuestoesTop = array(); //Array com questões mais utilizadas
+                
                    foreach($rs as $row){
                         $arrQuestoes[$row->POS_1]   = '';
                         $arrQuestoes[$row->POS_2]   = '';
@@ -130,60 +114,59 @@
 
                         $arr_ret[] = $row;
                     } 
-                }
-                
-                ksort($arrQuestoes);
-                $arrQuestoes = $this->getColor($arrQuestoes);
-                
-                foreach ($arr_ret as $row) { 
-                    isset($arrQuestoesTop[$row->POS_1]) ? $arrQuestoesTop[$row->POS_1]++ : $arrQuestoesTop[$row->POS_1] = 1;
-                    isset($arrQuestoesTop[$row->POS_2]) ? $arrQuestoesTop[$row->POS_2]++ : $arrQuestoesTop[$row->POS_2] = 1;
-                    isset($arrQuestoesTop[$row->POS_3]) ? $arrQuestoesTop[$row->POS_3]++ : $arrQuestoesTop[$row->POS_3] = 1;
-                    isset($arrQuestoesTop[$row->POS_4]) ? $arrQuestoesTop[$row->POS_4]++ : $arrQuestoesTop[$row->POS_4] = 1;
-                    isset($arrQuestoesTop[$row->POS_5]) ? $arrQuestoesTop[$row->POS_5]++ : $arrQuestoesTop[$row->POS_5] = 1;
-                    isset($arrQuestoesTop[$row->POS_6]) ? $arrQuestoesTop[$row->POS_6]++ : $arrQuestoesTop[$row->POS_6] = 1;
-                    isset($arrQuestoesTop[$row->POS_7]) ? $arrQuestoesTop[$row->POS_7]++ : $arrQuestoesTop[$row->POS_7] = 1;
-                    isset($arrQuestoesTop[$row->POS_8]) ? $arrQuestoesTop[$row->POS_8]++ : $arrQuestoesTop[$row->POS_8] = 1;
-                    isset($arrQuestoesTop[$row->POS_9]) ? $arrQuestoesTop[$row->POS_9]++ : $arrQuestoesTop[$row->POS_9] = 1;
-                    isset($arrQuestoesTop[$row->POS_10]) ? $arrQuestoesTop[$row->POS_10]++ : $arrQuestoesTop[$row->POS_10] = 1;
-                }
-    
-                asort($arrQuestoesTop);
-    
-                $valid = (sizeof($arrQuestoesTop) - 10);
-                $total = (sizeof($arr_ret) * 10);
-                
-                $count = 0;     
-    
-                $tmp_arrQuestoesTop     = array();
-    
-                foreach($arrQuestoesTop as $key => $value){
-                    if($count >= $valid){
-                        $perc = (($value / $total) * 100);
-                        $perc = round($perc, 1);
-                        
-                        $tmp_arrQuestoesTop[] = array("questao" => $key, "perc" => $perc);
+                    
+                    ksort($arrQuestoes);
+                    $arrQuestoes = $this->getColor($arrQuestoes);
+
+                    foreach ($arr_ret as $row) { 
+                        isset($arrQuestoesTop[$row->POS_1]) ? $arrQuestoesTop[$row->POS_1]++ : $arrQuestoesTop[$row->POS_1] = 1;
+                        isset($arrQuestoesTop[$row->POS_2]) ? $arrQuestoesTop[$row->POS_2]++ : $arrQuestoesTop[$row->POS_2] = 1;
+                        isset($arrQuestoesTop[$row->POS_3]) ? $arrQuestoesTop[$row->POS_3]++ : $arrQuestoesTop[$row->POS_3] = 1;
+                        isset($arrQuestoesTop[$row->POS_4]) ? $arrQuestoesTop[$row->POS_4]++ : $arrQuestoesTop[$row->POS_4] = 1;
+                        isset($arrQuestoesTop[$row->POS_5]) ? $arrQuestoesTop[$row->POS_5]++ : $arrQuestoesTop[$row->POS_5] = 1;
+                        isset($arrQuestoesTop[$row->POS_6]) ? $arrQuestoesTop[$row->POS_6]++ : $arrQuestoesTop[$row->POS_6] = 1;
+                        isset($arrQuestoesTop[$row->POS_7]) ? $arrQuestoesTop[$row->POS_7]++ : $arrQuestoesTop[$row->POS_7] = 1;
+                        isset($arrQuestoesTop[$row->POS_8]) ? $arrQuestoesTop[$row->POS_8]++ : $arrQuestoesTop[$row->POS_8] = 1;
+                        isset($arrQuestoesTop[$row->POS_9]) ? $arrQuestoesTop[$row->POS_9]++ : $arrQuestoesTop[$row->POS_9] = 1;
+                        isset($arrQuestoesTop[$row->POS_10]) ? $arrQuestoesTop[$row->POS_10]++ : $arrQuestoesTop[$row->POS_10] = 1;
                     }
-                    $count++;
+
+                    asort($arrQuestoesTop);
+
+                    $valid = (sizeof($arrQuestoesTop) - 10);
+                    $total = (sizeof($arr_ret) * 10);
+
+                    $count = 0;     
+
+                    $tmp_arrQuestoesTop     = array();
+
+                    foreach($arrQuestoesTop as $key => $value){
+                        if($count >= $valid){
+                            $perc = (($value / $total) * 100);
+                            $perc = round($perc, 1);
+
+                            $tmp_arrQuestoesTop[] = array("questao" => $key, "perc" => $perc);
+                        }
+                        $count++;
+                    }
+
+                    $arrQuestoesTop = array();
+
+                    for($i=9; $i >= 0; $i--){
+                        $arrQuestoesTop[] = $tmp_arrQuestoesTop[$i];
+                    }
+
+                    $ret->status    = true;
+                    $ret->data      = $arr_ret;
+                    $ret->colors    = $arrQuestoes;
+                    $ret->top       = $arrQuestoesTop;
                 }
                 
-                $arrQuestoesTop = array();
-                
-                for($i=9; $i >= 0; $i--){
-                    $arrQuestoesTop[] = $tmp_arrQuestoesTop[$i];
-                }
-                
-                $ret->status    = true;
-                $ret->data      = $arr_ret;
-                $ret->colors    = $arrQuestoes;
-                $ret->top       = $arrQuestoesTop;
+                $ret->msg = "Nenhum resultado encontrado";
                 
                 return $ret;
             }catch(Exception $e){
-                echo "Erro buscas relatório TOP 10<br />\n";
-                echo $e->getMessage() . "<br />\n";
-                echo $e->getFile() . " - Linha: " . $e->getLine() ."<br />\n";
-                die;
+                throw $e;
             }
         }
         

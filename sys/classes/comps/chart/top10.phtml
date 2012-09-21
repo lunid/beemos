@@ -16,8 +16,7 @@
                     text: 'Histórico de TOP 10'
                 },
                 xAxis: {
-                    categories: ['TOP 10'],
-                    gridLineColor: '#FFF'
+                    categories: ['TOP 10']
                 },
                 yAxis: {
                     min: 0,
@@ -36,8 +35,7 @@
                         formatter: function() {
                             return this.stack;
                         }
-                    },
-                    gridLineColor: '#FFF'
+                    }
                 },
                 legend: {
                     enabled: false
@@ -55,9 +53,6 @@
                                 return this.series.name;
                             }
                         }
-                    },
-                    series: {
-                        pointWidth: 55
                     }
                 },
                 series: [

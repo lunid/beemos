@@ -22,13 +22,13 @@ class Conn {
         $dbName     = 'interbits1';
         $user       = 'interbits1'; 
         $passwd     = 'my230812';
-        $local      = FALSE;
+        $local      = TRUE;
 
         if ($local){
             $host   = 'localhost';
-            $dbName = 'superpro';
-            $user   = 'root';
-            $passwd = '';
+            $dbName = 'interbits1';
+            $user   = 'interbits1';
+            $passwd = 'my230812';
         }
 
         DB::$host       = $host;

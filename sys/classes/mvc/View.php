@@ -12,7 +12,7 @@
         const CSS_INC   = '';
         const JS        = 'sys:util.dictionary';
         const JS_INC    = '';
-        const PLUGINS   = '';
+        const PLUGINS   = 'jquery_ui,abas,drop,menu_slider';
         
         private $objHeader      = NULL;        
         private $tplFile        = '';           
