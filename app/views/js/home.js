@@ -1,21 +1,11 @@
 /*
- * Classe de abstração para funções JavaScript da Home
- **/
-Home = function(){};
 
+ * Classe de abstração para funções JavaScript da Home
+
+ **/
+
+Home = function(){};
 Home.prototype = {
-    init: function(){
-        var slider = new Slider();
-        slider.init({
-            id: 'banner'
-        });
-        
-        menu = new Menu();
-        menu.init({
-            id: 'top-menu'
-        });
-    },
-    
     areaAluno: function(){
         try{
             $("#aba_aluno").removeClass('loginAbaInativa').addClass('loginAbaAtiva');   
@@ -26,6 +16,7 @@ Home.prototype = {
             alert(Dic.loadMsg("Home", "CATCH", "changeArea") + " " + err.message);
         }
     },
+
     areaAssinante: function(){
         try{
             $("#aba_aluno").removeClass('loginAbaAtiva').addClass('loginAbaInativa');   
@@ -37,10 +28,3 @@ Home.prototype = {
         }
     }    
 };
-
- $(document).ready(function() {
-    home = new Home();
-    home.init();
-    oHandler = $(".mydds").msDropDown().data("dd");
-    $("#ver").html($.msDropDown.version);
-}); 

@@ -39,7 +39,8 @@
 
                     $size = filesize($outFileMin);
                     if ($size == 0){
-                        die('O arquivo '.$outFileMin.'foi gerado porém está vazio.<br><br>'.$strIncMin);
+                        //die('O arquivo '.$outFileMin.'foi gerado porém está vazio.<br><br>'.$strIncMin);
+                        return FALSE;
                     }
                     return TRUE;
                 } 

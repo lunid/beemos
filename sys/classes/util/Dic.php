@@ -34,15 +34,21 @@
             $fileException  = 'app/dic/e'.$class.'.xml';
            
             $method = __CLASS__.'\\'.__FUNCTION__."()";//Monta uma string ref. ao método atual. Usado para mostrar erro do método setErr()
-            $xml    = (file_exists($fileException))?$fileException:'app/dic/backend_exception.xml';//Arquivo de dicionário
-           
+            
+            $xml = $fileException;
+            if (!file_exists($fileException)) {
+                //Verifica na pasta sys
+                $fileException  = str_replace('app/','sys/',$fileException);
+                $xml            = (!file_exists($fileException))?'sys/dic/exception.xml':$fileException;
+            }            
+            
             if (file_exists($xml)){
                 $strXml     = file_get_contents($xml);
                 $objXml     = @simplexml_load_string($strXml);
                 $arrNodes   = $objXml->$class->$func;//object se for um único nó <msg..>, array se for maior que um.
                 
                 if (is_object($objXml) && (is_object($arrNodes) || is_array($arrNodes))){
-                    //Arquivo xml carregado com sucesso.
+                    //Arquivo xml carregado com sucesso.                    
                     foreach($arrNodes as $msgNodes){              
                         if (count($msgNodes->msg) > 1){ 
                             //Existe mais de uma mensagem (<msg...>) para a $class->$func atual.

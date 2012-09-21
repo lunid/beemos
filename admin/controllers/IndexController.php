@@ -2,11 +2,11 @@
 
     use \sys\classes\mvc\Controller;    
     use \sys\classes\mvc\View;        
+    use \sys\classes\mvc\ViewPart;      
     use \sys\classes\util\Request;
     use \sys\classes\util\Date;
     use \admin\models\Top10Model;
-
-
+    
     /**
     * Classe Controller usada com default quando nenhuma outra é informada.
     * Refere-se à página inicial do admin.
@@ -21,18 +21,7 @@
                 //Top10
                 $m_top10 = new Top10Model();
                 
-                $objView        = new View('top10_questoes');
-                $objView->TITLE = 'ADM | SuperPro';
-                
-                $objView->setPlugin("jquery_ui");
-
-                $objView->setPlugin("abas");
-                $objView->setPlugin("drop");
-                $objView->setPlugin("menu_slider");
-                
-                $objView->setPlugin("highcharts");
-                
-                $objView->setMinify(TRUE);
+                $objView = new ViewPart('top10');
                 
                 $id_materia             = Request::post("id_materia", "NUMBER");
                 $id_fonte_vestibular    = Request::post("id_fonte_vestibular", "NUMBER");
@@ -76,8 +65,24 @@
                 $objView->DATA_FINAL    = Date::formatDate($data_final);
                 
                 $objView->GR_TOP10 = ChartComponent::gerGraficoTop10($m_top10->graficoTop10($data_inicio, $data_final));
-                                
-                $objView->render();            
+                
+                $tpl = new View($objView);
+                
+                $tpl->TITLE = 'ADM | SuperPro';
+                
+                $tpl->setPlugin("jquery_ui");
+
+                $tpl->setPlugin("abas");
+                $tpl->setPlugin("drop");
+                $tpl->setPlugin("menu_slider");
+                
+                $tpl->setCssJs('top10');
+                
+                $tpl->setPlugin("highcharts");
+                
+                $tpl->forceCssJsMinifyOn();
+                
+                $tpl->render('top10');            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";

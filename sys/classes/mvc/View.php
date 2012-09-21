@@ -4,116 +4,74 @@
     use \sys\classes\util\Dic;
     use \sys\classes\plugins\Plugin;
     use \sys\classes\mvc\Header;
+    use \sys\classes\util\File;
+    use \sys\classes\mvc\ViewPart;
     
-    class View {
+    class View extends ViewPart {
         const CSS       = 'site';
         const CSS_INC   = '';
         const JS        = 'sys:util.dictionary';
         const JS_INC    = '';
+        const PLUGINS   = '';
         
-        private $objHeader      = NULL;
-        private $viewAlias      = '';
-        private $viewFile       = '';
-        private $tplFile        = '';   
-        private $tplContent     = '';
-        private $bodyContent    = '';
-        private $params         = array();
+        private $objHeader      = NULL;        
+        private $tplFile        = '';           
         private $forceNewIncMin = FALSE;
         
-        function __construct($viewAlias,$tplName='padrao'){            
-            $tplFile        = '';
-            $viewFile       = '';
-            if (strlen($viewAlias) > 0) {
-                $viewFile    = __APP__ . '/views/'.$viewAlias.'.html';  
-                try {
-                    //Inicializa um objeto Header e define os includes padrão (js e css)
-                    $objHeader = new Header($viewAlias);            
+        function __construct(ViewPart $objViewPart,$tplName='padrao'){                            
+            if (is_object($objViewPart)) {                                 
+                $objViewTpl         = new ViewPart('templates/'.$tplName);
+                $objViewTpl->BODY   = $objViewPart->render();
+                $this->bodyContent  = $objViewTpl->render();
+                $this->layoutName   = $objViewPart->layoutName;                
+                
+                if (strlen($tplName) > 0){
+                    $objHeader = new Header();            
                     $objHeader->addCss(self::CSS);
                     $objHeader->addCssInc(self::CSS_INC);
                     $objHeader->addJs(self::JS);
-                    $objHeader->addJsInc(self::JS_INC);
-                    $this->checkUrlFile($viewFile);//Verifica se o arquivo existe.  
-                    $this->viewAlias    = $viewAlias;
-                    $this->bodyContent  = file_get_contents($viewFile);
-		    
+                    $objHeader->addJsInc(self::JS_INC);                      
+                    
                     //Faz a inclusão de arquivos css e js com o mesmo nome da view atual, caso existam.
-                    try {
-                        $objHeader->memoSetFile($objHeader::EXT_CSS,$viewAlias);
-                        $objHeader->memoSetFile($objHeader::EXT_JS,$viewAlias);                        
+                    try {                        
+                        $objHeader->memoSetFile($objHeader::EXT_CSS,self::CSS,FALSE);
+                        $objHeader->memoSetFile($objHeader::EXT_JS,self::JS,FALSE);                        
+                        $this->objHeader = $objHeader;                                                                   
+                        
+                        //Plugins                        
+                        $plugins    = $this::PLUGINS;
+                        $arrPlugins = explode(',',$plugins);
+                        if (is_array($arrPlugins)) {
+                            foreach($arrPlugins as $plugin) {                                 
+                                $this->setPlugin($plugin);
+                            }
+                        }
                     } catch(\Exception $e){
                         $this->showErr('View()',$e,FALSE); 
-                    }   
-                } catch(\Exception $e){
-                    $this->showErr('Erro ao instanciar a view solicitada',$e);                    
-                }              
+                    }                                                           
+                }                
             } else {
-                $this->showErr('Impossível continuar. O nome da view não foi informado',$e);                
-            }
-            
-            $tpl     = (strlen($tplName) == 0)?'padrao':$tplName; 
-            $tplFile = __APP__ . '/views/templates/'.$tpl.'.html';  
-            
-            try {                                                 
-                $this->checkUrlFile($tplFile); 
-                $this->tplContent = file_get_contents($tplFile);
-            } catch(\Exception $e){
-                $this->showErr('Erro ao verificar o template solicitado ('.$tplFile.')',$e);                 
-            }
-            
-            $this->objHeader    = $objHeader;
-            $this->viewFile     = $viewFile;
-            $this->tplFile      = $tplFile;
-        }   
-        
-        /**
-         * Define o comportamento para a criação dos arquivos de include (css e js).
-         * 
-         * Se $action = TRUE, força a criação dos arquivos de inclusão (sufixo _min) mesmo que já existam.
-         * Se $action = FALSE, gera novos arquivos _min apenas se ainda não existirem.
-         * 
-         * @param boolean $action
-         */
-        function setMinify($action){
-            $objHeader = $this->getObjHeader();
-            if (is_object($objHeader)){
-                if (is_bool($action)) {
-                    $objHeader->forceMinifyOn();
-                } else {
-                    $objHeader->forceMinifyOff();
-                }
-            }
-        }
-        
-        private function showErr($msg,$e,$die=TRUE){
-            $msgErr = "<b>".$msg.':</b><br/><br/>'.$e->getMessage();
-            if ($die) die($msgErr);
-            echo $msgErr.'<br/><br/>';
-        } 
+                die('Impossível continuar. O objeto View não foi informado ou não é um objeto válido.');                
+            }            
+        }               
         
         private function getObjHeader(){
-            $objHeader = $this->objHeader;
-            if (!is_object($objHeader)) die('View->getObjHeader(): O objeto Header solicitado não foi localizado.');
+            $objHeader = $this->objHeader;            
+            if (!is_object($objHeader)) $objHeader = new Header();
             return $objHeader;
-        }
-        
-        private function checkUrlFile($urlFile=''){
-            if (!file_exists($urlFile)) {
-                $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_EXISTS'); 
-                $msgErr = str_replace('{FILE}',$urlFile,$msgErr);
-                throw new \Exception( $msgErr );  
-            }
-            return TRUE;
-        }
-        
+        }        
+               
         function setPlugin($plugin){
            if (strlen($plugin) > 0){
                $arr = Plugin::$plugin();                 
                if (is_array($arr) && count($arr) > 0){ 
                    $objHeader = $this->getObjHeader();
-                   try {
-                        foreach($arr as $ext=>$listInc){
-                            $objHeader->memoIncludeJsCss($listInc, $ext);
-                        }
+                   try {                       
+                       foreach($arr as $ext=>$listInc){
+                           //echo $listInc.'<br>';
+                           $objHeader->memoIncludeJsCss($listInc, $ext);
+                       }
+                       $this->objHeader = $objHeader;
                    } catch(\Exception $e){
                        $this->showErr('Erro ao incluir o Plugin solicitado ('.$plugin.')',$e);      
                    }
@@ -121,7 +79,7 @@
                    echo 'Plugin não retornou dados de inclusão (css | js).';
                }
            } 
-        }  
+        } 
         
         private function getIncludesCss(){
             $objHeader  = $this->getObjHeader();
@@ -137,30 +95,75 @@
             return $inc;
         }
         
-        private function getIncludes($ext){               
-           $objHeader   = $this->getObjHeader();           
-           return $objHeader->getTags($ext);
-        } 
+        private function getIncludes($ext,$exception=TRUE){    
+           try {
+            $objHeader = $this->getObjHeader();           
+            return $objHeader->getTags($ext,$this->layoutName);
+           } catch(\Exception $e) {
+               if ($exception) {
+                   $this->showErr('Erro ao ao gerar os includes de '.$ext.' para a página atual',$e);  
+               }
+           }
+        }                
         
-        function render(){            
+        function render($layoutName=''){            
+            if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
+           
             $css                       = $this->getIncludesCss();
             $js                        = $this->getIncludesJs();
-            $tplContent                = $this->tplContent;
-            $bodyContent               = $this->bodyContent;
-            $params                    = $this->params;
+            
+            $bodyContent               = trim($this->bodyContent);
+            $params                    = $this->params;                                       
             $params['INCLUDE_CSS']     = $css;
-            $params['INCLUDE_JS']      = $js;
-            $tplContent                = str_replace('{BODY}',$bodyContent,$tplContent);     
+            $params['INCLUDE_JS']      = $js;                                                      
+                       
             if (is_array($params)) {
                 foreach($params as $key=>$value){
-                    $tplContent = str_replace('{'.$key.'}',$value,$tplContent);                
+                    $bodyContent = str_replace('{'.$key.'}',$value,$bodyContent);                
+                }
+            }
+            
+            echo $bodyContent;
+        } 
+        
+        function __call($fn,$args){
+            $objHeader  = $this->getObjHeader(); 
+            
+            if (is_object($objHeader)){        
+                $ext = '';                
+                switch($fn){                
+                    case 'setCss':
+                        $ext = $objHeader::EXT_CSS;
+                        break;
+                    case 'setCssInc':
+                        $ext = $objHeader::EXT_CSS_INC;
+                        break;
+                    case 'setJs':
+                        $ext = $objHeader::EXT_JS;
+                        break;
+                    case 'setJsInc':
+                        $ext = $objHeader::EXT_JS_INC;
+                }
+                                
+                if (strlen($ext) > 0){
+                    $listFiles = (isset($args[0]))?$args[0]:'';
+                    if (strlen($listFiles) > 0) {
+                        try {
+                        $this->objHeader->memoIncludeJsCss($listFiles,$ext);  
+                        } catch(\Exception $e){
+                            $this->showErr('Erro ao memorizar arquivo(s) de inclusão(ões) css | js -> '.$listFiles,$e);                    
+                        }
+                    } else {
+                       echo "Inclusão não realizada $listFiles<br>"; 
+                    }
+                } elseif ($fn == 'forceCssJsMinifyOn') {
+                    $objHeader->forceCssJsMinifyOn();                                          
+                } elseif ($fn == 'forceCssJsMinifyOff') {
+                    $objHeader->forceMinifyOff();     
+                } elseif ($fn == 'onlyExternalCssJs') {
+                    $objHeader->onlyExternalCssJs();  
                 }
             }            
-            echo $tplContent;
-        }
-        
-        function __set($var,$value){
-            $this->params[$var] = $value;
         }
     }
 ?>

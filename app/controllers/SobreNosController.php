@@ -2,6 +2,7 @@
 
     use \sys\classes\mvc\Controller;    
     use \sys\classes\mvc\View;        
+    use \sys\classes\mvc\ViewPart;        
     use \app\models\HomeModel;
 
 
@@ -15,19 +16,26 @@
         *Conteúdo da página Sobre Nós
         */
         function indexHome(){
-	    $this->aInterbits();//  
+	    $this->aInterbits();
+            //$objPartPg  = new ViewPart('blank');  
+            //$objView    = new View($objPartPg);         
+            //$objView->render('index');
         }      
         
-        function aInterbits(){
-            //$objModel           = new HomeModel();	    
+        function aInterbits(){          
+            $objPartPg              = new ViewPart('blank');            
+            $objPartLayout          = new ViewPart('templates/navegacaoVertical');
+            $objPartLayout->IMG     = "<img src='app/views/images/testeira.jpg'>";
+            $objPartLayout->BODY    = $objPartPg->render();                                    
             
-            $objView           = new View('sobreNos_aInterbits');
+            $objView           = new View($objPartLayout);            
             $objView->TITLE    = 'SuperPro - A Interbits';
+            $objView->setCssInc('pg_internas,menu_lateral');                      
             
-            $objView->setPlugin('sliderBanner');
-            $objView->setPlugin('menuHorizontal');
-            $objView->setPlugin('menuIdiomas');
-            $objView->render();    
+            $objView->forceCssJsMinifyOn();
+            //$objView->onlyExternalCssJs();
+                        
+            $objView->render('aInterbits');    
         }
     }
 ?>

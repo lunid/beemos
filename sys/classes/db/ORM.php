@@ -446,9 +446,9 @@ abstract class ORM {
         if (is_array($results) && count($results) > 0) {
             //Converte cada registro em objeto da classe atual
             $this->row  = array();//Zera a linha de um único registro caso esteja preenchida.
-            $arrObj     = array_map(array($this, 'getObj'), $results); 
-            $objRs      = new Resultset($arrObj);
-            return $objRs;
+            $arrObj     = array_map(array($this, 'getObj'), $results);  
+            $rsObj      = new Resultset($arrObj);
+            return $rsObj;
         }
         return false;
     }
@@ -975,12 +975,14 @@ abstract class ORM {
      *      
      *      function joinUf(){
      *          //Objeto referente à tabela A:
-     *          $objA           = $this;
-     *          $objA->alias    = 'a';    
+     *          $objA               = $this;
+     *          $objA->alias        = 'a';    
+     *          $objA->fieldsJoin   = 'NOME_PRINCIPAL,LOGIN,EMAIL';//Campos da tabela Cliente
      * 
      *          //Objeto referente à tabela B:
-     *          $objB           = new Uf();
-     *          $objB->alias    = 'b';    
+     *          $objB               = new Uf();
+     *          $objB->alias        = 'b';    
+     *          $objA->fieldsJoin   = 'UF';//Campos da tabela Uf
      * 
      *          //Array com campo(s) usado(s) para fazer o JOIN:
      *          $arrFields      = 'ID_UF';
@@ -1143,7 +1145,7 @@ abstract class ORM {
         }
         
         $sql       = "SELECT $fields FROM ".$joinWhere;
-        if (strlen($where) > 0) $sql .= " WHERE 1 AND {$where}";
+        if (strlen($where) > 0) $sql .= " WHERE 1=1 AND {$where}";
         $sql       = $this->concatOrderByLimit($sql); 
         return self::query($sql);//Cada registro é um objeto stdClass         
     }

@@ -1,6 +1,7 @@
 <?php
 
     use \sys\classes\mvc\Controller;    
+    use \sys\classes\mvc\ViewPart;      
     use \sys\classes\mvc\View;        
     use \app\models\HomeModel;
 
@@ -15,20 +16,18 @@
         *Conteúdo da página home do site.
         */
         function indexHome(){
-            $objModel           = new HomeModel();	    
-            $totalQuestoesDb    = $objModel->getTotalQuestoesDb();
-            $totalQuestoesEnem  = $objModel->getTotalQuestoesEnem(); 
+            $objModel                           = new HomeModel();	    
+            $objViewPart                        = new ViewPart('home');
+            $objViewPart->TOTAL_QUESTOES_DB     = $objModel->getTotalQuestoesDb();
+            $objViewPart->TOTAL_QUESTOES_ENEM   = $objModel->getTotalQuestoesEnem(); 
+            
+            $objView                            = new View($objViewPart);
+            //$objView->forceCssJsMinifyOn();
+            $objView->TITLE                     = 'Bem-vindo ao SuperPro';
 
-            $objView                        = new View('home');
-            //$objView->setMinify(TRUE);
-
-            $objView->TITLE                 = 'Bem-vindo ao SuperPro';
-            $objView->TOTAL_QUESTOES_DB     = $totalQuestoesDb;
-            $objView->TOTAL_QUESTOES_ENEM   = $totalQuestoesEnem;
-
-            $objView->setPlugin('sliderBanner');
-            $objView->setPlugin('menuHorizontal');
-            $objView->setPlugin('menuIdiomas');
+            //$objView->setPlugin('sliderBanner');
+            //$objView->setPlugin('menuHorizontal');
+            //$objView->setPlugin('menuIdiomas');
             $objView->render();            
         }               
     }
