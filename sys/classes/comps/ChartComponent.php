@@ -15,8 +15,6 @@ class ChartComponent {
         try{
             $arq = self::$html_path . self::$default_html . ".phtml";
             
-            
-            
             ob_start();
             include($arq);
             $output = ob_get_contents();

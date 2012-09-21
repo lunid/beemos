@@ -103,41 +103,81 @@
                     return $ret;
                 }
                 
-                if($diff->days > 15){
+                /*if($diff->days > 15){
                     $ret->msg = "A diferença entre as datas não pode ser superior a 15 dias";
                     return $ret;
-                }
+                }*/
                 
                 $arr_ret        = array(); //Array com objetos de retorno
-                $arr_questoes   = array(); //Array com distinct de questoes
+                $arrQuestoes    = array(); //Array com distinct de questoes
+                $arrQuestoesTop = array(); //Array com questões mais utilizadas
                 
                 $tb_top10   = new AdmTop10Log();
                 $rs         = $tb_top10->getTop10Periodo($data_inicio, $data_final);
                 
                 if($rs->count() > 0){
                    foreach($rs as $row){
-                        $arr_questoes[$row->POS_1] = '';
-                        $arr_questoes[$row->POS_2] = '';
-                        $arr_questoes[$row->POS_3] = '';
-                        $arr_questoes[$row->POS_4] = '';
-                        $arr_questoes[$row->POS_5] = '';
-                        $arr_questoes[$row->POS_6] = '';
-                        $arr_questoes[$row->POS_7] = '';
-                        $arr_questoes[$row->POS_8] = '';
-                        $arr_questoes[$row->POS_9] = '';
-                        $arr_questoes[$row->POS_10] = '';
+                        $arrQuestoes[$row->POS_1]   = '';
+                        $arrQuestoes[$row->POS_2]   = '';
+                        $arrQuestoes[$row->POS_3]   = '';
+                        $arrQuestoes[$row->POS_4]   = '';
+                        $arrQuestoes[$row->POS_5]   = '';
+                        $arrQuestoes[$row->POS_6]   = '';
+                        $arrQuestoes[$row->POS_7]   = '';
+                        $arrQuestoes[$row->POS_8]   = '';
+                        $arrQuestoes[$row->POS_9]   = '';
+                        $arrQuestoes[$row->POS_10]  = '';
 
                         $arr_ret[] = $row;
                     } 
                 }
                 
-                ksort($arr_questoes);
-                $arr_questoes = $this->getColor($arr_questoes);
-
+                ksort($arrQuestoes);
+                $arrQuestoes = $this->getColor($arrQuestoes);
+                
+                foreach ($arr_ret as $row) { 
+                    isset($arrQuestoesTop[$row->POS_1]) ? $arrQuestoesTop[$row->POS_1]++ : $arrQuestoesTop[$row->POS_1] = 1;
+                    isset($arrQuestoesTop[$row->POS_2]) ? $arrQuestoesTop[$row->POS_2]++ : $arrQuestoesTop[$row->POS_2] = 1;
+                    isset($arrQuestoesTop[$row->POS_3]) ? $arrQuestoesTop[$row->POS_3]++ : $arrQuestoesTop[$row->POS_3] = 1;
+                    isset($arrQuestoesTop[$row->POS_4]) ? $arrQuestoesTop[$row->POS_4]++ : $arrQuestoesTop[$row->POS_4] = 1;
+                    isset($arrQuestoesTop[$row->POS_5]) ? $arrQuestoesTop[$row->POS_5]++ : $arrQuestoesTop[$row->POS_5] = 1;
+                    isset($arrQuestoesTop[$row->POS_6]) ? $arrQuestoesTop[$row->POS_6]++ : $arrQuestoesTop[$row->POS_6] = 1;
+                    isset($arrQuestoesTop[$row->POS_7]) ? $arrQuestoesTop[$row->POS_7]++ : $arrQuestoesTop[$row->POS_7] = 1;
+                    isset($arrQuestoesTop[$row->POS_8]) ? $arrQuestoesTop[$row->POS_8]++ : $arrQuestoesTop[$row->POS_8] = 1;
+                    isset($arrQuestoesTop[$row->POS_9]) ? $arrQuestoesTop[$row->POS_9]++ : $arrQuestoesTop[$row->POS_9] = 1;
+                    isset($arrQuestoesTop[$row->POS_10]) ? $arrQuestoesTop[$row->POS_10]++ : $arrQuestoesTop[$row->POS_10] = 1;
+                }
+    
+                asort($arrQuestoesTop);
+    
+                $valid = (sizeof($arrQuestoesTop) - 10);
+                $total = (sizeof($arr_ret) * 10);
+                
+                $count = 0;     
+    
+                $tmp_arrQuestoesTop     = array();
+    
+                foreach($arrQuestoesTop as $key => $value){
+                    if($count >= $valid){
+                        $perc = (($value / $total) * 100);
+                        $perc = round($perc, 1);
+                        
+                        $tmp_arrQuestoesTop[] = array("questao" => $key, "perc" => $perc);
+                    }
+                    $count++;
+                }
+                
+                $arrQuestoesTop = array();
+                
+                for($i=9; $i >= 0; $i--){
+                    $arrQuestoesTop[] = $tmp_arrQuestoesTop[$i];
+                }
+                
                 $ret->status    = true;
                 $ret->data      = $arr_ret;
-                $ret->colors    = $arr_questoes;
-
+                $ret->colors    = $arrQuestoes;
+                $ret->top       = $arrQuestoesTop;
+                
                 return $ret;
             }catch(Exception $e){
                 echo "Erro buscas relatório TOP 10<br />\n";

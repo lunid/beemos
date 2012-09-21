@@ -9,6 +9,11 @@
                     $date_f     = explode("-", $date_time[0]);
                     return $date_f[2] . "/" . $date_f[1] . "/" . $date_f[0];
                     break;
+                case 'DD/MM':
+                    $date_time  = explode(" ", $date);
+                    $date_f     = explode("-", $date_time[0]);
+                    return $date_f[2] . "/" . $date_f[1];
+                    break;
                 case 'AAAA-MM-DD':
                     $date_time  = explode(" ", $date);
                     $date_f     = explode("/", $date_time[0]);
