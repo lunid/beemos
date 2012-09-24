@@ -49,24 +49,22 @@
             </td>
             <? //if ($usuario->getIdPerfil() == 1) { ?>
                 <td>
-                    <select id="id_usuario" name="id_usuario" onchange="javascript:atualizaUsuarioQuestao(<?=$questao['questao']['ID_BCO_QUESTAO']?>, this.value);">
+                    <select id="id_usuario" name="id_usuario" onchange="javascript:top10.atualizaUsuarioQuestao(<?=$questao['questao']['ID_BCO_QUESTAO']?>, this.value);">
                         <option value="0">Selecione um usuário</option>
                         <? foreach ($questao['usuarios'] as $row_usuario) { ?>
-                            <option value="<?=$row_usuario['ID_USUARIO']?>"><?=$row_usuario['NOME']?></option>
+                            <option value="<?=$row_usuario['ID_USUARIO']?>" <? if((int)$questao['questao']['ID_USUARIO'] == $row_usuario['ID_USUARIO']){ ?> selected="selected" <? } ?>><?=$row_usuario['NOME']?></option>
                         <? } ?>
                     </select>
                 </td>
             <? //} ?>
             <td>
-                <? if ($questao['questao']['ID_AVALIACAO_QUESTAO'] > 0) { ?>
-                    <a href="top10_avaliar_questao.php?id_questao=<?=$questao['questao']['ID_BCO_QUESTAO']?>" target="_blank">
+                <a href="top10/avaliarQuestao/?id_questao=<?=$questao['questao']['ID_BCO_QUESTAO']?>" target="_blank">
+                    <? if ($questao['questao']['ID_AVALIACAO_QUESTAO'] > 0) { ?>
                         <img src="<?=__APP__?>/views/images/avaliacao-concluida.jpg" border="0" style="width:23px;height:23px;" />
-                    </a>
-                <? } else { ?>
-                    <a href="top10_avaliar_questao.php?id_questao=<?=$questao['questao']['ID_BCO_QUESTAO']?>" target="_blank">
+                    <? } else { ?>
                         <img src="<?=__APP__?>/views/images/icone_avaliar.gif" border="0" style="width:23px;height:23px;" />
-                    </a>
-                <? } ?>
+                    <? } ?>
+                </a>
             </td>
         </tr>
         <?

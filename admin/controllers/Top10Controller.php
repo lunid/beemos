@@ -23,7 +23,13 @@
                 $objView = new ViewPart('top10');
                 
                 $id_materia             = Request::post("id_materia", "NUMBER");
+                $id_materia_gr          = Request::post("id_materia_gr", "NUMBER");
+                
                 $id_fonte_vestibular    = Request::post("id_fonte_vestibular", "NUMBER");
+                $id_fonte_vestibular_gr = Request::post("id_fonte_vestibular_gr", "NUMBER");
+                
+                $rs_materias            = $m_top10->getMateriasSelectBox();
+                $rs_fonte_vestibular    = $m_top10->getFontesSelectBox();
                 
                 //Opções do <select> de matérias
                 $cbo_materias_opts                  = new \stdClass();
@@ -31,7 +37,13 @@
                 $cbo_materias_opts->first_option    = "Selecione uma matéria";
                 $cbo_materias_opts->select_option   = $id_materia;
                 
-                $objView->COMBO_MATERIAS = HtmlComponent::select($m_top10->getMateriasSelectBox(), $cbo_materias_opts);
+                $objView->COMBO_MATERIAS = HtmlComponent::select($rs_materias, $cbo_materias_opts);
+                
+                $cbo_materias_opts->id              = "id_materia_gr";
+                $cbo_materias_opts->first_option    = "Todas as matérias";
+                $cbo_materias_opts->select_option   = $id_materia_gr;
+                
+                $objView->COMBO_MATERIAS_GR = HtmlComponent::select($rs_materias, $cbo_materias_opts);
                 
                 //Opções do <select> de fontes
                 $cbo_fontes_opts                  = new \stdClass();
@@ -40,16 +52,22 @@
                 $cbo_fontes_opts->select_option   = $id_fonte_vestibular;
                 $cbo_fontes_opts->disabled        = true;
                 
-                $objView->COMBO_FONTES = HtmlComponent::select($m_top10->getFontesSelectBox(), $cbo_fontes_opts);
+                $objView->COMBO_FONTES = HtmlComponent::select($rs_fonte_vestibular, $cbo_fontes_opts);
+                
+                $cbo_fontes_opts->id              = "id_fonte_vestibular_gr";
+                $cbo_fontes_opts->first_option    = "Todas as fontes";
+                $cbo_fontes_opts->select_option   = $id_fonte_vestibular_gr;
+                
+                $objView->COMBO_FONTES_GR = HtmlComponent::select($rs_fonte_vestibular, $cbo_fontes_opts);
                 
                 //Opções do <table> de questões
-                $tb_questos_opts                  = new \stdClass();
-                $tb_questos_opts->id              = "table_questoes";
-                $tb_questos_opts->disabled        = true;
-                $tb_questos_opts->class           = "table_questoes";
-                $tb_questos_opts->html_template   = "table_top10";
+                $tb_questoes_opts                  = new \stdClass();
+                $tb_questoes_opts->id              = "table_questoes";
+                $tb_questoes_opts->disabled        = true;
+                $tb_questoes_opts->class           = "table_questoes";
+                $tb_questoes_opts->html_template   = "table_top10";
                 
-                $objView->TB_QUESTOES = HtmlComponent::table($m_top10->listaQuestoesTop10($id_materia, $id_fonte_vestibular), $tb_questos_opts);
+                $objView->TB_QUESTOES = HtmlComponent::table($m_top10->listaQuestoesTop10($id_materia, $id_fonte_vestibular), $tb_questoes_opts);
                 
                 //Gráfico TOP10
                 if(Request::post("hdd_acao") == 'filtar_grafico'){
@@ -63,7 +81,7 @@
                 $objView->DATA_INICIO   = Date::formatDate($data_inicio);
                 $objView->DATA_FINAL    = Date::formatDate($data_final);
                 
-                $objView->GR_TOP10 = ChartComponent::gerGraficoTop10($m_top10->graficoTop10($data_inicio, $data_final));
+                $objView->GR_TOP10 = ChartComponent::geraGraficoTop10($m_top10->graficoTop10($data_inicio, $data_final));
                 
                 //Template
                 $tpl = new View($objView);
@@ -100,13 +118,15 @@
                     //Top10
                     $m_top10 = new Top10Model();
                 
-                    $data_inicio    = Date::formatDate(Request::post("data_inicio"), "AAAA-MM-DD");
-                    $data_final     = Date::formatDate(Request::post("data_final"), "AAAA-MM-DD");
+                    $data_inicio            = Date::formatDate(Request::post("data_inicio"), "AAAA-MM-DD");
+                    $data_final             = Date::formatDate(Request::post("data_final"), "AAAA-MM-DD");
+                    $id_materia             = Request::post("id_materia", "NUMBER");
+                    $id_fonte_vestibular    = Request::post("id_fonte_vestibular", "NUMBER");
                     
-                    $retGr = $m_top10->graficoTop10($data_inicio, $data_final);
+                    $retGr = $m_top10->graficoTop10($data_inicio, $data_final, $id_materia, $id_fonte_vestibular);
                     
                     if($retGr->status !== FALSE){
-                        $ret->html      = ChartComponent::gerGraficoTop10($retGr);
+                        $ret->html      = ChartComponent::geraGraficoTop10($retGr);
                         $ret->status    = true;
                         $ret->msg       = "";
                     }else{
@@ -128,7 +148,52 @@
                 echo json_encode($ret);
                 die;
             }
-        } 
+        }
+        
+        /**
+         * Função para implementação AJAX que altera o usuário responsável em avaliar uma determinada questão.
+         * 
+         * @return json $ret
+         */
+        public function atualizaUsuarioQuestao(){
+            try{
+                $ret            = new \stdClass();
+                $ret->status    = FALSE;
+                $ret->msg       = "Dados para alteração de usuário inválidos!";
+                
+                if(Request::post("id_questao") > 0 && Request::post("id_usuario")){
+                    $m_top10    = new Top10Model();
+                    $ret        = $m_top10->alteraUsuarioQuestao(Request::post('id_questao'), Request::post('id_usuario'));
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new \stdClass();
+                $ret->status    = FALSE;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        public function avaliarQuestao(){
+            try{
+                $ret            = new \stdClass();
+                $ret->status    = FALSE;
+                $ret->msg       = "Dados para avalia de usuário inválidos!";
+                
+                $id_questao = Request::get("id_questao");
+                
+                echo "teste " . $id_questao;
+            }catch(Exception $e){
+                echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
+            }
+        }
     }
 ?>
 

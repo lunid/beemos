@@ -71,6 +71,28 @@ Top10.prototype = {
         $("#" + filtro).css("background-color", "#FFF");
         $("#" + filtro).removeAttr("disabled");
     },
+    atualizaUsuarioQuestao: function (id_questao, id_usuario){
+        if(id_usuario <= 0){
+            alert("Selecione um usuário válido!");
+            return false;
+        }
+        
+        if(confirm("Tem certeza que deseja alterar o usuário.\nIsso pode limpar avaliações anteriores")){
+            $.post(
+                "top10/atualizaUsuarioQuestao",
+                {
+                    id_questao: id_questao,
+                    id_usuario: id_usuario
+                },
+                function(ret){
+                    alert(ret.msg);
+                },
+                'json'
+            );
+        }else{
+            return false;
+        }
+    },
     geraGrafico: function(){
         $("#aguarde").show();
         
@@ -79,6 +101,8 @@ Top10.prototype = {
             {
                 data_inicio: $("#data_inicio").val(),
                 data_final: $("#data_final").val(),
+                id_materia: $("#id_materia_gr").val(),
+                id_fonte_vestibular: $("#id_fonte_vestibular_gr").val(),
                 hdd_acao: 'filtar_grafico'
             },
             function(ret){

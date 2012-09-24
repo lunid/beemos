@@ -4,7 +4,7 @@ class ChartComponent {
     static $html_path       = "/sys/classes/comps/chart/";
     static $default_html;
     
-    public static function gerGraficoTop10($data){
+    public static function geraGraficoTop10($data){
         self::$default_html = "top10";
         self::$chartData = $data;
         

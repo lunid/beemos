@@ -8,6 +8,8 @@
     use \admin\models\tables\ClassificacaoQuestao;
     use \admin\models\tables\AdmUsuario;
     use \admin\models\tables\AdmTop10Log;
+    use \admin\models\tables\UsuarioAvaliaQuestao;
+    use \admin\models\tables\AvaliacaoQuestao;
     
     class Top10Model extends Model {
         public function listaQuestoesTop10($id_materia = 0, $id_fonte_vestibular = 0){
@@ -77,7 +79,7 @@
             }
         }
         
-        public function graficoTop10($data_inicio, $data_final){
+        public function graficoTop10($data_inicio, $data_final, $id_materia = 0, $id_fonte_vestibular = 0){
             try{
                 $ret            = new \stdClass(); //Objeto de retorno
                 $ret->status    = FALSE;
@@ -93,7 +95,7 @@
                 }*/
                 
                 $tb_top10   = new AdmTop10Log();
-                $rs         = $tb_top10->getTop10Periodo($data_inicio, $data_final);
+                $rs         = $tb_top10->getTop10Periodo($data_inicio, $data_final, $id_materia, $id_fonte_vestibular);
                 
                 if($rs->count() > 0){
                    $arr_ret        = array(); //Array com objetos de retorno
@@ -130,11 +132,11 @@
                         isset($arrQuestoesTop[$row->POS_9]) ? $arrQuestoesTop[$row->POS_9]++ : $arrQuestoesTop[$row->POS_9] = 1;
                         isset($arrQuestoesTop[$row->POS_10]) ? $arrQuestoesTop[$row->POS_10]++ : $arrQuestoesTop[$row->POS_10] = 1;
                     }
-
+                    
                     asort($arrQuestoesTop);
-
+                    
                     $valid = (sizeof($arrQuestoesTop) - 10);
-                    $total = (sizeof($arr_ret) * 10);
+                    $total = (sizeof($arr_ret));
 
                     $count = 0;     
 
@@ -149,13 +151,13 @@
                         }
                         $count++;
                     }
-
+                    
                     $arrQuestoesTop = array();
-
-                    for($i=9; $i >= 0; $i--){
+                    
+                    for($i=(sizeof($tmp_arrQuestoesTop)-1); $i >= 0; $i--){
                         $arrQuestoesTop[] = $tmp_arrQuestoesTop[$i];
                     }
-
+                    
                     $ret->status    = true;
                     $ret->data      = $arr_ret;
                     $ret->colors    = $arrQuestoes;
@@ -201,9 +203,39 @@
             return $c;
         }
         
+        /**
+         * Função que altera colaborador responsável em avaliar a questão
+         * 
+         * @param int $id_questao Código da questão
+         * @param int $id_usuario Código do usuário
+         * 
+         * @return stdClass $ret->status (boolean) Avaliação final do método <br />
+         * $ret->msg (string) Mensagem de retorno do método
+         * 
+         * @throws Exception
+         */
         public function alteraUsuarioQuestao($id_questao, $id_usuario){
             try{
-                return true;
+                $ret = new \stdClass();
+                $ret->status = FALSE;
+                $ret->msg    = "Falha ao alterar usuário. Tente mais tarde.";
+
+                //Exclui todos registros do usuário na table Usuário Avalia Questão
+                $tbUsuarioAvaliaQuestao = new UsuarioAvaliaQuestao();
+                if(!$tbUsuarioAvaliaQuestao->excluiUsuario($id_questao, $id_usuario)){
+                    $ret->msg = "Falha ao excluir Usuário de Avaliação";
+                    return $ret;
+                }
+
+                //Exclui todos registros da questão na table Avalia Questão
+                $tbAvaliaQuestao = new AvaliacaoQuestao();
+                if(!$tbAvaliaQuestao->excluiQuestao($id_questao, $id_usuario)){
+                    $ret->msg = "Falha ao excluir Avaliação da Questão";
+                    return $ret;
+                }
+
+                //Adiciona o novo usuário de Avaliação
+                return $tbUsuarioAvaliaQuestao->insereUsuarioAvaliaQuestao($id_usuario, $id_questao);
             }catch(Exception $e){
                 throw $e;
             }
