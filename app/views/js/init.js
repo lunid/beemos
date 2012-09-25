@@ -1,9 +1,10 @@
 $(document).ready(function() {
+    /*
     var slider = new Slider();
     slider.init({
        id: 'banner'
     });   
-
+    */
     menu = new Menu();
     menu.init({
         id: 'top-menu'

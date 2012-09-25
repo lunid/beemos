@@ -31,7 +31,7 @@
             
             $objView->forceCssJsMinifyOn();
             //$objView->onlyExternalCssJs();
-            $objView->setPlugin('sliderBanner');            
+            $objView->setPlugin('menu');            
             $objView->setPlugin('menuIdiomas');                                                                                               
             $objView->render('aInterbits');    
         }
