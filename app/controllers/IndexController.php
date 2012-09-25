@@ -22,10 +22,10 @@
             $objViewPart->TOTAL_QUESTOES_ENEM   = $objModel->getTotalQuestoesEnem(); 
             
             $objView                            = new View($objViewPart);
-            //$objView->forceCssJsMinifyOn();
-            $objView->setPlugin('menu');            
+            $objView->forceCssJsMinifyOn();
+            //$objView->setPlugin('menu');            
             $objView->setPlugin('sliderBanner');            
-            $objView->setPlugin('menuIdiomas');                        
+            //$objView->setPlugin('menuIdiomas');                        
             
             $objView->TITLE                     = 'Bem-vindo ao SuperPro';
             $objView->render();            

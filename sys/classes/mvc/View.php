@@ -8,11 +8,11 @@
     use \sys\classes\mvc\ViewPart;
     
     class View extends ViewPart {
-        const CSS       = 'site';
+        const CSS       = 'sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site';
         const CSS_INC   = '';
         const JS        = 'init,sys:util.dictionary';
-        const JS_INC    = '';
-        const PLUGINS   = 'jquery_ui,abas,dropdown,menu,menuIdiomas';
+        const JS_INC    = '';        
+        const PLUGINS   = 'menuHorizontal,menuIdiomas';
         
         private $objHeader      = NULL;        
         private $tplFile        = '';           
@@ -41,7 +41,7 @@
                         //Plugins                        
                         $plugins    = $this::PLUGINS;
                         $arrPlugins = explode(',',$plugins);
-                        if (is_array($arrPlugins) && 1==0) {
+                        if (is_array($arrPlugins)) {
                             foreach($arrPlugins as $plugin) {                                 
                                 $this->setPlugin($plugin);
                             }

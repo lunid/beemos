@@ -27,12 +27,12 @@
             
             $objView           = new View($objPartLayout);            
             $objView->TITLE    = 'SuperPro - A Interbits';
-            //$objView->setCssInc('pg_internas,menu_lateral');                      
+            $objView->setCssInc('pg_internas,menu_lateral');                      
             
-            $objView->forceCssJsMinifyOn();
+            //$objView->forceCssJsMinifyOn();
             //$objView->onlyExternalCssJs();
-            $objView->setPlugin('menu');            
-            $objView->setPlugin('menuIdiomas');                                                                                               
+            //$objView->setPlugin('menu');            
+            //$objView->setPlugin('menuIdiomas');                                                                                               
             $objView->render('aInterbits');    
         }
     }
