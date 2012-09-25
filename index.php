@@ -3,7 +3,7 @@
     error_reporting(E_ALL | E_STRICT);
     ini_set('display_errors', true);    
     
-    define("__APP__", "app");
+    define("__APP__", "admin");
     
     $controllerClass = 'index';
     $actionMethod    = 'index';

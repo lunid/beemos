@@ -4,7 +4,7 @@
 </ul>
 
 <div id="content_1" class="content">
-    <form id="form_filtros" name="form_filtros" method="post" action="/interbits_dev/index">
+    <form id="form_filtros" name="form_filtros" method="post" action="/interbits_dev/top10">
         <table>
             <tr>
                 <td colspan="3">
@@ -62,12 +62,44 @@
                     <td>
                         <input type="text" id="data_final" name="data_final" value="{DATA_FINAL}" />
                     </td>
-                    <td>
-                        <input type="hidden" name="hdd_acao" value="filtar_grafico" />
-                        <input type="button" id="btGeraGrafico" name="btGeraGrafico" value="Filtrar" />
-                        <span id="aguarde" style="display:none;">Aguarde...</span>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="tipo_filtro" value="id_materia_gr" checked="checked" onclick="javascript:top10.selecionaFiltro(this.value);" />
+                                </td>
+                                <td>
+                                    Matérias
+                                </td>
+                                <td>
+                                    {COMBO_MATERIAS_GR}
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="radio" name="tipo_filtro" value="id_fonte_vestibular_gr" onclick="javascript:top10.selecionaFiltro(this.value);" />
+                                </td>
+                                <td>
+                                    Fontes
+                                </td>
+                                <td>
+                                    {COMBO_FONTES_GR}
+                                </td>
+                                <td>
+                                    <input type="hidden" name="hdd_acao" value="filtar_grafico" />
+                                    <input type="button" id="btGeraGrafico" name="btGeraGrafico" value="Filtrar" />
+                                    <span id="aguarde" style="display:none;">Aguarde...</span>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
+                
             </table>
         </form>
     </div>

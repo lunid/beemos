@@ -5,6 +5,8 @@
     class BcoQuestao extends ORM {
         public function listaQuestoesTop10($id_materia = 1, $id_fonte_vestibular = 0){
             try{
+                //$this->debugOn();
+                
                 $where = "";
                 
                 if($id_materia > 0){
@@ -34,17 +36,21 @@
                 $objAvaliacaoQuestao->alias         = 'AQ';
                 $objAvaliacaoQuestao->fieldsJoin    = 'ID_AVALIACAO_QUESTAO';
                 
-                $fieldMap = "ID_BCO_QUESTAO";
+                $objUsuarioAvaliaQuestao                = new UsuarioAvaliaQuestao();
+                $objUsuarioAvaliaQuestao->alias         = 'UAQ';
+                $objUsuarioAvaliaQuestao->fieldsJoin    = 'ID_USUARIO';
                 
+                $fieldMap = "ID_BCO_QUESTAO";
                 $this->innerJoinFrom($objTableQuestoes, $objClassficacaoQuestao, $fieldMap);
                 
                 $fieldMap = "ID_FONTE_VESTIBULAR";
-                
                 $this->joinFromAdd($objFonteVestibular, $objTableQuestoes, $fieldMap);
                 
                 $fieldMap = "ID_BCO_QUESTAO";
-                
                 $this->joinFromAdd($objAvaliacaoQuestao, $objTableQuestoes, $fieldMap, "LEFT");
+                
+                $fieldMap = "ID_BCO_QUESTAO";
+                $this->joinFromAdd($objUsuarioAvaliaQuestao, $objTableQuestoes, $fieldMap, "LEFT");
                 
                 $this->setOrderBy("TOTAL_USO DESC");
                 $this->setLimit(10);

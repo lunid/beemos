@@ -140,50 +140,124 @@
                 ]
             });
             
-            chart;
             chart = new Highcharts.Chart({
                 chart: {
-                    renderTo: 'grafico_top10_pizza',
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false
+                    renderTo: 'grafico_top10_freq',
+                    type: 'column',
+                    margin: [50, 50, 100, 80]
                 },
                 title: {
                     text: 'Questões mais utilizadas'
                 },
+                xAxis: {
+                    categories: ['Questões']
+                },
+                yAxis: {
+                    min: 0,
+                    max: 100,
+                    title: {
+                        text: 'Frequência %'
+                    },
+                    stackLabels: {
+                        enabled: true,
+                        style: {
+                            fontWeight: 'bold',
+                            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                        },
+                        formatter: function() {
+                            return this.stack;
+                        }
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-                    percentageDecimals: 1
+                    enabled: false
                 },
                 plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
+                    column: {
+                        stacking: 'normal',
                         dataLabels: {
                             enabled: true,
-                            color: '#000000',
-                            connectorColor: '#000000',
+                            color: '#000',
                             formatter: function() {
-                                return '<b>'+ this.point.name +'</b>: '+ this.point.y +' %';
+                                return this.series.name;
+                            }
+                        },
+                        cursor: 'pointer',
+                        events: {
+                            click: function(event) {
+                                top10.geraGrafico(this.name, this.color);
                             }
                         }
                     }
                 },
-                series: [{
-                    type: 'pie',
-                    name: 'Percentagem',
-                    data: [
-                        <? foreach (self::$chartData->top as $top){ ?>
-                        {
-                            name: '<?=$top['questao']?>',
-                            y: parseFloat('<?=$top['perc']?>'),
-                            color: '#<?=self::$chartData->colors[$top['questao']]?>'
-                        },
-                        <? } ?>
-                    ]
-                }]
+                series: [
+                    <? foreach (self::$chartData->top as $top){ ?>
+                    {
+                        name: '<?=$top['questao']?>',
+                        data: [<?=$top['perc']?>],
+                        color: '#<?=self::$chartData->colorsFreq[$top['questao']]?>',
+                        stack: '<?=$top['questao']?>',
+                        dataLabels: {
+                            enabled: true,
+                            align: 'center',
+                            formatter: function() {
+                                return this.y + "%";
+                            },
+                            style: {
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    <? } ?>
+                ]
             });
+            
+//            chart = new Highcharts.Chart({
+//                chart: {
+//                    renderTo: 'grafico_top10_pizza',
+//                    plotBackgroundColor: null,
+//                    plotBorderWidth: null,
+//                    plotShadow: false
+//                },
+//                title: {
+//                    text: 'Questões mais utilizadas'
+//                },
+//                tooltip: {
+//                    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+//                    percentageDecimals: 1
+//                },
+//                plotOptions: {
+//                    pie: {
+//                        allowPointSelect: true,
+//                        cursor: 'pointer',
+//                        dataLabels: {
+//                            enabled: true,
+//                            color: '#000000',
+//                            connectorColor: '#000000',
+//                            formatter: function() {
+//                                return '<b>'+ this.point.name +'</b>: '+ this.point.y +' %';
+//                            }
+//                        }
+//                    }
+//                },
+//                series: [{
+//                    type: 'pie',
+//                    name: 'Percentagem',
+//                    data: [
+//                        <? foreach (self::$chartData->top as $top){ ?>
+//                        {
+//                            name: '<?=$top['questao']?>',
+//                            y: parseFloat('<?=$top['perc']?>'),
+//                            color: '#<?=self::$chartData->colors[$top['questao']]?>'
+//                        },
+//                        <? } ?>
+//                    ]
+//                }]
+//            });
         }
 </script>
 <div id="grafico_top10_barras" style="width:85%;"></div>
-<div id="grafico_top10_pizza" style="width:85%;"></div>
+<div id="grafico_top10_freq" style="width:85%;"></div>

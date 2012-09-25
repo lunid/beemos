@@ -71,15 +71,49 @@ Top10.prototype = {
         $("#" + filtro).css("background-color", "#FFF");
         $("#" + filtro).removeAttr("disabled");
     },
-    geraGrafico: function(){
-        $("#aguarde").show();
+    atualizaUsuarioQuestao: function (id_questao, id_usuario){
+        if(id_usuario <= 0){
+            alert("Selecione um usuário válido!");
+            return false;
+        }
         
+        if(confirm("Tem certeza que deseja alterar o usuário.\nIsso pode limpar avaliações anteriores")){
+            $.post(
+                "top10/atualizaUsuarioQuestao",
+                {
+                    id_questao: id_questao,
+                    id_usuario: id_usuario
+                },
+                function(ret){
+                    alert(ret.msg);
+                },
+                'json'
+            );
+        }else{
+            return false;
+        }
+    },
+    geraGrafico: function(selecao, cor){
+        if(parseInt(selecao) <= 0 || isNaN(parseInt(selecao))){
+            selecao = 0;
+        }
+        
+        if(cor == "" || cor == null){
+            cor = "";
+        }
+        
+        $("#aguarde").show();
+
         $.post(
             'top10/geraGrafico',
             {
                 data_inicio: $("#data_inicio").val(),
                 data_final: $("#data_final").val(),
-                hdd_acao: 'filtar_grafico'
+                id_materia: $("#id_materia_gr").val(),
+                id_fonte_vestibular: $("#id_fonte_vestibular_gr").val(),
+                hdd_acao: 'filtar_grafico',
+                selecao: selecao,
+                cor: cor
             },
             function(ret){
                 $("#aguarde").hide();
