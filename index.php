@@ -14,6 +14,8 @@
     if (is_array($arrParams) && count($arrParams) > 0) {       
         if (isset($arrParams[0]) && $arrParams[0] != null) $controllerClass  = $arrParams[0];
         if (isset($arrParams[1]) && $arrParams[1] != null) $actionMethod     = $arrParams[1];
+    } else {
+        
     }         
     
     $urlFile = __APP__ . '/controllers/'.ucfirst($controllerClass).'Controller.php';
