@@ -15,7 +15,7 @@
         /**
         *Conteúdo da página home do site.
         */
-        function indexHome(){
+        function actionIndex(){
             $objModel                           = new HomeModel();	    
             $objViewPart                        = new ViewPart('home');
             $objViewPart->TOTAL_QUESTOES_DB     = $objModel->getTotalQuestoesDb();
@@ -23,11 +23,11 @@
             
             $objView                            = new View($objViewPart);
             //$objView->forceCssJsMinifyOn();
+            $objView->setPlugin('menu');            
+            $objView->setPlugin('sliderBanner');            
+            $objView->setPlugin('menuIdiomas');                        
+            
             $objView->TITLE                     = 'Bem-vindo ao SuperPro';
-
-            //$objView->setPlugin('sliderBanner');
-            //$objView->setPlugin('menuHorizontal');
-            //$objView->setPlugin('menuIdiomas');
             $objView->render();            
         }               
     }

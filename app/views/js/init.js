@@ -2,8 +2,7 @@ $(document).ready(function() {
     var slider = new Slider();
     slider.init({
        id: 'banner'
-    });
-    alert('d');
+    });   
 
     menu = new Menu();
     menu.init({

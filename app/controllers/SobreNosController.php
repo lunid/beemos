@@ -15,14 +15,11 @@
         /**
         *Conteúdo da página Sobre Nós
         */
-        function indexHome(){
-	    $this->aInterbits();
-            //$objPartPg  = new ViewPart('blank');  
-            //$objView    = new View($objPartPg);         
-            //$objView->render('index');
+        function actionIndex(){
+	    $this->actionAinterbits();
         }      
         
-        function aInterbits(){          
+        function actionAinterbits(){          
             $objPartPg              = new ViewPart('blank');            
             $objPartLayout          = new ViewPart('templates/navegacaoVertical');
             $objPartLayout->IMG     = "<img src='app/views/images/testeira.jpg'>";
@@ -30,11 +27,12 @@
             
             $objView           = new View($objPartLayout);            
             $objView->TITLE    = 'SuperPro - A Interbits';
-            $objView->setCssInc('pg_internas,menu_lateral');                      
+            //$objView->setCssInc('pg_internas,menu_lateral');                      
             
             $objView->forceCssJsMinifyOn();
             //$objView->onlyExternalCssJs();
-                        
+            $objView->setPlugin('sliderBanner');            
+            $objView->setPlugin('menuIdiomas');                                                                                               
             $objView->render('aInterbits');    
         }
     }

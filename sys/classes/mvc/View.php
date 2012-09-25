@@ -10,9 +10,9 @@
     class View extends ViewPart {
         const CSS       = 'site';
         const CSS_INC   = '';
-        const JS        = 'sys:util.dictionary';
+        const JS        = 'init,sys:util.dictionary';
         const JS_INC    = '';
-        const PLUGINS   = 'jquery_ui,abas,drop,menu_slider';
+        const PLUGINS   = 'jquery_ui,abas,dropdown,menu,menuIdiomas';
         
         private $objHeader      = NULL;        
         private $tplFile        = '';           
@@ -41,7 +41,7 @@
                         //Plugins                        
                         $plugins    = $this::PLUGINS;
                         $arrPlugins = explode(',',$plugins);
-                        if (is_array($arrPlugins)) {
+                        if (is_array($arrPlugins) && 1==0) {
                             foreach($arrPlugins as $plugin) {                                 
                                 $this->setPlugin($plugin);
                             }
@@ -95,8 +95,8 @@
         
         private function getIncludes($ext,$exception=TRUE){    
            try {
-            $objHeader = $this->getObjHeader();           
-            return $objHeader->getTags($ext,$this->layoutName);
+               $objHeader = $this->getObjHeader();           
+               return $objHeader->getTags($ext,$this->layoutName);
            } catch(\Exception $e) {
                if ($exception) {
                    $this->showErr('Erro ao ao gerar os includes de '.$ext.' para a página atual',$e);  
@@ -116,8 +116,7 @@
             }
            
             $css                       = $this->getIncludesCss();
-            $js                        = $this->getIncludesJs();
-            
+            $js                        = $this->getIncludesJs();            
             $bodyContent               = trim($this->bodyContent);
             $params                    = $this->params;                                       
             $params['INCLUDE_CSS']     = $css;

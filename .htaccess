@@ -1,7 +1,7 @@
 RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?PG=$1
+RewriteRule ^(.*)$ index.php?PG=$1&%{QUERY_STRING}
 
 <IfModule mod_deflate.c>
 	# Files and Text to compress

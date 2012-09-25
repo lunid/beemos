@@ -5,6 +5,6 @@
     </descricao>
     <config>
         <include id='js'>menu_slider</include>        
-        <include id='css'>menu</include>        
+        <include id='cssInc'>menu</include>        
     </config>
 </root>
