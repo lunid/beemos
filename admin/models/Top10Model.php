@@ -79,7 +79,7 @@
             }
         }
         
-        public function graficoTop10($data_inicio, $data_final, $id_materia = 0, $id_fonte_vestibular = 0){
+        public function graficoTop10($data_inicio, $data_final, $id_materia = 0, $id_fonte_vestibular = 0, $selecao = 0, $cor = ""){
             try{
                 $ret            = new \stdClass(); //Objeto de retorno
                 $ret->status    = FALSE;
@@ -118,7 +118,19 @@
                     } 
                     
                     ksort($arrQuestoes);
-                    $arrQuestoes = $this->getColor($arrQuestoes);
+                    $arrQuestoes        = $this->getColor($arrQuestoes);
+                    $arrQuestoesFreq    = $arrQuestoes;
+                    
+                    if((int)$selecao > 0){
+                        foreach ($arrQuestoes as $key => $value) {
+                            if($key != $selecao){
+                                $arrQuestoes[$key] = 'DADADA';
+                            }else{
+                                $arrQuestoes[$key]      = str_replace("#", '', $cor);
+                                $arrQuestoesFreq[$key]  = str_replace("#", '', $cor);
+                            }
+                        }
+                    }
 
                     foreach ($arr_ret as $row) { 
                         isset($arrQuestoesTop[$row->POS_1]) ? $arrQuestoesTop[$row->POS_1]++ : $arrQuestoesTop[$row->POS_1] = 1;
@@ -158,10 +170,11 @@
                         $arrQuestoesTop[] = $tmp_arrQuestoesTop[$i];
                     }
                     
-                    $ret->status    = true;
-                    $ret->data      = $arr_ret;
-                    $ret->colors    = $arrQuestoes;
-                    $ret->top       = $arrQuestoesTop;
+                    $ret->status        = true;
+                    $ret->data          = $arr_ret;
+                    $ret->colors        = $arrQuestoes;
+                    $ret->colorsFreq    = $arrQuestoesFreq;
+                    $ret->top           = $arrQuestoesTop;
                 }
                 
                 $ret->msg = "Nenhum resultado encontrado";

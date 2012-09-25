@@ -122,8 +122,10 @@
                     $data_final             = Date::formatDate(Request::post("data_final"), "AAAA-MM-DD");
                     $id_materia             = Request::post("id_materia", "NUMBER");
                     $id_fonte_vestibular    = Request::post("id_fonte_vestibular", "NUMBER");
+                    $selecao                = Request::post("selecao", "NUMBER");
+                    $cor                    = Request::post("cor");
                     
-                    $retGr = $m_top10->graficoTop10($data_inicio, $data_final, $id_materia, $id_fonte_vestibular);
+                    $retGr = $m_top10->graficoTop10($data_inicio, $data_final, $id_materia, $id_fonte_vestibular, $selecao, $cor);
                     
                     if($retGr->status !== FALSE){
                         $ret->html      = ChartComponent::geraGraficoTop10($retGr);

@@ -93,9 +93,17 @@ Top10.prototype = {
             return false;
         }
     },
-    geraGrafico: function(){
-        $("#aguarde").show();
+    geraGrafico: function(selecao, cor){
+        if(parseInt(selecao) <= 0 || isNaN(parseInt(selecao))){
+            selecao = 0;
+        }
         
+        if(cor == "" || cor == null){
+            cor = "";
+        }
+        
+        $("#aguarde").show();
+
         $.post(
             'top10/geraGrafico',
             {
@@ -103,7 +111,9 @@ Top10.prototype = {
                 data_final: $("#data_final").val(),
                 id_materia: $("#id_materia_gr").val(),
                 id_fonte_vestibular: $("#id_fonte_vestibular_gr").val(),
-                hdd_acao: 'filtar_grafico'
+                hdd_acao: 'filtar_grafico',
+                selecao: selecao,
+                cor: cor
             },
             function(ret){
                 $("#aguarde").hide();

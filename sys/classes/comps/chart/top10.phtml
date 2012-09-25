@@ -184,6 +184,12 @@
                             formatter: function() {
                                 return this.series.name;
                             }
+                        },
+                        cursor: 'pointer',
+                        events: {
+                            click: function(event) {
+                                top10.geraGrafico(this.name, this.color);
+                            }
                         }
                     }
                 },
@@ -192,7 +198,7 @@
                     {
                         name: '<?=$top['questao']?>',
                         data: [<?=$top['perc']?>],
-                        color: '#<?=self::$chartData->colors[$top['questao']]?>',
+                        color: '#<?=self::$chartData->colorsFreq[$top['questao']]?>',
                         stack: '<?=$top['questao']?>',
                         dataLabels: {
                             enabled: true,
