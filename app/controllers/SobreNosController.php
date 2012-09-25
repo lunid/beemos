@@ -29,10 +29,12 @@
             $objView->TITLE    = 'SuperPro - A Interbits';
             $objView->setCssInc('pg_internas,menu_lateral');                      
             
-            //$objView->forceCssJsMinifyOn();
-            //$objView->onlyExternalCssJs();
-            //$objView->setPlugin('menu');            
-            //$objView->setPlugin('menuIdiomas');                                                                                               
+            $objView->forceCssJsMinifyOn();
+            
+            echo "<pre style='color:#FF0000;'>";
+            print_r($_SERVER);
+            echo "</pre>";
+                        
             $objView->render('aInterbits');    
         }
     }

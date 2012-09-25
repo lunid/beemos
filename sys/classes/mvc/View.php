@@ -10,20 +10,53 @@
     class View extends ViewPart {
         const CSS       = 'sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site';
         const CSS_INC   = '';
-        const JS        = 'init,sys:util.dictionary';
+        const JS        = 'init,site,sys:util.dictionary';
         const JS_INC    = '';        
         const PLUGINS   = 'menuHorizontal,menuIdiomas';
+        
+        private $arrMenuOpts = array(
+            "menu_home" => array( //menu_home será o ID do elemento HTML
+                "href"      => "/",
+                "titulo"    => "Home",
+                "subTitulo" => "Bem vindo",
+                "ativo"     => false
+            ),  
+            "menu_sobre" => array(
+                "href"      => "sobreNos",
+                "titulo"    => "Sobre Nós",
+                "subTitulo" => "Conheça a InterBits",
+                "ativo"     => false
+            ),  
+            "menu_assine" => array(
+                "href"      => "assine",
+                "titulo"    => "Assine Já",
+                "subTitulo" => "Planos & Preços",
+                "ativo"     => false
+            ),
+            "menu_super" => array(
+                "href"      => "superpro",
+                "titulo"    => "SuperPro",
+                "subTitulo" => "Principais Recursos",
+                "ativo"     => false
+            ),
+            "menu_ajuda" => array(
+                "href"      => "ajuda",
+                "titulo"    => "Ajuda",
+                "subTitulo" => "FAQ & Tutoriais",
+                "ativo"     => false
+            ),
+        );
         
         private $objHeader      = NULL;        
         private $tplFile        = '';           
         private $forceNewIncMin = FALSE;
         
-        function __construct(ViewPart $objViewPart,$tplName='padrao'){                            
+        function __construct(ViewPart $objViewPart,$menu_ativo='home',$tplName='padrao'){                            
             if (is_object($objViewPart)) {                                 
-                $objViewTpl         = new ViewPart('templates/'.$tplName);
-                $objViewTpl->BODY   = $objViewPart->render();
-                $this->bodyContent  = $objViewTpl->render();
-                $this->layoutName   = $objViewPart->layoutName;                
+                $objViewTpl                     = new ViewPart('templates/'.$tplName);
+                $objViewTpl->BODY               = $objViewPart->render();
+                $this->bodyContent              = $objViewTpl->render();
+                $this->layoutName               = $objViewPart->layoutName;                
                 
                 if (strlen($tplName) > 0){
                     $objHeader = new Header();            
@@ -121,7 +154,28 @@
             $params                    = $this->params;                                       
             $params['INCLUDE_CSS']     = $css;
             $params['INCLUDE_JS']      = $js;                                                      
-                       
+            
+            //Controle de Menu Horizontal
+            switch($layoutName){
+                case 'index':
+                case 'home':
+                    $menu_ativo = 'menu_home';
+                    break;
+                case 'sobre':
+                case 'sobreNos':
+                case 'aInterbits':
+                    $menu_ativo = 'menu_sobre';
+                    break;
+                default:
+                    $menu_ativo = 'menu_home';
+            }
+            
+            //Setando o menuque deve ser selecionado
+            $this->arrMenuOpts[$menu_ativo]["ativo"] = true;
+            
+            //Renderizando HTML do menu
+            $params['MENU_HORIZONTAL'] = \HtmlComponent::menuHorizontal($this->arrMenuOpts);
+            
             if (is_array($params)) {
                 foreach($params as $key=>$value){
                     $bodyContent = str_replace('{'.$key.'}',$value,$bodyContent);                

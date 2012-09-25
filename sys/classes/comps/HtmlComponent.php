@@ -25,6 +25,8 @@ class HtmlComponent {
     static $html_path_templates = "/comps/html/";
     static $default_html;
     
+    private static $arrMenuOpts;
+
     private static $table_data;
     
     private static $sel_options;
@@ -82,12 +84,7 @@ class HtmlComponent {
             //Renderizando o HTML
             return self::renderHtml(@$opts->html_template);
         }catch(Exception $e){
-            echo ">>>>>>>>>>>>>>> Erro Fatal - HtmlComponent <<<<<<<<<<<<<<< <br />\n";
-            echo "Erro: " . $e->getMessage() . "<br />\n";
-            echo "Arquivo:  " . $e->getFile() . "<br />\n";
-            echo "Linha:  " . $e->getLine() . "<br />\n";
-            echo "<br />\n";
-            die;
+            throw $e;
         }
     }
     
@@ -117,12 +114,7 @@ class HtmlComponent {
             //Renderizando o HTML
             return self::renderHtml(@$opts->html_template);
         }catch(Exception $e){
-            echo ">>>>>>>>>>>>>>> Erro Fatal - HtmlComponent <<<<<<<<<<<<<<< <br />\n";
-            echo "Erro: " . $e->getMessage() . "<br />\n";
-            echo "Arquivo:  " . $e->getFile() . "<br />\n";
-            echo "Linha:  " . $e->getLine() . "<br />\n";
-            echo "<br />\n";
-            die;
+            throw $e;
         }
     }
     
@@ -132,7 +124,7 @@ class HtmlComponent {
      * 
      * @return string HTML porcessado
      */
-    private static function renderHtml($html_template){
+    private static function renderHtml($html_template = null){
         try{
             if($html_template != null){
                 $arq = "/" . __APP__ . self::$html_path_templates . "{$html_template}.phtml";
@@ -146,12 +138,20 @@ class HtmlComponent {
             ob_end_clean();
             return $output;
         }catch(Exception $e){
-            echo ">>>>>>>>>>>>>>> Erro Fatal - HtmlComponent <<<<<<<<<<<<<<< <br />\n";
-            echo "Erro: " . $e->getMessage() . "<br />\n";
-            echo "Arquivo:  " . $e->getFile() . "<br />\n";
-            echo "Linha:  " . $e->getLine() . "<br />\n";
-            echo "<br />\n";
-            die;
+            throw $e;
+        }
+    }
+    
+    public static function menuHorizontal($arrMenuOpts){
+        try{
+            //Setando propriedades
+            self::$arrMenuOpts  = $arrMenuOpts;
+            self::$default_html = 'menuHorizontal';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $e){
+            throw $e;
         }
     }
 }

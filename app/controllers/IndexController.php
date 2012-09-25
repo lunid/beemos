@@ -21,14 +21,12 @@
             $objViewPart->TOTAL_QUESTOES_DB     = $objModel->getTotalQuestoesDb();
             $objViewPart->TOTAL_QUESTOES_ENEM   = $objModel->getTotalQuestoesEnem(); 
             
-            $objView                            = new View($objViewPart);
+            $objView = new View($objViewPart);
             $objView->forceCssJsMinifyOn();
-            //$objView->setPlugin('menu');            
             $objView->setPlugin('sliderBanner');            
-            //$objView->setPlugin('menuIdiomas');                        
             
-            $objView->TITLE                     = 'Bem-vindo ao SuperPro';
-            $objView->render();            
+            $objView->TITLE = 'Bem-vindo ao Super Professor Web';
+            $objView->render('home');            
         }               
     }
 ?>
