@@ -10,9 +10,10 @@
     * Refere-se à página inicial da raíz do site.
     */
     class SobreNos extends Controller {
-
+        
         /**
         * Conteúdo da página Sobre Nós        
+         * Teste xxx
         */
         function actionIndex(){
 	    $this->actionAinterbits();
