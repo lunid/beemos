@@ -31,10 +31,6 @@
             
             $objView->forceCssJsMinifyOn();
             
-            echo "<pre style='color:#FF0000;'>";
-            print_r($_SERVER);
-            echo "</pre>";
-                        
             $objView->render('aInterbits');    
         }
     }
