@@ -4,6 +4,7 @@
     ini_set('display_errors', true);    
     
     define("__APP__", "app");
+    define("__LOCALHOST__", "");
     
     $controllerClass = 'index';
     $actionMethod    = 'index';
