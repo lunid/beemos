@@ -12,8 +12,7 @@
     class SobreNos extends Controller {
 
         /**
-        * Conteúdo da página Sobre Nós
-        * Teste
+        * Conteúdo da página Sobre Nós        
         */
         function actionIndex(){
 	    $this->actionAinterbits();
