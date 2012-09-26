@@ -3,6 +3,7 @@
     use \sys\classes\mvc\Controller;    
     use \sys\classes\mvc\View;        
     use \sys\classes\mvc\ViewPart;        
+    use \app\models\HomeModel;       
     
     /**
     * Classe Controller usada com default quando nenhuma outra é informada.
