@@ -20,9 +20,10 @@
         }      
         
         function actionAinterbits(){          
-            $objPartPg              = new ViewPart('blank');            
             $objPartLayout          = new ViewPart('templates/navegacaoVertical');
             $objPartLayout->IMG     = "<img src='app/views/images/testeira.jpg'>";
+            
+            $objPartPg              = new ViewPart('sobreNos_aInterbits');            
             $objPartLayout->BODY    = $objPartPg->render();                                    
             
             $objView           = new View($objPartLayout);            
