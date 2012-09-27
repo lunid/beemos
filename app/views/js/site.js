@@ -26,4 +26,6 @@ Site.prototype = {
     }
 }
 
-site = new Site();
+$(document).ready(function() {
+    site = new Site();
+});         

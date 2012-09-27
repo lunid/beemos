@@ -1,10 +1,9 @@
 $(document).ready(function() {
-    $.post(
-        "sys/dic/pt/javascript.xml",
-        null,
-        function(xml){
+    $.ajax({
+        url: "sys/dic/pt/javascript.xml",
+        success: function(xml){
             xml_dic = xml;
-            
+
             menu = new Menu();
             menu.init({
                 id: 'top-menu'
@@ -13,6 +12,6 @@ $(document).ready(function() {
             dropDown = new Dropdown();
             dropDown.init();
         },
-        'xml'
-    );
+        async: false
+    });
 });
