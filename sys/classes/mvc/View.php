@@ -34,7 +34,7 @@
                 "ativo"     => false
             ),
             "menu_super" => array(
-                "href"      => "superpro",
+                "href"      => "superprofessor",
                 "titulo"    => "SuperPro",
                 "subTitulo" => "Principais Recursos",
                 "ativo"     => false
@@ -173,6 +173,17 @@
                 case 'recursos':
                 case 'pagamento':
                     $menu_ativo = 'menu_assine';
+                    break;
+                case 'superpro':
+                case 'provas':
+                case 'listas':
+                case 'relatorios':
+                    $menu_ativo = 'menu_super';
+                    break;
+                case 'faq':
+                case 'tutoriais':
+                case 'suporte':
+                    $menu_ativo = 'menu_ajuda';
                     break;
                 default:
                     $menu_ativo = 'menu_home';
