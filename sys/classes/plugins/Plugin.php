@@ -15,6 +15,9 @@
                 case 'menuIdiomas':
                     $folderPlugin = 'dropdown';
                     break;
+                case 'modal':
+                    $folderPlugin = 'fancybox';
+                    break;
             }                    
              
             $root = self::$root.$folderPlugin;

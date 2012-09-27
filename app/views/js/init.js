@@ -11,6 +11,15 @@ $(document).ready(function() {
 
             dropDown = new Dropdown();
             dropDown.init();
+            
+            $('#modal_aguarde').fancybox({
+                closeBtn: false,
+                closeClick: false,
+                scrollOutside: false,
+                helpers : { 
+                    overlay : {closeClick: false}
+                }
+            });
         },
         async: false
     });

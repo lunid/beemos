@@ -26,7 +26,9 @@ class HtmlComponent {
     static $default_html;
     
     private static $arrMenuOpts;
-
+    
+    private static $dadosEmail;
+    
     private static $table_data;
     
     private static $sel_options;
@@ -119,6 +121,7 @@ class HtmlComponent {
     }
     
     /**
+     * Função que efetua captura do HTML Template e executa o PHP inserido nele
      * 
      * @param string $html_template Nome do arquivo físico a ser processado (PHTML)
      * 
@@ -142,6 +145,23 @@ class HtmlComponent {
         }
     }
     
+    /**
+     * Função que monta o HTML do menu Horinzotal do APP > Site
+     * 
+     * @param type $arrMenuOpts
+     * <code>
+     * array(
+     *      "menu_home" => array( //menu_home será o ID do elemento HTML
+     *          "href"      => "/",
+     *          "titulo"    => "Home",
+     *          "subTitulo" => "Bem vindo",
+     *          "ativo"     => false
+     *      )
+     * );
+     * </code>
+     * @return string HTML processado para exibição
+     * @throws Exception
+     */
     public static function menuHorizontal($arrMenuOpts){
         try{
             //Setando propriedades
@@ -153,6 +173,19 @@ class HtmlComponent {
         }catch(Exception $e){
             throw $e;
         }
+    }
+    
+    public static function emailContato($dadosEmail){
+        try{
+            //Setando propriedades
+            self::$dadosEmail   = $dadosEmail;
+            self::$default_html = 'email_contato';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $ex){
+            throw $e;
+        }   
     }
 }
 
