@@ -43,6 +43,27 @@
             require_once($urlFileController);
 
             Conn::init();
+
+            /**
+            *Localiza a classe solicitada de acordo com o seu namespace e faz o include do arquivo.
+            * @param String $class (nome da classe requisitada).
+            * Não retorna valor.
+            */            
+            spl_autoload_register('self::loadClass');	         
+
+
+            $actionMethod   = 'action'.ucfirst($actionMethod);
+            $objPg          = new $controllerClass;
+            $objPg->$actionMethod();            
+        }
+        
+        private static function loadClass($class){            
+            $urlInc = str_replace("\\", "/" , $class . '.php');                
+            if (isset($class) && file_exists($urlInc)){          
+                require_once($urlInc);  
+            } else {           
+                die(" Classe $class não encontrada");
+            }                      
         }
         
         private static function defineApp($module){

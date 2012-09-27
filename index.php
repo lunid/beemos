@@ -3,8 +3,9 @@
     error_reporting(E_ALL | E_STRICT);
     ini_set('display_errors', true);    
     
+    /*
     define("__APP__", "app");
-    define("__LOCALHOST__", "");
+
     
     $controllerClass = 'index';
     $actionMethod    = 'index';
@@ -32,6 +33,8 @@
     require_once($urlFile);
     
     Conn::init();
+    
+    */
     
     /**
      *Localiza a classe solicitada de acordo com o seu namespace e faz o include do arquivo.
