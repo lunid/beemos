@@ -168,6 +168,12 @@
                 case 'aInterbits':
                     $menu_ativo = 'menu_sobre';
                     break;
+                case 'assine':
+                case 'planos':
+                case 'recursos':
+                case 'pagamento':
+                    $menu_ativo = 'menu_assine';
+                    break;
                 default:
                     $menu_ativo = 'menu_home';
             }

@@ -47,7 +47,7 @@
                 $objPartLayout->IMG     = "<img src='app/views/images/testeira_politica.jpg'>";
                 $objPartLayout->LOCAL   = "Conheça a nossa Política de Privacidade";
 
-                $objPartPg              = new ViewPart('sobreNos_Politica');            
+                $objPartPg              = new ViewPart('sobreNos_politica');            
                 $objPartLayout->BODY    = $objPartPg->render();                                    
 
                 $objView           = new View($objPartLayout);            
@@ -71,7 +71,7 @@
                 $objPartLayout->IMG     = "<img src='app/views/images/testeira.jpg'>";
                 $objPartLayout->LOCAL   = "Entre em contato com a Interbits";
 
-                $objPartPg              = new ViewPart('sobreNos_Contato');            
+                $objPartPg              = new ViewPart('sobreNos_contato');            
                 $objPartLayout->BODY    = $objPartPg->render();                                    
 
                 $objView           = new View($objPartLayout);            
