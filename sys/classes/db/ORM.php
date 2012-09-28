@@ -687,8 +687,8 @@ abstract class ORM {
                         $msgErr = str_replace('{FIELD}',$val,$msgErr);
                         throw new \Exception( $msgErr );
                     }
-                    $arrWhere[$val] = $arrParams[$val];//Cria um array associativo
-                    //$args[]         = $arrParams[$val];
+                    $arrWhere[$val]     = $arrParams[$val];//Cria um array associativo
+                    //$args[]           = $arrParams[$val];
                 }
                 //print_r($arrUnique);
                 //die();
@@ -1228,6 +1228,7 @@ abstract class ORM {
             }
             $this->id               = ($extra == 'auto_increment')?$value:0;
             $this->arrParams[$var]  = $value;
+            $this->row[$var]        = $value;
         }        
     } 
     
@@ -1235,7 +1236,7 @@ abstract class ORM {
      * @ignore     
      */    
     function __get($var){
-        $row = $this->row;
+        $row = $this->row;        
         if (is_array($row) && isset($row[$var])) return $row[$var];                         
         return false;
     }    
