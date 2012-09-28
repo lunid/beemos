@@ -51,7 +51,7 @@
         private $tplFile        = '';           
         private $forceNewIncMin = FALSE;
         
-        function __construct(ViewPart $objViewPart,$menu_ativo='home',$tplName='padrao'){                            
+        function __construct(ViewPart $objViewPart,$tplName='padrao'){                            
             if (is_object($objViewPart)) {                                 
                 $objViewTpl                     = new ViewPart('templates/'.$tplName);
                 $objViewTpl->BODY               = $objViewPart->render();

@@ -22,6 +22,8 @@
     require_once('sys/classes/comps/files/YUICompressor.php');
     require_once('sys/classes/comps/HtmlComponent.php');
     require_once('sys/classes/comps/ChartComponent.php');
+    require_once('sys/classes/comps/hybridauth/Auth.php');
+    require_once('sys/classes/comps/hybridauth/Endpoint.php');
     require_once('sys/classes/db/Meekrodb_2_0.php');
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/mvc/Controller.php');
@@ -37,7 +39,12 @@
      */
     spl_autoload_register('loadClass');	
     
-    function loadClass($class) {	
+    function loadClass($class) {
+        //Tratamento para utilização do Hybridauth.
+        if($class == 'FacebookApiException'){
+            return false;
+        }
+        
         $urlInc = str_replace("\\", "/" , $class . '.php');                
         if (isset($class) && file_exists($urlInc)){          
             require_once($urlInc);  
