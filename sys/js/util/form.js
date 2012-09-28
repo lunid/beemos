@@ -43,7 +43,19 @@ Form.prototype = {
             alert(Dic.loadMsg("Form", "CATCH", "init") + " " + err.message);
         }
     },
-    validate: function(form){
+    initModal:function(id){
+        $('#modal_' + id).fancybox({
+            closeBtn: true,
+            closeClick: true,
+            scrollOutside: false,
+            helpers : { 
+                overlay : {closeClick: false}
+            }
+        });
+        
+        this.modalId = id;
+    },
+    validate: function(form, ajax){
         try{
             var validate = true;
             
@@ -72,8 +84,39 @@ Form.prototype = {
                     $("#msg_error_email_" + this.id).hide('fast');
                 }
             });
-
-            if(validate){
+            
+            if(ajax && validate){
+                $("#modal_aguarde").trigger('click');
+                
+                var dados   = $(form).serializeArray();
+                var modalId = this.modalId;
+                
+                $.post(
+                    form.action,
+                    dados,
+                    function(ret){
+                        if(ret.status){
+                            $(dados).each(function(){
+                               $("#" + this.name).val(""); 
+                            });
+                        }
+                        
+                        $.fancybox.close(true);
+                        
+                        if(modalId != ""){
+                            $("#msg_" + modalId).html(ret.msg);
+                            $("#modal_" + modalId).trigger('click');
+                        }else{
+                            alert(ret.msg);
+                        }
+                    },
+                    'json'
+                ).error(function(){
+                        alert("Falha na requisição ao SERVIDOR! Tente daqui alguns minutos.");
+                        $.fancybox.close(true);
+                });
+                return false;
+            }else if(validate){
                 return true;
             }else{
                 return false;

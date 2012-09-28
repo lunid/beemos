@@ -12,7 +12,7 @@
         const CSS_INC   = '';
         const JS        = 'init,site,sys:util.dictionary';
         const JS_INC    = '';        
-        const PLUGINS   = 'menuHorizontal,menuIdiomas';
+        const PLUGINS   = 'modal,menuHorizontal,menuIdiomas';
         
         private $arrMenuOpts = array(
             "menu_home" => array( //menu_home será o ID do elemento HTML
@@ -34,7 +34,7 @@
                 "ativo"     => false
             ),
             "menu_super" => array(
-                "href"      => "superpro",
+                "href"      => "superprofessor",
                 "titulo"    => "SuperPro",
                 "subTitulo" => "Principais Recursos",
                 "ativo"     => false
@@ -162,9 +162,29 @@
                     $menu_ativo = 'menu_home';
                     break;
                 case 'sobre':
+                case 'politica':
+                case 'contato':
                 case 'sobreNos':
                 case 'aInterbits':
                     $menu_ativo = 'menu_sobre';
+                    break;
+                case 'assine':
+                case 'planos':
+                case 'recursos':
+                case 'pagamento':
+                    $menu_ativo = 'menu_assine';
+                    break;
+                case 'superpro':
+                case 'provas':
+                case 'listas':
+                case 'relatorios':
+                    $menu_ativo = 'menu_super';
+                    break;
+                case 'faq':
+                case 'tutoriais':
+                case 'suporte':
+                case 'chat':
+                    $menu_ativo = 'menu_ajuda';
                     break;
                 default:
                     $menu_ativo = 'menu_home';

@@ -26,7 +26,9 @@ class HtmlComponent {
     static $default_html;
     
     private static $arrMenuOpts;
-
+    
+    private static $dadosEmail;
+    
     private static $table_data;
     
     private static $sel_options;
@@ -38,6 +40,7 @@ class HtmlComponent {
     private static $class;
     private static $style;
     private static $disabled = FALSE;
+    private static $field_name;
     
     /**
      * Cria um elemento HTML <select> e seus <option>
@@ -77,6 +80,7 @@ class HtmlComponent {
             self::$class            = @$opts->class;
             self::$style            = @$opts->style;
             self::$disabled         = @$opts->disabled;
+            self::$field_name       = @$opts->field_name;
             
             //Setando template default
             self::$default_html = 'select';
@@ -119,6 +123,7 @@ class HtmlComponent {
     }
     
     /**
+     * Função que efetua captura do HTML Template e executa o PHP inserido nele
      * 
      * @param string $html_template Nome do arquivo físico a ser processado (PHTML)
      * 
@@ -141,6 +146,23 @@ class HtmlComponent {
         }
     }
     
+    /**
+     * Função que monta o HTML do menu Horinzotal do APP > Site
+     * 
+     * @param type $arrMenuOpts
+     * <code>
+     * array(
+     *      "menu_home" => array( //menu_home será o ID do elemento HTML
+     *          "href"      => "/",
+     *          "titulo"    => "Home",
+     *          "subTitulo" => "Bem vindo",
+     *          "ativo"     => false
+     *      )
+     * );
+     * </code>
+     * @return string HTML processado para exibição
+     * @throws Exception
+     */
     public static function menuHorizontal($arrMenuOpts){
         try{
             //Setando propriedades
@@ -166,6 +188,60 @@ class HtmlComponent {
             throw $e;
         }
     }    
+    
+    /**
+     * Cria o HTML de E-mail Suporte automático que o usuário recebe.
+     * 
+     * @param array $dadosEmail
+     * <code>
+     * array(
+     *      "nome"  => "Marcelo",
+     *      "msg"   => "Mensagem",
+     *      "email" => "marcelo@teste.com"
+     * )
+     * </code>
+     * @return string Html do e-mail processado.
+     * @throws Exception
+     */
+    public static function emailSuporteUser($dadosEmail){
+        try{
+            //Setando propriedades
+            self::$dadosEmail   = $dadosEmail;
+            self::$default_html = 'email_suporte';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $e){
+            throw $e;
+        }   
+    }
+    
+    /**
+     * Cria o HTML de E-mail Contato/Suporte automático enviado via Site pelo usuário.
+     * 
+     * @param array $dadosEmail
+     * <code>
+     * array(
+     *      "nome"  => "Marcelo",
+     *      "msg"   => "Mensagem",
+     *      "email" => "marcelo@teste.com"
+     * )
+     * </code>
+     * @return string Html do e-mail processado.
+     * @throws Exception
+     */
+    public static function emailContatoSite($dadosEmail){
+        try{
+            //Setando propriedades
+            self::$dadosEmail   = $dadosEmail;
+            self::$default_html = 'email_contato_site';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $e){
+            throw $e;
+        }   
+    }
 }
 
 ?>

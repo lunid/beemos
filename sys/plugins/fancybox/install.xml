@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Plugin de Janelas Modais
+    </descricao>
+    <config>
+        <include id='jsInc'>jquery_mousewheel_306_min,jquery_fancybox_2_min</include>        
+        <include id='css'>jquery_fancybox</include>        
+    </config>
+</root>
