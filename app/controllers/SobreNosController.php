@@ -99,18 +99,24 @@
                 $ret->msg       = "Mensagem enviada com sucesso! Em breve lhe responderemos.";
                 
                 //TODO Dispara e-mail
-                $html = HtmlComponent::emailContato($_POST);
+                $htmlUser   = HtmlComponent::emailContatoUser($_POST);
+                $htmlInter  = HtmlComponent::emailContatoSite($_POST);
                 
                 $headers = "From: interbits@interbits.com.br\r\n";
                 $headers .= "Reply-To: interbits@interbits.com.br\r\n";
                 $headers .= "MIME-Version: 1.0\r\n";
                 $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
                 
-                if($html == null || trim($html) == ""){
+                if(($htmlUser == null || trim($htmlUser) == "") && ($htmlInter == null || trim($htmlInter) == "")){
                     $ret->status    = true;
                     $ret->msg       = "Falha ao processar HTML e disparar e-mail! Tente mais tarde.";
-                }else if(!@mail("mpcbarone@gmail.com", Request::post("assunto"), $html, $headers)){
-                    $ret->status    = true;
+                }else if(@mail("prg.pacheco@interbits.com.br", "[Contato] - Mensagem de contato enviada via site", $htmlInter, $headers)){
+                    if(!@mail(strtolower(trim(Request::post("email"))), "Interbits - Confirmação de recebimento", $htmlUser, $headers)){
+                        $ret->status    = false;
+                        $ret->msg       = "Falha ao disparar e-mail! Tente mais tarde.";
+                    }
+                }else{
+                    $ret->status    = false;
                     $ret->msg       = "Falha ao disparar e-mail! Tente mais tarde.";
                 }
                 

@@ -40,6 +40,7 @@ class HtmlComponent {
     private static $class;
     private static $style;
     private static $disabled = FALSE;
+    private static $field_name;
     
     /**
      * Cria um elemento HTML <select> e seus <option>
@@ -79,6 +80,7 @@ class HtmlComponent {
             self::$class            = @$opts->class;
             self::$style            = @$opts->style;
             self::$disabled         = @$opts->disabled;
+            self::$field_name       = @$opts->field_name;
             
             //Setando template default
             self::$default_html = 'select';
@@ -189,11 +191,65 @@ class HtmlComponent {
      * @return string Html do e-mail processado.
      * @throws Exception
      */
-    public static function emailContato($dadosEmail){
+    public static function emailContatoUser($dadosEmail){
         try{
             //Setando propriedades
             self::$dadosEmail   = $dadosEmail;
             self::$default_html = 'email_contato';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $ex){
+            throw $e;
+        }   
+    }
+    
+    /**
+     * Cria o HTML de E-mail Suporte automático que o usuário recebe.
+     * 
+     * @param array $dadosEmail
+     * <code>
+     * array(
+     *      "nome"  => "Marcelo",
+     *      "msg"   => "Mensagem",
+     *      "email" => "marcelo@teste.com"
+     * )
+     * </code>
+     * @return string Html do e-mail processado.
+     * @throws Exception
+     */
+    public static function emailSuporteUser($dadosEmail){
+        try{
+            //Setando propriedades
+            self::$dadosEmail   = $dadosEmail;
+            self::$default_html = 'email_suporte';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $ex){
+            throw $e;
+        }   
+    }
+    
+    /**
+     * Cria o HTML de E-mail Contato/Suporte automático enviado via Site pelo usuário.
+     * 
+     * @param array $dadosEmail
+     * <code>
+     * array(
+     *      "nome"  => "Marcelo",
+     *      "msg"   => "Mensagem",
+     *      "email" => "marcelo@teste.com"
+     * )
+     * </code>
+     * @return string Html do e-mail processado.
+     * @throws Exception
+     */
+    public static function emailContatoSite($dadosEmail){
+        try{
+            //Setando propriedades
+            self::$dadosEmail   = $dadosEmail;
+            self::$default_html = 'email_contato_site';
             
             //Renderizando o HTML
             return self::renderHtml();

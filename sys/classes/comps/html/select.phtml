@@ -1,4 +1,4 @@
-<select name="<?=self::$id?>" id="<?=self::$id?>" <? if(self::$onchange != null){ ?> onchange="<?=self::$onchange?>" <? } ?> <? if(self::$class != null){ ?> class="<?=self::$class?>" <? } ?> <? if(self::$style != null){ ?> style="<?=$style?>" <? } ?> <? if(self::$disabled){ ?> disabled="disabled" <? } ?>>
+<select name="<?=self::$id?>" id="<?=self::$id?>" <? if(self::$onchange != null){ ?> onchange="<?=self::$onchange?>" <? } ?> <? if(self::$class != null){ ?> class="<?=self::$class?>" <? } ?> <? if(self::$style != null){ ?> style="<?=self::$style?>" <? } ?> <? if(self::$field_name != null){ ?> field_name="<?=self::$field_name?>" <? } ?> <? if(self::$disabled){ ?> disabled="disabled" <? } ?>>
     <? if(self::$first_option != null){ ?>
     <option value="0"><?=self::$first_option?></option>
     <? } ?>

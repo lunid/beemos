@@ -183,6 +183,7 @@
                 case 'faq':
                 case 'tutoriais':
                 case 'suporte':
+                case 'chat':
                     $menu_ativo = 'menu_ajuda';
                     break;
                 default:

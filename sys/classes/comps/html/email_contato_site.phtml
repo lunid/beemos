@@ -9,18 +9,15 @@ and open the template in the editor.
         <title>E-mail Contato</title>
     </head>
     <body>
-        Olá <?=self::$dadosEmail['nome']?>! Acabamos de receber sua mensagem:
+        O usuário <?=self::$dadosEmail['nome']?> acaba se enviar a seguinte mensagem via Site:
         <br /><br />
         <i>
             "<?=self::$dadosEmail['msg']?>"
         </i>
-        <br /><br />
-        Aguarde... Dentro de 24 hs estaremos lhe enviando uma resposta no e-mail: <?=self::$dadosEmail['email']?>.
-        <br /><br />
+        <br />
+        <br />
         <strong>
-            Atenciosamente,
-            <br />
-            Equipe Interbits
+            Tecnologia Interbits
             <br />
         </strong>
     </body>
