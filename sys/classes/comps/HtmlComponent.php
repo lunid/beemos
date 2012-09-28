@@ -126,14 +126,13 @@ class HtmlComponent {
      */
     private static function renderHtml($html_template = null){
         try{
-            if($html_template != null){
-                $arq = "/" . __APP__ . self::$html_path_templates . "{$html_template}.phtml";
-            }else{
-                $arq = self::$html_path . self::$default_html . ".phtml";
-            }
-            
+            $pathPhtml = self::$html_path . self::$default_html . ".phtml";
+            if($html_template != null) $pathPhtml = "/" . __MODULE__ . self::$html_path_templates . "{$html_template}.phtml";
+
             ob_start();
-            include($arq);
+            if (!@include_once($pathPhtml)) {                    
+                throw new Exception (__METHOD__."(): Arquivo {$pathPhtml} não existe.");                    
+            }
             $output = ob_get_contents();
             ob_end_clean();
             return $output;
@@ -154,6 +153,19 @@ class HtmlComponent {
             throw $e;
         }
     }
+    
+    public static function menuVertical($arrMenuOpts){
+        try{
+            //Setando propriedades
+            self::$arrMenuOpts  = $arrMenuOpts;
+            self::$default_html = 'menuVertical';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $e){
+            throw $e;
+        }
+    }    
 }
 
 ?>

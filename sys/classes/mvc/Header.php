@@ -20,7 +20,7 @@ class Header {
     private $layoutName             = '';
     
     function __construct($layoutName=''){        
-        self::$ROOT_VIEW_FILES = __APP__ . "/views";
+        self::$ROOT_VIEW_FILES = __MODULE__ . "/views";
         if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
     }   
     
@@ -307,9 +307,9 @@ class Header {
         $extFile    = $this->getExtFile($ext);                         
         if (strlen($file) > 0){           
             if ($extFile == self::EXT_JS) {
-                $inc = "<script type='text/javascript' src='".__LOCALHOST__.$file."'></script>".chr(13);
+                $inc = "<script type='text/javascript' src='".$file."'></script>".chr(13);
             } elseif ($extFile == self::EXT_CSS) {               
-                $inc = "<link rel='stylesheet' href='".__LOCALHOST__.$file."' type='text/css' />".chr(13);
+                $inc = "<link rel='stylesheet' href='".$file."' type='text/css' />".chr(13);
             }
         }            
         return $inc;

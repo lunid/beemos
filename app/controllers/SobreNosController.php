@@ -12,25 +12,34 @@
         /**
         *   Conteúdo da página Sobre Nós
         */
-        function actionIndex(){
-	    $this->actionAinterbits();
+        
+        static $arrMenuVertical = array('A Interbits','Política de Privacidade','Contato');
+        
+        function actionIndex(){             
+            $this->actionAinterbits();            
         }      
         
-        function actionAinterbits(){          
-            $objPartLayout          = new ViewPart('templates/navegacaoVertical');
-            $objPartLayout->IMG     = "<img src='app/views/images/testeira.jpg'>";
-            $objPartLayout->LOCAL   = "Conheça a Interbits";
-            
-            $objPartPg              = new ViewPart('sobreNos_aInterbits');            
-            $objPartLayout->BODY    = $objPartPg->render();                                    
-            
-            $objView           = new View($objPartLayout);            
-            $objView->TITLE    = 'SuperPro - A Interbits';
-            $objView->setCssInc('pg_internas,menu_lateral');                      
-            
-            $objView->forceCssJsMinifyOn();
-            
-            $objView->render('aInterbits');    
+        function actionAinterbits(){     
+            try {
+                $objPartLayout                  = new ViewPart('templates/navegacaoVertical');
+                $objPartLayout->IMG             = "<img src='app/views/images/testeira.jpg'>";
+                $objPartLayout->LOCAL           = "Conheça a Interbits";            
+                $objPartLayout->MENU_VERTICAL   = \HtmlComponent::menuVertical(self::$arrMenuVertical);
+
+                $objPartPg                      = new ViewPart('sobreNos_aInterbits');            
+                $objPartLayout->BODY            = $objPartPg->render();                                    
+
+                $objView           = new View($objPartLayout);            
+                $objView->TITLE    = 'SuperPro - A Interbits';
+                $objView->setCssInc('pg_internas,menu_lateral');                      
+
+                $objView->forceCssJsMinifyOn();
+
+                $objView->render('aInterbits');    
+            } catch( \Exception $e) {
+                echo $e->getMessage();
+                die();
+            } 
         }
         
         function actionPolitica(){          

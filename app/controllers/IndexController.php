@@ -5,7 +5,6 @@
     use \sys\classes\mvc\View;        
     use \app\models\HomeModel;
 
-
     /**
     * Classe Controller usada com default quando nenhuma outra é informada.
     * Refere-se à página inicial da raíz do site.

@@ -8,14 +8,14 @@
         protected   $bodyContent;
         protected   $viewFile;
         protected   $layoutName;
-        protected   $params   = array();
+        protected   $params = array();
         
         function __construct($pathViewHtml=''){
             if (isset($pathViewHtml) && strlen($pathViewHtml) > 0) {            
                 $arrParts           = explode('/',$pathViewHtml);
                 $numParts           = count($arrParts);
                 $this->layoutName   = (is_array($arrParts) && $numParts > 1)?$arrParts[$numParts-1]:$pathViewHtml; 
-                $viewFile           = __APP__ . '/views/'.$pathViewHtml.'.html';             
+                $viewFile           = __MODULE__ . '/views/'.$pathViewHtml.'.html';             
                 try {                    
                     if (File::exists($viewFile)){
                         //Arquivo existe.

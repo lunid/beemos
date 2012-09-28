@@ -1,5 +1,5 @@
 <?php
-
+    
     require_once('sys/classes/comps/files/YUICompressor.php');
     require_once('sys/classes/comps/HtmlComponent.php');
     require_once('sys/classes/comps/ChartComponent.php');
@@ -10,53 +10,74 @@
 
 
     class Application {
-               
+        /**
+         * Classe de inicialização da aplicação.
+         * 
+         * Faz o carregamento dos arquivos comuns aos módulos do sistema (require_once),
+         * identifica o módulo e seu respectivo Controller->action() a partir da URL e 
+         * carrega as classes solicitadas na aplicação a partir de seu namespace.
+        */               
         public static function load(){
             
             $arrModules   = array('app','admin');//Root dos módulos disponíveis
-            $module       = $arrModules[0];
+            $module       = $arrModules[0];//O primeiro módulo é sempre padrão.
             
             $controllerClass = 'index';
-            $actionMethod    = 'index';
+            $action          = 'index';
 
-            $var        = (isset($_GET['PG']))?$_GET['PG']:'';    
-            $arrParams  = explode('/',$var);
-
+            $params     = (isset($_GET['PG']))?$_GET['PG']:'';    
+            $arrParams  = explode('/',$params);            
+            
             if (is_array($arrParams) && count($arrParams) > 0) {       
-                $paramController    = (isset($arrParams[0]) && $arrParams[0] != null)?$arrParams[0]:'';
-                $keyModule          = array_search($paramController,$arrModules);
-                if ($paramController != null && $keyModule === NULL) {                    
-                    $controllerClass = $arrParams[0];
-                    if (isset($arrParams[1]) && $arrParams[1] != null) $actionMethod = $arrParams[1];
+                $controller    = (isset($arrParams[0]) && $arrParams[0] != null)?$arrParams[0]:'';
+                $keyModule     = array_search($controller,$arrModules);
+                if ($controller != null && $keyModule === FALSE) {                    
+                    //O primeiro parâmetro da URL não é um módulo.
+                    //Portanto, define o Controller e o método (action), caso tenha sido informado.
+                    $controllerClass = $controller;
+                    if (isset($arrParams[1]) && $arrParams[1] != null) $action = $arrParams[1];
                 } else {
                     //Acesso a um módulo específico.
                     $module = $arrModules[$keyModule];
                 }                                
-            }         
-
-            //Define a constante __APP__
-            self::defineApp($module);
+            }                     
             
-            $urlFileController = __APP__ . '/controllers/'.ucfirst($controllerClass).'Controller.php';
+            //Define a constante __MODULE__
+            self::defineModule($module);
+            
+            //Faz o include do Controller atual
+            $urlFileController = __MODULE__ . '/controllers/'.ucfirst($controllerClass).'Controller.php';
             if (!file_exists($urlFileController)) die('Arquivo de inclusão '.$urlFileController.' não localizado');
-
-            require_once($urlFileController);
-
+            require_once($urlFileController);           
+            
+            /*
+             * Inicializa a conexão com o DB.
+             * Necessário para evitar erro de conexão ao executar o Controller->action().
+             */            
             Conn::init();
 
-            /**
-            *Localiza a classe solicitada de acordo com o seu namespace e faz o include do arquivo.
-            * @param String $class (nome da classe requisitada).
-            * Não retorna valor.
-            */            
+            //Carrega classes invocadas na aplicação, a partir de seu namespace.
             spl_autoload_register('self::loadClass');	         
-
-
-            $actionMethod   = 'action'.ucfirst($actionMethod);
-            $objPg          = new $controllerClass;
-            $objPg->$actionMethod();            
+            
+            /*
+             * Identifica o método (action) a ser chamado no Controller atual.
+             * O $actionMethod deve iniciar sempre com o prefixo 'action' seguido do parâmetro
+             * $action com inicial maiúscula.
+             * 
+             * Exemplo:
+             * Para $action='faleConosco' o método do controle a ser chamado será 
+             * actionFaleConosco().                         
+             */            
+            $method         = 'action'.ucfirst($action);
+            $objController  = new $controllerClass;
+            $objController->$method();//Executa o Controller->action()            
         }
         
+        /**
+        * Localiza a classe solicitada de acordo com o seu namespace e faz o include do arquivo.
+        * @param String $class (nome da classe requisitada).
+        * return void
+        */             
         private static function loadClass($class){            
             $urlInc = str_replace("\\", "/" , $class . '.php');                
             if (isset($class) && file_exists($urlInc)){          
@@ -66,8 +87,12 @@
             }                      
         }
         
-        private static function defineApp($module){
-            define("__APP__", $module);            
+        /**
+         * Define qual o módulo chamado pelo usuário.
+         * @param type $module 
+         */
+        private static function defineModule($module){
+            define("__MODULE__", $module);            
         }
     }
 ?>
