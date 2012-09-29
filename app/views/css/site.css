@@ -1062,3 +1062,100 @@ a:hover {text-decoration: underline}
 
 	}
 
+        #box_usuario{
+            position:absolute;
+            z-index:9999;
+            top:25px;;
+            right:150px;
+            width:380px;
+            height:auto;
+            border:2px solid #CCC;
+            background-color:#FFF;
+        }
+        
+        #box_usuario #box_login{
+            width: 100%;
+            height: auto;
+        }
+        
+        #box_usuario #box_login table td{
+            padding:3px;
+        }
+        
+        #box_usuario #box_login table td input[type="text"], input[type="submit"], input[type="button"], input[type="password"]{
+            margin:0;
+        }
+        
+        #box_usuario #box_login table td .bt_normal{
+            background-image:none;
+            width:370px;
+            height:28px;
+            display: inline-block;
+            font-size:12px;
+            color:#000;
+            text-decoration: none;
+            text-shadow:none;
+            cursor: pointer;
+            margin-top:0;
+            margin-bottom:0;
+            line-height:normal;
+            padding:3px;
+            *padding-top:10px;
+            border:0px;
+        }
+        
+        #box_usuario #box_login table td .bt_normal:hover{
+            background-image:none;
+            width:370px;
+            height:28px;
+            display: inline-block;
+            font-size:12px;
+            color:#000;
+            text-decoration: none;
+            text-shadow:none;
+            cursor: pointer;
+            margin-top:0;
+            margin-bottom:0;
+            line-height:normal;
+            padding:3px;
+            *padding-top:10px;
+            border:0px;
+        }
+        
+        #box_usuario #box_login table td .bt_fb{
+            background-image:none;
+            background-color: #829BD3;
+            width:370px;
+            height:28px;
+            display: inline-block;
+            font-size:12px;
+            color:#FFF;
+            text-decoration: none;
+            text-shadow:none;
+            cursor: pointer;
+            margin-top:0;
+            margin-bottom:0;
+            line-height:normal;
+            padding:3px;
+            *padding-top:10px;
+            border:0px;
+        }
+        
+        #box_usuario #box_login table td .bt_fb:hover{
+            background-image:none;
+            background-color: #829BD3;
+            width:370px;
+            height:28px;
+            display: inline-block;
+            font-size:12px;
+            color:#FFF;
+            text-decoration: none;
+            text-shadow:none;
+            cursor: pointer;
+            margin-top:0;
+            margin-bottom:0;
+            line-height:normal;
+            padding:3px;
+            *padding-top:10px;
+            border:0px;
+        }

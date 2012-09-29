@@ -18,27 +18,30 @@
 	    $this->actionAinterbits();
         }      
         
-        function actionAinterbits(){     
-            try {
+        function actionAinterbits(){      
+            try{
                 $objPartLayout                  = new ViewPart('templates/navegacaoVertical');
                 $objPartLayout->IMG             = "<img src='app/views/images/testeira.jpg'>";
-                $objPartLayout->LOCAL           = "Conheça a Interbits";            
+                $objPartLayout->LOCAL           = "Conheça a Interbits";
                 $objPartLayout->MENU_VERTICAL   = \HtmlComponent::menuVertical(self::$arrMenuVertical);
-
+                        
                 $objPartPg                      = new ViewPart('sobreNos_aInterbits');            
                 $objPartLayout->BODY            = $objPartPg->render();                                    
 
                 $objView                        = new View($objPartLayout);            
                 $objView->TITLE                 = 'SuperPro - A Interbits';
+                
                 $objView->setCssInc('pg_internas,menu_lateral');                      
 
                 $objView->forceCssJsMinifyOn();
 
                 $objView->render('aInterbits');    
-            } catch( \Exception $e) {
-                echo $e->getMessage();
-                die();
-            } 
+            }catch(Exception $e){
+                echo "Erro<br />\n";
+                echo $e->getMessage() . "<br />\n";
+                echo "Arquivo: " . $e->getFile() . "<br />\n";
+                echo "Linha: " . $e->getLine() . "<br />\n";                
+            }
         }
         
         function actionPolitica(){        
@@ -102,10 +105,10 @@
                 $htmlUser   = HtmlComponent::emailContatoUser($_POST);
                 $htmlInter  = HtmlComponent::emailContatoSite($_POST);
                 
-                $headers = "From: interbits@interbits.com.br\r\n";
-                $headers .= "Reply-To: interbits@interbits.com.br\r\n";
-                $headers .= "MIME-Version: 1.0\r\n";
-                $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                $headers    = "From: interbits@interbits.com.br\r\n";
+                $headers    .= "Reply-To: interbits@interbits.com.br\r\n";
+                $headers    .= "MIME-Version: 1.0\r\n";
+                $headers    .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
                 
                 if(($htmlUser == null || trim($htmlUser) == "") && ($htmlInter == null || trim($htmlInter) == "")){
                     $ret->status    = true;

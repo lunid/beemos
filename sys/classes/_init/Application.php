@@ -78,7 +78,10 @@
         * @param String $class (nome da classe requisitada).
         * return void
         */             
-        private static function loadClass($class){            
+        private static function loadClass($class){   
+            //Tratamento para utilização do Hybridauth.
+            if($class == 'FacebookApiException') return false;            
+            
             $urlInc = str_replace("\\", "/" , $class . '.php');                
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  

@@ -190,6 +190,33 @@ class HtmlComponent {
     }    
     
     /**
+     * Cria o HTML de E-mail contato automático que o usuário recebe.
+     * 
+     * @param array $dadosEmail
+     * <code>
+     * array(
+     *      "nome"  => "Marcelo",
+     *      "msg"   => "Mensagem",
+     *      "email" => "marcelo@teste.com"
+     * )
+     * </code>
+     * @return string Html do e-mail processado.
+     * @throws Exception
+     */
+    public static function emailContatoUser($dadosEmail){
+        try{
+            //Setando propriedades
+            self::$dadosEmail   = $dadosEmail;
+            self::$default_html = 'email_contato';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $e){
+            throw $e;
+        }   
+    }
+    
+    /**
      * Cria o HTML de E-mail Suporte automático que o usuário recebe.
      * 
      * @param array $dadosEmail
