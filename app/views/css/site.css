@@ -1064,7 +1064,7 @@ a:hover {text-decoration: underline}
 
         #box_usuario{
             position:absolute;
-            z-index:9999;
+            z-index:10;
             top:25px;;
             right:150px;
             width:380px;
@@ -1073,20 +1073,20 @@ a:hover {text-decoration: underline}
             background-color:#FFF;
         }
         
-        #box_usuario #box_login{
+        #box_usuario .box_table{
             width: 100%;
             height: auto;
         }
         
-        #box_usuario #box_login table td{
+        #box_usuario .box_table table td{
             padding:3px;
         }
         
-        #box_usuario #box_login table td input[type="text"], input[type="submit"], input[type="button"], input[type="password"]{
+        #box_usuario .box_table table td input[type="text"], input[type="submit"], input[type="button"], input[type="password"]{
             margin:0;
         }
         
-        #box_usuario #box_login table td .bt_normal{
+        #box_usuario .box_table table td .bt_normal{
             background-image:none;
             width:370px;
             height:28px;
@@ -1104,7 +1104,7 @@ a:hover {text-decoration: underline}
             border:0px;
         }
         
-        #box_usuario #box_login table td .bt_normal:hover{
+        #box_usuario .box_table table td .bt_normal:hover{
             background-image:none;
             width:370px;
             height:28px;
@@ -1122,7 +1122,7 @@ a:hover {text-decoration: underline}
             border:0px;
         }
         
-        #box_usuario #box_login table td .bt_fb{
+        #box_usuario .box_table table td .bt_fb{
             background-image:none;
             background-color: #829BD3;
             width:370px;
@@ -1141,7 +1141,7 @@ a:hover {text-decoration: underline}
             border:0px;
         }
         
-        #box_usuario #box_login table td .bt_fb:hover{
+        #box_usuario .box_table table td .bt_fb:hover{
             background-image:none;
             background-color: #829BD3;
             width:370px;

@@ -46,19 +46,24 @@
                     die("Usuário do Facebook não encontrado!");
                 }
                 
+                //Procurando usuário do Facebook em nossa Base
                 $m_admUsuario           = new AdmUsuario();
                 $m_admUsuario->FB_ID    = $profile->identifier;
-                $rs = $m_admUsuario->verificaUserFacebook();
+                $rs                     = $m_admUsuario->verificaUserFacebook();
                 
-                echo "<pre style='color:#FF0000;'>";
-                print_r($profile->identifier);
-                echo "</pre>";
-                die;
+                $viewPart           = new ViewPart("social_facebook");
+                $viewPart->MSG      = $rs->msg;
                 
-                $viewPart   = new ViewPart("blank");
-                $view       = new View($viewPart, "blank");
+                if($rs->status === true){
+                    $viewPart->STATUS   = 1;
+                    
+                    $_SESSION['user_site'] = serialize($m_admUsuario);
+                }else{
+                    $viewPart->STATUS   = 0;
+                }
                 
-                
+                $view           = new View($viewPart, "socialauth");
+                $view->TITLE    = "Autenticação Facebook";
                 
                 $view->render();
             }catch(Exception $e){

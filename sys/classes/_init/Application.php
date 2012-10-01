@@ -1,6 +1,8 @@
 <?php
     
     require_once('sys/classes/comps/files/YUICompressor.php');
+    require_once('sys/classes/comps/hybridauth/Auth.php');
+    require_once('sys/classes/comps/hybridauth/Endpoint.php');
     require_once('sys/classes/comps/HtmlComponent.php');
     require_once('sys/classes/comps/ChartComponent.php');
     require_once('sys/classes/db/Meekrodb_2_0.php');

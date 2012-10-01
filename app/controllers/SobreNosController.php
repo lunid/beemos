@@ -82,7 +82,7 @@
 
                 $objView->setPlugin('tooltip');
                 $objView->setCssInc('pg_internas,menu_lateral');                      
-                $objView->setJsInc("sys:util.form,init_contato");
+                $objView->setJsInc("init_contato");
 
                 $objView->forceCssJsMinifyOn();
 

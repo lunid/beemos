@@ -269,6 +269,18 @@ class HtmlComponent {
             throw $e;
         }   
     }
+    
+    public static function barraTopo(){
+        try{
+            //Setando propriedades
+            self::$default_html = 'barraTopo';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $e){
+            throw $e;
+        }   
+    }
 }
 
 ?>

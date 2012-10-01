@@ -23,6 +23,55 @@ Site.prototype = {
         }catch(err){
             alert(Dic.loadMsg("Site", "CATCH", "changeArea") + " " + err.message);
         }
+    },
+    alternaLogin: function(local){
+        try{
+            if(local == 'aluno'){
+                $('#box_login').hide();
+                $('#box_aluno').show();
+            }else{
+                $('#box_aluno').hide();
+                $('#box_login').show();
+            }
+        }catch(err){
+            alert(Dic.loadMsg("Site", "CATCH", "alternaLogin") + " " + err.message);
+        }
+    },
+    reloadPage: function (){
+        window.location.reload();
+    },
+    logoff: function (){
+        try{
+            $("#modal_aguarde").trigger('click');
+
+            $.post(
+                'usuario/sair',
+                null,
+                function(ret){
+                    if(ret.status){
+                        window.location.reload();
+                    }else{
+                        $.fancybox.close(true);
+
+                        alert(ret.msg);
+                    }
+                },
+                'json'
+            );
+        }catch(err){
+            alert(Dic.loadMsg("Site", "CATCH", "logoff") + " " + err.message);
+        }
+    },
+    boxUsuario: function(){
+        try{
+            if($('#box_usuario').css('display') == 'none'){
+                $('#box_usuario').show();
+            }else{
+                $('#box_usuario').hide();
+            }
+        }catch(err){
+            alert(Dic.loadMsg("Site", "CATCH", "boxUsuario") + " " + err.message);
+        }
     }
 }
 

@@ -55,7 +55,7 @@ Form.prototype = {
         
         this.modalId = id;
     },
-    validate: function(form, ajax){
+    validate: function(form, ajax, callback){
         try{
             var validate = true;
             
@@ -101,14 +101,19 @@ Form.prototype = {
                             });
                         }
                         
-                        $.fancybox.close(true);
-                        
-                        if(modalId != ""){
-                            $("#msg_" + modalId).html(ret.msg);
-                            $("#modal_" + modalId).trigger('click');
+                        if(callback != "" && ret.status){
+                            var fn = site[callback];
+                            fn();
                         }else{
-                            alert(ret.msg);
-                        }
+                            $.fancybox.close(true);
+                            
+                            if(modalId != ""){
+                                $("#msg_" + modalId).html(ret.msg);
+                                $("#modal_" + modalId).trigger('click');
+                            }else{
+                                alert(ret.msg);
+                            }
+                        }   
                     },
                     'json'
                 ).error(function(){

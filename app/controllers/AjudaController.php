@@ -94,7 +94,7 @@
                 
                 $objView->setPlugin('tooltip');
                 $objView->setCssInc('pg_internas,menu_lateral');                      
-                $objView->setJsInc("sys:util.form,init_suporte");
+                $objView->setJsInc("init_suporte");
                 
                 $objView->forceCssJsMinifyOn();
 

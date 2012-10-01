@@ -11,7 +11,7 @@
         const CSS       = 'sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site';
         const CSS_INC   = '';
         const JS        = 'init,site,sys:util.dictionary';
-        const JS_INC    = '';        
+        const JS_INC    = 'sys:util.form';        
         const PLUGINS   = 'modal,menuHorizontal,menuIdiomas';
         
         private $arrMenuOpts = array(
@@ -55,6 +55,11 @@
             if (is_object($objViewPart)) {                                 
                 $objViewTpl                     = new ViewPart('templates/'.$tplName);
                 $objViewTpl->BODY               = $objViewPart->render();
+                
+                if($tplName == 'padrao'){
+                    $objViewTpl->BARRA_TOPO = \HtmlComponent::barraTopo();
+                }
+                
                 $this->bodyContent              = $objViewTpl->render();
                 $this->layoutName               = $objViewPart->layoutName;                
                 
