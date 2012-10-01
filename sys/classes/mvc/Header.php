@@ -138,7 +138,7 @@ class Header {
                     if (strlen($strFile) == 0) continue;
                     try {
                         $this->memoSetFile($ext,$strFile);  
-                    } catch(\Exception $e) {
+                    } catch(\Exception $e) {                        
                         $this->showErr('memoIncludeJsCss()',$e,FALSE); 
                     }                                
                 }                    
@@ -149,7 +149,8 @@ class Header {
                 throw new \Exception( $msgErr );                 
             }               
         } catch(\Exception $e){
-            $this->showErr('Erro ao memorizar lista de includes ('.$ext.' -> '.$listInc.')',$e);      
+            $msgErr = $this->showErr('Erro ao memorizar lista de includes ('.$ext.' -> '.$listInc.')',$e);
+            throw new \Exception($msgErr);            
         }                              
     }  
    
@@ -195,9 +196,9 @@ class Header {
                 $tags = (is_array($arrTag) && count($arrTag) > 0)?join(chr(13),$arrTag):'';
                 return $tags;            
             }
-        } catch(\Exception $e){
-            throw $e;
-             //$this->showErr('Erro ao recuperar listas memorizadas de includes ('.$ext.')',$e); 
+        } catch(\Exception $e){            
+             $msgErr = $this->showErr('Erro ao recuperar listas memorizadas de includes ('.$ext.')',$e); 
+             throw new \Exception($msgErr);  
         }
     }    
     
@@ -347,7 +348,7 @@ class Header {
     private function showErr($msg,$e,$die=TRUE){
         $msgErr = "<b>".$msg.':</b><br/><br/>'.$e->getMessage();
         if ($die) die($msgErr);
-        echo $msgErr.'<br/><br/>';
+        return $msgErr.'<br/><br/>';
     }    
 }
 ?>

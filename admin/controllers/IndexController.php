@@ -16,7 +16,7 @@
         /**
         *Conteúdo da página home do admin.
         */
-        function indexHome(){
+        function actionIndex(){
             try{
                 //Home
                 $objView = new ViewPart('home');

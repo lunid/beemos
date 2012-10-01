@@ -7,9 +7,9 @@
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/mvc/Controller.php');
     require_once('sys/classes/mvc/Model.php');           
-
-
-    class Application {
+    require_once('sys/classes/util/Xml.php');           
+    
+    class Application extends \sys\classes\util\Xml {
         /**
          * Classe de inicialização da aplicação.
          * 
@@ -24,7 +24,7 @@
             
             $controllerClass = 'index';
             $action          = 'index';
-
+            
             $params     = (isset($_GET['PG']))?$_GET['PG']:'';    
             $arrParams  = explode('/',$params);            
             
@@ -44,6 +44,9 @@
             
             //Define a constante __MODULE__
             self::defineModule($module);
+            //echo __MODULE__;                        
+            
+            self::loadConfig();
             
             //Faz o include do Controller atual
             $urlFileController = __MODULE__ . '/controllers/'.ucfirst($controllerClass).'Controller.php';
@@ -71,6 +74,30 @@
             $method         = 'action'.ucfirst($action);
             $objController  = new $controllerClass;
             $objController->$method();//Executa o Controller->action()            
+        }
+        
+        private static function loadConfig(){
+            //Carrega a configuração do sistema
+            $pathXml    = 'config.xml';
+            $objXml     = self::loadXml($pathXml);   
+            print_r($objXml);
+            if (is_object($objXml)) {
+                $nodes = $objXml->config->header;
+                print_r($nodes);
+                die();
+                $numItens    = count($nodes);
+                
+                if ($numItens > 0){
+                    $value  = self::valueForAttrib($nodes,'id',$codMsg);
+                    $msg    = (strlen($value) > 0)?$value:'Erro desconhecido';
+                } else {
+                    //Nenhuma mensagem foi localizada no XML informado.
+                    $msgErr  = 'O arquivo '.$pathXml.' existe, porém o Xml Node com a mensagem '.$codMsg.' não foi localizado.';
+                }
+            } else {
+                $msgErr = 'Impossível ler o arquivo '.$pathXml;
+                die($msgErr);
+            }            
         }
         
         /**

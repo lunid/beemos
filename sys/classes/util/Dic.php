@@ -5,9 +5,9 @@
  * O arquivo de dicionário é o XML /app/dic/backend_exception.xml.
  * 
  */
-    namespace sys\classes\util;
+    namespace sys\classes\util;    
     
-    class Dic {
+    class Dic extends Xml {
         
         /**
          * Recebe um nome de classe ou método na variável $item, retira o namespace e retorna 
@@ -24,56 +24,41 @@
         }
  
         public static function loadMsg($class,$func,$ns,$codMsg=''){
-            $msgErr         = ''; 
-            $msg            = '';
+            $msgErr  = ''; 
+            $msg     = '';
             
             //Retira o namespace da variável $class e $func
             $class          = self::getNameItem($class,$ns.'\\');
-            $func           = ($func == NULL)?'default':self::getNameItem($func,$ns.'\\'.$class.'::');
-            
+            $func           = ($func == NULL)?'default':self::getNameItem($func,$ns.'\\'.$class.'::');            
             $fileException  = 'app/dic/e'.$class.'.xml';
            
             $method = __CLASS__.'\\'.__FUNCTION__."()";//Monta uma string ref. ao método atual. Usado para mostrar erro do método setErr()
             
-            $xml = $fileException;
+            $pathXml = $fileException;
             if (!file_exists($fileException)) {
                 //Verifica na pasta sys
                 $fileException  = str_replace('app/','sys/',$fileException);
-                $xml            = (!file_exists($fileException))?'sys/dic/exception.xml':$fileException;
+                $pathXml        = (!file_exists($fileException))?'sys/dic/exception.xml':$fileException;
             }            
-            
-            if (file_exists($xml)){
-                $strXml     = file_get_contents($xml);
-                $objXml     = @simplexml_load_string($strXml);
-                $arrNodes   = $objXml->$class->$func;//object se for um único nó <msg..>, array se for maior que um.
+           
+            $objXml = self::loadXml($pathXml);
+            if (is_object($objXml)) {
+                $nodes      = $objXml->$class->$func->msg;
+                $numItens    = count($nodes);
                 
-                if (is_object($objXml) && (is_object($arrNodes) || is_array($arrNodes))){
-                    //Arquivo xml carregado com sucesso.                    
-                    foreach($arrNodes as $msgNodes){              
-                        if (count($msgNodes->msg) > 1){ 
-                            //Existe mais de uma mensagem (<msg...>) para a $class->$func atual.
-                            foreach($msgNodes as $msgNode) {
-                                $atrib = $msgNode->attributes();
-                                if ($atrib == strtoupper($codMsg)) {
-                                    $msg = $msgNode;
-                                    break;
-                                }
-                            }
-                        } else {
-                            //Existe um único nó <msg...> para a $class->$func atual.
-                            $atrib  = $msgNodes->msg->attributes();                            
-                            $msg    = ($atrib == $codMsg)?$msgNodes->msg:'Erro desconhecido';
-                        }                                                
-                    } 
-                    $msg = '<b>'.$class.'/'.$func."()</b>:<br/>".$msg;
+                if ($numItens > 0){
+                    $value  = self::valueForAttrib($nodes,'id',$codMsg);
+                    $msg    = (strlen($value) > 0)?$value:'Erro desconhecido';
                 } else {
-                    $msgErr = "Não foi possível carregar um objeto XML para $class->$func->$codMsg.";
+                    //Nenhuma mensagem foi localizada no XML informado.
+                    $msgErr  = 'O arquivo '.$pathXml.' existe, porém o Xml Node com a mensagem '.$codMsg.' não foi localizado.';
                 }
             } else {
-                $msgErr = "Arquivo $xml não localizado";                
+                $msgErr = 'Impossível ler o arquivo '.$pathXml;
             }
+            
             if (strlen($msgErr) > 0) self::setErr($method, $msgErr);
-            return $msg;
+            return $msg;                                    
         }
         
         /**

@@ -15,7 +15,7 @@
         /**
         * Conteúdo da página home do Top10.
         */
-        function indexHome(){
+        function actionIndex(){
             try{
                 //Top10
                 $m_top10 = new Top10Model();
@@ -107,7 +107,7 @@
         /**
         * Solicitação Ajax de Gráfico Top10
         */
-        function geraGrafico(){
+        function actionGeraGrafico(){
             try{
                 $ret            = new \stdClass();
                 $ret->status    = false;
@@ -157,7 +157,7 @@
          * 
          * @return json $ret
          */
-        public function atualizaUsuarioQuestao(){
+        public function actionAtualizaUsuarioQuestao(){
             try{
                 $ret            = new \stdClass();
                 $ret->status    = FALSE;
@@ -178,7 +178,7 @@
             }
         }
         
-        public function avaliarQuestao(){
+        public function actionAvaliarQuestao(){
             try{
                 $ret            = new \stdClass();
                 $ret->status    = FALSE;
