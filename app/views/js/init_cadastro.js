@@ -12,7 +12,7 @@ function esquecerRedeSocial(rede){
         $('#esquecer_fb').css('display', 'none');
     }else if(rede == 'google'){
         $('#google_id').val('');
-        $('#google_fb').css('display', 'none');
+        $('#esquecer_google').css('display', 'none');
     }
     
     $('#email_cadastro').removeAttr('readonly');
