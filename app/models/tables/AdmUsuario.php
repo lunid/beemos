@@ -215,12 +215,33 @@
                 $ret->status    = false;
                 $ret->msg       = "Falha ao efetuar o cadastro! Tente novamente";
                 
+                //Valida e-mail
                 $rs = $this->findAll("EMAIL = '{$this->EMAIL}'");
                 
                 if($rs->count() > 0){
                     $ret            = new \stdClass();
                     $ret->msg       = "E-mail já cadastrado!";
                     return $ret;
+                }
+                //Valida facebook
+                if($this->FB_ID != ''){
+                    $rs = $this->findAll("FB_ID = '{$this->FB_ID}'");
+
+                    if($rs->count() > 0){
+                        $ret            = new \stdClass();
+                        $ret->msg       = "Essa conta de Facebook já possui cadastro!";
+                        return $ret;
+                    }
+                }
+                //Valida google
+                if($this->GOOGLE_ID != ''){
+                    $rs = $this->findAll("GOOGLE_ID = '{$this->GOOGLE_ID}'");
+
+                    if($rs->count() > 0){
+                        $ret            = new \stdClass();
+                        $ret->msg       = "Essa conta do Google já possui cadastro!";
+                        return $ret;
+                    }
                 }
                 
                 //Inicia perfil do cadatsro como Professor caso não seja definido!

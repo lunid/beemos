@@ -1,10 +1,23 @@
 <script type="text/javascript">
     if({STATUS} == 1){
         window.opener.document.getElementById('nome_cadastro').value        = "{NOME}";
+        
         window.opener.document.getElementById('email_cadastro').value       = "{EMAIL}";
+        window.opener.document.getElementById('email_cadastro').readonly    = "readonly";
+        window.opener.document.getElementById('email_cadastro').style.backgroundColor = "#DADADA";
+        window.opener.document.getElementById('email_cadastro').style.color = "#000";
+        
         window.opener.document.getElementById('telefone_cadastro').value    = "{TELEFONE}";
-        window.opener.document.getElementById('fb_id').value                = "{FB_ID}";
-        window.opener.document.getElementById('google_id').value            = "{GOOGLE_ID}";
+        
+        window.opener.document.getElementById('esquecer_fb').style.display = "none";
+        window.opener.document.getElementById('esquecer_google').style.display = "none";
+        if('{FB_ID}' != ''){
+            window.opener.document.getElementById('fb_id').value = "{FB_ID}";
+            window.opener.document.getElementById('esquecer_fb').style.display = "";
+        }else if('{GOOGLE_ID}' != ''){
+            window.opener.document.getElementById('google_id').value = "{GOOGLE_ID}";
+            window.opener.document.getElementById('esquecer_google').style.display = "";
+        }
         window.close();
     }
 </script>

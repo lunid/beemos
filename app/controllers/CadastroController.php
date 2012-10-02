@@ -119,8 +119,8 @@
                     $m_admUsuario->TELEFONE         = $telefone;
                     $m_admUsuario->SENHA            = md5(123123);
                     $m_admUsuario->ID_PERFIL        = $id_perfil;
-                    $m_admUsuario->FB_ID            = $fb_id;
-                    $m_admUsuario->GOOGLE_ID        = $google_id;
+                    $m_admUsuario->FB_ID            = $fb_id != '' ? $fb_id : NULL;
+                    $m_admUsuario->GOOGLE_ID        = $google_id != '' ? $google_id : NULL;
                     $m_admUsuario->STATUS           = 'I';
                     $m_admUsuario->DATA_REGISTRO    = date("Y-m-d H:i:s");
                     
