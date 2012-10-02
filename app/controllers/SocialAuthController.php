@@ -3,6 +3,7 @@
     use \sys\classes\mvc\View;        
     use \sys\classes\mvc\ViewPart;  
     use \app\models\tables\AdmUsuario;
+    use \sys\classes\util\Request;
     
     /**
     * Classe Controller usada para autenticação em redes sociais utilizando a biblioteca Hybridauth
@@ -49,8 +50,9 @@
                 $m_admUsuario->FB_ID    = $profile->identifier;
                 $rs                     = $m_admUsuario->verificaUserFacebook();
                 
-                $viewPart           = new ViewPart("social_facebook");
+                $viewPart           = new ViewPart("social_login");
                 $viewPart->MSG      = $rs->msg;
+                $viewPart->irPara   = Request::get("irPara");
                 
                 if($rs->status === true){
                     $viewPart->STATUS   = 1;
@@ -117,8 +119,9 @@
                 $m_admUsuario->GOOGLE_ID    = $profile->identifier;
                 $rs                         = $m_admUsuario->verificaUserGoogle();
                 
-                $viewPart           = new ViewPart("social_facebook");
+                $viewPart           = new ViewPart("social_login");
                 $viewPart->MSG      = $rs->msg;
+                $viewPart->irPara   = Request::get("irPara");
                 
                 if($rs->status === true){
                     $viewPart->STATUS   = 1;
