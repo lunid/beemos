@@ -72,6 +72,37 @@
             }
         }
         
+        public function actionFacebookCadastro(){
+            try{
+                $auth       = new Hybrid_Auth($this->config);
+                $profile    = $auth->authenticate('Facebook')->getUserProfile();
+                
+                if($profile->identifier == '' || $profile->identifier == null){
+                    die("Usuário do Facebook não encontrado!");
+                }
+                
+                //Enviando dados para VIEW
+                $viewPart               = new ViewPart("social_cadastro");
+                $viewPart->MSG          = "Aguarde enquanto preenchemos seu cadastro...";
+                $viewPart->NOME         = $profile->displayName;
+                $viewPart->EMAIL        = $profile->emailVerified;
+                $viewPart->TELEFONE     = $profile->phone;
+                $viewPart->FB_ID        = $profile->identifier;
+                $viewPart->GOOGLE_ID    = "";
+                $viewPart->STATUS       = 1;
+                
+                $view           = new View($viewPart, "socialauth");
+                $view->TITLE    = "Cadastro com Facebook";
+                
+                $view->render('social_cadastro');
+            }catch(Exception $e){
+                echo "Erro<br />\n";
+                echo $e->getMessage() . "<br />\n";
+                echo "Arquivo: " . $e->getFile() . "<br />\n";
+                echo "Linha: " . $e->getLine() . "<br />\n";                
+            }
+        }
+        
         public function actionGoogle(){
             try{
                 $auth       = new Hybrid_Auth($this->config);
@@ -101,6 +132,37 @@
                 $view->TITLE    = "Autenticação Google";
                 
                 $view->render();
+            }catch(Exception $e){
+                echo "Erro<br />\n";
+                echo $e->getMessage() . "<br />\n";
+                echo "Arquivo: " . $e->getFile() . "<br />\n";
+                echo "Linha: " . $e->getLine() . "<br />\n";                
+            }
+        }
+        
+        public function actionGoogleCadastro(){
+            try{
+                $auth       = new Hybrid_Auth($this->config);
+                $profile    = $auth->authenticate('Google')->getUserProfile();
+                
+                if($profile->identifier == '' || $profile->identifier == null){
+                    die("Usuário do Google não encontrado!");
+                }
+                
+                //Enviando dados para VIEW
+                $viewPart               = new ViewPart("social_cadastro");
+                $viewPart->MSG          = "Aguarde enquanto preenchemos seu cadastro...";
+                $viewPart->NOME         = $profile->displayName;
+                $viewPart->EMAIL        = $profile->emailVerified;
+                $viewPart->TELEFONE     = $profile->phone;
+                $viewPart->GOOGLE_ID    = $profile->identifier;
+                $viewPart->FB_ID        = "";
+                $viewPart->STATUS       = 1;
+                
+                $view           = new View($viewPart, "socialauth");
+                $view->TITLE    = "Cadastro com Google";
+                
+                $view->render('social_cadastro');
             }catch(Exception $e){
                 echo "Erro<br />\n";
                 echo $e->getMessage() . "<br />\n";

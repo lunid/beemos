@@ -26,10 +26,17 @@
             <td style="width:50%" align="center">
                 <!-- Usuários do Site -->
                 <div style="padding:5px;margin:3px;">
-                    <form name="form_login_cadastro" id="form_login_cadastro" method="post" action="cadastro/login" onSubmit="return form.validate(this, true);">
+                    <form name="form_login_cadastro" id="form_login_cadastro" method="post" action="cadastro/login" onSubmit="return form.validate(this, true, 'irParaHome');">
                         <fieldset>
                             <legend>Já sou cadatsrado</legend>
                             <table style="width:100%;">
+                                <tr>
+                                    <td style="vertical-align:top;text-align:center;padding:5px;" colspan="2">
+                                        <a href="javascript:void(0);" title="Login com sua conta do Facebook" onclick="javascript:window.open('socialauth/facebook', 'Facebook', 'width=800,height=600');"><img src="app/views/images/icone_facebook.jpg" border="0" style="width:20px;height:20px;vertical-align:middle;margin:5px;" />Login com Facebook</a>
+                                        &nbsp;
+                                        <a href="javascript:void(0);" title="Login com sua conta do Google" onclick="javascript:window.open('socialauth/google', 'Google', 'width=800,height=600');"><img src="app/views/images/icone_google.gif" border="0" style="width:20px;height:20px;vertical-align:middle;margin:5px;" />Login com Google</a>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="vertical-align:top;">
                                         E-mail: 
@@ -43,7 +50,7 @@
                                         Senha: 
                                     </td>
                                     <td style="vertical-align:middle;">
-                                        <input type="text" id="senha_login" name="senha_login" style="width:100%" class="required" field_name="Senha" />
+                                        <input type="password" id="senha_login" name="senha_login" style="width:100%" class="required" field_name="Senha" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -58,7 +65,7 @@
                 <!-- Usuários do Site -->
                 <!-- Esqueci Senha -->
                 <div style="padding:5px;margin:3px;">
-                    <form name="form_esqueci_cadastro" id="form_esqueci_cadastro" method="post" action="cadastro/esqueci">
+                    <form name="form_esqueci_cadastro" id="form_esqueci_cadastro" method="post" action="cadastro/esqueci" onSubmit="return form.validate(this, true);">
                         <fieldset>
                             <legend>Esqueci minha senha</legend>
                             <table style="width:100%;">
@@ -67,7 +74,7 @@
                                         E-mail: 
                                     </td>
                                     <td style="vertical-align:middle;">
-                                        <input type="text" id="email_login" name="email_login" style="width:100%" />
+                                        <input type="text" id="email_esqueci" name="email_esqueci" style="width:100%" class="required email" field_name="E-mail" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,16 +91,23 @@
             <td style="width:50%" align="center">
                 <!-- Novo usuário -->
                 <div style="padding:5px;margin:3px;">
-                    <form name="form_novo_cadastro" id="form_novo_cadastro" method="post" action="cadastro/novo">
+                    <form name="form_novo_cadastro" id="form_novo_cadastro" method="post" action="cadastro/novo" onSubmit="return form.validate(this, true);">
                         <fieldset>
                             <legend>Ainda não tenho cadastro</legend>
                             <table style="width:100%;">
+                                <tr>
+                                    <td style="vertical-align:top;text-align:center;padding:5px;" colspan="2">
+                                        <a href="javascript:void(0);" title="Cadastre-se com sua conta do Facebook" onclick="javascript:window.open('socialauth/facebookCadastro', 'Facebook', 'width=800,height=600');"><img src="app/views/images/icone_facebook.jpg" border="0" style="width:20px;height:20px;vertical-align:middle;margin:5px;" />Cadastre-se com Facebook</a>
+                                        &nbsp;
+                                        <a href="javascript:void(0);" title="Cadastre-se com sua conta do Google" onclick="javascript:window.open('socialauth/googleCadastro', 'Google', 'width=800,height=600');"><img src="app/views/images/icone_google.gif" border="0" style="width:20px;height:20px;vertical-align:middle;margin:5px;" />Cadastre-se com Google</a>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="vertical-align:top;">
                                         Nome: 
                                     </td>
                                     <td style="vertical-align:middle;">
-                                        <input type="text" id="nome_cadastro" name="nome_cadastro" style="width:100%" />
+                                        <input type="text" id="nome_cadastro" name="nome_cadastro" style="width:100%" class="required" field_name="Nome" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -101,28 +115,34 @@
                                         E-mail: 
                                     </td>
                                     <td style="vertical-align:middle;">
-                                        <input type="text" id="email_cadastro" name="email_cadastro" style="width:100%" />
+                                        <input type="text" id="email_cadastro" name="email_cadastro" style="width:100%" class="required email" field_name="E-mail" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="vertical-align:top;">
-                                        Senha: 
+                                        Telefone 
                                     </td>
                                     <td style="vertical-align:middle;">
-                                        <input type="password" id="senha_cadastro" name="senha_cadastro" style="width:100%" />
+                                        <input type="text" id="telefone_cadastro" name="telefone_cadastro" style="width:100%" class="phone" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="vertical-align:top;">
-                                        Repetir Senha: 
+                                        Qual o seu perfil?
                                     </td>
                                     <td style="vertical-align:middle;">
-                                        <input type="password" id="r_senha_cadastro" name="r_senha_cadastro" style="width:100%" />
+                                        <input type="radio" name="id_perfil" value="2" checked="" />&nbsp;Professor
+                                        &nbsp;
+                                        <input type="radio" name="id_perfil" value="9" />&nbsp;Aluno
+                                        &nbsp;
+                                        <input type="radio" name="id_perfil" value="10" />&nbsp;Escola
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="vertical-align:top;text-align:right;">
-                                        <input type="submit" value="Salvar" />
+                                        <input type="hidden" id="fb_id" name="fb_id" value="" />
+                                        <input type="hidden" id="google_id" name="google_id" value="" />
+                                        <input type="submit" value="Cadastrar" />
                                     </td>
                                 </tr>
                             </table>

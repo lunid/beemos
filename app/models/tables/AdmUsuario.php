@@ -32,10 +32,22 @@
                     return $ret;
                 }
                 
-                $rs = $this->findAll("FB_ID = {$this->FB_ID} AND STATUS = 'A'");
+                $rs = $this->findAll("FB_ID = '{$this->FB_ID}'");
                 
                 if($rs->count() > 0){
                     $arrObj         = $rs->getRs();
+                    
+                    switch($arrObj[0]->STATUS){
+                        case 'I':
+                            $ret->msg = "Usuário inativo! Ative sua conta agora mesmo através do e-mail que lhe enviamos.";
+                            return $ret;
+                            break;
+                        case 'B':
+                            $ret->msg = "Usuário bloqueado! Entre em contato com o Suporte.";
+                            return $ret;
+                            break;
+                    }
+                    
                     $ret->status    = true;
                     
                     //Iniciando dados do objeto
@@ -76,10 +88,22 @@
                     return $ret;
                 }
                 
-                $rs = $this->findAll("GOOGLE_ID = {$this->GOOGLE_ID} AND STATUS = 'A'");
+                $rs = $this->findAll("GOOGLE_ID = '{$this->GOOGLE_ID}'");
                 
                 if($rs->count() > 0){
                     $arrObj         = $rs->getRs();
+                    
+                    switch($arrObj[0]->STATUS){
+                        case 'I':
+                            $ret->msg = "Usuário inativo! Ative sua conta agora mesmo através do e-mail que lhe enviamos.";
+                            return $ret;
+                            break;
+                        case 'B':
+                            $ret->msg = "Usuário bloqueado! Entre em contato com o Suporte.";
+                            return $ret;
+                            break;
+                    }
+                    
                     $ret->status    = true;
                     
                     //Iniciando dados do objeto
@@ -103,6 +127,12 @@
             }
         }
         
+        /**
+         * Valida o usuário e senha enviados, e caso existam na base ele carrega todos os dados do ADM_USUARIO
+         * 
+         * @return stdClass $ret
+         * @throws Exception
+         */
         public function validaUsuarioSenha(){
             try{
                 $ret            = new \stdClass();
@@ -132,7 +162,7 @@
                             return $ret;
                             break;
                         case 'I':
-                            $ret->msg = "Usuário Inativo no momento! Entre em contato com nosso suporte.";
+                            $ret->msg = "Usuário inativo! Ative sua conta agora mesmo através do e-mail que lhe enviamos.";
                             return $ret;
                             break;
                         case 'A':
@@ -145,6 +175,61 @@
                             return $ret;
                             break;
                     }
+                }
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Busca o cadatsro do usuário na base de dados, e caso exista gera uma nova senha e dispara por e-mail para ele.
+         * 
+         * @return stdClass $ret
+         * @throws Exception
+         */
+        public function esqueciSenha(){
+            try{
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "E-mail não encontrado!";
+                
+                $rs = $this->findAll("EMAIL = '{$this->EMAIL}'");
+                
+                if($rs->count() == 1){
+                    $ret            = new \stdClass();
+                    $ret->status    = true;
+                    $ret->msg       = "Nova senha enviada para o seu e-mail. Acesse e siga as instruções.";
+                }
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function cadastrarUsuarioSite($id_perfil = 2){
+            try{
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao efetuar o cadastro! Tente novamente";
+                
+                $rs = $this->findAll("EMAIL = '{$this->EMAIL}'");
+                
+                if($rs->count() > 0){
+                    $ret            = new \stdClass();
+                    $ret->msg       = "E-mail já cadastrado!";
+                    return $ret;
+                }
+                
+                //Inicia perfil do cadatsro como Professor caso não seja definido!
+                $this->ID_PERFIL = (int)$this->ID_PERFIL <= 0 ? $id_perfil : (int)$this->ID_PERFIL;
+                $id = $this->save();
+                
+                if($id > 0){
+                    $ret->status = true;
+                    $ret->msg    = "Usuário cadastrado com sucesso!<br />Você receberá um e-mail em instantes, por favor ative seu cadastrado através do link que lhe enviamos.";                    
                 }
                 
                 return $ret;

@@ -40,6 +40,9 @@ Site.prototype = {
     reloadPage: function (){
         window.location.reload();
     },
+    irParaHome: function (url){
+        window.location = "http://localhost/interbits";
+    },
     logoff: function (){
         try{
             $("#modal_aguarde").trigger('click');

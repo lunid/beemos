@@ -1,6 +1,10 @@
 <script type="text/javascript">
     if({STATUS} == 1){
-        window.opener.location.reload();
+        window.opener.document.getElementById('nome_cadastro').value        = "{NOME}";
+        window.opener.document.getElementById('email_cadastro').value       = "{EMAIL}";
+        window.opener.document.getElementById('telefone_cadastro').value    = "{TELEFONE}";
+        window.opener.document.getElementById('fb_id').value                = "{FB_ID}";
+        window.opener.document.getElementById('google_id').value            = "{GOOGLE_ID}";
         window.close();
     }
 </script>
