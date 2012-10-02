@@ -23,7 +23,16 @@
     <div class="sub_top">
         <span>Fone: 11 3549-3988</span>
         <span><a href="chat.php">Atendimento on-line</a></span>
-        <? 
+       
+    </div>  
+    <div id="idiomas">
+        <select class="mydds" name="myimge">0
+            <option value="pt" selected="selected" title="app/views/images/br.png">Português</option>
+            <option value="en" title="app/views/images/usa.png">Inglês</option>
+        </select>
+    </div> 
+    <div id="login2">
+    <? 
             if(isset($_SESSION['user_site'])){ 
                 $objUser = unserialize($_SESSION['user_site']);
         ?>
@@ -32,18 +41,13 @@
             }else{ 
                 $objUser = null;
         ?>
-        <a href="javascript:void(0);" onclick="javascript:site.boxUsuario();">Login</a>
+        <a href="javascript:void(0);" onclick="javascript:site.boxUsuario();">LOGIN</a>
         <?
             }
         ?>
         &nbsp;&nbsp;&nbsp;
     </div>
-    <div id="idiomas">
-        <select class="mydds" name="myimge">0
-            <option value="pt" selected="selected" title="app/views/images/br.png">Português</option>
-            <option value="en" title="app/views/images/usa.png">Inglês</option>
-        </select>
-    </div>   
+    
     <? if($objUser == null){ ?>
     <!-- Login Usuário -->
     <div id="box_usuario" style="display:none;">
@@ -114,4 +118,5 @@
     </div>
     <!-- Usuário Logado -->
     <? } ?>
+    
 </div>
