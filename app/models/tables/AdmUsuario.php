@@ -59,6 +59,50 @@
             }
         }
         
+        /**
+         * Verifica se existe uma conta de cadastro com a conta do Google Ativa no momento.
+         * 
+         * @return stdClass $ret
+         * @throws Exception
+         */
+        public function verificaUserGoogle(){
+            try{
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Nenhum usuário encontrado para esta conta de Google";
+                
+                if($this->GOOGLE_ID <= 0 || $this->GOOGLE_ID == ""){
+                    $ret->msg = "O Google ID não foi setado!";
+                    return $ret;
+                }
+                
+                $rs = $this->findAll("GOOGLE_ID = {$this->GOOGLE_ID} AND STATUS = 'A'");
+                
+                if($rs->count() > 0){
+                    $arrObj         = $rs->getRs();
+                    $ret->status    = true;
+                    
+                    //Iniciando dados do objeto
+                    $this->ID_USUARIO       = $arrObj[0]->ID_USUARIO;
+                    $this->NOME             = $arrObj[0]->NOME;
+                    $this->EMAIL            = $arrObj[0]->EMAIL;
+                    $this->SENHA            = $arrObj[0]->SENHA;
+                    $this->ID_PERFIL        = $arrObj[0]->ID_PERFIL;
+                    $this->STATUS           = $arrObj[0]->STATUS;
+                    $this->GOOGLE_ID        = $arrObj[0]->GOOGLE_ID;
+                    $this->DATA_REGISTRO    = $arrObj[0]->DATA_REGISTRO;
+                    $this->ULTIMO_ACESSO    = $arrObj[0]->ULTIMO_ACESSO;
+                    
+                    $ret->msg = "Usuário encontrado";
+                    return $ret;
+                }
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
         public function validaUsuarioSenha(){
             try{
                 $ret            = new \stdClass();
@@ -78,6 +122,7 @@
                     $this->ID_PERFIL        = $arrObj[0]->ID_PERFIL;
                     $this->STATUS           = $arrObj[0]->STATUS;
                     $this->FB_ID            = $arrObj[0]->FB_ID;
+                    $this->GOOGLE_ID        = $arrObj[0]->GOOGLE_ID;
                     $this->DATA_REGISTRO    = $arrObj[0]->DATA_REGISTRO;
                     $this->ULTIMO_ACESSO    = $arrObj[0]->ULTIMO_ACESSO;
                     
