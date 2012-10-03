@@ -13,21 +13,32 @@
     class Cadastro extends Controller {
         /**
         *   Conteúdo da página Assine Já
+         * 
+         * @return html Page
         */
         function actionIndex(){
-	    $objPartPg  = new ViewPart('cadastro');  
-            $objView    = new View($objPartPg);
+            try{
+                $objPartPg  = new ViewPart('cadastro');  
+                $objView    = new View($objPartPg);
 
-            $objView->setJsInc('init_cadastro');
-            $objView->forceCssJsMinifyOn();
-            
-            $objView->TITLE = 'SuperPro - Cadastre-se';
-            
-            $objView->render('cadastro');    
+                $objView->setJsInc('init_cadastro');
+                $objView->forceCssJsMinifyOn();
+
+                $objView->TITLE = 'SuperPro - Cadastre-se';
+
+                $objView->render('cadastro');    
+            }catch(Exception $e){
+                echo "Erro<br />\n";
+                echo $e->getMessage() . "<br />\n";
+                echo "Arquivo: " . $e->getFile() . "<br />\n";
+                echo "Linha: " . $e->getLine() . "<br />\n";                
+            }
         }
         
         /**
          * Efetua o Login do usuário utilizando Login e Senha
+         * 
+         * @return json ret
          */
         public function actionLogin(){
 	    try{
@@ -65,6 +76,8 @@
         
         /**
          * Efetua o Login do usuário utilizando Login e Senha
+         * 
+         * @return json ret
          */
         public function actionEsqueci(){
 	    try{
@@ -94,6 +107,11 @@
             }
         }
         
+        /**
+         * Função AJAX para cadastro de novos usuários visitantes do site
+         * 
+         * @return json ret
+         */
         public function actionNovo(){
 	    try{
                 $ret            = new stdClass();
