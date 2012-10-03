@@ -200,6 +200,14 @@
             }
         }
         
+        /**
+         * Efetua o acdastro de um visitante no site www.site.com.br/cadastro
+         * 
+         * @param int $id_perfil Perfilno qual deve ser cadastrado o usuário
+         * 
+         * @return stdClass $ret
+         * @throws Exception
+         */
         public function cadastrarUsuarioSite($id_perfil = 2){
             try{
                 $ret            = new \stdClass();

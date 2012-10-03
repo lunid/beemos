@@ -9,6 +9,11 @@
     * Classe Controller usada para autenticação em redes sociais utilizando a biblioteca Hybridauth
     */
     class SocialAuth extends Controller {
+        /**
+         * Array com as configurações das redes sociais que estamos usando no HybridAuth
+         * 
+         * @var array $config
+         */
         private $config = array(
             "base_url" => "http://localhost/interbits/socialauth", 
             "providers" => array ( 
@@ -25,6 +30,9 @@
             "debug_file" => "",
         );
         
+        /**
+         * Função que recebe retorno das redes sociais - Ponto Final
+         */
         public function actionIndex(){
 	    try{
                 Hybrid_Endpoint::process();
@@ -35,7 +43,13 @@
                 echo "Linha: " . $e->getLine() . "<br />\n";                
             }
         }   
-
+        
+        /**
+         * Função utilizada pra chamadas AJAX de validação do Facebook do usuário.
+         * Apenas chama o aplicativo e valida o usuário nele
+         * 
+         * @return html
+         */
         public function actionFacebook(){
             try{
                 $auth       = new Hybrid_Auth($this->config);
@@ -75,6 +89,11 @@
             }
         }
         
+        /**
+         * Preenche dados do formulário de cadastro com a conta do Facebook logada.
+         * 
+         * @return html
+         */
         public function actionFacebookCadastro(){
             try{
                 $auth       = new Hybrid_Auth($this->config);
@@ -106,6 +125,12 @@
             }
         }
         
+        /**
+         * Função utilizada pra chamadas AJAX de validação do Google do usuário.
+         * Apenas chama o aplicativo e valida o usuário nele
+         * 
+         * @return html
+         */
         public function actionGoogle(){
             try{
                 $auth       = new Hybrid_Auth($this->config);
@@ -145,6 +170,11 @@
             }
         }
         
+        /**
+         * Preenche dados do formulário de cadastro com a conta do Google logada.
+         * 
+         * @return html
+         */
         public function actionGoogleCadastro(){
             try{
                 $auth       = new Hybrid_Auth($this->config);
