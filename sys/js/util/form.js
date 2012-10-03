@@ -111,7 +111,7 @@ Form.prototype = {
 
                         if(callback != "" && callback != null && ret.status){
                             var fn = site[callback];
-                            fn();
+                            fn(ret, modalId);
                         }else{
                             $.fancybox.close(true);
                             

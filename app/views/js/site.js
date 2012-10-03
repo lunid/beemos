@@ -40,8 +40,19 @@ Site.prototype = {
     reloadPage: function (){
         window.location.reload();
     },
-    irParaHome: function (url){
+    irParaHome: function (){
         window.location = "http://localhost/interbits";
+    },
+    validaLogin: function(ret, modalId){
+        if(ret.login == true){
+            if(modalId != "" && modalId != null){
+                $.fancybox.close(true);
+                
+                $("#msg_" + modalId).html(ret.msg);
+                $("#modal_" + modalId).trigger('click');
+            }
+            setTimeout(function(){window.location = "http://localhost/interbits";},5000);
+        }
     },
     logoff: function (){
         try{

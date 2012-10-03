@@ -16,26 +16,39 @@
      */
     class AdmUsuario extends ORM{
         /**
-         * Verifica se existe uma conta de cadastro com a conta do Facebook Ativa no momento.
+         * Verifica se existe uma conta de cadastro com a conta do RedeSocial Ativa no momento.
+         * Caso exista uma conta em nosso banco ele faz ligação de rede social
          * 
          * @return stdClass $ret
          * @throws Exception
          */
-        public function verificaUserFacebook(){
+        public function verificaRedeSocialUsuario($rede){
             try{
                 $ret            = new \stdClass();
                 $ret->status    = false;
-                $ret->msg       = "Nenhum usuário encontrado para esta conta de Facebook";
+                $arrObj         = NULL;
+                $rede           = ucfirst(trim($rede));                
                 
-                if($this->FB_ID <= 0 || $this->FB_ID == ""){
-                    $ret->msg = "O Facebook ID não foi setado!";
-                    return $ret;
+                if($rede == 'Facebook'){
+                    if($this->FB_ID <= 0 || $this->FB_ID == ""){
+                        $ret->msg = "O Facebook ID não foi setado!";
+                        return $ret;
+                    }
+                    
+                    $rs = $this->findAll("FB_ID = '{$this->FB_ID}'");
+                }else if($rede == 'Google'){
+                    if($this->GOOGLE_ID <= 0 || $this->GOOGLE_ID == ""){
+                        $ret->msg = "O Google ID não foi setado!";
+                        return $ret;
+                    }
+                    
+                    $rs = $this->findAll("FB_ID = '{$this->FB_ID}'");
                 }
                 
-                $rs = $this->findAll("FB_ID = '{$this->FB_ID}'");
+                $ret->msg = "Nenhum usuário encontrado para esta conta do {$rede}";
                 
                 if($rs->count() > 0){
-                    $arrObj         = $rs->getRs();
+                    $arrObj = $rs->getRs();
                     
                     switch($arrObj[0]->STATUS){
                         case 'I':
@@ -47,8 +60,43 @@
                             return $ret;
                             break;
                     }
+                }else{
+                    if($rede == 'Facebook'){
+                        //Armazenando o FB_ID e EMAIL para Update
+                        $REDE_ID = $this->FB_ID;
+                    }else if($rede == 'Google'){
+                        //Armazenando o GOOGLE_ID e EMAIL para Update
+                        $REDE_ID = $this->GOOGLE_ID;
+                    }
                     
-                    $ret->status    = true;
+                    $rs = $this->findAll("EMAIL = '{$this->EMAIL}'");
+                    
+                    if($rs->count() > 0){
+                        $arrObj         = $rs->getRs();
+                        if($rede == 'Facebook'){
+                            $this->FB_ID = $REDE_ID;
+                        }else if($rede == 'Google'){
+                            $this->GOOGLE_ID = $REDE_ID;
+                        }
+                        $arrWhere       = array('ID_USUARIO = %s', $arrObj[0]->ID_USUARIO);
+                        
+                        $this->update($arrWhere);
+                        
+                        switch($arrObj[0]->STATUS){
+                            case 'I':
+                                $ret->msg = "Usuário inativo! Ative sua conta agora mesmo através do e-mail que lhe enviamos.";
+                                return $ret;
+                                break;
+                            case 'B':
+                                $ret->msg = "Usuário bloqueado! Entre em contato com o Suporte.";
+                                return $ret;
+                                break;
+                        }
+                    }
+                }
+                
+                if(is_array($arrObj)){
+                    $ret->status = true;
                     
                     //Iniciando dados do objeto
                     $this->ID_USUARIO       = $arrObj[0]->ID_USUARIO;
@@ -60,65 +108,8 @@
                     $this->FB_ID            = $arrObj[0]->FB_ID;
                     $this->DATA_REGISTRO    = $arrObj[0]->DATA_REGISTRO;
                     $this->ULTIMO_ACESSO    = $arrObj[0]->ULTIMO_ACESSO;
-                    
+
                     $ret->msg = "Usuário encontrado";
-                    return $ret;
-                }
-                
-                return $ret;
-            }catch(Exception $e){
-                throw $e;
-            }
-        }
-        
-        /**
-         * Verifica se existe uma conta de cadastro com a conta do Google Ativa no momento.
-         * 
-         * @return stdClass $ret
-         * @throws Exception
-         */
-        public function verificaUserGoogle(){
-            try{
-                $ret            = new \stdClass();
-                $ret->status    = false;
-                $ret->msg       = "Nenhum usuário encontrado para esta conta de Google";
-                
-                if($this->GOOGLE_ID <= 0 || $this->GOOGLE_ID == ""){
-                    $ret->msg = "O Google ID não foi setado!";
-                    return $ret;
-                }
-                
-                $rs = $this->findAll("GOOGLE_ID = '{$this->GOOGLE_ID}'");
-                
-                if($rs->count() > 0){
-                    $arrObj         = $rs->getRs();
-                    
-                    switch($arrObj[0]->STATUS){
-                        case 'I':
-                            $ret->msg = "Usuário inativo! Ative sua conta agora mesmo através do e-mail que lhe enviamos.";
-                            return $ret;
-                            break;
-                        case 'B':
-                            $ret->msg = "Usuário bloqueado! Entre em contato com o Suporte.";
-                            return $ret;
-                            break;
-                    }
-                    
-                    $ret->status    = true;
-                    
-                    //Iniciando dados do objeto
-                    $this->ID_USUARIO       = $arrObj[0]->ID_USUARIO;
-                    $this->NOME             = $arrObj[0]->NOME;
-                    $this->EMAIL            = $arrObj[0]->EMAIL;
-                    $this->SENHA            = $arrObj[0]->SENHA;
-                    $this->ID_PERFIL        = $arrObj[0]->ID_PERFIL;
-                    $this->STATUS           = $arrObj[0]->STATUS;
-                    $this->GOOGLE_ID        = $arrObj[0]->GOOGLE_ID;
-                    $this->DATA_REGISTRO    = $arrObj[0]->DATA_REGISTRO;
-                    $this->ULTIMO_ACESSO    = $arrObj[0]->ULTIMO_ACESSO;
-                    
-                    $ret->msg = "Usuário encontrado";
-                    return $ret;
                 }
                 
                 return $ret;
@@ -214,34 +205,85 @@
                 $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha ao efetuar o cadastro! Tente novamente";
+                $ret->login     = false;
+                $verRede        = false;
+                $arrObj         = NULL;
+                
+                //Armazena dados para utilização de UPDATE
+                $FB_ID      = $this->FB_ID;
+                $GOOGLE_ID  = $this->GOOGLE_ID;
                 
                 //Valida e-mail
                 $rs = $this->findAll("EMAIL = '{$this->EMAIL}'");
                 
                 if($rs->count() > 0){
-                    $ret            = new \stdClass();
-                    $ret->msg       = "E-mail já cadastrado!";
-                    return $ret;
+                    $arrObj = $rs->getRs();
                 }
+                
                 //Valida facebook
-                if($this->FB_ID != ''){
-                    $rs = $this->findAll("FB_ID = '{$this->FB_ID}'");
+                if($FB_ID != ''){
+                    $rs_fb = $this->findAll("FB_ID = '{$FB_ID}'");
 
-                    if($rs->count() > 0){
-                        $ret            = new \stdClass();
-                        $ret->msg       = "Essa conta de Facebook já possui cadastro!";
+                    if($rs_fb->count() > 0){
+                        $ret->msg = "Essa conta de Facebook já possui cadastro!";
                         return $ret;
+                    }else if(is_array($arrObj)){
+                        $this->FB_ID    = $FB_ID;
+                        $this->STATUS   = $arrObj[0]->STATUS;
+                        $arrWhere       = array("ID_USUARIO = %s", $arrObj[0]->ID_USUARIO);
+                        $this->update($arrWhere);
+                        $verRede        = true;
                     }
                 }
                 //Valida google
-                if($this->GOOGLE_ID != ''){
-                    $rs = $this->findAll("GOOGLE_ID = '{$this->GOOGLE_ID}'");
+                if($GOOGLE_ID != ''){
+                    $rs_google = $this->findAll("GOOGLE_ID = '{$GOOGLE_ID}'");
 
-                    if($rs->count() > 0){
-                        $ret            = new \stdClass();
-                        $ret->msg       = "Essa conta do Google já possui cadastro!";
+                    if($rs_google->count() > 0){
+                        $ret->msg = "Essa conta de Google já possui cadastro!";
                         return $ret;
+                    }else if(is_array($arrObj)){
+                        $this->GOOGLE_ID    = $GOOGLE_ID;
+                        $this->STATUS       = $arrObj[0]->STATUS;
+                        $arrWhere           = array("ID_USUARIO = %s", $arrObj[0]->ID_USUARIO);
+                        $this->update($arrWhere);
+                        $verRede            = true;
                     }
+                }
+                
+                if($rs->count() > 0 && !$verRede){
+                    $ret->msg       = "E-mail já cadastrado!";
+                    return $ret;
+                }else if($rs->count() > 0 && $verRede){
+                    $arrObj = $rs->getRs();
+                    
+                    switch($arrObj[0]->STATUS){
+                        case 'I':
+                            $ret->msg = "Usuário inativo! Ative sua conta agora mesmo através do e-mail que lhe enviamos.";
+                            return $ret;
+                            break;
+                        case 'B':
+                            $ret->msg = "Usuário bloqueado! Entre em contato com o Suporte.";
+                            return $ret;
+                            break;
+                    }
+                    
+                    //Iniciando dados do objeto
+                    $this->ID_USUARIO       = $arrObj[0]->ID_USUARIO;
+                    $this->NOME             = $arrObj[0]->NOME;
+                    $this->EMAIL            = $arrObj[0]->EMAIL;
+                    $this->SENHA            = $arrObj[0]->SENHA;
+                    $this->ID_PERFIL        = $arrObj[0]->ID_PERFIL;
+                    $this->STATUS           = $arrObj[0]->STATUS;
+                    $this->FB_ID            = $arrObj[0]->FB_ID;
+                    $this->GOOGLE_ID        = $arrObj[0]->GOOGLE_ID;
+                    $this->DATA_REGISTRO    = $arrObj[0]->DATA_REGISTRO;
+                    $this->ULTIMO_ACESSO    = $arrObj[0]->ULTIMO_ACESSO;
+                    
+                    $ret->status = true;
+                    $ret->login  = true;
+                    $ret->msg    = "Você já possui uma conta no SuperPro!<br />Apenas relacionamos sua Rede Social à sua conta.<br /><br />Você será logado automaticamente em instantes. Aguarde...";
+                    return $ret;
                 }
                 
                 //Inicia perfil do cadatsro como Professor caso não seja definido!

@@ -125,6 +125,10 @@
                     $m_admUsuario->DATA_REGISTRO    = date("Y-m-d H:i:s");
                     
                     $ret = $m_admUsuario->cadastrarUsuarioSite();
+                    
+                    if($ret->login == TRUE){
+                        $_SESSION['user_site'] = serialize($m_admUsuario);
+                    }
                 }
                 
                 echo json_encode($ret);

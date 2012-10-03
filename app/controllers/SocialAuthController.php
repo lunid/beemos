@@ -48,7 +48,8 @@
                 //Procurando usuário do Facebook em nossa Base
                 $m_admUsuario           = new AdmUsuario();
                 $m_admUsuario->FB_ID    = $profile->identifier;
-                $rs                     = $m_admUsuario->verificaUserFacebook();
+                $m_admUsuario->EMAIL    = $profile->emailVerified;
+                $rs                     = $m_admUsuario->verificaRedeSocialUsuario('Facebook');
                 
                 $viewPart           = new ViewPart("social_login");
                 $viewPart->MSG      = $rs->msg;
@@ -114,10 +115,11 @@
                     die("Usuário do Google não encontrado!");
                 }
                 
-                //Procurando usuário do Facebook em nossa Base
+                //Procurando usuário do Google em nossa Base
                 $m_admUsuario               = new AdmUsuario();
+                $m_admUsuario->EMAIL        = $profile->emailVerified;
                 $m_admUsuario->GOOGLE_ID    = $profile->identifier;
-                $rs                         = $m_admUsuario->verificaUserGoogle();
+                $rs                         = $m_admUsuario->verificaRedeSocialUsuario('Google');
                 
                 $viewPart           = new ViewPart("social_login");
                 $viewPart->MSG      = $rs->msg;
