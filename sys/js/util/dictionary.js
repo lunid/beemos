@@ -14,4 +14,4 @@ Dic.loadMsg = function(class_name, msg_param, method){
     }catch(err){
         alert("Error to load message in dictionary: " + err.message);
     }
-}
+};

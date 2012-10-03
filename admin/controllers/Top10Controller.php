@@ -15,7 +15,7 @@
         /**
         * Conteúdo da página home do Top10.
         */
-        function indexHome(){
+        function actionIndex(){
             try{
                 //Top10
                 $m_top10 = new Top10Model();
@@ -42,7 +42,7 @@
                 $cbo_materias_opts->id              = "id_materia_gr";
                 $cbo_materias_opts->first_option    = "Todas as matérias";
                 $cbo_materias_opts->select_option   = $id_materia_gr;
-                
+
                 $objView->COMBO_MATERIAS_GR = HtmlComponent::select($rs_materias, $cbo_materias_opts);
                 
                 //Opções do <select> de fontes
@@ -51,6 +51,8 @@
                 $cbo_fontes_opts->first_option    = "Selecione uma fonte";
                 $cbo_fontes_opts->select_option   = $id_fonte_vestibular;
                 $cbo_fontes_opts->disabled        = true;
+                
+                
                 
                 $objView->COMBO_FONTES = HtmlComponent::select($rs_fonte_vestibular, $cbo_fontes_opts);
                 
@@ -95,7 +97,7 @@
                 
                 $tpl->render('top10');            
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";
                 echo "Arquivo:  " . $e->getFile() . "<br />\n";
                 echo "Linha:  " . $e->getLine() . "<br />\n";
@@ -107,7 +109,7 @@
         /**
         * Solicitação Ajax de Gráfico Top10
         */
-        function geraGrafico(){
+        function actionGeraGrafico(){
             try{
                 $ret            = new \stdClass();
                 $ret->status    = false;
@@ -157,7 +159,7 @@
          * 
          * @return json $ret
          */
-        public function atualizaUsuarioQuestao(){
+        public function actionAtualizaUsuarioQuestao(){
             try{
                 $ret            = new \stdClass();
                 $ret->status    = FALSE;
@@ -178,17 +180,29 @@
             }
         }
         
-        public function avaliarQuestao(){
+        public function actionAvaliarQuestao(){
             try{
-                $ret            = new \stdClass();
-                $ret->status    = FALSE;
-                $ret->msg       = "Dados para avalia de usuário inválidos!";
+                //Armazena ID da questão enviado
+                $id_questao = (int)Request::get("id_questao");
                 
-                $id_questao = Request::get("id_questao");
+                if($id_questao <= 0){
+                    throw new Exception("ID da Questão inválido!");
+                }
                 
-                echo "teste " . $id_questao;
+                $objView = new ViewPart('top10_avaliar');
+                
+                //Template
+                $tpl = new View($objView);
+                
+                $tpl->TITLE = 'ADM | SuperPro | TOP 10 | Avaliar Questão';
+                
+                $tpl->setCssJs('top10');
+                
+                $tpl->forceCssJsMinifyOn();
+                
+                $tpl->render('top10_avaliar');
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";
                 echo "Arquivo:  " . $e->getFile() . "<br />\n";
                 echo "Linha:  " . $e->getLine() . "<br />\n";

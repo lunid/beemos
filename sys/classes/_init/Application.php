@@ -45,7 +45,7 @@
             }                     
             
             //Define a constante __MODULE__
-            self::defineModule($module);
+            self::defineModule('admin');
             
             //Faz o include do Controller atual
             $urlFileController = __MODULE__ . '/controllers/'.ucfirst($controllerClass).'Controller.php';

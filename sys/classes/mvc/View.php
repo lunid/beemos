@@ -8,11 +8,19 @@
     use \sys\classes\mvc\ViewPart;
     
     class View extends ViewPart {
-        const CSS       = 'sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site';
+        //Site
+//        const CSS       = 'sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site';
+//        const CSS_INC   = '';
+//        const JS        = 'init,site,sys:util.dictionary';
+//        const JS_INC    = 'sys:util.form';
+//        const PLUGINS   = 'modal,menuHorizontal,menuIdiomas';
+        
+        //Admin
+        const CSS       = 'site';
         const CSS_INC   = '';
-        const JS        = 'init,site,sys:util.dictionary';
-        const JS_INC    = 'sys:util.form';        
-        const PLUGINS   = 'modal,menuHorizontal,menuIdiomas';
+        const JS        = 'init,sys:util.dictionary';
+        const JS_INC    = '';        
+        const PLUGINS   = 'jquery_ui,abas,drop,menu_slider';
         
         private $arrMenuOpts = array(
             "menu_home" => array( //menu_home será o ID do elemento HTML
