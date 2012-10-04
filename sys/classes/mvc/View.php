@@ -18,9 +18,9 @@
         //Admin
         const CSS       = 'site';
         const CSS_INC   = '';
-        const JS        = 'init,sys:util.dictionary';
+        const JS        = 'init,sys:util.dictionary,sys:util.form';
         const JS_INC    = '';        
-        const PLUGINS   = 'jquery_ui,abas,drop,menu_slider';
+        const PLUGINS   = 'jquery_ui,abas,drop,menu_slider,modal';
         
         private $arrMenuOpts = array(
             "menu_home" => array( //menu_home será o ID do elemento HTML

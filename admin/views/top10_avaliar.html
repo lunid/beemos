@@ -1,20 +1,26 @@
 <script type="text/javascript">
-    function selecionaNota(id){
-        var dados = id.split("_");
-
-        for(var i=1; i<=5; i++){
-            $("#" + dados[0] + "_" + i).attr("src", "admin/views/images/questoes/estrela_vazia.jpg");
-        }
-
-        for(var i=1; i<=dados[1]; i++){
-            $("#" + dados[0] + "_" + i).attr("src", "admin/views/images/questoes/estrela_cheia.jpg");
-        }
-
-        $("#nota_" + dados[0]).val(dados[1]);
-
-        return false;
-    }
+    
 </script>
+<!-- MODAL TOP10_AVALIAR -->
+<a id="modal_top10_avaliar" href="#mtop10_avaliar_div" style="display: none;"></a>
+<div id="mtop10_avaliar_div" style="width:400px;display:none;text-align:center">
+    <table style="width:390px;height:120px;" align="center">
+        <tr>
+            <td align="center" valign="middle" style="width:100%;height:120px;vertical-align:middle;">
+                <!-- MSG -->
+                <table align="center">
+                    <tr>
+                        <td id="msg_top10_avaliar" align="center" style="vertical-align:middle;padding:10px;font-weight:bold;font-size:16px;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </table>
+                <!-- MSG -->
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- MODAL TOP10_AVALIAR -->
 <div id="enunciado">
     <fieldset>
         <legend>Enunciado</legend>
@@ -28,192 +34,200 @@
     </fieldset>
 </div>
 <div id="avaliacao">
-    <form id="form_avaliacao" method="post" action="top10/salvaAvaliacao" onsubmit="if(confirm('Tem certeza que deseja finaliza a Avaliação?')){ return form.validate(this); }else{ return false; }">
-        <table>
+    <form id="form_avaliacao" name="form_avaliacao" method="post" action="/interbits/top10/SalvarAvaliacao" onSubmit="if(confirm('Tem certeza que deseja finaliza a Avaliação?')){ return form.validate(this, true, 'verAvaliacao'); }else{ return false; }">
+        <table class="table_avaliar_questao">
+            <tr style="background-color:#E8ECEF;font-size:15px;">
+                <td colspan="2">
+                    <strong>
+                        Última avaliação em:
+                    </strong>
+                    &nbsp;
+                    {DATA_AVALIACAO}
+                    &nbsp;
+                    <strong>
+                        Por: 
+                    </strong>
+                    &nbsp;
+                    {AVALIADOR}
+                </td>
+            </tr>
+            
             <tr>
                 <td>
                     Enunciado:
-                </td>
-                <td>
-                    <img id="enunciado_1" name="enunciado_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="enunciado_2" name="enunciado_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="enunciado_3" name="enunciado_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="enunciado_4" name="enunciado_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="enunciado_5" name="enunciado_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                    <div>
+                        <img id="enunciado_1" name="enunciado_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="enunciado_2" name="enunciado_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="enunciado_3" name="enunciado_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="enunciado_4" name="enunciado_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="enunciado_5" name="enunciado_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
 
-                    <input type="hidden" id="nota_enunciado" name="nota_enunciado" class="required" value="0" field_name="Nota de Enunciado" />
+                        <input type="hidden" id="nota_enunciado" name="nota_enunciado" class="required" value="0" field_name="Nota de Enunciado" />
+                    </div>
+                </td>
+                <td style="width:400px;">
+                    Sobre o enunciado:
+                    <br />
+                    <textarea id="sobre_enunciado" name="sobre_enunciado" style="width:100%;height:120px;resize:none;" class="required" field_name="Sobre o Enunciado">{SOBRE_ENUNCIADO}</textarea>
                 </td>
             </tr>
 
             <tr>
                 <td>
                     Abrangência:
+                    <div>
+                        <img id="abrangencia_1" name="abrangencia_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="abrangencia_2" name="abrangencia_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="abrangencia_3" name="abrangencia_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="abrangencia_4" name="abrangencia_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="abrangencia_5" name="abrangencia_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+
+                        <input type="hidden" id="nota_abrangencia" name="nota_abrangencia" class="required" value="0" field_name="Nota de Abrangência" />
+                    </div>
                 </td>
                 <td>
-                    <img id="abrangencia_1" name="abrangencia_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="abrangencia_2" name="abrangencia_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="abrangencia_3" name="abrangencia_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="abrangencia_4" name="abrangencia_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="abrangencia_5" name="abrangencia_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-
-                    <input type="hidden" id="nota_abrangencia" name="nota_abrangencia" class="required" value="0" field_name="Nota de Abrangência" />
+                    Sobre a Abrangência:
+                    <br />
+                    <textarea id="sobre_abrangencia" name="sobre_abrangencia" style="width:100%;height:120px;resize:none;" class="required" field_name="Sobre a Abrangência">{SOBRE_ABRANGENCIA}</textarea>
                 </td>
             </tr>
-
+            
             <tr>
                 <td>
                     Ilustração:
+                    <div>
+                        <img id="ilustracao_1" name="ilustracao_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="ilustracao_2" name="ilustracao_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="ilustracao_3" name="ilustracao_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="ilustracao_4" name="ilustracao_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="ilustracao_5" name="ilustracao_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+
+                        <input type="hidden" id="nota_ilustracao" name="nota_ilustracao" class="required" value="0" field_name="Nota de Ilustração" />
+                    </div>
                 </td>
                 <td>
-                    <img id="ilustracao_1" name="ilustracao_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="ilustracao_2" name="ilustracao_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="ilustracao_3" name="ilustracao_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="ilustracao_4" name="ilustracao_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="ilustracao_5" name="ilustracao_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-
-                    <input type="hidden" id="nota_ilustracao" name="nota_ilustracao" class="required" value="0" field_name="Nota de Ilustração" />
+                    Sobre a Ilustração:
+                    <br />
+                    <textarea id="sobre_ilustracao" name="sobre_ilustracao" style="width:100%;height:120px;resize:none;" class="required" field_name="Sobre a Ilustração">{SOBRE_ILUSTRACAO}</textarea>
                 </td>
             </tr>
-
+            
             <tr>
                 <td>
                     Interdisciplinaridade:
+                    <div>
+                        <img id="interdisciplinaridade_1" name="interdisciplinaridade_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="interdisciplinaridade_2" name="interdisciplinaridade_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="interdisciplinaridade_3" name="interdisciplinaridade_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="interdisciplinaridade_4" name="interdisciplinaridade_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="interdisciplinaridade_5" name="interdisciplinaridade_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+
+                        <input type="hidden" id="nota_interdisciplinaridade" name="nota_interdisciplinaridade" class="required" value="0" field_name="Nota de Interdisciplinaridade" />
+                    </div>
                 </td>
                 <td>
-                    <img id="interdisciplinaridade_1" name="interdisciplinaridade_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="interdisciplinaridade_2" name="interdisciplinaridade_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="interdisciplinaridade_3" name="interdisciplinaridade_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="interdisciplinaridade_4" name="interdisciplinaridade_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="interdisciplinaridade_5" name="interdisciplinaridade_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-
-                    <input type="hidden" id="nota_interdisciplinaridade" name="nota_interdisciplinaridade" class="required" value="0" field_name="Nota de Interdisciplinaridade" />
+                    Sobre a Interdisciplinaridade:
+                    <br />
+                    <textarea id="sobre_interdisciplinaridade" name="sobre_interdisciplinaridade" style="width:100%;height:120px;resize:none;" class="required" field_name="Sobre a Interdisciplinaridade">{SOBRE_INTERDISCIPLINARIDADE}</textarea>
                 </td>
             </tr>
-
+            
             <tr>
                 <td>
                     Habilidades e Competências:
+                    <div>
+                        <img id="habilidadecompetencia_1" name="habilidadecompetencia_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="habilidadecompetencia_2" name="habilidadecompetencia_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="habilidadecompetencia_3" name="habilidadecompetencia_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="habilidadecompetencia_4" name="habilidadecompetencia_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="habilidadecompetencia_5" name="habilidadecompetencia_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+
+                        <input type="hidden" id="nota_habilidadecompetencia" name="nota_habilidadecompetencia" class="required" value="0" field_name="Nota de Habilidades e Competências" />
+                    </div>
                 </td>
                 <td>
-                    <img id="habilidadecompetencia_1" name="habilidadecompetencia_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="habilidadecompetencia_2" name="habilidadecompetencia_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="habilidadecompetencia_3" name="habilidadecompetencia_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="habilidadecompetencia_4" name="habilidadecompetencia_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="habilidadecompetencia_5" name="habilidadecompetencia_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-
-                    <input type="hidden" id="nota_habilidadecompetencia" name="nota_habilidadecompetencia" class="required" value="0" field_name="Nota de Habilidades e Competências" />
+                    Sobre as Habilidades e Competências:
+                    <br />
+                    <textarea id="sobre_habilidadecompetencia" name="sobre_habilidadecompetencia" style="width:100%;height:120px;resize:none;" class="required" field_name="Sobre as Habilidades e Competências">{SOBRE_HABILIDADE_COMPETENCIA}</textarea>
                 </td>
             </tr>
-
+            
             <tr>
                 <td>
                     Originalidade:
+                    <div>
+                        <img id="originalidade_1" name="originalidade_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="originalidade_2" name="originalidade_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="originalidade_3" name="originalidade_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="originalidade_4" name="originalidade_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+                        &nbsp;
+                        <img id="originalidade_5" name="originalidade_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
+
+                        <input type="hidden" id="nota_originalidade" name="nota_originalidade" class="required" value="0" field_name="Nota de Originalidade" />
+                    </div>
                 </td>
                 <td>
-                    <img id="originalidade_1" name="originalidade_1" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="originalidade_2" name="originalidade_2" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="originalidade_3" name="originalidade_3" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="originalidade_4" name="originalidade_4" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-                    &nbsp;
-                    <img id="originalidade_5" name="originalidade_5" src="admin/views/images/questoes/estrela_vazia.jpg" style="width:25px;height:25px;cursor:pointer;" onclick="javascript:selecionaNota(this.id);" />
-
-                    <input type="hidden" id="nota_originalidade" name="nota_originalidade" class="required" value="0" field_name="Nota de Originalidade" />
+                    Sobre a Originalidade:
+                    <br />
+                    <textarea id="sobre_originalidade" name="sobre_originalidade" style="width:100%;height:120px;resize:none;" class="required" field_name="Sobre a Originalidade">{SOBRE_ORIGINALIDADE}</textarea>
                 </td>
             </tr>
-
-            <? if($questao->validaQuestaoAvaliacao() && $usuario->validaUsuarioAvaliacao($id_questao)){ ?>
             <tr>
                 <td colspan="2">
-                    <input type="hidden" id="id_questao" name="id_questao" value="<?=$id_questao?>" />
-                    <input type="submit" value="Salvar Avaliação" />
+                    <input type="hidden" id="id_questao" name="id_questao" value="{id_questao}" />
+                    <input type="submit" id="bt_submit" value="Salvar Avaliação" />
                 </td>
             </tr>
-            <? } ?>
         </table>
     </form>
 </div>
-<?
-}else{
-?>
-<h1>Nenhuma Questão encontrada.</h1>
-<?
-}
-?>
 <script type="text/javascript">
-//    $(document).ready(function() {
-//        $.post(
-//        "../dic/pt/javascript.xml",
-//        null,
-//        function(xml){
-//            xml_dic = xml;
-//            form    = new Form();
-//            form.init('form_avaliacao');
-//                        
-//                <? 
-//                $avaliacao = $questao->getAvaliacaoQuestao();
-//            if($avaliacao != null){
-//                if($avaliacao->getNotaEnunciado() > 0){
-//                        ?>
-//                        selecionaNota("enunciado_" + <?=$avaliacao->getNotaEnunciado()?>);
-//                        <? 
-//                    }
-//                                
-//                if($avaliacao->getNotaAbrangencia() > 0){
-//                        ?>
-//                        selecionaNota("abrangencia_" + <?=$avaliacao->getNotaAbrangencia()?>);
-//                        <?
-//                    }
-//                                
-//                if($avaliacao->getNotaIlustracao() > 0){
-//                        ?>
-//                        selecionaNota("ilustracao_" + <?=$avaliacao->getNotaIlustracao()?>);
-//                        <?
-//                    }
-//                                
-//                if($avaliacao->getNotaInterdisciplinaridade() > 0){
-//                        ?>
-//                        selecionaNota("interdisciplinaridade_" + <?=$avaliacao->getNotaInterdisciplinaridade()?>);
-//                        <?
-//                    }
-//                                
-//                if($avaliacao->getNotaHabilidadeCompetencia() > 0){
-//                        ?>
-//                        selecionaNota("habilidadecompetencia_" + <?=$avaliacao->getNotaHabilidadeCompetencia()?>);
-//                        <?
-//                    }
-//                                
-//                if($avaliacao->getNotaOriginalidade() > 0){
-//                        ?>
-//                        selecionaNota("originalidade_" + <?=$avaliacao->getNotaOriginalidade()?>);
-//                        <?
-//                    }
-//            }
-//                ?>
-//            },
-//        'xml'
-//    );                
-//    });
+    $(document).ready(function() {
+        if({NOTA_ENUNCIADO} > 0){
+            selecionaNota("enunciado_{NOTA_ENUNCIADO}");
+        }
+        
+        if({NOTA_ABRANGENCIA} > 0){
+            selecionaNota("abrangencia_{NOTA_ABRANGENCIA}");
+        }      
+        
+        if({NOTA_ILUSTRACAO} > 0){
+            selecionaNota("ilustracao_{NOTA_ILUSTRACAO}");
+        }      
+        
+        if({NOTA_INTERDISCIPLINARIDADE} > 0){
+            selecionaNota("interdisciplinaridade_{NOTA_INTERDISCIPLINARIDADE}");
+        }      
+        
+        if({NOTA_HABILIDADE_COMPETENCIA} > 0){
+            selecionaNota("habilidadecompetencia_{NOTA_HABILIDADE_COMPETENCIA}");
+        }      
+        
+        if({NOTA_ORIGINALIDADE} > 0){
+            selecionaNota("originalidade_{NOTA_ORIGINALIDADE}");
+        }      
+    });
 </script>
