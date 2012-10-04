@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config>
-    <header rootFolderSys='./sys' rootFolderView='./views'>
-        <include id='css'>sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site</include>
+<root>
+    <app>
+        <config id='root'>interbits</config>
+        <config id='defaultModule'>app</config>  
+        <config id='folderViews'>views</config>
+    </app>
+    <module>
+        <config id='folderTemplate'>templates</config>
+        <config id='defaultTemplate'>padrao.html</config>
+    </module>
+    <header>
+        <include id='css' concat='1'>sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site</include>
         <include id='cssInc'></include>
         <include id='js'>init,site,sys:util.dictionary</include>
         <include id='jsInc'></include>
         <include id='plugins'>modal,menuHorizontal,menuIdiomas</include>
     </header>
-    <templates rootFolder='.views/templates'>
-        <fileName id='default'>padrao.html</fileName>
-    </templates>
-</config>
+</root>

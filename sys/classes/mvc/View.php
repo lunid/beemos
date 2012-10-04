@@ -8,71 +8,66 @@
     use \sys\classes\mvc\ViewPart;
     
     class View extends ViewPart {
-        const CSS       = 'sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site';
-        const CSS_INC   = '';
-        const JS        = 'init,site,sys:util.dictionary';
-        const JS_INC    = '';        
-        const PLUGINS   = 'modal,menuHorizontal,menuIdiomas';
-        
-        private $arrMenuOpts = array(
-            "menu_home" => array( //menu_home será o ID do elemento HTML
-                "href"      => "/",
-                "titulo"    => "Home",
-                "subTitulo" => "Bem vindo",
-                "ativo"     => false
-            ),  
-            "menu_sobre" => array(
-                "href"      => "sobreNos",
-                "titulo"    => "Sobre Nós",
-                "subTitulo" => "Conheça a InterBits",
-                "ativo"     => false
-            ),  
-            "menu_assine" => array(
-                "href"      => "assine",
-                "titulo"    => "Assine Já",
-                "subTitulo" => "Planos & Preços",
-                "ativo"     => false
-            ),
-            "menu_super" => array(
-                "href"      => "superprofessor",
-                "titulo"    => "SuperPro",
-                "subTitulo" => "Principais Recursos",
-                "ativo"     => false
-            ),
-            "menu_ajuda" => array(
-                "href"      => "ajuda",
-                "titulo"    => "Ajuda",
-                "subTitulo" => "FAQ & Tutoriais",
-                "ativo"     => false
-            ),
-        );
-        
+
         private $objHeader      = NULL;        
         private $tplFile        = '';           
         private $forceNewIncMin = FALSE;
+        private $pathTpl        = '';
         
-        function __construct(ViewPart $objViewPart,$tplName='padrao'){                            
-            if (is_object($objViewPart)) {                                 
-                $objViewTpl                     = new ViewPart('templates/'.$tplName);
+        function __construct(){                            
+            $this->init();
+        } 
+        
+        /**
+         * Inicializa o template definido em config.xml
+         * 
+         * Pode conter também outros recursos de inicialização da View.
+         * return void 
+         */
+        function init(){            
+            $fileTpl = \LoadConfig::defaultTemplate();                 
+            $this->setTemplate($fileTpl);
+        }
+        
+        function setTemplate($fileTpl=''){
+            $pathTpl = '';
+            if (strlen($fileTpl) > 0) {
+                $folderTpl   = \LoadConfig::folderTemplate();                  
+                $pathTpl     = $folderTpl.'/'.$fileTpl;                
+                $pathTpl     = str_replace('//', '/', $pathTpl);                            
+            }
+            
+            $this->pathTpl  = $pathTpl;
+        }
+        
+        function setLayout(ViewPart $objViewPart){
+            if (is_object($objViewPart)) {                       
+                $pathTpl                        = $this->pathTpl;                                                
+                $objViewTpl                     = new ViewPart($pathTpl);
                 $objViewTpl->BODY               = $objViewPart->render();
                 $this->bodyContent              = $objViewTpl->render();
                 $this->layoutName               = $objViewPart->layoutName;                
-                
-                if (strlen($tplName) > 0){
-                    $objHeader = new Header();            
-                    $objHeader->addCss(self::CSS);
-                    $objHeader->addCssInc(self::CSS_INC);
-                    $objHeader->addJs(self::JS);
-                    $objHeader->addJsInc(self::JS_INC);                      
+          
+                if (strlen($pathTpl) > 0){                
+                    $css        = \LoadConfig::css();                
+                    $cssInc     = \LoadConfig::cssInc();                
+                    $js         = \LoadConfig::js();                
+                    $jsInc      = \LoadConfig::jsInc(); 
+                    $plugins    = \LoadConfig::plugins();                     
+                    $objHeader  = new Header();            
+                    
+                    $objHeader->addCss($css);
+                    $objHeader->addCssInc($cssInc);
+                    $objHeader->addJs($js);
+                    $objHeader->addJsInc($jsInc);                      
                     
                     //Faz a inclusão de arquivos css e js padrão.
                     try {                        
-                        $objHeader->memoSetFile($objHeader::EXT_CSS,self::CSS,FALSE);
-                        $objHeader->memoSetFile($objHeader::EXT_JS,self::JS,FALSE);                        
+                        //$objHeader->memoSetFile($objHeader::EXT_CSS,self::CSS,FALSE);
+                        //$objHeader->memoSetFile($objHeader::EXT_JS,self::JS,FALSE);                        
                         $this->objHeader = $objHeader;                                                                   
                         
-                        //Plugins                        
-                        $plugins    = $this::PLUGINS;
+                        //Plugins                                               
                         $arrPlugins = explode(',',$plugins);
                         if (is_array($arrPlugins)) {
                             foreach($arrPlugins as $plugin) {                                 
@@ -85,8 +80,8 @@
                 }                
             } else {
                 die('Impossível continuar. O objeto View não foi informado ou não é um objeto válido.');                
-            }            
-        }               
+            }                        
+        }
         
         private function getObjHeader(){
             $objHeader = $this->objHeader;            
@@ -153,48 +148,7 @@
             $bodyContent               = trim($this->bodyContent);
             $params                    = $this->params;                                       
             $params['INCLUDE_CSS']     = $css;
-            $params['INCLUDE_JS']      = $js;                                                      
-            
-            //Controle de Menu Horizontal
-            switch($layoutName){
-                case 'index':
-                case 'home':
-                    $menu_ativo = 'menu_home';
-                    break;
-                case 'sobre':
-                case 'politica':
-                case 'contato':
-                case 'sobreNos':
-                case 'aInterbits':
-                    $menu_ativo = 'menu_sobre';
-                    break;
-                case 'assine':
-                case 'planos':
-                case 'recursos':
-                case 'pagamento':
-                    $menu_ativo = 'menu_assine';
-                    break;
-                case 'superpro':
-                case 'provas':
-                case 'listas':
-                case 'relatorios':
-                    $menu_ativo = 'menu_super';
-                    break;
-                case 'faq':
-                case 'tutoriais':
-                case 'suporte':
-                case 'chat':
-                    $menu_ativo = 'menu_ajuda';
-                    break;
-                default:
-                    $menu_ativo = 'menu_home';
-            }
-            
-            //Setando o menuque deve ser selecionado
-            $this->arrMenuOpts[$menu_ativo]["ativo"] = true;
-            
-            //Renderizando HTML do menu
-            $params['MENU_HORIZONTAL'] = \HtmlComponent::menuHorizontal($this->arrMenuOpts);
+            $params['INCLUDE_JS']      = $js;                                                                              
             
             if (is_array($params)) {
                 foreach($params as $key=>$value){

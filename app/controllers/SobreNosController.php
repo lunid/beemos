@@ -1,7 +1,7 @@
 <?php
 
     use \sys\classes\mvc\Controller;    
-    use \sys\classes\mvc\View;        
+    use \app\classes\ViewSite;        
     use \sys\classes\mvc\ViewPart;        
     use \sys\classes\util\Request;
     
@@ -13,87 +13,44 @@
         /**
         *   Conteúdo da página Sobre Nós
         */
-        static $arrMenuVertical = array('A Interbits','Política de Privacidade','Contato');
+        static $arrMenuVertical = array('aInterbits'=>'A Interbits','privacidade'=>'Política de Privacidade','contato'=>'Contato');                
+        
         function actionIndex(){
 	    $this->actionAinterbits();
         }      
         
-        function actionAinterbits(){      
-            try{
-                $objPartLayout                  = new ViewPart('templates/navegacaoVertical');
-                $objPartLayout->IMG             = "<img src='app/views/images/testeira.jpg'>";
-                $objPartLayout->LOCAL           = "Conheça a Interbits";
-                $objPartLayout->MENU_VERTICAL   = \HtmlComponent::menuVertical(self::$arrMenuVertical);
-                        
-                $objPartPg                      = new ViewPart('sobreNos_aInterbits');            
-                $objPartLayout->BODY            = $objPartPg->render();                                    
-
-                $objView                        = new View($objPartLayout);            
-                $objView->TITLE                 = 'SuperPro - A Interbits';
+        function actionAinterbits(){
+            $objParams                  = new \stdClass();       
+            $objParams->imgCab          = "<img src='app/views/images/testeira.jpg'>";
+            $objParams->breadcumbs      = 'Conheça a Interbits';
+            $objParams->htmlViewPart    = 'sobreNos_aInterbits';
+            $objParams->title           = 'A Interbits';
+            $objParams->layoutName      = 'aInterbits';
+            
+            $this->actionPgVertical($objParams);
+        }
+        
+        function actionPrivacidade(){
+            $objParams                  = new \stdClass();           
+            $objParams->imgCab          = "<img src='app/views/images/testeira_politica.jpg'>";
+            $objParams->breadcumbs      = 'Conheça nossa Política de Privacidade';
+            $objParams->htmlViewPart    = 'sobreNos_politica';
+            $objParams->title           = 'Política de Privacidade';
+            $objParams->layoutName      = 'privacidade';
+            
+            $this->actionPgVertical($objParams);
+        }        
                 
-                $objView->setCssInc('pg_internas,menu_lateral');                      
-
-                $objView->forceCssJsMinifyOn();
-
-                $objView->render('aInterbits');    
-            }catch(Exception $e){
-                echo "Erro<br />\n";
-                echo $e->getMessage() . "<br />\n";
-                echo "Arquivo: " . $e->getFile() . "<br />\n";
-                echo "Linha: " . $e->getLine() . "<br />\n";                
-            }
-        }
-        
-        function actionPolitica(){        
-            try{
-                $objPartLayout          = new ViewPart('templates/navegacaoVertical');
-                $objPartLayout->IMG     = "<img src='app/views/images/testeira_politica.jpg'>";
-                $objPartLayout->LOCAL   = "Conheça a nossa Política de Privacidade";
-
-                $objPartPg              = new ViewPart('sobreNos_politica');            
-                $objPartLayout->BODY    = $objPartPg->render();                                    
-
-                $objView                = new View($objPartLayout);            
-                $objView->TITLE         = 'SuperPro - A Interbits';
-                $objView->setCssInc('pg_internas,menu_lateral');                      
-
-                $objView->forceCssJsMinifyOn();
-
-                $objView->render('politica');    
-            }catch(Exception $e){
-                echo "Erro<br />\n";
-                echo $e->getMessage() . "<br />\n";
-                echo "Arquivo: " . $e->getFile() . "<br />\n";
-                echo "Linha: " . $e->getLine() . "<br />\n";                
-            }
-        }
-        
-        function actionContato(){ 
-            try{
-                $objPartLayout          = new ViewPart('templates/navegacaoVertical');
-                $objPartLayout->IMG     = "<img src='app/views/images/testeira.jpg'>";
-                $objPartLayout->LOCAL   = "Entre em contato com a Interbits";
-
-                $objPartPg              = new ViewPart('sobreNos_contato');            
-                $objPartLayout->BODY    = $objPartPg->render();                                    
-
-                $objView                = new View($objPartLayout);            
-                $objView->TITLE         = 'SuperPro - A Interbits';
-
-                $objView->setPlugin('tooltip');
-                $objView->setCssInc('pg_internas,menu_lateral');                      
-                $objView->setJsInc("sys:util.form,init_contato");
-
-                $objView->forceCssJsMinifyOn();
-
-                $objView->render('contato');    
-            }catch(Exception $e){
-                echo "Erro<br />\n";
-                echo $e->getMessage() . "<br />\n";
-                echo "Arquivo: " . $e->getFile() . "<br />\n";
-                echo "Linha: " . $e->getLine() . "<br />\n";                
-            }
-        }
+        function actionContato(){
+            $objParams                  = new \stdClass();           
+            $objParams->imgCab          = "<img src='app/views/images/testeira.jpg'>";
+            $objParams->breadcumbs      = 'Entre em contato com a Interbits';
+            $objParams->htmlViewPart    = 'sobreNos_contato';
+            $objParams->title           = 'Contato';
+            $objParams->layoutName      = 'contato';
+            
+            $this->actionPgVertical($objParams);
+        }                 
         
         function actionDisparaContato(){ 
             try{
@@ -133,5 +90,46 @@
                 die;    
             }
         }
+        
+        function actionPgVertical($objParams){
+            try{
+                if (is_object($objParams)) {                    
+                    $imgCab          = $objParams->imgCab;
+                    $breadcumbs      = $objParams->breadcumbs;
+                    $htmlViewPart    = $objParams->htmlViewPart;
+                    $title           = $objParams->title;
+                    $layoutName      = $objParams->layoutName;
+                    
+                    $objPartLayout          = new ViewPart('templates/navegacaoVertical');
+                    $objPartLayout->IMG     = $imgCab;
+                    $objPartLayout->LOCAL   = $breadcumbs;
+
+                    $this->setMenuVertical($objPartLayout);
+
+                    $objPartPg              = new ViewPart($htmlViewPart);            
+                    $objPartLayout->BODY    = $objPartPg->render();                                    
+
+                    $objView                = new ViewSite();
+                    $objView->TITLE         = 'SuperPro - '.$title;
+                    
+                    $objView->setLayout($objPartLayout);                            
+                    $objView->setCssInc('pg_internas,menu_lateral');                      
+
+                    $objView->forceCssJsMinifyOn();
+
+                    $objView->render($layoutName);
+                }
+            }catch(Exception $e){
+                echo "Erro<br />\n";
+                echo $e->getMessage() . "<br />\n";
+                echo "Arquivo: " . $e->getFile() . "<br />\n";
+                echo "Linha: " . $e->getLine() . "<br />\n";                
+            }        
+        }
+        
+        private function setMenuVertical($objPartLayout){
+            $objPartLayout->MENU_VERTICAL   = \HtmlComponent::menuVertical(self::$arrMenuVertical);                        
+        }        
+        
     }
 ?>

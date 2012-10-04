@@ -15,7 +15,12 @@
                 $arrParts           = explode('/',$pathViewHtml);
                 $numParts           = count($arrParts);
                 $this->layoutName   = (is_array($arrParts) && $numParts > 1)?$arrParts[$numParts-1]:$pathViewHtml; 
-                $viewFile           = __MODULE__ . '/views/'.$pathViewHtml.'.html';             
+                $keyHtml            = strpos($pathViewHtml,'.htm');
+                $extHtml            = ($keyHtml !== false)?'':'.html';//Coloca a extensão html caso não tenha sido informada
+                $module             = \Application::getModule();
+                $folderViews        = \LoadConfig::folderViews();                
+                $viewFile           = $module.'/'.$folderViews.'/'.$pathViewHtml.$extHtml;    
+                
                 try {                    
                     if (File::exists($viewFile)){
                         //Arquivo existe.

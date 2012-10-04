@@ -10,7 +10,7 @@ class Header {
     const EXT_CSS                   = 'css';
     const EXT_JS_INC                = 'jsInc';
     const EXT_CSS_INC               = 'cssInc';    
-    static  $ROOT_VIEW_FILES        = 'app/views';
+    static  $ROOT_VIEW_FILES        = '';
     static  $ROOT_SYS_FILES         = 'sys';        
     private static $arrExt          = array(self::EXT_CSS,self::EXT_CSS_INC,self::EXT_JS,self::EXT_JS_INC);     
     private $arrMemoIncludeJsCss    = array(self::EXT_JS=>array(),self::EXT_JS_INC=>array(),self::EXT_CSS_INC=>array(),self::EXT_CSS=>array());//Guarda todas as inclusÃµes js e css da pÃ¡gina atual
@@ -19,8 +19,10 @@ class Header {
     private $onlyExternalCssJs      = FALSE;
     private $layoutName             = '';
     
-    function __construct($layoutName=''){        
-        self::$ROOT_VIEW_FILES = __MODULE__ . "/views";
+    function __construct($layoutName=''){       
+        $module        = \Application::getModule();
+        $folderViews   = \LoadConfig::folderViews();            
+        self::$ROOT_VIEW_FILES = $module. '/'.$folderViews;
         if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
     }   
     
