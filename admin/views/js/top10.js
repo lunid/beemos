@@ -105,7 +105,7 @@ Top10.prototype = {
         $("#aguarde").show();
 
         $.post(
-            'top10/geraGrafico',
+            '/interbits/top10/geraGrafico',
             {
                 data_inicio: $("#data_inicio").val(),
                 data_final: $("#data_final").val(),

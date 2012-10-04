@@ -45,6 +45,11 @@
                 $pathTpl                        = $this->pathTpl;                                                
                 $objViewTpl                     = new ViewPart($pathTpl);
                 $objViewTpl->BODY               = $objViewPart->render();
+                
+                if($tplName == 'padrao'){
+                    $objViewTpl->BARRA_TOPO = \HtmlComponent::barraTopo();
+                }
+                
                 $this->bodyContent              = $objViewTpl->render();
                 $this->layoutName               = $objViewPart->layoutName;                
           

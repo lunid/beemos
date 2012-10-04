@@ -201,3 +201,22 @@ body{
     background-color: #FFF;
     color: #000;
 }
+
+/* Tabela Avaliação de Questão
+================================================== */
+.table_avaliar_questao td{
+    vertical-align: top;
+    padding: 3px;
+}
+
+.table_avaliar_questao td div, textarea{
+    margin-top: 5px;
+}
+
+/* Estilos para Formulário
+================================================== */
+.msg_error{
+    font-size: 13px;
+    font-weight: bold;
+    color:red;
+}

@@ -136,7 +136,7 @@ class HtmlComponent {
             if($html_template != null) $pathPhtml = "/" . __MODULE__ . self::$html_path_templates . "{$html_template}.phtml";
 
             ob_start();
-            if (!@include_once($pathPhtml)) {                    
+            if (!@include($pathPhtml)) {                    
                 throw new Exception (__METHOD__."(): Arquivo {$pathPhtml} não existe.");                    
             }
             $output = ob_get_contents();
@@ -264,6 +264,18 @@ class HtmlComponent {
             //Setando propriedades
             self::$dadosEmail   = $dadosEmail;
             self::$default_html = 'email_contato_site';
+            
+            //Renderizando o HTML
+            return self::renderHtml();
+        }catch(Exception $e){
+            throw $e;
+        }   
+    }
+    
+    public static function barraTopo(){
+        try{
+            //Setando propriedades
+            self::$default_html = 'barraTopo';
             
             //Renderizando o HTML
             return self::renderHtml();

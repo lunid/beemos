@@ -20,6 +20,10 @@ $(document).ready(function() {
                     overlay : {closeClick: false}
                 }
             });
+            
+            form = new Form();
+            form.init('form_loginbox');
+            form.initModal('loginbox');
         },
         async: false
     });

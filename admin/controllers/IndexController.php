@@ -22,16 +22,14 @@
                 $objView = new ViewPart('home');
                 
                 //Template
-                $tpl = new View($objView);
+                $tpl        = new View($objView);
                 $tpl->TITLE = 'ADM | SuperPro';
-                
-                $tpl->setPlugin("highcharts");
                 
                 $tpl->forceCssJsMinifyOn();
                 
                 $tpl->render('home');            
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - IndexController <<<<<<<<<<<<<<< <br />\n";
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";
                 echo "Arquivo:  " . $e->getFile() . "<br />\n";
                 echo "Linha:  " . $e->getLine() . "<br />\n";

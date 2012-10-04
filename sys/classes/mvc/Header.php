@@ -217,13 +217,14 @@ class Header {
         $layoutName     = $this->layoutName;
         $strScript      = '';
         $tag            = '';
+        $arrMemo        = array_unique($arrMemo);
         
         if (strlen($layoutName) > 0){
             $outFileMin  = self::getNameFileMin($ext);               
             if ($this->forceNewIncMin)@unlink($outFileMin);
             
             if (!file_exists($outFileMin)){
-                foreach($arrMemo as $file){                
+                foreach($arrMemo as $file){
                     //O arquivo minify ainda não existe. Deve ser criado.
                     //Concatena o conteúdo de cada arquivo do $arrMemo e após o loop gera o arquivo _min.
                     $strScript .= file_get_contents($file);                   
