@@ -5,5 +5,5 @@
     include('sys/classes/_init/Application.php');
     
     //Inicializa a aplicação:
-    Application::load();
+    Application::load();   
 ?>
