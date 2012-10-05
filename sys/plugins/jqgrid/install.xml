@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Faz a inclusão dos arquivos necessários para utilização
+        jo JQGrid com PHP.
+    </descricao>
+    <config>
+        <include id='js'>js/i18n/grid_locale_pt_br,js/jquery_jqGrid_min</include>    
+        <include id='css'>css/ui_jqgrid</include>           
+    </config>
+</root>
