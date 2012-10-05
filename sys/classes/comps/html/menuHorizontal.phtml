@@ -1,11 +1,24 @@
 <div class="top">
     <div class="container nav-wrap">
         <ul class="group" id="top-menu">
-            <? foreach(self::$arrMenuOpts as $id => $menu){ ?>
-            <li id="<?=$id?>" <? if($menu['ativo'] === TRUE){ ?> class="current_page_item" <? } ?> onclick="javascript:menu.changeMenu(this.id);">
-                <a href="<?=$menu['href']?>"><?=$menu['titulo']?><p><?=$menu['subTitulo']?></p></a>
-            </li>
-            <? } ?>
+            <?php 
+                $li = '';
+                foreach(self::$arrMenuOpts as $id => $arrItemMenu){ 
+                    $listPages  = $arrItemMenu[0];
+                    $arrList    = explode(',',$listPages);
+                    $titulo     = $arrItemMenu[1];
+                    $descricao  = $arrItemMenu[2];
+                    $item       = $titulo.'<p>'.$descricao.'</p>';
+                    
+                    //Monta o link do item atual a partir da pasta root do site
+                    $link       = '/'.\LoadConfig::root().'/';                
+                    $link       .= ($id == 'index')?'':$id;
+                    //echo self::$params." - $id<br>";
+                    $class      = ((is_array($arrList) && array_search(self::$params,$arrList) !== false) || (self::$params == $id))?"class='current_page_item'":'';                     
+                    $li         .= "<li id='{$id}' {$class} onclick='javascript:menu.changeMenu(this.id);'><a href='{$link}'>{$item}</a></li>";
+                }
+                echo $li;
+            ?>            
         </ul>
     </div>            
 </div>

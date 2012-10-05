@@ -26,6 +26,7 @@ class HtmlComponent {
     static $default_html;
     
     private static $arrMenuOpts;
+    private static $params;
     
     private static $dadosEmail;
     
@@ -163,9 +164,10 @@ class HtmlComponent {
      * @return string HTML processado para exibição
      * @throws Exception
      */
-    public static function menuHorizontal($arrMenuOpts){
+    public static function menuHorizontal($arrMenuOpts,$params){
         try{
             //Setando propriedades
+            self::$params       = $params;
             self::$arrMenuOpts  = $arrMenuOpts;
             self::$default_html = 'menuHorizontal';
             

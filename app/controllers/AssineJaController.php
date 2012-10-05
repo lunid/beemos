@@ -1,7 +1,7 @@
 <?php
 
     use \sys\classes\mvc\Controller;    
-    use \sys\classes\mvc\View;        
+    use \app\classes\ViewSite;          
     use \sys\classes\mvc\ViewPart;        
     use \sys\classes\util\Request;
     
@@ -9,7 +9,7 @@
     * Classe Controller usada com default quando nenhuma outra é informada.
     * Refere-se à página Assine Já do site.
     */
-    class Assine extends Controller {
+    class AssineJa extends Controller {
         /**
         *   Conteúdo da página Assine Já
         */
@@ -26,8 +26,10 @@
                 $objPartPg              = new ViewPart('assine_planos');            
                 $objPartLayout->BODY    = $objPartPg->render();                                    
 
-                $objView           = new View($objPartLayout);            
+                $objView = new ViewSite();
+                $objView->setLayout($objPartLayout);
                 $objView->TITLE    = 'SuperPro - Assine já - Planos e Preços';
+                
                 $objView->setCssInc('pg_internas,menu_assineja,pg_assineja');                      
 
                 $objView->forceCssJsMinifyOn();
