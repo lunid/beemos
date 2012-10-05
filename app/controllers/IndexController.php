@@ -22,7 +22,8 @@
             
             $objView = new ViewSite($objViewPart);
             $objView->setLayout($objViewPart);
-            $objView->forceCssJsMinifyOn();
+            //$objView->forceCssJsMinifyOn();
+            $objView->onlyExternalCssJs();
             $objView->setPlugin('sliderBanner');            
             
             $objView->TITLE = 'Bem-vindo ao Super Professor Web';

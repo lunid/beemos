@@ -38,7 +38,7 @@
        * actionFaleConosco().                         
        *  
        */          
-        public static function load(){
+        public static function setup(){
             
             $arrPartsUrl    = self::processaUrl();             
             $module         = $arrPartsUrl['module'];
@@ -46,7 +46,8 @@
             $action         = $arrPartsUrl['action'];
             $method         = 'action'.ucfirst($action);                                         
                         
-            $objLoadConfig = new LoadConfig();
+            $objLoadConfig = new LoadConfig();            
+            //$objLoadConfig->loadConfigXml('config');
      
             //Faz o include do Controller atual
             $urlFileController = $module . '/controllers/'.ucfirst($controller).'Controller.php';

@@ -9,26 +9,30 @@
                 
         private $nodes;
         const PREFIXO_VAR = 'GLB_';
-        function __construct($pathXml='config.xml'){            
-            
+        function __construct(){            
+            $this->loadConfigXml('config.xml');            
+        }
+        
+        function loadConfigXml($pathXml){
+            $msgErr = '';
             if (file_exists($pathXml)) {
                 $arrPath    = pathinfo($pathXml);                
                 $extension  = $arrPath['extension'];
                 if ($extension == 'xml') {                    
-                    $objXml     = self::loadXml($pathXml);  
+                    $objXml = self::loadXml($pathXml);  
                     if (is_object($objXml)) {
                         $this->objXml = $objXml;
                         $this->loadVars($objXml);
                     } else {                
-                        $msgErr = 'Impossível ler o arquivo '.$pathXml;
-                        die($msgErr);            
+                        $msgErr = 'Impossível ler o arquivo '.$pathXml;                                            
                     }
                 } else {
-                   echo 'O arquivo informado parece não ser um arquivo XML';
+                   $msgErr = 'O arquivo informado parece não ser um arquivo XML';                                                                 
                 }
             } else {
-                echo "Arquivo {$pathXml} não foi localizado.";
-            }
+                $msgErr = "Arquivo {$pathXml} não foi localizado.";                
+            }            
+            if (strlen($msgErr) > 0) throw new \Exception( $msgErr );    
         }
         
         private function loadVars($objXml){    

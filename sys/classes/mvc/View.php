@@ -46,9 +46,9 @@
                 $objViewTpl                     = new ViewPart($pathTpl);
                 $objViewTpl->BODY               = $objViewPart->render();
                 
-                if($tplName == 'padrao'){
-                    $objViewTpl->BARRA_TOPO = \HtmlComponent::barraTopo();
-                }
+                //if($tplName == 'padrao'){
+                    //$objViewTpl->BARRA_TOPO = \HtmlComponent::barraTopo();
+                //}
                 
                 $this->bodyContent              = $objViewTpl->render();
                 $this->layoutName               = $objViewPart->layoutName;                
@@ -195,10 +195,13 @@
                        echo "Inclusão não realizada $listFiles<br>"; 
                     }
                 } elseif ($fn == 'forceCssJsMinifyOn') {
-                    $objHeader->forceCssJsMinifyOn();                                          
+                    //Força a compactação e junção dos includes (css e js), mesmo que o arquivo _min já exista.
+                    $objHeader->forceCssJsMinifyOn();                       
                 } elseif ($fn == 'forceCssJsMinifyOff') {
+                    //Volta à situação padrão: apenas compacta e junta includes se o arquivo _min ainda não existir.
                     $objHeader->forceMinifyOff();     
                 } elseif ($fn == 'onlyExternalCssJs') {
+                    //Gera a página HTML com os includes (css e js) separados.
                     $objHeader->onlyExternalCssJs();  
                 }
             }            
