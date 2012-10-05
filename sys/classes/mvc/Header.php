@@ -11,7 +11,7 @@ class Header {
     const EXT_JS_INC                = 'jsInc';
     const EXT_CSS_INC               = 'cssInc';    
     static  $ROOT_VIEW_FILES        = '';
-    static  $ROOT_SYS_FILES         = 'sys';        
+    static  $ROOT_SYS_FILES         = '';        
     private static $arrExt          = array(self::EXT_CSS,self::EXT_CSS_INC,self::EXT_JS,self::EXT_JS_INC);     
     private $arrMemoIncludeJsCss    = array(self::EXT_JS=>array(),self::EXT_JS_INC=>array(),self::EXT_CSS_INC=>array(),self::EXT_CSS=>array());//Guarda todas as inclusÃµes js e css da pÃ¡gina atual
     var $arrIncDefault              = array();//Guarda as inclusÃµes default para todas as pÃ¡ginas (css, js, cssInc, jsInc).
@@ -19,10 +19,10 @@ class Header {
     private $onlyExternalCssJs      = FALSE;
     private $layoutName             = '';
     
-    function __construct($layoutName=''){       
-        $module        = \Application::getModule();
-        $folderViews   = \LoadConfig::folderViews();            
-        self::$ROOT_VIEW_FILES = $module. '/'.$folderViews;
+    function __construct($layoutName=''){                       
+        self::$ROOT_VIEW_FILES      = \LoadConfig::folderViews();
+        self::$ROOT_SYS_FILES       = \LoadConfig::folderSys();
+      
         if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
     }   
     
@@ -53,18 +53,26 @@ class Header {
         $file = str_replace('.','/',$uri);
         
         if ($root != 'plugin'){
-            if ($root == 'sys') $root = self::$ROOT_SYS_FILES;  
+            if ($root == \LoadConfig::folderSys()) $root = self::$ROOT_SYS_FILES;  
             $extFile    = $this->getExtFile($ext);
-            $file       = $root.'/'.$extFile.'/'.$file;  	                                  
+            $file       = $root.'/'.$extFile.'/'.$file;  
+            $file       = \Url::relativeUrl($file);
+        } else {
+            $file = \Url::relativeUrl($file);
         }
 	
         $extFile = $this->getExtFile($ext);            
-        $file   .= '.'.$extFile;
-        //$file   = str_replace('//','/',$file);
-        //echo $file.'<br>';
+        $file   .= '.'.$extFile;   
+               
+        echo $file.'<br>';
+        //if (file_exists($file)){
+        //echo file_get_contents($file);
+        
         if (file_exists($file)){
+            echo 'xxx';
             $this->arrMemoIncludeJsCss[$ext][]  = $file;                                           
-        } elseif ($exception) {                
+        } elseif ($exception) {  
+            echo 'ERRO';
             $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_EXISTS'); 
             $msgErr = str_replace('{FILE}',$file,$msgErr);
             $msgErr = str_replace('{STR_FILE}',$strFile,$msgErr);
@@ -140,8 +148,9 @@ class Header {
                     if (strlen($strFile) == 0) continue;
                     try {
                         $this->memoSetFile($ext,$strFile);  
-                    } catch(\Exception $e) {                        
-                        $this->showErr('memoIncludeJsCss()',$e,FALSE); 
+                    } catch(\Exception $e) {  
+                        $msgErr = $this->showErr('memoIncludeJsCss()',$e,FALSE); 
+                        throw new \Exception($msgErr);                        
                     }                                
                 }                    
             } else {
@@ -230,11 +239,15 @@ class Header {
                     $strScript .= file_get_contents($file);                   
                 }
                 
-                if (strlen($strScript) > 0){
-                    if (Component::yuiCompressor($strScript,$ext,$outFileMin)){                   
-                        $tag = $this->setTag($outFileMin,$ext);                              
-                    }                     
-                }                
+                try {
+                    if (strlen($strScript) > 0){                        
+                        if (Component::yuiCompressor($strScript,$ext,$outFileMin)){                   
+                            $tag = $this->setTag($outFileMin,$ext);                              
+                        }                     
+                    }    
+                } catch(\Exception $e) {
+                    throw new \Exception($e);
+                }
             } else {
                 //Arquivo minify já existe. Ignorar o loop.
                 $tag = $this->setTag($outFileMin,$ext);              
@@ -285,17 +298,22 @@ class Header {
                 $outFileMin             = join('/',$arrFile);
                                
                 if ($this->forceNewIncMin)@unlink($outFileMin);//Exclui o arquivo _min caso exista.
+                
                 if (!file_exists($outFileMin)){
                     //Arquivo ainda não existe. Gera um arquivo _min.
                     $strScriptInc = file_get_contents($file);
-                                       
-                    if (Component::yuiCompressor($strScriptInc,$extFile,$outFileMin)){                                                        
-                        //Arquivo compactado com sucesso. Faz a inclusão do novo arquivo.
-                        $file = $outFileMin;
-                    } else {
-                        //O arquivo gerado está vazio. Utiliza o arquivo sem compactação.
-                        @unlink($outFileMin);//Exclui o arquivo _min caso exista.                        
-                    }                     
+                    
+                    try {
+                        if (Component::yuiCompressor($strScriptInc,$extFile,$outFileMin)){                                                        
+                            //Arquivo compactado com sucesso. Faz a inclusão do novo arquivo.
+                            $file = $outFileMin;
+                        } else {
+                            //O arquivo gerado está vazio. Utiliza o arquivo sem compactação.
+                            @unlink($outFileMin);//Exclui o arquivo _min caso exista.                        
+                        }    
+                    } catch(\Exception $e) {
+                        throw new \Exception($e);
+                    }
                 } else {
                     $file = $outFileMin;
                 }

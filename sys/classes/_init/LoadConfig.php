@@ -40,21 +40,30 @@
             $arrConfigCache     = array();
             $nodesHeader        = $objXml->header;
             $numItens           = count($nodesHeader);
-            $module             = 'app';
-            $idRoot             = 'root';
+            
+            $idRootFolder       = 'rootFolder';
+            $idBaseUrlHttp      = 'baseUrlHttp';
+            $idBaseUrlHttps     = 'baseUrlHttps';
             $idDefaultModule    = 'defaultModule';            
+            $idFolderSys        = 'folderSys';
             $idFolderViews      = 'folderViews';   
             
             if ($numItens > 0) {
                 //Configurações da aplicação:
                 $nodesApp               = $objXml->app->config; 
-                $root                   = self::valueForAttrib($nodesApp,'id',$idRoot);   
+                $cfgRootFolder          = self::valueForAttrib($nodesApp,'id',$idRootFolder);   
+                $cfgBaseUrlHttp         = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttp);   
+                $cfgBaseUrlHttps        = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttps);   
+                $cfgFolderSys           = self::valueForAttrib($nodesApp,'id',$idFolderSys);   
                 $cfgFolderViews         = self::valueForAttrib($nodesApp,'id',$idFolderViews);   
                 $cfgDefaultModule       = self::valueForAttrib($nodesApp,'id',$idDefaultModule);                
                              
+                $this->setGlobalVar($idBaseUrlHttp,$cfgBaseUrlHttp);
+                $this->setGlobalVar($idBaseUrlHttps,$cfgBaseUrlHttps);
+                $this->setGlobalVar($idFolderSys,$cfgFolderSys);
                 $this->setGlobalVar($idFolderViews,$cfgFolderViews);
-                $this->setGlobalVar($idRoot,$root);
-                $this->setGlobalVar($idDefaultModule,$root);
+                $this->setGlobalVar($idRootFolder,$cfgRootFolder);
+                $this->setGlobalVar($idDefaultModule,$cfgDefaultModule);
                 
                 //Configurações de módulo:
                 $idFolderTpl            = 'folderTemplate';
@@ -81,7 +90,7 @@
                 $this->setGlobalVar('folderSys',$rootFolderSys);
                 $this->setGlobalVar('folderView',$rootFolderView);
                 
-                $nodesInclude    = $objXml->header->include;     
+                $nodesInclude   = $objXml->header->include;     
                 $arrNodesInclude = self::convertNode2Array($nodesInclude);
                 foreach($arrNodesInclude as $arrItem){
                     $nodeValue  = (string)$arrItem['value'];    

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <app>
-        <config id='root'>interbits</config>
+    <app>        
+        <config id='baseUrlHttp'>www.interbits.com.br</config>
+        <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
+        <config id='rootFolder'>interbits</config>
         <config id='defaultModule'>app</config>  
+        <config id='folderSys'>sys</config>
         <config id='folderViews'>views</config>
     </app>
     <module>
@@ -10,7 +13,7 @@
         <config id='defaultTemplate'>padrao.html</config>
     </module>
     <header>
-        <include id='css' concat='1'>sys:skeleton.stylesheets.base,sys:skeleton.stylesheets.skeleton,sys:skeleton.stylesheets.layout,site</include>
+        <include id='css'>sys:skeleton/stylesheets/base,sys:skeleton/stylesheets/skeleton,sys:skeleton/stylesheets/layout,site</include>
         <include id='cssInc'></include>
         <include id='js'>init,site,sys:util.dictionary</include>
         <include id='jsInc'></include>

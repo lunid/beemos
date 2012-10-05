@@ -207,6 +207,8 @@ class Minify_YUICompressor {
                 ,'type' => $type
 
                 ,'nomunge' => false
+                
+                ,'verbose' => true
 
                 ,'preserve-semi' => false
 
@@ -219,21 +221,14 @@ class Minify_YUICompressor {
         );
 
         $cmd = self::$javaExecutable . ' -jar ' . escapeshellarg(self::$jarFile)
-
              . " --type {$type}"
-
              . (preg_match('/^[a-zA-Z\\-]+$/', $o['charset']) 
-
                 ? " --charset {$o['charset']}" 
-
                 : '')
-
              . (is_numeric($o['line-break']) && $o['line-break'] >= 0
-
                 ? ' --line-break ' . (int)$o['line-break']
-
-                : '');
-
+                : '')
+             . (($o['verbose'])?' --verbose':'');
         if ($type === 'js') {
 
             foreach (array('nomunge', 'preserve-semi', 'disable-optimizations') as $opt) {
@@ -247,7 +242,6 @@ class Minify_YUICompressor {
             }
 
         }
-
         return $cmd . ' ' . escapeshellarg($tmpFile);
 
     }

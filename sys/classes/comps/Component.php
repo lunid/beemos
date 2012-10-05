@@ -5,8 +5,10 @@
     class Component {	
         
         public static function yuiCompressor($strInc,$ext,$outFileMin=''){	
-            $root        = 'sys/components/yuicompressor-2_4_7/';            
-            $pathJar     = $root.'build/yuicompressor-2.4.7.jar';    
+            $root        = 'sys/components/yuicompressor-2_4_8/';                        
+            //$pathJar     = $root.'build/yuicompressor-2.4.7.jar'; 
+            $pathJar     = $root.'build/yuicompressor-2_4_8pre.jar'; 
+            
             $ext         = strtolower($ext);
             $strInc      = (string)$strInc;            
 
@@ -22,14 +24,14 @@
                     } else {
                         //css
                         $strIncMin = \Minify_YUICompressor::minifyCss($strInc,array('nomunge' => true, 'line-break' => 2000));                   
-                    } 
+                    }                                         
                 } catch(\Exception $e){
                     die($e->getMessage()); 
                 }
 
-                if (strlen($outFileMin) > 0){
-                    //Gera um arquivo físico com o conteúdo compactado:
-                    $fp     = fopen($outFileMin, "wb+");                
+                if (strlen($strIncMin) > 0 && strlen($outFileMin) > 0){
+                    //Gera um arquivo físico com o conteúdo compactado:                                      
+                    $fp = fopen($outFileMin, "wb+");                
                     fwrite($fp, $strIncMin);
                     fclose($fp);
 
@@ -39,15 +41,21 @@
 
                     $size = filesize($outFileMin);
                     if ($size == 0){
-                        die('O arquivo '.$outFileMin.' foi gerado porém está vazio.<br><br>'.$strIncMin);
-                        return FALSE;
+                        $msgErr = 'Componente->yuiCompressor(): O arquivo '.$outFileMin.' foi gerado porém está vazio.<br><br>'.$strIncMin;
+                        throw new \Exception( $msgErr );                                                                        
                     }
+                    throw new \Exception( 'Erro compressor' );    
                     return TRUE;
-                } 
+                } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
+                    $msgErr = 'Componente->yuiCompressor(): Impossível comprimir o arquivo '.$outFileMin.' porque a compressão retornou vazio.';
+                    throw new \Exception( $msgErr );          
+                }
                 return $strIncMin;
             } else {
-                die('yuiCompressor não pôde ser executado porque o parâmetro $ext não foi informado corretamente.');
+                $msgErr = 'Componente->yuiCompressor(): yuiCompressor não pôde ser executado porque o parâmetro $ext não foi informado corretamente.';
+                throw new \Exception( $msgErr );         
             }
+            return TRUE;
         }
     }
 ?>

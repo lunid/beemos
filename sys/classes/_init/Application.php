@@ -8,7 +8,8 @@
     require_once('sys/classes/mvc/Controller.php');
     require_once('sys/classes/mvc/Model.php');               
     require_once('sys/classes/_init/LoadConfig.php');           
-        
+    require_once('sys/classes/util/Url.php');  
+    
     class Application {
         /**
          * Classe de inicialização da aplicação.
@@ -45,10 +46,12 @@
             $controller     = $arrPartsUrl['controller'];
             $action         = $arrPartsUrl['action'];
             $method         = 'action'.ucfirst($action);                                         
-                        
+                                
             $objLoadConfig = new LoadConfig();            
-            //$objLoadConfig->loadConfigXml('config');
-     
+            $objLoadConfig->loadConfigXml('config.xml');
+            //echo $objLoadConfig->listVars();
+            //Url::siteUrlHttps(array('part1','part2','part3'));
+            //die();
             //Faz o include do Controller atual
             $urlFileController = $module . '/controllers/'.ucfirst($controller).'Controller.php';
             if (!file_exists($urlFileController)) {
@@ -72,19 +75,22 @@
         }
         
         private static function processaUrl(){
-            $arrModules = self::$arrModules;
-            $module     = (isset($arrModules))?$arrModules[0]:'app';//O primeiro módulo é sempre padrão.      
-            $params     = (isset($_GET['PG']))?$_GET['PG']:'';    
+            //$arrModules = self::$arrModules;
+            //$module     = (isset($arrModules))?$arrModules[0]:'app';//O primeiro módulo é sempre padrão.  
+            $module     = (isset($_GET['MODULE']))?$_GET['MODULE']:'app'; 
+            $params     = (isset($_GET['PG']))?$_GET['PG']:''; 
+            
             $pathParts  = explode('/',$params);            
             $controller = '';            
             $action     = self::getPartUrl(@$pathParts[1],'index'); 
+            
             
             if (is_array($pathParts) && count($pathParts) > 0) { 
                 //A URL pode conter partes que representam o módulo, controller e action
                 
                 $controller = self::getPartUrl($pathParts[0]);
-                $keyModule  = array_search($controller,$arrModules);
-                                 
+                //$keyModule  = array_search($controller,$arrModules);
+                /*                
                 if ($keyModule !== FALSE) {
                     //O primeiro parâmetro refere-se a um módulo
                     $module = $pathParts[0];  
@@ -92,9 +98,9 @@
                     //Após extrair o módulo redefine as partes da URL sem o índice zero.
                     array_shift($pathParts);  
                     $controller = self::getPartUrl(@$pathParts[0],'index');
-                }                                                                                            
+                }  */                                                                                          
             }   
-               
+              
             //Guarda o module, controller e action em variáveis de sessão.
             //Necessário para criar as URLs de navegação do site.            
             self::setModule($module);       

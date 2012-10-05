@@ -4,6 +4,10 @@
     ini_set('display_errors', true);    
     include('sys/classes/_init/Application.php');
     
-    //Inicializa a aplicação:
-    Application::setup();   
+    try {
+        //Inicializa a aplicação:
+        Application::setup();   
+    } catch(Exception $e) {
+        echo 'Erro ao efetuar o setup da aplicação: '.$e->getMessage();
+    }
 ?>

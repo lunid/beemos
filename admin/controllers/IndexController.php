@@ -23,6 +23,7 @@
                 
                 //Template
                 $tpl        = new View($objView);
+                $tpl->setLayout($objView);
                 $tpl->TITLE = 'ADM | SuperPro';
                 
                 $tpl->forceCssJsMinifyOn();
