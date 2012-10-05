@@ -1,9 +1,15 @@
 <?php if(isset(self::$arrMenuOpts)){ ?>
     <div id="menuVerticalTop"><br/></div>
     <ul id="itemBtn">
-        <li><a href="sobrenos/ainterbits">A InterBits</a></li>
-        <li><a href="sobrenos/politica">Politica de Privacidade</a></li>
-        <li><a href="contato">Contato</a></li>
+        <?
+            $controller = \Application::getController();
+            foreach(self::$arrMenuOpts as $id=>$textoMenu) {
+                $link       = '/'.\LoadConfig::root().'/'.$controller.'/';                
+                $link       .= ($id == 'index')?'':$id;                
+                $li .= "<li><a href='{$link}'>{$textoMenu}</a></li>";
+            }
+            echo $li;
+        ?>         
     </ul>
     <div id="menuVerticalBottom"><br/></div>
 <?php } ?>
