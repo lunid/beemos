@@ -10,7 +10,7 @@ class Header {
     const EXT_CSS                   = 'css';
     const EXT_JS_INC                = 'jsInc';
     const EXT_CSS_INC               = 'cssInc';    
-    static  $ROOT_VIEW_FILES        = '';
+    static  $ROOT_VIEW_FILES        = 'app/views';
     static  $ROOT_SYS_FILES         = 'sys';        
     private static $arrExt          = array(self::EXT_CSS,self::EXT_CSS_INC,self::EXT_JS,self::EXT_JS_INC);     
     private $arrMemoIncludeJsCss    = array(self::EXT_JS=>array(),self::EXT_JS_INC=>array(),self::EXT_CSS_INC=>array(),self::EXT_CSS=>array());//Guarda todas as inclusÃµes js e css da pÃ¡gina atual
@@ -19,10 +19,8 @@ class Header {
     private $onlyExternalCssJs      = FALSE;
     private $layoutName             = '';
     
-    function __construct($layoutName=''){       
-        $module        = \Application::getModule();
-        $folderViews   = \LoadConfig::folderViews();            
-        self::$ROOT_VIEW_FILES = $module. '/'.$folderViews;
+    function __construct($layoutName=''){        
+        self::$ROOT_VIEW_FILES = __MODULE__ . "/views";
         if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
     }   
     
@@ -140,7 +138,7 @@ class Header {
                     if (strlen($strFile) == 0) continue;
                     try {
                         $this->memoSetFile($ext,$strFile);  
-                    } catch(\Exception $e) {                        
+                    } catch(\Exception $e) {
                         $this->showErr('memoIncludeJsCss()',$e,FALSE); 
                     }                                
                 }                    
@@ -151,8 +149,7 @@ class Header {
                 throw new \Exception( $msgErr );                 
             }               
         } catch(\Exception $e){
-            $msgErr = $this->showErr('Erro ao memorizar lista de includes ('.$ext.' -> '.$listInc.')',$e);
-            throw new \Exception($msgErr);            
+            $this->showErr('Erro ao memorizar lista de includes ('.$ext.' -> '.$listInc.')',$e);      
         }                              
     }  
    
@@ -198,9 +195,9 @@ class Header {
                 $tags = (is_array($arrTag) && count($arrTag) > 0)?join(chr(13),$arrTag):'';
                 return $tags;            
             }
-        } catch(\Exception $e){            
-             $msgErr = $this->showErr('Erro ao recuperar listas memorizadas de includes ('.$ext.')',$e); 
-             throw new \Exception($msgErr);  
+        } catch(\Exception $e){
+            throw $e;
+             //$this->showErr('Erro ao recuperar listas memorizadas de includes ('.$ext.')',$e); 
         }
     }    
     
@@ -351,7 +348,7 @@ class Header {
     private function showErr($msg,$e,$die=TRUE){
         $msgErr = "<b>".$msg.':</b><br/><br/>'.$e->getMessage();
         if ($die) die($msgErr);
-        return $msgErr.'<br/><br/>';
+        echo $msgErr.'<br/><br/>';
     }    
 }
 ?>

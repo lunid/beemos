@@ -1,14 +1,16 @@
 <?php
     
     require_once('sys/classes/comps/files/YUICompressor.php');
+    require_once('sys/classes/comps/hybridauth/Auth.php');
+    require_once('sys/classes/comps/hybridauth/Endpoint.php');
     require_once('sys/classes/comps/HtmlComponent.php');
     require_once('sys/classes/comps/ChartComponent.php');
     require_once('sys/classes/db/Meekrodb_2_0.php');
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/mvc/Controller.php');
-    require_once('sys/classes/mvc/Model.php');               
-    require_once('sys/classes/_init/LoadConfig.php');           
-        
+    require_once('sys/classes/mvc/Model.php');           
+
+
     class Application {
         /**
          * Classe de inicialização da aplicação.
@@ -16,46 +18,39 @@
          * Faz o carregamento dos arquivos comuns aos módulos do sistema (require_once),
          * identifica o módulo e seu respectivo Controller->action() a partir da URL e 
          * carrega as classes solicitadas na aplicação a partir de seu namespace.
-        */   
-        
-        private static $sessionModuleName       =  'GLB_MODULE';
-        private static $sessionControllerName   =  'GLB_CONTROLLER';
-        private static $sessionActionName       = 'GLB_ACTION';        
-        private static $arrModules              = array('app','admin');
-        
-      /**
-       * Identifica o módulo, controller e action a partir da URL e faz a chamada
-       * do método, como segue:
-       * 
-       * $objController  = new $controller;
-       * $objController->method()
-       * 
-       * O $method deve iniciar sempre com o prefixo 'action' seguido do parâmetro
-       * $action com inicial maiúscula.
-       * 
-       * Exemplo:
-       * Para $action='faleConosco' a variável $method será 
-       * actionFaleConosco().                         
-       *  
-       */          
+        */               
         public static function load(){
             
-            $arrPartsUrl    = self::processaUrl();             
-            $module         = $arrPartsUrl['module'];
-            $controller     = $arrPartsUrl['controller'];
-            $action         = $arrPartsUrl['action'];
-            $method         = 'action'.ucfirst($action);                                         
-                        
-            $objLoadConfig = new LoadConfig();
-     
+            $arrModules   = array('app','admin');//Root dos módulos disponíveis
+            $module       = $arrModules[0];//O primeiro módulo é sempre padrão.
+            
+            $controllerClass = 'index';
+            $action          = 'index';
+
+            $params     = (isset($_GET['PG']))?$_GET['PG']:'';    
+            $arrParams  = explode('/',$params);            
+            
+            if (is_array($arrParams) && count($arrParams) > 0) {       
+                $controller    = (isset($arrParams[0]) && $arrParams[0] != null)?$arrParams[0]:'';
+                $keyModule     = array_search($controller,$arrModules);
+                if ($controller != null && $keyModule === FALSE) {                    
+                    //O primeiro parâmetro da URL não é um módulo.
+                    //Portanto, define o Controller e o método (action), caso tenha sido informado.
+                    $controllerClass = $controller;
+                    if (isset($arrParams[1]) && $arrParams[1] != null) $action = $arrParams[1];
+                } else {
+                    //Acesso a um módulo específico.
+                    $module = $arrModules[$keyModule];
+                }                                
+            }                     
+            
+            //Define a constante __MODULE__
+            self::defineModule('admin');
+            
             //Faz o include do Controller atual
-            $urlFileController = $module . '/controllers/'.ucfirst($controller).'Controller.php';
-            if (!file_exists($urlFileController)) {
-                $msgErr = 'Arquivo de inclusão '.$urlFileController.' não localizado';
-                throw new \Exception( $msgErr );  
-            }
-                
-            require_once($urlFileController);                    
+            $urlFileController = __MODULE__ . '/controllers/'.ucfirst($controllerClass).'Controller.php';
+            if (!file_exists($urlFileController)) die('Arquivo de inclusão '.$urlFileController.' não localizado');
+            require_once($urlFileController);           
             
             /*
              * Inicializa a conexão com o DB.
@@ -64,125 +59,20 @@
             Conn::init();
 
             //Carrega classes invocadas na aplicação, a partir de seu namespace.
-            spl_autoload_register('self::loadClass');	                           
+            spl_autoload_register('self::loadClass');	         
             
-            $objController  = new $controller;
-            $objController->$method();//Executa o Controller->method()            
-        }
-        
-        private static function processaUrl(){
-            $arrModules = self::$arrModules;
-            $module     = (isset($arrModules))?$arrModules[0]:'app';//O primeiro módulo é sempre padrão.      
-            $params     = (isset($_GET['PG']))?$_GET['PG']:'';    
-            $pathParts  = explode('/',$params);            
-            $controller = '';            
-            $action     = self::getPartUrl(@$pathParts[1],'index'); 
-            
-            if (is_array($pathParts) && count($pathParts) > 0) { 
-                //A URL pode conter partes que representam o módulo, controller e action
-                
-                $controller = self::getPartUrl($pathParts[0]);
-                $keyModule  = array_search($controller,$arrModules);
-                                 
-                if ($keyModule !== FALSE) {
-                    //O primeiro parâmetro refere-se a um módulo
-                    $module = $pathParts[0];  
-                    
-                    //Após extrair o módulo redefine as partes da URL sem o índice zero.
-                    array_shift($pathParts);  
-                    $controller = self::getPartUrl(@$pathParts[0],'index');
-                }                                                                                            
-            }   
-               
-            //Guarda o module, controller e action em variáveis de sessão.
-            //Necessário para criar as URLs de navegação do site.            
-            self::setModule($module);       
-            self::setController($controller);
-            self::setAction($action);  
-            
-            $arrPartsUrl['module']       = $module;
-            $arrPartsUrl['controller']   = $controller;
-            $arrPartsUrl['action']       = $action;
-            return $arrPartsUrl;
-        }
-        
-        private static function getPartUrl($pathPart,$default='index'){
-           $value = (isset($pathPart) && $pathPart != null)?$pathPart:$default; 
-           return $value;
-        }
-        
-        private static function setModule($module){
-            $_SESSION[self::$sessionModuleName] = $module;
-        }
-        
-        public static function getModule(){
-            return self::getVarApplication(self::$sessionModuleName);      
-        }        
-        
-        private static function setController($controller){
-            $_SESSION[self::$sessionControllerName] = $controller;
-        }
-        
-        public static function getController(){
-            return self::getVarApplication(self::$sessionControllerName);           
-        }        
-        
-        private static function setAction($action){
-            $_SESSION[self::$sessionActionName] = $action;
-        }
-        
-        public static function getAction(){
-            return self::getVarApplication(self::$sessionActionName);
-        }
-        
-        private static function getVarApplication($name){            
-            $value = (isset($_SESSION[$name]))?$_SESSION[$name]:'';
-            return $value;
-        }
-        
-        private static function loadConfig(){
-            //Carrega a configuração do sistema
-            $msgErr     = '';
-            $pathXml    = 'config.xml';
-            $objXml     = self::loadXml($pathXml);   
-            //print_r($objXml);
-            if (is_object($objXml)) {
-                $nodesHeader = $objXml->header;
-                $numItens    = count($nodesHeader);
-                if ($numItens > 0) {
-                    $rootFolderSys  = self::getAttrib($nodesHeader,'rootFolderSys');
-                    $rootFolderView = self::getAttrib($nodesHeader,'rootFolderView');
-                    
-                    $nodesInclude   = $objXml->header->include;                  
-                    $css            = self::valueForAttrib($nodesInclude,'id','css');
-                    $cssInc         = self::valueForAttrib($nodesInclude,'id','cssInc');
-                    $js             = self::valueForAttrib($nodesInclude,'id','js');
-                    $jsInc          = self::valueForAttrib($nodesInclude,'id','jsInc');
-                    $plugins        = self::valueForAttrib($nodesInclude,'id','plugins');
-                    
-                    echo $css.'<br>';
-                    echo $cssInc.'<br>';
-                    echo $js.'<br>';
-                    echo $jsInc.'<br>';
-                    
-                } else {
-                    //Nenhuma mensagem foi localizada no XML informado.
-                    $msgErr  = 'O arquivo '.$pathXml.' existe, porém o Xml Node com a mensagem '.$codMsg.' não foi localizado.';                    
-                }
-                die($msgErr);
-                $numItens    = count($nodes);
-                
-                if ($numItens > 0){
-                    $value  = self::valueForAttrib($nodes,'id',$codMsg);
-                    $msg    = (strlen($value) > 0)?$value:'Erro desconhecido';
-                } else {
-                    //Nenhuma mensagem foi localizada no XML informado.
-                    $msgErr  = 'O arquivo '.$pathXml.' existe, porém o Xml Node com a mensagem '.$codMsg.' não foi localizado.';
-                }
-            } else {
-                $msgErr = 'Impossível ler o arquivo '.$pathXml;
-                die($msgErr);
-            }            
+            /*
+             * Identifica o método (action) a ser chamado no Controller atual.
+             * O $actionMethod deve iniciar sempre com o prefixo 'action' seguido do parâmetro
+             * $action com inicial maiúscula.
+             * 
+             * Exemplo:
+             * Para $action='faleConosco' o método do controle a ser chamado será 
+             * actionFaleConosco().                         
+             */            
+            $method         = 'action'.ucfirst($action);
+            $objController  = new $controllerClass;
+            $objController->$method();//Executa o Controller->action()            
         }
         
         /**
@@ -200,6 +90,14 @@
             } else {           
                 die(" Classe $class não encontrada");
             }                      
-        }                
+        }
+        
+        /**
+         * Define qual o módulo chamado pelo usuário.
+         * @param type $module 
+         */
+        private static function defineModule($module){
+            define("__MODULE__", $module);            
+        }
     }
 ?>

@@ -40,7 +40,6 @@ abstract class ORM {
     private $prefixoTable          = 'SPRO_';
     private $arrKey                = array(); //Array que guarda a chave primária da tabela
     private $arrUnique             = array();
-    private $fields                = '*';
     private $colAutoNum; //Coluna autoNumber
     private $tableName;
     private $arrCols               = array(); //Guarda um array associativo cujo índice é o nome de cada coluna.
@@ -407,14 +406,6 @@ abstract class ORM {
         return $sql;
     }  
     
-    function select($fields){
-        $this->fields = (string)$fields;
-    }
-    
-    function where($where){
-        $this->where = (string)$where;
-    }
-    
     /**
      * Faz o SELECT na tabela atual e retorna um array de objetos.
      * 
@@ -437,20 +428,18 @@ abstract class ORM {
      * <code>     
      * $objCliente  = new Cliente();
      * $where       = "(PF_PJ='PF' AND NOME LIKE '%Maria%')";
-     * $results     = $objCliente
-     *                ->where($where)
-     *                ->findAll();
+     * $results     = $objCliente->findAll($where);
      * foreach($results as $obj){
      *      echo $obj->EMAIL;//Objetos da classe Cliente
      * }
      * </code>
-     *      
+     * 
+     * @param string $where Opcional. Pode conter uma cláusula WHERE (ex: CAMPO1 = VALOR1 AND CAMPO2 = VALOR2)
      * @return object[]
      */    
-    function findAll(){        
-        $fields             = $this->fields;
-        $where              = (strlen($this->where))?$this->where:'1=1';
-        $sql                = "SELECT {$fields} FROM ".$this->tableName." WHERE ".$where;
+    function findAll($where=''){
+        if (strlen($where) == 0) $where = '1=1';
+        $sql                = "SELECT * FROM ".$this->tableName." WHERE ".$where;
         $sql                = $this->concatOrderByLimit($sql);  
         $results            = self::query($sql);//Cada registro é um objeto
         $arrObj             = array();

@@ -14,10 +14,8 @@
             <msg id='EXTENSION_NOT_EXISTS'>A extensão informada não é válida.</msg>
         </checkExt>
         <memoSetFile>
-            <msg id='FILE_NOT_EXISTS'>Arquivo de inclusão {FILE} não localizado.  String da URI: {STR_FILE}.</msg>
+            <msg id='FILE_NOT_EXISTS'>Arquivo de inclusão {FILE} não localizado.</msg>
         </memoSetFile>
-        <getOneTagMin>
-            <msg id='ERR_OUT_NAME'>O nome necessário para compor o arquivo de saída (arquivo compactado) não foi informado.</msg>
-        </getOneTagMin>
+        <getTags><msg id='ERR_VIEW_ALIAS'>O apelido da view não foi informado ao iniciar o objeto Header.</msg></getTags>
     </Header>
 </root>

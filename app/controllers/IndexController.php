@@ -2,7 +2,7 @@
 
     use \sys\classes\mvc\Controller;    
     use \sys\classes\mvc\ViewPart;      
-    use \app\classes\ViewSite;           
+    use \sys\classes\mvc\View;        
     use \app\models\HomeModel;
 
     /**
@@ -20,8 +20,7 @@
             $objViewPart->TOTAL_QUESTOES_DB     = $objModel->getTotalQuestoesDb();
             $objViewPart->TOTAL_QUESTOES_ENEM   = $objModel->getTotalQuestoesEnem(); 
             
-            $objView = new ViewSite($objViewPart);
-            $objView->setLayout($objViewPart);
+            $objView = new View($objViewPart);
             $objView->forceCssJsMinifyOn();
             $objView->setPlugin('sliderBanner');            
             
