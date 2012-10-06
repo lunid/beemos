@@ -9,7 +9,7 @@
     list-style: none outside none;
 }
 .accordion li > a {
-	background-image:url(../../images/menu_passivo.jpg);
+	background-image:url(images/menu_passivo.jpg);
     box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1) inset, 0 1px 0 0 rgba(0, 0, 0, 0.1);
     color: #FDFDFD;
     display: block;
@@ -22,7 +22,7 @@
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 .accordion > li:hover > a, .accordion > li:target > a, .accordion > li > a.active {
-	background-image:url(../../images/menu_ativo.jpg);
+	background-image:url(images/menu_ativo.jpg);
     background: -moz-linear-gradient(center top , #3fa4b8 0%, #2b6f7d 100%) repeat scroll 0 0 transparent;
     color: #fff;
     text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2);
@@ -45,7 +45,7 @@
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 .accordion > li > a:before {
-	background-image:url("../../images/icons_menu.png");
+	background-image:url("images/icons_menu.png");
     background-position: 0 0;
     background-repeat: no-repeat;
     content: "";

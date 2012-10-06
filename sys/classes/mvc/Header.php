@@ -160,8 +160,7 @@ class Header {
                 throw new \Exception( $msgErr );                 
             }               
         } catch(\Exception $e){
-            $msgErr = $this->showErr('Erro ao memorizar lista de includes ('.$ext.' -> '.$listInc.')',$e);
-            throw new \Exception($msgErr);            
+            $this->showErr('Erro ao memorizar lista de includes ('.$ext.' -> '.$listInc.')',$e);      
         }                              
     }  
    
@@ -207,9 +206,9 @@ class Header {
                 $tags = (is_array($arrTag) && count($arrTag) > 0)?join(chr(13),$arrTag):'';
                 return $tags;            
             }
-        } catch(\Exception $e){            
-             $msgErr = $this->showErr('Erro ao recuperar listas memorizadas de includes ('.$ext.')',$e); 
-             throw new \Exception($msgErr);  
+        } catch(\Exception $e){
+            throw $e;
+             //$this->showErr('Erro ao recuperar listas memorizadas de includes ('.$ext.')',$e); 
         }
     }    
     
@@ -369,7 +368,7 @@ class Header {
     private function showErr($msg,$e,$die=TRUE){
         $msgErr = "<b>".$msg.':</b><br/><br/>'.$e->getMessage();
         if ($die) die($msgErr);
-        return $msgErr.'<br/><br/>';
+        echo $msgErr.'<br/><br/>';
     }    
 }
 ?>

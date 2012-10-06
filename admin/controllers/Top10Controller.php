@@ -88,7 +88,8 @@
                 //Template
                 $tpl = new View($objView);
                 
-                $tpl->TITLE = 'ADM | SuperPro';
+                $tpl->TITLE         = 'ADM | SuperPro';
+                $tpl->SUB_TITULO    = 'TOP 10';
                 
                 $tpl->setCssJs('top10');
                 $tpl->setPlugin("highcharts");
@@ -216,7 +217,8 @@
                 //Template
                 $tpl = new View($objView);
                 
-                $tpl->TITLE = 'ADM | SuperPro | TOP 10 | Avaliar Questão';
+                $tpl->TITLE         = 'ADM | SuperPro | TOP 10 | Avaliar Questão';
+                $tpl->SUB_TITULO    = 'TOP 10';
                 
                 $tpl->forceCssJsMinifyOn();
                 

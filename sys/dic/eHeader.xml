@@ -7,10 +7,9 @@
         <incCssJsFileName>
             <msg id='EXTENSION_OR_FILENAME_NOT_EXISTS'>A extensão de inclusão informada ({EXT}) não existe ou então o nome da view não foi informado.</msg>
         </incCssJsFileName>
-        <memoIncludeJsCss>
+        <setInc>
             <msg id='ERR_INCLUDE'>Impossível armazenar o(s) arquivo(s) de inclusão solicitado(s). A extensão {EXT} não existe e/ou a lista informada ({LIST}) não é uma string válida.</msg>
-            <msg id='ERR_INCLUDE2'>Teste</msg>
-        </memoIncludeJsCss>
+        </setInc>
         <checkExt>
             <msg id='EXTENSION_NOT_EXISTS'>A extensão informada não é válida.</msg>
         </checkExt>
