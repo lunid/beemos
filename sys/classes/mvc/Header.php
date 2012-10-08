@@ -228,7 +228,7 @@ class Header {
         $arrMemo        = array_unique($arrMemo);//Elimina valores em duplicidade.
         
         if (strlen($layoutName) > 0){
-            $outFileMin  = self::getNameFileMin($ext);               
+            $outFileMin  = self::getNameFileMin($ext);                
             if ($this->forceNewIncMin)@unlink($outFileMin);
             
             if (!file_exists($outFileMin)){
@@ -352,8 +352,8 @@ class Header {
      */
     private function getNameFileMin($ext){   
         $fileName       = $this->layoutName.'_min.'.$ext;
-        $path           = $ext.'/min/'.$fileName;                 
-        $pathFileMin    = \Url::physicalPath($path);        
+        $path           = $ext.'/min/'.$fileName;             
+        $pathFileMin    = \Url::physicalPath($path);   
         
         return $pathFileMin;
     }         

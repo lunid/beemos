@@ -14,10 +14,11 @@
         }
         
         function loadConfigXml($pathXml){
-            $msgErr = '';
-            if (file_exists($pathXml)) {
-                $arrPath    = pathinfo($pathXml);                
-                $extension  = $arrPath['extension'];
+            $msgErr         = '';           
+            
+            if (file_exists($pathXml)) {                
+                $arrPath        = pathinfo($pathXml);                
+                $extension      = $arrPath['extension'];
                 if ($extension == 'xml') {                    
                     $objXml = self::loadXml($pathXml);  
                     if (is_object($objXml)) {
@@ -29,9 +30,11 @@
                 } else {
                    $msgErr = 'O arquivo informado parece não ser um arquivo XML';                                                                 
                 }
-            } else {
-                $msgErr = "Arquivo {$pathXml} não foi localizado.";                
-            }            
+            } else {                
+                $arrUrl         = explode('/',$pathXml);
+                $tamPartsUrl    = count($arrUrl);                
+                if ($tamPartsUrl <= 1) $msgErr = "Arquivo {$pathXml} não foi localizado.";                
+            }                        
             if (strlen($msgErr) > 0) throw new \Exception( $msgErr );    
         }
         

@@ -54,13 +54,13 @@
             $objLoadConfig = new LoadConfig();            
             $objLoadConfig->loadConfigXml('config.xml');
             $objLoadConfig->loadConfigXml($configModule);
-            
+                       
             //Define o root da pasta de includes baseado na pastaBase/modulo/pastaViews/            
             $arrRoot                = array(LoadConfig::root(),$module,LoadConfig::folderViews());
             $pathRootFolder         = join('/',$arrRoot).'/';
             $absolutePathIncludes   = $_SERVER['DOCUMENT_ROOT'].$pathRootFolder;
             
-            self::getAbsolutePathIncludes($absolutePathIncludes);
+            self::setAbsolutePathIncludes($absolutePathIncludes);
            
             
             //echo $objLoadConfig->listVars();

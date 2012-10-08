@@ -5,8 +5,9 @@
         public static function physicalPath($uri){
             $path = $uri;
             if (strlen($uri) > 0) {
-                $absolutePathIncludes   = \Application::getAbsolutePathIncludes();              
-                $path                   = $absolutePathIncludes.$uri;             
+                $absolutePathIncludes   = \Application::getAbsolutePathIncludes();        
+                $path                   = $absolutePathIncludes.$uri; 
+                $path                   = str_replace('//','/',$path);    
             }
             return $path;
         }
