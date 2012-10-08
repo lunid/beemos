@@ -1,6 +1,44 @@
  <?php
 
     class Url {
+             
+        public static function physicalPath($uri){
+            $path = $uri;
+            if (strlen($uri) > 0) {
+                $absolutePathIncludes   = \Application::getAbsolutePathIncludes();              
+                $path                   = $absolutePathIncludes.$uri;             
+            }
+            return $path;
+        }
+        
+        public static function absolutePath($uri){
+           $path    = $uri;
+           $root    = $_SERVER['DOCUMENT_ROOT'];
+           $path    = str_replace($root,'/',$uri);           
+           return $path;            
+        }
+
+        public static function relativeUrl($uri){
+            $path = $uri;                             
+           if (strlen($uri) > 0) {     
+                $folderSys  = \LoadConfig::folderSys();          
+                $keySys     = strpos($uri,$folderSys);
+                if ($keySys === FALSE) {
+                    $rootFolder  = \LoadConfig::rootFolder(); 
+                    $module      = \Application::getModule();   
+                    $root        = $rootFolder.'/'.$module.'/';
+                    $keyRoot     = strpos($uri,$root);
+                    $path        = $_SERVER['DOCUMENT_ROOT'];
+                    if ($keyRoot !== false) {
+                        $path .= $uri;                                    
+                    } else {
+                        $path .= $root.$uri;
+                    }
+                }
+           }
+           $path = str_replace('//','/',$path);
+           return $path;
+        }
         
         public static function siteUrlHttp($params){
             return self::siteUrl($params,'http');
@@ -9,22 +47,7 @@
         
         public static function siteUrlHttps($params){
             return self::siteUrl($params,'https');
-        }  
-        
-        public static function relativeUrl($uri){
-           $path = $uri;
-           if (strlen($uri) > 0) {
-                $rootFolder  = \LoadConfig::rootFolder(); 
-                $module      = \Application::getModule();
-                $root        = '/'.$rootFolder.'/'.$module;
-                $folderSys   = \LoadConfig::folderSys();
-                echo $folderSys;
-                die('s');
-                $key         = strpos($uri,$folderSys);
-                if ($key === FALSE) $path = $root.'/'.$uri;                   
-           }
-           return $path;
-        }
+        }          
         
         /**
          * Método de suporte a siteUrlHttp e siteUrlHttps.

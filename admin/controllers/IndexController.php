@@ -27,6 +27,7 @@
                 $tpl->TITLE = 'ADM | SuperPro';
                 
                 $tpl->forceCssJsMinifyOn();
+                $tpl->onlyExternalCssJs();
                 
                 $tpl->render('home');            
             }catch(Exception $e){

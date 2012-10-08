@@ -10,7 +10,7 @@
         private $nodes;
         const PREFIXO_VAR = 'GLB_';
         function __construct(){            
-            $this->loadConfigXml('config.xml');            
+            //$this->loadConfigXml('config.xml');            
         }
         
         function loadConfigXml($pathXml){
@@ -35,11 +35,10 @@
             if (strlen($msgErr) > 0) throw new \Exception( $msgErr );    
         }
         
-        private function loadVars($objXml){    
-            $msgErr             = '';
-            $arrConfigCache     = array();
+        private function loadVars($objXml){                           
             $nodesHeader        = $objXml->header;
             $numItens           = count($nodesHeader);
+            $pathTplFolder      = '';
             
             $idRootFolder       = 'rootFolder';
             $idBaseUrlHttp      = 'baseUrlHttp';
@@ -50,48 +49,48 @@
             
             if ($numItens > 0) {
                 //Configurações da aplicação:
-                $nodesApp               = $objXml->app->config; 
-                $cfgRootFolder          = self::valueForAttrib($nodesApp,'id',$idRootFolder);   
-                $cfgBaseUrlHttp         = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttp);   
-                $cfgBaseUrlHttps        = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttps);   
-                $cfgFolderSys           = self::valueForAttrib($nodesApp,'id',$idFolderSys);   
-                $cfgFolderViews         = self::valueForAttrib($nodesApp,'id',$idFolderViews);   
-                $cfgDefaultModule       = self::valueForAttrib($nodesApp,'id',$idDefaultModule);                
-                             
-                $this->setGlobalVar($idBaseUrlHttp,$cfgBaseUrlHttp);
-                $this->setGlobalVar($idBaseUrlHttps,$cfgBaseUrlHttps);
-                $this->setGlobalVar($idFolderSys,$cfgFolderSys);
-                $this->setGlobalVar($idFolderViews,$cfgFolderViews);
-                $this->setGlobalVar($idRootFolder,$cfgRootFolder);
-                $this->setGlobalVar($idDefaultModule,$cfgDefaultModule);
+                $nodesApp               = $objXml->app->config;
+                if (is_object($nodesApp)) {
+                    $cfgRootFolder          = self::valueForAttrib($nodesApp,'id',$idRootFolder);   
+                    $cfgBaseUrlHttp         = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttp);   
+                    $cfgBaseUrlHttps        = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttps);   
+                    $cfgFolderSys           = self::valueForAttrib($nodesApp,'id',$idFolderSys);   
+                    $cfgFolderViews         = self::valueForAttrib($nodesApp,'id',$idFolderViews);   
+                    $cfgDefaultModule       = self::valueForAttrib($nodesApp,'id',$idDefaultModule);                
+
+                    $this->setGlobalVar($idBaseUrlHttp,$cfgBaseUrlHttp);
+                    $this->setGlobalVar($idBaseUrlHttps,$cfgBaseUrlHttps);
+                    $this->setGlobalVar($idFolderSys,$cfgFolderSys);
+                    $this->setGlobalVar($idFolderViews,$cfgFolderViews);
+                    $this->setGlobalVar($idRootFolder,$cfgRootFolder);
+                    $this->setGlobalVar($idDefaultModule,$cfgDefaultModule);
+                }
                 
                 //Configurações de módulo:
                 $idFolderTpl            = 'folderTemplate';
                 $idDefaultTpl           = 'defaultTemplate';
                 $nodesModule            = $objXml->module->config; 
-                $cfgFolderTemplate      = self::valueForAttrib($nodesModule,'id',$idFolderTpl);                
-                $cfgDefaultTemplate     = self::valueForAttrib($nodesModule,'id',$idDefaultTpl);                
-                $pathTplFolder          = $cfgDefaultModule.'/'.$cfgFolderTemplate.'/';                               
                 
-                try {
-                    $this->vldTemplate($pathTplFolder,$cfgDefaultTemplate);
-                } catch(\Exception $e) {
-                    die('LoadConfig->loadVars(): '.$e->getMessage());
-                }
-                                
-                $this->setGlobalVar($idFolderTpl,$cfgFolderTemplate);
-                $this->setGlobalVar($idDefaultTpl,$cfgDefaultTemplate);                
+                if (is_object($nodesModule)) {
+                    $cfgFolderTemplate      = self::valueForAttrib($nodesModule,'id',$idFolderTpl);                
+                    $cfgDefaultTemplate     = self::valueForAttrib($nodesModule,'id',$idDefaultTpl);                
+                    $pathTplFolder          = $cfgDefaultModule.'/'.$cfgFolderTemplate.'/';                               
+                    
+                    try {
+                        $this->vldTemplate($pathTplFolder,$cfgDefaultTemplate);
+                    } catch(\Exception $e) {
+                        die('LoadConfig->loadVars(): '.$e->getMessage());
+                    }
+
+                    $this->setGlobalVar($idFolderTpl,$cfgFolderTemplate);
+                    $this->setGlobalVar($idDefaultTpl,$cfgDefaultTemplate);                      
+                }                                             
                                  
                 //Configurações de cabeçalho (includes):
-                $nodesHeader            = $objXml->app->header;                 
-                $rootFolderSys          = self::getAttrib($nodesHeader,'rootFolderSys');
-                $rootFolderView         = self::getAttrib($nodesHeader,'rootFolderView');                            
-                                
-                $this->setGlobalVar('folderSys',$rootFolderSys);
-                $this->setGlobalVar('folderView',$rootFolderView);
+                //$nodesHeader        = $objXml->app->header;                                                                                                                                                           
+                $nodesInclude       = $objXml->header->include;     
+                $arrNodesInclude    = self::convertNode2Array($nodesInclude);
                 
-                $nodesInclude   = $objXml->header->include;     
-                $arrNodesInclude = self::convertNode2Array($nodesInclude);
                 foreach($arrNodesInclude as $arrItem){
                     $nodeValue  = (string)$arrItem['value'];    
                     $attrib     = $arrItem['attrib'];                    
@@ -223,7 +222,7 @@
         }
         
         public static function __callStatic($varName,$args) {                      
-            $varName = self::PREFIXO_VAR.$varName;
+            $varName = self::PREFIXO_VAR.$varName;           
             $value = (isset($_SESSION[$varName]))?$_SESSION[$varName]:'';
             return $value;                        
         }

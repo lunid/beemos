@@ -129,11 +129,16 @@ class HtmlComponent {
      * 
      * @return string HTML porcessado
      */
-    private static function renderHtml($html_template = null){
+    private static function renderHtml($htmlTemplate = null){
         try{
-            $pathPhtml = self::$html_path . self::$default_html . ".phtml";
-            if($html_template != null) $pathPhtml = "/" . __MODULE__ . self::$html_path_templates . "{$html_template}.phtml";
-
+           $phtmlFile = self::$html_path . self::$default_html . ".phtml";
+           $pathPhtml  = \Url::absolutePath($phtmlFile);
+                      
+           if($htmlTemplate != null) {
+               
+               $phtmlFile   = self::$html_path_templates . "{$htmlTemplate}.phtml";
+               $pathPhtml   = \Url::relativeUrl($phtmlFile);        
+           }
             ob_start();
             if (!@include($pathPhtml)) {                    
                 throw new Exception (__METHOD__."(): Arquivo {$pathPhtml} não existe.");                    

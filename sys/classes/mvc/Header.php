@@ -61,22 +61,22 @@ class Header {
             $file = \Url::relativeUrl($file);
         }
 	
-        $extFile = $this->getExtFile($ext);            
-        $file   .= '.'.$extFile;   
-               
-        echo $file.'<br>';
+        $extFile    = $this->getExtFile($ext);            
+        $file       .= '.'.$extFile;   
+        
+       
         //if (file_exists($file)){
         //echo file_get_contents($file);
         
-        if (file_exists($file)){
-            echo 'xxx';
+        if (file_exists($file)){                        
             $this->arrMemoIncludeJsCss[$ext][]  = $file;                                           
-        } elseif ($exception) {  
-            echo 'ERRO';
-            $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_EXISTS'); 
-            $msgErr = str_replace('{FILE}',$file,$msgErr);
-            $msgErr = str_replace('{STR_FILE}',$strFile,$msgErr);
-            throw new \Exception( $msgErr );                                  
+        } elseif ($exception) {    
+            if ($exception) {       
+                $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_EXISTS'); 
+                $msgErr = str_replace('{FILE}',$file,$msgErr);
+                $msgErr = str_replace('{STR_FILE}',$strFile,$msgErr);
+                throw new \Exception( $msgErr );                                  
+            }
         }                       
     } 
     
@@ -196,7 +196,7 @@ class Header {
             if (is_array($arrMemo)){                    
                 //A extensão atual possui uma lista memorizada.                  
                 if (($ext == $this::EXT_CSS || $ext == $this::EXT_JS) && !$this->onlyExternalCssJs){
-                    //css ou js: faz a junção de todos os arquivos em um único arquivo compactado.
+                    //css ou js: faz a junção de todos os arquivos em um único arquivo compactado.                                        
                     $arrTag[]  = $this->getOneTagMin($arrMemo,$ext);
                 } else {
                     //Para cada arquivo gera uma tag de include (<script ...> ou <link ...>)
@@ -225,7 +225,7 @@ class Header {
         $layoutName     = $this->layoutName;
         $strScript      = '';
         $tag            = '';
-        $arrMemo        = array_unique($arrMemo);
+        $arrMemo        = array_unique($arrMemo);//Elimina valores em duplicidade.
         
         if (strlen($layoutName) > 0){
             $outFileMin  = self::getNameFileMin($ext);               
@@ -326,7 +326,9 @@ class Header {
     private function setTag($file,$ext){       
         $inc        = '';
         $extFile    = $this->getExtFile($ext);                         
-        if (strlen($file) > 0){           
+        if (strlen($file) > 0){   
+            //echo $file.'<br>';
+            $file = \Url::absolutePath($file);
             if ($extFile == self::EXT_JS) {
                 $inc = "<script type='text/javascript' src='".$file."'></script>".chr(13);
             } elseif ($extFile == self::EXT_CSS) {               
@@ -348,10 +350,12 @@ class Header {
      * @param string $ext Exensão do arquivo (css,js).
      * @return string 
      */
-    private function getNameFileMin($ext){        
-        $rootOutFileMin = self::$ROOT_VIEW_FILES.'/'.$ext.'/min/'; 
-        $outFileMin     = $rootOutFileMin.$this->layoutName.'_min.'.$ext;  
-        return $outFileMin;
+    private function getNameFileMin($ext){   
+        $fileName       = $this->layoutName.'_min.'.$ext;
+        $path           = $ext.'/min/'.$fileName;                 
+        $pathFileMin    = \Url::physicalPath($path);        
+        
+        return $pathFileMin;
     }         
     
     function __call($fn,$args){

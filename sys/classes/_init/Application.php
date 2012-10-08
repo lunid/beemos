@@ -11,6 +11,7 @@
     require_once('sys/classes/util/Url.php');  
     
     class Application {
+        
         /**
          * Classe de inicialização da aplicação.
          * 
@@ -21,7 +22,8 @@
         
         private static $sessionModuleName       =  'GLB_MODULE';
         private static $sessionControllerName   =  'GLB_CONTROLLER';
-        private static $sessionActionName       = 'GLB_ACTION';        
+        private static $sessionActionName       = 'GLB_ACTION';       
+        private static $sessionAbsolutePathIncludes      = 'GLB_ROOT_INCLUDES';
         private static $arrModules              = array('app','admin');
         
       /**
@@ -47,8 +49,20 @@
             $action         = $arrPartsUrl['action'];
             $method         = 'action'.ucfirst($action);                                         
                                 
+            $configModule   = $module.'/config.xml';
+            
             $objLoadConfig = new LoadConfig();            
             $objLoadConfig->loadConfigXml('config.xml');
+            $objLoadConfig->loadConfigXml($configModule);
+            
+            //Define o root da pasta de includes baseado na pastaBase/modulo/pastaViews/            
+            $arrRoot                = array(LoadConfig::root(),$module,LoadConfig::folderViews());
+            $pathRootFolder         = join('/',$arrRoot).'/';
+            $absolutePathIncludes   = $_SERVER['DOCUMENT_ROOT'].$pathRootFolder;
+            
+            self::getAbsolutePathIncludes($absolutePathIncludes);
+           
+            
             //echo $objLoadConfig->listVars();
             //Url::siteUrlHttps(array('part1','part2','part3'));
             //die();
@@ -116,6 +130,14 @@
         private static function getPartUrl($pathPart,$default='index'){
            $value = (isset($pathPart) && $pathPart != null)?$pathPart:$default; 
            return $value;
+        }
+        
+        private static function setAbsolutePathIncludes($rootIncludes){
+            $_SESSION[self::$sessionAbsolutePathIncludes] = $rootIncludes;
+        }
+        
+        static function getAbsolutePathIncludes(){
+            return (isset($_SESSION[self::$sessionAbsolutePathIncludes]))?$_SESSION[self::$sessionAbsolutePathIncludes]:'';
         }
         
         private static function setModule($module){

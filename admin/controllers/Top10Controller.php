@@ -19,7 +19,7 @@
             try{
                 //Top10
                 $m_top10 = new Top10Model();
-                
+                                
                 $objView = new ViewPart('top10');
                 
                 $id_materia             = Request::post("id_materia", "NUMBER");
@@ -86,7 +86,8 @@
                 $objView->GR_TOP10 = ChartComponent::geraGraficoTop10($m_top10->graficoTop10($data_inicio, $data_final));
                 
                 //Template
-                $tpl = new View($objView);
+                $tpl = new View();
+                $tpl->setLayout($objView);                
                 
                 $tpl->TITLE         = 'ADM | SuperPro';
                 $tpl->SUB_TITULO    = 'TOP 10';

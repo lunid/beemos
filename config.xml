@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>        
-        <config id='baseUrlHttp'>www.interbits.com.br</config>
+        <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
         <config id='rootFolder'>interbits</config>
         <config id='defaultModule'>app</config>  

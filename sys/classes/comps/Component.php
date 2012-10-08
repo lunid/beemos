@@ -30,11 +30,11 @@
                 }
 
                 if (strlen($strIncMin) > 0 && strlen($outFileMin) > 0){
-                    //Gera um arquivo físico com o conteúdo compactado:                                      
+                    //Gera um arquivo físico com o conteúdo compactado:                    
                     $fp = fopen($outFileMin, "wb+");                
                     fwrite($fp, $strIncMin);
                     fclose($fp);
-
+                
                     if (!file_exists($outFileMin)){
                         die('O arquivo de inclusão '.$outFileMin.' não pôde ser gerado.');
                     }
@@ -43,8 +43,7 @@
                     if ($size == 0){
                         $msgErr = 'Componente->yuiCompressor(): O arquivo '.$outFileMin.' foi gerado porém está vazio.<br><br>'.$strIncMin;
                         throw new \Exception( $msgErr );                                                                        
-                    }
-                    throw new \Exception( 'Erro compressor' );    
+                    }                      
                     return TRUE;
                 } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
                     $msgErr = 'Componente->yuiCompressor(): Impossível comprimir o arquivo '.$outFileMin.' porque a compressão retornou vazio.';
