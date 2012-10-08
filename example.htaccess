@@ -2,6 +2,8 @@ RewriteEngine on
 
 RewriteBase /interbits
 
+RewriteRule (app|admin)/views/(images)/(.*) $1/views/images/$3 [L,R=302]
+
 RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
 RewriteRule (admin)/(.*) index.php?MODULE=$1&PG=$2&%{QUERY_STRING}
 
