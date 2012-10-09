@@ -49,6 +49,8 @@
             $idDefaultModule    = 'defaultModule';            
             $idFolderSys        = 'folderSys';
             $idFolderViews      = 'folderViews';   
+            $idAssetsFolderRoot = 'assetsFolderRoot';
+            $idFolderPlugins    = 'folderPlugins';
             
             if ($numItens > 0) {
                 //Configurações da aplicação:
@@ -72,6 +74,19 @@
                 //Configurações de módulo:
                 $idFolderTpl            = 'folderTemplate';
                 $idDefaultTpl           = 'defaultTemplate';
+                
+                $nodesPlugins           = $objXml->assets->config;
+                
+                if (is_object($nodesPlugins)) {
+                    $cfgFolderPlugins       = self::valueForAttrib($nodesPlugins,'id',$idFolderPlugins);
+                    $cfgAssetsFolderRoot    = self::valueForAttrib($nodesPlugins,'id',$idAssetsFolderRoot);
+                    //echo $cfgAssetsFolderRoot;
+                    
+                    $this->setGlobalVar($idFolderPlugins,$cfgFolderPlugins);
+                    $this->setGlobalVar($idAssetsFolderRoot,$cfgAssetsFolderRoot);
+                }
+                
+                
                 $nodesModule            = $objXml->module->config; 
                 
                 if (is_object($nodesModule)) {

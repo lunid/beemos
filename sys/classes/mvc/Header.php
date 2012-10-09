@@ -11,8 +11,8 @@ class Header {
     const EXT_JS_INC                = 'jsInc';
     const EXT_CSS_INC               = 'cssInc';    
     static  $ROOT_VIEW_FILES        = '';
-    static  $ROOT_SYS_FILES         = '';        
-    private static $arrExt          = array(self::EXT_CSS,self::EXT_CSS_INC,self::EXT_JS,self::EXT_JS_INC);     
+    //static  $ROOT_SYS_FILES         = '';        
+    private static $arrExt          = array(self::EXT_CSS,self::EXT_CSS_INC,self::EXT_JS_INC,self::EXT_JS);     
     private $arrMemoIncludeJsCss    = array(self::EXT_JS=>array(),self::EXT_JS_INC=>array(),self::EXT_CSS_INC=>array(),self::EXT_CSS=>array());//Guarda todas as inclusÃµes js e css da pÃ¡gina atual
     var $arrIncDefault              = array();//Guarda as inclusÃµes default para todas as pÃ¡ginas (css, js, cssInc, jsInc).
     private $forceNewIncMin         = FALSE;
@@ -21,65 +21,11 @@ class Header {
     
     function __construct($layoutName=''){                       
         self::$ROOT_VIEW_FILES      = \LoadConfig::folderViews();
-        self::$ROOT_SYS_FILES       = \LoadConfig::folderSys();
+        //self::$ROOT_SYS_FILES       = \LoadConfig::folderSys();
       
         if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
     }   
-    
-    /**
-     * Memoriza uma uri qualificada ($strFile) de acordo com a extensão informada (parâmetro $ext, que pode ser js ou css)
-     * 
-     * Como exemplo, seguem alguns valores possíveis para o parâmetro uri:
-     *  - $ext='js', $strFile='home': o sistema entende como 'app/views/js/home.js'
-     *  - $ext='css',$strFile='menu.init': o sistema entende como 'app/views/css/menu/init.css'
-     * 
-     * @param string $ext Valores possíveis: css,js,cssInc,jsInc
-     * @param string $strFile String que contém o endereço de um arquivo
-     * @param boolean $exception Se TRUE e o arquivo a ser memorizado não existir dispara uma exceção.
-     * @return void
-     * @throws \Exception Caso o arquivo físico não exista e o parâmetro $exception for TRUE.
-     */    
-    function memoSetFile($ext,$strFile,$exception=TRUE){
-        if (strlen($strFile) == 0) return;
-
-        $root = self::$ROOT_VIEW_FILES;
-        $arrUrlFile = explode(':',$strFile);
-        $uri        = $strFile;
-        if (is_array($arrUrlFile) && count($arrUrlFile) == 2){
-            $root    = $arrUrlFile[0]; 
-            $uri     = $arrUrlFile[1];
-        }
         
-        $file = str_replace('.','/',$uri);
-        
-        if ($root != 'plugin'){
-            if ($root == \LoadConfig::folderSys()) $root = self::$ROOT_SYS_FILES;  
-            $extFile    = $this->getExtFile($ext);
-            $file       = $root.'/'.$extFile.'/'.$file;  
-            $file       = \Url::relativeUrl($file);
-        } else {
-            $file = \Url::relativeUrl($file);
-        }
-	
-        $extFile    = $this->getExtFile($ext);            
-        $file       .= '.'.$extFile;   
-        
-       
-        //if (file_exists($file)){
-        //echo file_get_contents($file);
-        
-        if (file_exists($file)){                        
-            $this->arrMemoIncludeJsCss[$ext][]  = $file;                                           
-        } elseif ($exception) {    
-            if ($exception) {       
-                $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_EXISTS'); 
-                $msgErr = str_replace('{FILE}',$file,$msgErr);
-                $msgErr = str_replace('{STR_FILE}',$strFile,$msgErr);
-                throw new \Exception( $msgErr );                                  
-            }
-        }                       
-    } 
-    
     function forceCssJsMinifyOn(){
         $this->forceNewIncMin = TRUE;
     }
@@ -142,11 +88,11 @@ class Header {
         if (strlen($listInc) == 0) return;
         try {
             $this->checkExt($ext);
-            if (isset($listInc) && is_string($listInc)){
+            if (isset($listInc) && is_string($listInc)){                
                 $arrInclude = explode(',',$listInc);
                 foreach($arrInclude as $strFile){                        
                     if (strlen($strFile) == 0) continue;
-                    try {
+                    try {                       
                         $this->memoSetFile($ext,$strFile);  
                     } catch(\Exception $e) {  
                         $msgErr = $this->showErr('memoIncludeJsCss()',$e,FALSE); 
@@ -163,6 +109,46 @@ class Header {
             $this->showErr('Erro ao memorizar lista de includes ('.$ext.' -> '.$listInc.')',$e);      
         }                              
     }  
+    
+/**
+     * Memoriza uma uri qualificada ($strFile) de acordo com a extensão informada (parâmetro $ext, que pode ser js ou css)
+     * 
+     * Como exemplo, seguem alguns valores possíveis para o parâmetro uri:
+     *  - $ext='js', $strFile='home': o sistema entende como 'app/views/js/home.js'
+     *  - $ext='css',$strFile='menu.init': o sistema entende como 'app/views/css/menu/init.css'
+     * 
+     * @param string $ext Valores possíveis: css,js,cssInc,jsInc
+     * @param string $strFile String que contém o endereço de um arquivo
+     * @param boolean $exception Se TRUE e o arquivo a ser memorizado não existir dispara uma exceção.
+     * @return void
+     * @throws \Exception Caso o arquivo físico não exista e o parâmetro $exception for TRUE.
+     */    
+    function memoSetFile($ext,$strFile,$exception=TRUE){
+        if (strlen($strFile) == 0) return;
+        
+        $extensionFile  = $this->getExtFile($ext);
+        $file           = str_replace('.','/',$strFile);
+        
+        //Verifica se a URL atual é um include de PLUGIN
+        $keyPlugin      = strpos($strFile,\LoadConfig::folderPlugins());        
+        if ($keyPlugin === FALSE) {
+            $file = $extensionFile.'/'.$file;//Não é PLUGIN          	
+        }
+                      
+        $file       = 'assets/'.$file.'.'.$extensionFile;           
+        
+        if (file_exists($file)){                        
+            $this->arrMemoIncludeJsCss[$ext][]  = $file;                                           
+        } elseif ($exception) {    
+            if ($exception) {       
+                $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_EXISTS'); 
+                $msgErr = str_replace('{FILE}',$file,$msgErr);
+                $msgErr = str_replace('{STR_FILE}',$strFile,$msgErr);
+                throw new \Exception( $msgErr );                                  
+            }
+        }                       
+    } 
+        
    
     /**
      * Retorna o array dos paths de inclusão (js, css, jsInc e cssInc) da página atual.
@@ -196,7 +182,7 @@ class Header {
             if (is_array($arrMemo)){                    
                 //A extensão atual possui uma lista memorizada.                  
                 if (($ext == $this::EXT_CSS || $ext == $this::EXT_JS) && !$this->onlyExternalCssJs){
-                    //css ou js: faz a junção de todos os arquivos em um único arquivo compactado.                                        
+                    //css ou js: faz a junção de todos os arquivos em um único arquivo compactado.                       
                     $arrTag[]  = $this->getOneTagMin($arrMemo,$ext);
                 } else {
                     //Para cada arquivo gera uma tag de include (<script ...> ou <link ...>)
@@ -230,7 +216,7 @@ class Header {
         if (strlen($layoutName) > 0){
             $outFileMin  = self::getNameFileMin($ext);                
             if ($this->forceNewIncMin)@unlink($outFileMin);
-            
+            echo $outFileMin.' cc<br>';
             if (!file_exists($outFileMin)){
                 foreach($arrMemo as $file){
                     //O arquivo minify ainda não existe. Deve ser criado.
@@ -279,31 +265,40 @@ class Header {
         }
         
         foreach($arrMemo as $file){
-            //O arquivo deve ser incluído separadamente. Verifica se já está compactado                            
-            $arrFile        = explode('/',$file);
-            $indiceFile     = count($arrFile)-1;
-            $fileName       = $arrFile[$indiceFile];
-            $pos            = strpos($fileName,'_min.');
+            //O arquivo deve ser incluído separadamente. Verifica se já está compactado    
+                   
+            $arrInfo        = pathinfo($file);
+            $filename       = $arrInfo['filename'];
+            $extension      = $arrInfo['extension'];
+            
+            //print_r($arrInfo);
+            //die();
+            //$arrFile        = explode('/',$file);
+            //$indiceFile     = count($arrFile)-1;
+            //$fileName       = $arrFile[$indiceFile];
+            $pos            = strpos($filename,'_min.');
             $extFile        = ($ext == $this::EXT_CSS_INC)?'css':'js';            
-       
+            //echo $file.' c<br>';  
+            
             if ($pos === false) {
                 //O arquivo solicitado não é compactado (sufixo _min). Deve ser gerado.
                 
                 //Modifica o path do arquivo. Ex.: path/fileName.js para path/fileName_min.js  
-                $search                 = '.'.$extFile;
-                $replace                = '_min.'.$extFile;                
-                $nameMin                = str_replace($search,$replace,$fileName);               
-                $arrFile[$indiceFile]   = $nameMin;                
-                $outFileMin             = join('/',$arrFile);
-                               
-                if ($this->forceNewIncMin)@unlink($outFileMin);//Exclui o arquivo _min caso exista.
+                $search                 = '.'.$extension;
+                $replace                = '_min.'.$extension;                
+                $nameMin                = str_replace($search,$replace,$filename);               
+                $arrInfo['filename']    = $nameMin;                
+                $outFileMin             = join('/',$arrInfo);
+                $outFileMin             = self::getNameFileMin($extension);  
+                echo $outFileMin.' xx<br>';
+                //if ($this->forceNewIncMin)@unlink($outFileMin);//Exclui o arquivo _min caso exista.
                 
                 if (!file_exists($outFileMin)){
                     //Arquivo ainda não existe. Gera um arquivo _min.
                     $strScriptInc = file_get_contents($file);
                     
                     try {
-                        if (Component::yuiCompressor($strScriptInc,$extFile,$outFileMin)){                                                        
+                        if (Component::yuiCompressor($strScriptInc,$extension,$outFileMin)){                                                        
                             //Arquivo compactado com sucesso. Faz a inclusão do novo arquivo.
                             $file = $outFileMin;
                         } else {
@@ -314,6 +309,7 @@ class Header {
                         throw new \Exception($e);
                     }
                 } else {
+                    echo "existe<br>";
                     $file = $outFileMin;
                 }
             }                        			                            
@@ -324,15 +320,27 @@ class Header {
     }        
  
     private function setTag($file,$ext){       
-        $inc        = '';
-        $extFile    = $this->getExtFile($ext);                         
+        $inc                = '';
+        $cssJsExtension     = $this->getExtFile($ext);//Converte cssInc para css e jsInc para js, se necessário.                        
         if (strlen($file) > 0){   
+            $arrPath    = pathinfo($file);  
+            $dirname    = $arrPath['dirname'];
+            $basename   = $arrPath['basename'];
             //echo $file.'<br>';
-            $file = \Url::absolutePath($file);
-            if ($extFile == self::EXT_JS) {
-                $inc = "<script type='text/javascript' src='".$file."'></script>".chr(13);
-            } elseif ($extFile == self::EXT_CSS) {               
-                $inc = "<link rel='stylesheet' href='".$file."' type='text/css' />".chr(13);
+            //print_r($arrPath);
+            //Verifica se a URL atual é um include de PLUGIN
+            $plugins        = \LoadConfig::folderPlugins();//sub-pasta de assets onde ficam os plugins
+            $keyPlugin      = strpos($dirname,$plugins);
+            $pathFile       = $file;
+            //if ($keyPlugin !== FALSE)?$cssJsExtension.'/'.$dirname.$basename:$file;//Não é PLUGIN          	
+
+            //die();
+            //$pathFile = $cssJsExtension.'/'.$arrPath['basename'];//Ex.: css/fileName.css, ou js/fileName.js
+            
+            if ($cssJsExtension == self::EXT_JS) {
+                $inc = "<script type='text/javascript' src='".$pathFile."'></script>".chr(13);
+            } elseif ($cssJsExtension == self::EXT_CSS) {               
+                $inc = "<link rel='stylesheet' href='".$pathFile."' type='text/css' />".chr(13);
             }
         }            
         return $inc;
@@ -344,7 +352,7 @@ class Header {
      * 
      * Exemplo: 
      * Para $outFile='home', $ext='js' e $ROOT_VIEW_FILES = 'app/views'
-     * o arquivo de saída será app/views/js/min/home_min.js
+     * o arquivo de saída será app/views/js/home_min.js
      * 
      * @param string $outFile Nome do arquivo sem compactação. Ex: home.
      * @param string $ext Exensão do arquivo (css,js).
@@ -352,9 +360,12 @@ class Header {
      */
     private function getNameFileMin($ext){   
         $fileName       = $this->layoutName.'_min.'.$ext;
-        $path           = $ext.'/min/'.$fileName;             
-        $pathFileMin    = \Url::physicalPath($path);   
-        
+        $path           = $ext.'/'.$fileName;     
+        $root           = $_SERVER['DOCUMENT_ROOT'];
+        $rootFolder     = \LoadConfig::rootFolder();
+        $assets         = \LoadConfig::assetsFolderRoot();
+        $pathFileMin    = $root.$rootFolder.'/'.$assets.'/'.$path;
+    
         return $pathFileMin;
     }         
     

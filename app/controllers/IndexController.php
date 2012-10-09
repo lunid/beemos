@@ -20,9 +20,10 @@
             $objViewPart->TOTAL_QUESTOES_DB     = $objModel->getTotalQuestoesDb();
             $objViewPart->TOTAL_QUESTOES_ENEM   = $objModel->getTotalQuestoesEnem(); 
             
-            $objView = new View($objViewPart);
+            $objView = new View();
+            $objView->setLayout($objViewPart);
             $objView->forceCssJsMinifyOn();
-            $objView->onlyExternalCssJs();
+            //$objView->onlyExternalCssJs();
             $objView->setPlugin('sliderBanner');            
             
             $objView->TITLE = 'Bem-vindo ao Super Professor Web';

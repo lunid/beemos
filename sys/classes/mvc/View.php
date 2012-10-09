@@ -2,7 +2,7 @@
 
     namespace sys\classes\mvc;
     use \sys\classes\util\Dic;
-    use \sys\classes\plugins\Plugin;
+    use \sys\classes\util\Plugin;
     use \sys\classes\mvc\Header;
     use \sys\classes\util\File;
     use \sys\classes\mvc\ViewPart;

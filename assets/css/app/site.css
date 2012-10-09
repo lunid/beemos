@@ -76,7 +76,7 @@
 
 
     #bg_total{
-        background-image:url("../../images/bg_lateral.jpg");
+        background-image:url("images/bg_lateral.jpg");
         background-position: 0px -22px;
         background-repeat: repeat-x;
     }
@@ -202,7 +202,7 @@
         margin-left: -41px;
         padding-top: 5px;
         padding-left: 12px;
-        background-image:url("../../images/bt_login.png");
+        background-image:url("images/bt_login.png");
     }
     
     #login2 a{
@@ -243,7 +243,7 @@ idiomas
 
 
     .loginAbaAtiva{		
-        background-image:url("../../images/bg_trans.png");
+        background-image:url("images/bg_trans.png");
         -moz-border-radius: 8px 8px 0px 0px;
         -webkit-border-radius: 8px 8px 0px 0px;
         border-radius: 8px 8px 0px 0px;		
@@ -280,7 +280,7 @@ idiomas
 
     #area_assinante{
         width:218px;                
-        background-image:url("../../images/bg_trans.png");
+        background-image:url("images/bg_trans.png");
         -moz-border-radius: 0px 8px 8px 8px;
         -webkit-border-radius: 0px 8px 8px 8px;
         border-radius: 0px 8px 8px 8px;
@@ -319,7 +319,7 @@ idiomas
 
 
     #fldNome, #fldSenha, #fldCodigoLista {
-        background-image:url("../../images/bg_trans.png");
+        background-image:url("images/bg_trans.png");
         width:70px;
         height:12px;
         border:0px;
@@ -344,7 +344,7 @@ idiomas
 
 
     #btnLoginSenha{
-        background-image:url("../../images/bt.png");
+        background-image:url("images/bt.png");
         width:25px;
         height:25px;
         margin-top:11px;
@@ -428,7 +428,7 @@ idiomas
         width:145px;
         height:15px;
         float:left;
-        background-image:url("../../images/seta.png");
+        background-image:url("images/seta.png");
         background-position: 0px 2px;
         background-repeat:no-repeat;
         padding-left:18px;
@@ -453,7 +453,7 @@ idiomas
 
 
     .titRodape h1{
-        background-image:url("../../images/icon_rodape.png");
+        background-image:url("images/icon_rodape.png");
         background-position: 0px -5px;
         background-repeat:repeat-y;
         color:#ffffff;
@@ -467,7 +467,7 @@ idiomas
 
 
     .titRodape h2{
-        background-image:url("../../images/icon_rodape.png");
+        background-image:url("images/icon_rodape.png");
         background-position: 0px 57px;
         background-repeat:repeat-y;
         color:#ffffff;
@@ -482,7 +482,7 @@ idiomas
 
 
     .titRodape h3{
-        background-image:url("../../images/icon_rodape.png");
+        background-image:url("images/icon_rodape.png");
         background-position: 0px 27px;
         background-repeat:repeat-y;
         color:#ffffff;
@@ -497,7 +497,7 @@ idiomas
 
     button, 
     .buttonSuperPro {
-        background-image:url("../../images/bg_bt.png");
+        background-image:url("images/bg_bt.png");
         -moz-border-radius: 0px;
         -webkit-border-radius: 0px;
         border-radius: 0px;
@@ -522,7 +522,7 @@ idiomas
     input[type="submit"]:hover,
     input[type="reset"]:hover,
     input[type="button"]:hover {
-        background-image:url("../../images/bg_bt.png");
+        background-image:url("images/bg_bt.png");
         width:183px;
         height:70px;
         display: inline-block;
@@ -563,7 +563,7 @@ idiomas
     #btnFacebook{
         width:25px;
         height:25px;
-        background-image:url("../../images/midias.png");
+        background-image:url("images/midias.png");
         background-position: 0px 0px;
         float:left;
         margin-bottom:8px;
@@ -575,7 +575,7 @@ idiomas
     #btnTwitter{
         width:25px;
         height:25px;
-        background-image:url("../../images/midias.png");
+        background-image:url("images/midias.png");
         background-position: 52px 0px;
         float:left;
         margin-bottom:3px;
@@ -587,7 +587,7 @@ idiomas
     #btnBlog{
         width:25px;
         height:25px;
-        background-image:url("../../images/midias.png");
+        background-image:url("images/midias.png");
         background-position: 27px 0px;
         float:left;
         margin-bottom:3px;

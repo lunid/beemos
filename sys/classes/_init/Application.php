@@ -96,9 +96,7 @@
             
             $pathParts  = explode('/',$params);            
             $controller = '';            
-            $action     = self::getPartUrl(@$pathParts[1],'index'); 
-            
-            
+            $action     = self::getPartUrl(@$pathParts[1],'index');            
             if (is_array($pathParts) && count($pathParts) > 0) { 
                 //A URL pode conter partes que representam o módulo, controller e action
                 
@@ -169,7 +167,8 @@
             return $value;
         }
         
-        private static function loadConfig(){
+        /*
+        private static function loadConfigOld(){
             //Carrega a configuração do sistema
             $msgErr     = '';
             $pathXml    = 'config.xml';
@@ -213,6 +212,8 @@
                 die($msgErr);
             }            
         }
+         */
+         
         
         /**
         * Localiza a classe solicitada de acordo com o seu namespace e faz o include do arquivo.

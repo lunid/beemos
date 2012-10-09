@@ -28,7 +28,8 @@
                 } catch(\Exception $e){
                     die($e->getMessage()); 
                 }
-
+                
+                echo $outFileMin.'<br>';
                 if (strlen($strIncMin) > 0 && strlen($outFileMin) > 0){
                     //Gera um arquivo físico com o conteúdo compactado:                    
                     $fp = fopen($outFileMin, "wb+");                
