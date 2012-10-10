@@ -47,25 +47,13 @@
             $module         = $arrPartsUrl['module'];
             $controller     = $arrPartsUrl['controller'];
             $action         = $arrPartsUrl['action'];
-            $method         = 'action'.ucfirst($action);                                         
-                                
+            $method         = 'action'.ucfirst($action);                                                                         
             $configModule   = $module.'/config.xml';
             
-            $objLoadConfig = new LoadConfig();            
+            $objLoadConfig  = new LoadConfig();            
             $objLoadConfig->loadConfigXml('config.xml');
             $objLoadConfig->loadConfigXml($configModule);
-                       
-            //Define o root da pasta de includes baseado na pastaBase/modulo/pastaViews/            
-            $arrRoot                = array(LoadConfig::root(),$module,LoadConfig::folderViews());
-            $pathRootFolder         = join('/',$arrRoot).'/';
-            $absolutePathIncludes   = $_SERVER['DOCUMENT_ROOT'].$pathRootFolder;
-            
-            self::setAbsolutePathIncludes($absolutePathIncludes);
-           
-            
-            //echo $objLoadConfig->listVars();
-            //Url::siteUrlHttps(array('part1','part2','part3'));
-            //die();
+                    
             //Faz o include do Controller atual
             $urlFileController = $module . '/controllers/'.ucfirst($controller).'Controller.php';
             if (!file_exists($urlFileController)) {
@@ -89,28 +77,18 @@
         }
         
         private static function processaUrl(){
-            //$arrModules = self::$arrModules;
-            //$module     = (isset($arrModules))?$arrModules[0]:'app';//O primeiro módulo é sempre padrão.  
-            $module     = (isset($_GET['MODULE']))?$_GET['MODULE']:'app'; 
-            $params     = (isset($_GET['PG']))?$_GET['PG']:''; 
+            $arrPartsUrl    = array();
+            $module         = (isset($_GET['MODULE']))?$_GET['MODULE']:'app'; 
+            $params         = (isset($_GET['PG']))?$_GET['PG']:''; 
             
-            $pathParts  = explode('/',$params);            
-            $controller = '';            
-            $action     = self::getPartUrl(@$pathParts[1],'index');            
+            $pathParts      = explode('/',$params);            
+            $controller     = '';            
+            $action         = self::getPartUrl(@$pathParts[1],'index');            
+            
             if (is_array($pathParts) && count($pathParts) > 0) { 
                 //A URL pode conter partes que representam o módulo, controller e action
                 
-                $controller = self::getPartUrl($pathParts[0]);
-                //$keyModule  = array_search($controller,$arrModules);
-                /*                
-                if ($keyModule !== FALSE) {
-                    //O primeiro parâmetro refere-se a um módulo
-                    $module = $pathParts[0];  
-                    
-                    //Após extrair o módulo redefine as partes da URL sem o índice zero.
-                    array_shift($pathParts);  
-                    $controller = self::getPartUrl(@$pathParts[0],'index');
-                }  */                                                                                          
+                $controller = self::getPartUrl($pathParts[0]);                
             }   
               
             //Guarda o module, controller e action em variáveis de sessão.
@@ -166,53 +144,6 @@
             $value = (isset($_SESSION[$name]))?$_SESSION[$name]:'';
             return $value;
         }
-        
-        /*
-        private static function loadConfigOld(){
-            //Carrega a configuração do sistema
-            $msgErr     = '';
-            $pathXml    = 'config.xml';
-            $objXml     = self::loadXml($pathXml);   
-            //print_r($objXml);
-            if (is_object($objXml)) {
-                $nodesHeader = $objXml->header;
-                $numItens    = count($nodesHeader);
-                if ($numItens > 0) {
-                    $rootFolderSys  = self::getAttrib($nodesHeader,'rootFolderSys');
-                    $rootFolderView = self::getAttrib($nodesHeader,'rootFolderView');
-                    
-                    $nodesInclude   = $objXml->header->include;                  
-                    $css            = self::valueForAttrib($nodesInclude,'id','css');
-                    $cssInc         = self::valueForAttrib($nodesInclude,'id','cssInc');
-                    $js             = self::valueForAttrib($nodesInclude,'id','js');
-                    $jsInc          = self::valueForAttrib($nodesInclude,'id','jsInc');
-                    $plugins        = self::valueForAttrib($nodesInclude,'id','plugins');
-                    
-                    echo $css.'<br>';
-                    echo $cssInc.'<br>';
-                    echo $js.'<br>';
-                    echo $jsInc.'<br>';
-                    
-                } else {
-                    //Nenhuma mensagem foi localizada no XML informado.
-                    $msgErr  = 'O arquivo '.$pathXml.' existe, porém o Xml Node com a mensagem '.$codMsg.' não foi localizado.';                    
-                }
-                die($msgErr);
-                $numItens    = count($nodes);
-                
-                if ($numItens > 0){
-                    $value  = self::valueForAttrib($nodes,'id',$codMsg);
-                    $msg    = (strlen($value) > 0)?$value:'Erro desconhecido';
-                } else {
-                    //Nenhuma mensagem foi localizada no XML informado.
-                    $msgErr  = 'O arquivo '.$pathXml.' existe, porém o Xml Node com a mensagem '.$codMsg.' não foi localizado.';
-                }
-            } else {
-                $msgErr = 'Impossível ler o arquivo '.$pathXml;
-                die($msgErr);
-            }            
-        }
-         */
          
         
         /**

@@ -8,10 +8,10 @@ Home.prototype = {
         slider.init({
            id: 'banner'
         });
-    }    
+    }      
 };
 
 $(document).ready(function() {
     home = new Home();
-    home.init();
+    home.init();    
 });

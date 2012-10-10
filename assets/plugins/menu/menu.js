@@ -81,4 +81,4 @@ Menu.prototype = {
             alert(Dic.loadMsg("Menu", "CATCH", "changeMenu") + " " + err.message);
         }
     }
-}
+};

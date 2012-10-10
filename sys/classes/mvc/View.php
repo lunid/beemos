@@ -53,24 +53,24 @@
                 $this->bodyContent              = $objViewTpl->render();
                 $this->layoutName               = $objViewPart->layoutName;                
           
-                if (strlen($pathTpl) > 0){                
-                    $css        = \LoadConfig::css();                
-                    $cssInc     = \LoadConfig::cssInc();                
-                    $js         = \LoadConfig::js();                
-                    $jsInc      = \LoadConfig::jsInc(); 
+                if (strlen($pathTpl) > 0){    
+                    
+                    //Configurações lidas do arquivo config.xml:                    
                     $plugins    = \LoadConfig::plugins();                     
                     $objHeader  = new Header();            
-                    
-                    $objHeader->addCss($css);
-                    $objHeader->addCssInc($cssInc);
-                    $objHeader->addJs($js);
-                    $objHeader->addJsInc($jsInc);                      
-                    
+                     
+                    //Inclusões css e js:
+                    $arrExt     = $objHeader::$arrExt;
+                    foreach($arrExt as $fn) {
+                        $list   = \LoadConfig::$fn();                
+                        $objHeader->$fn($list);                        
+                    }                  
+                                                           
                     //Faz a inclusão de arquivos css e js padrão.
                     try {                        
                         //$objHeader->memoSetFile($objHeader::EXT_CSS,self::CSS,FALSE);
                         //$objHeader->memoSetFile($objHeader::EXT_JS,self::JS,FALSE);                        
-                        $this->objHeader = $objHeader;                                                                   
+                        $this->objHeader = $objHeader;                                                                                           
                         
                         //Plugins                                               
                         $arrPlugins = explode(',',$plugins);
@@ -127,27 +127,19 @@
         }
         
         private function getIncludes($ext,$exception=TRUE){    
-           try {
-               $objHeader = $this->getObjHeader();           
-               return $objHeader->getTags($ext,$this->layoutName);
-           } catch(\Exception $e) {
-               if ($exception) {
-                   $this->showErr('Erro ao ao gerar os includes de '.$ext.' para a página atual',$e);  
-               }
-           }
+            try {
+                $objHeader = $this->getObjHeader();           
+                return $objHeader->getTags($ext,$this->layoutName);
+            } catch(\Exception $e) {                                   
+                throw $e;
+            }
         }                
         
         function render($layoutName=''){            
             if (isset($layoutName) && strlen($layoutName) > 0) {
-                $this->layoutName   = $layoutName;
-                $objHeader          = $this->getObjHeader();
-                if (is_object($objHeader)) {
-                    //Faz a inclusão de arquivos css e js com o mesmo nome da view atual, caso existam.                
-                    $objHeader->memoSetFile(Header::EXT_CSS,$layoutName,FALSE);
-                    $objHeader->memoSetFile(Header::EXT_JS,$layoutName,FALSE);
-                }
+                $this->layoutName   = $layoutName;                
             }
-           
+            //$this->objHeader->getMemos();                        
             $css                       = $this->getIncludesCss();
             $js                        = $this->getIncludesJs();            
             $bodyContent               = trim($this->bodyContent);

@@ -18,8 +18,8 @@
     </module>
     <header>
         <include id='css'>skeleton.stylesheets.base,skeleton.stylesheets.skeleton,app.site</include>
-        <include id='cssInc'></include>
-        <include id='js'>app.init,app.site,util.form,util.dictionary</include>
+        <include id='cssInc'>app.site</include>
+        <include id='js'>app.init,util.form,util.dictionary</include>
         <include id='jsInc'>jquery.jquery_1_8_1_min</include>
         <include id='plugins'>modal,menuHorizontal,menuIdiomas</include>
     </header>

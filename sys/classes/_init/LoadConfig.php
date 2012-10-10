@@ -130,7 +130,7 @@
                             $arrValue   = explode(',',$newValue);
                             $arrValue   = array_unique($arrValue);
                             $newValue   = join(',',$arrValue);
-                        }
+                        }                        
                         $this->setGlobalVar($varName,$newValue);   
                     }                    
                 }                                   

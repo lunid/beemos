@@ -5,9 +5,10 @@
         public static function physicalPath($uri){
             $path = $uri;
             if (strlen($uri) > 0) {
-                $absolutePathIncludes   = \Application::getAbsolutePathIncludes();        
-                $path                   = $absolutePathIncludes.$uri; 
-                $path                   = str_replace('//','/',$path);    
+                $root           = $_SERVER['DOCUMENT_ROOT'];
+                $rootFolder     = \LoadConfig::rootFolder();
+                $path           = $root.$rootFolder.'/'.$uri;
+                $path           = str_replace('//','/',$path);
             }
             return $path;
         }
@@ -21,21 +22,11 @@
 
         public static function relativeUrl($uri){
             $path = $uri;                             
-           if (strlen($uri) > 0) {     
-                $folderSys  = \LoadConfig::folderSys();          
-                $keySys     = strpos($uri,$folderSys);
-                if ($keySys === FALSE) {
-                    $rootFolder  = \LoadConfig::rootFolder(); 
-                    $module      = \Application::getModule();   
-                    $root        = $rootFolder.'/'.$module.'/';
-                    $keyRoot     = strpos($uri,$root);
-                    $path        = $_SERVER['DOCUMENT_ROOT'];
-                    if ($keyRoot !== false) {
-                        $path .= $uri;                                    
-                    } else {
-                        $path .= $root.$uri;
-                    }
-                }
+           if (strlen($uri) > 0) {                    
+               $root            = $_SERVER['DOCUMENT_ROOT'];
+               $rootFolder      = \LoadConfig::rootFolder();               
+               $physicalPath    = $root.$rootFolder.'/';
+               $path            = str_replace($physicalPath,'',$uri);               
            }
            $path = str_replace('//','/',$path);
            return $path;

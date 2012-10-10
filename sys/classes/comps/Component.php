@@ -12,14 +12,14 @@
             $ext         = strtolower($ext);
             $strInc      = (string)$strInc;            
 
-            if ($ext == 'js' || $ext == 'css' && strlen($strInc) > 0) {            
+            if (($ext == 'js' || $ext == 'css') && strlen($strInc) > 0) {            
                 //Comprime a string:
                 $strIncMin   = '';
                 \Minify_YUICompressor::$jarFile  = realpath($pathJar);
                 \Minify_YUICompressor::$tempDir  = $root.'tmp/';                
                 try {
                     if ($ext == 'js'){
-                        //Javascript
+                        //Javascript                        
                         $strIncMin = \Minify_YUICompressor::minifyJs($strInc,array('nomunge' => true, 'line-break' => 1000));                   
                     } else {
                         //css
@@ -27,9 +27,8 @@
                     }                                         
                 } catch(\Exception $e){
                     die($e->getMessage()); 
-                }
-                
-                echo $outFileMin.'<br>';
+                }         
+                                
                 if (strlen($strIncMin) > 0 && strlen($outFileMin) > 0){
                     //Gera um arquivo físico com o conteúdo compactado:                    
                     $fp = fopen($outFileMin, "wb+");                
@@ -42,17 +41,17 @@
 
                     $size = filesize($outFileMin);
                     if ($size == 0){
-                        $msgErr = 'Componente->yuiCompressor(): O arquivo '.$outFileMin.' foi gerado porém está vazio.<br><br>'.$strIncMin;
+                        $msgErr = 'Component->yuiCompressor(): O arquivo '.$outFileMin.' foi gerado porém está vazio.<br><br>'.$strIncMin;
                         throw new \Exception( $msgErr );                                                                        
                     }                      
                     return TRUE;
                 } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
-                    $msgErr = 'Componente->yuiCompressor(): Impossível comprimir o arquivo '.$outFileMin.' porque a compressão retornou vazio.';
+                    $msgErr = 'Component->yuiCompressor(): Impossível comprimir o arquivo '.$outFileMin.' porque a compressão retornou vazio.';
                     throw new \Exception( $msgErr );          
                 }
                 return $strIncMin;
             } else {
-                $msgErr = 'Componente->yuiCompressor(): yuiCompressor não pôde ser executado porque o parâmetro $ext não foi informado corretamente.';
+                $msgErr = 'Component->yuiCompressor(): yuiCompressor não pôde ser executado porque o parâmetro $ext não foi informado corretamente.';
                 throw new \Exception( $msgErr );         
             }
             return TRUE;

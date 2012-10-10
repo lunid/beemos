@@ -12,4 +12,4 @@ Dropdown.prototype = {
             alert(Dic.loadMsg("Dropdown", "CATCH", "init") + " " + err.message);
         }
     }
-}
+};
