@@ -20,11 +20,11 @@
          * carrega as classes solicitadas na aplicação a partir de seu namespace.
         */   
         
-        private static $sessionModuleName       =  'GLB_MODULE';
-        private static $sessionControllerName   =  'GLB_CONTROLLER';
-        private static $sessionActionName       = 'GLB_ACTION';       
-        private static $sessionAbsolutePathIncludes      = 'GLB_ROOT_INCLUDES';
-        private static $arrModules              = array('app','admin');
+        private static $sessionModuleName               =  'GLB_MODULE';
+        private static $sessionControllerName           =  'GLB_CONTROLLER';
+        private static $sessionActionName               = 'GLB_ACTION';       
+        private static $sessionAbsolutePathIncludes     = 'GLB_ROOT_INCLUDES';
+        private static $arrModules                      = array('app','admin');
         
       /**
        * Identifica o módulo, controller e action a partir da URL e faz a chamada
@@ -42,17 +42,18 @@
        *  
        */          
         public static function setup(){
+            $objLoadConfig  = new LoadConfig();            
+            $objLoadConfig->loadConfigXml('config.xml');
+            
             
             $arrPartsUrl    = self::processaUrl();             
             $module         = $arrPartsUrl['module'];
             $controller     = $arrPartsUrl['controller'];
             $action         = $arrPartsUrl['action'];
             $method         = 'action'.ucfirst($action);                                                                         
-            $configModule   = $module.'/config.xml';
             
-            $objLoadConfig  = new LoadConfig();            
-            $objLoadConfig->loadConfigXml('config.xml');
-            $objLoadConfig->loadConfigXml($configModule);
+            $configModule   = $module.'/config.xml';
+            $objLoadConfig->loadConfigXml($configModule);                                             
                     
             //Faz o include do Controller atual
             $urlFileController = $module . '/controllers/'.ucfirst($controller).'Controller.php';
@@ -73,24 +74,36 @@
             spl_autoload_register('self::loadClass');	                           
             
             $objController  = new $controller;
+            if (!method_exists($objController,$method)) die('Método '.$controller.'Controller->'.$method.'() não existe.');
             $objController->$method();//Executa o Controller->method()            
         }
         
         private static function processaUrl(){
             $arrPartsUrl    = array();
-            $module         = (isset($_GET['MODULE']))?$_GET['MODULE']:'app'; 
+            $module         = LoadConfig::defaultModule(); 
             $params         = (isset($_GET['PG']))?$_GET['PG']:''; 
-            
+                                    
             $pathParts      = explode('/',$params);            
-            $controller     = '';            
-            $action         = self::getPartUrl(@$pathParts[1],'index');            
+            $controller     = 'index';
+            $action         = self::getPartUrl(@$pathParts[1]);            
             
             if (is_array($pathParts) && count($pathParts) > 0) { 
                 //A URL pode conter partes que representam o módulo, controller e action
-                
-                $controller = self::getPartUrl($pathParts[0]);                
+                $modules        = LoadConfig::modules();
+                $arrModules     = explode(',',$modules);
+                $controllerPart = $pathParts[0];
+                $keyModule      = array_search($controllerPart,$arrModules);
+                if ($keyModule !== FALSE) {
+                    //O primeiro parâmetro é um módulo
+                    $module     = $controllerPart;
+                    array_shift($pathParts);
+                    $controller = self::getPartUrl(@$pathParts[0]);            
+                    $action     = self::getPartUrl(@$pathParts[1]);            
+                } else {                    
+                    $controller = self::getPartUrl($controllerPart);                
+                }
             }   
-              
+            
             //Guarda o module, controller e action em variáveis de sessão.
             //Necessário para criar as URLs de navegação do site.            
             self::setModule($module);       

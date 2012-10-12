@@ -19,17 +19,17 @@
         function actionIndex(){
             try{
                 //Home
-                $objView = new ViewPart('home');
+                $objViewPart = new ViewPart('home');
                 
                 //Template
-                $tpl        = new View($objView);
-                $tpl->setLayout($objView);
+                $tpl = new View();
+                $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'ADM | SuperPro';
                 
                 $tpl->forceCssJsMinifyOn();
-                $tpl->onlyExternalCssJs();
+                //$tpl->onlyExternalCssJs();
                 
-                $tpl->render('home');            
+                $tpl->render('index');            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";

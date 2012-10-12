@@ -43,6 +43,7 @@
             $numItens           = count($nodesHeader);
             $pathTplFolder      = '';
             
+            $idModules          = 'modules';
             $idRootFolder       = 'rootFolder';
             $idBaseUrlHttp      = 'baseUrlHttp';
             $idBaseUrlHttps     = 'baseUrlHttps';
@@ -56,6 +57,7 @@
                 //Configurações da aplicação:
                 $nodesApp               = $objXml->app->config;
                 if (is_object($nodesApp)) {
+                    $cfgModules             = self::valueForAttrib($nodesApp,'id',$idModules);   
                     $cfgRootFolder          = self::valueForAttrib($nodesApp,'id',$idRootFolder);   
                     $cfgBaseUrlHttp         = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttp);   
                     $cfgBaseUrlHttps        = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttps);   
@@ -63,6 +65,7 @@
                     $cfgFolderViews         = self::valueForAttrib($nodesApp,'id',$idFolderViews);   
                     $cfgDefaultModule       = self::valueForAttrib($nodesApp,'id',$idDefaultModule);                
 
+                    $this->setGlobalVar($idModules,$cfgModules);
                     $this->setGlobalVar($idBaseUrlHttp,$cfgBaseUrlHttp);
                     $this->setGlobalVar($idBaseUrlHttps,$cfgBaseUrlHttps);
                     $this->setGlobalVar($idFolderSys,$cfgFolderSys);

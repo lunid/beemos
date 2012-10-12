@@ -1,0 +1,220 @@
+/* começo top
+================================================== */
+body{
+    width:auto;
+    height:auto;
+    margin:0px;    
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    background-color: #fff;
+}
+
+#container{
+    width:100%;
+}
+
+
+#top{
+    width:100%;
+    height:55px;
+    background-image:url("../../images/top.jpg");
+    background-position:bottom;
+    background-repeat:repeat-x;
+    margin-top:auto;
+    float:left;
+}
+
+
+/* correção chrome e safari
+========================= */
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    #top{
+        margin-top: -15px;
+    }
+}	
+/* ===================== */		
+
+#logo{
+    width:260px;
+    height:52px;
+    float:left;
+    margin-top:12px;
+    margin-left:22px;
+    font-size:24px;
+    color:#FFFFFF;
+    text-shadow: 0 2px 0px #333333;
+    /* For IE 8 */
+    filter: progid:DXImageTransform.Microsoft.DropShadow(offX=1,offY=1,color=333333);
+}
+
+#logo span{
+    vertical-align: top;
+    font-size:12px;
+}
+
+
+#nome{
+    width:auto;
+    height:50px;
+    margin-top:15px;
+    float:right;
+    font-size:18px;
+    color:#FFFFFF;
+    margin-right:20px;
+    text-shadow: 0 2px 0px #333333;
+    /* For IE 8 */
+    filter: progid:DXImageTransform.Microsoft.DropShadow(offX=1,offY=1,color=333333);
+}
+
+#icone_duvidas, #icone_ferramentas{
+    width:30px;
+    height:20px;
+    margin-top:15px;
+    padding-left:15px;
+    float:right;
+    border-left:2px solid;
+    border-color:#FFFFFF;
+}
+
+#icone_duvidas{
+    background-image:url(../../images/icons.png);
+    background-position:98px 0px;
+}
+
+#icone_ferramentas{
+    background-image:url(../../images/icons.png);
+    background-position:47px 0px;
+    margin-right:20px;
+}
+
+/* fim top
+================================================== */
+
+
+/* começo menu
+================================================== */
+
+#menu_base{
+    width:240px;
+    float:left;
+}
+
+/* correção chrome e safari
+========================= */
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    #menu_base{
+        margin-top: -15px;
+    }
+}	
+/* ===================== */	
+
+#menu{
+    width:240px;
+    height:auto;
+    float:left;
+}
+
+#menu_sombra{
+    width:240px;
+    height:10px;
+    float:left;
+    margin-top:1px;
+    background-image:url("../../images/sombra.jpg");
+    clear:both;
+}	
+
+
+/* fim menu
+================================================== */
+
+
+/* começo container
+================================================== */
+
+.titulo{
+    width:100%;
+    height:18px;
+    float:left;
+    margin:0px 0px 8px -11px;
+    padding:5px 0px 16px 15px;
+    background-image:url("../../images/bg_titulo.jpg");
+    background-position:bottom;
+    font-size:22px;
+}
+
+
+#conteudo{
+    width: 60%;                         /* para navegadores que não suportam calc() */
+    width: -webkit-calc(100% - 260px);  /* para Chrome */
+    width: -moz-calc(100% - 261px);     /* para Firefox */
+    width: calc(100% - 260px);          /* para suporte nativo */
+    padding-left:15px;
+    height:auto;
+    float:left;
+}
+
+
+
+/* fim container
+================================================== */
+
+/* começo rodape
+================================================== */
+
+
+
+
+
+/* fim rodape
+================================================== */
+
+/* Tabela Questoes
+================================================== */
+.table_questoes{
+    border: 1px solid #CCC;
+}
+
+.table_questoes th{
+    text-align: center;
+    background-color: #66676C;
+    color: #FFF;
+    padding: 5px;
+    font-size: 13px;
+}
+
+.table_questoes td{
+    padding: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.table_questoes tr.par{
+    background-color: #E8ECEF;
+    color: #000;
+}
+
+.table_questoes tr.impar{
+    background-color: #FFF;
+    color: #000;
+}
+
+/* Tabela Avaliação de Questão
+================================================== */
+.table_avaliar_questao td{
+    vertical-align: top;
+    padding: 3px;
+}
+
+.table_avaliar_questao td div, textarea{
+    margin-top: 5px;
+}
+
+/* Estilos para Formulário
+================================================== */
+.msg_error{
+    font-size: 13px;
+    font-weight: bold;
+    color:red;
+}

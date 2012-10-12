@@ -1,1 +1,0 @@
-$(document).ready(function(){$.ajax({url:"sys/dic/pt/javascript.xml",success:function(xml){xml_dic=xml;site=new Site()},async:false})});Site=function(){};Site.prototype={verAvaliacao:function(ret,modalId){if(ret.status==true){$("#bt_submit").hide();if(modalId!=""&&modalId!=null){$.fancybox.close(true);$("#msg_"+modalId).html(ret.msg);$("#modal_"+modalId).trigger("click")}}}};

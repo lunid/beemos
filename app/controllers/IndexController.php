@@ -2,7 +2,7 @@
 
     use \sys\classes\mvc\Controller;    
     use \sys\classes\mvc\ViewPart;      
-    use \sys\classes\mvc\View;        
+    use \app\classes\ViewSite;
     use \app\models\HomeModel;
 
     /**
@@ -21,7 +21,7 @@
                 $objViewPart->TOTAL_QUESTOES_DB     = $objModel->getTotalQuestoesDb();
                 $objViewPart->TOTAL_QUESTOES_ENEM   = $objModel->getTotalQuestoesEnem(); 
 
-                $objView = new View();
+                $objView = new ViewSite();
                 $objView->setLayout($objViewPart);
                 $objView->setJsInc('app.home');
                 $objView->forceCssJsMinifyOn();
@@ -29,7 +29,8 @@
                 $objView->setPlugin('sliderBanner');            
 
                 $objView->TITLE = 'Bem-vindo ao Super Professor Web';
-                $objView->render('index');            
+                $objView->render('index');  
+                
             } catch(\Exception $e) {
                 echo $e->getMessage();
                 die();

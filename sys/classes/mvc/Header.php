@@ -250,7 +250,7 @@ class Header {
                 $arrParams['fileNameMin']   = $outFileMin;                
 
                 try {
-                    $file = $this->geraMinify($arrParams);                                        
+                    $outFileMin = $this->geraMinify($arrParams);                                        
                 } catch(\Exception $e) {
                     throw new \Exception($e);
                 }
@@ -290,7 +290,7 @@ class Header {
             $search         = '.'.$ext;
             $replace        = $sufixo.'.'.$ext;                                                             
             $uri            = str_replace($search,$replace,$file);
-            $uri            = str_replace($filename.$sufixo,$prefixo.$filename,$uri);            
+            $uri            = str_replace($filename.$sufixo,$prefixo.$filename.$sufixo,$uri);            
         } else {
             //Um arquivo não foi informado. 
             //Cria um nome de arquivo a partir de $layoutName.
@@ -303,10 +303,9 @@ class Header {
             $pathInfo       = pathinfo($fileName);
             $basename       = $pathInfo['basename'];        
             $path           = str_replace($basename,$module.'/'.$basename,$path);            
-            $uri            = $assets.'/'.$path;            
+            $uri            = $assets.'/'.$path;                        
         }
-        
-        
+                
         $pathFileMin    = \Url::physicalPath($uri);
     
         return $pathFileMin;
@@ -369,6 +368,13 @@ class Header {
         return $arrTag;
     }        
     
+    /**
+     * Gera um arquivo compactado a partir dos dados recebidos em $arrParams.
+     * 
+     * @param type $arrParams Array associativo com os dados do arquivo a ser compactado.
+     * @return string Retorna o nome do arquivo compactado caso a operação tenha ocorrido com sucesso.
+     * @throws Exception Caso algum erro tenha ocorrido ao executar YuiCompressor.
+     */
     private function geraMinify($arrParams){
         
         $string         = '';
@@ -396,16 +402,10 @@ class Header {
     }
  
     private function setTag($file,$ext){       
-        $inc                = '';
+        $inc                = '';        
         $cssJsExtension     = $this->getExtFile($ext);//Converte cssInc para css e jsInc para js, se necessário.                        
-        if (strlen($file) > 0){   
-            //$arrPath    = pathinfo($file);  
-            //$dirname    = $arrPath['dirname'];
-            //$basename   = $arrPath['basename'];
-                        
-            //Verifica se a URL atual é um include de PLUGIN
-            //$plugins        = \LoadConfig::folderPlugins();//sub-pasta de assets onde ficam os plugins
-            //$keyPlugin      = strpos($dirname,$plugins);
+        if (strlen($file) > 0){              
+            
             $pathFile       = \Url::relativeUrl($file);
             
             if ($cssJsExtension == self::EXT_JS) {

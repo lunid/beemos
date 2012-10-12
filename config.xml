@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <app>        
+    <app>
+        <config id='modules'>app,admin</config>
+        <config id='defaultModule'>app</config>  
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
-        <config id='rootFolder'>interbits</config>
-        <config id='defaultModule'>app</config>  
+        <config id='rootFolder'>interbits</config>        
         <config id='folderSys'>sys</config>        
         <config id='folderViews'>viewParts</config>
     </app>
@@ -17,7 +18,7 @@
         <config id='defaultTemplate'>padrao.html</config>
     </module>
     <header>
-        <include id='css'>skeleton.stylesheets.base,skeleton.stylesheets.skeleton,app.site</include>
+        <include id='css'>skeleton.stylesheets.base,skeleton.stylesheets.skeleton</include>
         <include id='cssInc'>app.site</include>
         <include id='js'>app.init,util.form,util.dictionary</include>
         <include id='jsInc'>jquery.jquery_1_8_1_min</include>

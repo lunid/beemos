@@ -1,0 +1,1 @@
+$(document).ready(function(){$(".drop ul li ul").hide();$(".drop ul li").hover(function(){$(this).find("ul:first").slideDown("slow")},function(){$(this).find("ul:first").slideUp("slow")})});

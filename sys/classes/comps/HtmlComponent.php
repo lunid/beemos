@@ -136,8 +136,9 @@ class HtmlComponent {
                       
            if($htmlTemplate != null) {
                
-               $phtmlFile   = self::$html_path_templates . "{$htmlTemplate}.phtml";
-               $pathPhtml   = \Url::relativeUrl($phtmlFile);        
+               $phtmlFile   = \Application::getModule().'/comps/html/'. "{$htmlTemplate}.phtml";
+               $pathPhtml   = \Url::physicalPath($phtmlFile);
+               //$pathPhtml   = '/'.\LoadConfig::rootFolder().'/'.$phtmlFile;                 
            }
             ob_start();
             if (!@include($pathPhtml)) {                    
