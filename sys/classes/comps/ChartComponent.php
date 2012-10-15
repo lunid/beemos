@@ -1,16 +1,17 @@
 <?php
-class ChartComponent {
+class ChartComponent extends HtmlComponent {
     static $chartData       = null;
     static $html_path       = "/sys/classes/comps/chart/";
     static $default_html;
     
     public static function geraGraficoTop10($data){
         self::$default_html = "top10";
-        self::$chartData = $data;
+        self::$chartData    = $data;
         
         return self::renderHtml();
     }
     
+    /*
     private static function renderHtml(){
         try{
             $arq = self::$html_path . self::$default_html . ".phtml";
@@ -28,7 +29,7 @@ class ChartComponent {
             echo "<br />\n";
             die;
         }
-    }
+    }*/
 }
 
 ?>

@@ -5,9 +5,10 @@
     use \sys\classes\mvc\ViewPart;      
     use \sys\classes\util\Request;
     use \sys\classes\util\Date;
+    use \sys\classes\html\Combobox;
     use \admin\models\Top10Model;
     use \admin\models\tables\AvaliacaoQuestao;
-
+    
     /**
     * Refere-se à página de questões do Top10.
     */
@@ -22,40 +23,44 @@
                                 
                 $objView = new ViewPart('top10');
                 
-                $id_materia             = Request::post("id_materia", "NUMBER");
-                $id_materia_gr          = Request::post("id_materia_gr", "NUMBER");
+                $idMateria                  = Request::post("idMateria", "NUMBER");
+                $idMateriaGrafico           = Request::post("idMateriaGrafico", "NUMBER");
+                $idFonteVestibular          = Request::post("idFonteVestibular", "NUMBER");
+                $idFonteVestibularGrafico   = Request::post("idFonteVestibularGrafico", "NUMBER");
                 
-                $id_fonte_vestibular    = Request::post("id_fonte_vestibular", "NUMBER");
-                $id_fonte_vestibular_gr = Request::post("id_fonte_vestibular_gr", "NUMBER");
+                $rsMaterias           = $m_top10->getMateriasSelectBox();
+                $rsFontesVestibular   = $m_top10->getFontesSelectBox();
                 
-                $rs_materias            = $m_top10->getMateriasSelectBox();
-                $rs_fonte_vestibular    = $m_top10->getFontesSelectBox();
+                //=====COMBOBOX MATERIAS =======================================
+                $objCbxMateria      = new Combobox();
+                $objCbxMateria->id  = 'idMateria';
+                $objCbxMateria->addOption('0','Todas as Matérias');                
+                $objCbxMateria->addOptions($rsMaterias);           
+                $objCbxMateria->selected($idMateria);                
+                                
+                $objView->CBX_MATERIAS = $objCbxMateria->render();
                 
-                //Opções do <select> de matérias
-                $cbo_materias_opts                  = new \stdClass();
-                $cbo_materias_opts->id              = "id_materia";
-                $cbo_materias_opts->first_option    = "Selecione uma matéria";
-                $cbo_materias_opts->select_option   = $id_materia;
+                //=====COMBOBOX MATERIAS/GRAFICO ===============================
+                $objCbxMateriaGrafico       = new Combobox();
+                $objCbxMateriaGrafico->id   = 'idMateriaGrafico';
+                $objCbxMateria->addOption('0','Todas as Matérias');
+                $objCbxMateria->addOptions($rsMaterias);           
+                $objCbxMateria->selected($idMateriaGrafico);                
+                                
+                $objView->CBX_MATERIAS_GRAFICO = $objCbxMateriaGrafico->render();
                 
-                $objView->COMBO_MATERIAS = HtmlComponent::select($rs_materias, $cbo_materias_opts);
+                //=====COMBOBOX FONTES/VESTIB ==================================
+                $objCbxFonteVestib          = new Combobox();
+                $objCbxFonteVestib->id      = 'idFonteVestibular';
+                $objCbxFonteVestib->addOption('0','Selecione uma fonte');
+                $objCbxFonteVestib->addOptions($rsFontesVestibular);           
+                $objCbxFonteVestib->disabledOff();
+                $objCbxFonteVestib->selected($idFonteVestibular);                
                 
-                $cbo_materias_opts->id              = "id_materia_gr";
-                $cbo_materias_opts->first_option    = "Todas as matérias";
-                $cbo_materias_opts->select_option   = $id_materia_gr;
-
-                $objView->COMBO_MATERIAS_GR = HtmlComponent::select($rs_materias, $cbo_materias_opts);
-                
-                //Opções do <select> de fontes
-                $cbo_fontes_opts                  = new \stdClass();
-                $cbo_fontes_opts->id              = "id_fonte_vestibular";
-                $cbo_fontes_opts->first_option    = "Selecione uma fonte";
-                $cbo_fontes_opts->select_option   = $id_fonte_vestibular;
-                $cbo_fontes_opts->disabled        = true;
-                
-                
-                
-                $objView->COMBO_FONTES = HtmlComponent::select($rs_fonte_vestibular, $cbo_fontes_opts);
-                
+                echo $objCbxFonteVestib->render();
+                die();
+                $objView->CBX_FONTES_GRAFICO = $objCbxFonteVestib->render();
+                                        
                 $cbo_fontes_opts->id              = "id_fonte_vestibular_gr";
                 $cbo_fontes_opts->first_option    = "Todas as fontes";
                 $cbo_fontes_opts->select_option   = $id_fonte_vestibular_gr;
@@ -129,19 +134,21 @@
                     $selecao                = Request::post("selecao", "NUMBER");
                     $cor                    = Request::post("cor");
                     
-                    $retGr = $m_top10->graficoTop10($data_inicio, $data_final, $id_materia, $id_fonte_vestibular, $selecao, $cor);
+                    $objRet = $m_top10->graficoTop10($data_inicio, $data_final, $id_materia, $id_fonte_vestibular, $selecao, $cor);
                     
-                    if($retGr->status !== FALSE){
-                        $ret->html      = ChartComponent::geraGraficoTop10($retGr);
-                        $ret->status    = true;
-                        $ret->msg       = "";
+                    if($objRet->status !== FALSE){
+                        print_r($objRet);
+                        die();
+                        $objRet->html      = ChartComponent::geraGraficoTop10($objRet);
+                        $objRet->status    = true;
+                        $objRet->msg       = "";
                     }else{
-                        $ret->html      = null;
-                        $ret->status    = true;
-                        $ret->msg       = $retGr->msg;
+                        $objRet->html      = null;
+                        $objRet->status    = true;
+                        $objRet->msg       = $retGr->msg;
                     }
                 }else{
-                    $ret->msg = "HDD Ação inválida!";
+                    $objRet->msg = "HDD Ação inválida!";
                 }           
                 
                 echo json_encode($ret);

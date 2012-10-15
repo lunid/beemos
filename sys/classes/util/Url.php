@@ -1,7 +1,15 @@
  <?php
 
     class Url {
-             
+        
+        /**
+         * Retorna o caminho físico da URI informada.
+         * 
+         * Exemplo: c:/serverFolder/projectFolder/...
+         * 
+         * @param string $uri Exemplo: app/phtml/table.phtml
+         * @return string
+         */
         public static function physicalPath($uri){
             $path = $uri;
             if (strlen($uri) > 0) {
@@ -13,10 +21,19 @@
             return $path;
         }
         
-        public static function absolutePath($uri){
-           $path    = $uri;
+       
+        /**
+         * Define o caminho absoluto do path informado retirando o caminho físico, se houver.
+         * 
+         * Por exemplo, caso o caminho ($path) informado seja c:/projetos/folder/...
+         * path de retorno será /folder/...
+         * 
+         * @param string $path
+         * @return string
+         */
+        public static function absolutePath($path){           
            $root    = $_SERVER['DOCUMENT_ROOT'];
-           $path    = str_replace($root,'/',$uri);           
+           $path    = str_replace($root,'/',$path);           
            return $path;            
         }
 

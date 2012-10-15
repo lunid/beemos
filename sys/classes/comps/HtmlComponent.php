@@ -113,10 +113,12 @@ class HtmlComponent {
             self::$class        = @$opts->class;
             
             //Setando template default
-            self::$default_html = 'table';
+            $defaultTemplate = 'table';
             
-            //Renderizando o HTML
-            return self::renderHtml(@$opts->html_template);
+            $htmlTemplate   = (isset($opts->html_template))?$opts->html_template:$defaultTemplate;
+            
+            //Renderizando o HTML            
+            return self::renderHtml($htmlTemplate);
         }catch(Exception $e){
             throw $e;
         }
@@ -129,17 +131,14 @@ class HtmlComponent {
      * 
      * @return string HTML porcessado
      */
-    private static function renderHtml($htmlTemplate = null){
+    protected static function renderHtml($htmlTemplate){
         try{
            $phtmlFile = self::$html_path . self::$default_html . ".phtml";
            $pathPhtml  = \Url::absolutePath($phtmlFile);
-                      
-           if($htmlTemplate != null) {
-               
-               $phtmlFile   = \Application::getModule().'/comps/html/'. "{$htmlTemplate}.phtml";
-               $pathPhtml   = \Url::physicalPath($phtmlFile);
-               //$pathPhtml   = '/'.\LoadConfig::rootFolder().'/'.$phtmlFile;                 
-           }
+              
+            $phtmlFile   = \Application::getModule().'/comps/html/'. "{$htmlTemplate}.phtml";
+            $pathPhtml   = \Url::physicalPath($phtmlFile);            
+
             ob_start();
             if (!@include($pathPhtml)) {                    
                 throw new Exception (__METHOD__."(): Arquivo {$pathPhtml} não existe.");                    

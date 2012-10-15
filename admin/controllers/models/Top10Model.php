@@ -133,16 +133,10 @@
                     }
 
                     foreach ($arr_ret as $row) { 
-                        isset($arrQuestoesTop[$row->POS_1]) ? $arrQuestoesTop[$row->POS_1]++ : $arrQuestoesTop[$row->POS_1] = 1;
-                        isset($arrQuestoesTop[$row->POS_2]) ? $arrQuestoesTop[$row->POS_2]++ : $arrQuestoesTop[$row->POS_2] = 1;
-                        isset($arrQuestoesTop[$row->POS_3]) ? $arrQuestoesTop[$row->POS_3]++ : $arrQuestoesTop[$row->POS_3] = 1;
-                        isset($arrQuestoesTop[$row->POS_4]) ? $arrQuestoesTop[$row->POS_4]++ : $arrQuestoesTop[$row->POS_4] = 1;
-                        isset($arrQuestoesTop[$row->POS_5]) ? $arrQuestoesTop[$row->POS_5]++ : $arrQuestoesTop[$row->POS_5] = 1;
-                        isset($arrQuestoesTop[$row->POS_6]) ? $arrQuestoesTop[$row->POS_6]++ : $arrQuestoesTop[$row->POS_6] = 1;
-                        isset($arrQuestoesTop[$row->POS_7]) ? $arrQuestoesTop[$row->POS_7]++ : $arrQuestoesTop[$row->POS_7] = 1;
-                        isset($arrQuestoesTop[$row->POS_8]) ? $arrQuestoesTop[$row->POS_8]++ : $arrQuestoesTop[$row->POS_8] = 1;
-                        isset($arrQuestoesTop[$row->POS_9]) ? $arrQuestoesTop[$row->POS_9]++ : $arrQuestoesTop[$row->POS_9] = 1;
-                        isset($arrQuestoesTop[$row->POS_10]) ? $arrQuestoesTop[$row->POS_10]++ : $arrQuestoesTop[$row->POS_10] = 1;
+                        for($i=1;$i<=10;$i++) {
+                            $field = 'POS_'.$i;
+                            isset($arrQuestoesTop[$row->$field]) ? $arrQuestoesTop[$row->$field]++ : $arrQuestoesTop[$row->$field] = 1;
+                        }                        
                     }
                     
                     asort($arrQuestoesTop);
@@ -152,7 +146,7 @@
 
                     $count = 0;     
 
-                    $tmp_arrQuestoesTop     = array();
+                    $tmp_arrQuestoesTop = array();
 
                     foreach($arrQuestoesTop as $key => $value){
                         if($count >= $valid){
@@ -164,9 +158,9 @@
                         $count++;
                     }
                     
-                    $arrQuestoesTop = array();
-                    
-                    for($i=(sizeof($tmp_arrQuestoesTop)-1); $i >= 0; $i--){
+                    $arrQuestoesTop     = array();
+                    $tamArrQuestoesTop  = count($tmp_arrQuestoesTop)-1;
+                    for($i=$tamArrQuestoesTop; $i >= 0; $i--){
                         $arrQuestoesTop[] = $tmp_arrQuestoesTop[$i];
                     }
                     
