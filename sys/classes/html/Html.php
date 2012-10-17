@@ -103,10 +103,18 @@
         */
         protected function renderHtml(){
             try{
-                $phtmlFile  = $this->getPathHtml();                
-                $pathPhtml  = \Url::physicalPath($phtmlFile);            
-                $params     = $this->params;
-
+                $phtmlFile      = $this->getPathHtml();                
+                $pathPhtml      = \Url::physicalPath($phtmlFile);            
+                $params         = $this->params;
+                $arrConfigParam = $this->arrConfigParam;
+                
+                //Inicializa todos os parâmetros do objeto atual:
+                if (is_array($arrConfigParam)) {                    
+                    foreach($arrConfigParam as $name) {                        
+                        $$name = '';
+                    }                
+                }
+                
                 if (is_array($params)) {                    
                     foreach($params as $name=>$value) {                        
                         $$name = $value;
@@ -116,9 +124,9 @@
                 if (strlen($name) == 0 && strlen($id) > 0) $name = $id;
                 if (strlen(@$onchange) > 0) $onchange = "onchange=\"{$onchange}\"";
                 if (strlen(@$onclick) > 0) $onclick = "onchange=\"{$onclick}\"";
-                if (strlen(@$css) > 0) $css = "style=\"{$css}\"";
-                if (strlen(@$cls) > 0) $cls = "class=\"{$class}\"";                               
-                                
+                if (strlen(@$css) > 0) $css = "style=\"{$css}\"";                
+                if (strlen(@$cls) > 0) $cls = "class=\"{$cls}\"";                               
+                
                 ob_start();
                 
                 if (!@include($pathPhtml)) {                    
@@ -135,8 +143,8 @@
                 
                 //Include realizado com sucesso                
                 $output = ob_get_contents();
-                ob_end_clean();
-                echo $output;
+                echo $output.'x<br>';
+                ob_end_clean();                
                 return $output;
             }catch(Exception $e){
                 throw $e;

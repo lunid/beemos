@@ -6,6 +6,7 @@
     use \sys\classes\util\Request;
     use \sys\classes\util\Date;
     use \sys\classes\html\Combobox;
+    use \sys\classes\html\Table;
     use \admin\models\Top10Model;
     use \admin\models\tables\AvaliacaoQuestao;
     
@@ -31,7 +32,7 @@
                 $rsMaterias           = $m_top10->getMateriasSelectBox();
                 $rsFontesVestibular   = $m_top10->getFontesSelectBox();
                 
-                //=====COMBOBOX MATERIAS =======================================
+                //===== COMBOBOX MATERIAS ======================================
                 $objCbxMateria      = new Combobox();
                 $objCbxMateria->id  = 'idMateria';
                 $objCbxMateria->addOption('0','Todas as Matérias');                
@@ -40,7 +41,7 @@
                                 
                 $objView->CBX_MATERIAS = $objCbxMateria->render();
                 
-                //=====COMBOBOX MATERIAS/GRAFICO ===============================
+                //===== COMBOBOX MATERIAS/GRÁFICO ==============================
                 $objCbxMateriaGrafico       = new Combobox();
                 $objCbxMateriaGrafico->id   = 'idMateriaGrafico';
                 $objCbxMateria->addOption('0','Todas as Matérias');
@@ -49,7 +50,7 @@
                                 
                 $objView->CBX_MATERIAS_GRAFICO = $objCbxMateriaGrafico->render();
                 
-                //=====COMBOBOX FONTES/VESTIB ==================================
+                //===== COMBOBOX FONTES/VESTIB =================================
                 $objCbxFonteVestib          = new Combobox();
                 $objCbxFonteVestib->id      = 'idFonteVestibular';
                 $objCbxFonteVestib->addOption('0','Selecione uma fonte');
@@ -57,23 +58,29 @@
                 $objCbxFonteVestib->disabledOff();
                 $objCbxFonteVestib->selected($idFonteVestibular);                
                 
-                echo $objCbxFonteVestib->render();
-                die();
-                $objView->CBX_FONTES_GRAFICO = $objCbxFonteVestib->render();
+                $objView->CBX_FONTES = $objCbxFonteVestib->render();
                                         
-                $cbo_fontes_opts->id              = "id_fonte_vestibular_gr";
-                $cbo_fontes_opts->first_option    = "Todas as fontes";
-                $cbo_fontes_opts->select_option   = $id_fonte_vestibular_gr;
+                //==== COMBOBOX FONTES/VESTIB/GRÁFICO ==========================
+                $objCbxFonteVestibGrafico          = new Combobox();
+                $objCbxFonteVestibGrafico->id      = 'idFonteVestibularGrafico';
+                $objCbxFonteVestibGrafico->addOption('0','Todas as fontes');
+                $objCbxFonteVestibGrafico->addOptions($rsFontesVestibular);                           
+                $objCbxFonteVestibGrafico->selected($idFonteVestibularGrafico);                                                
                 
-                $objView->COMBO_FONTES_GR = HtmlComponent::select($rs_fonte_vestibular, $cbo_fontes_opts);
+                $objView->COMBO_FONTES_GRAFICO = $objCbxFonteVestibGrafico->render();
                 
-                //Opções do <table> de questões
-                $tb_questoes_opts                  = new \stdClass();
-                $tb_questoes_opts->id              = "table_questoes";
-                $tb_questoes_opts->disabled        = true;
-                $tb_questoes_opts->class           = "table_questoes";
-                $tb_questoes_opts->html_template   = "table_top10";
                 
+                //===== TABELA QUESTÕES ========================================
+                $arrDados                   = $m_top10->listaQuestoesTop10($idMateria, $idFonteVestibular);
+                //print_r($arrDados);
+                //die();
+                $objTable                   = new Table();
+                $objTable->setColumns(array('ID/Questão','Fonte/Vestibular','Uso'));
+                $objTable->id               = 'table_questoes';
+                $objTable->cls              = 'table_top10';                
+                echo $objTable->render();
+                die();
+               
                 $objView->TB_QUESTOES = HtmlComponent::table($m_top10->listaQuestoesTop10($id_materia, $id_fonte_vestibular), $tb_questoes_opts);
                 
                 //Gráfico TOP10

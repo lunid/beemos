@@ -28,8 +28,7 @@
             
             //Define os parâmetros específicos da classe atual:
             $this->addParam('multiple');            
-            $this->addParam('options');            
-            $this->addParam('firstOption');            
+            $this->addParam('options');                                 
             $this->addParam('select');            
             
             //Carrega as propriedades do objeto atual a partir de objParams:
