@@ -18,10 +18,7 @@
                 case 'modal':
                     $plugin = 'fancybox';
                     break;
-            }           
-            
-            
-            
+            }                                              
             
             return self::loadXmlPlugin($plugin);	
 	}

@@ -56,7 +56,7 @@
             $objLoadConfig->loadConfigXml($configModule);                                             
                     
             //Faz o include do Controller atual
-            $urlFileController = $module . '/controllers/'.ucfirst($controller).'Controller.php';
+            $urlFileController = $module . '/classes/controllers/'.ucfirst($controller).'Controller.php';
             if (!file_exists($urlFileController)) {
                 $msgErr = 'Arquivo de inclusão '.$urlFileController.' não localizado';
                 throw new \Exception( $msgErr );  

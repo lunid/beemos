@@ -23,6 +23,17 @@
                 
                 //Template
                 $tpl = new View();
+                $tpl->MENU = "
+                <div id='menu'><p>Titulo</p></div>
+                <ul class='sub-menu'>
+                    <li><a class='home' href='index.html'>Home</a></li>
+                    <li><a class='usuario' href='usuario.html'>Usuário</a></li>
+                    <li><a class='comercial' href='comercial.html'>Comercial</a></li>
+                    <li><a class='cliente' href='cliente.html'>Clientes</a></li>
+                    <li><a class='relatorio' href='relatorios.html'>Relatórios</a></li>
+                </ul>                    
+                ";
+                
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'ADM | SuperPro';
                 

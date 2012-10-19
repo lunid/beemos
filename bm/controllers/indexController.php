@@ -26,7 +26,7 @@
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'ADM | SuperPro';
                 
-                $tpl->forceCssJsMinifyOn();
+                //$tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();
                 
                 $tpl->render('index');            

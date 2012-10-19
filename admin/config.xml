@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>    
     <header>
-        <include id='css'>admin.site</include>
-        <include id='cssInc'></include>
+        <include id='css'></include>
+        <include id='cssInc'>admin.site</include>
         <include id='js'>admin.init,util.dictionary</include>
         <include id='jsInc'></include>
-        <include id='plugins'>jquery_ui,abas,menu_slider,drop</include>
+        <include id='plugins'>jquery_ui,abas</include>
     </header>
 </root>

@@ -1,90 +1,89 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html class="no-js" lang="en">
-    <!--<![endif]-->
-    <head>
+    <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+    <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+    <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+    <!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
         <!-- Basic Page Needs
   ================================================== -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{TITLE}</title>
-        <meta name="description" content="{DESCRIPTION}">
-        <meta name="author" content="InterbitsDev">
+        <title>Sistema Super Professor® Web</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-        <!-- Mobile Specific Metas ================================================== -->
+        <!-- Mobile Specific Metas
+  ================================================== -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-        <!-- CSS ================================================== -->
+        <!-- CSS -->
         {INCLUDE_CSS}
-
-
+        
         <!--[if lt IE 9]>
                 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 
+        <!-- Favicons
+        ================================================== -->
+        <link rel="shortcut icon" href="images/favicon.ico">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+       
+        <script type='text/javascript' src='assets/js/jquery/jquery_1_8_1_min.js'></script>
         {INCLUDE_JS}
-    </head>
-    <body>
-        <!-- Primary Page Layout ================================================== --> 
+</head>
+<body>
+<!-- Primary Page Layout
+================================================== --> 
 
-        <!-- top -->
-        <div id="top">
-            <div id="logo">Super Professor<span>®</span> Web</div>
-            <div id="icone_ferramentas"></div>
-            <div id="icone_duvidas"></div>
-            <div class="drop">
-                <ul>
-                    <li><a href="#"><img src="admin/views/images/click.png" width="25" height="25" border="0"/></a>
-                        <ul>
-                            <li><a href="#">Logar</a></li>
-                            <li><a href="#">Assistente</a></li>
-                            <li><a href="#">Ajuda</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div id="nome">Eduardo</div>
-        </div>
-        <!-- fim top --> 
+<!-- Delete everything in this .container and get started on your own site! --> 
 
-        <!-- container -->
-        <div id="container">
-            <!-- começo menu -->
-            <div id="menu_base">
-                <div id="menu"> 
-                    <ul class="accordion">
-                        <li id="banco" class="files">
-                            <a href="#banco">Banco de Questões</a>
-                            <ul class="sub-menu">
-                                <li><a href="top10">TOP 10</a></li>
-                            </ul>
-                        </li>
-                        <li id="adm" class="sign">
-                            <a href="#adm">Admin</a>
-                            <ul class="sub-menu">
-                                <li><a href="usuarios">usuarios</a></li>
-                            </ul>
-                        </li>
+<!-- top -->
+<div id="top">
+    <div id="logo">Super Professor<span>®</span> Web</div>
+   
+    <!-- drop -->
+    <div class="wrapper">
+        <div class="mainmenu">
+            <ul class="drop">
+                <li class="list">
+                    <a class="category" href="#about" title="Claudio Rubens"><img src="assets/images/admin/icone_avatar.png" width="52" height="22"></a>
+                    <ul class="subdrop">
+                        <li><a href="#about1">About link 1</a></li>
+                        <li><a href="#about2">About link 2</a></li>
+                        <li><a href="#about3">About link 3</a></li>
+                        <li><a href="#about4">About link 4</a></li>
+                        <li><a class="endlist" href="#about5">About link 5</a></li>
                     </ul>
-                </div>
-                <div id="menu_sombra"></div>
-            </div>
-            <!-- fim menu --> 
-            
-            <!-- começo conteudo -->
-            <div id="conteudo">
-                <div class="titulo">{SUB_TITULO}</div>
-                <div id="tabbed_box_1" class="tabbed_box">
-                    <div class="tabbed_area">
-                    {BODY}              
-                    </div>
-                </div>
-            </div>
-            <!-- fim conteudo -->
-        </div>
-        <!-- fim container -->
-        <!-- End Document ================================================== -->
-    </body>
+                </li>
+            </ul>
+
+            <ul class="drop">
+                <li class="list"><a class="category" href="#Home" title="Ajuda"><img src="assets/images/admin/icone_duvida.png" width="51" height="22"></a></li>
+            </ul>
+            <ul class="drop">
+                <li class="list"><a class="category" href="#Home" title='Configurações'><img src="assets/images/admin/icone_ferramentas.png" width="47" height="22"></a></li>
+            </ul>            
+      </div>
+   </div>  
+   <!-- fim drop -->        
+</div>
+<!-- fim top --> 
+<!-- container -->
+<div id="container">
+    <!-- começo menu -->
+    <div id="menu_base">
+        {MENU}
+    </div>
+    <!-- fim menu --> 
+    {BODY}
+</div>
+<!-- fim conteudo -->  
+
+<!-- fim container -->
+
+<!-- End Document
+            ================================================== -->
+</body>
 </html>
