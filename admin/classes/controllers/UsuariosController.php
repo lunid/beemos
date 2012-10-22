@@ -1,17 +1,8 @@
 <?php
-
-    use \sys\classes\mvc\Controller;    
-    use \sys\classes\mvc\View;        
-    use \sys\classes\mvc\ViewPart;      
-    use \sys\classes\util\Request;
-    use \sys\classes\util\Date;
-    use \app\models\tables\AdmUsuario;
+   
+    use \admin\classes\controllers\AdminController;
     
-    /**
-    * Classe Controller usada com default quando nenhuma outra é informada.
-    * Refere-se à página inicial do admin.
-    */
-    class Usuarios extends Controller {
+    class Usuarios extends AdminController {
 
         /**
         *Conteúdo da página home do admin.
@@ -19,10 +10,11 @@
         function actionIndex(){
             try{
                 //Home
-                $objView = new ViewPart('usuarios');
+                $objViewPart = $this->mkViewPart('usuarios');
                 
                 //Template
-                $tpl                = new View($objView);
+                $tpl                = $this->mkView();
+                $tpl->setLayout($objViewPart);
                 $tpl->TITLE         = 'ADM | SuperPro';
                 $tpl->SUB_TITULO    = 'Usuários';
                 
@@ -45,10 +37,10 @@
             try{
                 $ret    = new \stdClass();
                 
-                $page   = Request::get('page'); // get the requested page
-                $limit  = Request::get('rows'); // get how many rows we want to have into the grid
-                $sidx   = Request::get('sidx'); // get index row - i.e. user click to sort
-                $sord   = Request::get('sord'); // get the direction
+                $page   = Request::get('page'); // página requisitada
+                $limit  = Request::get('rows'); // número de linhas do grid
+                $sidx   = Request::get('sidx'); // índice da linha - ex.: usuário clicou para ordernar 
+                $sord   = Request::get('sord'); // direção (ASC/DESC)
                 if(!$sidx) $sidx = 1;
                 
                 $m_admusuario   = new AdmUsuario();

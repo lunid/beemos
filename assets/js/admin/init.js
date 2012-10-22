@@ -5,7 +5,7 @@ $(document).ready(function() {
             xml_dic = xml;
             
             //Inicializa objeto com funções do site
-            site = new Site();
+            //site = new Site();
         },
         async: false
     });

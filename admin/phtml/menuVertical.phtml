@@ -1,14 +1,21 @@
-<?php
-    //Trata a lista de itens selecionados (se for listbox pode existir mais de um item selecionado):
-    $arrSelect = array();
-    if (strlen($select) > 0) $arrSelect = explode(',',$select);
-?>
+<!--
+    Menu vertical da área Admin:
+    O css de formatação encontra-se no arquivo assets/css/admin/menuVertical.css
+-->
 <div id='menu'><p>Titulo</p></div>
-<select name="<?=$name?>" id="<?=$id?>" <?=$onchange?> <?=$class?> <?=$css?> <?=$disabled?> <?=$multiple?>>     
+<ul class='sub-menu'>
     <?php 
-        foreach($options as $option){ 
-            $option = array_values($option);
+        foreach($itens as $arrItem){            
+            $cls        = $arrItem['CLS'];
+            $id         = $cls;
+            $link       = $arrItem['LINK'];
+            $text       = $arrItem['TEXT'];
+            $selected   = (int)$arrItem['SELECTED'];
+            $url        = $link.'/';
+            //Verifica se o item atual deve aparecer como selecionado.
+            $clsSel     = '';
+            if ($selected == 1) $clsSel = $cls.'Sel Sel';
     ?>
-        <option value="<?=$option[0]?>" <? if(array_search($option[0],$arrSelect) !== FALSE) { ?> selected="selected" <? } ?>><?=$option[1]?></option>
-    <? } ?>
-</select>
+        <li><a class='<?=$cls?> <?=$clsSel?>' href='<?=$url?>' id="<?=$id?>"><?=$text?></a></li>
+    <?php } ?>
+</ul>

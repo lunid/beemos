@@ -46,15 +46,24 @@
             $objLoadConfig->loadConfigXml('config.xml');
             
             
-            $arrPartsUrl    = self::processaUrl();             
+            $arrPartsUrl    = self::processaUrl(); 
             $module         = $arrPartsUrl['module'];
             $controller     = $arrPartsUrl['controller'];
-            $action         = $arrPartsUrl['action'];
+            $action         = $arrPartsUrl['action'];            
             $method         = 'action'.ucfirst($action);                                                                         
             
             $configModule   = $module.'/config.xml';
             $objLoadConfig->loadConfigXml($configModule);                                             
-                    
+                                
+            /*
+             * Inicializa a conexão com o DB.
+             * Necessário para evitar erro de conexão ao executar o Controller->action().
+             */            
+            Conn::init();
+
+            //Carrega, a partir do namespace, classes invocadas na aplicação.
+            spl_autoload_register('self::loadClass');	                           
+            
             //Faz o include do Controller atual
             $urlFileController = $module . '/classes/controllers/'.ucfirst($controller).'Controller.php';
             if (!file_exists($urlFileController)) {
@@ -64,14 +73,6 @@
                 
             require_once($urlFileController);                    
             
-            /*
-             * Inicializa a conexão com o DB.
-             * Necessário para evitar erro de conexão ao executar o Controller->action().
-             */            
-            Conn::init();
-
-            //Carrega classes invocadas na aplicação, a partir de seu namespace.
-            spl_autoload_register('self::loadClass');	                           
             
             $objController  = new $controller;
             if (!method_exists($objController,$method)) die('Método '.$controller.'Controller->'.$method.'() não existe.');
@@ -168,7 +169,8 @@
             //Tratamento para utilização do Hybridauth.
             if($class == 'FacebookApiException') return false;            
             
-            $urlInc = str_replace("\\", "/" , $class . '.php');                
+            $urlInc = str_replace("\\", "/" , $class . '.php');     
+            //echo $urlInc.'<br>';
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
             } else {           

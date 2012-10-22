@@ -1,17 +1,12 @@
 <?php
-
-    use \sys\classes\mvc\Controller;    
-    use \sys\classes\mvc\View;        
-    use \sys\classes\mvc\ViewPart;      
-    use \sys\classes\util\Request;
-    use \sys\classes\util\Date;
-    use \admin\models\Top10Model;
     
     /**
     * Classe Controller usada com default quando nenhuma outra é informada.
     * Refere-se à página inicial do admin.
     */
-    class Index extends Controller {
+    use \admin\classes\controllers\AdminController;
+    
+    class Index extends AdminController {
 
         /**
         *Conteúdo da página home do admin.
@@ -19,21 +14,10 @@
         function actionIndex(){
             try{
                 //Home
-                $objViewPart = new ViewPart('home');
+                $objViewPart = $this->mkViewPart('home');
                 
                 //Template
-                $tpl = new View();
-                $tpl->MENU = "
-                <div id='menu'><p>Titulo</p></div>
-                <ul class='sub-menu'>
-                    <li><a class='home' href='index.html'>Home</a></li>
-                    <li><a class='usuario' href='usuario.html'>Usuário</a></li>
-                    <li><a class='comercial' href='comercial.html'>Comercial</a></li>
-                    <li><a class='cliente' href='cliente.html'>Clientes</a></li>
-                    <li><a class='relatorio' href='relatorios.html'>Relatórios</a></li>
-                </ul>                    
-                ";
-                
+                $tpl = $this->mkView();                                
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'ADM | SuperPro';
                 

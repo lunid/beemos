@@ -1,0 +1,84 @@
+
+
+/* começo menu
+================================================== */			
+		
+	#menu{
+		width:240px;
+		height:40px;
+		background-image:url(../../images/admin/sombra.png);
+		background-repeat:no-repeat;
+		float:left;
+	}
+	
+	#menu p{
+		font-size:16px;
+		margin-top: 6px;
+		margin-left:35px;
+	}
+	
+	#menu_base{
+		width:171px;
+		height: 500px;
+		float:left;
+	}
+	
+	.sub-menu{
+		width: 99%;
+		float:left;
+	}
+	
+	.sub-menu li{}
+	
+	
+	.sub-menu li a span{
+		padding-left:33px;
+	}
+	
+	.sub-menu li  a {
+		color: #000;
+		display: block;
+		height: 35px;
+		padding: 7px 10px 0px 56px;
+		text-decoration: none;
+		background-image:url(../../images/menu.png);
+		background-repeat:no-repeat;
+	}
+
+	.sub-menu li a:hover, .sub-menu li a.Sel {
+		color: #fff;
+		padding: 7px 10px 0px 56px;
+		text-decoration: none;
+		background-color:#172236;
+	}
+	
+	.sub-menu .index {background-position: 29px -347px; width: 102px; height:25px;}
+	.sub-menu .index:hover, .sub-menu li a.indexSel {
+            background-position: 29px -378px;
+        }
+	
+        
+	.sub-menu .usuario {background-position: 29px 5px; width: 102px; height:25px;}
+	.sub-menu .usuario:hover, .sub-menu li a.usuarioSel {
+            background-position: 29px -25px;
+        }
+
+	.sub-menu .comercial {background-position: 29px -76px; width: 102px; height:25px}
+	.sub-menu .comercial:hover, .sub-menu li a.comercialSel {
+            background-position: 29px -115px;
+        }
+
+	.sub-menu .cliente {background-position: 29px -172px; width: 102px; height:25px}
+	.sub-menu .cliente:hover, .sub-menu li a.clienteSel {
+            background-position: 29px -209px;
+        }
+	
+	.sub-menu .relatorio {background-position: 29px -260px; width: 102px; height:25px}
+	.sub-menu .relatorio:hover, .sub-menu li a.relatorioSel	{
+            background-position: 29px -291px;
+        }
+
+
+
+/* fim menu
+================================================== */

@@ -90,7 +90,7 @@
         }
         
         function render(){            
-            $this->renderHtml();
+            return $this->renderHtml();
         }
         
         
@@ -121,30 +121,32 @@
                     }                
                 }
                 
-                if (strlen($name) == 0 && strlen($id) > 0) $name = $id;
-                if (strlen(@$onchange) > 0) $onchange = "onchange=\"{$onchange}\"";
-                if (strlen(@$onclick) > 0) $onclick = "onchange=\"{$onclick}\"";
-                if (strlen(@$css) > 0) $css = "style=\"{$css}\"";                
-                if (strlen(@$cls) > 0) $cls = "class=\"{$cls}\"";                               
                 
+                if (strlen($name) == 0 && strlen($id) > 0)  $name       = $id;
+                if (strlen(@$onchange) > 0)                 $onchange   = "onchange=\"{$onchange}\"";
+                if (strlen(@$onclick) > 0)                  $onclick    = "onchange=\"{$onclick}\"";
+                if (strlen(@$css) > 0)                      $css        = "style=\"{$css}\"";                
+                if (strlen(@$cls) > 0)                      $cls        = "class=\"{$cls}\"";                               
+                                
                 ob_start();
-                
+                              
                 if (!@include($pathPhtml)) {                    
-                    //Não localizou o path na pasta sys. Procura no módulo atual
+                    //Não localizou o path na pasta sys. Procura no módulo atual                    
                     $module     = \Application::getModule();
                     $folderHtml = $module.'/phtml';
                     $this->setFolderHtml($folderHtml);
                     $phtmlFile  = $this->getPathHtml();
-                    $pathPhtml  = \Url::physicalPath($phtmlFile);                                
+                    $pathPhtml  = \Url::physicalPath($phtmlFile);    
+                    
                     if (!@include($pathPhtml)){
                         throw new \Exception (__METHOD__."(): Arquivo {$pathPhtml} não existe.");                    
-                    }                    
+                    }                                      
                 }
-                
+                 
                 //Include realizado com sucesso                
-                $output = ob_get_contents();
-                echo $output.'x<br>';
-                ob_end_clean();                
+                $output = ob_get_contents();                
+                ob_end_clean();             
+                
                 return $output;
             }catch(Exception $e){
                 throw $e;

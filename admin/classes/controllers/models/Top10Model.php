@@ -1,5 +1,5 @@
 <?php
-    namespace admin\models;
+    namespace admin\classes\models;
     use \sys\classes\mvc\Model;        
     use \sys\classes\util\Date;
     use \admin\models\tables\BcoQuestao;

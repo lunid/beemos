@@ -1,7 +1,9 @@
+<!--
 <ul class="tabs">
     <li><a href="javascript:tabSwitch('usuarios_lista', 'usuarios_lista_content');" id="usuarios_lista" class="abas active">Lista de usuários</a></li>
     <li><a href="javascript:tabSwitch('usuarios_novo', 'usuarios_novo_content');" id="usuarios_novo" class="abas">Novo Usuário</a></li>
 </ul>
+-->
 
 <div id="usuarios_lista_content" class="content">
     <table id="tb_lista"></table>
@@ -12,29 +14,4 @@
     2
 </div>
 
-<script type="text/javascript">
-    jQuery("#tb_lista").jqGrid({
-   	url:'usuarios/listaUsuarios',
-	datatype: "json",
-   	colNames:['Código','Nome', 'E-mail', 'Telefone','Data Cadastro'],
-   	colModel:[
-            {name:'ID_USUARIO',index:'ID_USUARIO', width:60, align:"center"},
-            {name:'NOME',index:'NOME', width:300},
-            {name:'EMAIL',index:'EMAIL', width:300},
-            {name:'TELEFONE',index:'TELEFONE', width:100, align:"center"},
-            {name:'DATA_REGISTTRO',index:'DATA_REGISTRO', width:100, align:"center"}		
-   	],
-   	rowNum:30,
-   	rowList:[10,20,30],
-   	pager: '#div_pg',
-   	sortname: 'NOME',
-        viewrecords: true,
-        sortorder: "asc",
-        caption:"Usuários",
-        width: '1000',
-        height: 'auto'
-    });
-    
-    jQuery("#tb_lista").jqGrid('navGrid','#div_pg',{search:true,edit:false,add:false,del:false});
-</script>
     
