@@ -8,6 +8,6 @@
         //Inicializa a aplicação:
         Application::setup();   
     } catch(Exception $e) {
-        //echo 'Erro ao efetuar o setup da aplicação: '.$e->getMessage();
+        echo 'Erro ao efetuar o setup da aplicação: '.$e->getMessage();
     }
 ?>

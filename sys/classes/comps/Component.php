@@ -1,6 +1,6 @@
 <?php
 
-    namespace sys\classes\comps;
+    namespace sys\classes\comps;   
     
     class Component {	
         
@@ -16,7 +16,8 @@
                 //Comprime a string:
                 $strIncMin   = '';
                 \Minify_YUICompressor::$jarFile  = realpath($pathJar);
-                \Minify_YUICompressor::$tempDir  = $root.'tmp/';                
+                \Minify_YUICompressor::$tempDir  = $root.'tmp/'; 
+                               
                 try {
                     if ($ext == 'js'){
                         //Javascript                        
@@ -30,7 +31,12 @@
                 }         
                                 
                 if (strlen($strIncMin) > 0 && strlen($outFileMin) > 0){
-                    //Gera um arquivo físico com o conteúdo compactado:                    
+                    //Gera um arquivo físico com o conteúdo compactado:                       
+                    $dirName    = dirname($outFileMin);
+                    $dirName    = \Url::relativeUrl($dirName);
+     
+                    if (!is_dir($dirName)) mkdir($dirName,'0777');
+                    
                     $fp = fopen($outFileMin, "wb+");                
                     fwrite($fp, $strIncMin);
                     fclose($fp);

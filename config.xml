@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>
-        <config id='modules'>app,admin</config>
-        <config id='defaultModule'>app</config>  
+        <config id='modules'>app,admin,bm</config>
+        <config id='defaultModule'>bm</config>  
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
-        <config id='rootFolder'>interbits</config>        
+        <config id='rootFolder'>supervip</config>        
         <config id='folderSys'>sys</config>        
         <config id='folderViews'>viewParts</config>
     </app>

@@ -50,17 +50,17 @@
             $module         = $arrPartsUrl['module'];
             $controller     = $arrPartsUrl['controller'];
             $action         = $arrPartsUrl['action'];            
-            $method         = 'action'.ucfirst($action);                                                                         
+            $method         = 'action'.ucfirst($action);                                                                                    
             
             $configModule   = $module.'/config.xml';
             $objLoadConfig->loadConfigXml($configModule);                                             
-                                
+                        
             /*
              * Inicializa a conexão com o DB.
              * Necessário para evitar erro de conexão ao executar o Controller->action().
              */            
             Conn::init();
-
+           
             //Carrega, a partir do namespace, classes invocadas na aplicação.
             spl_autoload_register('self::loadClass');	                           
             
@@ -72,8 +72,7 @@
             }
                 
             require_once($urlFileController);                    
-            
-            
+                        
             $objController  = new $controller;
             if (!method_exists($objController,$method)) die('Método '.$controller.'Controller->'.$method.'() não existe.');
             $objController->$method();//Executa o Controller->method()            

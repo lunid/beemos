@@ -18,17 +18,17 @@
         */
         function actionIndex(){
             try{
-                //Home
+                //Home            
                 $objViewPart = new ViewPart('home');
                 
                 //Template
                 $tpl = new View();
                 $tpl->setLayout($objViewPart);
-                $tpl->TITLE = 'ADM | SuperPro';
+                $tpl->TITLE = 'ADM | beeMoS';
                 
                 //$tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();
-                
+              
                 $tpl->render('index');            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
