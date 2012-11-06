@@ -4,7 +4,7 @@
         Plugin para a criação de Janela Modal
     </descricao>
     <config>
-        <include id='jsInc'>jquery_mousewheel_306_min,jquery_fancybox_2_min</include>        
-        <include id='css'>jquery_fancybox</include>        
+        <include id='jsInc'>fancybox_213_min</include>        
+        <include id='cssInc'>css/fancybox</include>        
     </config>
 </root>

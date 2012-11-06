@@ -6,7 +6,7 @@
         O css de formatação encontra-se no arquivo css ref. à página em uso.
     </descricao>
     <config>
-        <include id='jsInc'>jquery_ui_1_8_23_custom_min</include>    
-        <include id='css'>jquery_ui_1_8_23_custom_min</include>           
+        <include id='jsInc'>jquery_ui_datepicker_pt_BR,jquery_ui_1_9_1_custom_min</include>    
+        <include id='cssInc'>jquery_ui_1_9_1_custom_min</include>           
     </config>
 </root>

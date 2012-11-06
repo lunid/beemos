@@ -94,7 +94,6 @@
 /* fim top
 ================================================== */
 
-
 /* menu drop
 ================================================== */
 
@@ -118,14 +117,14 @@
 		line-height:25px;
 		margin-left:23px;
 		margin-top:5px;
-		width:151px;
+		width:202px;
 	}
 	
 	ul.drop {
 		padding:0;
 		margin: 0 0 0 -40px;
 		list-style:none;
-		
+		width:90px;
 		overflow:hidden;
 		float:left;
 	}
@@ -148,7 +147,7 @@
 		z-index:50;
 		display:block;
 		float:left;
-		width:100px;
+		width:120px;
 		margin-top:10px;
 		background:transparent;
 	}
@@ -232,7 +231,22 @@
 		float:left;
 	}
 
-	
+        .modal_aguarde{
+            display:none;
+            width:140px;
+        }
+        
+        .modal_aguarde .img{
+            float:left;
+            padding:30px 10px 0 0;
+        }
+        
+        .modal_aguarde .txt{
+            font-family:Verdana,Arial;
+            font-size:16px;
+            font-weight:bold;
+            padding-top:35px;
+        }
 
 /* fim container
 ================================================== */
