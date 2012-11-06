@@ -14,10 +14,13 @@
 
             if (($ext == 'js' || $ext == 'css') && strlen($strInc) > 0) {            
                 //Comprime a string:
-                $strIncMin   = '';
+                $strIncMin      = '';
+                $pathTmp        = $root.'tmp/';
                 \Minify_YUICompressor::$jarFile  = realpath($pathJar);
-                \Minify_YUICompressor::$tempDir  = $root.'tmp/'; 
-                               
+                \Minify_YUICompressor::$tempDir  = $pathTmp; 
+                
+                if (!is_dir($pathTmp)) mkdir($pathTmp);
+                
                 try {
                     if ($ext == 'js'){
                         //Javascript                        

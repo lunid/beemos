@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>
-        <config id='modules'>app,admin,bm</config>
-        <config id='defaultModule'>bm</config>  
+        <config id='modules'>app,admin</config>
+        <config id='defaultModule'>admin</config>  
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
         <config id='rootFolder'>interbits</config>        
@@ -20,9 +20,7 @@
     <header>
         <!-- <include id='css'>skeleton.stylesheets.base,skeleton.stylesheets.skeleton</include> -->
         <include id='css'>yaml402-121023.yaml.core.base_min</include>
-        <include id='cssInc'>
-            yaml402-121023.yaml.navigation.nav_shinybuttons,
-            yaml402-121023.yaml.navigation.nav_shinybuttons,bm.site</include>
+        <include id='cssInc'></include>
         <include id='js'>app.init,util.form,util.dictionary</include>
         <include id='jsInc'>jquery.jquery_1_8_1_min</include>
         <include id='plugins'>modal,menuHorizontal,menuIdiomas</include>
