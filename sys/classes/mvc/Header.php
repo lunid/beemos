@@ -306,8 +306,7 @@ class Header {
             $uri            = $assets.'/'.$path;                        
         }
                 
-        $pathFileMin    = \Url::physicalPath($uri);
-    
+        $pathFileMin    = \Url::physicalPath($uri);       
         return $pathFileMin;
     }  
         
@@ -404,10 +403,8 @@ class Header {
     private function setTag($file,$ext){       
         $inc                = '';        
         $cssJsExtension     = $this->getExtFile($ext);//Converte cssInc para css e jsInc para js, se necessário.                        
-        if (strlen($file) > 0){              
-            
+        if (strlen($file) > 0){                         
             $pathFile       = \Url::relativeUrl($file);
-            
             if ($cssJsExtension == self::EXT_JS) {
                 $inc = "<script type='text/javascript' src='".$pathFile."'></script>".chr(13);
             } elseif ($cssJsExtension == self::EXT_CSS) {               
