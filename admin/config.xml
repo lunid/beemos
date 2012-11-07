@@ -3,7 +3,7 @@
     <header>
         <include id='css'>admin.menuVertical</include>
         <include id='cssInc'>admin.site</include>
-        <include id='js'>admin.init,util.dictionary</include>
+        <include id='js'>admin.init,util.dictionary,util.form</include>
         <include id='jsInc'></include>
         <include id='plugins'>jquery_ui,jqgrid,modal</include>
     </header>

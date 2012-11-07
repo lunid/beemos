@@ -5,7 +5,7 @@ $(document).ready(function() {
             xml_dic = xml;
             
             //Inicializa objeto com funções do site
-            //site = new Site();
+            site = new Site();
         },
         async: false
     });
@@ -17,6 +17,14 @@ $(document).ready(function() {
 Site = function(){};
 
 Site.prototype = {
+    aguarde: function(){
+        $.fancybox.open([
+            {
+                href: '#modal_aguarde',
+                modal: true
+            }
+        ]);
+    },
     verAvaliacao: function(ret, modalId){
         if(ret.status == true){
             $('#bt_submit').hide();

@@ -4,6 +4,10 @@
     use \sys\classes\util\Request;
     
     class Escolas extends AdminController {
+        /**
+         * Inicializa a página de Escola & Turmas
+         * Inicializa as Abas da Página
+         */
         public function actionIndex(){
             try{
                 //View do Grid de Escolas
@@ -30,6 +34,9 @@
             }
         }
         
+        /**
+         * Traz o array jSon para que seja possível montar o grid de escolas & turmas
+         */
         public function actionGridEscolas(){
             try{
                 //Obejto de retorno
@@ -109,7 +116,7 @@
                             $row->ID_ESCOLA,
                             utf8_decode($row->NOME),
                             "<input type='radio' name='status_{$row->ID_ESCOLA}' value='1' ".($row->STATUS == 1 ? "checked='checked'" : "")." onclick='javascript:alteraStatusEscola({$row->ID_ESCOLA}, this.value);' /> Ativa &nbsp; <input type='radio' name='status_{$row->ID_ESCOLA}' value='0' ".($row->STATUS == 0 ? "checked='checked'" : "")." onclick='javascript:alteraStatusEscola({$row->ID_ESCOLA}, this.value);' /> Inativa ",
-                            "<input type='button' value='Turmas' onclick='javascript:abreModalTurma({$row->ID_ESCOLA});' />"        
+                            "<input type='button' value='Turmas' onclick='javascript:turmas({$row->ID_ESCOLA}, 26436, \"{$row->NOME}\");' />"        
                         );
                         $i++;
                     }
@@ -121,6 +128,123 @@
                 $ret->status    = false;
                 $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
                 $ret->escolas   = array();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Função para incluir uma nova Escola na base de dados
+         */
+        public function actionSalvarEscola(){
+            try{
+                //Obejto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar nova Escola!";
+                
+                //Recebe dados do POST
+                $ID_CLIENTE = Request::post("escolaIdCliente", "NUMBER");
+                $NOME       = Request::post("escolaNome");
+                
+                //Executa chamada de model para salvar a nova escola
+                $mEscolasTurmas = new EscolasTurmasModel();
+                $ret            = $mEscolasTurmas->salvarEscola($ID_CLIENTE, $NOME);
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Função que atualiza o status de ATIVO e INATIVO de uma escola
+         */
+        public function actionAlteraStatusEscola(){
+            try{
+                //Obejto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao alterar status Escola!";
+                
+                //Recebe dados do POST
+                $ID_ESCOLA  = Request::post("escolaId", "NUMBER");
+                $ID_CLIENTE = Request::post("escolaIdCliente", "NUMBER");
+                $STATUS     = Request::post("escolaStatus", "NUMBER");
+                
+                //Executa chamada de model para salvar a nova escola
+                $mEscolasTurmas = new EscolasTurmasModel();
+                $ret            = $mEscolasTurmas->alteraStatusEscola($ID_ESCOLA, $ID_CLIENTE, $STATUS);
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Lista as turmas de um cliente e uma escola
+         */
+        public function actionListaTurmas(){
+            try{
+                //Obejto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao listas Turmas!";
+                
+                //Recebe dados do POST
+                $ID_ESCOLA  = Request::post("ID_ESCOLA", "NUMBER");
+                $ID_CLIENTE = Request::post("ID_CLIENTE", "NUMBER");
+                
+                //Executa chamada de model para salvar a nova escola
+                $mEscolasTurmas = new EscolasTurmasModel();
+                $ret            = $mEscolasTurmas->listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA);
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Função para salvar os dados de uma Turma (nova ou existente)
+         */
+        public function actionSalvarTurma(){
+            try{
+                //Obejto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar dados da Turma!";
+                
+                //Recebe dados do POST
+                //Executa chamada de model para salvar a nova escola
+                $mEscolasTurmas = new EscolasTurmasModel();
+                $ret            = $mEscolasTurmas->salvarTurma(
+                                        Request::post("turmaId", "NUMBER"),
+                                        Request::post("turmaIdEscola", "NUMBER"),
+                                        Request::post("turmaClasse"),
+                                        Request::post("turmaEnsino"),
+                                        Request::post("turmaAno", "NUMBER"),
+                                        Request::post("turmaPeriodo")
+                                  );
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
                 
                 echo json_encode($ret);
             }
