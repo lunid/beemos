@@ -35,7 +35,7 @@ $(document).ready(function(){
             onClickButton: function(){ 
                 $.fancybox.open([
                     {
-                        href: '#modal_aguarde',
+                        href: '#modal_turmas',
                         helpers: {
                             overlay : {
                                 closeClick : false

@@ -1,4 +1,68 @@
 <!-- começo conteudo -->
+<!-- Modal Turmas -->
+<div id="modal_turmas" style="display:none;">
+    <table style="width:750px;height:500px;border-collapse:collapse;border-spacing:0;">
+    <tr>
+        <td style="width:30%;vertical-align:top;text-align:left;">
+            <!-- Coluna Lista Escolas -->
+            Escolas
+            <br />
+            <ul>
+                <? while($row = mysql_fetch_object($escolas->escolas)){ ?>
+                <li id="lista_<?=$row->ID_ESCOLA?>" class="lista_escolas">
+                    <?=$row->NOME?>
+                </li>
+                <? } ?>
+            </ul>
+            <!-- Coluna Lista Escolas -->
+        </td>
+        <td style="width:100%;vertical-align:top;text-align:left;">
+            <!-- Coluna Form Turmas -->
+            <form name="form_turma" id="form_turma" onsubmit="return validaFormEscola();">
+                <table style="width:100%;border-collapse:collapse;border-spacing:0;">
+                <tr>
+                    <td>
+                        Nome da Classe
+                        <br />
+                        <input type="text" id="CLASSE" name="CLASSE" maxlength="100" style="width:99%;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="width:30%;float:left;">
+                            Ensino
+                            <br />
+                            <select id="ENSINO" name="ENSINO">
+                                <option value="M">Médio</option>
+                                <option value="F">Fundamental</option>
+                            </select>
+                        </div>
+                        <div style="width:30%;float:left;">
+                            Ano
+                            <br />
+                            <select id="ANO" name="ANO">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" id="ID_CLIENTE" name="ID_CLIENTE" value="26436" />    
+                        <input type="hidden" id="ID_ESCOLA" name="ID_ESCOLA" value="" />    
+                        <input type="hidden" id="ID_TURMA" name="ID_TURMA" value="" />    
+                        <input type="submit" value="Salvar" />
+                    </td>
+                </tr>
+                </table>
+            </form>
+            <!-- Coluna Form Turmas -->
+        </td>
+    </tr>
+    </table>
+</div>
+<!-- Modal Turmas -->
 <div id="conteudo" style="padding:0;width:91%;">
     <div id="abas">
         <ul>
