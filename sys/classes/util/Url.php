@@ -43,6 +43,8 @@
                $root            = $_SERVER['DOCUMENT_ROOT'];
                $rootFolder      = \LoadConfig::rootFolder();               
                $physicalPath    = $root.'/'.$rootFolder.'/';
+               $physicalPath    = str_replace('//','/',$physicalPath);
+
                $path            = str_replace($physicalPath,'',$uri);               
            }
            $path = str_replace('//','/',$path);
