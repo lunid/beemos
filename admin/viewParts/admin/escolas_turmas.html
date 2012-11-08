@@ -1,0 +1,141 @@
+<!-- começo conteudo -->
+<!-- Modal Turmas -->
+<div id="modal_turmas" style="display:none;">
+    <table style="width:750px;height:500px;border-collapse:collapse;border-spacing:0;">
+    <tr>
+        <td style="width:30%;vertical-align:top;text-align:left;">
+            <!-- Coluna Lista Turmas -->
+            <strong style="font-size: 14px;">
+                Turmas
+            </strong>
+            <br />
+            <div id="lista_turmas"></div>
+            <!-- Coluna Lista Turmas -->
+        </td>
+        <td style="width:100%;vertical-align:top;text-align:left;">
+            <!-- Coluna Form Turmas -->
+            <div style="font-size:14px;padding:0 0 15px 0;margin:0">
+                <strong>Escola</strong>
+                <br />
+                <span id="turmaEscola"></span>
+            </div>
+            
+            <form name="form_turma" id="form_turma" method="post" action="SalvarTurma" onSubmit="return formTurma.validate(this, true, 'verSalvarTurma');">
+                <!-- Erros de validação no server -->
+                <div id="form_turma_erros" class="ui-state-error ui-corner-all" style="display:none;">
+                    <span id="form_turma_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
+                    <span id="form_turma_erros_msg"></span>
+                </div>
+                <!-- Erros de validação no server -->
+                <table style="width:100%;border-collapse:separate;border-spacing:0 7px;">
+                <tr>
+                    <td style="font-size:14px;padding-bottom:2px;">
+                        <strong id="turmaTitulo">Cadastrar Nova Turma</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Nome da Classe
+                        <br />
+                        <input type="text" id="turmaClasse" name="turmaClasse" maxlength="100" style="width:99%;" class="required" field_name="Nome da Classe" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="width:22%;float:left;">
+                            Ensino
+                            <br />
+                            <select id="turmaEnsino" name="turmaEnsino" onchange="javascript:mudaAno(this.value);" class="required" field_name="Ensino">
+                                <option value="M">Médio</option>
+                                <option value="F">Fundamental</option>
+                            </select>
+                        </div>
+                        <div style="width:9%;float:left;">
+                            Ano
+                            <br />
+                            <select id="turmaAno" name="turmaAno" class="required" field_name="Ano">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div style="width:30%;float:left;">
+                            Período
+                            <br />
+                            <select id="turmaPeriodo" name="turmaPeriodo" class="required" field_name="Período">
+                                <option value="M">Manhã</option>
+                                <option value="T">Tarde</option>
+                                <option value="N">Noite</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" id="turmaIdCliente" name="turmaIdCliente" value="" />    
+                        <input type="hidden" id="turmaIdEscola" name="turmaIdEscola" value="" />    
+                        <input type="hidden" id="turmaId" name="turmaId" value="" />    
+                        <input type="submit" value="Salvar" />
+                        <input type="button" id="btNovaTurma" value="Cadastrar Nova Turma" onclick="javascript:novaTurma();" style="display:none;" />
+                    </td>
+                </tr>
+                </table>
+            </form>
+            <!-- Coluna Form Turmas -->
+        </td>
+    </tr>
+    </table>
+</div>
+<!-- Modal Turmas -->
+<!-- Modal Escola -->
+<div id="modal_escolas" style="display:none;">
+    <table class="form_padrao">
+    <tr>
+        <td style="width:100%;">
+            <form name="form_escola" id="form_escola" method="post" action="salvarEscola" onSubmit="return form.validate(this, true, 'atualizaGridEscolas');">
+                <!-- Erros de validação no server -->
+                <div id="form_escola_erros" class="ui-state-error ui-corner-all" style="display:none;">
+                    <span id="form_escola_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
+                    <span id="form_escola_erros_msg"></span>
+                </div>
+                <!-- Erros de validação no server -->
+                <table style="width:100%;">
+                <tr>
+                    <td style="width:100%;">
+                        Nome da Escola
+                        <br />
+                        <input type="text" id="escolaNome" name="escolaNome" maxlength="100" class="required" field_name="Nome da Escola" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" id="escolaIdCliente" name="escolaIdCliente" value="26436" />    
+                        <input type="submit" value="Salvar" />
+                    </td>
+                </tr>
+                </table>
+            </form>
+        </td>
+    </tr>
+    </table>
+</div>
+<!-- Modal Escola -->
+<div id="conteudo" style="padding:0;width:91%;">
+    <div id="abas">
+        <ul>
+            <li>
+                <a href="#escolas">Escolas & Turmas</a>
+            </li>
+            <li>
+                <a href="#turmasListas">Distribuir Listas</a>
+            </li>
+        </ul>
+        <div id="escolas" style="width:100%;">
+            <table id="grid_escola" style="width:100%;"></table>
+            <div id="pg_escola"></div>
+        </div>
+        <div id="turmasListas" style="width:100%;">
+            Listas
+        </div>
+    </div>
+</div>

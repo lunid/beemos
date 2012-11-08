@@ -18,6 +18,7 @@
                 $objMenuVert->addItem('comercial','comercial','Comercial');
                 $objMenuVert->addItem('cliente','clientes','Clientes');
                 $objMenuVert->addItem('relatorio','relatorios','Relatorios');            
+                $objMenuVert->addItem('escolas','escolas','Escolas');            
 
                 $this->MENU_VERTICAL = $objMenuVert->render($layoutName);
                 

@@ -52,6 +52,10 @@ Form.prototype = {
         }
     },
     initModal:function(id){
+        $('body').append(
+            "<div id='modal_" + id + "' class='modal_form'><table align='center'><tr><td align='center' valign='middle'><table align='center'><tr><td id='msg_" + id + "' align='center' class='msg_modal'>&nbsp;</td></tr></table></td></tr></table></div>"
+        );
+            
         $('#modal_' + id).fancybox({
             closeBtn: true,
             closeClick: true,
@@ -63,8 +67,11 @@ Form.prototype = {
         
         this.modalId = id;
     },
-    validate: function(form, ajax, callback){
+    validate: function(form, ajax, callback, useSite){
         try{
+            //oculta erros
+            $("#" + form.name + "_erros").css("display", "none");
+            
             var validate = true;
             
             $(form).find(".required").each(function(){
@@ -94,7 +101,8 @@ Form.prototype = {
             });
             
             if(ajax && validate){
-                $("#modal_aguarde").trigger('click');
+                //Exibe modal de Aguarde
+                site.aguarde();
                 
                 var dados   = $(form).serializeArray();
                 var modalId = this.modalId;
@@ -103,18 +111,25 @@ Form.prototype = {
                     form.action,
                     dados,
                     function(ret){
+                        //Fecha aguarde
+                        site.fechaAguarde();
+                        
                         if(ret.status){
                             $(dados).each(function(){
                                $("#" + this.name).val(""); 
                             });
                         }
 
-                        if(callback != "" && callback != null && ret.status){
-                            var fn = site[callback];
-                            fn(ret, modalId);
+                        if(callback != "" && callback != null){
+                            var fn = null;
+                            if(useSite == true){
+                                fn = site[callback];
+                                fn(ret, modalId);
+                            }else{
+                                fn = window[callback];
+                                fn(ret, modalId);
+                            }
                         }else{
-                            $.fancybox.close(true);
-                            
                             if(modalId != ""){
                                 $("#msg_" + modalId).html(ret.msg);
                                 $("#modal_" + modalId).trigger('click');
