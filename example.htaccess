@@ -2,8 +2,9 @@ RewriteEngine on
 
 # RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
 
-# RewriteCond %{SCRIPT_FILENAME} !-f
-# RewriteRule /(sys)/(.*) sys/$2 [L,R=302]
+## Redefine as URLs de sys:
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule (sys)/(.*) /interbits/sys/$2 [L,R=302]
 
 ## Redefine as URLs de imagem, css e js:
 RewriteCond %{SCRIPT_FILENAME} !-f
