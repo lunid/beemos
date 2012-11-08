@@ -159,6 +159,16 @@ function novaTurma(){
  * Abre o Modal de Turmas da Escola escolhida
  */
 function turmas(ID_ESCOLA, ID_CLIENTE, ESCOLA){
+    //Limpa formulário
+    $("#turmaTitulo").html("Cadastrar Nova Turma");
+    $("#turmaClasse").val("");
+    $("#turmaEnsino").val("M");
+    $("#turmaAno").val(1);
+    $("#turmaPeriodo").val("M");
+    $("#turmaId").val("");
+    
+    $("#form_turma_erros").css("display", "none");
+    
     //Abre modal
     $.fancybox.open([
         {
