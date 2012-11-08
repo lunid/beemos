@@ -29,6 +29,34 @@
             $this->setTemplate($fileTpl);
         }
         
+        /**
+         * Método usado para gerar um link para um controller/action no módulo atualmente ativo.
+         *
+         * @param string $controller Nome do controller. Ex,.: usuarios
+         * @param string $action Nome do método (geralmente refere-se a uma página) a ser executado. Ex.: pedidos.
+         *  
+         * @return string
+         */
+        function setModuleUrl($controller='',$action=''){
+            $module = \Application::getModule();
+            return $this->setUrl($module,$controller,$action);
+        }
+        
+        /**
+         * Método usado para gerar um link para um module/controller/action.
+         * 
+         * @param string $module Nome do módulo.
+         * @param string $controller Nome do controller. Ex,.: usuarios.
+         * @param string $action Nome do método (geralmente refere-se a uma página) a ser executado. Ex.: pedidos.
+         * 
+         * @return string
+         */        
+        function setUrl($module='',$controller='',$action=''){           
+           $arrUrl = array('module'=>$module,'controller'=>$controller,'action'=>$action);           
+           $url = \Url::setUrl($arrUrl);               
+           return $url;
+        }        
+        
         function setTemplate($fileTpl=''){
             $pathTpl = '';
             if (strlen($fileTpl) > 0) {

@@ -3,6 +3,32 @@
     class Url {
         
         /**
+         * Recebe um array associativo que será convertido em URL no formato
+         * modulo/controller/action/...
+         * 
+         * @param array $arrUrl Array associativo. 
+         * Exemplo: 
+         * O array('module'=>'admin','controller'=>'escolas','action'=>'home','id'=>11) retornará
+         * admin/escola/home/id/11
+         * 
+         * @return string 
+         */                
+        public static function setUrl(array $arrUrl){   
+            $url            = '/';
+            $rootFolder     = \LoadConfig::rootFolder();
+            if (strlen($rootFolder) > 0) $url .= $rootFolder.'/';
+            
+            foreach($arrUrl as $key=>$value) {
+                if (($key == 'module' || $key == 'controller' || $key == 'action')) {
+                    if (strlen(trim($value)) > 0) $url .= $value.'/';
+                } else {
+                    $url .= $key.'/'.$value;                
+                }
+            }
+            return $url;
+        }
+        
+        /**
          * Retorna o caminho físico da URI informada.
          * 
          * Exemplo: c:/serverFolder/projectFolder/...
