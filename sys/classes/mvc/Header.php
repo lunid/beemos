@@ -175,7 +175,8 @@ class Header {
     }
     
     /**
-     * Imprime na tela todas as URLs de inclusão memorizadas até o momento e para a execução do script. 
+     * Imprime na tela todas as URLs de inclusão memorizadas até o momento.
+     * Ao chamar este método o script é interrompido. 
      */
     function getMemos(){
         echo "<pre>";

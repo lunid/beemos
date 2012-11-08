@@ -88,7 +88,7 @@
            ){       
                if (strlen($value) == 0) return;
                
-               //Identifica qual a inclusÃ£o solicitada (js ou css):
+               //Identifica qual a inclusão solicitada (js ou css):
                //===============================================================
                $ext         = 'js';
                $tag         = 'INCLUDE_JS';

@@ -13,7 +13,7 @@
         public static function physicalPath($uri){
             $path = $uri;
             if (strlen($uri) > 0) {
-                $root           = $_SERVER['DOCUMENT_ROOT'];                
+                $root           = $_SERVER['DOCUMENT_ROOT'];
                 $rootFolder     = \LoadConfig::rootFolder();
                 $path           = $root.'/'.$rootFolder.'/'.$uri;
                 $path           = str_replace('//','/',$path);
@@ -43,6 +43,7 @@
                $root            = $_SERVER['DOCUMENT_ROOT'];
                $rootFolder      = \LoadConfig::rootFolder();               
                $physicalPath    = $root.'/'.$rootFolder.'/';
+               $physicalPath    = str_replace('//','/',$physicalPath);
                $path            = str_replace($physicalPath,'',$uri);               
            }
            $path = str_replace('//','/',$path);

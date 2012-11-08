@@ -7,7 +7,7 @@ RewriteEngine on
 
 ## Redefine as URLs de imagem, css e js:
 RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteRule (images|css|js)/(.*) /interbits/assets/$1/$2 [L,R=302]
+RewriteRule (images|css|js|plugins)/(.*) /interbits/assets/$1/$2 [L,R=302]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
 #RewriteCond %{SCRIPT_FILENAME} !-d
