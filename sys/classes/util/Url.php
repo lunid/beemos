@@ -4,21 +4,21 @@
         
         /**
          * Recebe um array associativo que será convertido em URL no formato
-         * modulo/controller/action/...
-         * 
+         * rootFolder/modulo/controller/action/...onde rootFolder é lido do arquivo config.xml.
+         *          
          * @param array $arrUrl Array associativo. 
          * Exemplo: 
          * O array('module'=>'admin','controller'=>'escolas','action'=>'home','id'=>11) retornará
-         * admin/escola/home/id/11
+         * /rootFolder/admin/escola/home/id/11
          * 
          * @return string 
          */                
-        public static function setUrl(array $arrUrl){   
+        public static function setUrl(array $arrOptions){   
             $url            = '/';
             $rootFolder     = \LoadConfig::rootFolder();
             if (strlen($rootFolder) > 0) $url .= $rootFolder.'/';
             
-            foreach($arrUrl as $key=>$value) {
+            foreach($arrOptions as $key=>$value) {
                 if (($key == 'module' || $key == 'controller' || $key == 'action')) {
                     if (strlen(trim($value)) > 0) $url .= $value.'/';
                 } else {
