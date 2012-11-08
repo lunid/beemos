@@ -8,7 +8,8 @@ $(document).ready(function(){
         datatype: "json",
         colNames:['COD', 'Escola', 'Status', ''],
         colModel:[
-                {name:'ID_ESCOLA', index:'ID_ESCOLA', width:25, align:'center', search: true},
+                //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'ID_ESCOLA', index:'ID_ESCOLA', width:25, align:'center', search: true, cellattr: site.formataGrid },
                 {name:'NOME', index:'NOME', search: true},
                 {name:'STATUS', index:'STATUS', width:50, align:'center', search: true, stype: 'select', searchoptions:{ value: "-1:Todas;1:Ativa;0:Inativa" }},
                 {name:'Turmas', index:'Turmas', width:30, align:'center', search: false, sortable: false}

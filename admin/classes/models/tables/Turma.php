@@ -37,12 +37,6 @@
                 $ret->status    = false;
                 $ret->msg       = "Falha no ORM ao listas turmas!";
                 
-                //Valida ID_ESCOLA
-                if((int)$this->ID_ESCOLA <= 0){
-                    $ret->msg = "ID_ESCOLA inválido ou nulo";
-                    return $ret;
-                }
-                
                 //Instância da table SPRO_TURMA
                 $tbTurma                = $this;
                 $tbTurma->alias         = "T";
@@ -64,8 +58,12 @@
                 $fieldMap = "ID_ESCOLA";
                 //Montando SQL do Inner Join
                 $this->innerJoinFrom($tbTurma, $tbEscola, $fieldMap);
-                //Montando where do SQL
-                $where = " T.ID_ESCOLA = " . $this->ID_ESCOLA;
+                                
+                //Valida ID_ESCOLA
+                if((int)$this->ID_ESCOLA > 0){
+                    //Montando where do SQL
+                    $where = " T.ID_ESCOLA = " . $this->ID_ESCOLA;
+                }
                 
                 if((int)$ID_CLIENTE > 0){
                     if($where != ""){

@@ -53,26 +53,20 @@
                     //Código da escola
                     $ID_ESCOLA = Request::get('ID_ESCOLA', 'NUMBER');
                     if($ID_ESCOLA > 0){
-                        $where = " ID_ESCOLA = " . $ID_ESCOLA;  
+                        $where = " AND ID_ESCOLA = " . $ID_ESCOLA;  
                     }
                     
                     //Nome da escola
                     $NOME = Request::get('NOME');
                     if($NOME != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                        $where .= " NOME LIKE '%" . mysql_escape_string($NOME) . "%'";  
+                        $where .= " AND NOME LIKE '%" . $NOME . "%'";  
                     }
                     
                     //Status da escola
                     $STATUS = Request::get('STATUS', 'NUMBER');
                     if($STATUS){
                         if($STATUS != -1){
-                            if($where != ""){
-                                $where .= " AND ";
-                            }
-                            $where .= " STATUS = " . $STATUS;  
+                            $where .= " AND STATUS = " . $STATUS;  
                         }
                     }
                 }
@@ -121,14 +115,17 @@
                         );
                         $i++;
                     }
+                }else{
+                    $ret                    = new stdClass();
+                    $ret->rows[0]['id']     = 0;
+                    $ret->rows[0]['cell']   = array($rs->msg);
                 }
 
                 echo json_encode($ret);
             }catch(Exception $e){
-                $ret            = new stdClass();
-                $ret->status    = false;
-                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
-                $ret->escolas   = array();
+                $ret                    = new stdClass();
+                $ret->rows[0]['id']     = 0;
+                $ret->rows[0]['cell']   = array('Erro: ' . $e->getMessage() . " <br /> Arquivo: " . $e->getFile() . " <br /> Linha: " . $e->getLine());
                 
                 echo json_encode($ret);
             }
@@ -251,7 +248,7 @@
             }
         }
         
-        public function actionCarregaTableTurmas(){
+        public function actionGridTurmas(){
             try{
                 //Opções da Tabela
                 $table = new Table();

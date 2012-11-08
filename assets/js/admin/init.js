@@ -31,6 +31,15 @@ Site.prototype = {
     fechaAguarde: function(){
         $( "#modal_aguarde" ).dialog("close");
     },
+    formataGrid: function(rowId, tv, rawObject, cm, rdata) {
+        var border = " border-left: 1px solid #D3D3D3 ";
+        
+        if(rowId == 0){
+            return " colspan='11' style='color:#FF0000;font-weight:bold;" + border + "'";
+        }else{
+            return " style='" + border + "'";
+        }
+    },
     verAvaliacao: function(ret, modalId){
         if(ret.status == true){
             $('#bt_submit').hide();
