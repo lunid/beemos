@@ -70,7 +70,8 @@ Form.prototype = {
     validate: function(form, ajax, callback, useSite){
         try{
             //oculta erros
-            $("#form_erros").css("display", "none");
+            $("#" + form.name + "_erros").css("display", "none");
+            
             var validate = true;
             
             $(form).find(".required").each(function(){
@@ -101,7 +102,7 @@ Form.prototype = {
             
             if(ajax && validate){
                 //Exibe modal de Aguarde
-                //site.aguarde();
+                site.aguarde();
                 
                 var dados   = $(form).serializeArray();
                 var modalId = this.modalId;
@@ -110,6 +111,9 @@ Form.prototype = {
                     form.action,
                     dados,
                     function(ret){
+                        //Fecha aguarde
+                        site.fechaAguarde();
+                        
                         if(ret.status){
                             $(dados).each(function(){
                                $("#" + this.name).val(""); 
@@ -126,8 +130,6 @@ Form.prototype = {
                                 fn(ret, modalId);
                             }
                         }else{
-                            $.fancybox.close(true);
-                            
                             if(modalId != ""){
                                 $("#msg_" + modalId).html(ret.msg);
                                 $("#modal_" + modalId).trigger('click');

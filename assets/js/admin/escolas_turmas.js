@@ -65,13 +65,16 @@ $(document).ready(function(){
 function atualizaGridEscolas(ret, modalId){
     $("#grid_escola").trigger("reloadGrid");
     
-    $.fancybox.close(true);
-                            
-    if(modalId != ""){
-        $("#msg_" + modalId).html(ret.msg);
-        $("#modal_" + modalId).trigger('click');
+    if(ret.status){
+        if(modalId != ""){
+            $("#msg_" + modalId).html(ret.msg);
+            $("#modal_" + modalId).trigger('click');
+        }else{
+            alert(ret.msg);
+        }
     }else{
-        alert(ret.msg);
+        $("#form_escola_erros_msg").html(ret.msg);
+        $("#form_escola_erros").css("display", "");
     }
 }
 
@@ -84,8 +87,8 @@ function verSalvarTurma(ret, modalId){
             alert(ret.msg);
         }
     }else{
-        $("#msg_erro").html(ret.msg);
-        $("#form_erros").css("display", "");
+        $("#form_turma_erros_msg").html(ret.msg);
+        $("#form_turma_erros").css("display", "");
     }
 }
 
@@ -93,6 +96,7 @@ function verSalvarTurma(ret, modalId){
  * Alterar o Status de ATIVO e INATIVO da Escola
  */
 function alteraStatusEscola(ID_ESCOLA, status){
+    //Abre aguarde
     site.aguarde();
 
     $.post(
@@ -103,7 +107,9 @@ function alteraStatusEscola(ID_ESCOLA, status){
             escolaStatus:       status
         },
         function(ret){
-            $.fancybox.close();
+            //Fecha aguarde
+            site.fechaAguarde();
+            
             if(!ret.status){
                 $("#msg_escolas_turmas").html(ret.msg);
                 $("#modal_escolas_turmas").trigger('click');
@@ -130,6 +136,7 @@ function editarTurmas(ID_TURMA){
     $("#turmaId").val(ID_TURMA);
     
     $("#btNovaTurma").css("display", "");
+    $("#form_turma_erros").css("display", "none");
 }
 
 /**
@@ -145,6 +152,7 @@ function novaTurma(){
     $("#turmaId").val("");
     
     $("#btNovaTurma").css("display", "none");
+    $("#form_turma_erros").css("display", "none");
 }
 
 /**

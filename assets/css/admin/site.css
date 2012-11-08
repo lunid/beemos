@@ -233,19 +233,18 @@
 
         .modal_aguarde{
             display:none;
-            width:140px;
         }
         
         .modal_aguarde .img{
             float:left;
-            padding:30px 10px 0 0;
+            padding:10px;
         }
         
         .modal_aguarde .txt{
             font-family:Verdana,Arial;
             font-size:16px;
             font-weight:bold;
-            padding-top:35px;
+            padding:15px;
         }
 
 /* fim container

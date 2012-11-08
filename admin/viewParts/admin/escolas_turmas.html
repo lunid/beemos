@@ -21,10 +21,12 @@
             </div>
             
             <form name="form_turma" id="form_turma" method="post" action="SalvarTurma" onSubmit="return formTurma.validate(this, true, 'verSalvarTurma');">
-                <div id="form_erros" class="ui-state-error ui-corner-all" style="display:none;">
-                    <span id="icone_erro" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
-                    <span id="msg_erro"></span>
+                <!-- Erros de validação no server -->
+                <div id="form_turma_erros" class="ui-state-error ui-corner-all" style="display:none;">
+                    <span id="form_turma_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
+                    <span id="form_turma_erros_msg"></span>
                 </div>
+                <!-- Erros de validação no server -->
                 <table style="width:100%;border-collapse:separate;border-spacing:0 7px;">
                 <tr>
                     <td style="font-size:14px;padding-bottom:2px;">
@@ -91,6 +93,12 @@
     <tr>
         <td style="width:100%;">
             <form name="form_escola" id="form_escola" method="post" action="salvarEscola" onSubmit="return form.validate(this, true, 'atualizaGridEscolas');">
+                <!-- Erros de validação no server -->
+                <div id="form_escola_erros" class="ui-state-error ui-corner-all" style="display:none;">
+                    <span id="form_escola_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
+                    <span id="form_escola_erros_msg"></span>
+                </div>
+                <!-- Erros de validação no server -->
                 <table style="width:100%;">
                 <tr>
                     <td style="width:100%;">
