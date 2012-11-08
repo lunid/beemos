@@ -114,7 +114,7 @@
                         $ret->rows[$i]['id']   = $row->ID_ESCOLA;
                         $ret->rows[$i]['cell'] = array(
                             $row->ID_ESCOLA,
-                            utf8_decode($row->NOME),
+                            $row->NOME,
                             "<input type='radio' name='status_{$row->ID_ESCOLA}' value='1' ".($row->STATUS == 1 ? "checked='checked'" : "")." onclick='javascript:alteraStatusEscola({$row->ID_ESCOLA}, this.value);' /> Ativa &nbsp; <input type='radio' name='status_{$row->ID_ESCOLA}' value='0' ".($row->STATUS == 0 ? "checked='checked'" : "")." onclick='javascript:alteraStatusEscola({$row->ID_ESCOLA}, this.value);' /> Inativa ",
                             "<input type='button' value='Turmas' onclick='javascript:turmas({$row->ID_ESCOLA}, 26436, \"{$row->NOME}\");' />"        
                         );
