@@ -51,5 +51,10 @@
                 $this->columns    = $columns;            
             }
         }
+        
+        public function setLayoutName($name){
+            //Informa o nome do arquivo phtml a ser usado na classe atual:
+            $this->setHtml($name);
+        }
     }
 ?>

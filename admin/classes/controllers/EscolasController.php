@@ -2,6 +2,7 @@
     use \admin\classes\controllers\AdminController;
     use \admin\classes\models\EscolasTurmasModel;
     use \sys\classes\util\Request;
+    use \sys\classes\html\Table;
     
     class Escolas extends AdminController {
         /**
@@ -248,6 +249,33 @@
                 
                 echo json_encode($ret);
             }
+        }
+        
+        public function actionCarregaTableTurmas(){
+            try{
+                //Opções da Tabela
+                $table = new Table();
+                
+                $table->setLayoutName("tableDistribuirTurma");
+                echo $table->render();
+            }catch(Exception $e){
+                $html = "<center>
+                            <table style='border-collapse:separate;border-spacing:10px;'>
+                                <tr>
+                                    <td style='text-align:left;font-family:Verdana, Arial;font-size:14px;'>
+                                        <center>
+                                            <strong style='color:#FF0000;'>Falha ao carregar Turmas!</strong>
+                                        </center>
+                                        <strong>Erro:</strong> {$e->getMessage()}<br />
+                                        <strong>Arquivo:</strong> {$e->getFile()}<br />
+                                        <strong>Linha:</strong> {$e->getLine()}<br />
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>";
+                                        
+                echo $html;
+            }  
         }
     }
 ?>

@@ -57,6 +57,21 @@ $(document).ready(function(){
     formTurma = new Form();
     formTurma.init('form_turma');
     formTurma.initModal('escolas_turmas');
+    
+    /** Carrega dados da Aba Distibuir Listas */
+    
+    //Carrega Turmas
+    $.post(
+        'carregaTableTurmas',
+        {
+            ID_ESCOLA: 0,
+            ID_CLIENTE: 0
+        },
+        function (ret){
+            $("#distribuirTurmasGrid").html(ret);
+        },
+        'html'
+    );
 });
 
 /**

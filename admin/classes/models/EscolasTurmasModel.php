@@ -230,6 +230,26 @@
             }
         }
         
+        /**
+         * Salva os dados de uma Turma, seja ela existente ou não
+         * 
+         * @param int $ID_TURMA
+         * @param int $ID_ESCOLA
+         * @param string $CLASSE
+         * @param char $ENSINO
+         * @param int $ANO
+         * @param char $PERIODO
+         * 
+         * @return stdClass
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int     $ret->id        - ID da Turma Inserida ou número de linhas afetadas <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function salvarTurma($ID_TURMA, $ID_ESCOLA, $CLASSE, $ENSINO, $ANO, $PERIODO){
             try{
                 //Objeto de retorno
