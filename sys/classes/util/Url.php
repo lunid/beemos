@@ -3,6 +3,32 @@
     class Url {
         
         /**
+         * Recebe um array associativo que será convertido em URL no formato
+         * rootFolder/modulo/controller/action/...onde rootFolder é lido do arquivo config.xml.
+         *          
+         * @param array $arrUrl Array associativo. 
+         * Exemplo: 
+         * O array('module'=>'admin','controller'=>'escolas','action'=>'home','id'=>11) retornará
+         * /rootFolder/admin/escola/home/id/11
+         * 
+         * @return string 
+         */                
+        public static function setUrl(array $arrOptions){   
+            $url            = '/';
+            $rootFolder     = \LoadConfig::rootFolder();
+            if (strlen($rootFolder) > 0) $url .= $rootFolder.'/';
+            
+            foreach($arrOptions as $key=>$value) {
+                if (($key == 'module' || $key == 'controller' || $key == 'action')) {
+                    if (strlen(trim($value)) > 0) $url .= $value.'/';
+                } else {
+                    $url .= $key.'/'.$value;                
+                }
+            }
+            return $url;
+        }
+        
+        /**
          * Retorna o caminho físico da URI informada.
          * 
          * Exemplo: c:/serverFolder/projectFolder/...
@@ -44,7 +70,6 @@
                $rootFolder      = \LoadConfig::rootFolder();               
                $physicalPath    = $root.'/'.$rootFolder.'/';
                $physicalPath    = str_replace('//','/',$physicalPath);
-
                $path            = str_replace($physicalPath,'',$uri);               
            }
            $path = str_replace('//','/',$path);
