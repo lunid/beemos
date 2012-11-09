@@ -2,7 +2,7 @@ $(document).ready(function(){
     //Habilitando componente de Abas
     $( "#abas" ).tabs({ active:0 });
     
-    //Inicializando o Grid
+    //Inicializando o Grid de Escolas (Aba Escolas & Turmas)
     $("#grid_escola").jqGrid({
         url: 'GridEscolas',
         datatype: "json",
@@ -61,18 +61,29 @@ $(document).ready(function(){
     
     /** Carrega dados da Aba Distibuir Listas */
     
-    //Carrega Turmas
-    $.post(
-        'carregaTableTurmas',
-        {
-            ID_ESCOLA: 0,
-            ID_CLIENTE: 0
-        },
-        function (ret){
-            $("#distribuirTurmasGrid").html(ret);
-        },
-        'html'
-    );
+    //Carrega Grid de Turmas (Aba Distribuir listas)
+    $("#grid_turmas").jqGrid({
+        url: 'actionGridTurmas',
+        datatype: "json",
+        colNames:['COD', 'Classe'],
+        colModel:[
+                //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'ID_TURMA', index:'ID_TURMA', width:25, align:'center', search: true, cellattr: site.formataGrid },
+                {name:'CLASSE', index:'CLASSE', search: true}
+        ],
+        rowNum:10,
+        rowList:[10,20,30],
+        pager: '#pg_turmas',
+        sortname: 'ID_TURMA',
+        viewrecords: true,
+        sortorder: "desc",
+        caption:"Turmas",
+        width: 750,
+        height: 'auto',
+        scrollOffset: 0
+    });
+                
+    $("#grid_turmas").filterToolbar();
 });
 
 /**
