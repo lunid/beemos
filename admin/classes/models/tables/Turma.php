@@ -30,7 +30,7 @@
          * 
          * @throws Exception
          */
-        public function listaTurmasEscolas($ID_CLIENTE = 0){
+        public function listaTurmasEscolas($ID_CLIENTE = 0, $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -65,12 +65,26 @@
                     $where = " T.ID_ESCOLA = " . $this->ID_ESCOLA;
                 }
                 
+                //Valida ID_CLIENTE
                 if((int)$ID_CLIENTE > 0){
                     if($where != ""){
                         $where .= " AND ";
                     }
                     
                     $where .= "E.ID_CLIENTE = " . $ID_CLIENTE;
+                }
+                
+                //Insere Ordenação e Paginação caso exista
+                if(is_array($arrPg)){
+                    //Ordenação
+                    if(isset($arrPg['campoOrdenacao'])){
+                        $this->setOrderBy("T" . $arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao']);
+                    }
+                    
+                    //Paginação
+                    if(isset($arrPg['inicio']) && isset($arrPg['limite'])){
+                        $this->setLimit((int)$arrPg['inicio'], (int)$arrPg['limite']);
+                    }
                 }
                 
                 $rs = $this->setJoin($where);
