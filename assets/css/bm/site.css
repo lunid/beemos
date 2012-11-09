@@ -1,18 +1,15 @@
-/**
- * "Yet Another Multicolumn Layout" - (X)HTML/CSS framework
- * (pt) stylesheet principal
- *
- * @creator       YAML Builder V1.2.1 (http://builder.yaml.de)
- * @file          site.css
- */
+/* Início
+================================================== */
 
-/* import core styles | Basis-Stylesheets einbinden */
-@import url(../yaml/core/base.css);
+*{margin:0;padding:0}
 
-/* import screen layout | Screen-Layout einbinden */
-@import url(../yaml/navigation/nav_shinybuttons.css);
-@import url(screen/basemod.css);
-@import url(screen/content.css);
 
-/* import print layout | Druck-Layout einbinden */
-@import url(../yaml/print/print_draft.css);
+body{
+    width:auto;
+    height:auto;
+    margin:0px;
+    background-image:url("../../images/bm/bg_gray.jpg");   
+    background-repeat:repeat-y;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+}

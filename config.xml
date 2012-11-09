@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>
-        <config id='modules'>app,admin</config>
+        <config id='modules'>app,admin,bm</config>
         <config id='langs'>br,en</config>
-        <config id='defaultModule'>admin</config>  
+        <config id='defaultModule'>bm</config>  
         <config id='defaultLang'>br</config>
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>

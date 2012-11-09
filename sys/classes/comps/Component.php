@@ -11,8 +11,9 @@
             
             $ext         = strtolower($ext);
             $strInc      = (string)$strInc;            
-
-            if (($ext == 'js' || $ext == 'css') && strlen($strInc) > 0) {            
+            if (strlen($strInc) == 0) return TRUE;
+            
+            if (($ext == 'js' || $ext == 'css')) {            
                 //Comprime a string:
                 $strIncMin      = '';
                 $pathTmp        = $root.'tmp/';
@@ -60,7 +61,7 @@
                 }
                 return $strIncMin;
             } else {
-                $msgErr = 'Component->yuiCompressor(): yuiCompressor não pôde ser executado porque o parâmetro $ext não foi informado corretamente.';
+                $msgErr = 'Component->yuiCompressor(): yuiCompressor não pôde ser executado porque o parâmetro $ext não foi informado corretamente. Valor informado: '.$ext;
                 throw new \Exception( $msgErr );         
             }
             return TRUE;

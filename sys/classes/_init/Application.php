@@ -86,19 +86,21 @@
                                     
             $pathParts      = explode('/',$params);            
             $controller     = 'index';
-            $language       = LoadConfig::defaultLang();
+            $language       = LoadConfig::defaultLang();            
             $action         = self::getPartUrl(@$pathParts[1]);            
             
             if (is_array($pathParts) && count($pathParts) > 0) { 
                 //A URL pode conter partes que representam o módulo, controller e action
-                $lang           = LoadConfig::lang();//Idiomas aceitos pelo sistema
+                $lang           = LoadConfig::langs();//Idiomas aceitos pelo sistema
                 $modules        = LoadConfig::modules();
                 $arrLangs       = explode(',',$lang); 
                 $arrModules     = explode(',',$modules);
                 $controllerPart = $pathParts[0];
                 
                 //Verifica se a primeira parte da URL é um idioma
-                $keyLang        = array_search($controllerPart,$arrLangs);
+                $keyLang        = FALSE;
+                if (strlen($arrLangs[0]) > 0) $keyLang = array_search($controllerPart,$arrLangs);
+
                 if ($keyLang !== FALSE) {
                     //O primeiro parâmetro refere-se a um idioma específico
                     $language   = $controllerPart;
@@ -145,7 +147,7 @@
         }
         
         private static function setLanguage($language){
-            $_SESSION[self::$sessionLangName] = $language;
+            $_SESSION[self::$sessionLangName] = trim($language);
         }
         
         static function getLanguage(){

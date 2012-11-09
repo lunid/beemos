@@ -21,7 +21,7 @@
                 $lang               = \Application::getLanguage();
                 $module             = \Application::getModule();
                 $folderViews        = \LoadConfig::folderViews();      
-                                
+                
                 if (strlen($lang) > 0) $lang = $lang.'/';
                 $viewFile = $module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;    
                 
