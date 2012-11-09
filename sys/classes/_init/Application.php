@@ -98,7 +98,7 @@
                 $controllerPart = $pathParts[0];
                 
                 //Verifica se a primeira parte da URL é um idioma
-                $keyLang        = FALSE;
+                $keyLang        = FALSE; 
                 if (strlen($arrLangs[0]) > 0) $keyLang = array_search($controllerPart,$arrLangs);
 
                 if ($keyLang !== FALSE) {
