@@ -250,28 +250,91 @@
         
         public function actionGridTurmas(){
             try{
-                //Opções da Tabela
-                $table = new Table();
+                //Obejto de retorno
+                $ret = new stdClass();
                 
-                $table->setLayoutName("tableDistribuirTurma");
-                echo $table->render();
+                //Model de Escolas e Turmas
+                $mdEscolasTurmas = new EscolasTurmasModel();
+                
+                //Verifica filtros
+                $where  = "";
+                $search = Request::get('_search'); 
+                if($search == true){
+                    //Código da escola
+                    $ID_ESCOLA = Request::get('ID_ESCOLA', 'NUMBER');
+                    if($ID_ESCOLA > 0){
+                        $where = " AND ID_ESCOLA = " . $ID_ESCOLA;  
+                    }
+                    
+                    //Nome da escola
+                    $NOME = Request::get('NOME');
+                    if($NOME != ''){
+                        $where .= " AND NOME LIKE '%" . $NOME . "%'";  
+                    }
+                    
+                    //Status da escola
+                    $STATUS = Request::get('STATUS', 'NUMBER');
+                    if($STATUS){
+                        if($STATUS != -1){
+                            $where .= " AND STATUS = " . $STATUS;  
+                        }
+                    }
+                }
+
+                //Lista todas escolas encontradas
+                $rs = $mdEscolasTurmas->listaTurmasGrid(26436);
+                
+                if($rs->status){
+                    $page           = Request::get('page', 'NUMBER'); 
+                    $limit          = Request::get('rows', 'NUMBER'); 
+                    $orderField     = Request::get('sidx'); 
+                    $orderType      = Request::get('sord'); 
+
+                    if(!$orderField) $orderField = 1;
+
+                    //Total de registros
+                    $count          = sizeof($rs->turmas);
+                    $total_pages    = $count > 0 ? ceil($count/$limit) : 0;
+                    $page           = $page > $total_pages ? $total_pages : $page;
+                    $start          = $limit * $page - $limit;
+                    
+                    //Efetua select com ordenação e paginação
+                    $rs = $mdEscolasTurmas->listaTurmasGrid(
+                            26436, 
+                            array(
+                                "campoOrdenacao"    => $orderField, 
+                                "tipoOrdenacao"     => $orderType, 
+                                "inicio"            => $start, 
+                                "limite"            => $limit
+                            )
+                    );
+                    
+                    $ret->page      = $page;
+                    $ret->total     = $total_pages;
+                    $ret->records   = $count;
+
+                    $i=0;
+                    foreach($rs->turmas as $row) {
+                        $ret->rows[$i]['id']   = $row->ID_TURMA;
+                        $ret->rows[$i]['cell'] = array(
+                            $row->ID_TURMA,
+                            $row->CLASSE
+                        );
+                        $i++;
+                    }
+                }else{
+                    $ret                    = new stdClass();
+                    $ret->rows[0]['id']     = 0;
+                    $ret->rows[0]['cell']   = array($rs->msg);
+                }
+
+                echo json_encode($ret);
             }catch(Exception $e){
-                $html = "<center>
-                            <table style='border-collapse:separate;border-spacing:10px;'>
-                                <tr>
-                                    <td style='text-align:left;font-family:Verdana, Arial;font-size:14px;'>
-                                        <center>
-                                            <strong style='color:#FF0000;'>Falha ao carregar Turmas!</strong>
-                                        </center>
-                                        <strong>Erro:</strong> {$e->getMessage()}<br />
-                                        <strong>Arquivo:</strong> {$e->getFile()}<br />
-                                        <strong>Linha:</strong> {$e->getLine()}<br />
-                                    </td>
-                                </tr>
-                            </table>
-                        </center>";
-                                        
-                echo $html;
+                $ret                    = new stdClass();
+                $ret->rows[0]['id']     = 0;
+                $ret->rows[0]['cell']   = array('Erro: ' . $e->getMessage() . " <br /> Arquivo: " . $e->getFile() . " <br /> Linha: " . $e->getLine());
+                
+                echo json_encode($ret);
             }  
         }
     }

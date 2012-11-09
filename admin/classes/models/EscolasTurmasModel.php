@@ -73,6 +73,32 @@
             }
         }
         
+        public function listaTurmasCliente($ID_CLIENTE, $where, $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao listar Turmas do Cliente!";
+                $ret->escolas   = array();
+                
+                //Valida se existe ID_CLIENTE
+                if(!$ID_CLIENTE || $ID_CLIENTE <= 0){
+                    $ret->msg = "ID_CLIENTE não foi inicializado!";
+                    return $ret;
+                }
+                
+                //Objeto de controle da table SPRO_ESCOLAS
+                $tbTurma    = new Turma();
+                //Busca as turmas de acordo com os parâmetros enviados
+                $rs         = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $arrPg);
+                
+                //Retorna resultado da busca
+                return $rs;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
         /**
          * Salva uma nova escola no banco de dados, validando se ela já existe para o cliente.
          * 
@@ -213,7 +239,7 @@
          * @return type
          * @throws \admin\classes\models\Exception
          */
-        public function listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA){
+        public function listaTurmasGrid($ID_CLIENTE, $ID_ESCOLA){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
