@@ -16,7 +16,10 @@
         public static function setUrl(array $arrOptions){   
             $url            = '/';
             $rootFolder     = \LoadConfig::rootFolder();
+            $lang           = \Application::getLanguage();            
+            
             if (strlen($rootFolder) > 0) $url .= $rootFolder.'/';
+            if (strlen($lang) > 0) $url .= $lang.'/';
             
             foreach($arrOptions as $key=>$value) {
                 if (($key == 'module' || $key == 'controller' || $key == 'action')) {

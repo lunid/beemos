@@ -20,6 +20,7 @@
          * carrega as classes solicitadas na aplicação a partir de seu namespace.
         */   
         
+        private static $sessionLangName                 =  'GLB_LANG';
         private static $sessionModuleName               =  'GLB_MODULE';
         private static $sessionControllerName           =  'GLB_CONTROLLER';
         private static $sessionActionName               = 'GLB_ACTION';       
@@ -85,13 +86,26 @@
                                     
             $pathParts      = explode('/',$params);            
             $controller     = 'index';
+            $language       = LoadConfig::defaultLang();
             $action         = self::getPartUrl(@$pathParts[1]);            
             
             if (is_array($pathParts) && count($pathParts) > 0) { 
                 //A URL pode conter partes que representam o módulo, controller e action
+                $lang           = LoadConfig::lang();//Idiomas aceitos pelo sistema
                 $modules        = LoadConfig::modules();
+                $arrLangs       = explode(',',$lang); 
                 $arrModules     = explode(',',$modules);
                 $controllerPart = $pathParts[0];
+                
+                //Verifica se a primeira parte da URL é um idioma
+                $keyLang        = array_search($controllerPart,$arrLangs);
+                if ($keyLang !== FALSE) {
+                    //O primeiro parâmetro refere-se a um idioma específico
+                    $language   = $controllerPart;
+                    array_shift($pathParts); 
+                    $controllerPart = (isset($pathParts[0]))?$pathParts[0]:'';
+                }
+                
                 $keyModule      = array_search($controllerPart,$arrModules);
                 if ($keyModule !== FALSE) {
                     //O primeiro parâmetro é um módulo
@@ -104,8 +118,9 @@
                 }
             }   
             
-            //Guarda o module, controller e action em variáveis de sessão.
+            //Guarda o idioma(language), module, controller e action em variáveis de sessão.
             //Necessário para criar as URLs de navegação do site.            
+            self::setLanguage($language);  
             self::setModule($module);       
             self::setController($controller);
             self::setAction($action);  
@@ -127,6 +142,14 @@
         
         static function getAbsolutePathIncludes(){
             return (isset($_SESSION[self::$sessionAbsolutePathIncludes]))?$_SESSION[self::$sessionAbsolutePathIncludes]:'';
+        }
+        
+        private static function setLanguage($language){
+            $_SESSION[self::$sessionLangName] = $language;
+        }
+        
+        static function getLanguage(){
+            return self::getVarApplication(self::$sessionLangName);                  
         }
         
         private static function setModule($module){

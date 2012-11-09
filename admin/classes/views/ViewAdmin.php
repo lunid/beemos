@@ -12,7 +12,8 @@
             try {
                 $objMenuVert    = new MenuVertical();
                 $objMenuVert->setItemSel($layoutName);
-                   
+                $lang           = \Application::getLanguage();            
+                
                 //MenuVertical->addItem(cls(class Css),link(link do item),text)       
                 $objMenuVert->addItem('index',      $this->setModuleUrl('home'),      'Home');
                 $objMenuVert->addItem('usuario',    $this->setModuleUrl('usuarios'),  'Usuários');

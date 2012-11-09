@@ -52,11 +52,13 @@
             $idFolderViews      = 'folderViews';   
             $idAssetsFolderRoot = 'assetsFolderRoot';
             $idFolderPlugins    = 'folderPlugins';
+            $idLangs            = 'langs';
+            $idDefaultLang      = 'defaultLang';
             
             if ($numItens > 0) {
                 //Configurações da aplicação:
                 $nodesApp               = $objXml->app->config;
-                if (is_object($nodesApp)) {
+                if (is_object($nodesApp)) {                    
                     $cfgModules             = self::valueForAttrib($nodesApp,'id',$idModules);   
                     $cfgRootFolder          = self::valueForAttrib($nodesApp,'id',$idRootFolder);   
                     $cfgBaseUrlHttp         = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttp);   
@@ -64,6 +66,8 @@
                     $cfgFolderSys           = self::valueForAttrib($nodesApp,'id',$idFolderSys);   
                     $cfgFolderViews         = self::valueForAttrib($nodesApp,'id',$idFolderViews);   
                     $cfgDefaultModule       = self::valueForAttrib($nodesApp,'id',$idDefaultModule);                
+                    $cfgLangs               = self::valueForAttrib($nodesApp,'id',$idLangs);  
+                    $cfgDefaultLang         = self::valueForAttrib($nodesApp,'id',$idDefaultLang); 
 
                     $this->setGlobalVar($idModules,$cfgModules);
                     $this->setGlobalVar($idBaseUrlHttp,$cfgBaseUrlHttp);
@@ -72,6 +76,8 @@
                     $this->setGlobalVar($idFolderViews,$cfgFolderViews);
                     $this->setGlobalVar($idRootFolder,$cfgRootFolder);
                     $this->setGlobalVar($idDefaultModule,$cfgDefaultModule);
+                    $this->setGlobalVar($idLangs,$cfgLangs);
+                    $this->setGlobalVar($idDefaultLang,$cfgDefaultLang);
                 }
                 
                 //Configurações de módulo:

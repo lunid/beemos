@@ -18,9 +18,12 @@
                 $keyHtm             = strpos($pathViewHtml,'.htm');
                 $keyHtml            = strpos($pathViewHtml,'.html');
                 $extHtml            = ($keyHtm !== false && $keyHtml !== false)?'':'.html';//Coloca a extensão html caso não tenha sido informada
+                $lang               = \Application::getLanguage();
                 $module             = \Application::getModule();
-                $folderViews        = \LoadConfig::folderViews();                
-                $viewFile           = $module.'/'.$folderViews.'/'.$pathViewHtml.$extHtml;    
+                $folderViews        = \LoadConfig::folderViews();      
+                                
+                if (strlen($lang) > 0) $lang = $lang.'/';
+                $viewFile = $module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;    
                 
                 try {                    
                     if (File::exists($viewFile)){
