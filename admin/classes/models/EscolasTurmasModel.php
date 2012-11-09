@@ -1,7 +1,6 @@
 <?php
     namespace admin\classes\models;
     use \sys\classes\mvc\Model;        
-    use \sys\classes\util\Date;
     use \admin\classes\models\tables\Escola;
     use \admin\classes\models\tables\Turma;
     
@@ -73,7 +72,24 @@
             }
         }
         
-        public function listaTurmasCliente($ID_CLIENTE, $where, $arrPg = null){
+        /**
+         * Lista as Turmas de um determinado cliente cpom filtros, ordenação e paginação
+         * 
+         * @param int $ID_CLIENTE
+         * @param int $ID_ESCOLA
+         * @param string $where Filtros de pesquisa
+         * @param string $arrPg Campos de paginação e ordenação do select
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->turmas    - Armazena o array de turmas encontradas no Banco   <br />
+         * </code>
+         * @throws Exception
+         */
+        public function listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA = 0, $where = "", $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -88,9 +104,10 @@
                 }
                 
                 //Objeto de controle da table SPRO_ESCOLAS
-                $tbTurma    = new Turma();
+                $tbTurma            = new Turma();
+                $tbTurma->ID_ESCOLA = $ID_ESCOLA;
                 //Busca as turmas de acordo com os parâmetros enviados
-                $rs         = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $arrPg);
+                $rs = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $where, $arrPg);
                 
                 //Retorna resultado da busca
                 return $rs;
@@ -232,31 +249,6 @@
         }
         
         /**
-         * Listas as Turmas de um Cliente filtrando por Escola
-         * 
-         * @param int $ID_CLIENTE
-         * @param int $ID_ESCOLA
-         * @return type
-         * @throws \admin\classes\models\Exception
-         */
-        public function listaTurmasGrid($ID_CLIENTE, $ID_ESCOLA){
-            try{
-                //Objeto de retorno
-                $ret            = new \stdClass();
-                $ret->status    = false;
-                $ret->msg       = "Falha ao listar turmas!";
-                
-                $tbTurma            = new Turma();
-                $tbTurma->ID_ESCOLA = $ID_ESCOLA;
-                $ret                = $tbTurma->listaTurmasEscolas($ID_CLIENTE);
-                
-                return $ret;
-            }catch(Exception $e){
-                throw $e;
-            }
-        }
-        
-        /**
          * Salva os dados de uma Turma, seja ela existente ou não
          * 
          * @param int $ID_TURMA
@@ -325,6 +317,57 @@
                 $ret->msg       = "Turma salva com sucesso!";
                 $ret->id        = $id;
                 return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Traduz a sigla do Ensino para o decritivo completo dele
+         * 
+         * @param string $ensino
+         * @return string Descrição do Ensino
+         * @throws Exception
+         */
+        static function traduzEnsino($ensino){
+            try{
+                switch($ensino){
+                    case 'M': 
+                        return 'Médio';
+                        break;
+                    case 'F': 
+                        return 'Fundamental';
+                        break;
+                    default: 
+                        return $ensino;
+                }
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Traduz a sigla do Período para o descritivo completo dele 
+         * 
+         * @param type $periodo
+         * @return string Descrição do período
+         * @throws Exception
+         */
+        static function traduzPeriodo($periodo){
+            try{
+                switch($periodo){
+                    case 'M': 
+                        return 'Manhã';
+                        break;
+                    case 'T': 
+                        return 'Tarde';
+                        break;
+                    case 'N': 
+                        return 'Noite';
+                        break;
+                    default: 
+                        return $periodo;
+                }
             }catch(Exception $e){
                 throw $e;
             }

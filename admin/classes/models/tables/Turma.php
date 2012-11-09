@@ -30,7 +30,7 @@
          * 
          * @throws Exception
          */
-        public function listaTurmasEscolas($ID_CLIENTE = 0, $arrPg = null){
+        public function listaTurmasEscolas($ID_CLIENTE = 0, $where = "", $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -52,15 +52,19 @@
                 //Instância da table SPRO_ESCOLA
                 $tbEscola              = new Escola();
                 $tbEscola->alias       = "E";
-                $tbEscola->fieldsJoin  = "NOME";
+                $tbEscola->fieldsJoin  = "NOME AS ESCOLA";
                 
                 //Campo de união do JOIN
                 $fieldMap = "ID_ESCOLA";
                 //Montando SQL do Inner Join
                 $this->innerJoinFrom($tbTurma, $tbEscola, $fieldMap);
-                                
+                
                 //Valida ID_ESCOLA
                 if((int)$this->ID_ESCOLA > 0){
+                    if($where != ""){
+                        $where .= " AND ";
+                    }
+                    
                     //Montando where do SQL
                     $where = " T.ID_ESCOLA = " . $this->ID_ESCOLA;
                 }
@@ -78,7 +82,7 @@
                 if(is_array($arrPg)){
                     //Ordenação
                     if(isset($arrPg['campoOrdenacao'])){
-                        $this->setOrderBy("T" . $arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao']);
+                        $this->setOrderBy(($arrPg['campoOrdenacao'] != 'ESCOLA' ? "T" : "") . $arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao']);
                     }
                     
                     //Paginação

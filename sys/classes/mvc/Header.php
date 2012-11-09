@@ -407,9 +407,9 @@ class Header {
         if (strlen($file) > 0){                         
             $pathFile       = \Url::relativeUrl($file);
             if ($cssJsExtension == self::EXT_JS) {
-                $inc = "<script type='text/javascript' src='".$pathFile."'></script>".chr(13);
+                $inc = "<script type='text/javascript' src='/interbits/".$pathFile."'></script>".chr(13);
             } elseif ($cssJsExtension == self::EXT_CSS) {               
-                $inc = "<link rel='stylesheet' href='".$pathFile."' type='text/css' />".chr(13);
+                $inc = "<link rel='stylesheet' href='/interbits/".$pathFile."' type='text/css' />".chr(13);
             }
         }            
         return $inc;

@@ -1026,7 +1026,7 @@ abstract class ORM {
             $this->arrObjJoin   = array();
             $this->arrObjJoin[] = $objTableA;
             $this->arrObjJoin[] = $objTableB;    
-            $fieldsMap          = "{$aliasA}.{$fieldMap} = {$aliasB}.{$fieldMap}";
+                        
             if (is_array($fieldMap)){
                 //O JOIN deve ser feito entre dois campos ou mais (Ex: a.FIELD1 = b.FIELD1 AND a.FIELD2 = b.FIELD2...)
                 $arrFieldsMap = array(); //Guarda o mapeamento dos campos entre as duas tabelas.
@@ -1044,7 +1044,10 @@ abstract class ORM {
                     $arrFieldsMap[] = $fieldMapItem;
                 }
                 $fieldsMap = join($arrFieldsMap,' AND ');
+            }else{
+                $fieldsMap = "{$aliasA}.{$fieldMap} = {$aliasB}.{$fieldMap}";
             }
+            
             $this->joinWhere    = "({$tableA} AS {$aliasA} {$type} JOIN {$tableB} AS {$aliasB} ON {$fieldsMap})";              
         } else {
             //Um ou mais parâmetros obrigatórios inválidos ou não informados.

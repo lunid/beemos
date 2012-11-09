@@ -63,20 +63,24 @@ $(document).ready(function(){
     
     //Carrega Grid de Turmas (Aba Distribuir listas)
     $("#grid_turmas").jqGrid({
-        url: 'actionGridTurmas',
+        url: 'GridTurmas',
         datatype: "json",
-        colNames:['COD', 'Classe'],
+        colNames:['COD', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
         colModel:[
                 //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
-                {name:'ID_TURMA', index:'ID_TURMA', width:25, align:'center', search: true, cellattr: site.formataGrid },
-                {name:'CLASSE', index:'CLASSE', search: true}
+                {name:'ID_TURMA', index:'ID_TURMA', width:15, align:'center', search: true, cellattr: site.formataGrid },
+                {name:'CLASSE', index:'CLASSE', width:40, search: true},
+                {name:'ENSINO', index:'ENSINO', width:30, search: true, stype: 'select', searchoptions:{ value: "T:Todos;F:Fundamental;M:Médio" }},
+                {name:'ANO', index:'ANO', width:25, search: true, align:'center', stype: 'select', searchoptions:{ value: "T:Todos;1:1;2:2;3:3;4:4" }},
+                {name:'PERIODO', index:'PERIODO', width:25, search: true, stype: 'select', searchoptions:{ value: "TO:Todos;M:Manhã;T:Tarde;N:Noite" }},
+                {name:'ESCOLA', index:'ESCOLA', search: true}
         ],
         rowNum:10,
         rowList:[10,20,30],
         pager: '#pg_turmas',
-        sortname: 'ID_TURMA',
+        sortname: 'ESCOLA',
         viewrecords: true,
-        sortorder: "desc",
+        sortorder: "ASC",
         caption:"Turmas",
         width: 750,
         height: 'auto',
@@ -84,6 +88,34 @@ $(document).ready(function(){
     });
                 
     $("#grid_turmas").filterToolbar();
+    
+    //Carrega Grid de Listas (Aba Distribuir listas)
+    $("#grid_listas").jqGrid({
+        url: 'GridListas',
+        datatype: "json",
+        colNames:['COD', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
+        colModel:[
+                //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'ID_TURMA', index:'ID_TURMA', width:15, align:'center', search: true, cellattr: site.formataGrid },
+                {name:'CLASSE', index:'CLASSE', width:40, search: true},
+                {name:'ENSINO', index:'ENSINO', width:30, search: true, stype: 'select', searchoptions:{ value: "T:Todos;F:Fundamental;M:Médio" }},
+                {name:'ANO', index:'ANO', width:25, search: true, align:'center', stype: 'select', searchoptions:{ value: "T:Todos;1:1;2:2;3:3;4:4" }},
+                {name:'PERIODO', index:'PERIODO', width:25, search: true, stype: 'select', searchoptions:{ value: "TO:Todos;M:Manhã;T:Tarde;N:Noite" }},
+                {name:'ESCOLA', index:'ESCOLA', search: true}
+        ],
+        rowNum:10,
+        rowList:[10,20,30],
+        pager: '#pg_listas',
+        sortname: 'ESCOLA',
+        viewrecords: true,
+        sortorder: "ASC",
+        caption:"Listas de Exercícios",
+        width: 750,
+        height: 'auto',
+        scrollOffset: 0
+    });
+                
+    $("#grid_listas").filterToolbar();
 });
 
 /**
