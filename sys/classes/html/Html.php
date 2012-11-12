@@ -2,7 +2,7 @@
 
     namespace sys\classes\html;
     
-    abstract class Html {
+    abstract class Html extends \sys\classes\util\Xml{
         protected $arrConfigParam   = array('id','name','onchange','onclick','onblur','css','cls','disabled');
         protected $params           = array();
         private $folderHtml         = 'sys/phtml';

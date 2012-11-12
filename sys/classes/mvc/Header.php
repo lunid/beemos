@@ -146,7 +146,7 @@ class Header {
             $file = $extension.'/'.$file;//Não é PLUGIN          	
         }
                       
-        $file       = 'assets/'.$file.'.'.$extension;           
+        $file       = \LoadConfig::assetsFolderRoot().'/'.$file.'.'.$extension;           
         
         if (file_exists($file)){                        
             $this->arrMemoIncludeJsCss[$ext][]  = $file;                                           
@@ -404,8 +404,10 @@ class Header {
     private function setTag($file,$ext){       
         $inc                = '';        
         $cssJsExtension     = $this->getExtFile($ext);//Converte cssInc para css e jsInc para js, se necessário.                        
-        if (strlen($file) > 0){                         
-            $pathFile       = \Url::relativeUrl($file);
+        if (strlen($file) > 0){                        
+            $rootFolder     = \LoadConfig::rootFolder();
+            $pathFile       = '/'.$rootFolder.'/'.\Url::relativeUrl($file);       
+            
             if ($cssJsExtension == self::EXT_JS) {
                 $inc = "<script type='text/javascript' src='".$pathFile."'></script>".chr(13);
             } elseif ($cssJsExtension == self::EXT_CSS) {               
