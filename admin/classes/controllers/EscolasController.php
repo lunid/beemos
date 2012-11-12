@@ -1,6 +1,7 @@
 <?php
     use \admin\classes\controllers\AdminController;
     use \admin\classes\models\EscolasTurmasModel;
+    use \admin\classes\models\ListasModel;
     use \sys\classes\util\Request;
     use \sys\classes\html\Table;
     
@@ -248,6 +249,9 @@
             }
         }
         
+        /**
+         * Monta o jSon para criação do Grid de Turmas
+         */
         public function actionGridTurmas(){
             try{
                 //Obejto de retorno
@@ -260,29 +264,65 @@
                 $where  = "";
                 $search = Request::get('_search'); 
                 if($search == true){
-                    //Código da escola
-                    $ID_ESCOLA = Request::get('ID_ESCOLA', 'NUMBER');
-                    if($ID_ESCOLA > 0){
-                        $where = " AND ID_ESCOLA = " . $ID_ESCOLA;  
+                    //Filtro de ensino
+                    $ENSINO = Request::get('ENSINO');
+                    if($ENSINO != 'T' && $ENSINO != ''){
+                        $where = " T.ENSINO = '" . $ENSINO . "'";  
                     }
                     
-                    //Nome da escola
-                    $NOME = Request::get('NOME');
-                    if($NOME != ''){
-                        $where .= " AND NOME LIKE '%" . $NOME . "%'";  
-                    }
-                    
-                    //Status da escola
-                    $STATUS = Request::get('STATUS', 'NUMBER');
-                    if($STATUS){
-                        if($STATUS != -1){
-                            $where .= " AND STATUS = " . $STATUS;  
+                    //Filtro de Ano
+                    $ANO = Request::get('ANO');
+                    if($ANO != 'T' && $ANO != ''){
+                        if($where != ""){
+                            $where .= " AND ";
                         }
+                        
+                        $where .= " T.ANO = " . $ANO;  
+                    }
+                    
+                    //Filtro de Periodo
+                    $PERIODO = Request::get('PERIODO');
+                    if($PERIODO != 'TO' && $PERIODO != ''){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " T.PERIODO = '" . $PERIODO . "'";  
+                    }
+                    
+                    //Filtro de Escola
+                    $ESCOLA = Request::get('ESCOLA');
+                    if($ESCOLA != ''){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " E.NOME LIKE '%" . $ESCOLA . "%'";  
+                    }
+                    
+                    //Filtro de classe
+                    $CLASSE = Request::get('CLASSE');
+                    if($CLASSE != ''){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " T.CLASSE LIKE '%" . $CLASSE . "%'";  
+                    }
+                    
+                    //Filtro de Turma
+                    $ID_TURMA = Request::get('ID_TURMA', 'NUMBER');
+                    if($ID_TURMA > 0){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " T.ID_TURMA = " . $ID_TURMA;  
                     }
                 }
 
                 //Lista todas escolas encontradas
-                $rs = $mdEscolasTurmas->listaTurmasGrid(26436);
+                $rs = $mdEscolasTurmas->listaTurmasCliente(26436, 0, $where);
                 
                 if($rs->status){
                     $page           = Request::get('page', 'NUMBER'); 
@@ -299,8 +339,10 @@
                     $start          = $limit * $page - $limit;
                     
                     //Efetua select com ordenação e paginação
-                    $rs = $mdEscolasTurmas->listaTurmasGrid(
-                            26436, 
+                    $rs = $mdEscolasTurmas->listaTurmasCliente(
+                            26436,
+                            0,
+                            $where,
                             array(
                                 "campoOrdenacao"    => $orderField, 
                                 "tipoOrdenacao"     => $orderType, 
@@ -315,10 +357,146 @@
 
                     $i=0;
                     foreach($rs->turmas as $row) {
-                        $ret->rows[$i]['id']   = $row->ID_TURMA;
+                        $ret->rows[$i]['id']   = $row['ID_TURMA'];
                         $ret->rows[$i]['cell'] = array(
-                            $row->ID_TURMA,
-                            $row->CLASSE
+                            $row['ID_TURMA'],
+                            $row['CLASSE'],
+                            EscolasTurmasModel::traduzEnsino($row['ENSINO']),
+                            $row['ANO'],
+                            EscolasTurmasModel::traduzPeriodo($row['PERIODO']),
+                            $row['ESCOLA']
+                        );
+                        $i++;
+                    }
+                }else{
+                    $ret                    = new stdClass();
+                    $ret->rows[0]['id']     = 0;
+                    $ret->rows[0]['cell']   = array($rs->msg);
+                }
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret                    = new stdClass();
+                $ret->rows[0]['id']     = 0;
+                $ret->rows[0]['cell']   = array('Erro: ' . $e->getMessage() . " <br /> Arquivo: " . $e->getFile() . " <br /> Linha: " . $e->getLine());
+                
+                echo json_encode($ret);
+            }  
+        }
+        
+        public function actionGridListas(){
+            try{
+                //Obejto de retorno
+                $ret = new stdClass();
+                
+                //Model de Listas de Exercícios
+                $mdListas = new ListasModel();
+                
+                //Verifica filtros
+                $where  = "";
+                $search = Request::get('_search'); 
+                if($search == true){
+                    //Filtro de ensino
+                    $ENSINO = Request::get('ENSINO');
+                    if($ENSINO != 'T' && $ENSINO != ''){
+                        $where = " T.ENSINO = '" . $ENSINO . "'";  
+                    }
+                    
+                    //Filtro de Ano
+                    $ANO = Request::get('ANO');
+                    if($ANO != 'T' && $ANO != ''){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                        
+                        $where .= " T.ANO = " . $ANO;  
+                    }
+                    
+                    //Filtro de Periodo
+                    $PERIODO = Request::get('PERIODO');
+                    if($PERIODO != 'TO' && $PERIODO != ''){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " T.PERIODO = '" . $PERIODO . "'";  
+                    }
+                    
+                    //Filtro de Escola
+                    $ESCOLA = Request::get('ESCOLA');
+                    if($ESCOLA != ''){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " E.NOME LIKE '%" . $ESCOLA . "%'";  
+                    }
+                    
+                    //Filtro de classe
+                    $CLASSE = Request::get('CLASSE');
+                    if($CLASSE != ''){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " T.CLASSE LIKE '%" . $CLASSE . "%'";  
+                    }
+                    
+                    //Filtro de Turma
+                    $ID_TURMA = Request::get('ID_TURMA', 'NUMBER');
+                    if($ID_TURMA > 0){
+                        if($where != ""){
+                            $where .= " AND ";
+                        }
+                    
+                        $where .= " T.ID_TURMA = " . $ID_TURMA;  
+                    }
+                }
+
+                //Carrega todas listas de um cliente + escola
+                $rs = $mdListas->carregaListasCliente(26436, 0);
+                
+                if($rs->status){
+                    $page           = Request::get('page', 'NUMBER'); 
+                    $limit          = Request::get('rows', 'NUMBER'); 
+                    $orderField     = Request::get('sidx'); 
+                    $orderType      = Request::get('sord'); 
+
+                    if(!$orderField) $orderField = 1;
+
+                    //Total de registros
+                    $count          = sizeof($rs->turmas);
+                    $total_pages    = $count > 0 ? ceil($count/$limit) : 0;
+                    $page           = $page > $total_pages ? $total_pages : $page;
+                    $start          = $limit * $page - $limit;
+                    
+                    //Efetua select com ordenação e paginação
+                    $rs = $mdEscolasTurmas->listaTurmasCliente(
+                            26436,
+                            0,
+                            $where,
+                            array(
+                                "campoOrdenacao"    => $orderField, 
+                                "tipoOrdenacao"     => $orderType, 
+                                "inicio"            => $start, 
+                                "limite"            => $limit
+                            )
+                    );
+                    
+                    $ret->page      = $page;
+                    $ret->total     = $total_pages;
+                    $ret->records   = $count;
+
+                    $i=0;
+                    foreach($rs->turmas as $row) {
+                        $ret->rows[$i]['id']   = $row['ID_TURMA'];
+                        $ret->rows[$i]['cell'] = array(
+                            $row['ID_TURMA'],
+                            $row['CLASSE'],
+                            EscolasTurmasModel::traduzEnsino($row['ENSINO']),
+                            $row['ANO'],
+                            EscolasTurmasModel::traduzPeriodo($row['PERIODO']),
+                            $row['ESCOLA']
                         );
                         $i++;
                     }
