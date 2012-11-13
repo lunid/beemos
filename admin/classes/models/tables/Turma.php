@@ -19,6 +19,18 @@
          * Efetua a relação TURMA > ESCOLA e listas as turmas de um Cliente
          * 
          * @param int $ID_CLIENTE
+         * @param int $utilizadas 1 - Filtra apenas turmas já utilizadas em listas 0 - Lista todas
+         * @param int $ID_HISTORICO_GERADOC Código da Turma para filtro de utilizadas
+         * @param string $where WHERE para filtro de SQL
+         * @param array $arrPg Array com dados de Ordenação e Paginação Ex:
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
          * 
          * @return stdClass $ret
          * <code>
@@ -36,39 +48,6 @@
                 $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha no ORM ao listas turmas!";
-                
-                
-//                //Instância da table SPRO_TURMA
-//                $tbTurma                = $this;
-//                $tbTurma->alias         = "T";
-//                $tbTurma->fieldsJoin    = "ID_TURMA,
-//                                            ID_ESCOLA,
-//                                            CLASSE,
-//                                            ANO,
-//                                            PERIODO,
-//                                            ENSINO,
-//                                            STATUS,
-//                                            DATA_REGISTRO";
-//                
-//                //Instância da table SPRO_ESCOLA
-//                $tbEscola              = new Escola();
-//                $tbEscola->alias       = "E";
-//                $tbEscola->fieldsJoin  = "NOME AS ESCOLA";
-//                
-//                //Campo de união do JOIN
-//                $fieldMap = "ID_ESCOLA";
-//                //Montando SQL do Inner Join
-//                $this->innerJoinFrom($tbTurma, $tbEscola, $fieldMap);
-//                
-//                
-//                //Instância do objeto Listas
-//                $tbTurmaLista               = new TurmaLista();
-//                $tbTurmaLista->alias        = "TL";
-//                $tbTurmaLista->fieldsJoin   = "ID_HISTORICO_GERADOC";
-//                
-//                
-//                ".($utilizadas == 1 ? "INNER JOIN SPRO_TURMA_LISTA TL ON TL.ID_HISTORICO_GERADOC = L.ID_HISTORICO_GERADOC AND TL.ID_TURMA = {$ID_TURMA}" : "")."
-                
                 
                 //Valida ID_ESCOLA
                 if((int)$this->ID_ESCOLA > 0){

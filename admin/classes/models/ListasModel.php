@@ -25,6 +25,7 @@
          *   "limite"            => 10
          * )
          * </code>
+         * 
          * @return stdClass $ret
          * <code>
          *  <br />

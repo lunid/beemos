@@ -9,11 +9,21 @@
          * Listas as escolas cadastradas para um determinado cliente
          * 
          * @param int $ID_CLIENTE Código do cliente para filtro de escolas
+         * @param string $where texto com o WHERE para Filtro de SQL
+         * @param array $arrPg Array com informações de Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
          * 
          * @return stdClass $ret
          * <code>
          *  <br />
-         *  <b>bool</b>    $ret->status    - Retorna TRUE ou FALSE para o status do Método   <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método   <br />
          *  string  $ret->msg       - Armazena mensagem ao usuário                    <br />
          *  array   $ret->escolas   - Armazena o array de escolas encontrados no Banco<br />
          * </code>
@@ -77,8 +87,18 @@
          * 
          * @param int $ID_CLIENTE
          * @param int $ID_ESCOLA
-         * @param string $where Filtros de pesquisa
+         * @param int $utilizadas Valida o filtro para busca de apenas Turmas utilizadas (0 ou 1)
+         * @param int $ID_HISTORICO_GERADOC Código da lista para filtro de utilizadas
+         * @param string $where Filtros de pesquisa SQL
          * @param string $arrPg Campos de paginação e ordenação do select
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
          * 
          * @return stdClass $ret
          * <code>
