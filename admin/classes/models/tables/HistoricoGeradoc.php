@@ -39,27 +39,96 @@
      * @property string CACHE_NAV_LST
      */
     class HistoricoGeradoc extends ORM {
-        public function carregaListasCliente($ID_CLIENTE, $ID_ESCOLA){
+        /**
+         * Função que efetua o INNER JOIN de DOCs com Turmas e filtra resultados através dos parâmetros enviados
+         * 
+         * @param int $ID_CLIENTE Código do cliente
+         * @param string $where String enviada para filtro de resultados
+         * <code>
+         *  Ex: AND L.COD_LISTA LIKE '%Teste%'
+         * </code>
+         * @param int $utilizadas Filtrar apenas listas utilizadas ou não
+         * @param int $ID_TURMA Filtrar apenas listas utilizadas pela Turma enviada
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->listas    - Armazena o array de listas encontrados no Banco   <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function carregaListasCliente($ID_CLIENTE, $where = "", $utilizadas = 0, $ID_TURMA = 0, $arrPg = null){
             try{
-                //Objeto da tabela SPRO_HISTORICO_GERADOC
-                $tbListas               = $this;
-                $tbListas->alias        = "L";
-                $tbListas->fieldsJoin   = "COD_LISTA,
-                                            LISTA_ATIVA_DT_HR_INI";
+                //Obejto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar listas do cliente!";
+                $ret->listas    = array();
                 
-                //Objeto da tabela SPRO_HISTORICO_ESCOLA
-                $tbEscolas              = new Escola();
-                $tbEscolas->alias       = "E";
+                //Verifica Paginação e Ordenação
+                $order = "";
+                $limit = "";
                 
-                $fieldMap = array("ID_LOGIN = ID_CLIENTE");
+                if($arrPg != null){
+                    //Monta ordeção
+                    if(isset($arrPg['campoOrdenacao']) && isset($arrPg['tipoOrdenacao'])){
+                        $order = " ORDER BY L." . $arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao'];
+                    }
+                    
+                    //Monta paginação
+                    if(isset($arrPg['inicio']) && isset($arrPg['limit3'])){
+                        $order = " LIMIT " . $arrPg['inicio'] . ", " . $arrPg['limit3'];
+                    }
+                }
                 
-                $this->innerJoinFrom($tbListas, $tbEscolas, $fieldMap);
-                $rs = $this->setJoin();
+                //Montra instrução SQL
+                //TODO: Utilizar ORM
+                $sql = "SELECT
+                            DISTINCT
+                            L.ID_HISTORICO_GERADOC,
+                            L.COD_LISTA,
+                            L.DATA_REGISTRO,
+                            L.DESCR_ARQ,
+                            L.NUM_QUESTOES,
+                            (SELECT T.ID_TURMA FROM SPRO_TURMA_LISTA T WHERE T.ID_TURMA = {$ID_TURMA} AND T.ID_HISTORICO_GERADOC = L.ID_HISTORICO_GERADOC ) AS ID_TURMA
+                        FROM
+                            SPRO_HISTORICO_GERADOC L
+                        ".($utilizadas == 1 ? "INNER JOIN SPRO_TURMA_LISTA TL ON TL.ID_HISTORICO_GERADOC = L.ID_HISTORICO_GERADOC AND TL.ID_TURMA = {$ID_TURMA}" : "")."
+                        WHERE
+                            L.ID_LOGIN = " . $ID_CLIENTE . " 
+                        AND 
+                            L.FORMATO = 'LST'
+                        {$where}
+                        {$order}
+                        {$limit}
+                        ;";
+               
+                //Executa query
+                $rs = $this->query($sql);
                 
-                echo "<pre style='color:#FF0000;'>";
-                print_r($rs);
-                echo "</pre>";
-                die;
+                //Caso não seja encontrada nenhuma lista
+                if(!is_array($rs) || sizeof($rs) <= 0){
+                    $ret->msg = "Nenhuma lista encontrada!";
+                    return $ret;
+                }
+                
+                //Retorna listas encotradas
+                $ret->status    = true;
+                $ret->msg       = "Listas carregadas!";
+                $ret->listas    = $rs;
+                
+                return $ret;
             }catch(Exception $e){
                 throw $e;
             }      

@@ -84,35 +84,51 @@ $(document).ready(function(){
         caption:"Turmas",
         width: 750,
         height: 'auto',
-        scrollOffset: 0
+        scrollOffset: 0,
+        onSelectRow: function(id){ 
+            //Armazena a turma selecionada
+            $("#idTurmaSel").val(id); 
+            //Ao selecionar uma linha o Grid de Listas é carregado com o ID_TURMA escolhido
+            $("#grid_listas").setGridParam({url: 'GridListas?ID_TURMA=' + id}); 
+            $("#grid_listas").trigger("reloadGrid");
+            $("#listas_inicio").hide();
+            $("#listas").show();
+            //Limpa filtros
+            $("#selTodasListas").removeAttr("checked");
+            $("#selListasUtilizadas").removeAttr("checked");
+            //Limpa txt de status
+            $("#txtStatus").html("");
+        }
     });
                 
     $("#grid_turmas").filterToolbar();
     
     //Carrega Grid de Listas (Aba Distribuir listas)
     $("#grid_listas").jqGrid({
-        url: 'GridListas',
+        url: 'GridListas?ID_TURMA=0',
         datatype: "json",
-        colNames:['COD', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
+        colNames:['', 'COD', 'Lista', 'Data Criação', 'Qtd Questões'],
         colModel:[
                 //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
-                {name:'ID_TURMA', index:'ID_TURMA', width:15, align:'center', search: true, cellattr: site.formataGrid },
-                {name:'CLASSE', index:'CLASSE', width:40, search: true},
-                {name:'ENSINO', index:'ENSINO', width:30, search: true, stype: 'select', searchoptions:{ value: "T:Todos;F:Fundamental;M:Médio" }},
-                {name:'ANO', index:'ANO', width:25, search: true, align:'center', stype: 'select', searchoptions:{ value: "T:Todos;1:1;2:2;3:3;4:4" }},
-                {name:'PERIODO', index:'PERIODO', width:25, search: true, stype: 'select', searchoptions:{ value: "TO:Todos;M:Manhã;T:Tarde;N:Noite" }},
-                {name:'ESCOLA', index:'ESCOLA', search: true}
+                {name:'ID_HISTORICO_GERADOC', index:'ID_HISTORICO_GERADOC', width:15, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
+                {name:'COD_LISTA', index:'COD_LISTA', width:15, align:'center', search: true },
+                {name:'DESCR_ARQ', index:'DESCR_ARQ', width:40, search: true},
+                {name:'DATA_REGISTRO', index:'DATA_REGISTRO', width:40, align:'center', search: false},
+                {name:'NUM_QUESTOES', index:'NUM_QUESTOES', width:40, align:'center', search: false}
         ],
         rowNum:10,
         rowList:[10,20,30],
         pager: '#pg_listas',
-        sortname: 'ESCOLA',
+        sortname: 'DATA_REGISTRO',
         viewrecords: true,
-        sortorder: "ASC",
+        sortorder: "DESC",
         caption:"Listas de Exercícios",
         width: 750,
         height: 'auto',
-        scrollOffset: 0
+        scrollOffset: 0,
+        jsonReader: {
+            records: function(obj) { $("#idsListas").val(obj.idsListas); }
+        }
     });
                 
     $("#grid_listas").filterToolbar();
@@ -306,4 +322,87 @@ function mudaAno(ensino){
     
     //Popula <select> de Ano
     $("#turmaAno").html(html);
+}
+
+//Seleciona o desmarca todas as opções do grid
+function selListas(obj){
+    //Tipo de operação a ser executada
+    var tipo;
+    
+    //Verifica se o check foi marcado ou desmarcado
+    if(obj.checked){
+        $(".check_lista").attr("checked", "checked");
+        tipo = "I"; //Inserir listas
+    }else{
+        $(".check_lista").removeAttr("checked");
+        tipo = "E"; //Excluir listas
+    }
+    
+    //Mensagem de aguarde
+    $("#txtStatus").html("Aguarde...");
+    
+    $.post(
+        'salvaTurmaLista',
+        {
+            idTurma: $("#idTurmaSel").val(),
+            idsListas: $("#idsListas").val(), 
+            tipo: tipo
+        },
+        function (ret){
+            if(ret.status){
+                $("#txtStatus").html(ret.msg);
+            }else{
+                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+            }
+        },
+        'json'
+    );
+}
+
+function salvaRelacaoLista(obj){
+    //Tipo de operação a ser executada
+    var tipo;
+    
+    //Mensagem de aguarde
+    $("#txtStatus").html("Aguarde...");
+    
+    //Verifica se o check foi marcado ou desmarcado
+    if(obj.checked){
+        tipo = "I"; //Inserir lista
+    }else{
+        tipo = "E"; //Excluir lista
+    }
+    
+    $.post(
+        'salvaTurmaLista',
+        {
+            idTurma: $("#idTurmaSel").val(),
+            idsListas: obj.value, 
+            tipo: tipo
+        },
+        function (ret){
+            if(ret.status){
+                $("#txtStatus").html(ret.msg);
+            }else{
+                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+            }
+        },
+        'json'
+    );
+}
+
+function exibeUtilizadas(obj){
+    //Pega o ID da Turma selecionada
+    var id = $("#idTurmaSel").val(); 
+    var utilizadas;
+    
+    if(obj.checked){
+        utilizadas = 1;
+    }else{
+        utilizadas = 0;
+    }
+    
+    //Refaz o grid soliciando apenas selecionadas
+    $("#grid_listas").setGridParam({url: 'GridListas?ID_TURMA=' + id + '&utilizadas=' + utilizadas}); 
+    $("#grid_listas").trigger("reloadGrid");
 }
