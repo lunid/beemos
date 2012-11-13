@@ -267,62 +267,49 @@
                     //Filtro de ensino
                     $ENSINO = Request::get('ENSINO');
                     if($ENSINO != 'T' && $ENSINO != ''){
-                        $where = " T.ENSINO = '" . $ENSINO . "'";  
+                        $where = " AND T.ENSINO = '" . $ENSINO . "'";  
                     }
                     
                     //Filtro de Ano
                     $ANO = Request::get('ANO');
                     if($ANO != 'T' && $ANO != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                        
-                        $where .= " T.ANO = " . $ANO;  
+                        $where .= " AND T.ANO = " . $ANO;  
                     }
                     
                     //Filtro de Periodo
                     $PERIODO = Request::get('PERIODO');
                     if($PERIODO != 'TO' && $PERIODO != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " T.PERIODO = '" . $PERIODO . "'";  
+                        $where .= " AND T.PERIODO = '" . $PERIODO . "'";  
                     }
                     
                     //Filtro de Escola
                     $ESCOLA = Request::get('ESCOLA');
                     if($ESCOLA != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " E.NOME LIKE '%" . $ESCOLA . "%'";  
+                        $where .= " AND E.NOME LIKE '%" . $ESCOLA . "%'";  
                     }
                     
                     //Filtro de classe
                     $CLASSE = Request::get('CLASSE');
                     if($CLASSE != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " T.CLASSE LIKE '%" . $CLASSE . "%'";  
+                        $where .= " AND T.CLASSE LIKE '%" . $CLASSE . "%'";  
                     }
                     
                     //Filtro de Turma
                     $ID_TURMA = Request::get('ID_TURMA', 'NUMBER');
                     if($ID_TURMA > 0){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " T.ID_TURMA = " . $ID_TURMA;  
+                        $where .= " AND T.ID_TURMA = " . $ID_TURMA;  
                     }
                 }
-
+                
+                //Verifica se foi enviado o ID_LISTA e o filtro de Utilizadas
+                $ID_HISTORICO_GERADOC   = Request::get('ID_LISTA', 'NUMBER');
+                $utilizadas             = Request::get('utilizadas', 'NUMBER');
+                
                 //Lista todas escolas encontradas
-                $rs = $mdEscolasTurmas->listaTurmasCliente(26436, 0, $where);
+                $rs = $mdEscolasTurmas->listaTurmasCliente(26436, 0, $utilizadas, ($utilizadas == 1 ? $ID_HISTORICO_GERADOC : 0), $where);
+                
+                //Variável que armazena IDs encontrados no Select
+                $ids = "";
                 
                 if($rs->status){
                     $page           = Request::get('page', 'NUMBER'); 
@@ -342,6 +329,8 @@
                     $rs = $mdEscolasTurmas->listaTurmasCliente(
                             26436,
                             0,
+                            $utilizadas, 
+                            $ID_HISTORICO_GERADOC,
                             $where,
                             array(
                                 "campoOrdenacao"    => $orderField, 
@@ -357,8 +346,15 @@
 
                     $i=0;
                     foreach($rs->turmas as $row) {
+                        //Concatena IDs encontrados
+                        if($ids != ""){
+                            $ids .= ",";
+                        }
+                        $ids .= $row['ID_TURMA'];
+                        
                         $ret->rows[$i]['id']   = $row['ID_TURMA'];
                         $ret->rows[$i]['cell'] = array(
+                            "<input type='checkbox' value='{$row['ID_TURMA']}' class='check_turma' ".($row['ID_HISTORICO_GERADOC'] == $ID_HISTORICO_GERADOC ? "checked='checked'" : "")." onclick='javascript:salvaRelacaoTurma(this);' />",
                             $row['ID_TURMA'],
                             $row['CLASSE'],
                             EscolasTurmasModel::traduzEnsino($row['ENSINO']),
@@ -368,6 +364,8 @@
                         );
                         $i++;
                     }
+                    //Armazena IDs no retorno
+                    $ret->idsTurmas = $ids;
                 }else{
                     $ret                    = new stdClass();
                     $ret->rows[0]['id']     = 0;
@@ -505,7 +503,7 @@
                 //Salva operação enviada
                 $mdListas   = new ListasModel();
                 $ret        = $mdListas->salvaListasTurmas(
-                                    Request::post('idTurma', 'NUMBER'), 
+                                    Request::post('idsTurmas'), 
                                     Request::post('idsListas'), 
                                     Request::post('tipo')
                                 );

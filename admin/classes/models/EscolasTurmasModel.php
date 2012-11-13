@@ -89,7 +89,7 @@
          * </code>
          * @throws Exception
          */
-        public function listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA = 0, $where = "", $arrPg = null){
+        public function listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA = 0, $utilizadas = 0, $ID_HISTORICO_GERADOC = 0, $where = "", $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -107,7 +107,7 @@
                 $tbTurma            = new Turma();
                 $tbTurma->ID_ESCOLA = $ID_ESCOLA;
                 //Busca as turmas de acordo com os parâmetros enviados
-                $rs = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $where, $arrPg);
+                $rs = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $utilizadas, $ID_HISTORICO_GERADOC, $where, $arrPg);
                 
                 //Retorna resultado da busca
                 return $rs;

@@ -62,60 +62,62 @@
         /**
          * Função que salva a alteração de relacionamentos entre Turmas e Listas
          * 
-         * @param int $ID_TURMA Código da Turma
+         * @param string $idTurmas String com IDs de turmas separados por vírgula. Ex: 23,56,87
          * @param string $idsListas String com IDs de listas separados por vírgula. Ex: 17878,21233,98877
          * @param char $tipo Tipo de operação a ser realizada I - Inserção ou E - Exclusão
          * @return \stdClass
          * @throws Exception
          */
-        public function salvaListasTurmas($ID_TURMA, $idsListas, $tipo){
+        public function salvaListasTurmas($idTurmas, $idsListas, $tipo){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha ao salvar Lista(s) da Turma";
                 
-                $tbTurmaLista = new TurmaLista();
+                //Array de Turmas
+                $arrIdTurmas = explode(",", $idTurmas);
                 
-                //Limpa as listas do com IDs enviados
-                $sql = "DELETE FROM SPRO_TURMA_LISTA WHERE ID_TURMA = {$ID_TURMA} AND ID_HISTORICO_GERADOC IN({$idsListas});";
-                $tbTurmaLista->query($sql);
-                
-                //Verifica qual operação executar
-                switch($tipo){
-                    case "I":
-                        //Tranforma IDs em Array
-                        $arrId = explode(",", $idsListas);
-                        //Verifica se forma encontrados IDs
-                        if(is_array($arrId) && sizeof($arrId) > 0){
-                            foreach($arrId as $idLista){
-                                //Popula informações para insert
-                                $tbTurmaLista->ID_TURMA             = (int)$ID_TURMA;
-                                $tbTurmaLista->ID_HISTORICO_GERADOC = (int)$idLista;
+                //Percorre array limpando registros e adicionando relacionamentos
+                foreach($arrIdTurmas as $idTurma){
+                    //Limpa as listas do com IDs enviados
+                    $tbTurmaLista   = new TurmaLista();
+                    $sql            = "DELETE FROM SPRO_TURMA_LISTA WHERE ID_TURMA = {$idTurma} AND ID_HISTORICO_GERADOC IN({$idsListas});";
+                    $tbTurmaLista->query($sql);
 
-                                //Executa inserção
-                                $tbTurmaLista->save();
+                    //Verifica qual operação executar
+                    switch($tipo){
+                        case "I":
+                            //Tranforma IDs em Array
+                            $arrId = explode(",", $idsListas);
+                            //Verifica se forma encontrados IDs
+                            if(is_array($arrId) && sizeof($arrId) > 0){
+                                foreach($arrId as $idLista){
+                                    //Popula informações para insert
+                                    $tbTurmaLista->ID_TURMA             = (int)$idTurma;
+                                    $tbTurmaLista->ID_HISTORICO_GERADOC = (int)$idLista;
+
+                                    //Executa inserção
+                                    $tbTurmaLista->save();
+                                }
+
+                                //Se não houver erro, é retornado status OK
+                                $ret->status    = true;
+                                $ret->msg       = "Relação salva com sucesso!";
+                            }else{
+                                //Caso não seja enviado nenhum ID
+                                $ret->msg = "Nenhuma ID de lista enviado!";
                             }
-                            
-                            //Se não houver erro, é retornado status OK
+                            break;
+                        case "E":
+                            //Caso seja apenas uma exclusão
                             $ret->status    = true;
-                            $ret->msg       = "Relação salva com sucesso!";
+                            $ret->msg       = "Relação desfeita com sucesso!";
+                            break;
+                        default:
+                            $ret->msg = "Operação não identificada!";
                             return $ret;
-                        }else{
-                            //Caso não seja enviado nenhum ID
-                            $ret->msg = "Nenhuma ID de lista enviado!";
-                            return $ret;
-                        }
-                        break;
-                    case "E":
-                        //Caso seja apenas uma exclusão
-                        $ret->status    = true;
-                        $ret->msg       = "Relação desfeita com sucesso!";
-                        return $ret;
-                        break;
-                    default:
-                        $ret->msg = "Operação não identificada!";
-                        return $ret;
+                    }
                 }
                 
                 return $ret;
