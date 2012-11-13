@@ -518,5 +518,62 @@
                 echo json_encode($ret);
             }  
         }
+        
+        public function actionCarregaInfoConvite(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao disparar notificação aos Alunos!";
+                
+                //Captura variáveis enviadas
+                $id             = Request::post('id');
+                //Instância Model
+                $mdEscolaTurma  = new EscolasTurmasModel();
+                                
+                switch ($tipo) {
+                    case 'T':
+                        $ret = $mdEscolaTurma->carregaContatosTurma($id);
+                        break;
+                    case 'L':
+                        $ret = $mdEscolaTurma->carregaContatosTurma($id);
+                        break;
+                }
+                               
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        public function actionDisparaNotificacao(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao disparar notificação aos Alunos!";
+                
+                //Captura variáveis enviadas
+                $id     = Request::post('id', 'NUMBER');
+                $tipo   = Request::post('tipo');
+                $sms    = Request::post('sms');
+                
+                
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
     }
 ?>

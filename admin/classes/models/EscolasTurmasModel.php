@@ -3,6 +3,7 @@
     use \sys\classes\mvc\Model;        
     use \admin\classes\models\tables\Escola;
     use \admin\classes\models\tables\Turma;
+    use \admin\classes\models\tables\Cliente;
     
     class EscolasTurmasModel extends Model {
         /**
@@ -336,6 +337,18 @@
                 $ret->status    = true;
                 $ret->msg       = "Turma salva com sucesso!";
                 $ret->id        = $id;
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function carregaContatosTurma($idsTurmas){
+            try{
+                //Faz a consulta de informações do cliente e repassa resultado
+                $tbCliente  = new Cliente();
+                $ret        = $tbCliente->carregaInfoAlunosTurma($idsTurmas);
+                
                 return $ret;
             }catch(Exception $e){
                 throw $e;

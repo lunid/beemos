@@ -1,4 +1,14 @@
 <!-- começo conteudo -->
+<!-- Modal Notificação -->
+<div id="modal_convite" style="display:none;">
+    <div id="erroConvite" style="font-weight:bold;color:red;text-align:center;"></div>
+    <div id="msgConvite" style="width:100%;">
+        Ao clicar em <strong>SIM</strong>, TODOS os Alunos da(s) Turma(s) selecionada(s) receberão um e-mail com instruções para acesso à(s) Lista(s) de Exercícios selecionada(s).
+        <br /><br />
+        Deseja disparar a Notificação agora?
+    </div>
+</div>
+<!-- Modal Notificação -->
 <!-- Modal Turmas -->
 <div id="modal_turmas" style="display:none;">
     <table style="width:750px;height:500px;border-collapse:collapse;border-spacing:0;">
@@ -211,7 +221,12 @@
             </div>
             <!-- Turmas > Listas -->
             
-            <div id="txtStatus"></div>
+            <!-- Rodapé Grids -->
+            <div style="width:750px;">
+                <div id="txtStatus" style="float:left"></div>
+                <input type="button" value="Enviar Convite" style="float:right" onclick="javascript:enviaConvite();" />
+            </div>
+            <!-- Rodapé Grids -->
         </div>
     </div>
 </div>

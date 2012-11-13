@@ -592,3 +592,122 @@ function exibeOpt(opt){
     $(".opts").hide();
     $("#" + opt).show();
 }
+
+function enviaConvite(){
+    //Verifica tela onde está sendo feito o envio.
+    var optSel      = null; //Armazena opção escolhida pelo user
+    var id          = 0; //ID que será enviado para convites
+
+    if($("input[name=tipoDistribuicao]:checked").val() == 'optTurmaLista'){
+        var idTurmaSel  = $("#idTurmaSel").val();
+        
+        if(idTurmaSel == null || idTurmaSel <= 0){
+            $( "#erroConvite" ).html("Selecione uma Turma para continuar!");
+        }else{
+            //Inicia varáveis para serem enviadas
+            id      = idTurmaSel;
+            optSel  = "T";
+        }
+    }else{
+        var idListaSel = $("#idListaSel").val();
+
+        if(idListaSel == null || idListaSel <= 0){
+            $( "#erroConvite" ).html("Selecione uma Lista de Exercícios para continuar!");
+        }else{
+            //Inicia varáveis para serem enviadas
+            id      = idListaSel;
+            optSel  = "L";
+        }
+    }
+
+    //Se houver erros o script exibe a msg e para.
+    if(id == 0){
+        $("#erroConvite").css("display", "");
+        $("#msgConvite").css("display", "none");
+        
+        $( "#modal_convite" ).dialog({
+            title: 'Enviar Convite',
+            open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
+            resizable: false,
+            draggable: false,
+            width: 350,
+            modal: true,
+            zIndex: 9999,
+            buttons: null
+        });
+        return false;
+    }
+    
+    //Controla exibição das msgs
+    $("#erroConvite").css("display", "none");
+    $("#msgConvite").css("display", "");       
+    
+    $.post(
+        'CarregaInfoConvite',
+        {
+            id: id,
+            tipo: optSel
+        }, 
+        function(ret){
+            
+        },
+        'json'
+    );
+    
+    //Abre o Modal com a mensagem de confirmação para disparo
+    $( "#modal_convite" ).dialog({
+        title: 'Enviar Convite',
+        open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
+        resizable: false,
+        draggable: false,
+        width: 350,
+        modal: true,
+        zIndex: 9999,
+        buttons: {
+            'Sim': function() {
+                //Exibe mensagem de aguarde ao usuário
+                $( "#msgConvite" ).html("<center style='font-weight:bold;'>Aguarde, enviando convites...</center>");
+                
+                //Efetua a chamada do script de disparo
+                $.post(
+                    'DisparaNotificacao', 
+                    {
+                        id: id,
+                        tipo: optSel
+                    }, 
+                    function(ret){
+                        //Valida retorno
+                        if(ret.status){
+                            $( "#msgConvite" ).html("<center style='font-weight:bold;color:blue;'>" + ret.msg + "</center>");
+                            
+                            //Controla exibição das msgs
+                            $("#erroConvite").css("display", "none");
+                            $("#msgConvite").css("display", "");
+                        }else{
+                            $( "#erroConvite" ).html(ret.msg);
+                            
+                            //Controla exibição das msgs
+                            $("#erroConvite").css("display", "");
+                            $("#msgConvite").css("display", "none");
+                        }
+                        
+                        $( "#modal_convite" ).dialog({
+                            title: 'Enviar Convite',
+                            open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
+                            resizable: false,
+                            draggable: false,
+                            width: 350,
+                            modal: true,
+                            zIndex: 9999,
+                            buttons: null
+                        });
+                    }, 
+                    'json'
+                );
+            },
+            'Não': function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
+}
