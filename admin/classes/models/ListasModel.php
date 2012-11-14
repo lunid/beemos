@@ -3,6 +3,7 @@
     use \sys\classes\mvc\Model;        
     use \admin\classes\models\tables\HistoricoGeradoc;
     use \admin\classes\models\tables\TurmaLista;
+    use \admin\classes\models\tables\TurmaConvite;
     
     class ListasModel extends Model {
         /**
@@ -119,6 +120,40 @@
                             $ret->msg = "Operação não identificada!";
                             return $ret;
                     }
+                }
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function salvaConvites($ID_CLIENTE, $ID_TURMA, $ID_HISTORICO_GERADOC, $sms){
+            try{
+                //Objeto de retorno 
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar disparo de convites!";
+                
+                //Instãcia da table SPRO_TURMA_CONVITE
+                $tbTurmaConvite                         = new TurmaConvite();
+                
+                //Seta valores para INSERT
+                $tbTurmaConvite->ID_TURMA_CONVITE       = 0;
+                $tbTurmaConvite->ID_CLIENTE             = $ID_CLIENTE;
+                $tbTurmaConvite->ID_TURMA               = $ID_TURMA;
+                $tbTurmaConvite->ID_HISTORICO_GERADOC   = $ID_HISTORICO_GERADOC;
+                $tbTurmaConvite->ENVIAR_SMS             = $sms;
+                $tbTurmaConvite->COD_LISTA              = 'Teste';
+                
+                //Executa INSERT
+                $id = $tbTurmaConvite->save();
+                
+                if($id > 0){
+                    $ret->status    = true;
+                    $ret->msg       = "Disparo de convide gravado com sucesso!";
+                }else{
+                    $ret->msg       = "Falha ao gravar disparo de convide!";
                 }
                 
                 return $ret;

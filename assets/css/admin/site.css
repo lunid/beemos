@@ -296,6 +296,13 @@
     font-size:16px;
 }
 
+/* Classe de erro para Modal Padrão */
+.erro{
+    color: #FF0000;
+    font-weight: bold;
+    text-align: center;
+}
+
 /* começo rodape
 ================================================== */
 

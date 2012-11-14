@@ -594,120 +594,104 @@ function exibeOpt(opt){
 }
 
 function enviaConvite(){
-    //Verifica tela onde está sendo feito o envio.
     var optSel      = null; //Armazena opção escolhida pelo user
     var id          = 0; //ID que será enviado para convites
-
+    var idLista     = ""; //ID da lista para convites
+    var erro        = ""; //Mensagem de erro
+    verSms          = "N"; //Verifica o envio de sms
+    
+    //Verifica tela onde está sendo feito o envio.
     if($("input[name=tipoDistribuicao]:checked").val() == 'optTurmaLista'){
         var idTurmaSel  = $("#idTurmaSel").val();
         
         if(idTurmaSel == null || idTurmaSel <= 0){
-            $( "#erroConvite" ).html("Selecione uma Turma para continuar!");
+            erro = "Selecione uma Turma para continuar!";
         }else{
             //Inicia varáveis para serem enviadas
-            id      = idTurmaSel;
-            optSel  = "T";
+            id          = idTurmaSel;
+            optSel      = "T";
+            idLista     = 0;
         }
     }else{
         var idListaSel = $("#idListaSel").val();
 
         if(idListaSel == null || idListaSel <= 0){
-            $( "#erroConvite" ).html("Selecione uma Lista de Exercícios para continuar!");
+            erro = "Selecione uma Lista de Exercícios para continuar!";
         }else{
             //Inicia varáveis para serem enviadas
-            id      = idListaSel;
-            optSel  = "L";
+            id          = idListaSel;
+            optSel      = "L";
+            idLista     = idListaSel;
         }
     }
 
     //Se houver erros o script exibe a msg e para.
     if(id == 0){
-        $("#erroConvite").css("display", "");
-        $("#msgConvite").css("display", "none");
-        
-        $( "#modal_convite" ).dialog({
-            title: 'Enviar Convite',
-            open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
-            resizable: false,
-            draggable: false,
-            width: 350,
-            modal: true,
-            zIndex: 9999,
-            buttons: null
-        });
-        return false;
-    }
-    
-    //Controla exibição das msgs
-    $("#erroConvite").css("display", "none");
-    $("#msgConvite").css("display", "");       
-    
-    $.post(
-        'CarregaInfoConvite',
-        {
-            id: id,
-            tipo: optSel
-        }, 
-        function(ret){
-            
-        },
-        'json'
-    );
-    
-    //Abre o Modal com a mensagem de confirmação para disparo
-    $( "#modal_convite" ).dialog({
-        title: 'Enviar Convite',
-        open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
-        resizable: false,
-        draggable: false,
-        width: 350,
-        modal: true,
-        zIndex: 9999,
-        buttons: {
-            'Sim': function() {
-                //Exibe mensagem de aguarde ao usuário
-                $( "#msgConvite" ).html("<center style='font-weight:bold;'>Aguarde, enviando convites...</center>");
-                
-                //Efetua a chamada do script de disparo
-                $.post(
-                    'DisparaNotificacao', 
-                    {
-                        id: id,
-                        tipo: optSel
-                    }, 
-                    function(ret){
-                        //Valida retorno
-                        if(ret.status){
-                            $( "#msgConvite" ).html("<center style='font-weight:bold;color:blue;'>" + ret.msg + "</center>");
-                            
-                            //Controla exibição das msgs
-                            $("#erroConvite").css("display", "none");
-                            $("#msgConvite").css("display", "");
-                        }else{
-                            $( "#erroConvite" ).html(ret.msg);
-                            
-                            //Controla exibição das msgs
-                            $("#erroConvite").css("display", "");
-                            $("#msgConvite").css("display", "none");
+        //Exibe modal com erro
+        site.modal(erro, "Enviar Convite", "erro");
+    }else{
+        //Prossegue com o envio de convites
+        $.post(
+            'CarregaInfoConvite',
+            {
+                id: id,
+                tipo: optSel
+            }, 
+            function(ret){
+                //Se houver erro no carregamento de informações
+                if(!ret.status){
+                    //Exibe modal com erro
+                    site.modal(ret.msg, "Enviar Convite", "erro");
+                }else{
+                    var msgCel = "";
+                    
+                    //Verifica se existem usuários com celular
+                    if(ret.qtdCel > 0){
+                        msgCel  = "<strong style='color:red'>Atenção:</strong> Existe" + (ret.qtdCel > 1 ? "m" : "") + " <strong>" + ret.qtdCel + " aluno" + (ret.qtdCel > 1 ? "s" : "") + "</strong> com celular cadastrado para envio de convite por SMS.<br /><br />";
+                        msgCel += "Isso irá consumir <strong>" + (ret.qtdCel*5) + " créditos</strong> da sua conta.<br /><br />";
+                        msgCel += "Caso queira enviar os convites por SMS, marque a opção abaixo.<br /><br />";
+                        msgCel += "<input type='checkbox' id='enviaCel' name='enviaCel' onclick='javascript:if(this.checked){ verSms = \"S\"; }else{ verSms = \"N\"; }'/> <strong>Sim, desejo enviar convites via SMS.</strong><br /><br />";
+                    }
+                    
+                    site.modal(
+                        "O convite será enviado por <strong>e-mail</strong> para <strong>" + ret.qtd + " aluno</strong>" + (ret.qtd > 1 ? "s" : "") + "." +
+                        "<br /><br />" + msgCel +
+                        "Deseja enviar convite" + (ret.qtd > 1 ? "s" : "") + " agora?"
+                        , 
+                        "Enviar Convite",
+                        "",
+                        {
+                            'Sim': function() {
+                                //Exibe mensagem de aguarde ao usuário
+                                site.modal("<center style='font-weight:bold;'>Aguarde, enviando convites...</center>", "Enviar Convite");
+                                
+                                //Efetua a chamada do script de disparo
+                                $.post(
+                                    'DisparaConvites', 
+                                    {
+                                        idsTurmas: ret.idsTurmas,
+                                        idLista: idLista,
+                                        sms: verSms
+                                    }, 
+                                    function(retDisparo){
+                                        //Valida retorno
+                                        if(retDisparo.status){
+                                            site.modal("<center style='font-weight:bold;color:blue;'>" + retDisparo.msg + "</center>", "Enviar Convite");
+                                        }else{
+                                            site.modal(retDisparo.msg, "Enviar Convite", "erro");
+                                        }
+                                    }, 
+                                    'json'
+                                );
+                            },
+                            'Não': function() {
+                                site.fechaModal();
+                            }
                         }
-                        
-                        $( "#modal_convite" ).dialog({
-                            title: 'Enviar Convite',
-                            open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
-                            resizable: false,
-                            draggable: false,
-                            width: 350,
-                            modal: true,
-                            zIndex: 9999,
-                            buttons: null
-                        });
-                    }, 
-                    'json'
-                );
+                    );
+                }
             },
-            'Não': function() {
-                $( this ).dialog( "close" );
-            }
-        }
-    });
+            'json'
+        ); //Fim .post
+    } //Verificação de erros
 }
