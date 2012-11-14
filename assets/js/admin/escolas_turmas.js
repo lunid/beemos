@@ -593,6 +593,9 @@ function exibeOpt(opt){
     $("#" + opt).show();
 }
 
+/**
+ * Efetua a verificação dos dados necessário para o envi ode convites e chama o script de disparo
+ */
 function enviaConvite(){
     var optSel      = null; //Armazena opção escolhida pelo user
     var id          = 0; //ID que será enviado para convites

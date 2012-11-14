@@ -343,6 +343,22 @@
             }
         }
         
+        /**
+         * Função que calcula o total de Alunos em uma Turma e o Total de Alunos que possuem celular
+         * 
+         * @param string $idsTurmas Códigos de Turmas concatenos por virgula, ex: 12,65,978
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int     $ret->qtd       - Número total de alunos em uma turma               <br />
+         *  int     $ret->qtdCel    - Número total de alunos com celular em uma turma               <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregaContatosTurma($idsTurmas){
             try{
                 //Faz a consulta de informações do cliente e repassa resultado

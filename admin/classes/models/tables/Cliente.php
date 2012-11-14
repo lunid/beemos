@@ -42,6 +42,22 @@
             $this->setJoin("b.UF='SP'");                
         }
         
+        /**
+         * Função que calcula o Total de Alunos e Total de Alunos com Celular em uma Turma
+         * 
+         * @param int $ID_TURMA Código da Turma
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int     $ret->qtd       - Número total de alunos em uma turma               <br />
+         *  int     $ret->qtdCel    - Número total de alunos com celular em uma turma               <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregaInfoAlunosTurma($ID_TURMA){
             try{
                 //Objeto de retorno 

@@ -519,6 +519,10 @@
             }  
         }
         
+        /**
+         * Carrega as informações sobre o disparo de convites:
+         * Total de Alunos e Total de Celulares
+         */
         public function actionCarregaInfoConvite(){
             try{
                 //Objeto de retorno
@@ -572,6 +576,9 @@
             }
         }
         
+        /**
+         * Função que salva a lista de Turmas e Listas para onde devem ser disparados os convites.
+         */
         public function actionDisparaConvites(){
             try{
                 //Objeto de retorno
