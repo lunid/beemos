@@ -48,6 +48,8 @@ $(document).ready(function(){
             }, 
             position:"last"
     });
+    //Fim do Grid Escolas
+    
     
     //Formulário de escolas
     form = new Form();
@@ -59,15 +61,20 @@ $(document).ready(function(){
     formTurma.init('form_turma');
     formTurma.initModal('escolas_turmas');
     
+    
+    
     /** Carrega dados da Aba Distibuir Listas */
+    
+    
     
     //Carrega Grid de Turmas (Aba Distribuir listas)
     $("#grid_turmas").jqGrid({
         url: 'GridTurmas',
         datatype: "json",
-        colNames:['COD', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
+        colNames:['', 'COD', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
         colModel:[
                 //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'ID_TURMA_2', index:'ID_TURMA_2', hidden: true },
                 {name:'ID_TURMA', index:'ID_TURMA', width:15, align:'center', search: true, cellattr: site.formataGrid },
                 {name:'CLASSE', index:'CLASSE', width:40, search: true},
                 {name:'ENSINO', index:'ENSINO', width:30, search: true, stype: 'select', searchoptions:{ value: "T:Todos;F:Fundamental;M:Médio" }},
@@ -84,19 +91,108 @@ $(document).ready(function(){
         caption:"Turmas",
         width: 750,
         height: 'auto',
-        scrollOffset: 0
+        scrollOffset: 0,
+        onSelectRow: function(id){ 
+            //Armazena a turma selecionada
+            $("#idTurmaSel").val(id); 
+            //Ao selecionar uma linha o Grid de Listas é carregado com o ID_TURMA escolhido
+            $("#grid_listas").setGridParam({url: 'GridListas?ID_TURMA=' + id}); 
+            $("#grid_listas").trigger("reloadGrid");
+            $("#listas_inicio").hide();
+            $("#listas").show();
+            //Limpa filtros
+            $("#selTodasListas").removeAttr("checked");
+            $("#selListasUtilizadas").removeAttr("checked");
+            //Limpa txt de status
+            $("#txtStatus").html("");
+        }
     });
                 
     $("#grid_turmas").filterToolbar();
     
     //Carrega Grid de Listas (Aba Distribuir listas)
     $("#grid_listas").jqGrid({
-        url: 'GridListas',
+        url: 'GridListas?ID_TURMA=0',
         datatype: "json",
-        colNames:['COD', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
+        colNames:['', 'COD', 'Lista', 'Data Criação', 'Qtd Questões'],
         colModel:[
                 //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
-                {name:'ID_TURMA', index:'ID_TURMA', width:15, align:'center', search: true, cellattr: site.formataGrid },
+                {name:'ID_HISTORICO_GERADOC', index:'ID_HISTORICO_GERADOC', width:15, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
+                {name:'COD_LISTA', index:'COD_LISTA', width:15, align:'center', search: true },
+                {name:'DESCR_ARQ', index:'DESCR_ARQ', width:40, search: true},
+                {name:'DATA_REGISTRO', index:'DATA_REGISTRO', width:40, align:'center', search: false},
+                {name:'NUM_QUESTOES', index:'NUM_QUESTOES', width:40, align:'center', search: false}
+        ],
+        rowNum:10,
+        rowList:[10,20,30],
+        pager: '#pg_listas',
+        sortname: 'DATA_REGISTRO',
+        viewrecords: true,
+        sortorder: "DESC",
+        caption:"Listas de Exercícios",
+        width: 750,
+        height: 'auto',
+        scrollOffset: 0,
+        jsonReader: {
+            records: function(obj) { $("#idsListas").val(obj.idsListas); }
+        }
+    });
+                
+    $("#grid_listas").filterToolbar();
+    
+    
+    
+    //Carrega Grid de Listas (Aba Distribuir listas) - Segunda Visualização
+    $("#grid_listas_turmas").jqGrid({
+        url: 'GridListas?ID_TURMA=0',
+        datatype: "json",
+        colNames:['', 'COD', 'Lista', 'Data Criação', 'Qtd Questões'],
+        colModel:[
+                //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'ID_HISTORICO_GERADOC', index:'ID_HISTORICO_GERADOC', hidden:true },
+                {name:'COD_LISTA', index:'COD_LISTA', width:15, align:'center', search: true, cellattr: site.formataGrid },
+                {name:'DESCR_ARQ', index:'DESCR_ARQ', width:40, search: true},
+                {name:'DATA_REGISTRO', index:'DATA_REGISTRO', width:40, align:'center', search: false},
+                {name:'NUM_QUESTOES', index:'NUM_QUESTOES', width:40, align:'center', search: false},
+                
+        ],
+        rowNum:10,
+        rowList:[10,20,30],
+        pager: '#pg_listas_turmas',
+        sortname: 'DATA_REGISTRO',
+        viewrecords: true,
+        sortorder: "DESC",
+        caption:"Listas de Exercícios",
+        width: 750,
+        height: 'auto',
+        scrollOffset: 0,
+        onSelectRow: function(id){ 
+            //Armazena a turma selecionada
+            $("#idListaSel").val(id); 
+            //Ao selecionar uma linha o Grid de Listas é carregado com o ID_TURMA escolhido
+            $("#grid_turmas_listas").setGridParam({url: 'GridTurmas?ID_LISTA=' + id}); 
+            $("#grid_turmas_listas").trigger("reloadGrid");
+            $("#turmas_inicio").hide();
+            $("#turmas").show();
+            //Limpa filtros
+            $("#selTodasTurmas").removeAttr("checked");
+            $("#selTurmasUtilizadas").removeAttr("checked");
+            //Limpa txt de status
+            $("#txtStatus").html("");
+        }
+    });
+                
+    $("#grid_listas_turmas").filterToolbar();
+    
+    //Carrega Grid de Turmas da segunda visualização
+    $("#grid_turmas_listas").jqGrid({
+        url: 'GridTurmas?ID_LISTA=0',
+        datatype: "json",
+        colNames:['', '', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
+        colModel:[
+                //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'ID_TURMA', index:'ID_TURMA', width:15, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
+                {name:'ID_TURMA_2', index:'ID_TURMA_2', hidden:true },
                 {name:'CLASSE', index:'CLASSE', width:40, search: true},
                 {name:'ENSINO', index:'ENSINO', width:30, search: true, stype: 'select', searchoptions:{ value: "T:Todos;F:Fundamental;M:Médio" }},
                 {name:'ANO', index:'ANO', width:25, search: true, align:'center', stype: 'select', searchoptions:{ value: "T:Todos;1:1;2:2;3:3;4:4" }},
@@ -105,17 +201,20 @@ $(document).ready(function(){
         ],
         rowNum:10,
         rowList:[10,20,30],
-        pager: '#pg_listas',
+        pager: '#pg_turmas',
         sortname: 'ESCOLA',
         viewrecords: true,
         sortorder: "ASC",
-        caption:"Listas de Exercícios",
+        caption:"Turmas",
         width: 750,
         height: 'auto',
-        scrollOffset: 0
+        scrollOffset: 0,
+        jsonReader: {
+            records: function(obj) { $("#idsTurmas").val(obj.idsTurmas); }
+        }
     });
                 
-    $("#grid_listas").filterToolbar();
+    $("#grid_turmas_listas").filterToolbar();
 });
 
 /**
@@ -306,4 +405,309 @@ function mudaAno(ensino){
     
     //Popula <select> de Ano
     $("#turmaAno").html(html);
+}
+
+//Seleciona ou desmarca todas as opções do grid
+function selListas(obj){
+    //Tipo de operação a ser executada
+    var tipo;
+    
+    //Verifica se o check foi marcado ou desmarcado
+    if(obj.checked){
+        $(".check_lista").attr("checked", "checked");
+        tipo = "I"; //Inserir listas
+    }else{
+        $(".check_lista").removeAttr("checked");
+        tipo = "E"; //Excluir listas
+    }
+    
+    //Mensagem de aguarde
+    $("#txtStatus").html("Aguarde...");
+    
+    $.post(
+        'salvaTurmaLista',
+        {
+            idTurma: $("#idTurmaSel").val(),
+            idsListas: $("#idsListas").val(), 
+            tipo: tipo
+        },
+        function (ret){
+            if(ret.status){
+                $("#txtStatus").html(ret.msg);
+            }else{
+                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+            }
+        },
+        'json'
+    );
+}
+
+//Seleciona ou desmarca todas as opções do grid
+function selTurmas(obj){
+    //Tipo de operação a ser executada
+    var tipo;
+    
+    //Verifica se o check foi marcado ou desmarcado
+    if(obj.checked){
+        $(".check_turma").attr("checked", "checked");
+        tipo = "I"; //Inserir listas
+    }else{
+        $(".check_turma").removeAttr("checked");
+        tipo = "E"; //Excluir listas
+    }
+    
+    //Mensagem de aguarde
+    $("#txtStatus").html("Aguarde...");
+    
+    $.post(
+        'salvaTurmaLista',
+        {
+            idsTurmas: $("#idsTurmas").val(),
+            idsListas: $("#idListaSel").val(),
+            tipo: tipo
+        },
+        function (ret){
+            if(ret.status){
+                $("#txtStatus").html(ret.msg);
+            }else{
+                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+            }
+        },
+        'json'
+    );
+}
+
+/**
+ * Função que salva a relação entre uma e uma turma (1:1)
+ */
+function salvaRelacaoLista(obj){
+    //Tipo de operação a ser executada
+    var tipo;
+    
+    //Mensagem de aguarde
+    $("#txtStatus").html("Aguarde...");
+    
+    //Verifica se o check foi marcado ou desmarcado
+    if(obj.checked){
+        tipo = "I"; //Inserir lista
+    }else{
+        tipo = "E"; //Excluir lista
+    }
+    
+    $.post(
+        'salvaTurmaLista',
+        {
+            idsTurmas: $("#idTurmaSel").val(),
+            idsListas: obj.value, 
+            tipo: tipo
+        },
+        function (ret){
+            if(ret.status){
+                $("#txtStatus").html(ret.msg);
+            }else{
+                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+            }
+        },
+        'json'
+    );
+}
+
+/**
+ * Função que salva a relação entre uma lista e uma turma (1:1)
+ */
+function salvaRelacaoTurma(obj){
+    //Tipo de operação a ser executada
+    var tipo;
+    
+    //Mensagem de aguarde
+    $("#txtStatus").html("Aguarde...");
+    
+    //Verifica se o check foi marcado ou desmarcado
+    if(obj.checked){
+        tipo = "I"; //Inserir lista
+    }else{
+        tipo = "E"; //Excluir lista
+    }
+    
+    $.post(
+        'salvaTurmaLista',
+        {
+            idsTurmas: obj.value,
+            idsListas: $("#idListaSel").val(), 
+            tipo: tipo
+        },
+        function (ret){
+            if(ret.status){
+                $("#txtStatus").html(ret.msg);
+            }else{
+                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+            }
+        },
+        'json'
+    );
+}
+
+/**
+ * Função que filtra para o grid de listas apenas as já utilizadas
+ */
+function exibeListasUtilizadas(obj){
+    //Pega o ID da Turma selecionada
+    var id = $("#idTurmaSel").val(); 
+    var utilizadas;
+    
+    if(obj.checked){
+        utilizadas = 1;
+    }else{
+        utilizadas = 0;
+    }
+    
+    //Refaz o grid soliciando apenas selecionadas
+    $("#grid_listas").setGridParam({url: 'GridListas?ID_TURMA=' + id + '&utilizadas=' + utilizadas}); 
+    $("#grid_listas").trigger("reloadGrid");
+}
+
+/**
+ * Função que filtra para o grid de turmas apenas as já utilizadas
+ */
+function exibeTurmasUtilizadas(obj){
+    //Pega o ID da Turma selecionada
+    var id = $("#idListaSel").val(); 
+    var utilizadas;
+    
+    if(obj.checked){
+        utilizadas = 1;
+    }else{
+        utilizadas = 0;
+    }
+    
+    //Refaz o grid soliciando apenas selecionadas
+    $("#grid_turmas_listas").setGridParam({url: 'GridTurmas?ID_LISTA=' + id + '&utilizadas=' + utilizadas}); 
+    $("#grid_turmas_listas").trigger("reloadGrid");
+}
+
+/**
+ * Função que controla o tipo de distribuição escolhido pelo usuário
+ */
+function exibeOpt(opt){
+    $(".opts").hide();
+    $("#" + opt).show();
+}
+
+function enviaConvite(){
+    //Verifica tela onde está sendo feito o envio.
+    var optSel      = null; //Armazena opção escolhida pelo user
+    var id          = 0; //ID que será enviado para convites
+
+    if($("input[name=tipoDistribuicao]:checked").val() == 'optTurmaLista'){
+        var idTurmaSel  = $("#idTurmaSel").val();
+        
+        if(idTurmaSel == null || idTurmaSel <= 0){
+            $( "#erroConvite" ).html("Selecione uma Turma para continuar!");
+        }else{
+            //Inicia varáveis para serem enviadas
+            id      = idTurmaSel;
+            optSel  = "T";
+        }
+    }else{
+        var idListaSel = $("#idListaSel").val();
+
+        if(idListaSel == null || idListaSel <= 0){
+            $( "#erroConvite" ).html("Selecione uma Lista de Exercícios para continuar!");
+        }else{
+            //Inicia varáveis para serem enviadas
+            id      = idListaSel;
+            optSel  = "L";
+        }
+    }
+
+    //Se houver erros o script exibe a msg e para.
+    if(id == 0){
+        $("#erroConvite").css("display", "");
+        $("#msgConvite").css("display", "none");
+        
+        $( "#modal_convite" ).dialog({
+            title: 'Enviar Convite',
+            open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
+            resizable: false,
+            draggable: false,
+            width: 350,
+            modal: true,
+            zIndex: 9999,
+            buttons: null
+        });
+        return false;
+    }
+    
+    //Controla exibição das msgs
+    $("#erroConvite").css("display", "none");
+    $("#msgConvite").css("display", "");       
+    
+    $.post(
+        'CarregaInfoConvite',
+        {
+            id: id,
+            tipo: optSel
+        }, 
+        function(ret){
+            
+        },
+        'json'
+    );
+    
+    //Abre o Modal com a mensagem de confirmação para disparo
+    $( "#modal_convite" ).dialog({
+        title: 'Enviar Convite',
+        open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
+        resizable: false,
+        draggable: false,
+        width: 350,
+        modal: true,
+        zIndex: 9999,
+        buttons: {
+            'Sim': function() {
+                //Exibe mensagem de aguarde ao usuário
+                $( "#msgConvite" ).html("<center style='font-weight:bold;'>Aguarde, enviando convites...</center>");
+                
+                //Efetua a chamada do script de disparo
+                $.post(
+                    'DisparaNotificacao', 
+                    {
+                        id: id,
+                        tipo: optSel
+                    }, 
+                    function(ret){
+                        //Valida retorno
+                        if(ret.status){
+                            $( "#msgConvite" ).html("<center style='font-weight:bold;color:blue;'>" + ret.msg + "</center>");
+                            
+                            //Controla exibição das msgs
+                            $("#erroConvite").css("display", "none");
+                            $("#msgConvite").css("display", "");
+                        }else{
+                            $( "#erroConvite" ).html(ret.msg);
+                            
+                            //Controla exibição das msgs
+                            $("#erroConvite").css("display", "");
+                            $("#msgConvite").css("display", "none");
+                        }
+                        
+                        $( "#modal_convite" ).dialog({
+                            title: 'Enviar Convite',
+                            open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
+                            resizable: false,
+                            draggable: false,
+                            width: 350,
+                            modal: true,
+                            zIndex: 9999,
+                            buttons: null
+                        });
+                    }, 
+                    'json'
+                );
+            },
+            'Não': function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
 }

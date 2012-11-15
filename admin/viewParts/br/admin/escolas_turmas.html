@@ -1,4 +1,14 @@
 <!-- começo conteudo -->
+<!-- Modal Notificação -->
+<div id="modal_convite" style="display:none;">
+    <div id="erroConvite" style="font-weight:bold;color:red;text-align:center;"></div>
+    <div id="msgConvite" style="width:100%;">
+        Ao clicar em <strong>SIM</strong>, TODOS os Alunos da(s) Turma(s) selecionada(s) receberão um e-mail com instruções para acesso à(s) Lista(s) de Exercícios selecionada(s).
+        <br /><br />
+        Deseja disparar a Notificação agora?
+    </div>
+</div>
+<!-- Modal Notificação -->
 <!-- Modal Turmas -->
 <div id="modal_turmas" style="display:none;">
     <table style="width:750px;height:500px;border-collapse:collapse;border-spacing:0;">
@@ -135,24 +145,88 @@
             <div id="pg_escola"></div>
         </div>
         <div id="turmasListas" style="padding:10px;width:100%;">
-            <table style="width:100%;">
-                <tr>
-                    <td style="vertical-align:top;text-align:left">
-                        <!-- Grid de Turmas -->
-                        <table id="grid_turmas" style="width:100%;"></table>
-                        <div id="pg_turmas"></div>
-                        <!-- Grid de Turmas -->
-                    </td>
-                </tr>
-                <tr>
-                    <td style="vertical-align:top;text-align:left">
-                        <!-- Grid de Listas -->
-                        <table id="grid_listas" style="width:100%;"></table>
-                        <div id="pg_listas"></div>
-                        <!-- Grid de Listas -->
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <input type="radio" name="tipoDistribuicao" value="optTurmaLista" checked="checked" onclick="javascript:exibeOpt(this.value);" /> Uma turma com uma ou mais listas
+                &nbsp;
+                <input type="radio" name="tipoDistribuicao" value="optListaTurma" onclick="javascript:exibeOpt(this.value);" /> Uma lista com uma ou mais turmas
+            </div>
+            
+            <!-- Turmas > Listas -->
+            <div id="optTurmaLista" class="opts">
+                <table style="width:100%;">
+                    <tr>
+                        <td style="vertical-align:top;text-align:left">
+                            <!-- Grid de Turmas -->
+                            <table id="grid_turmas" style="width:100%;"></table>
+                            <div id="pg_turmas"></div>
+                            <input type="hidden" name="idsListas" id="idsListas" value=""/>
+                            <input type="hidden" name="idTurmaSel" id="idTurmaSel" value=""/>
+                            <!-- Grid de Turmas -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top;text-align:left">
+                            <!-- Grid de Listas -->
+                            <div id="listas_inicio">
+                                Selecione uma Turma para filtrar as Listas
+                            </div>
+                            <div id="listas" style="display:none;">
+                                <div>
+                                    <input type="checkbox" name="selTodasListas" id="selTodasListas" onclick="javascript:selListas(this);" /> Selecionar todas as Listas
+                                    &nbsp;
+                                    <input type="checkbox" name="selListasUtilizadas" id="selListasUtilizadas" onclick="javascript:exibeListasUtilizadas(this);" /> Selecionar listas utilizadas
+                                </div>
+                                <table id="grid_listas" style="width:100%;"></table>
+                                <div id="pg_listas"></div>                            
+                            </div>
+                            <!-- Grid de Listas -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Turmas > Listas -->
+            
+            <!-- Listas > Turmas -->
+            <div id="optListaTurma" class="opts" style="display:none;">
+                <table style="width:100%;">
+                    <tr>
+                        <td style="vertical-align:top;text-align:left">
+                            <!-- Grid de Turmas -->
+                            <table id="grid_listas_turmas" style="width:100%;"></table>
+                            <div id="pg_listas_turmas"></div>
+                            <input type="hidden" name="idsTurmas" id="idsTurmas" value=""/>
+                            <input type="hidden" name="idListaSel" id="idListaSel" value=""/>
+                            <!-- Grid de Turmas -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top;text-align:left">
+                            <!-- Grid de Listas -->
+                            <div id="turmas_inicio">
+                                Selecione uma Lista para filtrar as Turmas
+                            </div>
+                            <div id="turmas" style="display:none;">
+                                <div>
+                                    <input type="checkbox" name="selTodasTurmas" id="selTodasTurmas" onclick="javascript:selTurmas(this);" /> Selecionar todas as Turmas
+                                    &nbsp;
+                                    <input type="checkbox" name="selTurmasUtilizadas" id="selTurmasUtilizadas" onclick="javascript:exibeTurmasUtilizadas(this);" /> Selecionar Turmas utilizadas
+                                </div>
+                                <table id="grid_turmas_listas" style="width:100%;"></table>
+                                <div id="pg_turmas_listas"></div>
+                            </div>
+                            <!-- Grid de Listas -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Turmas > Listas -->
+            
+            <!-- Rodapé Grids -->
+            <div style="width:750px;">
+                <div id="txtStatus" style="float:left"></div>
+                <input type="button" value="Enviar Convite" style="float:right" onclick="javascript:enviaConvite();" />
+            </div>
+            <!-- Rodapé Grids -->
         </div>
     </div>
 </div>

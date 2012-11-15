@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Módulo admin:
+    Configurações do menu vertical.
+    Dados agrupados por idioma.
+-->
+
+<root>
+    <br>
+        <itemMenuParams>
+            <param id='cls'>index</param>
+            <param id='controller'>home</param>
+            <param id='text'>Home</param>
+        </itemMenuParams>        
+        <itemMenuParams>
+            <param id='cls'>index</param>
+            <param id='controller'>home</param>
+            <param id='text'>Home</param>
+        </itemMenuParams>   
+        <itemMenuParams>
+            <param id='cls'>usuario</param>
+            <param id='controller'>usuarios</param>
+            <param id='text'>Usuários</param>
+        </itemMenuParams>           
+        <itemMenuParams>
+            <param id='cls'>comercial</param>
+            <param id='controller'>comercial</param>
+            <param id='text'>Comercial</param>
+        </itemMenuParams>          
+    </br>
+    <en>
+        
+    </en>
+</root>
