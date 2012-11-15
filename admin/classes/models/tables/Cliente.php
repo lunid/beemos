@@ -42,6 +42,22 @@
             $this->setJoin("b.UF='SP'");                
         }
         
+        /**
+         * Função que calcula o Total de Alunos e Total de Alunos com Celular em uma Turma
+         * 
+         * @param int $ID_TURMA Código da Turma
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int     $ret->qtd       - Número total de alunos em uma turma               <br />
+         *  int     $ret->qtdCel    - Número total de alunos com celular em uma turma               <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregaInfoAlunosTurma($ID_TURMA){
             try{
                 //Objeto de retorno 
@@ -50,29 +66,21 @@
                 $ret->msg       = "Falha ao carregar informações de Alunos!";
                 
                 $sql = "SELECT
-                            count(1) as QTD
-                        FROM
-                            SPRO_CLIENTE C
-                        INNER JOIN
-                            SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = C.ID_CLIENTE
-                        WHERE
-                            TA.ID_TURMA = {$ID_TURMA}
-                        ";
+                            (SELECT count(1) FROM SPRO_CLIENTE C INNER JOIN SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = C.ID_CLIENTE WHERE TA.ID_TURMA IN ({$ID_TURMA})) AS QTD,
+                            (SELECT count(1) FROM SPRO_CLIENTE C INNER JOIN SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = C.ID_CLIENTE WHERE TA.ID_TURMA IN ({$ID_TURMA}) AND FONE_CELULAR IS NOT NULL ) AS QTD_CELULAR
+                       ";
                             
                 $rs = $this->query($sql);
+                $rs = $rs[0]; //Armazena apena sprimeira linha
                 
-                echo "<pre style='color:#FF0000;'>";
-                print_r($rs);
-                echo "</pre>";
-                die;
-                
-                //VErifica resultado retornado
+                //Verifica resultado retornado
                 if($rs['QTD'] <= 0){
-                    $ret->msg = "Nenhum Aluno cadastrado nesta Turma!";
+                    $ret->msg = "Nenhum Aluno cadastrado na(s) Turma(s) selecionada(s)!";
                 }else{
                     $ret->status    = true;
                     $ret->msg       = "dados carregado com sucesso!";
                     $ret->qtd       = $rs['QTD'];
+                    $ret->qtdCel    = $rs['QTD_CELULAR'];
                 }
                 
                 return $ret;

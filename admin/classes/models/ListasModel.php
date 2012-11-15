@@ -3,6 +3,7 @@
     use \sys\classes\mvc\Model;        
     use \admin\classes\models\tables\HistoricoGeradoc;
     use \admin\classes\models\tables\TurmaLista;
+    use \admin\classes\models\tables\TurmaConvite;
     
     class ListasModel extends Model {
         /**
@@ -119,6 +120,66 @@
                             $ret->msg = "Operação não identificada!";
                             return $ret;
                     }
+                }
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Função que salva as informações de Turma e Lista para que depois os convites sejam disparados via CRON
+         * 
+         * @param int $ID_CLIENTE
+         * @param int $ID_TURMA
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * @param char $sms S ou N
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function salvaConvites($ID_CLIENTE, $ID_TURMA, $ID_HISTORICO_GERADOC, $sms){
+            try{
+                //Objeto de retorno 
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar disparo de convites!";
+                
+                //Instância da table SPRO_TURMA_CONVITE
+                $tbTurmaConvite                         = new TurmaConvite();
+                
+                //Carrega Lista e seus dados
+                $tbLista = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                
+                //Verifica se foi encontrada a lista
+                if($tbLista->ID_HISTORICO_GERADOC != $ID_HISTORICO_GERADOC){
+                    $ret->msg = "Lista não encontrada!";
+                    return $ret;
+                }
+                
+                //Seta valores para INSERT
+                $tbTurmaConvite->ID_TURMA_CONVITE       = 0;
+                $tbTurmaConvite->ID_CLIENTE             = $ID_CLIENTE;
+                $tbTurmaConvite->ID_TURMA               = $ID_TURMA;
+                $tbTurmaConvite->ID_HISTORICO_GERADOC   = $tbLista->ID_HISTORICO_GERADOC;
+                $tbTurmaConvite->ENVIAR_SMS             = $sms;
+                $tbTurmaConvite->COD_LISTA              = $tbLista->COD_LISTA;
+                
+                //Executa INSERT
+                $id = $tbTurmaConvite->save();
+                
+                if($id > 0){
+                    $ret->status    = true;
+                    $ret->msg       = "Disparo de convide gravado com sucesso!";
+                }else{
+                    $ret->msg       = "Falha ao gravar disparo de convide!";
                 }
                 
                 return $ret;

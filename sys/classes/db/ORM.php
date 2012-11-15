@@ -107,6 +107,7 @@ abstract class ORM {
     private function init(){
         $this->getTable();
         $results    = $this->loadColumns();
+        self::$results = null;
         if (is_array($results)) {
             foreach($results as $col){
                 $colName                    = $col['Field'];//NOME DA COLUNA

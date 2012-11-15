@@ -519,6 +519,10 @@
             }  
         }
         
+        /**
+         * Carrega as informações sobre o disparo de convites:
+         * Total de Alunos e Total de Celulares
+         */
         public function actionCarregaInfoConvite(){
             try{
                 //Objeto de retorno
@@ -528,15 +532,36 @@
                 
                 //Captura variáveis enviadas
                 $id             = Request::post('id');
+                $tipo           = Request::post('tipo');
                 //Instância Model
                 $mdEscolaTurma  = new EscolasTurmasModel();
                                 
                 switch ($tipo) {
                     case 'T':
-                        $ret = $mdEscolaTurma->carregaContatosTurma($id);
+                        $ret            = $mdEscolaTurma->carregaContatosTurma($id);
+                        $ret->idsTurmas = $id; //Retorna IDs de Turma utilizados
                         break;
                     case 'L':
-                        $ret = $mdEscolaTurma->carregaContatosTurma($id);
+                        //Busca turmas relacionadas a Lista
+                        $rsTurmas = $mdEscolaTurma->listaTurmasCliente(26436, 0, 1, $id);
+                        
+                        //Verifica se houve retorno
+                        if(!$rsTurmas->status){
+                            $ret = $rsTurmas;
+                        }else{
+                            //Cancatena IDs de Turma encontradas
+                            $ids = "";                            
+                            foreach ($rsTurmas->turmas as $turma) {
+                                if($ids != ""){
+                                    $ids .= ",";
+                                }
+                                $ids .= $turma["ID_TURMA"];
+                            }
+                            
+                            //Verifica informações de alunos para convites
+                            $ret            = $mdEscolaTurma->carregaContatosTurma($ids);
+                            $ret->idsTurmas = $ids; //Retorna IDs de Turma utilizados
+                        }
                         break;
                 }
                                
@@ -551,19 +576,96 @@
             }
         }
         
-        public function actionDisparaNotificacao(){
+        /**
+         * Função que salva a lista de Turmas e Listas para onde devem ser disparados os convites.
+         */
+        public function actionDisparaConvites(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha ao disparar notificação aos Alunos!";
+                $txtErro        = ""; //Armazena erros caso existam
+                $qtdDisparos    = 0; //Contador de disparos
+                $verOk          = 0; //Contador de disparos OK
                 
                 //Captura variáveis enviadas
-                $id     = Request::post('id', 'NUMBER');
-                $tipo   = Request::post('tipo');
-                $sms    = Request::post('sms');
+                $idsTurmas  = Request::post('idsTurmas');
+                $idLista    = Request::post('idLista', 'NUMBER');
+                $sms        = Request::post('sms');
                 
+                //Array de turmas
+                $arrId = explode(",", $idsTurmas);
+                //Armazena quantidade de turmas
+                $ret->qtdTurmas = sizeof($arrId);
                 
+                //Instância do Model de Listas
+                $mdListas   = new ListasModel();
+                
+                //Verifica se será enviado convite apenas para uma lista
+                if($idLista > 0){
+                    //Seta Total de Disparos
+                    $qtdDisparos = sizeof($arrId);
+                    //Insere registros para disparo apenas para a lista desejada
+                    foreach($arrId as $idTurma){
+                        //Insere registros para disparo via cron
+                        $rs = $mdListas->salvaConvites(
+                                26436,
+                                $idTurma,
+                                $idLista,
+                                $sms
+                        );
+                        
+                        if(!$rs->status){
+                            $txtErro .= "<br />Falha ao disparar convites para Turma: " . $idTurma;
+                        }else{
+                            $verOk++;
+                        }
+                    }
+                }else{
+                    //Caso seja um disparo de todas as listas de uma ou mais turmas...
+                    
+                    //Varre Turma enviadas
+                    foreach($arrId as $idTurma){
+                        //Busca listas ta turma
+                        $retListas = $mdListas->carregaListasCliente(26436, '', 1, $idTurma);
+                        
+                        //Se houver listas para turma
+                        if($retListas->status){
+                            //Seta Total de Disparos
+                            $qtdDisparos = sizeof($retListas->listas);
+                            //Insere um registro de convite para cada lista
+                            foreach($retListas->listas as $lista){
+                                //Insere registros para disparo via cron
+                                $rs = $mdListas->salvaConvites(
+                                        26436,
+                                        $idTurma,
+                                        $lista['ID_HISTORICO_GERADOC'],
+                                        $sms
+                                );
+                                
+                                //Caso exista erro no INSERT o erro é anotado
+                                if(!$rs->status){
+                                    $txtErro .= "<br />Falha ao disparar convites para Turma: " . $idTurma;
+                                }else{
+                                    $verOk++;
+                                }
+                            }
+                        }else{
+                            $ret = $retListas;
+                        } //Verificação de listas
+                    } //Loop de Turmas
+                } //Verificação de convite é para lista ou turmas
+                
+                if($verOk == $qtdDisparos){
+                    $ret->status = true;
+                    $ret->msg = "Convites enviados com sucesso! Em breve seus alunos receberão as informações para acesso à(s) Lista(s) de Exercícios";
+                }else if($verOk == 0){
+                    $ret->msg = "Falha ao disparar convites, tente mais tarde!";
+                }else{
+                    $ret->status    = false;
+                    $ret->msg       = "Falha ao disparar convites:<br />" . $txtErro;
+                }
                 
                 echo json_encode($ret);
             }catch(Exception $e){
