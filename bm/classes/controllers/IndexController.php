@@ -21,6 +21,7 @@
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'ADM';
                 
+                $tpl->setCss('bm.home');
                 $tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();
                 

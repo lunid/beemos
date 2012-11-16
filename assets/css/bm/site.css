@@ -8,16 +8,23 @@ body{
     width:auto;
     height:auto;
     margin:0px;
-    background:#efefef url(../../images/bm/bg_gray.jpg) repeat-x center top;    
+    background:#efefef url("../../images/bm/bg_gray.gif") repeat-x center top;    
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
 }
 
 
-#wrap{
+.wrapPage {
     width:960px;/*960*/
-    background:#fff;
-    margin:30px auto 30px auto;
+    background:none;
+    margin:0px auto 0px auto;
     padding:0;
-    border:1px solid #ccc;
+}
+
+#aba_logo {
+    width: 236px;
+    height: 55px;
+    padding-top:10px;
+    padding-left:70px;
+    background: url("../../images/bm/bg_aba_logo.gif") no-repeat center top;           
 }

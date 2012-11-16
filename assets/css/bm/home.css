@@ -1,0 +1,14 @@
+/* 
+    Document   : home
+    Created on : 15/11/2012, 12:43:24
+    Author     : Claudio
+    Description:
+        Página home do site institucional
+*/
+
+#banner {
+    height: 533px;
+    margin-top:0px;
+    background:#efefef url("../../images/bm/banners/bg_banner_home.gif") repeat-x center top;    
+}
+
