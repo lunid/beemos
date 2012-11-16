@@ -19,7 +19,7 @@
                 //Template
                 $tpl = $this->mkView();                                
                 $tpl->setLayout($objViewPart);
-                $tpl->TITLE = 'ADM | SuperPro';
+                $tpl->TITLE = 'ADM';
                 
                 $tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();

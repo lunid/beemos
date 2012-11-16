@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Componente para Dicas de formulário
+    </descricao>
+    <config>
+        <include id='jsInc'>js.prettify,js.kickstart</include>
+        <include id='cssInc'>css.kickstart,style</include>
+    </config>
+</root>

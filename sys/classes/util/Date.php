@@ -3,11 +3,20 @@
     
     class Date {
         public static function formatDate($date, $type = 'DD/MM/AAAA'){
+            if(trim($date) == '' || $date == null){
+                return '';                
+            }
+            
             switch($type){
                 case 'DD/MM/AAAA':
                     $date_time  = explode(" ", $date);
                     $date_f     = explode("-", $date_time[0]);
                     return $date_f[2] . "/" . $date_f[1] . "/" . $date_f[0];
+                    break;
+                case 'DD/MM/AAAA HH:MM:SS':
+                    $date_time  = explode(" ", $date);
+                    $date_f     = explode("-", $date_time[0]);
+                    return $date_f[2] . "/" . $date_f[1] . "/" . $date_f[0] . " " . $date_time[1];
                     break;
                 case 'DD/MM':
                     $date_time  = explode(" ", $date);

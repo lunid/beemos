@@ -267,62 +267,49 @@
                     //Filtro de ensino
                     $ENSINO = Request::get('ENSINO');
                     if($ENSINO != 'T' && $ENSINO != ''){
-                        $where = " T.ENSINO = '" . $ENSINO . "'";  
+                        $where = " AND T.ENSINO = '" . $ENSINO . "'";  
                     }
                     
                     //Filtro de Ano
                     $ANO = Request::get('ANO');
                     if($ANO != 'T' && $ANO != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                        
-                        $where .= " T.ANO = " . $ANO;  
+                        $where .= " AND T.ANO = " . $ANO;  
                     }
                     
                     //Filtro de Periodo
                     $PERIODO = Request::get('PERIODO');
                     if($PERIODO != 'TO' && $PERIODO != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " T.PERIODO = '" . $PERIODO . "'";  
+                        $where .= " AND T.PERIODO = '" . $PERIODO . "'";  
                     }
                     
                     //Filtro de Escola
                     $ESCOLA = Request::get('ESCOLA');
                     if($ESCOLA != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " E.NOME LIKE '%" . $ESCOLA . "%'";  
+                        $where .= " AND E.NOME LIKE '%" . $ESCOLA . "%'";  
                     }
                     
                     //Filtro de classe
                     $CLASSE = Request::get('CLASSE');
                     if($CLASSE != ''){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " T.CLASSE LIKE '%" . $CLASSE . "%'";  
+                        $where .= " AND T.CLASSE LIKE '%" . $CLASSE . "%'";  
                     }
                     
                     //Filtro de Turma
                     $ID_TURMA = Request::get('ID_TURMA', 'NUMBER');
                     if($ID_TURMA > 0){
-                        if($where != ""){
-                            $where .= " AND ";
-                        }
-                    
-                        $where .= " T.ID_TURMA = " . $ID_TURMA;  
+                        $where .= " AND T.ID_TURMA = " . $ID_TURMA;  
                     }
                 }
-
+                
+                //Verifica se foi enviado o ID_LISTA e o filtro de Utilizadas
+                $ID_HISTORICO_GERADOC   = Request::get('ID_LISTA', 'NUMBER');
+                $utilizadas             = Request::get('utilizadas', 'NUMBER');
+                
                 //Lista todas escolas encontradas
-                $rs = $mdEscolasTurmas->listaTurmasCliente(26436, 0, $where);
+                $rs = $mdEscolasTurmas->listaTurmasCliente(26436, 0, $utilizadas, ($utilizadas == 1 ? $ID_HISTORICO_GERADOC : 0), $where);
+                
+                //Variável que armazena IDs encontrados no Select
+                $ids = "";
                 
                 if($rs->status){
                     $page           = Request::get('page', 'NUMBER'); 
@@ -342,6 +329,8 @@
                     $rs = $mdEscolasTurmas->listaTurmasCliente(
                             26436,
                             0,
+                            $utilizadas, 
+                            $ID_HISTORICO_GERADOC,
                             $where,
                             array(
                                 "campoOrdenacao"    => $orderField, 
@@ -357,8 +346,15 @@
 
                     $i=0;
                     foreach($rs->turmas as $row) {
+                        //Concatena IDs encontrados
+                        if($ids != ""){
+                            $ids .= ",";
+                        }
+                        $ids .= $row['ID_TURMA'];
+                        
                         $ret->rows[$i]['id']   = $row['ID_TURMA'];
                         $ret->rows[$i]['cell'] = array(
+                            "<input type='checkbox' value='{$row['ID_TURMA']}' class='check_turma' ".($row['ID_HISTORICO_GERADOC'] == $ID_HISTORICO_GERADOC ? "checked='checked'" : "")." onclick='javascript:salvaRelacaoTurma(this);' />",
                             $row['ID_TURMA'],
                             $row['CLASSE'],
                             EscolasTurmasModel::traduzEnsino($row['ENSINO']),
@@ -368,6 +364,8 @@
                         );
                         $i++;
                     }
+                    //Armazena IDs no retorno
+                    $ret->idsTurmas = $ids;
                 }else{
                     $ret                    = new stdClass();
                     $ret->rows[0]['id']     = 0;
@@ -505,7 +503,7 @@
                 //Salva operação enviada
                 $mdListas   = new ListasModel();
                 $ret        = $mdListas->salvaListasTurmas(
-                                    Request::post('idTurma', 'NUMBER'), 
+                                    Request::post('idsTurmas'), 
                                     Request::post('idsListas'), 
                                     Request::post('tipo')
                                 );
@@ -519,6 +517,165 @@
                 
                 echo json_encode($ret);
             }  
+        }
+        
+        /**
+         * Carrega as informações sobre o disparo de convites:
+         * Total de Alunos e Total de Celulares
+         */
+        public function actionCarregaInfoConvite(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao disparar notificação aos Alunos!";
+                
+                //Captura variáveis enviadas
+                $id             = Request::post('id');
+                $tipo           = Request::post('tipo');
+                //Instância Model
+                $mdEscolaTurma  = new EscolasTurmasModel();
+                                
+                switch ($tipo) {
+                    case 'T':
+                        $ret            = $mdEscolaTurma->carregaContatosTurma($id);
+                        $ret->idsTurmas = $id; //Retorna IDs de Turma utilizados
+                        break;
+                    case 'L':
+                        //Busca turmas relacionadas a Lista
+                        $rsTurmas = $mdEscolaTurma->listaTurmasCliente(26436, 0, 1, $id);
+                        
+                        //Verifica se houve retorno
+                        if(!$rsTurmas->status){
+                            $ret = $rsTurmas;
+                        }else{
+                            //Cancatena IDs de Turma encontradas
+                            $ids = "";                            
+                            foreach ($rsTurmas->turmas as $turma) {
+                                if($ids != ""){
+                                    $ids .= ",";
+                                }
+                                $ids .= $turma["ID_TURMA"];
+                            }
+                            
+                            //Verifica informações de alunos para convites
+                            $ret            = $mdEscolaTurma->carregaContatosTurma($ids);
+                            $ret->idsTurmas = $ids; //Retorna IDs de Turma utilizados
+                        }
+                        break;
+                }
+                               
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Função que salva a lista de Turmas e Listas para onde devem ser disparados os convites.
+         */
+        public function actionDisparaConvites(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao disparar notificação aos Alunos!";
+                $txtErro        = ""; //Armazena erros caso existam
+                $qtdDisparos    = 0; //Contador de disparos
+                $verOk          = 0; //Contador de disparos OK
+                
+                //Captura variáveis enviadas
+                $idsTurmas  = Request::post('idsTurmas');
+                $idLista    = Request::post('idLista', 'NUMBER');
+                $sms        = Request::post('sms');
+                
+                //Array de turmas
+                $arrId = explode(",", $idsTurmas);
+                //Armazena quantidade de turmas
+                $ret->qtdTurmas = sizeof($arrId);
+                
+                //Instância do Model de Listas
+                $mdListas   = new ListasModel();
+                
+                //Verifica se será enviado convite apenas para uma lista
+                if($idLista > 0){
+                    //Seta Total de Disparos
+                    $qtdDisparos = sizeof($arrId);
+                    //Insere registros para disparo apenas para a lista desejada
+                    foreach($arrId as $idTurma){
+                        //Insere registros para disparo via cron
+                        $rs = $mdListas->salvaConvites(
+                                26436,
+                                $idTurma,
+                                $idLista,
+                                $sms
+                        );
+                        
+                        if(!$rs->status){
+                            $txtErro .= "<br />Falha ao disparar convites para Turma: " . $idTurma;
+                        }else{
+                            $verOk++;
+                        }
+                    }
+                }else{
+                    //Caso seja um disparo de todas as listas de uma ou mais turmas...
+                    
+                    //Varre Turma enviadas
+                    foreach($arrId as $idTurma){
+                        //Busca listas ta turma
+                        $retListas = $mdListas->carregaListasCliente(26436, '', 1, $idTurma);
+                        
+                        //Se houver listas para turma
+                        if($retListas->status){
+                            //Seta Total de Disparos
+                            $qtdDisparos = sizeof($retListas->listas);
+                            //Insere um registro de convite para cada lista
+                            foreach($retListas->listas as $lista){
+                                //Insere registros para disparo via cron
+                                $rs = $mdListas->salvaConvites(
+                                        26436,
+                                        $idTurma,
+                                        $lista['ID_HISTORICO_GERADOC'],
+                                        $sms
+                                );
+                                
+                                //Caso exista erro no INSERT o erro é anotado
+                                if(!$rs->status){
+                                    $txtErro .= "<br />Falha ao disparar convites para Turma: " . $idTurma;
+                                }else{
+                                    $verOk++;
+                                }
+                            }
+                        }else{
+                            $ret = $retListas;
+                        } //Verificação de listas
+                    } //Loop de Turmas
+                } //Verificação de convite é para lista ou turmas
+                
+                if($verOk == $qtdDisparos){
+                    $ret->status = true;
+                    $ret->msg = "Convites enviados com sucesso! Em breve seus alunos receberão as informações para acesso à(s) Lista(s) de Exercícios";
+                }else if($verOk == 0){
+                    $ret->msg = "Falha ao disparar convites, tente mais tarde!";
+                }else{
+                    $ret->status    = false;
+                    $ret->msg       = "Falha ao disparar convites:<br />" . $txtErro;
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
         }
     }
 ?>

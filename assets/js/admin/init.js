@@ -31,6 +31,42 @@ Site.prototype = {
     fechaAguarde: function(){
         $( "#modal_aguarde" ).dialog("close");
     },
+    modal: function(msg, title, cssClass, buttons, width){
+        //Seta largura padrão
+        if(width <= 0 || width == null){
+            width = 350;
+        }
+        
+        //Seta mensagem
+        $("#msg_modal_padrao").html(msg);
+        
+        //Seta classe
+        if(cssClass != null && cssClass != ''){
+            $("#msg_modal_padrao").addClass(cssClass);
+        }else{
+            $("#msg_modal_padrao").attr('class', '');
+        }        
+        
+        //Abre o modal
+        $( "#modal_padrao" ).dialog({
+            title: title,
+            open: title != null && title != '' ? function(event, ui) { $(".ui-dialog-titlebar").show(); } : null,
+            resizable: false,
+            draggable: false,
+            width: width,
+            modal: true,
+            zIndex: 9999,
+            buttons: buttons != null ? buttons : null
+        });
+    },
+    fechaModal: function(){
+        //Zera mensagem
+        $("#msg_modal_padrao").html('');
+        //Zera css
+        $("#msg_modal_padrao").attr('class', '');
+        //Fecha modal
+        $( "#modal_padrao" ).dialog("close");
+    },
     formataGrid: function(rowId, tv, rawObject, cm, rdata) {
         var border = " border-left: 1px solid #D3D3D3 ";
         

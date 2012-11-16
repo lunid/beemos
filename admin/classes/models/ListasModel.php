@@ -3,6 +3,7 @@
     use \sys\classes\mvc\Model;        
     use \admin\classes\models\tables\HistoricoGeradoc;
     use \admin\classes\models\tables\TurmaLista;
+    use \admin\classes\models\tables\TurmaConvite;
     
     class ListasModel extends Model {
         /**
@@ -25,6 +26,7 @@
          *   "limite"            => 10
          * )
          * </code>
+         * 
          * @return stdClass $ret
          * <code>
          *  <br />
@@ -62,60 +64,122 @@
         /**
          * Função que salva a alteração de relacionamentos entre Turmas e Listas
          * 
-         * @param int $ID_TURMA Código da Turma
+         * @param string $idTurmas String com IDs de turmas separados por vírgula. Ex: 23,56,87
          * @param string $idsListas String com IDs de listas separados por vírgula. Ex: 17878,21233,98877
          * @param char $tipo Tipo de operação a ser realizada I - Inserção ou E - Exclusão
          * @return \stdClass
          * @throws Exception
          */
-        public function salvaListasTurmas($ID_TURMA, $idsListas, $tipo){
+        public function salvaListasTurmas($idTurmas, $idsListas, $tipo){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha ao salvar Lista(s) da Turma";
                 
-                $tbTurmaLista = new TurmaLista();
+                //Array de Turmas
+                $arrIdTurmas = explode(",", $idTurmas);
                 
-                //Limpa as listas do com IDs enviados
-                $sql = "DELETE FROM SPRO_TURMA_LISTA WHERE ID_TURMA = {$ID_TURMA} AND ID_HISTORICO_GERADOC IN({$idsListas});";
-                $tbTurmaLista->query($sql);
-                
-                //Verifica qual operação executar
-                switch($tipo){
-                    case "I":
-                        //Tranforma IDs em Array
-                        $arrId = explode(",", $idsListas);
-                        //Verifica se forma encontrados IDs
-                        if(is_array($arrId) && sizeof($arrId) > 0){
-                            foreach($arrId as $idLista){
-                                //Popula informações para insert
-                                $tbTurmaLista->ID_TURMA             = (int)$ID_TURMA;
-                                $tbTurmaLista->ID_HISTORICO_GERADOC = (int)$idLista;
+                //Percorre array limpando registros e adicionando relacionamentos
+                foreach($arrIdTurmas as $idTurma){
+                    //Limpa as listas do com IDs enviados
+                    $tbTurmaLista   = new TurmaLista();
+                    $sql            = "DELETE FROM SPRO_TURMA_LISTA WHERE ID_TURMA = {$idTurma} AND ID_HISTORICO_GERADOC IN({$idsListas});";
+                    $tbTurmaLista->query($sql);
 
-                                //Executa inserção
-                                $tbTurmaLista->save();
+                    //Verifica qual operação executar
+                    switch($tipo){
+                        case "I":
+                            //Tranforma IDs em Array
+                            $arrId = explode(",", $idsListas);
+                            //Verifica se forma encontrados IDs
+                            if(is_array($arrId) && sizeof($arrId) > 0){
+                                foreach($arrId as $idLista){
+                                    //Popula informações para insert
+                                    $tbTurmaLista->ID_TURMA             = (int)$idTurma;
+                                    $tbTurmaLista->ID_HISTORICO_GERADOC = (int)$idLista;
+
+                                    //Executa inserção
+                                    $tbTurmaLista->save();
+                                }
+
+                                //Se não houver erro, é retornado status OK
+                                $ret->status    = true;
+                                $ret->msg       = "Relação salva com sucesso!";
+                            }else{
+                                //Caso não seja enviado nenhum ID
+                                $ret->msg = "Nenhuma ID de lista enviado!";
                             }
-                            
-                            //Se não houver erro, é retornado status OK
+                            break;
+                        case "E":
+                            //Caso seja apenas uma exclusão
                             $ret->status    = true;
-                            $ret->msg       = "Relação salva com sucesso!";
+                            $ret->msg       = "Relação desfeita com sucesso!";
+                            break;
+                        default:
+                            $ret->msg = "Operação não identificada!";
                             return $ret;
-                        }else{
-                            //Caso não seja enviado nenhum ID
-                            $ret->msg = "Nenhuma ID de lista enviado!";
-                            return $ret;
-                        }
-                        break;
-                    case "E":
-                        //Caso seja apenas uma exclusão
-                        $ret->status    = true;
-                        $ret->msg       = "Relação desfeita com sucesso!";
-                        return $ret;
-                        break;
-                    default:
-                        $ret->msg = "Operação não identificada!";
-                        return $ret;
+                    }
+                }
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Função que salva as informações de Turma e Lista para que depois os convites sejam disparados via CRON
+         * 
+         * @param int $ID_CLIENTE
+         * @param int $ID_TURMA
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * @param char $sms S ou N
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function salvaConvites($ID_CLIENTE, $ID_TURMA, $ID_HISTORICO_GERADOC, $sms){
+            try{
+                //Objeto de retorno 
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar disparo de convites!";
+                
+                //Instância da table SPRO_TURMA_CONVITE
+                $tbTurmaConvite                         = new TurmaConvite();
+                
+                //Carrega Lista e seus dados
+                $tbLista = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                
+                //Verifica se foi encontrada a lista
+                if($tbLista->ID_HISTORICO_GERADOC != $ID_HISTORICO_GERADOC){
+                    $ret->msg = "Lista não encontrada!";
+                    return $ret;
+                }
+                
+                //Seta valores para INSERT
+                $tbTurmaConvite->ID_TURMA_CONVITE       = 0;
+                $tbTurmaConvite->ID_CLIENTE             = $ID_CLIENTE;
+                $tbTurmaConvite->ID_TURMA               = $ID_TURMA;
+                $tbTurmaConvite->ID_HISTORICO_GERADOC   = $tbLista->ID_HISTORICO_GERADOC;
+                $tbTurmaConvite->ENVIAR_SMS             = $sms;
+                $tbTurmaConvite->COD_LISTA              = $tbLista->COD_LISTA;
+                
+                //Executa INSERT
+                $id = $tbTurmaConvite->save();
+                
+                if($id > 0){
+                    $ret->status    = true;
+                    $ret->msg       = "Disparo de convide gravado com sucesso!";
+                }else{
+                    $ret->msg       = "Falha ao gravar disparo de convide!";
                 }
                 
                 return $ret;

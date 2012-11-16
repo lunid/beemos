@@ -5,6 +5,6 @@
         <include id='cssInc'>bm.site</include>
         <include id='js'></include>
         <include id='jsInc'></include>
-        <include id='plugins'></include>
+        <include id='plugins'>kickstart</include>
     </header>
 </root>

@@ -3,17 +3,28 @@
     use \sys\classes\mvc\Model;        
     use \admin\classes\models\tables\Escola;
     use \admin\classes\models\tables\Turma;
+    use \admin\classes\models\tables\Cliente;
     
     class EscolasTurmasModel extends Model {
         /**
          * Listas as escolas cadastradas para um determinado cliente
          * 
          * @param int $ID_CLIENTE Código do cliente para filtro de escolas
+         * @param string $where texto com o WHERE para Filtro de SQL
+         * @param array $arrPg Array com informações de Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
          * 
          * @return stdClass $ret
          * <code>
          *  <br />
-         *  <b>bool</b>    $ret->status    - Retorna TRUE ou FALSE para o status do Método   <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método   <br />
          *  string  $ret->msg       - Armazena mensagem ao usuário                    <br />
          *  array   $ret->escolas   - Armazena o array de escolas encontrados no Banco<br />
          * </code>
@@ -77,8 +88,18 @@
          * 
          * @param int $ID_CLIENTE
          * @param int $ID_ESCOLA
-         * @param string $where Filtros de pesquisa
+         * @param int $utilizadas Valida o filtro para busca de apenas Turmas utilizadas (0 ou 1)
+         * @param int $ID_HISTORICO_GERADOC Código da lista para filtro de utilizadas
+         * @param string $where Filtros de pesquisa SQL
          * @param string $arrPg Campos de paginação e ordenação do select
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
          * 
          * @return stdClass $ret
          * <code>
@@ -89,7 +110,7 @@
          * </code>
          * @throws Exception
          */
-        public function listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA = 0, $where = "", $arrPg = null){
+        public function listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA = 0, $utilizadas = 0, $ID_HISTORICO_GERADOC = 0, $where = "", $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -107,7 +128,7 @@
                 $tbTurma            = new Turma();
                 $tbTurma->ID_ESCOLA = $ID_ESCOLA;
                 //Busca as turmas de acordo com os parâmetros enviados
-                $rs = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $where, $arrPg);
+                $rs = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $utilizadas, $ID_HISTORICO_GERADOC, $where, $arrPg);
                 
                 //Retorna resultado da busca
                 return $rs;
@@ -316,6 +337,34 @@
                 $ret->status    = true;
                 $ret->msg       = "Turma salva com sucesso!";
                 $ret->id        = $id;
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Função que calcula o total de Alunos em uma Turma e o Total de Alunos que possuem celular
+         * 
+         * @param string $idsTurmas Códigos de Turmas concatenos por virgula, ex: 12,65,978
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int     $ret->qtd       - Número total de alunos em uma turma               <br />
+         *  int     $ret->qtdCel    - Número total de alunos com celular em uma turma               <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function carregaContatosTurma($idsTurmas){
+            try{
+                //Faz a consulta de informações do cliente e repassa resultado
+                $tbCliente  = new Cliente();
+                $ret        = $tbCliente->carregaInfoAlunosTurma($idsTurmas);
+                
                 return $ret;
             }catch(Exception $e){
                 throw $e;

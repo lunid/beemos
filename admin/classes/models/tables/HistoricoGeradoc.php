@@ -101,6 +101,10 @@
                             L.DATA_REGISTRO,
                             L.DESCR_ARQ,
                             L.NUM_QUESTOES,
+                            L.LISTA_ATIVA_DT_HR_INI,
+                            L.LISTA_ATIVA_DT_HR_FIM,
+                            IF(NOW() >= L.LISTA_ATIVA_DT_HR_INI AND NOW() <= L.LISTA_ATIVA_DT_HR_FIM, 'Ativa', 'Inativa') as STATUS,
+                            VER_IMPRESSA,
                             (SELECT T.ID_TURMA FROM SPRO_TURMA_LISTA T WHERE T.ID_TURMA = {$ID_TURMA} AND T.ID_HISTORICO_GERADOC = L.ID_HISTORICO_GERADOC ) AS ID_TURMA
                         FROM
                             SPRO_HISTORICO_GERADOC L
