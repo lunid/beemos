@@ -125,8 +125,8 @@ class Header {
      * Memoriza uma uri qualificada ($strFile) de acordo com a extensão informada (parâmetro $ext, que pode ser js ou css)
      * 
      * Como exemplo, seguem alguns valores possíveis para o parâmetro uri:
-     *  - $ext='js', $strFile='home': o sistema entende como 'app/views/js/home.js'
-     *  - $ext='css',$strFile='menu.init': o sistema entende como 'app/views/css/menu/init.css'
+     *  - $ext='js', $strFile='app.home': o sistema entende como 'assets/app/js/home.js'
+     *  - $ext='css',$strFile='app.menu.init': o sistema entende como 'assets/app/css/menu/init.css'
      * 
      * @param string $ext Valores possíveis: css,js,cssInc,jsInc
      * @param string $strFile String que contém o endereço de um arquivo
@@ -232,13 +232,10 @@ class Header {
         $string         = '';
         $tag            = '';
         $arrMemo        = array_unique($arrMemo);//Elimina valores em duplicidade.      
-        //echo "<pre>";
-        //print_r($arrMemo);
-        //echo "</pre>";
         
         if (strlen($layoutName) > 0){
-            $outFileMin  = self::getNameFileMin($extension);                
-            if ($this->forceNewIncMin)@unlink($outFileMin);
+            $outFileMin = self::getNameFileMin($extension);               
+            $this->verifRecriarArquivo($outFileMin);
             
             if (!file_exists($outFileMin)){                
                 foreach($arrMemo as $file){
@@ -307,7 +304,7 @@ class Header {
             $uri            = $assets.'/'.$path;                        
         }
                 
-        $pathFileMin    = \Url::physicalPath($uri);       
+        $pathFileMin    = \Url::physicalPath($uri);        
         return $pathFileMin;
     }  
         
@@ -337,7 +334,6 @@ class Header {
             if (strlen($file) == 0) continue;
             
             $arrInfo        = pathinfo($file);
-            $filename       = $arrInfo['filename'];
             $extension      = $arrInfo['extension'];
           
             $pos            = strpos($file,'_min.');
@@ -345,7 +341,7 @@ class Header {
             if ($pos === false) {
                 //O arquivo solicitado não é compactado (sufixo _min). Deve ser gerado.                                
                 $outFileMin = $this->getNameFileMin($extension,$file);
-                
+                $this->verifRecriarArquivo($outFileMin);
                 if (!file_exists($outFileMin)){
                     //Arquivo ainda não existe. Gera um arquivo _min.
                     
@@ -385,10 +381,8 @@ class Header {
         if (is_array($arrParams)) {
             $string         = $arrParams['string'];
             $extension      = $arrParams['extension'];
-            $fileNameMin    = $arrParams['fileNameMin'];
+            $fileNameMin    = $arrParams['fileNameMin'];                              
         }
-        
-        //echo "<pre>".print_r($arrParams).'</pre>';
                 
         try {            
             if (Component::yuiCompressor($string,$extension,$fileNameMin)){                                                        
@@ -428,6 +422,22 @@ class Header {
             $ext    = $fn;// js | jsInc | css | cssInc
             if (strlen($value) > 0) $this->memoIncludeJsCss($value,$ext);
         }
+    }
+    
+    /**
+     * Verifica se o arquivo solicitado, caso exista, deve ser excluído.
+     * Este método dá suporte aos métodos responsáveis por gerar arquivos compactados de css e js.
+     * 
+     * @param string $url URL absoluto do arquivo a ser verificado/excluído.
+     * 
+     * @return boolean
+     */
+    private function verifRecriarArquivo($url){
+        if ($this->forceNewIncMin){ 
+            $pathFile = \Url::relativeUrl($url);
+            if (file_exists($pathFile)) return unlink($pathFile);             
+        }
+        return FALSE;
     }
     
     private function showErr($msg,$e,$die=TRUE){
