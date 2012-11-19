@@ -14,6 +14,7 @@
         function actionIndex(){
             try{
                 //Home
+                //$this->setCache();
                 $objViewPart = $this->mkViewPart('home');
                 
                 //Template

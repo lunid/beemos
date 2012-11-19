@@ -6,7 +6,7 @@
     class ViewPart {               
         
         protected   $bodyContent;
-        protected   $viewFile;
+        protected   $viewFile;//path do arquivo estático usado como view.
         protected   $layoutName;
         protected   $params = array();
         
@@ -15,8 +15,8 @@
                 $arrParts           = explode('/',$pathViewHtml);
                 $numParts           = count($arrParts);
                 $this->layoutName   = (is_array($arrParts) && $numParts > 1)?$arrParts[$numParts-1]:$pathViewHtml; 
-                $keyHtm             = strpos($pathViewHtml,'.htm');
-                $keyHtml            = strpos($pathViewHtml,'.html');
+                $keyHtm             = strpos($pathViewHtml,'.htm');//Verifica se o path possui extensão .htm
+                $keyHtml            = strpos($pathViewHtml,'.html');//Verifica se o path possui extensão .html
                 $extHtml            = ($keyHtm !== false && $keyHtml !== false)?'':'.html';//Coloca a extensão html caso não tenha sido informada
                 $lang               = \Application::getLanguage();
                 $module             = \Application::getModule();

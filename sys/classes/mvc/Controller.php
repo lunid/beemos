@@ -5,13 +5,18 @@
  * @abstract
  */
     namespace sys\classes\mvc;
-    
+    use \sys\classes\util\Cache;
     
     abstract class Controller {
         
-
+        private $memCache;
+        
         function __construct(){
-            
+            try {
+                //$this->memCache = new Cache();
+            }catch(Exception $e){
+                throw $e;
+            }
         }                
         
         /*
@@ -77,9 +82,16 @@
                 }
             }
             
-            header( "Expires: ".gmdate("D, d M Y H:i:s", time() + (24 * 60 * 60)) . " GMT");//adiciona 1 dia ao tempo de expiraÃ§Ã£o
+            header( "Expires: ".gmdate("D, d M Y H:i:s", time() + (24 * 60 * 60)) . " GMT");//adiciona 1 dia ao tempo de expiração
             echo $htmlTpl;
         } 
+        
+        function setCache($period='DAY',$time=30){            
+            if (!$this->memCache->setTime($period,$time)) {
+                //Erro ao definir um período de tempo para o cache
+                echo 'erro';
+            }
+        }
         
         function __set($var,$value){
            if (

@@ -49,7 +49,15 @@
     </ORM>
     <File>
         <exists>
-            <msg id='FILE_NOT_EXISTS'>Arquivo não localizado: {FILE}</msg>
+            <msg id='FILE_NOT_EXISTS'>Arquivo não localizado: {FILE}.</msg>
         </exists>
     </File>
+    <Cache>
+        <__construct>
+            <msg id='ERR_MEMCACHE_CONN'>Falha ao se conectar com o MemCache.</msg>
+        </__construct>
+        <set>
+            <msg id='ERR_SAVE_CACHE'>Falha ao salvar dados no cache.</msg> 
+        </set>
+    </Cache>
 </root>
