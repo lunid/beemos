@@ -10,13 +10,10 @@
     abstract class Controller {
         
         private $memCache;
+        private $nameCache;
         
         function __construct(){
-            try {
-                //$this->memCache = new Cache();
-            }catch(Exception $e){
-                throw $e;
-            }
+             $this->nameCache = NULL;
         }                
         
         /*
@@ -86,10 +83,41 @@
             echo $htmlTpl;
         } 
         
-        function setCache($period='DAY',$time=30){            
-            if (!$this->memCache->setTime($period,$time)) {
-                //Erro ao definir um período de tempo para o cache
-                echo 'erro';
+        function cacheOn($action,$period='DAY',$time=30){            
+            try {
+                $nameCache          = $this->setNameCache($action);                
+                $this->nameCache    = $nameCache;
+                $memCache           = new Cache($nameCache);                   
+                $content            = $memCache->getCache();
+                $memCache->setTime($period,$time);            
+                $this->memCache     = $memCache;
+                if (strlen($content) > 0) {
+                    //Um conteúdo ref. ao parâmetro action foi localizado.
+                    die($content);
+                }
+            }catch(Exception $e){
+                throw $e;
+            }                        
+        }
+        
+        function getMemCache(){
+            return $this->memCache;
+        }
+        
+        private function setNameCache($action){
+            $nameCache      = \Application::getModule().'_'.$action;
+            $nameCache      = str_replace('::','_',$nameCache); 
+            return $nameCache;
+        }        
+
+        function cacheOff($action){
+            if (strlen($action) > 0) {
+                $nameCache  = $this->setNameCache($action);                    
+                if (strlen($nameCache) > 0) {                    
+                    $memCache = new Cache($nameCache);                    
+                    $memCache->delete();
+                }
+                $this->memCache = NULL;
             }
         }
         

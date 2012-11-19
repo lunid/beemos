@@ -6,7 +6,7 @@
     
     class ViewBm extends View {       
         
-        function render($layoutName=''){
+        function render($layoutName='',$objMemCache=NULL){
             
             try {
                 /*
@@ -24,7 +24,7 @@
 
                 $this->MENU_VERTICAL = $objMenuVert->render($layoutName);
                 */
-                parent::render($layoutName);
+                parent::render($layoutName,$objMemCache);
                  
             } catch(\Exception $e) {
                 throw($e);

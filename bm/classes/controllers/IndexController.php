@@ -14,7 +14,13 @@
         function actionIndex(){
             try{
                 //Home
-                //$this->setCache();
+                $cache = FALSE;
+                if ($cache) {
+                    $this->cacheOn(__METHOD__);
+                } else {
+                    $this->cacheOff(__METHOD__);
+                }
+                
                 $objViewPart = $this->mkViewPart('home');
                 
                 //Template
@@ -26,7 +32,7 @@
                 $tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();
                 
-                $tpl->render('index');            
+                $tpl->render('index',$this->getMemCache());            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";

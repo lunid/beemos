@@ -56,8 +56,13 @@
         <__construct>
             <msg id='ERR_MEMCACHE_CONN'>Falha ao se conectar com o MemCache.</msg>
         </__construct>
-        <set>
+        <setCache>
+            <msg id='ERR_NAME_CACHE'>Nome do cache não definido. É necessário definir um nome para o conteúdo que deseja armazenar em cache.</msg> 
             <msg id='ERR_SAVE_CACHE'>Falha ao salvar dados no cache.</msg> 
-        </set>
+        </setCache>
+        <setTime>
+            <msg id='ERR_TIME_CACHE'>Não foi possível definir um período de validade para o cache. 
+            Verifique se os parâmetros informados estão corretos.</msg> 
+        </setTime>
     </Cache>
 </root>

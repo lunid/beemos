@@ -163,7 +163,7 @@
             }
         }                
         
-        function render($layoutName=''){            
+        function render($layoutName='',$objMemCache=NULL){            
             if (isset($layoutName) && strlen($layoutName) > 0) {
                 $this->layoutName   = $layoutName;                
             }
@@ -180,7 +180,10 @@
                     $bodyContent = str_replace('{'.$key.'}',$value,$bodyContent);                
                 }
             }
-            
+            if (is_object($objMemCache)) {
+                //O cache foi ativado para o conteúdo atual. Armazena $bodyContent em cache.
+                $objMemCache->setCache($bodyContent);
+            }
             echo $bodyContent;
         } 
         

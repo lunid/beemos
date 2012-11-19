@@ -6,17 +6,24 @@
             private $memcache;
             private $version;
             private $timeSec;
+            private $nameCache;
             
-            function __construct(){
+            function __construct($nameCache=''){
                     $memcache = new \Memcache();
                     if (!$memcache->connect('localhost', 11211)){
                         $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_MEMCACHE_CONN'); 
                         throw new \Exception( $msgErr );                         
                     }
-
-                    $this->version  = $memcache->getVersion();                   								
-                    $this->memcache = $memcache;
-            }      
+                    
+                    $this->setNameCache($nameCache);
+                    
+                    $this->version      = $memcache->getVersion();                   								
+                    $this->memcache     = $memcache;
+            }
+            
+            function setNameCache($nameCache) {
+                $this->nameCache = $nameCache;                
+            }
             
             function getVersion(){
                 return $this->version;
@@ -24,28 +31,44 @@
 
             /**
              * Guarda uma variável em cache.
-             * 
-             * @param string $name Nome da variável
+             *              
              * @param string $content Conteúdo a ser guardado em cache (string ou objeto)             
-             * @return boolean TRUE caso a variável seja armazenada com sucesso.
+             * @return void
              * @throws \Exception Caso um erro ocorra ao guardar o contéudo informado em cache.
              */
-            function setCache($name,$content){			
-                if (!$this->memcache->set($name,$content, false, $this->timeSec)){
+            function setCache($content){			
+                $nameCache = $this->nameCache;               
+                if (strlen($nameCache) == 0) {
+                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_NAME_CACHE'); 
+                    throw new \Exception( $msgErr );                                                   		                                        
+                }
+                
+                if (!$this->memcache->set($nameCache,$content, false, $this->timeSec)){
                     $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_SAVE_CACHE'); 
                     throw new \Exception( $msgErr );                                                   		
-                }
-                return TRUE;
+                }                
             }
 
+            
+            /**
+             * Captura o valor de uma variável armazenada em cache.
+             *
+             * @return mixed Retorna o valor da variável ou FALSE caso a variável não exista em cache.
+             */
+            function getCache(){	
+                $nameCache  = $this->nameCache;
+                $cache      = (strlen($nameCache) > 0)?$this->memcache->get($nameCache):'';			
+                return $cache;
+            }
+            
             /**
              * Exclui uma variável do cache.
              * 
-             * @param string $name Nome da variável.
              * @return void
              */
-            function delete($name){
-                $this->memcache->delete($name);						
+            function delete(){
+                $nameCache = $this->nameCache;
+                $this->memcache->delete($nameCache);						
             }           
 
             /**
@@ -94,7 +117,7 @@
              * 
              * @param string $period Pode ser DAY, HOUR, MIN ou SEC.
              * @param integer $time Tempo a ser convertido em segundos de acordo com o período informado em $period.
-             * @return boolean TRUE caso um tempo válido tenha sido definido com sucesso, FALSE caso contrário.
+             * @return void
              */
             function setTime($period,$time){
                 $sec        = 0;
@@ -102,7 +125,7 @@
                 $period     = strtoupper($period);
                 $arrPeriod  = array('DAY','HOUR','MIN','SEC');
                 $key        = array_search($period,$arrPeriod);
-                $out        = FALSE;
+                
                 if ($key !== FALSE && $time > 0) {
                     switch ($period){
                         case 'DAY':
@@ -117,10 +140,12 @@
                        default:
                             $sec = $time;                      
                     }
-                    $this->timeSec = $sec;
-                    $out = TRUE;
-                }
-                return $out;
+                    $this->timeSec = $sec;                    
+                } else {
+                    //Erro ao definir um período de tempo para o cache
+                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_TIME_CACHE');                     
+                    throw new \Exception( $msgErr );                         
+                }                
             }
 
             /**
@@ -128,18 +153,6 @@
              */
             function flush(){
                 $this->memcache->flush();			
-            }
-
-            //RETORNA FALSE SE O CONTEÚDO NÃO ESTIVE EM CACHE, OU ENTÃO RETORNA O CONTEÚDO
-            /**
-             * Captura o valor de uma variável armazenada em cache.
-             * 
-             * @param string $name Nome da variável. 
-             * @return mixed Retorna o valor da variável ou FALSE caso a variável não exista em cache.
-             */
-            function getCache($name){			
-                $cache = $this->memcache->get($name);			
-                return $cache;
             }		
     }
 ?>
