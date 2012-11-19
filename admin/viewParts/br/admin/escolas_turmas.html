@@ -20,7 +20,7 @@
                 <span id="turmaEscola"></span>
             </div>
             
-            <form name="form_turma" id="form_turma" method="post" action="SalvarTurma" onSubmit="return formTurma.validate(this, true, 'verSalvarTurma');">
+            <form name="form_turma" id="form_turma" method="post" action="escolas/salvarturma" onSubmit="return formTurma.validate(this, true, 'verSalvarTurma');">
                 <!-- Erros de validação no server -->
                 <div id="form_turma_erros" class="ui-state-error ui-corner-all" style="display:none;">
                     <span id="form_turma_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
@@ -92,7 +92,7 @@
     <table class="form_padrao">
     <tr>
         <td style="width:100%;">
-            <form name="form_escola" id="form_escola" method="post" action="salvarEscola" onSubmit="return form.validate(this, true, 'atualizaGridEscolas');">
+            <form name="form_escola" id="form_escola" method="post" action="escolas/salvarescola" onSubmit="return form.validate(this, true, 'atualizaGridEscolas');">
                 <!-- Erros de validação no server -->
                 <div id="form_escola_erros" class="ui-state-error ui-corner-all" style="display:none;">
                     <span id="form_escola_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
