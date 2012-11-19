@@ -6,7 +6,7 @@ $(document).ready(function(){
     
     //Carrega Grid de Listas - Aba principal
     $("#grid_listas").jqGrid({
-        url: 'GridListas',
+        url: 'listas/gridlistas',
         datatype: "json",
         colNames:['Código', 'Nome', 'Data Criação', 'Impressão', 'Resultado', 'Status', ''],
         colModel:[

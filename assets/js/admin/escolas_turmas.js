@@ -4,7 +4,7 @@ $(document).ready(function(){
     
     //Inicializando o Grid de Escolas (Aba Escolas & Turmas)
     $("#grid_escola").jqGrid({
-        url: 'GridEscolas',
+        url: 'escolas/gridescolas',
         datatype: "json",
         colNames:['COD', 'Escola', 'Status', ''],
         colModel:[
@@ -69,7 +69,7 @@ $(document).ready(function(){
     
     //Carrega Grid de Turmas (Aba Distribuir listas)
     $("#grid_turmas").jqGrid({
-        url: 'GridTurmas',
+        url: 'escolas/gridturmas',
         datatype: "json",
         colNames:['', 'COD', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
         colModel:[
@@ -96,7 +96,7 @@ $(document).ready(function(){
             //Armazena a turma selecionada
             $("#idTurmaSel").val(id); 
             //Ao selecionar uma linha o Grid de Listas é carregado com o ID_TURMA escolhido
-            $("#grid_listas").setGridParam({url: 'GridListas?ID_TURMA=' + id}); 
+            $("#grid_listas").setGridParam({url: 'escolas/gridlistas?ID_TURMA=' + id}); 
             $("#grid_listas").trigger("reloadGrid");
             $("#listas_inicio").hide();
             $("#listas").show();
@@ -112,7 +112,7 @@ $(document).ready(function(){
     
     //Carrega Grid de Listas (Aba Distribuir listas)
     $("#grid_listas").jqGrid({
-        url: 'GridListas?ID_TURMA=0',
+        url: 'escolas/gridlistas?ID_TURMA=0',
         datatype: "json",
         colNames:['', 'COD', 'Lista', 'Data Criação', 'Qtd Questões'],
         colModel:[
@@ -144,7 +144,7 @@ $(document).ready(function(){
     
     //Carrega Grid de Listas (Aba Distribuir listas) - Segunda Visualização
     $("#grid_listas_turmas").jqGrid({
-        url: 'GridListas?ID_TURMA=0',
+        url: 'escolas/gridlistas?ID_TURMA=0',
         datatype: "json",
         colNames:['', 'COD', 'Lista', 'Data Criação', 'Qtd Questões'],
         colModel:[
@@ -170,7 +170,7 @@ $(document).ready(function(){
             //Armazena a turma selecionada
             $("#idListaSel").val(id); 
             //Ao selecionar uma linha o Grid de Listas é carregado com o ID_TURMA escolhido
-            $("#grid_turmas_listas").setGridParam({url: 'GridTurmas?ID_LISTA=' + id}); 
+            $("#grid_turmas_listas").setGridParam({url: 'escolas/gridturmas?ID_LISTA=' + id}); 
             $("#grid_turmas_listas").trigger("reloadGrid");
             $("#turmas_inicio").hide();
             $("#turmas").show();
@@ -186,7 +186,7 @@ $(document).ready(function(){
     
     //Carrega Grid de Turmas da segunda visualização
     $("#grid_turmas_listas").jqGrid({
-        url: 'GridTurmas?ID_LISTA=0',
+        url: 'escolas/gridturmas?ID_LISTA=0',
         datatype: "json",
         colNames:['', '', 'Classe', 'Ensino', 'Ano', 'Período', 'Escola'],
         colModel:[
@@ -258,7 +258,7 @@ function alteraStatusEscola(ID_ESCOLA, status){
     site.aguarde();
 
     $.post(
-        'alteraStatusEscola',
+        'escolas/alterastatusescola',
         {
             escolaIdCliente:    26436,
             escolaId:           ID_ESCOLA,
@@ -356,7 +356,7 @@ function carregaListaTurmas(ID_ESCOLA, ID_CLIENTE){
     
     //Função que lista as Turmas da Escola selecionada
     $.post(
-        'listaTurmas',
+        'escolas/listaTurmas',
         {
             ID_ESCOLA: ID_ESCOLA,
             ID_CLIENTE: ID_CLIENTE
@@ -425,9 +425,9 @@ function selListas(obj){
     $("#txtStatus").html("Aguarde...");
     
     $.post(
-        'salvaTurmaLista',
+        'escolas/salvaturmalista',
         {
-            idTurma: $("#idTurmaSel").val(),
+            idsTurmas: $("#idTurmaSel").val(),
             idsListas: $("#idsListas").val(), 
             tipo: tipo
         },
@@ -460,7 +460,7 @@ function selTurmas(obj){
     $("#txtStatus").html("Aguarde...");
     
     $.post(
-        'salvaTurmaLista',
+        'escolas/salvaturmalista',
         {
             idsTurmas: $("#idsTurmas").val(),
             idsListas: $("#idListaSel").val(),
@@ -495,7 +495,7 @@ function salvaRelacaoLista(obj){
     }
     
     $.post(
-        'salvaTurmaLista',
+        'escolas/salvaturmalista',
         {
             idsTurmas: $("#idTurmaSel").val(),
             idsListas: obj.value, 
@@ -530,7 +530,7 @@ function salvaRelacaoTurma(obj){
     }
     
     $.post(
-        'salvaTurmaLista',
+        'escolas/salvaturmalista',
         {
             idsTurmas: obj.value,
             idsListas: $("#idListaSel").val(), 
@@ -562,7 +562,7 @@ function exibeListasUtilizadas(obj){
     }
     
     //Refaz o grid soliciando apenas selecionadas
-    $("#grid_listas").setGridParam({url: 'GridListas?ID_TURMA=' + id + '&utilizadas=' + utilizadas}); 
+    $("#grid_listas").setGridParam({url: 'escolas/gridlistas?ID_TURMA=' + id + '&utilizadas=' + utilizadas}); 
     $("#grid_listas").trigger("reloadGrid");
 }
 
@@ -581,7 +581,7 @@ function exibeTurmasUtilizadas(obj){
     }
     
     //Refaz o grid soliciando apenas selecionadas
-    $("#grid_turmas_listas").setGridParam({url: 'GridTurmas?ID_LISTA=' + id + '&utilizadas=' + utilizadas}); 
+    $("#grid_turmas_listas").setGridParam({url: 'escolas/gridturmas?ID_LISTA=' + id + '&utilizadas=' + utilizadas}); 
     $("#grid_turmas_listas").trigger("reloadGrid");
 }
 
@@ -635,7 +635,7 @@ function enviaConvite(){
     }else{
         //Prossegue com o envio de convites
         $.post(
-            'CarregaInfoConvite',
+            'escolas/carregainfoconvite',
             {
                 id: id,
                 tipo: optSel
@@ -670,7 +670,7 @@ function enviaConvite(){
                                 
                                 //Efetua a chamada do script de disparo
                                 $.post(
-                                    'DisparaConvites', 
+                                    'escolas/disparaconvites', 
                                     {
                                         idsTurmas: ret.idsTurmas,
                                         idLista: idLista,
