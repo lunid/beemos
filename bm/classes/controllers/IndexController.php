@@ -14,6 +14,7 @@
         function actionIndex(){
             try{
                 //Home
+                //$this->setCache();
                 $objViewPart = $this->mkViewPart('home');
                 
                 //Template
@@ -21,6 +22,7 @@
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'ADM';
                 
+                $tpl->setCss('bm.home');
                 $tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();
                 

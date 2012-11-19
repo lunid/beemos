@@ -101,7 +101,7 @@
                 if (is_object($nodesModule)) {
                     $cfgFolderTemplate      = self::valueForAttrib($nodesModule,'id',$idFolderTpl);                
                     $cfgDefaultTemplate     = self::valueForAttrib($nodesModule,'id',$idDefaultTpl);                
-                    $pathTplFolder          = $cfgDefaultModule.'/'.$cfgFolderTemplate.'/';                               
+                    $pathTplFolder          = $cfgDefaultModule.'/'.$cfgFolderViews.'/'.$cfgDefaultLang.'/'.$cfgFolderTemplate.'/';                               
                     
                     try {
                         $this->vldTemplate($pathTplFolder,$cfgDefaultTemplate);
@@ -151,7 +151,7 @@
         
         /**
          * Valida o template padrão da aplicação e cria um arquivo novo 
-         * na pasta de templatescaso ainda não exista.
+         * na pasta de templates caso ainda não exista.
          * 
          * @param string $pathTplFolder Path da pasta de templates
          * @param string $cfgDefaultTemplate nome do arquivo template padrão
