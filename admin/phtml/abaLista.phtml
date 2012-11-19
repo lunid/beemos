@@ -1,0 +1,86 @@
+<div id="menu_listas">
+    <a href="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>">Configurações</a>
+</div>
+<div id="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista">
+    <!-- Opções de Configuração da Lista -->
+    <table class="table_opts_lista">
+        <tr>
+            <td>
+                <strong>Anticola</strong>
+                <br />
+                <span>Opção utilizada para dificultar a cola dos alunos.</span>
+            </td>
+            <td>
+                <strong>Status</strong>
+                <br />
+                <input type="radio" name="anticola" value="1" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 1 ? 'checked="checked"' : '' ?> /> Habilitada
+                &nbsp;
+                <input type="radio" name="anticola" value="0" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitada
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Período</strong>
+                <br />
+                <span>Determina o período de validade da lista, entre uma data inicial e uma final.</span>
+            </td>
+            <td>
+                <div style="float:left;">
+                    <strong>Início</strong>
+                    <br />
+                    <input type="text" id="periodo_inicio" name="periodo_inicio" class="periodo_ini periodo" value="<?=$attrs['PERIODO_INICIO']?>" onchange="alteraPeriodo(this.value, 'INI', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                </div>
+                <div>
+                    <strong>Final</strong>
+                    <br />
+                    <input type="text" id="periodo_final" name="periodo_final" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Resultado do Aluno</strong>
+                <br />
+                <span>Opção utilizada para exibir resultado final ao aluno.</span>
+            </td>
+            <td>
+                <strong>Status</strong>
+                <br />
+                <input type="radio" name="resultado" value="1" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
+                &nbsp;
+                <input type="radio" name="resultado" value="0" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Gabarito</strong>
+                <br />
+                <span>Opção utilizada para exibir, ou não, o Gabarito ao aluno.</span>
+            </td>
+            <td>
+                <strong>Status</strong>
+                <br />
+                <input type="radio" name="gabarito" value="1" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
+                &nbsp;
+                <input type="radio" name="gabarito" value="0" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Tempo de Vida</strong>
+                <br />
+                <span>
+                    Determina o tempo (em horas e minutos) que o Aluno possui para iniciar e finalizar a lista. Ex: 00:30 (Meia hora)
+                    <br />
+                    Caso o tempo seja 00:00 o Aluno poderá finalizar a lista no tempo necessário para ele, sem limite.
+                </span>
+            </td>
+            <td>
+                <strong>Tempo</strong>
+                <br />
+                <input type="text" id="tempo_vida" name="tempo_vida" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+            </td>
+        </tr>
+    </table>
+    <!-- Opções de Configuração da Lista --> 
+</div>
