@@ -1,0 +1,29 @@
+#menu_listas{
+    display: block;
+    width: 99.8%;
+    border: 1px solid #DADADA;
+}
+
+.opt_lista{
+    display: block;
+    width: 99.8%;
+}
+
+.table_opts_lista{
+    display: block;
+}
+
+.table_opts_lista td{
+    padding: 3px 5px 0 0;
+    white-space: nowrap;
+}
+
+.table_opts_lista .periodo{
+    width: 100px;
+    text-align: center;
+}
+
+.tempo_vida{
+    width: 100px;
+    text-align: center;
+}

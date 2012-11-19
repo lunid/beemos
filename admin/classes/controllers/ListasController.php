@@ -3,6 +3,7 @@
     use \sys\classes\util\Date;
     use \sys\classes\util\Request;
     use \admin\classes\models\ListasModel;
+    use \admin\classes\html\AbaLista;
     
     class Listas extends AdminController {
         /**
@@ -21,6 +22,7 @@
                 $tpl->SUB_TITULO    = 'Minhas Listas';
                 
                 $tpl->setJs('admin/minhas_listas');
+                $tpl->setCss('admin/minhas_listas');
                 
                 $tpl->forceCssJsMinifyOn();
                 
@@ -134,6 +136,216 @@
                 
                 echo json_encode($ret);
             }  
+        }
+        
+        /**
+         * Carrega o html para montar uma nova aba de Lista seleciona no grid
+         */
+        public function actionCarregaHtmlAbaLista(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar dados da Lista! Tente mais tarde.";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                
+                //Carrega dados da lista solicitada
+                $mdListas   = new ListasModel();
+                $ret        = $mdListas->carregaDadosLista($idLista);
+                
+                //Se forem carregados os dados
+                if($ret->status){
+                    //Objeto HTML para montar Aba
+                    $aba        = new AbaLista();
+                    //Dados a serem repassados ao HTML
+                    $aba->setAttr('ID_HISTORICO_GERADOC', $idLista);
+                    $aba->setAttr('ANTICOLA', $ret->lista->ANTICOLA);
+                    $aba->setAttr('PERIODO_INICIO', Date::formatDate($ret->lista->LISTA_ATIVA_DT_HR_INI));
+                    $aba->setAttr('PERIODO_FINAL', Date::formatDate($ret->lista->LISTA_ATIVA_DT_HR_FIM));
+                    $aba->setAttr('ST_RESULTADO_ALUNO', $ret->lista->ST_RESULTADO_ALUNO);
+                    $aba->setAttr('ST_GABARITO_ALUNO', $ret->lista->ST_GABARITO_ALUNO);
+                    $aba->setAttr('TEMPO_VIDA', $ret->lista->TEMPO_VIDA);
+                    //HTML final
+                    $ret->html  = $aba->render();
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera o status de Anticola de uma lista
+         */
+        public function actionAlteraAnticola(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao tentar alterar status de Anticola! Tente mais tarde.";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                $status     = Request::post("status", "NUMBER");
+                
+                if($idLista <= 0){
+                    $ret->msg = "ID_HISTORICO_GERADOC inválido ou nulo!";
+                }else{
+                    //Instancia o Objeto Model e efetua alteração
+                    $mdListas   = new ListasModel();
+                    $ret        = $mdListas->alteraAnticola($idLista, $status);
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera o Período de Vida de uma Lista
+         */
+        public function actionAlteraPeriodo(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao tentar alterar período de validade! Tente mais tarde.";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                $data       = Request::post("data");
+                $tipo       = Request::post("tipo");
+                
+                if($idLista <= 0){
+                    $ret->msg = "ID_HISTORICO_GERADOC inválido ou nulo!";
+                }else{
+                    //Instancia o Objeto Model e efetua alteração
+                    $mdListas   = new ListasModel();
+                    $ret        = $mdListas->alteraPeriodo($idLista, $data, $tipo);
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera a permissão de um aluno visualizar (ou não) o seu resultado final após finalizar a lista
+         */
+        public function actionAlteraResultadoAluno(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao tentar alterar status de Resultado do Aluno! Tente mais tarde.";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                $status     = Request::post("status", "NUMBER");
+                
+                if($idLista <= 0){
+                    $ret->msg = "ID_HISTORICO_GERADOC inválido ou nulo!";
+                }else{
+                    //Instancia o Objeto Model e efetua alteração
+                    $mdListas   = new ListasModel();
+                    $ret        = $mdListas->alteraResultadoAluno($idLista, $status);
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera a permissão de um aluno visualizar (ou não) o Gabarito da Listas
+         */
+        public function actionAlteraGabaritoAluno(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao tentar alterar status de Gabarito do Aluno! Tente mais tarde.";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                $status     = Request::post("status", "NUMBER");
+                
+                if($idLista <= 0){
+                    $ret->msg = "ID_HISTORICO_GERADOC inválido ou nulo!";
+                }else{
+                    //Instancia o Objeto Model e efetua alteração
+                    $mdListas   = new ListasModel();
+                    $ret        = $mdListas->alteraGabaritoAluno($idLista, $status);
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera o tempo limite que o aluno possui paa iniciar e finalizar a lista de questões. Ex: 00:45
+         */
+        public function actionAlteraTempoVida(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao tentar alterar status de Gabarito do Aluno! Tente mais tarde.";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                $tempo      = Request::post("tempo");
+                
+                if($idLista <= 0){
+                    $ret->msg = "ID_HISTORICO_GERADOC inválido ou nulo!";
+                }else{
+                    //Instancia o Objeto Model e efetua alteração
+                    $mdListas   = new ListasModel();
+                    $ret        = $mdListas->alteraTempoVida($idLista, $tempo);
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
         }
     }
 ?>
