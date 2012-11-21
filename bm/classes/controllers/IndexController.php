@@ -29,6 +29,7 @@
                 $tpl->TITLE = 'ADM';
                 
                 $tpl->setCss('bm.home');
+                $tpl->setJsInc('bm.home');
                 $tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();
                 
