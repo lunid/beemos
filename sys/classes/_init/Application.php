@@ -3,7 +3,7 @@
     require_once('sys/classes/comps/files/YUICompressor.php');
     require_once('sys/classes/comps/HtmlComponent.php');
     require_once('sys/classes/comps/ChartComponent.php');
-    require_once('sys/classes/db/Meekrodb_2_0.php');
+    require_once('sys/classes/db/Meekrodb_2_1.php');
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/mvc/Controller.php');
     require_once('sys/classes/mvc/Model.php'); 
