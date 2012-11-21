@@ -13,9 +13,9 @@
             <td>
                 <strong>Status</strong>
                 <br />
-                <input type="radio" name="anticola" value="1" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 1 ? 'checked="checked"' : '' ?> /> Habilitada
+                <input type="radio" name="anticola_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="1" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 1 ? 'checked="checked"' : '' ?> /> Habilitada
                 &nbsp;
-                <input type="radio" name="anticola" value="0" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitada
+                <input type="radio" name="anticola_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="0" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitada
             </td>
         </tr>
         <tr>
@@ -28,12 +28,12 @@
                 <div style="float:left;">
                     <strong>Início</strong>
                     <br />
-                    <input type="text" id="periodo_inicio" name="periodo_inicio" class="periodo_ini periodo" value="<?=$attrs['PERIODO_INICIO']?>" onchange="alteraPeriodo(this.value, 'INI', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                    <input type="text" id="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_ini periodo" value="<?=$attrs['PERIODO_INICIO']?>" onchange="alteraPeriodo(this.value, 'INI', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
                 </div>
                 <div>
                     <strong>Final</strong>
                     <br />
-                    <input type="text" id="periodo_final" name="periodo_final" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                    <input type="text" id="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
                 </div>
             </td>
         </tr>
@@ -46,9 +46,9 @@
             <td>
                 <strong>Status</strong>
                 <br />
-                <input type="radio" name="resultado" value="1" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
+                <input type="radio" name="resultado_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="1" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
                 &nbsp;
-                <input type="radio" name="resultado" value="0" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
+                <input type="radio" name="resultado_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="0" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
             </td>
         </tr>
         <tr>
@@ -60,9 +60,9 @@
             <td>
                 <strong>Status</strong>
                 <br />
-                <input type="radio" name="gabarito" value="1" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
+                <input type="radio" name="gabarito_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="1" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
                 &nbsp;
-                <input type="radio" name="gabarito" value="0" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
+                <input type="radio" name="gabarito_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="0" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
             </td>
         </tr>
         <tr>
@@ -78,9 +78,24 @@
             <td>
                 <strong>Tempo</strong>
                 <br />
-                <input type="text" id="tempo_vida" name="tempo_vida" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                <input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <strong>Recursos por Lista</strong>                
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <!-- Gráficos e Dados -->
+                <div id="gr_respostas_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="float:left;"></div>
+                
+                <div id="gr_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="float:left;"></div>
+                <!-- Gráficos e Dados -->                
             </td>
         </tr>
     </table>
+    
     <!-- Opções de Configuração da Lista --> 
 </div>

@@ -158,15 +158,21 @@
                 //Se forem carregados os dados
                 if($ret->status){
                     //Objeto HTML para montar Aba
-                    $aba        = new AbaLista();
+                    $aba = new AbaLista();
+                    
                     //Dados a serem repassados ao HTML
-                    $aba->setAttr('ID_HISTORICO_GERADOC', $idLista);
+                    $aba->setAttr('ID_HISTORICO_GERADOC', $ret->lista->ID_HISTORICO_GERADOC);
                     $aba->setAttr('ANTICOLA', $ret->lista->ANTICOLA);
                     $aba->setAttr('PERIODO_INICIO', Date::formatDate($ret->lista->LISTA_ATIVA_DT_HR_INI));
                     $aba->setAttr('PERIODO_FINAL', Date::formatDate($ret->lista->LISTA_ATIVA_DT_HR_FIM));
                     $aba->setAttr('ST_RESULTADO_ALUNO', $ret->lista->ST_RESULTADO_ALUNO);
                     $aba->setAttr('ST_GABARITO_ALUNO', $ret->lista->ST_GABARITO_ALUNO);
                     $aba->setAttr('TEMPO_VIDA', $ret->lista->TEMPO_VIDA);
+                    
+                    //Informações de gráfico
+                    $ret->GR_RESPOSTAS  = $mdListas->calculaRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
+                    $ret->GR_ALUNOS     = $mdListas->calculaAlunosRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
+                    
                     //HTML final
                     $ret->html  = $aba->render();
                 }
