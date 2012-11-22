@@ -86,7 +86,7 @@ function abreLista(idLista, nomeAba){
                 //Objeto para capturar informações de data
                 var date = new Date();
                 var ano = date.getFullYear();
-                var mes = date.getMonth()+1;
+                var mes = date.getMonth();
                 var dia = date.getDate();
                 
                 $(".periodo_ini").datepicker({
@@ -118,7 +118,12 @@ function abreLista(idLista, nomeAba){
                             plotBorderWidth: null,
                             plotShadow: false,
                             width: 200,
-                            height: 200
+                            height: 200,
+                            borderWidth: 1,
+                            borderColor: '#909090'
+                        },
+                        credits: {
+                            enabled: false
                         },
                         title: {
                             text: 'Respostas'
@@ -133,7 +138,16 @@ function abreLista(idLista, nomeAba){
                                 cursor: 'pointer',
                                 dataLabels: {
                                     enabled: false
-                                }
+                                },
+                                showInLegend: true,
+                                size: '95%'
+                            }
+                        },
+                        legend:{
+                            borderWidth: 0,
+                            layout: 'vertical',
+                            itemStyle: {
+                                fontSize: '10px'
                             }
                         },
                         series: [{
@@ -156,7 +170,12 @@ function abreLista(idLista, nomeAba){
                             plotBorderWidth: null,
                             plotShadow: false,
                             width: 200,
-                            height: 200
+                            height: 200,
+                            borderWidth: 1,
+                            borderColor: '#909090'
+                        },
+                        credits: {
+                            enabled: false
                         },
                         title: {
                             text: 'Alunos'
@@ -171,7 +190,16 @@ function abreLista(idLista, nomeAba){
                                 cursor: 'pointer',
                                 dataLabels: {
                                     enabled: false
-                                }
+                                },
+                                showInLegend: true,
+                                size: '95%'
+                            }
+                        },
+                        legend:{
+                            borderWidth: 0,
+                            layout: 'vertical',
+                            itemStyle: {
+                                fontSize: '10px'
                             }
                         },
                         series: [{
@@ -183,6 +211,11 @@ function abreLista(idLista, nomeAba){
                         }]
                     });                    
                 } //Gráficio de alunos
+                
+                //Informações de aproveitamento
+                if(ret.APROVEITAMENTO.status){
+                    $("#num_proveitamento_" + idLista).html(ret.APROVEITAMENTO.aproveitamento);                    
+                }
             }
         },
         'json'

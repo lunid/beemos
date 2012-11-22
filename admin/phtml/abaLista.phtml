@@ -5,6 +5,46 @@
     <!-- Opções de Configuração da Lista -->
     <table class="table_opts_lista">
         <tr>
+            <td colspan="2" style="background-color:#EDEDED;">
+                <!-- Informações da Lista -->
+                <table class="table_info_lista">
+                    <tr>
+                        <td width="33%" nowrap="nowrap">
+                            <strong>
+                                Nome da Lista
+                            </strong>
+                            <br />
+                            <?=$attrs['NOME_ARQ']?>
+                        </td>
+                        <td width="33%" nowrap="nowrap">
+                            <strong>
+                                Código da Lista
+                            </strong>
+                            <br />
+                            <?=$attrs['COD_LISTA']?>
+                        </td>
+                        <td width="33%" nowrap="nowrap">
+                            <strong>
+                                Status
+                            </strong>
+                            <br />
+                            <? 
+                                if($attrs['STATUS'] == 'Ativa'){ 
+                                    $cor = 'green';
+                                }else{
+                                    $cor = 'red';
+                                }
+                            ?>
+                            <strong style="color:<?=$cor?>;">
+                                <?=$attrs['STATUS']?>
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Informações da Lista -->
+            </td>
+        </tr>
+        <tr>
             <td>
                 <strong>Anticola</strong>
                 <br />
@@ -83,15 +123,33 @@
         </tr>
         <tr>
             <td colspan="2">
-                <strong>Recursos por Lista</strong>                
+                <strong>Números da Lista</strong>                
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <!-- Gráficos e Dados -->
-                <div id="gr_respostas_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="float:left;"></div>
-                
-                <div id="gr_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="float:left;"></div>
+                <div id="gr_respostas_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Respostas
+                        <br />
+                        <strong>0</strong>
+                    </p>
+                </div>
+                <div id="gr_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Alunos
+                        <br />
+                        <strong>0</strong>
+                    </p>
+                </div>
+                <div id="aproveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Aproveitamento
+                        <br />
+                        <strong id="num_proveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>">0</strong>%
+                    </p>
+                </div>
                 <!-- Gráficos e Dados -->                
             </td>
         </tr>

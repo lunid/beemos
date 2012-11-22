@@ -97,7 +97,7 @@
                 $ret->status    = false;
                 $ret->msg       = "Falha ao calcular alunos que reponderam a lista!";
                 
-                //Sql da pesquisa de respostas
+                //Sql da pesquisa de alunos
                 $sql = "SELECT
                             IF(LR.ID_LST_HIST_RESPOSTA IS NULL, 0, 1) as STATUS
                         FROM
@@ -137,6 +137,73 @@
                 //Retorno final
                 $ret->status    = true;
                 $ret->msg       = "Alunos encontradas!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC){
+            try{
+                //Objeto de etorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao calcular repostas da lista!";
+                
+                //Carrega Lista e sesus dados
+                $tbListas = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                
+                //Caso a Lista não seja encontrada, é retornado um erro
+                if($tbListas->ID_HISTORICO_GERADOC <= 0){
+                    $ret->msg = "Lista não encontrada!";
+                    return $ret;
+                }
+                
+                //Sql da pesquisa de respostas e alunos
+                $sql = "SELECT
+                            IF(LR.RESPOSTA = LR.GABARITO, 1, 0) as STATUS,
+                            LU.ID_LST_USUARIO
+                        FROM
+                            SPRO_LST_USUARIO LU
+                        INNER JOIN
+                            SPRO_LST_HIST_RESPOSTA LR ON LR.ID_LST_USUARIO = LU.ID_LST_USUARIO
+                        WHERE
+                            LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}                        
+                        ;";
+                
+                //Executa SQL
+                $rs = $this->query($sql);
+                
+                //Se não houver nenhuma resposta
+                if(sizeof($rs) <= 0){
+                    $ret->msg = "Nenhuma resposta encontrada!";
+                    return $ret;
+                }
+                
+                //Contador de respostas corretas
+                $corretas   = 0;
+                //Aray de alunos que responderam
+                $alunos     = array(); 
+                
+                foreach($rs as $resposta){
+                    if(!in_array($resposta['ID_LST_USUARIO'], $alunos)){
+                        $alunos[] = $resposta['ID_LST_USUARIO'];
+                    }
+                    
+                    if((int)$resposta['STATUS'] == 1){
+                        //Se for correta soma contador
+                        $corretas++;
+                    }
+                }
+                
+                //Total de questões * alunos
+                $totalQuestoes          = $tbListas->NUM_QUESTOES * sizeof($alunos);
+                $ret->aproveitamento    = round(($corretas / $totalQuestoes) * 100, 0);
+                
+                //Retorno final
+                $ret->status    = true;
+                $ret->msg       = "Respostas encontradas!";
                 
                 return $ret;
             }catch(Exception $e){

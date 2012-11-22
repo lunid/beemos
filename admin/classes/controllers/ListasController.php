@@ -168,10 +168,27 @@
                     $aba->setAttr('ST_RESULTADO_ALUNO', $ret->lista->ST_RESULTADO_ALUNO);
                     $aba->setAttr('ST_GABARITO_ALUNO', $ret->lista->ST_GABARITO_ALUNO);
                     $aba->setAttr('TEMPO_VIDA', $ret->lista->TEMPO_VIDA);
+                    $aba->setAttr('NOME_ARQ', $ret->lista->NOME_ARQ);
+                    $aba->setAttr('COD_LISTA', $ret->lista->COD_LISTA);
+                    
+                    //Verifica Status
+                    if($ret->lista->LISTA_ATIVA_DT_HR_INI == null || $ret->lista->LISTA_ATIVA_DT_HR_FIM == null){
+                        $status = "Ativa";
+                    }else{
+                        //Converte Datas
+                        $dataAtual  = strtotime(date("Y-m-d H:i:s"));
+                        $dataInicio = strtotime($ret->lista->LISTA_ATIVA_DT_HR_INI);
+                        $dataFinal  = strtotime($ret->lista->LISTA_ATIVA_DT_HR_FIM);
+                        //Testa a data
+                        $status = $dataAtual >= $dataInicio && $dataAtual <= $dataFinal ? 'Ativa' : 'Inativa';
+                    }
+                    
+                    $aba->setAttr('STATUS', $status);                    
                     
                     //Informações de gráfico
-                    $ret->GR_RESPOSTAS  = $mdListas->calculaRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
-                    $ret->GR_ALUNOS     = $mdListas->calculaAlunosRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
+                    $ret->GR_RESPOSTAS      = $mdListas->calculaRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
+                    $ret->GR_ALUNOS         = $mdListas->calculaAlunosRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
+                    $ret->APROVEITAMENTO    = $mdListas->calculaAproveitamentoLista($ret->lista->ID_HISTORICO_GERADOC);
                     
                     //HTML final
                     $ret->html  = $aba->render();

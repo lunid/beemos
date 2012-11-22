@@ -464,6 +464,16 @@
                 throw $e;
             }
         }
+        
+        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaAproveitamentoLista($ID_HISTORICO_GERADOC);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
     
 ?>
