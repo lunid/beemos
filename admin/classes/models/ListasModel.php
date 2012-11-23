@@ -5,6 +5,7 @@
     use \admin\classes\models\tables\HistoricoGeradoc;
     use \admin\classes\models\tables\TurmaLista;
     use \admin\classes\models\tables\TurmaConvite;
+    use \admin\classes\models\tables\LstUsuario;
     
     class ListasModel extends Model {
         /**
@@ -426,5 +427,53 @@
                 throw $e;
             }
         }
+        
+        /**
+         * Efetua a chamado do método calculaRespostasLista no ORM LstUsuario e repassa o resultado
+         * do calculo de questões obtido.
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da lista
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int  $ret->correta      - Total de questões já respondidas e Corretas       <br />
+         *  int  $ret->errada       - Total de questões já respondidas e Erradas        <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaRespostasLista($ID_HISTORICO_GERADOC){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaRespostasLista($ID_HISTORICO_GERADOC);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function calculaAlunosRespostasLista($ID_HISTORICO_GERADOC){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaAlunosRespostasLista($ID_HISTORICO_GERADOC);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaAproveitamentoLista($ID_HISTORICO_GERADOC);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
+    
 ?>

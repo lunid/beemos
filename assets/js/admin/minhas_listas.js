@@ -82,12 +82,19 @@ function abreLista(idLista, nomeAba){
                 tabCounter++;
                 
                 //Aplica datepicker
+                
+                //Objeto para capturar informações de data
+                var date = new Date();
+                var ano = date.getFullYear();
+                var mes = date.getMonth();
+                var dia = date.getDate();
+                
                 $(".periodo_ini").datepicker({
-                    minDate: new Date(2012, 11, 19)
+                    minDate: new Date(ano, mes, dia)
                 });
                 
                 $(".periodo_fim").datepicker({
-                    minDate: new Date(2012, 11, 19)
+                    minDate: new Date(ano, mes, dia)
                 });
                 
                 //Aplica máscara de tempo HH:MM
@@ -100,6 +107,115 @@ function abreLista(idLista, nomeAba){
                 controleAbas += id;
                 
                 $("#controleAbas").val(controleAbas);
+                
+                //Verifica se foram encontradas informações de respostas
+                if(ret.GR_RESPOSTAS.status){
+                    //Gráficos
+                    var grRespostas = new Highcharts.Chart({
+                        chart: {
+                            renderTo: 'gr_respostas_' + idLista,
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            width: 200,
+                            height: 200,
+                            borderWidth: 1,
+                            borderColor: '#909090'
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        title: {
+                            text: 'Respostas'
+                        },
+                        tooltip: {
+                                pointFormat: '<b>{point.y}</b>',
+                                percentageDecimals: 2
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: true,
+                                size: '95%'
+                            }
+                        },
+                        legend:{
+                            borderWidth: 0,
+                            layout: 'vertical',
+                            itemStyle: {
+                                fontSize: '10px'
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            data: [
+                                ['Corretas',   ret.GR_RESPOSTAS.correta],
+                                ['Erradas',    ret.GR_RESPOSTAS.errada]
+                            ]
+                        }]
+                    });                    
+                } //Gráficio de Respostas
+                
+                //Verifica se foram encontradas informações de alunos
+                if(ret.GR_ALUNOS.status){
+                    //Gráficos
+                    var grAlunos = new Highcharts.Chart({
+                        chart: {
+                            renderTo: 'gr_alunos_' + idLista,
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            width: 200,
+                            height: 200,
+                            borderWidth: 1,
+                            borderColor: '#909090'
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        title: {
+                            text: 'Alunos'
+                        },
+                        tooltip: {
+                                pointFormat: '<b>{point.y}</b>',
+                                percentageDecimals: 2
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: true,
+                                size: '95%'
+                            }
+                        },
+                        legend:{
+                            borderWidth: 0,
+                            layout: 'vertical',
+                            itemStyle: {
+                                fontSize: '10px'
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            data: [
+                                ['Responderam',     ret.GR_ALUNOS.respondeu],
+                                ['Não Responderam', ret.GR_ALUNOS.naoRespondeu]
+                            ]
+                        }]
+                    });                    
+                } //Gráficio de alunos
+                
+                //Informações de aproveitamento
+                if(ret.APROVEITAMENTO.status){
+                    $("#num_proveitamento_" + idLista).html(ret.APROVEITAMENTO.aproveitamento);                    
+                }
             }
         },
         'json'
@@ -144,6 +260,9 @@ function alteraAnticola(status, idLista){
     );
 }
 
+/**
+ * Altera da data de inicio ou fim da validade da prova
+ */
 function alteraPeriodo(data, tipo, idLista){
     //Inicial modal de aguarde
     site.aguarde();
@@ -174,6 +293,9 @@ function alteraPeriodo(data, tipo, idLista){
     );
 }
 
+/**
+ * Alterar status de permissão do Resultado ao Aluno (0 ou 1)
+ */
 function alteraResultadoAluno(status, idLista){
     //Inicial modal de aguarde
     site.aguarde();
@@ -203,6 +325,9 @@ function alteraResultadoAluno(status, idLista){
     );
 }
 
+/**
+ * Alterar status de permissão do Gabarito ao Aluno (0 ou 1)
+ */
 function alteraGabaritoAluno(status, idLista){
     //Inicial modal de aguarde
     site.aguarde();
@@ -232,31 +357,34 @@ function alteraGabaritoAluno(status, idLista){
     );
 }
 
+/**
+ * Altera o empo limite que o aluno possui para finalizar a lista
+ */
 function alteraTempoVida(tempo, idLista){
-    //Inicial modal de aguarde
-    site.aguarde();
+    //Expressão regular para validar o campo
+    var regTempo = /^[0-9][0-9]:[0-9][0-9]/;
     
-    $.post(
-        'listas/alteraTempoVida',
-        {
-            idLista: idLista,
-            tempo: tempo
-        },
-        function(ret){
-            //Fecha aguarde
-            site.fechaAguarde();
-            
-            if(!ret.status){
-                //Exibe erro, caso exista
-                site.modal(ret.msg, "Tempo de Vida", "erro");
+    //Verifica se o valor está no padrão 00:00 e salva informação
+    if(regTempo.test(tempo)){
+        $.post(
+            'listas/alteraTempoVida',
+            {
+                idLista: idLista,
+                tempo: tempo
+            },
+            function(ret){
+                if(!ret.status){
+                    //Exibe erro, caso exista
+                    site.modal(ret.msg, "Tempo de Vida", "erro");
+                }
+            },
+            'json'
+        ).error(
+            //Exibe ALERT em caso de erro fatal
+            function(){
+                site.fechaAguarde();
+                alert("Falha no servidor! Tente mais tarde.");
             }
-        },
-        'json'
-    ).error(
-        //Exibe ALERT em caso de erro fatal
-        function(){
-            site.fechaAguarde();
-            alert("Falha no servidor! Tente mais tarde.");
-        }
-    );
+        );
+    }
 }

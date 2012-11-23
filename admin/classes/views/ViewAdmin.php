@@ -7,7 +7,7 @@
     
     class ViewAdmin extends View {       
         
-        function render($layoutName=''){
+        function render($layoutName='', $objMemCache = NULL){
             
             try {
                 $objMenuVert    = new MenuVertical('xml/menuVertical.xml');
@@ -15,7 +15,7 @@
 
                 $this->MENU_VERTICAL = $objMenuVert->render($layoutName);
                 
-                parent::render($layoutName);
+                parent::render($layoutName, $objMemCache = NULL);
                  
             } catch(\Exception $e) {
                 throw($e);
