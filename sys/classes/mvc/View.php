@@ -87,7 +87,6 @@
          */
         private function getTemplate(){
             $pathTpl        = $this->pathTpl;
-            $pathTpl        = '';
             $fileTplDefault = 'sys_blank.html';
             
             if (strlen($pathTpl) == 0) {

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Classe abastrata que contÃ©m os recursos comuns a todos os Controllers
+ * Classe abastrata que contém os recursos comuns a todos os Controllers
  * @abstract
  */
     namespace sys\classes\mvc;
@@ -17,11 +17,11 @@
         }                
         
         /*
-         * MÃ©todo que recebe o nome do arquivo e um objeto cujos atributos 
-         * representam as variÃ¡veis a concatenar.
+         * Método que recebe o nome do arquivo e um objeto cujos atributos 
+         * representam as variáveis a concatenar.
          * 
-         * @param $fileName (nome do arquivo HTML que servirÃ¡ de matriz para a pÃ¡gina solicitada).
-         * @param $objParams (os atributos representam os parÃ¢metros usados para concatenar com o HTML de $fileName)
+         * @param $fileName (nome do arquivo HTML que servirá de matriz para a página solicitada).
+         * @param $objParams (os atributos representam os parâmetros usados para concatenar com o HTML de $fileName)
          * @return String
         */            
         protected function view($fileName,$objParams = NULL){
@@ -46,13 +46,13 @@
                 }
             }
             
-            //Faz a inclusÃ£o de JS e CSS dos plugins da pÃ¡gina:
+            //Faz a inclusão de JS e CSS dos plugins da página:
             //==================================================================
-            //Array multidimensional usado para agrupar os tipos de todos os plugins (extensÃ£o: js|css|jsInc|cssInc)
+            //Array multidimensional usado para agrupar os tipos de todos os plugins (extensão: js|css|jsInc|cssInc)
             //Ex: arrVarInc['css'][], arrVarInc['js'][]...
             $arrVarInc = array();
             
-            //Faz a leitura de cada plugin e separa as strings de cada extensÃ£o. 
+            //Faz a leitura de cada plugin e separa as strings de cada extensão. 
             //Guarda em $arrVarIn.
             if (is_array($arrPlugin) && count($arrPlugin) > 0){
                 foreach($arrPlugin as $plugin){                    
@@ -62,7 +62,7 @@
                 }                
             }
             
-            //Agora, para cada extensÃ£o, faz o include e/ou concatena em um Ãºnico arquivo.
+            //Agora, para cada extensão, faz o include e/ou concatena em um único arquivo.
             if (count($arrVarInc) > 0){
                 $this->outFileMin = get_class($this).'Plugin';
                 foreach($arrVarInc as $ext => $arrValue){  
@@ -83,6 +83,24 @@
             echo $htmlTpl;
         } 
         
+        /**
+         * Habilita o cache para um método (action) específico do Controller atual.
+         * 
+         * O parâmetro $action será usado para compor o nome do cache de acordo com 
+         * o formato modulo_action (vide método setNameCache()).
+         * 
+         * Exemplo de uso:
+         * <code>
+         *  function actionIndex(){         
+         *    $this->cacheOn(__METHOD__);
+         *    ...
+         * </code>
+         * 
+         * @param string $action Nome do método (action) onde cacheOn foi chamado.
+         * @param string $period Unidade que representa o período de validade do cache (DAY, HOUR, MIN ou SEC).
+         * @param integer $time Número que representa a quantidade do período.
+         * @throws Exception 
+         */
         function cacheOn($action,$period='DAY',$time=30){            
             try {
                 $nameCache          = $this->setNameCache($action);                
@@ -110,6 +128,20 @@
             return $nameCache;
         }        
 
+        /**
+         * Limpa o cache de uma página.
+         * O parâmetro recebido refere-se ao método onde cacheOff foi chamado.
+         * 
+         * Exemplo de uso:
+         * <code>
+         *  function actionIndex(){         
+         *    $this->cacheOff(__METHOD__);
+         *    ...
+         * </code>
+         * 
+         * @return void
+         * @param string $action Nome da action cujo conteúdo deve ser eliminado do cache.
+         */
         function cacheOff($action){
             if (strlen($action) > 0) {
                 $nameCache  = $this->setNameCache($action);                    
