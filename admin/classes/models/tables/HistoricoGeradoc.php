@@ -1,6 +1,7 @@
 <?php
     namespace admin\classes\models\tables;
     use \sys\classes\db\ORM;
+    use \admin\classes\models\EscolasTurmasModel;
     
     /**
      * Representa uma entidade da tabela SPRO_HISTORICO_GERADOC
@@ -58,6 +59,7 @@
          *   "limite"            => 10
          * )
          * </code>
+         * 
          * @return stdClass $ret
          * <code>
          *  <br />
@@ -136,6 +138,164 @@
             }catch(Exception $e){
                 throw $e;
             }      
+        }
+        
+        /**
+         * Função que lista as Escolas e Turmas de uam determinada lista.
+         * 
+         * @param int $ID_CLIENTE ID do cliente 
+         * @param int $ID_ESCOLA ID da Escola
+         * @param string $ENSINO Ensinos para serem filtrados usando IN. Ex: 'M', 'F'
+         * @param string $PERIODO Períodos para serem filtrados usando IN. Ex: 'M', 'F'
+         * @param string $ANO Abos para serem filtrados usando IN. Ex: 1, 3
+         *
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status        - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg           - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->arrEscolas    - Array com as escolas encontradas                  <br />
+         *  array   $ret->arrTurmas     - Array com as turmas encontradas                   <br />
+         *  array   $ret->arrEnsino     - Array com os ensinos encontrados                  <br />
+         *  array   $ret->arrPeriodo    - Array com os períodos encontrados                 <br />
+         *  array   $ret->arrAno        - Array com os anos encontrados                     <br />
+         * </code>
+         * 
+         * @throws \admin\classes\models\tables\Exception
+         */
+        public function carregaEscolasTurmasLista($ID_CLIENTE, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = ''){
+            try{
+                //Obejto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = true;
+                $ret->msg       = "Falha ao listar Escolas e Turmas da Lista";
+                
+                //Objeto da tabela SPRO_ESCOLA para join
+                $tbEscola               = new Escola();
+                $tbEscola->alias        = "E";
+                $tbEscola->fieldsJoin   = "ID_ESCOLA,
+                                           NOME";
+                
+                //Objeto da tabela SPRO_TURMA para join
+                $tbTurma                = new Turma();
+                $tbTurma->alias         = "T";
+                $tbTurma->fieldsJoin    = "ID_TURMA,
+                                           CLASSE,
+                                           ANO,
+                                           PERIODO,
+                                           ENSINO";
+                
+                //Objeto da tabela SPRO_TURMA para join
+                $tbTurmaLista               = new TurmaLista();
+                $tbTurmaLista->alias        = "TL";
+                
+                //Objeto da tabela SPRO_HISTORICO_GERADOC (LISTAS) para join
+                $tbLista        = $this;
+                $tbLista->alias = "L";
+                
+                //Inicia Joins
+                $this->joinFrom     ($tbEscola      , $tbTurma      , 'ID_ESCOLA');
+                $this->joinFromAdd  ($tbTurmaLista  , $tbTurma      , 'ID_TURMA');
+                $this->joinFromAdd  ($tbLista       , $tbTurmaLista , 'ID_HISTORICO_GERADOC');
+                
+                //Executa select com os Joins
+                $where = ""; //WHERE da query
+                
+                //Filtro por Escola
+                if($ID_ESCOLA > 0){
+                    $where .= " AND E.ID_ESCOLA = {$ID_ESCOLA} ";
+                }
+                
+                //Filtro de Ensinos
+                if($ENSINO != "'0'" && $ENSINO != "''" && $ENSINO != "" && $ENSINO != null){
+                    $where .= " AND T.ENSINO IN ({$ENSINO}) ";
+                }
+                
+                //Filtro de Períodos
+                if($PERIODO != "'0'" && $PERIODO != "''" && $PERIODO != "" && $PERIODO != null){
+                    $where .= " AND T.PERIODO IN ({$PERIODO}) ";
+                }
+                
+                //Filtro de Anos
+                if($ANO != 0 && $ANO != "" && $ANO != null){
+                    $where .= " AND T.ANO IN ({$ANO}) ";
+                }
+
+                //Executa Select com Joins e Where
+                $rs = $this->setJoin("E.ID_CLIENTE = {$ID_CLIENTE} AND L.ID_HISTORICO_GERADOC = {$this->ID_HISTORICO_GERADOC} {$where}");
+                
+                //Verifica retorno
+                if(sizeof($rs) <= 0){
+                    $ret->msg = "Nenhuma Escola encotrada!";
+                    return $ret;
+                }
+                
+                //Array de retorno
+                $arrEscolas = array();
+                $arrEnsino  = array();
+                $arrTurmas  = array();
+                $arrAno     = array();
+                $arrPeriodo = array();
+                
+                //Monta Array
+                foreach($rs as $row){
+                    //Array de escolas encontradas
+                    if(!array_key_exists($row['ID_ESCOLA'], $arrEscolas)){
+                        $arrEscolas[$row['ID_ESCOLA']] = array(
+                            "ID_ESCOLA"     => $row['ID_ESCOLA'],
+                            "ESCOLA"        => $row['NOME'],
+                        );
+                    }
+                    
+                    //Array de turmas encontradas
+                    if(!array_key_exists($row['ID_TURMA'], $arrTurmas)){
+                        $arrTurmas[$row['ID_TURMA']] = array(
+                            "ID_TURMA"     => $row['ID_TURMA'],
+                            "CLASSE"       => $row['CLASSE'],
+                        );
+                    }
+                    
+                    //Array de ensinos encontrados
+                    if(!array_key_exists($row['ENSINO'], $arrEnsino)){
+                        $arrEnsino[$row['ENSINO']] = array(
+                            "ENSINO"    => $row['ENSINO'],
+                            "DESC"      => EscolasTurmasModel::traduzEnsino($row['ENSINO']),
+                        );
+                    }
+                    
+                    //Array de períodos encontrados
+                    if(!array_key_exists($row['PERIODO'], $arrPeriodo)){
+                        $arrPeriodo[$row['PERIODO']] = array(
+                            "PERIODO"   => $row['PERIODO'],
+                            "DESC"      => EscolasTurmasModel::traduzPeriodo($row['PERIODO']),
+                        );
+                    }
+                    
+                    //Array de Anos encontrados
+                    if(!in_array($row['ANO'], $arrAno)){
+                        $arrAno[] = $row['ANO'];
+                    }
+                }
+                
+                //Ordenação de arrays
+                ksort($arrEscolas);
+                ksort($arrTurmas);
+                ksort($arrEnsino);
+                ksort($arrPeriodo);
+                sort($arrAno);
+                
+                //Retorno OK
+                $ret->status            = true;
+                $ret->msg               = "Escolas e Turmas da Lista carregadas com sucesso!";
+                $ret->arrEscolas        = $arrEscolas;
+                $ret->arrTurmas         = $arrTurmas;
+                $ret->arrEnsino         = $arrEnsino;
+                $ret->arrPeriodo        = $arrPeriodo;
+                $ret->arrAno            = $arrAno;
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
         }
     }
 

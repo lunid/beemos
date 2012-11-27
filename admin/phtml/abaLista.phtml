@@ -1,7 +1,8 @@
 <div id="menu_listas">
-    <a href="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>">Configurações</a>
+    <a href="javascript:void(0);" onclick="javascript:menuLista('lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>');">Configurações</a>
+    <a href="javascript:void(0);" onclick="javascript:menuLista('lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>');">Resultados</a>
 </div>
-<div id="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista">
+<div id="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>">
     <!-- Opções de Configuração da Lista -->
     <table class="table_opts_lista">
         <tr>
@@ -121,13 +122,46 @@
                 <input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
             </td>
         </tr>
+    </table>
+    
+    <!-- Opções de Configuração da Lista --> 
+</div>
+
+<div id="lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
+    <!-- Opções de Configuração da Lista -->
+    <table class="tb_resultados_listas">
         <tr>
-            <td colspan="2">
-                <strong>Números da Lista</strong>                
+            <td style="vertical-align:top;">
+                <strong>Escola</strong>
+                <br />
+                <select id="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Ensino</strong>
+                <br />
+                <select id="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Período</strong>
+                <br />
+                <select id="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Ano</strong>
+                <br />
+                <select id="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Turmas</strong>
+                <br />
+                <select id="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple"></select>
+            </td>
+            <td style="vertical-align:bottom;">
+                <input type="button" value="Filtrar" onclick="javascript:geraGrafico(<?=$attrs['ID_HISTORICO_GERADOC']?>);" />
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="6">
                 <!-- Gráficos e Dados -->
                 <div id="gr_respostas_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
                     <p>
@@ -150,10 +184,26 @@
                         <strong id="num_proveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>">0</strong>%
                     </p>
                 </div>
-                <!-- Gráficos e Dados -->                
+                <!-- Gráficos e Dados --> 
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <!-- Gráficos e Dados -->
+                <div id="gr_questoes_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Questões
+                        <br />
+                        <strong>0</strong>
+                    </p>
+                </div>
+                <!-- Gráficos e Dados --> 
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <input type="button" value="Imprimir" onclick="javascript:imprimirGraficos(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
             </td>
         </tr>
     </table>
-    
-    <!-- Opções de Configuração da Lista --> 
 </div>

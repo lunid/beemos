@@ -1,5 +1,7 @@
 <?php
     use \admin\classes\controllers\AdminController;
+    use \sys\classes\mvc\View;
+    use \sys\classes\mvc\ViewPart;
     use \sys\classes\util\Date;
     use \sys\classes\util\Request;
     use \admin\classes\models\ListasModel;
@@ -185,14 +187,115 @@
                     
                     $aba->setAttr('STATUS', $status);                    
                     
-                    //Informações de gráfico
+                    //Informações de gráficos e Números
                     $ret->GR_RESPOSTAS      = $mdListas->calculaRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
                     $ret->GR_ALUNOS         = $mdListas->calculaAlunosRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
                     $ret->APROVEITAMENTO    = $mdListas->calculaAproveitamentoLista($ret->lista->ID_HISTORICO_GERADOC);
                     
+                    //Opções para select de escolas
+                    $ret->escolasTurmas = $mdListas->carregaEscolasTurmasLista($ret->lista->ID_HISTORICO_GERADOC, 26436);
+                    
                     //HTML final
                     $ret->html  = $aba->render();
                 }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        public function actionGeraGraficosResultados(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar Resultados Gráficos da Lista!";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                $idEscola   = Request::post("idEscola", "NUMBER");
+                $ensino     = "'" . implode("','", Request::post("ensino", "ARRAY")) . "'";
+                $periodo    = "'" . implode("','", Request::post("periodo", "ARRAY")) . "'";
+                $ano        = implode(",", Request::post("ano", "ARRAY"));
+                $turma      = implode(",", Request::post("turma", "ARRAY"));
+                
+                //Carrega dados da lista solicitada
+                $mdListas   = new ListasModel();
+                
+                //Informações de gráficos e Números
+                $ret->GR_RESPOSTAS      = $mdListas->calculaRespostasLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                $ret->GR_ALUNOS         = $mdListas->calculaAlunosRespostasLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                $ret->APROVEITAMENTO    = $mdListas->calculaAproveitamentoLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                $ret->GR_QUESTOES       = $mdListas->calculaAproveitamentoQuestao($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                
+                $ret->status = true;
+                $ret->msg    = "Informações carregadas!";
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }   
+        }
+        
+        public function actionImprimirGraficos(){
+            try{
+                //View Impressão de Graficos
+                $objView = new View();
+                $objView->setTemplate("blank");
+                
+                //$objViewPart    = new ViewPart("admin/imprimir_graficos");
+                $objView->BODY  = "Teste";
+                
+                //$objViewPart = new ViewPart("admin/imprimir_graficos");
+                
+                //$objView->setLayout($objViewPart);
+                //$objView->setJs('admin/minhas_listas');
+                //$objView->setCss('admin/minhas_listas');
+                
+                $objView->render('imprimir_graficos');
+            }catch(Exception $e){
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
+            }
+        }
+        
+        /**
+         * Carrega os filtros da tela de resultados da Lista
+         */
+        public function actionCarregaFiltrosResultados(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar Filtros!";
+                
+                //Pega as variáveis enviadas
+                $idLista    = Request::post("idLista", "NUMBER");
+                $idEscola   = Request::post("idEscola", "NUMBER");
+                $ensino     = "'" . implode("','", Request::post("ensino", "ARRAY")) . "'";
+                $periodo    = "'" . implode("','", Request::post("periodo", "ARRAY")) . "'";
+                $ano        = implode(",", Request::post("ano", "ARRAY"));
+                
+                //Carrega dados da lista solicitada
+                $mdListas   = new ListasModel();
+                
+                //Opções para select de escolas
+                $ret->escolasTurmas = $mdListas->carregaEscolasTurmasLista($idLista, 26436, $idEscola, $ensino, $periodo, $ano);
                 
                 echo json_encode($ret);
             }catch(Exception $e){

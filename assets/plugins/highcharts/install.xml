@@ -4,6 +4,6 @@
         Configura/formata o menu superior de idiomas.         
     </descricao>
     <config>
-        <include id='js'>highcharts</include>   
+        <include id='js'>highcharts,modules/exporting</include>   
     </config>
 </root>

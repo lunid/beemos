@@ -38,12 +38,52 @@
          * 
          * @throws Exception
          */
-        public function calculaRespostasLista($ID_HISTORICO_GERADOC){
+        public function calculaRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha ao calcular repostas da lista!";
+                
+                //WHERE
+                $where = "";
+                
+                //Filtro de escola
+                if($ID_ESCOLA > 0){
+                    $where .= " AND T.ID_ESCOLA = {$ID_ESCOLA} ";
+                }
+                
+                //Filtro de ensino
+                if($ENSINO != "'0'" && $ENSINO != "''" && $ENSINO != "" && $ENSINO != null){
+                    $where .= " AND T.ENSINO IN ({$ENSINO}) ";
+                }
+                
+                //Filtro de período
+                if($PERIODO != "'0'" && $PERIODO != "''" && $PERIODO != "" && $PERIODO != null){
+                    $where .= " AND T.PERIODO IN ({$PERIODO}) ";
+                }
+                
+                //Filtro de amo
+                if($ANO != "0" && $ANO != "" && $ANO != null){
+                    $where .= " AND T.ANO IN ({$ANO}) ";
+                }
+                
+                //Filtro de turmas
+                if($TURMA != "0" && $TURMA != "" && $TURMA != null){
+                    $where .= " AND T.ID_TURMA IN ({$TURMA}) ";
+                }
+                
+                $INNER_JOIN = "";
+                if($where != ""){
+                    $INNER_JOIN = " 
+                        INNER JOIN
+                            SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = LU.ID_CLIENTE
+                        INNER JOIN
+                            SPRO_TURMA T ON T.ID_TURMA = TA.ID_TURMA
+                        INNER JOIN
+                            SPRO_TURMA_LISTA TL ON TL.ID_TURMA = T.ID_TURMA
+                        ";
+                }
                 
                 //Sql da pesquisa de respostas
                 $sql = "SELECT
@@ -52,8 +92,10 @@
                             SPRO_LST_USUARIO LU
                         INNER JOIN
                             SPRO_LST_HIST_RESPOSTA LR ON LR.ID_LST_USUARIO = LU.ID_LST_USUARIO
+                        {$INNER_JOIN}
                         WHERE
-                            LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}                        
+                            LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}
+                        {$where}
                         ;";
                 
                 //Executa SQL
@@ -90,12 +132,69 @@
             }
         }
         
-        public function calculaAlunosRespostasLista($ID_HISTORICO_GERADOC){
+        /**
+         * Função que calcula o total de alunos que respoderam as questões da Lista
+         * e o total de alunos que abriram a lista mas não terminaram (não respoderam)
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int  $ret->respondeu    - Total de alunos que responderam                   <br />
+         *  int  $ret->naoRespondeu - Total de alunos que não respoderam                <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha ao calcular alunos que reponderam a lista!";
+                
+                //WHERE
+                $where = "";
+                
+                //Filtro de escola
+                if($ID_ESCOLA > 0){
+                    $where .= " AND T.ID_ESCOLA = {$ID_ESCOLA} ";
+                }
+                
+                //Filtro de ensino
+                if($ENSINO != "'0'" && $ENSINO != "''" && $ENSINO != "" && $ENSINO != null){
+                    $where .= " AND T.ENSINO IN ({$ENSINO}) ";
+                }
+                
+                //Filtro de período
+                if($PERIODO != "'0'" && $PERIODO != "''" && $PERIODO != "" && $PERIODO != null){
+                    $where .= " AND T.PERIODO IN ({$PERIODO}) ";
+                }
+                
+                //Filtro de amo
+                if($ANO != "0" && $ANO != "" && $ANO != null){
+                    $where .= " AND T.ANO IN ({$ANO}) ";
+                }
+                
+                //Filtro de turmas
+                if($TURMA != "0" && $TURMA != "" && $TURMA != null){
+                    $where .= " AND T.ID_TURMA IN ({$TURMA}) ";
+                }
+                
+                $INNER_JOIN = "";
+                if($where != ""){
+                    $INNER_JOIN = " 
+                        INNER JOIN
+                            SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = LU.ID_CLIENTE
+                        INNER JOIN
+                            SPRO_TURMA T ON T.ID_TURMA = TA.ID_TURMA
+                        INNER JOIN
+                            SPRO_TURMA_LISTA TL ON TL.ID_TURMA = T.ID_TURMA
+                        ";
+                }
                 
                 //Sql da pesquisa de alunos
                 $sql = "SELECT
@@ -104,8 +203,10 @@
                             SPRO_LST_USUARIO LU
                         LEFT JOIN
                             SPRO_LST_HIST_RESPOSTA LR ON LR.ID_LST_USUARIO = LU.ID_LST_USUARIO
+                        {$INNER_JOIN}
                         WHERE
-                            LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}                        
+                            LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}      
+                        {$where}
                         GROUP BY
                             LU.ID_LST_USUARIO
                         ;";
@@ -144,7 +245,24 @@
             }
         }
         
-        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC){
+        /**
+         * Calcula o aproveitamento total de uma lista, somando o toltal de respostas
+         * corretas dos alunos que respoderam e dividinfo pela multiplicação da quantidade
+         * total de alunos que repsondeu x quantidade questões
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status        - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg           - Armazena mensagem ao usuário                      <br />
+         *  double  $ret->aproveitamento   - Percentual total de aproveitamento da lista    <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
@@ -160,6 +278,46 @@
                     return $ret;
                 }
                 
+                //WHERE
+                $where = "";
+                
+                //Filtro de escola
+                if($ID_ESCOLA > 0){
+                    $where .= " AND T.ID_ESCOLA = {$ID_ESCOLA} ";
+                }
+                
+                //Filtro de ensino
+                if($ENSINO != "'0'" && $ENSINO != "''" && $ENSINO != "" && $ENSINO != null){
+                    $where .= " AND T.ENSINO IN ({$ENSINO}) ";
+                }
+                
+                //Filtro de período
+                if($PERIODO != "'0'" && $PERIODO != "''" && $PERIODO != "" && $PERIODO != null){
+                    $where .= " AND T.PERIODO IN ({$PERIODO}) ";
+                }
+                
+                //Filtro de amo
+                if($ANO != "0" && $ANO != "" && $ANO != null){
+                    $where .= " AND T.ANO IN ({$ANO}) ";
+                }
+                
+                //Filtro de turmas
+                if($TURMA != "0" && $TURMA != "" && $TURMA != null){
+                    $where .= " AND T.ID_TURMA IN ({$TURMA}) ";
+                }
+                
+                $INNER_JOIN = "";
+                if($where != ""){
+                    $INNER_JOIN = " 
+                        INNER JOIN
+                            SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = LU.ID_CLIENTE
+                        INNER JOIN
+                            SPRO_TURMA T ON T.ID_TURMA = TA.ID_TURMA
+                        INNER JOIN
+                            SPRO_TURMA_LISTA TL ON TL.ID_TURMA = T.ID_TURMA
+                        ";
+                }
+                
                 //Sql da pesquisa de respostas e alunos
                 $sql = "SELECT
                             IF(LR.RESPOSTA = LR.GABARITO, 1, 0) as STATUS,
@@ -168,8 +326,10 @@
                             SPRO_LST_USUARIO LU
                         INNER JOIN
                             SPRO_LST_HIST_RESPOSTA LR ON LR.ID_LST_USUARIO = LU.ID_LST_USUARIO
+                        {$INNER_JOIN}
                         WHERE
                             LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}                        
+                        {$where}
                         ;";
                 
                 //Executa SQL
@@ -204,6 +364,144 @@
                 //Retorno final
                 $ret->status    = true;
                 $ret->msg       = "Respostas encontradas!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Calcula o aproveitamento total de uma lista, somando o toltal de respostas
+         * corretas dos alunos que respoderam e dividinfo pela multiplicação da quantidade
+         * total de alunos que repsondeu x quantidade questões
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status        - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg           - Armazena mensagem ao usuário                      <br />
+         *  double  $ret->aproveitamento   - Percentual total de aproveitamento da lista    <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+            try{
+                //Objeto de etorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao calcular repostas da lista!";
+                
+                //Carrega Lista e sesus dados
+                $tbListas = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                
+                //Caso a Lista não seja encontrada, é retornado um erro
+                if($tbListas->ID_HISTORICO_GERADOC <= 0){
+                    $ret->msg = "Lista não encontrada!";
+                    return $ret;
+                }
+                
+                //WHERE
+                $where = "";
+                
+                //Filtro de escola
+                if($ID_ESCOLA > 0){
+                    $where .= " AND T.ID_ESCOLA = {$ID_ESCOLA} ";
+                }
+                
+                //Filtro de ensino
+                if($ENSINO != "'0'" && $ENSINO != "''" && $ENSINO != "" && $ENSINO != null){
+                    $where .= " AND T.ENSINO IN ({$ENSINO}) ";
+                }
+                
+                //Filtro de período
+                if($PERIODO != "'0'" && $PERIODO != "''" && $PERIODO != "" && $PERIODO != null){
+                    $where .= " AND T.PERIODO IN ({$PERIODO}) ";
+                }
+                
+                //Filtro de amo
+                if($ANO != "0" && $ANO != "" && $ANO != null){
+                    $where .= " AND T.ANO IN ({$ANO}) ";
+                }
+                
+                //Filtro de turmas
+                if($TURMA != "0" && $TURMA != "" && $TURMA != null){
+                    $where .= " AND T.ID_TURMA IN ({$TURMA}) ";
+                }
+                
+                $INNER_JOIN = "";
+                if($where != ""){
+                    $INNER_JOIN = " 
+                        INNER JOIN
+                            SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = LU.ID_CLIENTE
+                        INNER JOIN
+                            SPRO_TURMA T ON T.ID_TURMA = TA.ID_TURMA
+                        INNER JOIN
+                            SPRO_TURMA_LISTA TL ON TL.ID_TURMA = T.ID_TURMA
+                        ";
+                }
+                
+                //Sql da pesquisa de respostas e alunos
+                $sql = "SELECT
+                            IF(LR.RESPOSTA = LR.GABARITO, 1, 0) as STATUS,
+                            LR.ID_BCO_QUESTAO
+                        FROM
+                            SPRO_LST_USUARIO LU
+                        INNER JOIN
+                            SPRO_LST_HIST_RESPOSTA LR ON LR.ID_LST_USUARIO = LU.ID_LST_USUARIO
+                        {$INNER_JOIN}
+                        WHERE
+                            LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}                        
+                        {$where}
+                        ORDER BY
+                            LR.ID_BCO_QUESTAO
+                        ;";
+                
+                //Executa SQL
+                $rs = $this->query($sql);
+                
+                //Se não houver nenhuma resposta
+                if(sizeof($rs) <= 0){
+                    $ret->msg = "Nenhuma resposta encontrada!";
+                    return $ret;
+                }
+                
+                //Array de alunos que responderam
+                $questoes   = array(); 
+                $tmp        = 0;
+                $cont       = 0;
+                
+                foreach($rs as $questao){
+                    if($tmp != $questao['ID_BCO_QUESTAO']){
+                        if($tmp != 0){
+                            $cont++;
+                        }
+                        
+                        $questoes[$cont] = array(
+                            'ID_BCO_QUESTAO'    => $questao['ID_BCO_QUESTAO'],
+                            'corretas'          => 0,
+                            'erradas'           => 0
+                        );
+                        
+                        $tmp = $questao['ID_BCO_QUESTAO'];
+                    }
+                    
+                    if((int)$questao['STATUS'] == 1){
+                        //Se for correta soma contador de corretas da questão
+                        $questoes[$cont]['corretas']++;
+                    }else{
+                        //Se for correta soma contador de erradas da questão
+                        $questoes[$cont]['erradas']++;
+                    }                  
+                }
+                
+                //Retorno final
+                $ret->status    = true;
+                $ret->msg       = "Questões contradas com sucesso!";
+                $ret->questoes  = $questoes;
                 
                 return $ret;
             }catch(Exception $e){
