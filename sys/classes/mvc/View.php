@@ -21,7 +21,7 @@
         /**
          * Inicializa o template definido em config.xml
          * 
-         * Pode conter também outros recursos de inicialização da View.
+         * Pode conter também outros recursos de inicialização da View (não implementados).
          * return void 
          */
         function init(){            
@@ -57,30 +57,77 @@
            return $url;
         }        
         
+        /**
+         * Define um novo template html para a view atual.
+         * O arquivo informado deve existir na pasta padrão de template, previamente definida no arquivo config.xml.
+         * 
+         * Exemplo:
+         * $objView->setTemplate('novoModelo.html');
+         * 
+         * @param string $fileTpl Deve conter um nome de arquivo contendo a extensão (htm ou html)
+         */
         function setTemplate($fileTpl=''){
             $pathTpl = '';
             if (strlen($fileTpl) > 0) {
                 $folderTpl   = \LoadConfig::folderTemplate();                  
-                $pathTpl     = $folderTpl.'/'.$fileTpl;                
+                $pathTpl     = $folderTpl.'/'.$fileTpl;                     
                 $pathTpl     = str_replace('//', '/', $pathTpl);                            
             }
             
             $this->pathTpl  = $pathTpl;
         }
         
+        
+        /**
+         * Retorna um template válido. Caso um arquivo de Template não tenha sido informado 
+         * um template padrão (sys_blank.html) é criado no módulo atual, pasta de templates.
+         * 
+         * @return string
+         * @throws \Exception Caso ocorra erro ao tentar criar um template padrão. 
+         */
+        private function getTemplate(){
+            $pathTpl        = $this->pathTpl;
+            $pathTpl        = '';
+            $fileTplDefault = 'sys_blank.html';
+            
+            if (strlen($pathTpl) == 0) {
+                //Um template não foi informado. Gera um arquivo template padrão.  
+                $objModule  = new \Module();
+                $newUrlTpl  = $objModule->tplLangFile($fileTplDefault);
+                $folderTpl   = \LoadConfig::folderTemplate();                  
+                $pathTpl     = $folderTpl.'/'.$fileTplDefault; 
+                
+                if (!file_exists($newUrlTpl)) {
+                    $content = "<div>{BODY}</div>";
+                    $fp = @fopen($newUrlTpl, "wb+");   
+                    if ($fp !== FALSE) {
+                        fwrite($fp, $content);
+                        fclose($fp);                                             
+                    } else {
+                        $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_CREATE_TEMPLATE'); 
+                        $msgErr = str_replace('{PATH_TPL}',$pathTpl,$msgErr);
+                        throw new \Exception( $msgErr );                           
+                    }                
+                }
+                $this->pathTpl = $pathTpl;
+            } 
+            return $pathTpl;
+        }        
+        
+        /**
+         * Faz a junção do conteúdo parcial (ViewPart) com o template atual.
+         * 
+         * @param ViewPart $objViewPart 
+         */
         function setLayout(ViewPart $objViewPart){
             if (is_object($objViewPart)) {                       
-                $pathTpl                        = $this->pathTpl;                                                
+                $pathTpl                        = $this->getTemplate();                  
                 $objViewTpl                     = new ViewPart($pathTpl);
-                $objViewTpl->BODY               = $objViewPart->render();
-                
-                //if($tplName == 'padrao'){
-                    //$objViewTpl->BARRA_TOPO = \HtmlComponent::barraTopo();
-                //}
+                $objViewTpl->BODY               = $objViewPart->render();               
                 
                 $this->bodyContent              = $objViewTpl->render();
                 $this->layoutName               = $objViewPart->layoutName;                
-          
+                
                 if (strlen($pathTpl) > 0){    
                     
                     //Configurações lidas do arquivo config.xml:                    
@@ -95,9 +142,7 @@
                     }                  
                                                            
                     //Faz a inclusão de arquivos css e js padrão.
-                    try {                        
-                        //$objHeader->memoSetFile($objHeader::EXT_CSS,self::CSS,FALSE);
-                        //$objHeader->memoSetFile($objHeader::EXT_JS,self::JS,FALSE);                        
+                    try {                                            
                         $this->objHeader = $objHeader;                                                                                           
                         
                         //Plugins                                               
@@ -110,9 +155,13 @@
                     } catch(\Exception $e){
                         $this->showErr('View()',$e,FALSE); 
                     }                                                           
+                } else {
+                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'TEMPLATE_NOT_INFO'); 
+                    throw new \Exception( $msgErr );                     
                 }                
             } else {
-                die('Impossível continuar. O objeto View não foi informado ou não é um objeto válido.');                
+                $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'VIEWPART_NOT_INFO'); 
+                throw new \Exception( $msgErr );                                        
             }                        
         }
         
@@ -167,7 +216,7 @@
             if (isset($layoutName) && strlen($layoutName) > 0) {
                 $this->layoutName   = $layoutName;                
             }
-            //$this->objHeader->getMemos();                        
+                            
             $css                       = $this->getIncludesCss();
             $js                        = $this->getIncludesJs();            
             $bodyContent               = trim($this->bodyContent);

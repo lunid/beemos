@@ -251,15 +251,24 @@
         public function actionImprimirGraficos(){
             try{
                 //View Impressão de Graficos
-                $objView = new View();
-                $objView->setTemplate("blank");
+                $objView = new View();                
                 
-                //$objViewPart    = new ViewPart("admin/imprimir_graficos");
-                $objView->BODY  = "Teste";
+                if (1==1) {
+                    //Imprimir conteúdo em um template padrão (não é necessário informá-lo)
+                    $objViewPart = new ViewPart();
+                    $objViewPart->setContent('Teste sdfdsf'); 
+                    $objView->setLayout($objViewPart);
+                    $objView->render('imprimir_graficos');
+                } else {
+                    
+                }
+                die();
+                // $objViewPart    = new ViewPart();
+                //$objViewPart->setContent('Teste sdfdsf');                
                 
-                //$objViewPart = new ViewPart("admin/imprimir_graficos");
+                $objViewPart = new ViewPart("admin/imprimir_graficos");
                 
-                //$objView->setLayout($objViewPart);
+                $objView->setLayout($objViewPart);
                 //$objView->setJs('admin/minhas_listas');
                 //$objView->setCss('admin/minhas_listas');
                 

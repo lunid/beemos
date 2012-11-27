@@ -35,8 +35,18 @@
                     $this->showErr('Erro ao instanciar a view solicitada -> '.$viewFile,$e);                    
                 } 
             } else {
-                die('ViewPart(): Impossível continuar. O nome referente ao conteúdo HTML não foi informado'); 
+                //die('ViewPart(): Impossível continuar. O nome referente ao conteúdo HTML não foi informado'); 
             }
+        }
+        
+        /**
+         * Define uma string como conteúdo da viewPart.
+         * Método utilizado geralmente quando não há um arquivo físico de conteúdo informado no construtor.
+         *  
+         * @param string $content Conteúdo da ViewPart.
+         */
+        function setContent($content){
+            $this->bodyContent = (string)$content;
         }
         
         protected function showErr($msg,$e=NULL,$die=TRUE){
@@ -50,14 +60,16 @@
         function render($layoutName=''){  
             if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
             $bodyContent    = $this->bodyContent;
-            $params          = $this->params;                      
-            
-            if (is_array($params)) {
-                foreach($params as $key=>$value){
-                    $bodyContent = str_replace('{'.$key.'}',$value,$bodyContent);                
+            if (strlen($bodyContent) > 0) {
+                $params          = $this->params;                      
+
+                if (is_array($params)) {
+                    foreach($params as $key=>$value){
+                        $bodyContent = str_replace('{'.$key.'}',$value,$bodyContent);                
+                    }
                 }
-            }            
-            return $bodyContent;
+            }
+            return $bodyContent;            
         }        
         
         function __set($var,$value){
