@@ -236,6 +236,9 @@ function filtrosResultados(idLista){
     );
 }
 
+/**
+ * Função que geras gráficos de uma determinada lista
+ */
 function geraGrafico(idLista){
     //Pega dados de filtros
     var idEscola    = $("#escolas_" + idLista).val();
@@ -379,9 +382,11 @@ function geraGrafico(idLista){
                 
                 //Informações de aproveitamento
                 if(ret.APROVEITAMENTO.status){
-                    $("#num_proveitamento_" + idLista).html(ret.APROVEITAMENTO.aproveitamento);                    
+                    $("#num_proveitamento_" + idLista).html(ret.APROVEITAMENTO.aproveitamento);      
+                    $("#tmp_aproveitamento_" + idLista).val(ret.APROVEITAMENTO.aproveitamento);
                 }else{
                     $("#aproveitamento_" + idLista).html("<p>Aproveitamento<br /><strong id='num_proveitamento_"+idLista+"'>0</strong>%</p>");
+                    $("#tmp_aproveitamento_" + idLista).val(0);
                 }
                 
                 //Verifica se foram encontradas informações de respostas
@@ -389,13 +394,11 @@ function geraGrafico(idLista){
                     //Monta array de colunas
                     var colunas     = Array(ret.GR_QUESTOES.questoes.length);
                     var corretas    = Array(ret.GR_QUESTOES.questoes.length);
-                    var erradas     = Array(ret.GR_QUESTOES.questoes.length);
                     var i           = 0;
                     
                     $(ret.GR_QUESTOES.questoes).each(function(){
                         colunas[i]  = this.ID_BCO_QUESTAO;
-                        corretas[i] = {y: this.corretas, color: '#4572A7'};
-                        erradas[i]  = {y: this.erradas, color: '#AA4643'};
+                        corretas[i] = this.aproveitamento;
                         
                         i++;
                     });
@@ -407,12 +410,12 @@ function geraGrafico(idLista){
                     var gr_questoes = new Highcharts.Chart({
                         chart: {
                             renderTo: 'gr_questoes_' + idLista,
-                            type: 'column',
+                            type: 'bar',
                             plotBackgroundColor: null,
                             plotBorderWidth: null,
                             plotShadow: false,
                             width: 750,
-                            height: 400,
+                            height: 600,
                             borderWidth: 1,
                             borderColor: '#909090'
                         },
@@ -433,22 +436,21 @@ function geraGrafico(idLista){
                         },
                         tooltip: {
                             formatter: function() {
-                                return this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+                                return this.y + '% de acertos';
                             }
                         },
                         plotOptions: {
-                            column: {
-                                stacking: 'percent'
+                            bar: {
+                                stacking: 'normal'
                             }
+                        },
+                        legend:{
+                            enabled: false
                         },
                         series: [
                             {
                                 name: 'Corretas',
                                 data: corretas
-                            },
-                            {
-                                name: 'Erradas',
-                                data: erradas
                             }
                         ],
                         credits: {
@@ -458,6 +460,9 @@ function geraGrafico(idLista){
                 }else{
                   $("#gr_questoes_" + idLista).hide();  
                 } //Gráfico de Questões
+                
+                //Redimensiona área do gráfico de universo x aluno e esconde
+                $("#gr_aluno_" + idLista).hide();
             }
         },
         'json'
@@ -470,25 +475,149 @@ function geraGrafico(idLista){
     );
 }
 
+/**
+ * Abre um modal com o Grid de Alunos que responderam a lista.
+ * Ao selecionar um aluno, será gerado o gráfico de aproveitamento dele x universo (já pesquisado)
+ */
 function modalAluno(idLista){
-    $.post(
-        'listas/CarregaAlunosLista',
-        {
-            idLista: idLista
+    //Aguarde
+    site.aguarde();
+    
+    //Carrega Grid de Alunos
+    $("#grid_alunos_" + idLista).jqGrid({
+        url: 'listas/CarregaAlunosLista?idLista=' + idLista,
+        datatype: "json",
+        colNames:['Código', 'Aluno', 'Escola', 'Turma'],
+        colModel:[
+                //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'ID_CLIENTE', index:'ID_CLIENTE', width:15, align:'center', search: true, cellattr: site.formataGrid },
+                {name:'ALUNO', index:'ALUNO', width:40, search: true},
+                {name:'ESCOLA', index:'ESCOLA', width:20, search: true},
+                {name:'TURMA', index:'TURMA', width:20, search: true}
+        ],
+        onSelectRow: function(id){ 
+            //Modal Aguarde
+            site.aguarde();
+            
+            //tmp_aproveitamento_
+            $.post(
+                'listas/GraficoAluno',
+                {
+                    idLista: idLista,
+                    idCliente: id
+                },
+                function(ret){
+                    //Fecha aguarde
+                    site.fechaAguarde();
+                    
+                    if(ret.status){
+                        var universo    = parseFloat($("#tmp_aproveitamento_" + idLista).val());
+                        var aluno       = ret.aproveitamento;
+                        
+                        //Gráfico
+                        var gr_aluno = new Highcharts.Chart({
+                            chart: {
+                                renderTo: 'gr_aluno_' + idLista,
+                                type: 'column',
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                width: 750,
+                                height: 300,
+                                borderWidth: 1,
+                                borderColor: '#909090'
+                            },
+                            exporting: {
+                                enabled: false
+                            },
+                            title: {
+                                text: 'Aproveitamento Universo x Aluno (%)'
+                            },
+                            subtitle: {
+                                text: 'Aluno(a) - ' + ret.aluno,
+                                style: {
+                                    fontSize: '14px',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            xAxis: {
+                                categories: ['Universo', 'Aluno(a)']
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Aproveitamento (%)'
+                                }
+                            },
+                            tooltip: {
+                                formatter: function() {
+                                    return this.y + '%';
+                                }
+                            },
+                            plotOptions: {
+                                column: {
+                                    stacking: 'normal'
+                                }
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            series: [
+                                {
+                                    name: 'Aproveitamento',
+                                    data: [
+                                        {
+                                            y: universo,
+                                            color: universo > aluno ? '#4572A7' : '#AA4643'                                            
+                                        },
+                                        {
+                                            y: aluno,
+                                            color: aluno > universo ? '#4572A7' : '#AA4643'                                            
+                                        }
+                                    ]
+                                }
+                            ],
+                            credits: {
+                                enabled: false
+                            }
+                        });
+                        
+                        //Redimensiona área do gráfico e exibe
+                        $("#gr_aluno_" + idLista).show();
+                    }else{
+                        alert(ret.msg);
+                    }
+                },
+                'json'
+            );
+            
+            $( "#modal_alunos_" + idLista ).dialog("close");
         },
-        function(ret){
-            $("#modal_alunos_" + idLista).dialog({
-                title: "Alunos"
-            });
-        },
-        'json'
-    ).error(
-        //Exibe ALERT em caso de erro fatal
-        function(){
-            site.fechaAguarde();
-            alert("Falha no servidor! Tente mais tarde.");
-        }
-    );
+        rowNum:10,
+        rowList:[10,20,30],
+        pager: '#pg_alunos_' + idLista,
+        sortname: 'ALUNO',
+        viewrecords: true,
+        sortorder: "ASC",
+        caption:"Alunos",
+        width: 750,
+        height: 'auto',
+        scrollOffset: 0
+    });
+                
+    $("#grid_alunos_" + idLista).filterToolbar();
+    
+    //Fecha aguarde
+    site.fechaAguarde();
+    
+    //Abre modal com grid
+    $("#modal_alunos_" + idLista).dialog({
+        title: "Selecione um Aluno",
+        open: function(event, ui) { $(".ui-dialog-titlebar").show(); },
+        modal: true,
+        width: 780,
+        heigth: 550
+    });
 }
 
 function imprimirGraficos(idLista){

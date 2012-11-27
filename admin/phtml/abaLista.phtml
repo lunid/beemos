@@ -189,15 +189,15 @@
         </tr>
         <tr>
             <td colspan="6">
-                <!-- Gráficos e Dados -->
-                <div id="gr_questoes_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista" style="height:400px;">
+                <!-- Gráficos Aproveitamento Questões -->
+                <div id="gr_questoes_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista" style="height:600px;">
                     <p>
                         Questões
                         <br />
                         <strong>0</strong>
                     </p>
                 </div>
-                <!-- Gráficos e Dados --> 
+                <!-- Gráficos Aproveitamento Questões --> 
             </td>
         </tr>
         <tr>
@@ -207,7 +207,14 @@
         </tr>
         <tr>
             <td colspan="6">
-                <input type="button" value="Imprimir" onclick="javascript:imprimirGraficos(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
+                <!-- Gráficos Aluno x Universo -->
+                <div id="gr_aluno_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista" style="display:none;height:310px;">&nbsp;</div>
+                <!-- Gráficos Aluno x Universo -->
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <input type="button" value="Imprimir Gráficos" onclick="javascript:imprimirGraficos(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
             </td>
         </tr>
     </table>
@@ -215,4 +222,5 @@
 <div id="modal_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
     <table id="grid_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="width:100%;"></table>
     <div id="pg_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>"></div>
+    <input type="hidden" id="tmp_aproveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="10" />
 </div>

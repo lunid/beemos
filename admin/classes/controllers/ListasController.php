@@ -283,6 +283,9 @@
             }
         }
         
+        /**
+         * Carrega json com dados para jqgrid de Alunos de uma determinada Lista
+         */
         function actionCarregaAlunosLista(){
             try{
                 //Objeto de retorno
@@ -297,25 +300,37 @@
                 $where  = "";
                 $search = Request::get('_search'); 
                 if($search == true){
-                    //Filtro Código da Lista
-                    $COD_LISTA = Request::get('COD_LISTA');
-                    if($COD_LISTA != ''){
-                        $where = " AND L.COD_LISTA LIKE '%" . $COD_LISTA . "%'";  
+                    //Filtro Código
+                    $ID_CLIENTE = Request::get('ID_CLIENTE');
+                    if($ID_CLIENTE != ''){
+                        $where = " AND C.ID_CLIENTE LIKE '%" . $ID_CLIENTE . "%'";  
                     }
                     
-                    //Filtro Descrição/Nome da Lista
-                    $DESCR_ARQ = Request::get('DESCR_ARQ');
-                    if($DESCR_ARQ != ''){
-                        $where .= " AND L.DESCR_ARQ LIKE '%" . $DESCR_ARQ . "%'";  
+                    //Filtro Aluno
+                    $ALUNO = Request::get('ALUNO');
+                    if($ALUNO != ''){
+                        $where = " AND C.NOME_PRINCIPAL LIKE '%" . $ALUNO . "%'";  
+                    }
+                    
+                    //Filtro Escola
+                    $ESCOLA = Request::get('ESCOLA');
+                    if($ESCOLA != ''){
+                        $where .= " AND E.NOME LIKE '%" . $ESCOLA . "%'";  
+                    }
+                    
+                    //Filtro Turma
+                    $TURMA = Request::get('TURMA');
+                    if($TURMA != ''){
+                        $where .= " AND T.CLASSE LIKE '%" . $TURMA . "%'";  
                     }
                 }
                 
                 $ID_HISTORICO_GERADOC = Request::get('idLista', 'NUMBER');
                 
-                //Carrega todas listas de um cliente + escola
+                //Carrega todos alunos de uma lista
                 $rs = $mdListas->carregaAlunosLista($ID_HISTORICO_GERADOC, $where);
                 
-                //Verifica se foram carregadas as listas
+                //Verifica se foram carregados os alunos
                 if($rs->status){
                     $page           = Request::get('page', 'NUMBER'); 
                     $limit          = Request::get('rows', 'NUMBER'); 
@@ -323,9 +338,9 @@
                     $orderType      = Request::get('sord'); 
                             
                     if(!$orderField) $orderField = 1;
-
+                    
                     //Total de registros
-                    $count          = sizeof($rs->listas);
+                    $count          = sizeof($rs->alunos);
                     $total_pages    = $count > 0 ? ceil($count/$limit) : 0;
                     $page           = $page > $total_pages ? $total_pages : $page;
                     $start          = $limit * $page - $limit;
@@ -350,9 +365,10 @@
                     foreach($rs->alunos as $row) {
                         $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
                         $ret->rows[$i]['cell'] = array(
+                            $row['ID_CLIENTE'],
                             $row['ALUNO'],
                             $row['ESCOLA'],
-                            $row['CLASSE']
+                            $row['TURMA']
                         );
                         $i++;
                     }
@@ -561,6 +577,34 @@
                     $mdListas   = new ListasModel();
                     $ret        = $mdListas->alteraTempoVida($idLista, $tempo);
                 }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Função que lista as informações de aproveitamento de uma aluno em determinada lista
+         */
+        public function actionGraficoAluno(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar aproveitamento do Aluno!";
+                
+                //Modal Listas
+                $ID_HISTORICO_GERADOC   = Request::post("idLista", "NUMBER");
+                $ID_CLIENTE             = Request::post("idCliente", "NUMBER");
+                
+                $mdListas   = new ListasModel();
+                $ret        = $mdListas->calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE);
                 
                 echo json_encode($ret);
             }catch(Exception $e){

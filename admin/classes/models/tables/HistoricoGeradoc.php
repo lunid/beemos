@@ -298,11 +298,35 @@
             }
         }
         
+        /**
+         * Função que lista os Alunos de uma terminada Lista
+         * 
+         * @param string $where Where para comando SQL
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'ALUNO', 
+         *   "tipoOrdenacao"     => 'ASC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->alunos    - Armazena o array de alunos encontrados no Banco   <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregaAlunosLista($where = '', $arrPg = null){
             try{
                 //Obejto de retorno
                 $ret            = new \stdClass();
-                $ret->status    = true;
+                $ret->status    = false;
                 $ret->msg       = "Falha ao listar Alunos da Lista";
                 
                 //Ordenação e Paginação

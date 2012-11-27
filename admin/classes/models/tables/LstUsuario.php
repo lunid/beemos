@@ -26,6 +26,11 @@
          * total de respostas corretas e erradas
          * 
          * @param int $ID_HISTORICO_GERADOC ID da lista
+         * @param int $ID_ESCOLA ID da Escola
+         * @param string $ENSINO String com um ou mais ensinos a serem filtrados. Ex: 'M','F'
+         * @param string $PERIODO String com um ou mais períodos a serem filtrados. Ex: 'N','M'
+         * @param string $ANO String com um ou mais Anos a serem filtrados. Ex: 1,3
+         * @param string $TURMA String com uma ou mais Turmas a serem filtradas. Ex: 12,55,74
          * 
          * @return \stdClass $ret
          * <code>
@@ -137,7 +142,12 @@
          * e o total de alunos que abriram a lista mas não terminaram (não respoderam)
          * 
          * @param int $ID_HISTORICO_GERADOC ID da Lista
-         
+         * @param int $ID_ESCOLA ID da Escola
+         * @param string $ENSINO String com um ou mais ensinos a serem filtrados. Ex: 'M','F'
+         * @param string $PERIODO String com um ou mais períodos a serem filtrados. Ex: 'N','M'
+         * @param string $ANO String com um ou mais Anos a serem filtrados. Ex: 1,3
+         * @param string $TURMA String com uma ou mais Turmas a serem filtradas. Ex: 12,55,74
+         * 
          * @return \stdClass $ret
          * <code>
          *  <br />
@@ -251,6 +261,11 @@
          * total de alunos que repsondeu x quantidade questões
          * 
          * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * @param int $ID_ESCOLA ID da Escola
+         * @param string $ENSINO String com um ou mais ensinos a serem filtrados. Ex: 'M','F'
+         * @param string $PERIODO String com um ou mais períodos a serem filtrados. Ex: 'N','M'
+         * @param string $ANO String com um ou mais Anos a serem filtrados. Ex: 1,3
+         * @param string $TURMA String com uma ou mais Turmas a serem filtradas. Ex: 12,55,74
          * 
          * @return \stdClass $ret
          * <code>
@@ -372,18 +387,21 @@
         }
         
         /**
-         * Calcula o aproveitamento total de uma lista, somando o toltal de respostas
-         * corretas dos alunos que respoderam e dividinfo pela multiplicação da quantidade
-         * total de alunos que repsondeu x quantidade questões
+         * Calcula o aproveitamento de cadas questão da lista
          * 
          * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * @param int $ID_ESCOLA ID da Escola
+         * @param string $ENSINO String com um ou mais ensinos a serem filtrados. Ex: 'M','F'
+         * @param string $PERIODO String com um ou mais períodos a serem filtrados. Ex: 'N','M'
+         * @param string $ANO String com um ou mais Anos a serem filtrados. Ex: 1,3
+         * @param string $TURMA String com uma ou mais Turmas a serem filtradas. Ex: 12,55,74
          * 
          * @return \stdClass $ret
          * <code>
          *  <br />
-         *  bool    $ret->status        - Retorna TRUE ou FALSE para o status do Método     <br />
-         *  string  $ret->msg           - Armazena mensagem ao usuário                      <br />
-         *  double  $ret->aproveitamento   - Percentual total de aproveitamento da lista    <br />
+         *  bool    $ret->status            - Retorna TRUE ou FALSE para o status do Método                                         <br />
+         *  string  $ret->msg               - Armazena mensagem ao usuário                                                          <br />
+         *  array   $ret->questoes          - Array com todas as questões da lista e cada uma com sua quantidade de acertos e erros <br />
          * </code>
          * 
          * @throws Exception
@@ -498,10 +516,86 @@
                     }                  
                 }
                 
+                for($i=0; $i < sizeof($questoes); $i++){
+                    $questoes[$i]['aproveitamento'] = round(($questoes[$i]['corretas'] / ($questoes[$i]['corretas'] + $questoes[$i]['erradas'])) * 100, 2);
+                }
+                
                 //Retorno final
                 $ret->status    = true;
                 $ret->msg       = "Questões contradas com sucesso!";
                 $ret->questoes  = $questoes;
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Calcula o aproveitamento de um determinado aluno em uma lista
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * @param int $ID_CLIENTE ID do Aluno
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status            - Retorna TRUE ou FALSE para o status do Método                                         <br />
+         *  string  $ret->msg               - Armazena mensagem ao usuário                                                          <br />
+         *  double  $ret->aproveitamento    - Aproveitamento do Aluno na Lista                                                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE){
+            try{
+                //Objeto de etorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao calcular aproveitamento do Aluno!";
+                
+                //Sql da pesquisa de respostas e alunos
+                $sql = "SELECT
+                            IF(LR.RESPOSTA = LR.GABARITO, 1, 0) as STATUS
+                        FROM
+                            SPRO_LST_USUARIO LU
+                        INNER JOIN
+                            SPRO_LST_HIST_RESPOSTA LR ON LR.ID_LST_USUARIO = LU.ID_LST_USUARIO
+                        WHERE
+                            LU.ID_HISTORICO_GERADOC = {$ID_HISTORICO_GERADOC}                        
+                        AND
+                            LU.ID_CLIENTE = {$ID_CLIENTE}
+                        ORDER BY
+                            LR.ID_BCO_QUESTAO
+                        ;";
+                            
+                $rs = $this->query($sql);
+                
+                //Verifica se houve retorno
+                if(sizeof($rs) <= 0){
+                    $ret->msg = "Nenhuma resposta encontrada!";
+                    return $ret;
+                }
+                
+                //Contadore de corretas
+                $corretas = 0;
+                $questoes = sizeof($rs);
+                
+                foreach($rs as $questao){
+                    if((int)$questao['STATUS'] == 1){
+                        //Se for correta soma contador de corretas da questão
+                        $corretas++;
+                    }                  
+                }
+                
+                //Nome do Aluno
+                $tbCliente = new Cliente($ID_CLIENTE);
+                
+                //Retorno OK
+                $ret->status            = true;
+                $ret->msg               = "Respostas encontradas!";
+                $ret->aluno             = $tbCliente->NOME_PRINCIPAL;
+                $ret->aproveitamento    = round(($corretas / $questoes) * 100, 2);
                 
                 return $ret;
             }catch(Exception $e){

@@ -64,6 +64,30 @@
             }
         }
         
+        /**
+         * Função que lista os Alunos de uma terminada Lista
+         * 
+         * @param string $where Where para comando SQL
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'ALUNO', 
+         *   "tipoOrdenacao"     => 'ASC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->alunos    - Armazena o array de alunos encontrados no Banco   <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregaAlunosLista($ID_HISTORICO_GERADOC, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno
@@ -582,11 +606,57 @@
             }
         }
         
+        /**
+         * Calcula o aproveitamento de cadas questão da lista
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * @param int $ID_ESCOLA ID da Escola
+         * @param string $ENSINO String com um ou mais ensinos a serem filtrados. Ex: 'M','F'
+         * @param string $PERIODO String com um ou mais períodos a serem filtrados. Ex: 'N','M'
+         * @param string $ANO String com um ou mais Anos a serem filtrados. Ex: 1,3
+         * @param string $TURMA String com uma ou mais Turmas a serem filtradas. Ex: 12,55,74
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status   - Retorna TRUE ou FALSE para o status do Método                                         <br />
+         *  string  $ret->msg      - Armazena mensagem ao usuário                                                          <br />
+         *  array   $ret->questoes - Array com todas as questões da lista e cada uma com sua quantidade de acertos e erros <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
                 $tbLstUsuario = new LstUsuario();
                 return $tbLstUsuario->calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Calcula o aproveitamento de um determinado aluno em uma lista
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * @param int $ID_CLIENTE ID do Aluno
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status            - Retorna TRUE ou FALSE para o status do Método                                         <br />
+         *  string  $ret->msg               - Armazena mensagem ao usuário                                                          <br />
+         *  double  $ret->aproveitamento    - Aproveitamento do Aluno na Lista                                                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE);
             }catch(Exception $e){
                 throw $e;
             }
