@@ -470,6 +470,27 @@ function geraGrafico(idLista){
     );
 }
 
+function modalAluno(idLista){
+    $.post(
+        'listas/CarregaAlunosLista',
+        {
+            idLista: idLista
+        },
+        function(ret){
+            $("#modal_alunos_" + idLista).dialog({
+                title: "Alunos"
+            });
+        },
+        'json'
+    ).error(
+        //Exibe ALERT em caso de erro fatal
+        function(){
+            site.fechaAguarde();
+            alert("Falha no servidor! Tente mais tarde.");
+        }
+    );
+}
+
 function imprimirGraficos(idLista){
     window.open("listas/ImprimirGraficos?idLista=" + idLista, "Imprimir Gráficos", "");
 }

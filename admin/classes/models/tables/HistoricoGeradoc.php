@@ -297,6 +297,69 @@
                 throw $e;
             }
         }
+        
+        public function carregaAlunosLista($where = '', $arrPg = null){
+            try{
+                //Obejto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = true;
+                $ret->msg       = "Falha ao listar Alunos da Lista";
+                
+                //Ordenação e Paginação
+                $orderPg = "";
+                if($arrPg != null){
+                    $orderPg = "ORDER BY
+                                    {$arrPg['campoOrdenacao']} {$arrPg['tipoOrdenacao']}
+                                LIMIT
+                                    {$arrPg['inicio']}, {$arrPg['limite']}
+                    ;";
+                }
+                
+                $sql = "SELECT
+                            L.ID_HISTORICO_GERADOC,
+                            LU.ID_CLIENTE,
+                            C.NOME_PRINCIPAL AS ALUNO,
+                            E.NOME AS ESCOLA,
+                            T.CLASSE AS TURMA
+                        FROM
+                            SPRO_HISTORICO_GERADOC L
+                        INNER JOIN
+                            SPRO_LST_USUARIO LU ON LU.ID_HISTORICO_GERADOC = L.ID_HISTORICO_GERADOC
+                        INNER JOIN
+                            SPRO_LST_HIST_RESPOSTA HR ON HR.ID_LST_USUARIO = LU.ID_LST_USUARIO
+                        INNER JOIN
+                            SPRO_CLIENTE C ON C.ID_CLIENTE = LU.ID_CLIENTE
+                        LEFT JOIN
+                            SPRO_TURMA_ALUNO TA ON TA.ID_CLIENTE = LU.ID_CLIENTE
+                        LEFT JOIN
+                            SPRO_TURMA T ON T.ID_TURMA = TA.ID_TURMA
+                        LEFT JOIN
+                            SPRO_ESCOLA E ON E.ID_ESCOLA = T.ID_ESCOLA
+                        WHERE
+                            L.ID_HISTORICO_GERADOC = {$this->ID_HISTORICO_GERADOC}
+                        {$where}
+                        GROUP BY
+                            LU.ID_CLIENTE
+                        {$orderPg}
+                        ;";
+                
+                $rs = $this->query($sql);
+                
+                //Verifica retorno
+                if(sizeof($rs) <= 0){
+                    $ret->msg = "Nenhum Aluno encotrado!";
+                    return $ret;
+                }
+                
+                //Retorno OK
+                $ret->status            = true;
+                $ret->msg               = "Alunos carregados com sucesso!";
+                $ret->alunos            = $rs;
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
 
 ?>
