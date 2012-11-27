@@ -5,6 +5,8 @@
     use \admin\classes\models\tables\HistoricoGeradoc;
     use \admin\classes\models\tables\TurmaLista;
     use \admin\classes\models\tables\TurmaConvite;
+    use \admin\classes\models\tables\LstUsuario;
+    use \admin\classes\models\tables\Escola;
     
     class ListasModel extends Model {
         /**
@@ -189,6 +191,21 @@
             }
         }
         
+        /**
+         * Carrega todos os dados de uma determinada listas
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool                $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string              $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  HistoricoGeradoc    $ret->lista     - Armazena objeto com dados da lista                <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregaDadosLista($ID_HISTORICO_GERADOC){
             try{
                 //Objeto de retorno 
@@ -426,5 +443,130 @@
                 throw $e;
             }
         }
+        
+        /**
+         * Efetua a chamado do método calculaRespostasLista no ORM LstUsuario e repassa o resultado
+         * do calculo de questões obtido.
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da lista
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int  $ret->correta      - Total de questões já respondidas e Corretas       <br />
+         *  int  $ret->errada       - Total de questões já respondidas e Erradas        <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Função que calcula o total de alunos que respoderam as questões da Lista
+         * e o total de alunos que abriram a lista mas não terminaram (não respoderam)
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  int  $ret->respondeu    - Total de alunos que responderam                   <br />
+         *  int  $ret->naoRespondeu - Total de alunos que não respoderam                <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Calcula o aproveitamento total de uma lista, somando o toltal de respostas
+         * corretas dos alunos que respoderam e dividinfo pela multiplicação da quantidade
+         * total de alunos que repsondeu x quantidade questões
+         * 
+         * @param int $ID_HISTORICO_GERADOC ID da Lista
+         * 
+         * @return \stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status        - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg           - Armazena mensagem ao usuário                      <br />
+         *  double  $ret->aproveitamento   - Percentual total de aproveitamento da lista    <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Função que lista as Escolas e Turmas de uam determinada lista.
+         * 
+         * @param int $ID_CLIENTE ID do cliente 
+         * @param int $ID_ESCOLA ID da Escola
+         * @param string $ENSINO Ensinos para serem filtrados usando IN. Ex: 'M', 'F'
+         * @param string $PERIODO Períodos para serem filtrados usando IN. Ex: 'M', 'F'
+         * @param string $ANO Abos para serem filtrados usando IN. Ex: 1, 3
+         *
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status        - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg           - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->arrEscolas    - Array com as escolas encontradas                  <br />
+         *  array   $ret->arrTurmas     - Array com as turmas encontradas                   <br />
+         *  array   $ret->arrEnsino     - Array com os ensinos encontrados                  <br />
+         *  array   $ret->arrPeriodo    - Array com os períodos encontrados                 <br />
+         *  array   $ret->arrAno        - Array com os anos encontrados                     <br />
+         * </code>
+         * 
+         * @throws \admin\classes\models\tables\Exception
+         */
+        public function carregaEscolasTurmasLista($ID_HISTORICO_GERADOC, $ID_CLIENTE, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = ''){
+            try{
+                //Instância o objeto da Tabela SPRO_HISORICO_GERADOC 
+                $tbLista = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                return $tbLista->carregaEscolasTurmasLista($ID_CLIENTE, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+            try{
+                //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
+                $tbLstUsuario = new LstUsuario();
+                return $tbLstUsuario->calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
+    
 ?>

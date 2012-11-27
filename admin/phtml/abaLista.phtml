@@ -1,9 +1,50 @@
 <div id="menu_listas">
-    <a href="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>">Configurações</a>
+    <a href="javascript:void(0);" onclick="javascript:menuLista('lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>');">Configurações</a>
+    <a href="javascript:void(0);" onclick="javascript:menuLista('lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>');">Resultados</a>
 </div>
-<div id="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista">
+<div id="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>">
     <!-- Opções de Configuração da Lista -->
     <table class="table_opts_lista">
+        <tr>
+            <td colspan="2" style="background-color:#EDEDED;">
+                <!-- Informações da Lista -->
+                <table class="table_info_lista">
+                    <tr>
+                        <td width="33%" nowrap="nowrap">
+                            <strong>
+                                Nome da Lista
+                            </strong>
+                            <br />
+                            <?=$attrs['NOME_ARQ']?>
+                        </td>
+                        <td width="33%" nowrap="nowrap">
+                            <strong>
+                                Código da Lista
+                            </strong>
+                            <br />
+                            <?=$attrs['COD_LISTA']?>
+                        </td>
+                        <td width="33%" nowrap="nowrap">
+                            <strong>
+                                Status
+                            </strong>
+                            <br />
+                            <? 
+                                if($attrs['STATUS'] == 'Ativa'){ 
+                                    $cor = 'green';
+                                }else{
+                                    $cor = 'red';
+                                }
+                            ?>
+                            <strong style="color:<?=$cor?>;">
+                                <?=$attrs['STATUS']?>
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Informações da Lista -->
+            </td>
+        </tr>
         <tr>
             <td>
                 <strong>Anticola</strong>
@@ -13,9 +54,9 @@
             <td>
                 <strong>Status</strong>
                 <br />
-                <input type="radio" name="anticola" value="1" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 1 ? 'checked="checked"' : '' ?> /> Habilitada
+                <input type="radio" name="anticola_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="1" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 1 ? 'checked="checked"' : '' ?> /> Habilitada
                 &nbsp;
-                <input type="radio" name="anticola" value="0" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitada
+                <input type="radio" name="anticola_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="0" onclick="javascript:alteraAnticola(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ANTICOLA'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitada
             </td>
         </tr>
         <tr>
@@ -28,12 +69,12 @@
                 <div style="float:left;">
                     <strong>Início</strong>
                     <br />
-                    <input type="text" id="periodo_inicio" name="periodo_inicio" class="periodo_ini periodo" value="<?=$attrs['PERIODO_INICIO']?>" onchange="alteraPeriodo(this.value, 'INI', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                    <input type="text" id="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_ini periodo" value="<?=$attrs['PERIODO_INICIO']?>" onchange="alteraPeriodo(this.value, 'INI', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
                 </div>
                 <div>
                     <strong>Final</strong>
                     <br />
-                    <input type="text" id="periodo_final" name="periodo_final" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                    <input type="text" id="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
                 </div>
             </td>
         </tr>
@@ -46,9 +87,9 @@
             <td>
                 <strong>Status</strong>
                 <br />
-                <input type="radio" name="resultado" value="1" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
+                <input type="radio" name="resultado_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="1" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
                 &nbsp;
-                <input type="radio" name="resultado" value="0" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
+                <input type="radio" name="resultado_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="0" onclick="javascript:alteraResultadoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_RESULTADO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
             </td>
         </tr>
         <tr>
@@ -60,9 +101,9 @@
             <td>
                 <strong>Status</strong>
                 <br />
-                <input type="radio" name="gabarito" value="1" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
+                <input type="radio" name="gabarito_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="1" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 1 ? 'checked="checked"' : '' ?> /> Habilitado
                 &nbsp;
-                <input type="radio" name="gabarito" value="0" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
+                <input type="radio" name="gabarito_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="0" onclick="javascript:alteraGabaritoAluno(this.value, '<?=$attrs['ID_HISTORICO_GERADOC']?>');" <?=$attrs['ST_GABARITO_ALUNO'] == 0 ? 'checked="checked"' : '' ?> /> Desabilitado
             </td>
         </tr>
         <tr>
@@ -78,9 +119,91 @@
             <td>
                 <strong>Tempo</strong>
                 <br />
-                <input type="text" id="tempo_vida" name="tempo_vida" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                <input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
             </td>
         </tr>
     </table>
+    
     <!-- Opções de Configuração da Lista --> 
+</div>
+
+<div id="lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
+    <!-- Opções de Configuração da Lista -->
+    <table class="tb_resultados_listas">
+        <tr>
+            <td style="vertical-align:top;">
+                <strong>Escola</strong>
+                <br />
+                <select id="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Ensino</strong>
+                <br />
+                <select id="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Período</strong>
+                <br />
+                <select id="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Ano</strong>
+                <br />
+                <select id="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+            </td>
+            <td style="vertical-align:top;">
+                <strong>Turmas</strong>
+                <br />
+                <select id="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple"></select>
+            </td>
+            <td style="vertical-align:bottom;">
+                <input type="button" value="Filtrar" onclick="javascript:geraGrafico(<?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <!-- Gráficos e Dados -->
+                <div id="gr_respostas_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Respostas
+                        <br />
+                        <strong>0</strong>
+                    </p>
+                </div>
+                <div id="gr_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Alunos
+                        <br />
+                        <strong>0</strong>
+                    </p>
+                </div>
+                <div id="aproveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Aproveitamento
+                        <br />
+                        <strong id="num_proveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>">0</strong>%
+                    </p>
+                </div>
+                <!-- Gráficos e Dados --> 
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <!-- Gráficos e Dados -->
+                <div id="gr_questoes_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Questões
+                        <br />
+                        <strong>0</strong>
+                    </p>
+                </div>
+                <!-- Gráficos e Dados --> 
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <input type="button" value="Imprimir" onclick="javascript:imprimirGraficos(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
+            </td>
+        </tr>
+    </table>
 </div>
