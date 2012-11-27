@@ -283,6 +283,96 @@
             }
         }
         
+        function actionCarregaAlunosLista(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar alunos da Lista!";
+                
+                //Model de Listas de Exercícios
+                $mdListas = new ListasModel();
+                
+                //Verifica filtros
+                $where  = "";
+                $search = Request::get('_search'); 
+                if($search == true){
+                    //Filtro Código da Lista
+                    $COD_LISTA = Request::get('COD_LISTA');
+                    if($COD_LISTA != ''){
+                        $where = " AND L.COD_LISTA LIKE '%" . $COD_LISTA . "%'";  
+                    }
+                    
+                    //Filtro Descrição/Nome da Lista
+                    $DESCR_ARQ = Request::get('DESCR_ARQ');
+                    if($DESCR_ARQ != ''){
+                        $where .= " AND L.DESCR_ARQ LIKE '%" . $DESCR_ARQ . "%'";  
+                    }
+                }
+                
+                $ID_HISTORICO_GERADOC = Request::get('idLista', 'NUMBER');
+                
+                //Carrega todas listas de um cliente + escola
+                $rs = $mdListas->carregaAlunosLista($ID_HISTORICO_GERADOC, $where);
+                
+                //Verifica se foram carregadas as listas
+                if($rs->status){
+                    $page           = Request::get('page', 'NUMBER'); 
+                    $limit          = Request::get('rows', 'NUMBER'); 
+                    $orderField     = Request::get('sidx'); 
+                    $orderType      = Request::get('sord'); 
+                            
+                    if(!$orderField) $orderField = 1;
+
+                    //Total de registros
+                    $count          = sizeof($rs->listas);
+                    $total_pages    = $count > 0 ? ceil($count/$limit) : 0;
+                    $page           = $page > $total_pages ? $total_pages : $page;
+                    $start          = $limit * $page - $limit;
+                    
+                    //Efetua select com ordenação e paginação
+                    $rs = $mdListas->carregaAlunosLista(
+                            $ID_HISTORICO_GERADOC,
+                            $where,
+                            array(
+                                "campoOrdenacao"    => $orderField, 
+                                "tipoOrdenacao"     => $orderType, 
+                                "inicio"            => $start, 
+                                "limite"            => $limit
+                            )
+                    );
+                    
+                    $ret->page      = $page;
+                    $ret->total     = $total_pages;
+                    $ret->records   = $count;
+
+                    $i=0;
+                    foreach($rs->alunos as $row) {
+                        $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
+                        $ret->rows[$i]['cell'] = array(
+                            $row['ALUNO'],
+                            $row['ESCOLA'],
+                            $row['CLASSE']
+                        );
+                        $i++;
+                    }
+                }else{
+                    $ret                    = new stdClass();
+                    $ret->rows[0]['id']     = 0;
+                    $ret->rows[0]['cell']   = array($rs->msg);
+                }
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }      
+        }
+        
         /**
          * Carrega os filtros da tela de resultados da Lista
          */

@@ -64,6 +64,30 @@
             }
         }
         
+        public function carregaAlunosLista($ID_HISTORICO_GERADOC, $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar alunos da lista de exercícios!";
+                
+                //Valida ID_CLIENTE
+                if((int)$ID_HISTORICO_GERADOC <= 0){
+                    $ret->msg = "ID_HISTORICO_GERADOC inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Instância da table SPRO_HISTORICO_GERADOC
+                $tbHistGeradoc  = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                //Carrega listas do cliente
+                $ret            = $tbHistGeradoc->carregaAlunosLista($where, $arrPg);
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
         /**
          * Função que salva a alteração de relacionamentos entre Turmas e Listas
          * 

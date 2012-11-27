@@ -131,38 +131,45 @@
     <!-- Opções de Configuração da Lista -->
     <table class="tb_resultados_listas">
         <tr>
-            <td style="vertical-align:top;">
+            <td style="width:10px;vertical-align:top;white-space:nowrap;">
                 <strong>Escola</strong>
                 <br />
                 <select id="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
             </td>
-            <td style="vertical-align:top;">
+            <td style="width:10px;vertical-align:top;white-space:nowrap;">
                 <strong>Ensino</strong>
                 <br />
                 <select id="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
             </td>
-            <td style="vertical-align:top;">
+            <td style="width:10px;vertical-align:top;white-space:nowrap;">
                 <strong>Período</strong>
                 <br />
                 <select id="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
             </td>
-            <td style="vertical-align:top;">
+            <td style="width:10px;vertical-align:top;white-space:nowrap;">
                 <strong>Ano</strong>
                 <br />
                 <select id="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
             </td>
-            <td style="vertical-align:top;">
+            <td style="width:10px;vertical-align:top;white-space:nowrap;">
                 <strong>Turmas</strong>
                 <br />
                 <select id="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple"></select>
             </td>
-            <td style="vertical-align:bottom;">
+            <td style="width:90%;vertical-align:bottom;white-space:nowrap;text-align:left;">
                 <input type="button" value="Filtrar" onclick="javascript:geraGrafico(<?=$attrs['ID_HISTORICO_GERADOC']?>);" />
             </td>
         </tr>
         <tr>
             <td colspan="6">
                 <!-- Gráficos e Dados -->
+                <div id="aproveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                    <p>
+                        Aproveitamento
+                        <br />
+                        <strong id="num_proveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>">0</strong>%
+                    </p>
+                </div>
                 <div id="gr_respostas_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
                     <p>
                         Respostas
@@ -177,20 +184,13 @@
                         <strong>0</strong>
                     </p>
                 </div>
-                <div id="aproveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
-                    <p>
-                        Aproveitamento
-                        <br />
-                        <strong id="num_proveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>">0</strong>%
-                    </p>
-                </div>
                 <!-- Gráficos e Dados --> 
             </td>
         </tr>
         <tr>
             <td colspan="6">
                 <!-- Gráficos e Dados -->
-                <div id="gr_questoes_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
+                <div id="gr_questoes_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista" style="height:400px;">
                     <p>
                         Questões
                         <br />
@@ -202,8 +202,17 @@
         </tr>
         <tr>
             <td colspan="6">
+                <input type="button" value="Gráfico Aluno x Universo" onclick="javascript:modalAluno(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
                 <input type="button" value="Imprimir" onclick="javascript:imprimirGraficos(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
             </td>
         </tr>
     </table>
+</div>
+<div id="modal_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
+    <table id="grid_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="width:100%;"></table>
+    <div id="pg_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>"></div>
 </div>
