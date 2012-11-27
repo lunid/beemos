@@ -14,7 +14,7 @@
         function actionIndex(){
             try{
                 //Home
-                $cache = FALSE;
+                $cache = TRUE;
                 if ($cache) {
                     $this->cacheOn(__METHOD__);
                 } else {
