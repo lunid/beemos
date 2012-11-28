@@ -252,19 +252,22 @@
             }   
         }
         
+        /**
+         * Função que abre o POP de impressão de gráficos
+         */
         public function actionImprimirGraficos(){
             try{
                 //View VAZIA para Impressão de Graficos
                 $objView = new View();                
                 $objView->setTemplate('blank');
                 
-                
-                
+                //View com HTML de gráficos
                 $objViewPart = new ViewPart("admin/imprimir_graficos");
                 $objViewPart->idLista = $_GET['idLista'];
                 
                 $objView->setLayout($objViewPart);
                 
+                //Scripts necessários
                 $objView->setJs('admin/minhas_listas');
                 $objView->setCss('admin/minhas_listas');
                 
