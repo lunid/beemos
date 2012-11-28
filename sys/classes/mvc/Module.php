@@ -8,6 +8,16 @@
             $this->module = \Application::getModule();
         }
 
+        function tplLangFile($path){
+            $rootModule     = $this->viewPartsLangFile('');
+            $tplFolder      = \LoadConfig::folderTemplate(); 
+            if (strlen($tplFolder) > 0) $rootModule = $rootModule.$tplFolder.'/';
+            
+            $url            = $rootModule.$path;
+            
+            return $url;
+        }
+        
         function viewPartsLangFile($path){
             $rootModule     = $this->viewPartsFile('');
             $lang           = \Application::getLanguage();

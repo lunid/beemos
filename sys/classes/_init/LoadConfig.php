@@ -206,7 +206,7 @@
             if (is_object($nodes)) {
                 $value      = self::valueForAttrib($nodes,'id',$valueAttrib);
                 $arrAttrib  = self::getAttribsOneNode($nodes);
-                if (count($arrAttrib) > 1)print_r($arrAttrib);
+                //if (count($arrAttrib) > 1)print_r($arrAttrib);
             }
             return $value;
         }

@@ -7,6 +7,6 @@
     </descricao>
     <config>
         <include id='jsInc'>jquery_ui_datepicker_pt_BR,jquery_ui_1_9_1_custom_min</include>    
-        <include id='cssInc'>jquery_ui_1_9_1_custom_min</include>           
+        <include id='cssInc'>jquery_ui_1_9_2_custom</include>           
     </config>
 </root>

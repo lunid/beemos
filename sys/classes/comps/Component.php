@@ -1,6 +1,7 @@
 <?php
 
     namespace sys\classes\comps;   
+    use \sys\classes\util\Dic;
     
     class Component {	
         
@@ -38,31 +39,43 @@
                     //Gera um arquivo físico com o conteúdo compactado:                       
                     $dirName    = dirname($outFileMin);
                     $dirName    = \Url::relativeUrl($dirName);
-     
+                            
                     if (!is_dir($dirName)) mkdir($dirName,'0777');
-                    
-                    $fp = fopen($outFileMin, "wb+");                
-                    fwrite($fp, $strIncMin);
-                    fclose($fp);
-                
+
+                    $fp = @fopen($outFileMin, "wb+");   
+                    if ($fp !== FALSE) {
+                        fwrite($fp, $strIncMin);
+                        fclose($fp);
+                    } else {
+                        $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'DIR_NOT_FOUND'); 
+                        $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
+                        throw new \Exception( $msgErr );                           
+                    }
+          
                     if (!file_exists($outFileMin)){
-                        die('O arquivo de inclusão '.$outFileMin.' não pôde ser gerado.');
+                        $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_FILE_INC'); 
+                        $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
+                        throw new \Exception( $msgErr );                           
                     }
 
                     $size = filesize($outFileMin);
                     if ($size == 0){
-                        $msgErr = 'Component->yuiCompressor(): O arquivo '.$outFileMin.' foi gerado porém está vazio.<br><br>'.$strIncMin;
-                        throw new \Exception( $msgErr );                                                                        
+                        $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_FILE_SIZE_ZERO'); 
+                        $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
+                        $msgErr = str_replace('{STR_MIN}',$strIncMin,$msgErr);
+                        throw new \Exception( $msgErr );                                                                         
                     }                      
                     return TRUE;
                 } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
-                    $msgErr = 'Component->yuiCompressor(): Impossível comprimir o arquivo '.$outFileMin.' porque a compressão retornou vazio.';
-                    throw new \Exception( $msgErr );          
+                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_JS_COMPRESS'); 
+                    $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
+                    throw new \Exception( $msgErr );              
                 }
                 return $strIncMin;
             } else {
-                $msgErr = 'Component->yuiCompressor(): yuiCompressor não pôde ser executado porque o parâmetro $ext não foi informado corretamente. Valor informado: '.$ext;
-                throw new \Exception( $msgErr );         
+                $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_EXT'); 
+                $msgErr = str_replace('{EXT}',$ext,$msgErr);
+                throw new \Exception( $msgErr );     
             }
             return TRUE;
         }

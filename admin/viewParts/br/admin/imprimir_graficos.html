@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#aproveitamento_{idLista}_imprimir").html($(window.opener.document).find("#aproveitamento_{idLista}").html());
+        $("#gr_respostas_{idLista}_imprimir").html($(window.opener.document).find("#gr_respostas_{idLista}").html());
+        $("#gr_alunos_{idLista}_imprimir").html($(window.opener.document).find("#gr_alunos_{idLista}").html());
+        $("#gr_questoes_{idLista}_imprimir").html($(window.opener.document).find("#gr_questoes_{idLista}").html());
+        $("#gr_aluno_{idLista}_imprimir").html($(window.opener.document).find("#gr_aluno_{idLista}").html());
+       
+        window.print();
+    });
+</script>
+<table>
+<tr>
+    <td colspan="6">
+        <!-- Gráficos e Dados -->
+        <div id="aproveitamento_{idLista}_imprimir" class="gr_config_lista">
+            <p>
+                Aproveitamento
+                <br />
+                <strong id="num_proveitamento_{idLista}_imprimir">0</strong>%
+            </p>
+        </div>
+        <div id="gr_respostas_{idLista}_imprimir" class="gr_config_lista">
+            <p>
+                Respostas
+                <br />
+                <strong>0</strong>
+            </p>
+        </div>
+        <div id="gr_alunos_{idLista}_imprimir" class="gr_config_lista">
+            <p>
+                Alunos
+                <br />
+                <strong>0</strong>
+            </p>
+        </div>
+        <!-- Gráficos e Dados --> 
+    </td>
+</tr>
+<tr>
+    <td colspan="6">
+        <!-- Gráficos Aproveitamento Questões -->
+        <div id="gr_questoes_{idLista}_imprimir" class="gr_config_lista" style="height:auto;">
+            <p>
+                Questões
+                <br />
+                <strong>0</strong>
+            </p>
+        </div>
+        <!-- Gráficos Aproveitamento Questões --> 
+    </td>
+</tr>
+<tr>
+    <td colspan="6">
+        <!-- Gráficos Aluno x Universo -->
+        <div id="gr_aluno_{idLista}_imprimir" class="gr_config_lista" style="height:310px;">&nbsp;</div>
+        <!-- Gráficos Aluno x Universo -->
+    </td>
+</tr>
+</table>

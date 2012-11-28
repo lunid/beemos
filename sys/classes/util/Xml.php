@@ -43,11 +43,11 @@
          * @param SimpleXMLElement $nodes
          * @return mixed[] Retorna um array associativo contendo o valor do atributo respectivo.
          */
-        public static function getAttribsOneNode($nodes){        
+        public static function getAttribsOneNode($node){        
             $arrAtrib = array();
-            try {
-                if (is_object($nodes) && $nodes->count() > 0) {            
-                    foreach($nodes->attributes() as $name => $value){                    
+            try {               
+                if (is_object($node)) {  
+                    foreach($node->attributes() as $name => $value){                    
                         $arrAtrib[$name] = (string)$value;
                     }                       
                 }

@@ -3,13 +3,16 @@
     require_once('sys/classes/comps/files/YUICompressor.php');
     require_once('sys/classes/comps/HtmlComponent.php');
     require_once('sys/classes/comps/ChartComponent.php');
-    require_once('sys/classes/db/Meekrodb_2_0.php');
+    require_once('sys/classes/db/Meekrodb_2_1.php');
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/mvc/Controller.php');
     require_once('sys/classes/mvc/Model.php'); 
     require_once('sys/classes/mvc/Module.php');      
     require_once('sys/classes/_init/LoadConfig.php');           
     require_once('sys/classes/util/Url.php');  
+    require_once('sys/classes/util/DI.php');
+    
+    use sys\classes\util\DI;
     
     class Application {
         
@@ -194,10 +197,10 @@
             //Tratamento para utilização do Hybridauth.
             if($class == 'FacebookApiException') return false;            
             
-            $urlInc = str_replace("\\", "/" , $class . '.php');     
-            //echo $urlInc.'<br>';
+            $urlInc = str_replace("\\", "/" , $class . '.php');                
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
+                //DI::loadMapXml($urlInc);
             } else {           
                 die(" Classe $class não encontrada");
             }                      

@@ -3,7 +3,7 @@
     <app>
         <config id='modules'>app,admin,bm</config>
         <config id='langs'>br,en</config>
-        <config id='defaultModule'>bm</config>  
+        <config id='defaultModule'>admin</config>  
         <config id='defaultLang'>br</config>
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
