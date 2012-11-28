@@ -23,8 +23,8 @@ Site.prototype = {
             draggable: false,
             modal: true,
             open: function(event, ui) { $(".ui-dialog-titlebar").hide(); },
-            width: '190',
-            height: '100',
+            width: '205',
+            height: '115',
             zIndex: 9999
         });
     },

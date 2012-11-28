@@ -1,3 +1,7 @@
+#listas{
+    padding: 3px;
+}
+
 #menu_listas{
     display: block;
     width: 99.8%;
@@ -9,16 +13,7 @@
     width: 99.8%;
 }
 
-.table_opts_lista{
-    display: block;
-}
-
-.table_opts_lista td{
-    padding: 3px 5px 0 0;
-    white-space: nowrap;
-}
-
-.table_opts_lista .periodo{
+.periodo{
     width: 100px;
     text-align: center;
 }
@@ -40,16 +35,17 @@
 }
 
 .gr_config_lista p{
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: bold;
     border: 1px solid #909090;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    height: 197px;
+    line-height: 87.6px;
+    margin: 1px 0 0 0;
 }
 
-.gr_config_lista strong{
+.gr_config_lista span{
     font-size: 3.8em;
     font-weight: normal;
 }

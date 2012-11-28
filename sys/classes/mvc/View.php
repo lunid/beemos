@@ -228,7 +228,6 @@
                             $key = array_search($fn, $arrIncludeCfgOff);
                             if ($key === FALSE) {
                                 $list   = \LoadConfig::$fn();
-                                echo $list.'<br>';
                                 $objHeader->$fn($list);                        
                             }
                         }  

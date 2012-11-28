@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-    <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-    <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-    <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-    <!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <head>
         <!-- Basic Page Needs
@@ -19,9 +16,7 @@
         <!-- CSS -->
         {INCLUDE_CSS}
         
-        <!--[if lt IE 9]>
-                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
         <!-- Favicons
         ================================================== -->
@@ -51,59 +46,44 @@
 </div>
 <!-- modal aguarde -->
 
-<!-- Primary Page Layout
-================================================== --> 
-
-<!-- Delete everything in this .container and get started on your own site! --> 
-
-<!-- top -->
+<!-- ===================================== TOP ===================================== -->
 <div id="top">
-    <div id="logo">Super Professor<span>®</span> Web</div>
-   
-    <!-- drop -->
-    <div class="wrapper">
-        <div class="mainmenu">
-            <ul class="drop">
-                <li class="list">
-                    <a class="category" href="#about" title="Claudio Rubens"><img src="assets/images/admin/icone_avatar.png" width="52" height="22"></a>
-                    <ul class="subdrop">
-                        <li><a href="#about1">About link 1</a></li>
-                        <li><a href="#about2">About link 2</a></li>
-                        <li><a href="#about3">About link 3</a></li>
-                        <li><a href="#about4">About link 4</a></li>
-                        <li><a class="endlist" href="#about5">About link 5</a></li>
-                    </ul>
-                </li>
-            </ul>
-
-            <ul class="drop">
-                <li class="list"><a class="category" href="#Home" title="Ajuda"><img src="assets/images/admin/icone_duvida.png" width="51" height="22"></a></li>
-            </ul>
-            <ul class="drop">
-                <li class="list"><a class="category" href="#Home" title='Configurações'><img src="assets/images/admin/icone_ferramentas.png" width="47" height="22"></a></li>
-            </ul>     
-            <ul class="drop">
-                <li class="list"><a class="category" href="index.html"><img src="assets/images/admin/icone_fechar.png" width="18" height="22"></a></li>
-            </ul>
-      </div>
-   </div>  
-   <!-- fim drop -->        
-</div>
-<!-- fim top --> 
-<!-- container -->
-<div id="container">
-    <!-- começo menu -->
-    <div id="menu_base">
-        {MENU_VERTICAL}
+    <div id="button-bar-esquerda">
+        <ul class="menu">
+            <li><a href=""><span class="icon" data-icon="u"></span>Usuário</a>
+                <ul>
+                    <li><a href=""><span class="icon" data-icon="Z"></span>Sub Item</a></li>
+                    <li><a href=""><span class="icon" data-icon="k"></span>Sub Item</a></li>
+                    <li><a href=""><span class="icon" data-icon="J"></span>Sub Item</a></li>
+                    <li><a href=""><span class="icon" data-icon="="></span>Sub Item</a></li>
+                </ul>
+            </li>
+            <li><a href=""><span class="icon" data-icon="?"></span>Ajuda</a></li>
+            <li><a href=""><span class="icon" data-icon="z"></span>Ferramentas</a></li>
+            <li><a href=""><span class="icon" data-icon="x"></span>Fechar</a></li>
+        </ul>
     </div>
-    <!-- fim menu --> 
+</div>
+<!-- =====================================fim TOP ===================================== -->
+
+<!-- ===================================== menu lateral ===================================== -->
+<div id="coluna_esquerda">
+
+        <!-- Menu Vertical Left MENU_VERTICAL -->
+        <ul class="menu vertical">
+        <li class="current"><a href="index.html"><span class="icon" data-icon="I"></span>Home</a></li>
+        <li><a href="escolaseturmas.html"><span class="icon" data-icon="U"></span>Escolas & turmas</a></li>
+        <li><a href="listas.html"><span class="icon" data-icon="v"></span>Minhas listas</a></li>
+        <li><a href="caixapostal.html"><span class="icon" data-icon="@"></span>Caixa postal</a></li>
+        </ul>
+
+</div>
+<!-- ===================================== fim menu lateral ===================================== -->
+
+<!-- ===================================== fim conteúdo ===================================== -->
+<div id="conteudo">
     {BODY}
 </div>
-<!-- fim conteudo -->  
-
-<!-- fim container -->
-
-<!-- End Document
-            ================================================== -->
+<!-- ===================================== fim conteúdo ===================================== -->
 </body>
 </html>

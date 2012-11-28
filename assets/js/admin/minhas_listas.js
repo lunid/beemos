@@ -320,7 +320,7 @@ function geraGrafico(idLista){
                         }]
                     });                    
                 }else{
-                    $("#gr_respostas_" + idLista).html("<p>Respostas<br /><strong>0</strong></p>");
+                    $("#gr_respostas_" + idLista).html("<p>Respostas<br /><span>0</span></p>");
                 } //Gráficio de Respostas
                 
                 //Verifica se foram encontradas informações de alunos
@@ -377,7 +377,7 @@ function geraGrafico(idLista){
                         }]
                     });                    
                 }else{
-                    $("#gr_alunos_" + idLista).html("<p>Alunos<br /><strong>0</strong></p>");
+                    $("#gr_alunos_" + idLista).html("<p>Alunos<br /><span>0</span></p>");
                 } //Gráficio de alunos
                 
                 //Informações de aproveitamento
@@ -385,7 +385,7 @@ function geraGrafico(idLista){
                     $("#num_proveitamento_" + idLista).html(ret.APROVEITAMENTO.aproveitamento);      
                     $("#tmp_aproveitamento_" + idLista).val(ret.APROVEITAMENTO.aproveitamento);
                 }else{
-                    $("#aproveitamento_" + idLista).html("<p>Aproveitamento<br /><strong id='num_proveitamento_"+idLista+"'>0</strong>%</p>");
+                    $("#aproveitamento_" + idLista).html("<p>Aproveitamento<br /><span id='num_proveitamento_"+idLista+"'>0</span>%</p>");
                     $("#tmp_aproveitamento_" + idLista).val(0);
                 }
                 
