@@ -210,6 +210,10 @@
             }
         }
         
+        /**
+         * Função que gera os gráficos de resultados
+         * de acordo com os filtros enviados
+         */
         public function actionGeraGraficosResultados(){
             try{
                 //Objeto de retorno
@@ -250,27 +254,19 @@
         
         public function actionImprimirGraficos(){
             try{
-                //View Impressão de Graficos
+                //View VAZIA para Impressão de Graficos
                 $objView = new View();                
+                $objView->setTemplate('blank');
                 
-                if (1==1) {
-                    //Imprimir conteúdo em um template padrão (não é necessário informá-lo)
-                    $objViewPart = new ViewPart();
-                    $objViewPart->setContent('Teste sdfdsf'); 
-                    $objView->setLayout($objViewPart);
-                    $objView->render('imprimir_graficos');
-                } else {
-                    
-                }
-                die();
-                // $objViewPart    = new ViewPart();
-                //$objViewPart->setContent('Teste sdfdsf');                
+                
                 
                 $objViewPart = new ViewPart("admin/imprimir_graficos");
+                $objViewPart->idLista = $_GET['idLista'];
                 
                 $objView->setLayout($objViewPart);
-                //$objView->setJs('admin/minhas_listas');
-                //$objView->setCss('admin/minhas_listas');
+                
+                $objView->setJs('admin/minhas_listas');
+                $objView->setCss('admin/minhas_listas');
                 
                 $objView->render('imprimir_graficos');
             }catch(Exception $e){

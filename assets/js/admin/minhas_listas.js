@@ -415,7 +415,6 @@ function geraGrafico(idLista){
                             plotBorderWidth: null,
                             plotShadow: false,
                             width: 750,
-                            height: 600,
                             borderWidth: 1,
                             borderColor: '#909090'
                         },
@@ -620,8 +619,11 @@ function modalAluno(idLista){
     });
 }
 
+/**
+ * Abre a tela de impressão de gráficos
+ */
 function imprimirGraficos(idLista){
-    window.open("listas/ImprimirGraficos?idLista=" + idLista, "Imprimir Gráficos", "");
+    window.open("listas/ImprimirGraficos?idLista=" + idLista, "Imprimir", "width=800,height=600,status=no,scrollbars=yes");
 }
 
 /**
