@@ -193,7 +193,6 @@
          */        
         function includeCfgOff($ext='all'){
             if ($ext == 'all') {
-                echo 'foi';
                 $this->includeCfgAllOff = TRUE;                 
             } else {
                 $this->arrIncludeCfgOff[] = $ext;
