@@ -14,10 +14,92 @@
      * @link http://krasimirtsonev.com/blog/article/Dependency-Injection-in-PHP-example-how-to-DI-create-your-own-dependency-injection-container
      *     
      */
-    class DI {
+    require_once('sys/classes/util/Xml.php');  
+    
+    class DI extends \sys\classes\util\Xml {
     
         private static $map;
-    
+        private static $xmlConfig = 'DI.xml';
+        
+        public static function loadMapXml($classNamespace){
+            $pathXml = \Application::getModule().'/'.self::$xmlConfig;
+            if (file_exists($pathXml)) {
+                $objXml = self::loadXml($pathXml);  
+                if (is_object($objXml)) {
+                    //$this->objXml   = $objXml;
+                    $nodesMap       = $objXml->map;
+                    $numItens       = count($nodesMap);
+                    if ($numItens > 0) {                        
+                        //Localiza as dependências que devem ser mapeadas para classe informada.
+                        $nodeMaps        = self::valueForAttrib($nodesMap,'class',$classNamespace);
+                        foreach($nodeMaps as $nodeMap) {    
+                            //Um ou mais nós da tag <injection /> foram encontrados
+                            $arrInjection   = self::getAttribsOneNode($nodeMap);                                       
+                            
+                            if (is_array($arrInjection)) {
+                                //Objeto a ser injetado na classe atual. Guarda os valores de cada atributo da tag.                               
+                                $arrAttrib  = array('singleton','var','class','params');//Atributos da tag XML.                            
+                                foreach($arrAttrib as $id){
+                                    $$id = (isset($arrInjection[$id]))?$arrInjection[$id]:null;                                                                 
+                                }
+
+                                //Faz o mapeamento de injeção para a classe atual:                                    
+                                if ((int)$singleton == 1) {
+                                    DI::mapClassAsSingleton($var, $class,$params);
+                                } elseif ($var !== null && $class !== null) {
+                                    $arrParams = ($params !== null)?explode(';',$params):null;
+                                    DI::mapClass($var, $class,$params);
+                                    $obj = self::getInstanceOf_($class,$var,$params);
+                                    var_dump($obj);
+                                    die();
+                                } else {
+                                    echo 'Impossível fazer injeção de dependência para a classe '.$classNamespace;                                
+                                }
+
+                                echo "$var - $class - $params";
+                            }
+                        }
+                    }
+                } else {                
+                    $msgErr = 'Impossível ler o arquivo '.$pathXml;                                            
+                }                            
+            }
+            echo $pathXml;
+            die();
+        }
+        
+        public static function getInstanceOf_($className,$var,$params = null){
+            //ReflectionClass
+            $reflection = new \ReflectionClass($className);
+            
+            //Cria uma instância da classe
+            if($arguments === null || count($arguments) == 0) {
+               $obj = new $className;
+            } else {
+                if(!is_array($arguments)) {
+                    $arguments = array($arguments);
+                }
+               $obj = $reflection->newInstanceArgs($arguments);
+            }  
+            
+            //Faz a injeção de Dependência
+            switch(self::$map->$var->type) {
+                case "value":
+                case "class":
+                    $obj->$var = self::$map->$var->value;
+                break;
+                case "classSingleton":
+                    if(self::$map->$var->instance === null) {
+                        $obj->$var = self::$map->$var->instance = self::$map->$var->value;
+                    } else {
+                        $obj->$var = self::$map->$var->instance;
+                    }
+                break;
+            }            
+            //Retorna uma instância criada.
+            return $obj;              
+        }
+        
         public static function getInstanceOf($className, $arguments = null) {
         
             // checking if the class exists
