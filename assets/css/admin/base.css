@@ -1,0 +1,280 @@
+	body{
+		width:auto;
+		height:auto;
+		background-image:url("../../images/admin/bg_lateral.jpg");
+		background-position:top left;
+		background-repeat:repeat-y;
+	}
+	 
+	 
+	  #top{
+		  width:100%;
+		  height:46px;
+		  background-image:url(../../images/admin/top.jpg);
+		  background-position:bottom;
+		  background-repeat:repeat-x;
+		  border-bottom: 1px solid #FFFFFF;;
+		  float:left;
+	  }
+	  
+	  
+	  #coluna_esquerda {
+		  width:168px;
+		  height: 500px;
+		  float:left;
+	  }
+	  
+	  
+	  #conteudo {
+		  width: 80%;                         /* para navegadores que não suportam calc() */
+		  width: -webkit-calc(100% - 188px);  /* para Chrome */
+		  width: -moz-calc(100% - 188px);     /* para Firefox */
+		  width: calc(100% - 188px);          /* para suporte nativo */
+		  padding:0px 0px 0px 16px;
+		  height:auto;
+		  float:left;
+	  }
+	  
+	
+	  .titulo {
+		  background-color: #f5f5f5;
+		  float: left;
+		  font-size: 20px;
+		  height: 37px;
+		  margin: 0 0 8px -14px;
+		  padding: 8px 16px 0;
+		  width: 98%;
+	  }
+	  
+	  
+		#box {
+			width:631px;
+			height:411px;
+			margin:auto;
+			float:left;
+			position:relative;
+		}
+                
+                		.col_1, .col_2, .col_3, .col_4, .col_5, .col_6, .col_7, .col_8, .col_9, .col_10, .col_11, .col_12 {
+			display: block;
+			float: left;
+			margin: 0;
+		}
+		.col_3 {
+			width: 25%;
+		}
+		
+		p {
+			color: #000;
+		}
+		
+		textarea {
+			-moz-box-sizing: border-box;
+			border: 1px solid #CCCCCC;
+			border-radius: 5px 5px 5px 5px;
+			box-shadow: 0 1px 6px #CCCCCC inset;
+			font-family: inherit;
+			font-size: 0.9em;
+			height: 177px;
+			margin-left: 4px;
+			padding: 5px;
+			vertical-align: middle;
+			width: 100%;
+		}
+		
+		
+		input {
+			-moz-box-sizing: border-box;
+			background: none repeat scroll 0 0 #FFFFFF;
+			border: 1px solid #CCCCCC;
+			border-radius: 5px 5px 5px 5px;
+			box-shadow: 0 1px 6px #CCCCCC inset;
+			display: inline-block;
+			font-size: 1em;
+			margin: 0;
+			padding: 2px 0;
+			text-indent: 5px;
+			vertical-align: middle;
+			width: 100%;
+		}
+		
+		
+		.border {
+			border-left: 1px solid #CCCCCC;
+			float: left;
+			height: 71%;
+			padding-top: 5px;
+			width: 0;
+		}
+		
+		.cinza{
+			width:100%;
+			height:auto;
+			float:left;
+			background-color:#FAFAFA;
+		}
+		
+		blockquote {
+			font-size: 14px;
+			 margin: 2px 30px 15px 0;
+		}
+		
+		.column .inner {
+			padding: 5px;
+		}
+		
+		hr {
+			margin: 0;
+		}
+		
+		
+		ul.alt li {
+			background-position:6px 23px;
+		}
+		
+		.espaco{
+			width:100%;
+			height:8px;
+			float:left;
+		}
+		
+		#nav {
+			left: 0;
+			position: relative;
+			text-align: center;
+			top: 0;
+		}
+		
+		strong, b {
+			background: none repeat scroll 0 0 ;
+		}
+		
+		
+		p {
+			margin: 0;
+			line-height: 100%;
+		}
+		
+		.chzn-container-multi .chzn-choices .search-field input {
+			padding: 10px;
+		}
+		
+		
+		.chzn-container-single .chzn-single {
+			width: 98%;
+		}
+		
+		
+		
+		.bt_e-mail{
+			background: -moz-linear-gradient(center top , #FCFCFC 0%, #E0E0E0 100%) repeat scroll 0 0 transparent;
+			border: 1px solid #CCCCCC;
+			border-radius: 5px 5px 5px 5px;
+			color: #666666;
+			cursor: pointer;
+			display: inline-block;
+			font-size: 14px;
+			font-weight: normal;
+			left: 0;
+			line-height: 100%;
+			margin: 0;
+			overflow: visible;
+			padding: 7px 15px;
+			position: relative;
+			text-decoration: none;
+			text-shadow: 0 1px 0 #FFFFFF;
+			top: 0;
+			vertical-align: middle;
+			width: 99%;
+			margin-bottom:8px;
+		}
+		
+		
+		#button-bar-esquerda{
+			float: right;
+			height: 94px;
+			margin: 1px 12px 0px 0px ;
+			width: 458px;
+		}
+		
+		.menu li a {
+			padding: 15px 12px;
+		}
+                
+                #abas{
+                    border: none;
+                    margin: 0 -5px 0 -13px;
+                    padding: 0;
+                }
+                
+                /* Padrão para botão fechar de Abas */
+                #abas li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+                
+                /* Form Padrão ================================================== */
+                .form_padrao{
+                    width:350px;
+                    border-collapse:collapse;
+                    border-spacing:0;
+                }
+
+                .form_padrao td{
+                    vertical-align:top;
+                    text-align:left;
+                }
+
+                .form_padrao input[type='text']{
+                    width: 98%;
+                }
+
+                .form_padrao .msg_error{
+                    color: #FF0000;
+                }
+
+
+                .modal_form{
+                    width:400px;
+                    display:none;
+                    text-align:center
+                }
+
+                .modal_form table{
+                    width:390px;
+                    height:120px;
+                }
+
+                .modal_form td{
+                    width:100%;
+                    height:120px;
+                    vertical-align:middle;
+                }
+
+                .modal_form td .msg_modal{
+                    vertical-align:middle;
+                    padding:10px;
+                    font-weight:bold;
+                    font-size:16px;
+                }
+
+                /* Classe de erro para Modal Padrão */
+                .erro{
+                    color: #FF0000;
+                    font-weight: bold;
+                    text-align: center;
+                }
+                
+                /* Modal Aguarde ================================================== */
+                .modal_aguarde{
+                    display:none;
+                }
+
+                .modal_aguarde .img{
+                    float:left;
+                    padding:10px;
+                }
+
+                .modal_aguarde .txt{
+                    font-family:Verdana,Arial;
+                    font-size:16px;
+                    font-weight:bold;
+                    padding:15px;
+                }

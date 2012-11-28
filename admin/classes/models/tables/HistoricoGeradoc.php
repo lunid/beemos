@@ -70,7 +70,7 @@
          * 
          * @throws Exception
          */
-        public function carregaListasCliente($ID_CLIENTE, $where = "", $utilizadas = 0, $ID_TURMA = 0, $arrPg = null){
+        public function carregarListasCliente($ID_CLIENTE, $where = "", $utilizadas = 0, $ID_TURMA = 0, $arrPg = null){
             try{
                 //Obejto de retorno
                 $ret            = new \stdClass();
@@ -163,7 +163,7 @@
          * 
          * @throws \admin\classes\models\tables\Exception
          */
-        public function carregaEscolasTurmasLista($ID_CLIENTE, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = ''){
+        public function carregarEscolasTurmasLista($ID_CLIENTE, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = ''){
             try{
                 //Obejto de retorno
                 $ret            = new \stdClass();
@@ -259,7 +259,7 @@
                     if(!array_key_exists($row['ENSINO'], $arrEnsino)){
                         $arrEnsino[$row['ENSINO']] = array(
                             "ENSINO"    => $row['ENSINO'],
-                            "DESC"      => EscolasTurmasModel::traduzEnsino($row['ENSINO']),
+                            "DESC"      => EscolasTurmasModel::traduzirEnsino($row['ENSINO']),
                         );
                     }
                     
@@ -267,7 +267,7 @@
                     if(!array_key_exists($row['PERIODO'], $arrPeriodo)){
                         $arrPeriodo[$row['PERIODO']] = array(
                             "PERIODO"   => $row['PERIODO'],
-                            "DESC"      => EscolasTurmasModel::traduzPeriodo($row['PERIODO']),
+                            "DESC"      => EscolasTurmasModel::traduzirPeriodo($row['PERIODO']),
                         );
                     }
                     
@@ -322,7 +322,7 @@
          * 
          * @throws Exception
          */
-        public function carregaAlunosLista($where = '', $arrPg = null){
+        public function carregarAlunosLista($where = '', $arrPg = null){
             try{
                 //Obejto de retorno
                 $ret            = new \stdClass();

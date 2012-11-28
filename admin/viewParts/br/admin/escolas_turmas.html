@@ -120,103 +120,102 @@
     </table>
 </div>
 <!-- Modal Escola -->
-<div id="conteudo" style="padding:0;width:91%;">
-    <div id="abas">
-        <ul>
-            <li>
-                <a href="#escolas">Escolas & Turmas</a>
-            </li>
-            <li>
-                <a href="#turmasListas">Distribuir Listas</a>
-            </li>
-        </ul>
-        <div id="escolas" style="padding:10px;width:100%;">
-            <table id="grid_escola" style="width:100%;"></table>
-            <div id="pg_escola"></div>
+
+<div id="abas">
+    <ul>
+        <li>
+            <a href="#escolas">Escolas & Turmas</a>
+        </li>
+        <li>
+            <a href="#turmasListas">Distribuir Listas</a>
+        </li>
+    </ul>
+    <div id="escolas" style="padding:10px;width:100%;">
+        <table id="grid_escola" style="width:100%;"></table>
+        <div id="pg_escola"></div>
+    </div>
+    <div id="turmasListas" style="padding:10px;width:100%;">
+        <div>
+            <input type="radio" name="tipoDistribuicao" value="optTurmaLista" checked="checked" onclick="javascript:exibeOpt(this.value);" /> Uma turma com uma ou mais listas
+            &nbsp;
+            <input type="radio" name="tipoDistribuicao" value="optListaTurma" onclick="javascript:exibeOpt(this.value);" /> Uma lista com uma ou mais turmas
         </div>
-        <div id="turmasListas" style="padding:10px;width:100%;">
-            <div>
-                <input type="radio" name="tipoDistribuicao" value="optTurmaLista" checked="checked" onclick="javascript:exibeOpt(this.value);" /> Uma turma com uma ou mais listas
-                &nbsp;
-                <input type="radio" name="tipoDistribuicao" value="optListaTurma" onclick="javascript:exibeOpt(this.value);" /> Uma lista com uma ou mais turmas
-            </div>
-            
-            <!-- Turmas > Listas -->
-            <div id="optTurmaLista" class="opts">
-                <table style="width:100%;">
-                    <tr>
-                        <td style="vertical-align:top;text-align:left">
-                            <!-- Grid de Turmas -->
-                            <table id="grid_turmas" style="width:100%;"></table>
-                            <div id="pg_turmas"></div>
-                            <input type="hidden" name="idsListas" id="idsListas" value=""/>
-                            <input type="hidden" name="idTurmaSel" id="idTurmaSel" value=""/>
-                            <!-- Grid de Turmas -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align:top;text-align:left">
-                            <!-- Grid de Listas -->
-                            <div id="listas_inicio">
-                                Selecione uma Turma para filtrar as Listas
+
+        <!-- Turmas > Listas -->
+        <div id="optTurmaLista" class="opts">
+            <table style="width:100%;">
+                <tr>
+                    <td style="vertical-align:top;text-align:left">
+                        <!-- Grid de Turmas -->
+                        <table id="grid_turmas" style="width:100%;"></table>
+                        <div id="pg_turmas"></div>
+                        <input type="hidden" name="idsListas" id="idsListas" value=""/>
+                        <input type="hidden" name="idTurmaSel" id="idTurmaSel" value=""/>
+                        <!-- Grid de Turmas -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top;text-align:left">
+                        <!-- Grid de Listas -->
+                        <div id="listas_inicio">
+                            Selecione uma Turma para filtrar as Listas
+                        </div>
+                        <div id="listas" style="display:none;">
+                            <div>
+                                <input type="checkbox" name="selTodasListas" id="selTodasListas" onclick="javascript:selListas(this);" /> Selecionar todas as Listas
+                                &nbsp;
+                                <input type="checkbox" name="selListasUtilizadas" id="selListasUtilizadas" onclick="javascript:exibeListasUtilizadas(this);" /> Selecionar listas utilizadas
                             </div>
-                            <div id="listas" style="display:none;">
-                                <div>
-                                    <input type="checkbox" name="selTodasListas" id="selTodasListas" onclick="javascript:selListas(this);" /> Selecionar todas as Listas
-                                    &nbsp;
-                                    <input type="checkbox" name="selListasUtilizadas" id="selListasUtilizadas" onclick="javascript:exibeListasUtilizadas(this);" /> Selecionar listas utilizadas
-                                </div>
-                                <table id="grid_listas" style="width:100%;"></table>
-                                <div id="pg_listas"></div>                            
-                            </div>
-                            <!-- Grid de Listas -->
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <!-- Turmas > Listas -->
-            
-            <!-- Listas > Turmas -->
-            <div id="optListaTurma" class="opts" style="display:none;">
-                <table style="width:100%;">
-                    <tr>
-                        <td style="vertical-align:top;text-align:left">
-                            <!-- Grid de Turmas -->
-                            <table id="grid_listas_turmas" style="width:100%;"></table>
-                            <div id="pg_listas_turmas"></div>
-                            <input type="hidden" name="idsTurmas" id="idsTurmas" value=""/>
-                            <input type="hidden" name="idListaSel" id="idListaSel" value=""/>
-                            <!-- Grid de Turmas -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align:top;text-align:left">
-                            <!-- Grid de Listas -->
-                            <div id="turmas_inicio">
-                                Selecione uma Lista para filtrar as Turmas
-                            </div>
-                            <div id="turmas" style="display:none;">
-                                <div>
-                                    <input type="checkbox" name="selTodasTurmas" id="selTodasTurmas" onclick="javascript:selTurmas(this);" /> Selecionar todas as Turmas
-                                    &nbsp;
-                                    <input type="checkbox" name="selTurmasUtilizadas" id="selTurmasUtilizadas" onclick="javascript:exibeTurmasUtilizadas(this);" /> Selecionar Turmas utilizadas
-                                </div>
-                                <table id="grid_turmas_listas" style="width:100%;"></table>
-                                <div id="pg_turmas_listas"></div>
-                            </div>
-                            <!-- Grid de Listas -->
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <!-- Turmas > Listas -->
-            
-            <!-- Rodapé Grids -->
-            <div style="width:750px;">
-                <div id="txtStatus" style="float:left"></div>
-                <input type="button" value="Enviar Convite" style="float:right" onclick="javascript:enviaConvite();" />
-            </div>
-            <!-- Rodapé Grids -->
+                            <table id="grid_listas" style="width:100%;"></table>
+                            <div id="pg_listas"></div>                            
+                        </div>
+                        <!-- Grid de Listas -->
+                    </td>
+                </tr>
+            </table>
         </div>
+        <!-- Turmas > Listas -->
+
+        <!-- Listas > Turmas -->
+        <div id="optListaTurma" class="opts" style="display:none;">
+            <table style="width:100%;">
+                <tr>
+                    <td style="vertical-align:top;text-align:left">
+                        <!-- Grid de Turmas -->
+                        <table id="grid_listas_turmas" style="width:100%;"></table>
+                        <div id="pg_listas_turmas"></div>
+                        <input type="hidden" name="idsTurmas" id="idsTurmas" value=""/>
+                        <input type="hidden" name="idListaSel" id="idListaSel" value=""/>
+                        <!-- Grid de Turmas -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top;text-align:left">
+                        <!-- Grid de Listas -->
+                        <div id="turmas_inicio">
+                            Selecione uma Lista para filtrar as Turmas
+                        </div>
+                        <div id="turmas" style="display:none;">
+                            <div>
+                                <input type="checkbox" name="selTodasTurmas" id="selTodasTurmas" onclick="javascript:selTurmas(this);" /> Selecionar todas as Turmas
+                                &nbsp;
+                                <input type="checkbox" name="selTurmasUtilizadas" id="selTurmasUtilizadas" onclick="javascript:exibeTurmasUtilizadas(this);" /> Selecionar Turmas utilizadas
+                            </div>
+                            <table id="grid_turmas_listas" style="width:100%;"></table>
+                            <div id="pg_turmas_listas"></div>
+                        </div>
+                        <!-- Grid de Listas -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- Turmas > Listas -->
+
+        <!-- Rodapé Grids -->
+        <div style="width:750px;">
+            <div id="txtStatus" style="float:left"></div>
+            <input type="button" value="Enviar Convite" style="float:right" onclick="javascript:enviaConvite();" />
+        </div>
+        <!-- Rodapé Grids -->
     </div>
 </div>

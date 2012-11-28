@@ -60,7 +60,7 @@ function abreLista(idLista, nomeAba){
     site.aguarde();
     
     $.post(
-        'listas/carregahtmlabalista',
+        'listas/carregarHtmlAbaLista',
         {
             idLista: idLista
         },
@@ -172,7 +172,7 @@ function filtrosResultados(idLista){
     var ano         = verificaOptTodas("#ano_" + idLista);
     
     $.post(
-        'listas/CarregaFiltrosResultados',
+        'listas/CarregarFiltrosResultados',
         {
             idLista: idLista,
             idEscola: idEscola,
@@ -251,7 +251,7 @@ function geraGrafico(idLista){
     site.aguarde();
     
     $.post(
-        'listas/GeraGraficosResultados',
+        'listas/GerarGraficosResultados',
         {
             idLista: idLista,
             idEscola: idEscola,
@@ -320,7 +320,7 @@ function geraGrafico(idLista){
                         }]
                     });                    
                 }else{
-                    $("#gr_respostas_" + idLista).html("<p>Respostas<br /><strong>0</strong></p>");
+                    $("#gr_respostas_" + idLista).html("<p>Respostas<br /><span>0</span></p>");
                 } //Gráficio de Respostas
                 
                 //Verifica se foram encontradas informações de alunos
@@ -377,7 +377,7 @@ function geraGrafico(idLista){
                         }]
                     });                    
                 }else{
-                    $("#gr_alunos_" + idLista).html("<p>Alunos<br /><strong>0</strong></p>");
+                    $("#gr_alunos_" + idLista).html("<p>Alunos<br /><span>0</span></p>");
                 } //Gráficio de alunos
                 
                 //Informações de aproveitamento
@@ -385,7 +385,7 @@ function geraGrafico(idLista){
                     $("#num_proveitamento_" + idLista).html(ret.APROVEITAMENTO.aproveitamento);      
                     $("#tmp_aproveitamento_" + idLista).val(ret.APROVEITAMENTO.aproveitamento);
                 }else{
-                    $("#aproveitamento_" + idLista).html("<p>Aproveitamento<br /><strong id='num_proveitamento_"+idLista+"'>0</strong>%</p>");
+                    $("#aproveitamento_" + idLista).html("<p>Aproveitamento<br /><span id='num_proveitamento_"+idLista+"'>0</span>%</p>");
                     $("#tmp_aproveitamento_" + idLista).val(0);
                 }
                 
@@ -484,7 +484,7 @@ function modalAluno(idLista){
     
     //Carrega Grid de Alunos
     $("#grid_alunos_" + idLista).jqGrid({
-        url: 'listas/CarregaAlunosLista?idLista=' + idLista,
+        url: 'listas/CarregarAlunosLista?idLista=' + idLista,
         datatype: "json",
         colNames:['Código', 'Aluno', 'Escola', 'Turma'],
         colModel:[
@@ -634,7 +634,7 @@ function alteraAnticola(status, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteraanticola',
+        'listas/alterarAnticola',
         {
             idLista: idLista,
             status: status
@@ -666,7 +666,7 @@ function alteraPeriodo(data, tipo, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteraperiodo',
+        'listas/alterarPeriodo',
         {
             data: data,
             tipo: tipo,
@@ -699,7 +699,7 @@ function alteraResultadoAluno(status, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteraresultadoaluno',
+        'listas/alterarResultadoAluno',
         {
             idLista: idLista,
             status: status
@@ -731,7 +731,7 @@ function alteraGabaritoAluno(status, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteragabaritoaluno',
+        'listas/alterarGabaritoAluno',
         {
             idLista: idLista,
             status: status
@@ -765,7 +765,7 @@ function alteraTempoVida(tempo, idLista){
     //Verifica se o valor está no padrão 00:00 e salva informação
     if(regTempo.test(tempo)){
         $.post(
-            'listas/alteraTempoVida',
+            'listas/alterarTempoVida',
             {
                 idLista: idLista,
                 tempo: tempo

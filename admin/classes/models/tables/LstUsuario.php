@@ -43,7 +43,7 @@
          * 
          * @throws Exception
          */
-        public function calculaRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
@@ -159,7 +159,7 @@
          * 
          * @throws Exception
          */
-        public function calculaAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
@@ -277,7 +277,7 @@
          * 
          * @throws Exception
          */
-        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
@@ -406,7 +406,7 @@
          * 
          * @throws Exception
          */
-        public function calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
@@ -547,7 +547,7 @@
          * 
          * @throws Exception
          */
-        public function calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE){
+        public function calcularAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE){
             try{
                 //Objeto de etorno
                 $ret            = new \stdClass();
