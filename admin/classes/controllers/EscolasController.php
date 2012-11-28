@@ -73,7 +73,7 @@
                 }
 
                 //Lista todas escolas encontradas
-                $rs = $mdEscolasTurmas->listaEscolasCliente(26436, $where);
+                $rs = $mdEscolasTurmas->listarEscolasCliente(26436, $where);
                 
                 if($rs->status){
                     $page           = Request::get('page', 'NUMBER'); 
@@ -90,7 +90,7 @@
                     $start          = $limit * $page - $limit;
                     
                     //Efetua select com ordenação e paginação
-                    $rs = $mdEscolasTurmas->listaEscolasCliente(
+                    $rs = $mdEscolasTurmas->listarEscolasCliente(
                             26436, 
                             $where, 
                             array(
@@ -163,7 +163,7 @@
         /**
          * Função que atualiza o status de ATIVO e INATIVO de uma escola
          */
-        public function actionAlteraStatusEscola(){
+        public function actionAlterarStatusEscola(){
             try{
                 //Obejto de retorno
                 $ret            = new stdClass();
@@ -177,7 +177,7 @@
                 
                 //Executa chamada de model para salvar a nova escola
                 $mEscolasTurmas = new EscolasTurmasModel();
-                $ret            = $mEscolasTurmas->alteraStatusEscola($ID_ESCOLA, $ID_CLIENTE, $STATUS);
+                $ret            = $mEscolasTurmas->alterarStatusEscola($ID_ESCOLA, $ID_CLIENTE, $STATUS);
 
                 echo json_encode($ret);
             }catch(Exception $e){
@@ -192,7 +192,7 @@
         /**
          * Lista as turmas de um cliente e uma escola
          */
-        public function actionListaTurmas(){
+        public function actionListarTurmas(){
             try{
                 //Obejto de retorno
                 $ret            = new stdClass();
@@ -205,7 +205,7 @@
                 
                 //Executa chamada de model para salvar a nova escola
                 $mEscolasTurmas = new EscolasTurmasModel();
-                $ret            = $mEscolasTurmas->listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA);
+                $ret            = $mEscolasTurmas->listarTurmasCliente($ID_CLIENTE, $ID_ESCOLA);
 
                 echo json_encode($ret);
             }catch(Exception $e){
@@ -306,7 +306,7 @@
                 $utilizadas             = Request::get('utilizadas', 'NUMBER');
                 
                 //Lista todas escolas encontradas
-                $rs = $mdEscolasTurmas->listaTurmasCliente(26436, 0, $utilizadas, ($utilizadas == 1 ? $ID_HISTORICO_GERADOC : 0), $where);
+                $rs = $mdEscolasTurmas->listarTurmasCliente(26436, 0, $utilizadas, ($utilizadas == 1 ? $ID_HISTORICO_GERADOC : 0), $where);
                 
                 //Variável que armazena IDs encontrados no Select
                 $ids = "";
@@ -326,7 +326,7 @@
                     $start          = $limit * $page - $limit;
                     
                     //Efetua select com ordenação e paginação
-                    $rs = $mdEscolasTurmas->listaTurmasCliente(
+                    $rs = $mdEscolasTurmas->listarTurmasCliente(
                             26436,
                             0,
                             $utilizadas, 
@@ -357,9 +357,9 @@
                             "<input type='checkbox' value='{$row['ID_TURMA']}' class='check_turma' ".($row['ID_HISTORICO_GERADOC'] == $ID_HISTORICO_GERADOC ? "checked='checked'" : "")." onclick='javascript:salvaRelacaoTurma(this);' />",
                             $row['ID_TURMA'],
                             $row['CLASSE'],
-                            EscolasTurmasModel::traduzEnsino($row['ENSINO']),
+                            EscolasTurmasModel::traduzirEnsino($row['ENSINO']),
                             $row['ANO'],
-                            EscolasTurmasModel::traduzPeriodo($row['PERIODO']),
+                            EscolasTurmasModel::traduzirPeriodo($row['PERIODO']),
                             $row['ESCOLA']
                         );
                         $i++;
@@ -416,7 +416,7 @@
                 $utilizadas = Request::get('utilizadas', 'NUMBER');
                 
                 //Carrega todas listas de um cliente + escola
-                $rs = $mdListas->carregaListasCliente(26436, $where, $utilizadas, ($utilizadas == 1 ? $ID_TURMA : 0));
+                $rs = $mdListas->carregarListasCliente(26436, $where, $utilizadas, ($utilizadas == 1 ? $ID_TURMA : 0));
                 
                 //Variável que armazena IDs encontrados no Select
                 $ids = "";
@@ -437,7 +437,7 @@
                     $start          = $limit * $page - $limit;
                     
                     //Efetua select com ordenação e paginação
-                    $rs = $mdListas->carregaListasCliente(
+                    $rs = $mdListas->carregarListasCliente(
                             26436,
                             $where,
                             $utilizadas,
@@ -493,7 +493,7 @@
         /**
          * Salva alteração de relacionamento entre listas e turmas
          */
-        public function actionSalvaTurmaLista(){
+        public function actionSalvarTurmaLista(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -502,7 +502,7 @@
                 
                 //Salva operação enviada
                 $mdListas   = new ListasModel();
-                $ret        = $mdListas->salvaListasTurmas(
+                $ret        = $mdListas->salvarListasTurmas(
                                     Request::post('idsTurmas'), 
                                     Request::post('idsListas'), 
                                     Request::post('tipo')
@@ -523,7 +523,7 @@
          * Carrega as informações sobre o disparo de convites:
          * Total de Alunos e Total de Celulares
          */
-        public function actionCarregaInfoConvite(){
+        public function actionCarregarInfoConvite(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -538,12 +538,12 @@
                                 
                 switch ($tipo) {
                     case 'T':
-                        $ret            = $mdEscolaTurma->carregaContatosTurma($id);
+                        $ret            = $mdEscolaTurma->carregarContatosTurma($id);
                         $ret->idsTurmas = $id; //Retorna IDs de Turma utilizados
                         break;
                     case 'L':
                         //Busca turmas relacionadas a Lista
-                        $rsTurmas = $mdEscolaTurma->listaTurmasCliente(26436, 0, 1, $id);
+                        $rsTurmas = $mdEscolaTurma->listarTurmasCliente(26436, 0, 1, $id);
                         
                         //Verifica se houve retorno
                         if(!$rsTurmas->status){
@@ -559,7 +559,7 @@
                             }
                             
                             //Verifica informações de alunos para convites
-                            $ret            = $mdEscolaTurma->carregaContatosTurma($ids);
+                            $ret            = $mdEscolaTurma->carregarContatosTurma($ids);
                             $ret->idsTurmas = $ids; //Retorna IDs de Turma utilizados
                         }
                         break;
@@ -579,7 +579,7 @@
         /**
          * Função que salva a lista de Turmas e Listas para onde devem ser disparados os convites.
          */
-        public function actionDisparaConvites(){
+        public function actionDispararConvites(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -609,7 +609,7 @@
                     //Insere registros para disparo apenas para a lista desejada
                     foreach($arrId as $idTurma){
                         //Insere registros para disparo via cron
-                        $rs = $mdListas->salvaConvites(
+                        $rs = $mdListas->salvarConvites(
                                 26436,
                                 $idTurma,
                                 $idLista,
@@ -628,7 +628,7 @@
                     //Varre Turma enviadas
                     foreach($arrId as $idTurma){
                         //Busca listas ta turma
-                        $retListas = $mdListas->carregaListasCliente(26436, '', 1, $idTurma);
+                        $retListas = $mdListas->carregarListasCliente(26436, '', 1, $idTurma);
                         
                         //Se houver listas para turma
                         if($retListas->status){
@@ -637,7 +637,7 @@
                             //Insere um registro de convite para cada lista
                             foreach($retListas->listas as $lista){
                                 //Insere registros para disparo via cron
-                                $rs = $mdListas->salvaConvites(
+                                $rs = $mdListas->salvarConvites(
                                         26436,
                                         $idTurma,
                                         $lista['ID_HISTORICO_GERADOC'],

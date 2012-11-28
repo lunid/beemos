@@ -40,7 +40,7 @@
          * 
          * @throws Exception
          */
-        public function carregaListasCliente($ID_CLIENTE, $where = "", $utilizadas = 0, $ID_TURMA = 0, $arrPg = null){
+        public function carregarListasCliente($ID_CLIENTE, $where = "", $utilizadas = 0, $ID_TURMA = 0, $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -56,7 +56,7 @@
                 //Instância da table SPRO_HISTORICO_GERADOC
                 $tbHistGeradoc  = new HistoricoGeradoc();
                 //Carrega listas do cliente
-                $ret            = $tbHistGeradoc->carregaListasCliente($ID_CLIENTE, $where, $utilizadas, $ID_TURMA, $arrPg);
+                $ret            = $tbHistGeradoc->carregarListasCliente($ID_CLIENTE, $where, $utilizadas, $ID_TURMA, $arrPg);
                 
                 return $ret;
             }catch(Exception $e){
@@ -88,7 +88,7 @@
          * 
          * @throws Exception
          */
-        public function carregaAlunosLista($ID_HISTORICO_GERADOC, $where = '', $arrPg = null){
+        public function carregarAlunosLista($ID_HISTORICO_GERADOC, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -104,7 +104,7 @@
                 //Instância da table SPRO_HISTORICO_GERADOC
                 $tbHistGeradoc  = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
                 //Carrega listas do cliente
-                $ret            = $tbHistGeradoc->carregaAlunosLista($where, $arrPg);
+                $ret            = $tbHistGeradoc->carregarAlunosLista($where, $arrPg);
                 
                 return $ret;
             }catch(Exception $e){
@@ -121,7 +121,7 @@
          * @return \stdClass
          * @throws Exception
          */
-        public function salvaListasTurmas($idTurmas, $idsListas, $tipo){
+        public function salvarListasTurmas($idTurmas, $idsListas, $tipo){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -196,7 +196,7 @@
          * 
          * @throws Exception
          */
-        public function salvaConvites($ID_CLIENTE, $ID_TURMA, $ID_HISTORICO_GERADOC, $sms){
+        public function salvarConvites($ID_CLIENTE, $ID_TURMA, $ID_HISTORICO_GERADOC, $sms){
             try{
                 //Objeto de retorno 
                 $ret            = new \stdClass();
@@ -254,7 +254,7 @@
          * 
          * @throws Exception
          */
-        public function carregaDadosLista($ID_HISTORICO_GERADOC){
+        public function carregarDadosLista($ID_HISTORICO_GERADOC){
             try{
                 //Objeto de retorno 
                 $ret            = new \stdClass();
@@ -296,7 +296,7 @@
          * 
          * @throws Exception
          */
-        public function alteraAnticola($ID_HISTORICO_GERADOC, $status){
+        public function alterarAnticola($ID_HISTORICO_GERADOC, $status){
             try{
                 //Objeto de retorno 
                 $ret            = new \stdClass();
@@ -337,7 +337,7 @@
          * 
          * @throws Exception
          */
-        public function alteraPeriodo($ID_HISTORICO_GERADOC, $data, $tipo){
+        public function alterarPeriodo($ID_HISTORICO_GERADOC, $data, $tipo){
             try{
                 //Objeto de retorno 
                 $ret            = new \stdClass();
@@ -387,7 +387,7 @@
          * 
          * @throws Exception
          */
-        public function alteraResultadoAluno($ID_HISTORICO_GERADOC, $status){
+        public function alterarResultadoAluno($ID_HISTORICO_GERADOC, $status){
             try{
                 //Objeto de retorno 
                 $ret            = new \stdClass();
@@ -427,7 +427,7 @@
          * 
          * @throws Exception
          */
-        public function alteraGabaritoAluno($ID_HISTORICO_GERADOC, $status){
+        public function alterarGabaritoAluno($ID_HISTORICO_GERADOC, $status){
             try{
                 //Objeto de retorno 
                 $ret            = new \stdClass();
@@ -467,7 +467,7 @@
          * 
          * @throws Exception
          */
-        public function alteraTempoVida($ID_HISTORICO_GERADOC, $tempo){
+        public function alterarTempoVida($ID_HISTORICO_GERADOC, $tempo){
             try{
                 //Objeto de retorno 
                 $ret            = new \stdClass();
@@ -509,11 +509,11 @@
          * 
          * @throws Exception
          */
-        public function calculaRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaRespostasLista
                 $tbLstUsuario = new LstUsuario();
-                return $tbLstUsuario->calculaRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+                return $tbLstUsuario->calcularRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
             }
@@ -536,11 +536,11 @@
          * 
          * @throws Exception
          */
-        public function calculaAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
                 $tbLstUsuario = new LstUsuario();
-                return $tbLstUsuario->calculaAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+                return $tbLstUsuario->calcularAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
             }
@@ -563,11 +563,11 @@
          * 
          * @throws Exception
          */
-        public function calculaAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
                 $tbLstUsuario = new LstUsuario();
-                return $tbLstUsuario->calculaAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+                return $tbLstUsuario->calcularAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
             }
@@ -596,11 +596,11 @@
          * 
          * @throws \admin\classes\models\tables\Exception
          */
-        public function carregaEscolasTurmasLista($ID_HISTORICO_GERADOC, $ID_CLIENTE, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = ''){
+        public function carregarEscolasTurmasLista($ID_HISTORICO_GERADOC, $ID_CLIENTE, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = ''){
             try{
                 //Instância o objeto da Tabela SPRO_HISORICO_GERADOC 
                 $tbLista = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
-                return $tbLista->carregaEscolasTurmasLista($ID_CLIENTE, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO);
+                return $tbLista->carregarEscolasTurmasLista($ID_CLIENTE, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO);
             }catch(Exception $e){
                 throw $e;
             }
@@ -626,11 +626,11 @@
          * 
          * @throws Exception
          */
-        public function calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
+        public function calcularAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
                 $tbLstUsuario = new LstUsuario();
-                return $tbLstUsuario->calculaAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
+                return $tbLstUsuario->calcularAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
             }
@@ -652,11 +652,11 @@
          * 
          * @throws Exception
          */
-        public function calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE){
+        public function calcularAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
                 $tbLstUsuario = new LstUsuario();
-                return $tbLstUsuario->calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE);
+                return $tbLstUsuario->calcularAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE);
             }catch(Exception $e){
                 throw $e;
             }
