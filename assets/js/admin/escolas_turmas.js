@@ -258,7 +258,7 @@ function alteraStatusEscola(ID_ESCOLA, status){
     site.aguarde();
 
     $.post(
-        'escolas/alterastatusescola',
+        'escolas/alterarStatusEscola',
         {
             escolaIdCliente:    26436,
             escolaId:           ID_ESCOLA,
@@ -356,7 +356,7 @@ function carregaListaTurmas(ID_ESCOLA, ID_CLIENTE){
     
     //Função que lista as Turmas da Escola selecionada
     $.post(
-        'escolas/listaTurmas',
+        'escolas/listarTurmas',
         {
             ID_ESCOLA: ID_ESCOLA,
             ID_CLIENTE: ID_CLIENTE
@@ -425,7 +425,7 @@ function selListas(obj){
     $("#txtStatus").html("Aguarde...");
     
     $.post(
-        'escolas/salvaturmalista',
+        'escolas/salvarTurmaLista',
         {
             idsTurmas: $("#idTurmaSel").val(),
             idsListas: $("#idsListas").val(), 
@@ -460,7 +460,7 @@ function selTurmas(obj){
     $("#txtStatus").html("Aguarde...");
     
     $.post(
-        'escolas/salvaturmalista',
+        'escolas/salvarTurmaLista',
         {
             idsTurmas: $("#idsTurmas").val(),
             idsListas: $("#idListaSel").val(),
@@ -495,7 +495,7 @@ function salvaRelacaoLista(obj){
     }
     
     $.post(
-        'escolas/salvaturmalista',
+        'escolas/salvarTurmaLista',
         {
             idsTurmas: $("#idTurmaSel").val(),
             idsListas: obj.value, 
@@ -530,7 +530,7 @@ function salvaRelacaoTurma(obj){
     }
     
     $.post(
-        'escolas/salvaturmalista',
+        'escolas/salvarTurmaLista',
         {
             idsTurmas: obj.value,
             idsListas: $("#idListaSel").val(), 
@@ -635,7 +635,7 @@ function enviaConvite(){
     }else{
         //Prossegue com o envio de convites
         $.post(
-            'escolas/carregainfoconvite',
+            'escolas/carregarInfoConvite',
             {
                 id: id,
                 tipo: optSel
@@ -670,7 +670,7 @@ function enviaConvite(){
                                 
                                 //Efetua a chamada do script de disparo
                                 $.post(
-                                    'escolas/disparaconvites', 
+                                    'escolas/dispararConvites', 
                                     {
                                         idsTurmas: ret.idsTurmas,
                                         idLista: idLista,

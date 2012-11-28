@@ -60,7 +60,7 @@ function abreLista(idLista, nomeAba){
     site.aguarde();
     
     $.post(
-        'listas/carregahtmlabalista',
+        'listas/carregarHtmlAbaLista',
         {
             idLista: idLista
         },
@@ -172,7 +172,7 @@ function filtrosResultados(idLista){
     var ano         = verificaOptTodas("#ano_" + idLista);
     
     $.post(
-        'listas/CarregaFiltrosResultados',
+        'listas/CarregarFiltrosResultados',
         {
             idLista: idLista,
             idEscola: idEscola,
@@ -251,7 +251,7 @@ function geraGrafico(idLista){
     site.aguarde();
     
     $.post(
-        'listas/GeraGraficosResultados',
+        'listas/GerarGraficosResultados',
         {
             idLista: idLista,
             idEscola: idEscola,
@@ -484,7 +484,7 @@ function modalAluno(idLista){
     
     //Carrega Grid de Alunos
     $("#grid_alunos_" + idLista).jqGrid({
-        url: 'listas/CarregaAlunosLista?idLista=' + idLista,
+        url: 'listas/CarregarAlunosLista?idLista=' + idLista,
         datatype: "json",
         colNames:['Código', 'Aluno', 'Escola', 'Turma'],
         colModel:[
@@ -634,7 +634,7 @@ function alteraAnticola(status, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteraanticola',
+        'listas/alterarAnticola',
         {
             idLista: idLista,
             status: status
@@ -666,7 +666,7 @@ function alteraPeriodo(data, tipo, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteraperiodo',
+        'listas/alterarPeriodo',
         {
             data: data,
             tipo: tipo,
@@ -699,7 +699,7 @@ function alteraResultadoAluno(status, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteraresultadoaluno',
+        'listas/alterarResultadoAluno',
         {
             idLista: idLista,
             status: status
@@ -731,7 +731,7 @@ function alteraGabaritoAluno(status, idLista){
     site.aguarde();
     
     $.post(
-        'listas/alteragabaritoaluno',
+        'listas/alterarGabaritoAluno',
         {
             idLista: idLista,
             status: status
@@ -765,7 +765,7 @@ function alteraTempoVida(tempo, idLista){
     //Verifica se o valor está no padrão 00:00 e salva informação
     if(regTempo.test(tempo)){
         $.post(
-            'listas/alteraTempoVida',
+            'listas/alterarTempoVida',
             {
                 idLista: idLista,
                 tempo: tempo

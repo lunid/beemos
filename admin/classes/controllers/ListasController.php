@@ -68,7 +68,7 @@
                 }
 
                 //Carrega todas listas de um cliente + escola
-                $rs = $mdListas->carregaListasCliente(26436, $where);
+                $rs = $mdListas->carregarListasCliente(26436, $where);
                 
                 //Verifica se foram carregadas as listas
                 if($rs->status){
@@ -86,7 +86,7 @@
                     $start          = $limit * $page - $limit;
                     
                     //Efetua select com ordenação e paginação
-                    $rs = $mdListas->carregaListasCliente(
+                    $rs = $mdListas->carregarListasCliente(
                             26436,
                             $where,
                             0, //Utilizadas
@@ -143,7 +143,7 @@
         /**
          * Carrega o html para montar uma nova aba de Lista seleciona no grid
          */
-        public function actionCarregaHtmlAbaLista(){
+        public function actionCarregarHtmlAbaLista(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -155,7 +155,7 @@
                 
                 //Carrega dados da lista solicitada
                 $mdListas   = new ListasModel();
-                $ret        = $mdListas->carregaDadosLista($idLista);
+                $ret        = $mdListas->carregarDadosLista($idLista);
                 
                 //Se forem carregados os dados
                 if($ret->status){
@@ -188,12 +188,12 @@
                     $aba->setAttr('STATUS', $status);                    
                     
                     //Informações de gráficos e Números
-                    $ret->GR_RESPOSTAS      = $mdListas->calculaRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
-                    $ret->GR_ALUNOS         = $mdListas->calculaAlunosRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
-                    $ret->APROVEITAMENTO    = $mdListas->calculaAproveitamentoLista($ret->lista->ID_HISTORICO_GERADOC);
+                    $ret->GR_RESPOSTAS      = $mdListas->calcularRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
+                    $ret->GR_ALUNOS         = $mdListas->calcularAlunosRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
+                    $ret->APROVEITAMENTO    = $mdListas->calcularAproveitamentoLista($ret->lista->ID_HISTORICO_GERADOC);
                     
                     //Opções para select de escolas
-                    $ret->escolasTurmas = $mdListas->carregaEscolasTurmasLista($ret->lista->ID_HISTORICO_GERADOC, 26436);
+                    $ret->escolasTurmas = $mdListas->carregarEscolasTurmasLista($ret->lista->ID_HISTORICO_GERADOC, 26436);
                     
                     //HTML final
                     $ret->html  = $aba->render();
@@ -214,7 +214,7 @@
          * Função que gera os gráficos de resultados
          * de acordo com os filtros enviados
          */
-        public function actionGeraGraficosResultados(){
+        public function actionGerarGraficosResultados(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -233,10 +233,10 @@
                 $mdListas   = new ListasModel();
                 
                 //Informações de gráficos e Números
-                $ret->GR_RESPOSTAS      = $mdListas->calculaRespostasLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
-                $ret->GR_ALUNOS         = $mdListas->calculaAlunosRespostasLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
-                $ret->APROVEITAMENTO    = $mdListas->calculaAproveitamentoLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
-                $ret->GR_QUESTOES       = $mdListas->calculaAproveitamentoQuestao($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                $ret->GR_RESPOSTAS      = $mdListas->calcularRespostasLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                $ret->GR_ALUNOS         = $mdListas->calcularAlunosRespostasLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                $ret->APROVEITAMENTO    = $mdListas->calcularAproveitamentoLista($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
+                $ret->GR_QUESTOES       = $mdListas->calcularAproveitamentoQuestao($idLista, $idEscola, $ensino, $periodo, $ano, $turma);
                 
                 $ret->status = true;
                 $ret->msg    = "Informações carregadas!";
@@ -262,8 +262,8 @@
                 $objView->setTemplate('blank');
                 
                 //View com HTML de gráficos
-                $objViewPart = new ViewPart("admin/imprimir_graficos");
-                $objViewPart->idLista = $_GET['idLista'];
+                $objViewPart            = new ViewPart("admin/imprimir_graficos");
+                $objViewPart->idLista   = Request::get('idLista', 'NUMBER');
                 
                 $objView->setLayout($objViewPart);
                 
@@ -285,7 +285,7 @@
         /**
          * Carrega json com dados para jqgrid de Alunos de uma determinada Lista
          */
-        function actionCarregaAlunosLista(){
+        function actionCarregarAlunosLista(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -327,7 +327,7 @@
                 $ID_HISTORICO_GERADOC = Request::get('idLista', 'NUMBER');
                 
                 //Carrega todos alunos de uma lista
-                $rs = $mdListas->carregaAlunosLista($ID_HISTORICO_GERADOC, $where);
+                $rs = $mdListas->carregarAlunosLista($ID_HISTORICO_GERADOC, $where);
                 
                 //Verifica se foram carregados os alunos
                 if($rs->status){
@@ -345,7 +345,7 @@
                     $start          = $limit * $page - $limit;
                     
                     //Efetua select com ordenação e paginação
-                    $rs = $mdListas->carregaAlunosLista(
+                    $rs = $mdListas->carregarAlunosLista(
                             $ID_HISTORICO_GERADOC,
                             $where,
                             array(
@@ -391,7 +391,7 @@
         /**
          * Carrega os filtros da tela de resultados da Lista
          */
-        public function actionCarregaFiltrosResultados(){
+        public function actionCarregarFiltrosResultados(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -409,7 +409,7 @@
                 $mdListas   = new ListasModel();
                 
                 //Opções para select de escolas
-                $ret->escolasTurmas = $mdListas->carregaEscolasTurmasLista($idLista, 26436, $idEscola, $ensino, $periodo, $ano);
+                $ret->escolasTurmas = $mdListas->carregarEscolasTurmasLista($idLista, 26436, $idEscola, $ensino, $periodo, $ano);
                 
                 echo json_encode($ret);
             }catch(Exception $e){
@@ -425,7 +425,7 @@
         /**
          * Altera o status de Anticola de uma lista
          */
-        public function actionAlteraAnticola(){
+        public function actionAlterarAnticola(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -441,7 +441,7 @@
                 }else{
                     //Instancia o Objeto Model e efetua alteração
                     $mdListas   = new ListasModel();
-                    $ret        = $mdListas->alteraAnticola($idLista, $status);
+                    $ret        = $mdListas->alterarAnticola($idLista, $status);
                 }
                 
                 echo json_encode($ret);
@@ -458,7 +458,7 @@
         /**
          * Altera o Período de Vida de uma Lista
          */
-        public function actionAlteraPeriodo(){
+        public function actionAlterarPeriodo(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -475,7 +475,7 @@
                 }else{
                     //Instancia o Objeto Model e efetua alteração
                     $mdListas   = new ListasModel();
-                    $ret        = $mdListas->alteraPeriodo($idLista, $data, $tipo);
+                    $ret        = $mdListas->alterarPeriodo($idLista, $data, $tipo);
                 }
                 
                 echo json_encode($ret);
@@ -492,7 +492,7 @@
         /**
          * Altera a permissão de um aluno visualizar (ou não) o seu resultado final após finalizar a lista
          */
-        public function actionAlteraResultadoAluno(){
+        public function actionAlterarResultadoAluno(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -508,7 +508,7 @@
                 }else{
                     //Instancia o Objeto Model e efetua alteração
                     $mdListas   = new ListasModel();
-                    $ret        = $mdListas->alteraResultadoAluno($idLista, $status);
+                    $ret        = $mdListas->alterarResultadoAluno($idLista, $status);
                 }
                 
                 echo json_encode($ret);
@@ -525,7 +525,7 @@
         /**
          * Altera a permissão de um aluno visualizar (ou não) o Gabarito da Listas
          */
-        public function actionAlteraGabaritoAluno(){
+        public function actionAlterarGabaritoAluno(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -541,7 +541,7 @@
                 }else{
                     //Instancia o Objeto Model e efetua alteração
                     $mdListas   = new ListasModel();
-                    $ret        = $mdListas->alteraGabaritoAluno($idLista, $status);
+                    $ret        = $mdListas->alterarGabaritoAluno($idLista, $status);
                 }
                 
                 echo json_encode($ret);
@@ -558,7 +558,7 @@
         /**
          * Altera o tempo limite que o aluno possui paa iniciar e finalizar a lista de questões. Ex: 00:45
          */
-        public function actionAlteraTempoVida(){
+        public function actionAlterarTempoVida(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -574,7 +574,7 @@
                 }else{
                     //Instancia o Objeto Model e efetua alteração
                     $mdListas   = new ListasModel();
-                    $ret        = $mdListas->alteraTempoVida($idLista, $tempo);
+                    $ret        = $mdListas->alterarTempoVida($idLista, $tempo);
                 }
                 
                 echo json_encode($ret);
@@ -603,7 +603,7 @@
                 $ID_CLIENTE             = Request::post("idCliente", "NUMBER");
                 
                 $mdListas   = new ListasModel();
-                $ret        = $mdListas->calculaAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE);
+                $ret        = $mdListas->calcularAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE);
                 
                 echo json_encode($ret);
             }catch(Exception $e){

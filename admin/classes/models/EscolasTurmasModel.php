@@ -30,7 +30,7 @@
          * </code>
          * @throws Exception
          */
-        public function listaEscolasCliente($ID_CLIENTE, $where, $arrPg = null){
+        public function listarEscolasCliente($ID_CLIENTE, $where, $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -110,7 +110,7 @@
          * </code>
          * @throws Exception
          */
-        public function listaTurmasCliente($ID_CLIENTE, $ID_ESCOLA = 0, $utilizadas = 0, $ID_HISTORICO_GERADOC = 0, $where = "", $arrPg = null){
+        public function listarTurmasCliente($ID_CLIENTE, $ID_ESCOLA = 0, $utilizadas = 0, $ID_HISTORICO_GERADOC = 0, $where = "", $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -225,7 +225,7 @@
          * @return stdClass
          * @throws admin\classes\models\Exception
          */
-        public function alteraStatusEscola($ID_ESCOLA, $ID_CLIENTE, $STATUS){
+        public function alterarStatusEscola($ID_ESCOLA, $ID_CLIENTE, $STATUS){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -359,7 +359,7 @@
          * 
          * @throws Exception
          */
-        public function carregaContatosTurma($idsTurmas){
+        public function carregarContatosTurma($idsTurmas){
             try{
                 //Faz a consulta de informações do cliente e repassa resultado
                 $tbCliente  = new Cliente();
@@ -378,7 +378,7 @@
          * @return string Descrição do Ensino
          * @throws Exception
          */
-        static function traduzEnsino($ensino){
+        static function traduzirEnsino($ensino){
             try{
                 switch($ensino){
                     case 'M': 
@@ -402,7 +402,7 @@
          * @return string Descrição do período
          * @throws Exception
          */
-        static function traduzPeriodo($periodo){
+        static function traduzirPeriodo($periodo){
             try{
                 switch($periodo){
                     case 'M': 
