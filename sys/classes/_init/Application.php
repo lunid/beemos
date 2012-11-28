@@ -200,7 +200,7 @@
             $urlInc = str_replace("\\", "/" , $class . '.php');                
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
-                DI::loadMapXml($urlInc);
+                //DI::loadMapXml($urlInc);
             } else {           
                 die(" Classe $class não encontrada");
             }                      
