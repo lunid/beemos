@@ -10,6 +10,7 @@
     require_once('sys/classes/mvc/Module.php');      
     require_once('sys/classes/_init/LoadConfig.php');           
     require_once('sys/classes/util/Url.php');  
+    require_once('sys/classes/util/DI.php');
     
     class Application {
         
