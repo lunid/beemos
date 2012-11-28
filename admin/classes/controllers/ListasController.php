@@ -260,14 +260,15 @@
                 //View VAZIA para Impressão de Graficos
                 $objView = new View();                
                 $objView->setTemplate('blank');
-                
+                 
                 //View com HTML de gráficos
-                $objViewPart = new ViewPart("admin/imprimir_graficos");
-                $objViewPart->idLista = $_GET['idLista'];
+                $objViewPart            = new ViewPart("admin/imprimir_graficos");
+                $objViewPart->idLista   = Request::get('idLista');
                 
+                $objView->includeCfgOff();                
                 $objView->setLayout($objViewPart);
                 
-                //Scripts necessários
+                //Scripts necessários                
                 $objView->setJs('admin/minhas_listas');
                 $objView->setCss('admin/minhas_listas');
                 

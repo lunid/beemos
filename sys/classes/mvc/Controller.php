@@ -88,6 +88,8 @@
          * 
          * O parâmetro $action será usado para compor o nome do cache de acordo com 
          * o formato modulo_action (vide método setNameCache()).
+         * O período do cache, caso os parâmetros $period e $time sejam mantidos sem alteração, 
+         * será de 30 dias.
          * 
          * Exemplo de uso:
          * <code>

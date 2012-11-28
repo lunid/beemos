@@ -9,10 +9,12 @@
     
     class View extends ViewPart {
 
-        private $objHeader      = NULL;        
-        private $tplFile        = '';           
-        private $forceNewIncMin = FALSE;
-        private $pathTpl        = '';
+        private $objHeader          = NULL;        
+        private $tplFile            = '';           
+        private $forceNewIncMin     = FALSE;
+        private $pathTpl            = '';
+        private $arrIncludeCfgOff   = array();
+        private $includeCfgAllOff   = FALSE;
         
         function __construct(){                            
             $this->init();
@@ -111,7 +113,92 @@
                 $this->pathTpl = $pathTpl;
             } 
             return $pathTpl;
+        }          
+        
+        /**
+         * Desabilita a inclusão da lista de javascript definida em config.xml, conforme o nó abaixo:
+         * <header><include id='js'></include></header>
+         * 
+         * IMPORTANTE: 
+         * Este método deve ser chamado antes de setLayout().
+         * 
+         * @return void
+         */
+        function cfgJsOff(){
+            $this->includeCfgOff(Header::EXT_JS);
+        }
+        
+        /**
+         * Desabilita a inclusão da lista de javascript (arquivos externos) definida em config.xml, conforme o nó abaixo:
+         * <header><include id='jsInc'>...</include></header>
+         * 
+         * IMPORTANTE: 
+         * Este método deve ser chamado antes de setLayout(). 
+         * 
+         * @return void
+         */        
+        function cfgJsIncOff(){
+            $this->includeCfgOff(Header::EXT_JS_INC);
+        }   
+        
+        /**
+         * Desabilita a inclusão da lista de css definida em config.xml, conforme o nó abaixo:
+         * <header><include id='css'>...</include></header>
+         * 
+         * IMPORTANTE: 
+         * Este método deve ser chamado antes de setLayout().
+         *          
+         * @return void
+         */        
+        function cfgCssOff(){
+            $this->includeCfgOff(Header::EXT_CSS);
         }        
+        
+        /**
+         * Desabilita a inclusão da lista de css (arquivos externos) definida em config.xml, conforme o nó abaixo:
+         * <header><include id='cssInc'>...</include></header>
+         *          
+         * IMPORTANTE: 
+         * Este método deve ser chamado antes de setLayout().
+         * 
+         * @return void
+         */        
+        function cfgCssIncOff(){
+            $this->includeCfgOff(Header::EXT_CSS_INC);
+        }    
+        
+        /**
+         * Desabilita a inclusão dos plugins definidos em config.xml, conforme o nó abaixo:
+         * <header><include id='plugins'>...</include></header>
+         * 
+         * IMPORTANTE: 
+         * Este método deve ser chamado antes de setLayout().
+         * 
+         * @return void
+         */        
+        function cfgPluginOff(){
+            $this->includeCfgOff('plugin');
+        } 
+        
+        /**
+         * Desabilita um tipo específico de include (parâmetro $ext) ou todos os includes 
+         * definidos em config.xml, conforme o nó abaixo:
+         * <header><include id='$ext'></include></header>
+         * 
+         * IMPORTANTE: 
+         * Este método deve ser chamado antes de setLayout().
+         * 
+         * @param string $ext Pode ser css, js, cssInc, jsInc (vide constantes da classe Header)
+         * @return void
+         */        
+        function includeCfgOff($ext='all'){
+            if ($ext == 'all') {
+                echo 'foi';
+                $this->includeCfgAllOff = TRUE;                 
+            } else {
+                $this->arrIncludeCfgOff[] = $ext;
+            }
+        }
         
         /**
          * Faz a junção do conteúdo parcial (ViewPart) com o template atual.
@@ -129,26 +216,40 @@
                 
                 if (strlen($pathTpl) > 0){    
                     
-                    //Configurações lidas do arquivo config.xml:                    
-                    $plugins    = \LoadConfig::plugins();                     
+                    //Configurações lidas do arquivo config.xml:                                                       
                     $objHeader  = new Header();            
-                     
-                    //Inclusões css e js:
-                    $arrExt     = $objHeader::$arrExt;
-                    foreach($arrExt as $fn) {
-                        $list   = \LoadConfig::$fn();                
-                        $objHeader->$fn($list);                        
-                    }                  
-                                                           
+                    $plugins    = '';
+                    //Inclusões css e js:                    
+                    if (!$this->includeCfgAllOff) {                        
+                        //As configurações de include definidas em config.xml devem ser carregadas.
+                        $plugins            = \LoadConfig::plugins();      
+                        $arrIncludeCfgOff   = $this->arrIncludeCfgOff;                    
+                        $arrExt             = $objHeader::$arrExt;
+                        foreach($arrExt as $fn) {
+                            $key = array_search($fn, $arrIncludeCfgOff);
+                            if ($key === FALSE) {
+                                $list   = \LoadConfig::$fn();
+                                echo $list.'<br>';
+                                $objHeader->$fn($list);                        
+                            }
+                        }  
+                        
+                        //Verifica se apenas os plugins defindos em config.xml foram desabilitados:
+                        $key = array_search('plugin', $arrIncludeCfgOff);
+                        if ($key !== FALSE) $plugins = '';
+                    }
+                    
                     //Faz a inclusão de arquivos css e js padrão.
                     try {                                            
                         $this->objHeader = $objHeader;                                                                                           
                         
-                        //Plugins                                               
-                        $arrPlugins = explode(',',$plugins);
-                        if (is_array($arrPlugins)) {
-                            foreach($arrPlugins as $plugin) {                                 
-                                $this->setPlugin($plugin);
+                        //Plugins         
+                        if (strlen($plugins) > 0) {
+                            $arrPlugins = explode(',',$plugins);
+                            if (is_array($arrPlugins)) {
+                                foreach($arrPlugins as $plugin) {                                 
+                                    $this->setPlugin($plugin);
+                                }
                             }
                         }
                     } catch(\Exception $e){
