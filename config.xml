@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>
-        <config id='modules'>app,admin,bm</config>
+        <config id='modules'>app,admin,bm,api</config>
         <config id='langs'>br,en</config>
         <config id='defaultModule'>admin</config>  
         <config id='defaultLang'>br</config>
