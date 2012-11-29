@@ -1,5 +1,6 @@
 <?php    
     use \api\classes\controllers\ServerController;
+    use \api\classes\models\UsuariosModel;
     
     class Usuarios extends ServerController {
         /**
@@ -48,15 +49,15 @@
                        $params = $xml->params->param;
 
                        //Campos utilizados
-                       $token      = getXmlField($params, 'token');
-                       $id_usuario = getXmlField($params, 'id_usuario');
+                       $token      = $this->getXmlField($params, 'token');
+                       $id_usuario = $this->getXmlField($params, 'id_usuario');
 
                        if(!isset($token) || $token == null || $token == ""){
                            $erro   = 4;
                            $msg    = "Token inválido!";
                        }else{
                            //Autentica usuário e token
-                           $ret = authenticate($token);
+                           $ret = $this->authenticate($token);
 
                            if(!$ret->status){
                                $erro   = $ret->erro;
@@ -72,6 +73,9 @@
                                        $msg    = "Sem permissão para excluir seu próprio usuário!";
                                    }
                                }else{
+                                   //Model de usuários
+                                   $mdUsuarios = new UsuariosModel();
+                                   
                                    //Valida se o usuário é dependente do usuário logado
                                    $sql = "SELECT 
                                                ID_CLIENTE
@@ -92,7 +96,8 @@
                                        $erro   = 83;
                                        $msg    = "Usuário não é seu dependente ou não existe!";
                                    }else{
-                                       $rs = atualizaStatusUsuario($id_usuario, $ret->ID_CLIENTE, 'EXCLUIR');
+                                       
+                                       $rs = $mdUsuarios->atualizaStatusUsuario($id_usuario, $ret->ID_CLIENTE, 'EXCLUIR');
 
                                        //VErifica se o status foi atualizado
                                        if(!$rs->status){
