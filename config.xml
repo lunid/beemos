@@ -7,7 +7,7 @@
         <config id='defaultLang'>br</config>
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
-        <config id='rootFolder'>supervip</config>        
+        <config id='rootFolder'>interbits</config>        
         <config id='folderSys'>sys</config>        
         <config id='folderViews'>viewParts</config>
     </app>

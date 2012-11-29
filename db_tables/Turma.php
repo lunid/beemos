@@ -1,7 +1,5 @@
 <?php
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
-    
+    namespace db_tables;
     /**
      * Representa uma entidade da tabela SPRO_TURMA
      * 
@@ -14,7 +12,7 @@
      * @property int STATUS
      * @property datetime DATA_REGISTRO
      */
-    class Turma extends ORM {
+    class Turma extends \Table {
         /**
          * Efetua a relação TURMA > ESCOLA e listas as turmas de um Cliente
          * 

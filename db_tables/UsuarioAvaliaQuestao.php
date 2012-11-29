@@ -1,8 +1,7 @@
 <?php
-    namespace admin\models\tables;
-    use \sys\classes\db\ORM;
-    
-    class UsuarioAvaliaQuestao extends ORM{
+    namespace db_tables;
+ 
+    class UsuarioAvaliaQuestao extends \Table {
         /**
          * Exclui todos os registros de um determinado usuário da tabela USUARIO_AVALIA_QUESTAO
          * 

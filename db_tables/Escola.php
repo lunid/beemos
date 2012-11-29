@@ -1,7 +1,6 @@
 <?php
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
-    
+    namespace db_tables;
+
     /**
      * Representa uma entidade da tabela SPRO_ESCOLA
      * 
@@ -11,7 +10,7 @@
      * @property bool STATUS
      * @property datetime DATA_REGISTRO
      */
-    class Escola extends ORM {
+    class Escola extends \Table {
         
     }
 ?>

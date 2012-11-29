@@ -1,9 +1,7 @@
 <?php
     namespace admin\classes\models;
     use \sys\classes\mvc\Model;        
-    use \admin\classes\models\tables\Escola;
-    use \admin\classes\models\tables\Turma;
-    use \admin\classes\models\tables\Cliente;
+    use \db_tables as TB;
     
     class EscolasTurmasModel extends Model {
         /**
@@ -45,8 +43,8 @@
                 }
                 
                 //Objeto de controle da table SPRO_ESCOLAS
-                $tbEscola = new Escola();
-                
+                $tbEscola = new TB\Escola();
+                  
                 $whereSql  = " ID_CLIENTE = {$ID_CLIENTE} ";
                 $whereSql .= $where;
                 
@@ -121,11 +119,11 @@
                 //Valida se existe ID_CLIENTE
                 if(!$ID_CLIENTE || $ID_CLIENTE <= 0){
                     $ret->msg = "ID_CLIENTE não foi inicializado!";
-                    return $ret;
+                    //return $ret;
                 }
                 
                 //Objeto de controle da table SPRO_ESCOLAS
-                $tbTurma            = new Turma();
+                $tbTurma            = new TB\Turma();
                 $tbTurma->ID_ESCOLA = $ID_ESCOLA;
                 //Busca as turmas de acordo com os parâmetros enviados
                 $rs = $tbTurma->listaTurmasEscolas($ID_CLIENTE, $utilizadas, $ID_HISTORICO_GERADOC, $where, $arrPg);
@@ -173,7 +171,7 @@
                 }
                 
                 //ORM de SPRO_ESCOLA
-                $tbEscola                   = new Escola();
+                $tbEscola                   = new TB\Escola();
                 //Inicia campos para salvar o novo registro
                 $tbEscola->ID_CLIENTE       = (int)$ID_CLIENTE;
                 $tbEscola->NOME             = $NOME;
@@ -249,7 +247,7 @@
                 }
                 
                 //ORM de SPRO_ESCOLA
-                $tbEscola                   = new Escola();
+                $tbEscola                   = new TB\Escola();
                 //Inicia campos para salvar o novo registro
                 $tbEscola->ID_ESCOLA        = (int)$ID_ESCOLA;
                 $tbEscola->ID_CLIENTE       = (int)$ID_CLIENTE;
@@ -303,7 +301,7 @@
                 }
                 
                 //Instancia do ORM de SPRO_TURMA
-                $tbTurma    = new Turma();
+                $tbTurma    = new TB\Turma();
                 //VErifica se já existe o nome de classe para a escola
                 $tbTurma->setLimit(1);
                 $verClasse  = $tbTurma->findAll("CLASSE = '" . $CLASSE . "' AND ID_ESCOLA = " . $ID_ESCOLA);
@@ -362,7 +360,7 @@
         public function carregarContatosTurma($idsTurmas){
             try{
                 //Faz a consulta de informações do cliente e repassa resultado
-                $tbCliente  = new Cliente();
+                $tbCliente  = new TB\Cliente();
                 $ret        = $tbCliente->carregaInfoAlunosTurma($idsTurmas);
                 
                 return $ret;

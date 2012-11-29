@@ -51,7 +51,7 @@
                             break;
                         case 'NUMBER':
                             //Verifica se $value é numérica (pode ser float ou integer)
-                            $value = (!is_numeric($value))?0:$value;                                
+                            $value = (int)$value;                                
                             break;
                         case 'OBJECT':
                             if (!is_object($value)) $value = $valorDefault;

@@ -1,8 +1,7 @@
 <?php
-    namespace admin\models\tables;
-    use \sys\classes\db\ORM;
-
-    class BcoQuestao extends ORM {
+    namespace db_tables;
+    
+    class BcoQuestao extends \Table {
         public function listaQuestoesTop10($id_materia = 1, $id_fonte_vestibular = 0){
             try{
                 //$this->debugOn();
@@ -57,12 +56,7 @@
                 
                 return $this->setJoin($where);
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - BcoQuestal - ORM <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;
             }
         }
     }

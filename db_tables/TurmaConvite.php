@@ -1,6 +1,5 @@
 <?php
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
+    namespace db_tables;    
     
     /**
      * Representa uma entidade da tabela SPRO_TURMA_CONVITE
@@ -16,7 +15,7 @@
      * @property char SMS_ENVIADO ENUM(S,N)   
      * @property string DATA_ENVIO_SMS ENUM(S,N)   
      */
-    class TurmaConvite extends ORM {
+    class TurmaConvite extends \Table {
         
     }
 ?>

@@ -5,6 +5,8 @@
     require_once('sys/classes/comps/ChartComponent.php');
     require_once('sys/classes/db/Meekrodb_2_1.php');
     require_once('sys/classes/db/Conn.php');
+    require_once('sys/classes/db/ORM.php');
+    require_once('sys/classes/db/Table.php');
     require_once('sys/classes/mvc/Controller.php');
     require_once('sys/classes/mvc/Model.php'); 
     require_once('sys/classes/mvc/Module.php');      
@@ -195,14 +197,15 @@
         */             
         public static function loadClass($class){   
             //Tratamento para utilização do Hybridauth.
-            if($class == 'FacebookApiException') return false;            
+            if($class == 'FacebookApiException') return false; 
+
+            $urlInc = str_replace("\\", "/" , $class . '.php');                           
             
-            $urlInc = str_replace("\\", "/" , $class . '.php');                
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
                 //DI::loadMapXml($class);
-            } else {           
-                die(" Classe $class não encontrada");
+            } else {                          
+               die(" Classe $class não encontrada");
             }                      
         }                
     }

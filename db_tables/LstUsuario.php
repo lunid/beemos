@@ -1,6 +1,5 @@
 <?php
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
+    namespace db_tables;
     
     /**
      * Representa uma entidade da tabela SPRO_LST_USUARIO
@@ -20,7 +19,7 @@
      * @property string DT_HR_EMAIL_ENV
      * @property string DATA_REGISTRO
      */
-    class LstUsuario extends ORM {
+    class LstUsuario extends \Table {
         /**
          * Calcula total de questões respondidas em uma lista, assim como o 
          * total de respostas corretas e erradas

@@ -1,9 +1,8 @@
 <?php
 
-    namespace admin\models\tables;
-    use \sys\classes\db\ORM;
-
-    class AdmUsuario extends ORM {
+    namespace db_tables;  
+    
+    class AdmUsuario extends \Table {
         public function getUsuariosQuestao($in_materias){
             try{
                 $arr_usuarios = array();
@@ -31,12 +30,7 @@
                             
                 return $arr_usuarios;
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - AdmUsuarios - Model <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;                
             }
         }
     }

@@ -1,9 +1,8 @@
 <?php
 
-    namespace admin\models\tables;
-    use \sys\classes\db\ORM;
-
-    class AdmTop10Log extends ORM {
+    namespace db_tables;    
+   
+    class AdmTop10Log extends \Table {
         public function getTop10Periodo($data_inicio, $data_final, $id_materia = 0, $id_fonte_vestibular = 0){
             try{
                 //$this->debugOn();

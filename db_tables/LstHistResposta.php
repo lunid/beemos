@@ -1,6 +1,5 @@
 <?php
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
+    namespace db_tables;   
     
     /**
      * Representa uma entidade da tabela SPRO_LST_HIST_RESPOSTA
@@ -13,7 +12,7 @@
      * @property string DATA_REGISTRO
      * 
      */
-    class LstHistResposta extends ORM {
+    class LstHistResposta extends \Table {
         
     }
 ?>

@@ -1,9 +1,8 @@
 <?php
 
-    namespace admin\models\tables;
-    use \sys\classes\db\ORM;
+    namespace db_tables;    
 
-    class FonteVestibular extends ORM {
+    class FonteVestibular extends \Table {
         public function getFontesSelectBox(){
             try{
                 $sql = "SELECT
@@ -17,12 +16,7 @@
                 
                 return $this->query($sql);
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - FonteVestibular - Model <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;
             }
         }
     }
