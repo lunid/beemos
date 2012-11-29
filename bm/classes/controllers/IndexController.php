@@ -1,5 +1,4 @@
 <?php
-    
     /**
     * Classe Controller usada com default quando nenhuma outra é informada.
     * Refere-se à página inicial do admin.
@@ -29,13 +28,22 @@
                 $tpl->TITLE = 'ADM';
                 
                 $tpl->setCss('bm.home');
-                $tpl->setJsInc('bm.home');
                 $tpl->forceCssJsMinifyOn();
                 //$tpl->onlyExternalCssJs();
                 
                 $tpl->render('index',$this->getMemCache());            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
+            }
+        }               
+    }
+?>
+
                 echo "Erro: " . $e->getMessage() . "<br />\n";
                 echo "Arquivo:  " . $e->getFile() . "<br />\n";
                 echo "Linha:  " . $e->getLine() . "<br />\n";

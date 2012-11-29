@@ -34,17 +34,13 @@ $(document).ready(function(){
             caption: "Nova Escola", 
             buttonicon: "ui-icon-plus", 
             onClickButton: function(){ 
-                $.fancybox.open([
-                    {
-                        href: '#modal_escolas',
-                        helpers: {
-                            overlay : {
-                                closeClick : false
-                            }
-                        },
-                        height: 40
-                    }
-                ]);
+                //Abre modal
+                $("#modal_escolas").dialog({
+                    title: "Cadastrar Escola",
+                    modal: true,
+                    width: "550",
+                    height: "280"
+                });
             }, 
             position:"last"
     });
@@ -104,6 +100,7 @@ $(document).ready(function(){
             $("#selTodasListas").removeAttr("checked");
             $("#selListasUtilizadas").removeAttr("checked");
             //Limpa txt de status
+            $("#statusListasTurmas").hide();
             $("#txtStatus").html("");
         }
     });
@@ -178,6 +175,7 @@ $(document).ready(function(){
             $("#selTodasTurmas").removeAttr("checked");
             $("#selTurmasUtilizadas").removeAttr("checked");
             //Limpa txt de status
+            $("#statusListasTurmas").hide();
             $("#txtStatus").html("");
         }
     });
@@ -220,33 +218,48 @@ $(document).ready(function(){
 /**
  * Função de callback do Formulário de Escolas
  */
-function atualizaGridEscolas(ret, modalId){
+function atualizarGridEscolas(ret, modalId){
     $("#grid_escola").trigger("reloadGrid");
     
+    //Remove todas possíveis classes
+    $("#form_escola_erros").removeClass("warning");
+    $("#form_escola_erros").removeClass("success");
+    $("#form_escola_erros").removeClass("error");
+    
     if(ret.status){
-        if(modalId != ""){
-            $("#msg_" + modalId).html(ret.msg);
-            $("#modal_" + modalId).trigger('click');
-        }else{
-            alert(ret.msg);
-        }
+        $("#form_escola_erros").addClass("success"); //Adiciona classe de sucesso
+        $("#form_escola_erros_msg").html(ret.msg); //Adiciona mensagem
+        $("#form_escola_erros").show(); //Exibe notificações
     }else{
+        $("#form_escola_erros").addClass("error");
         $("#form_escola_erros_msg").html(ret.msg);
-        $("#form_escola_erros").css("display", "");
+        $("#form_escola_erros").show();
     }
 }
 
+/**
+ * Verifica retorno da operação de cadastro de turmas
+ */
 function verSalvarTurma(ret, modalId){
+    //Remove todas possíveis classes
+    $("#form_turma_erros").removeClass("warning");
+    $("#form_turma_erros").removeClass("success");
+    $("#form_turma_erros").removeClass("error");
+        
     if(ret.status){
-        if(modalId != ""){
-            $("#msg_" + modalId).html(ret.msg);
-            $("#modal_" + modalId).trigger('click');
-        }else{
-            alert(ret.msg);
-        }
+        $("#form_turma_erros").addClass("success"); //Adiciona classe de sucesso
+        $("#form_turma_erros_msg").html(ret.msg); //Adiciona mensagem
+        $("#form_turma_erros").show(); //Exibe notificações
+        
+        //Atualiza Turmas
+        carregaListaTurmas($("#turmaIdEscola").val());
+        
+        //Zera Form
+        novaTurma(false);
     }else{
+        $("#form_turma_erros").addClass("error");
         $("#form_turma_erros_msg").html(ret.msg);
-        $("#form_turma_erros").css("display", "");
+        $("#form_turma_erros").show();
     }
 }
 
@@ -288,11 +301,26 @@ function editarTurmas(ID_TURMA){
     //Carrega dados da Turma a ser Editada
     $("#turmaTitulo").html("Editar Turma");
     $("#turmaClasse").val($("#turmaClasse_" + ID_TURMA).val());
-    $("#turmaEnsino").val($("#turmaEnsino_" + ID_TURMA).val());
-    $("#turmaAno").val($("#turmaAno_" + ID_TURMA).val());
-    $("#turmaPeriodo").val($("#turmaPeriodo_" + ID_TURMA).val());
-    $("#turmaId").val(ID_TURMA);
     
+    $("input[name=turmaEnsino]").each(function(){
+        if(this.value == $("#turmaEnsino_" + ID_TURMA).val()){
+            this.checked = true;
+        }else{
+            this.checked = false;
+        }
+    });
+    
+    $("input[name=turmaPeriodo]").each(function(){
+        if(this.value == $("#turmaPeriodo_" + ID_TURMA).val()){
+            this.checked = true;
+        }else{
+            this.checked = false;
+        }
+    });
+    
+    $("#turmaAno").val($("#turmaAno_" + ID_TURMA).val());
+    
+    $("#turmaId").val(ID_TURMA);
     $("#btNovaTurma").css("display", "");
     $("#form_turma_erros").css("display", "none");
 }
@@ -300,17 +328,35 @@ function editarTurmas(ID_TURMA){
 /**
  * Limpa o formulário de Turmas para que seja cadastrada uma Nova Turma
  */
-function novaTurma(){
+function novaTurma(ocultarErros){
     //Carrega dados da Turma a ser Editada
     $("#turmaTitulo").html("Cadastrar Nova Turma");
     $("#turmaClasse").val("");
-    $("#turmaEnsino").val("M");
+    
+    $("input[name=turmaEnsino]").each(function(){
+        if(this.value == 'M'){
+            this.checked = true;
+        }else{
+            this.checked = false;
+        }
+    });
+    
+    $("input[name=turmaPeriodo]").each(function(){
+        if(this.value == 'M'){
+            this.checked = true;
+        }else{
+            this.checked = false;
+        }
+    });
+    
     $("#turmaAno").val(1);
-    $("#turmaPeriodo").val("M");
     $("#turmaId").val("");
     
     $("#btNovaTurma").css("display", "none");
-    $("#form_turma_erros").css("display", "none");
+    
+    if(ocultarErros == true || ocultarErros == null || ocultarErros == undefined){
+        $("#form_turma_erros").hide();
+    }
 }
 
 /**
@@ -325,41 +371,35 @@ function turmas(ID_ESCOLA, ID_CLIENTE, ESCOLA){
     $("#turmaPeriodo").val("M");
     $("#turmaId").val("");
     
+    //Oculta erros
     $("#form_turma_erros").css("display", "none");
     
     //Abre modal
-    $.fancybox.open([
-        {
-            href: '#modal_turmas',
-            helpers: {
-                overlay : {
-                    closeClick : false
-                }
-            }
-        }
-    ]);
+    $("#modal_turmas").dialog({
+        title: "Turmas",
+        modal: true,
+        width: "800"
+    });
     
     //Carrega lista de turmas do cliente, para escola escolhida
-    carregaListaTurmas(ID_ESCOLA, ID_CLIENTE);
+    carregaListaTurmas(ID_ESCOLA);
     
     //Carrega lista de Turmas
     $("#turmaEscola").html(ESCOLA);
     $("#form_turma #turmaIdEscola").val(ID_ESCOLA);
-    $("#form_turma #turmaIdCliente").val(ID_CLIENTE);
 }
 
 /**
  * Carrega todas as turmas e monta o HTML do UL das mesmas
  */
-function carregaListaTurmas(ID_ESCOLA, ID_CLIENTE){
+function carregaListaTurmas(ID_ESCOLA){
     $("#lista_turmas").html("Aguarde...");
     
     //Função que lista as Turmas da Escola selecionada
     $.post(
         'escolas/listarTurmas',
         {
-            ID_ESCOLA: ID_ESCOLA,
-            ID_CLIENTE: ID_CLIENTE
+            ID_ESCOLA: ID_ESCOLA
         },
         function (ret){
             if(!ret.status){
@@ -374,7 +414,7 @@ function carregaListaTurmas(ID_ESCOLA, ID_CLIENTE){
                     html += "<input type='hidden' id='turmaEnsino_" + this.ID_TURMA + "' value='" + this.ENSINO + "' />";
                     html += "<input type='hidden' id='turmaAno_" + this.ID_TURMA + "' value='" + this.ANO + "' />";
                     html += "<input type='hidden' id='turmaPeriodo_" + this.ID_TURMA + "' value='" + this.PERIODO + "' />";
-                    html += "<a href='javascript:void(0);' onclick='javascript:editarTurmas(" + this.ID_TURMA + ")'>" + this.CLASSE + "</a>";
+                    html += "<a href='javascript:void(0);' onclick='javascript:editarTurmas(" + this.ID_TURMA + ")'>" + this.CLASSE + "</a><br/>";
                     html += "</li>";
                 });
                 html += "</ul>";
@@ -400,7 +440,7 @@ function mudaAno(ensino){
     
     //Monta HTML de opções
     for(var i=1; i <= limite; i++){
-        html += "<option value='"+i+"'>"+i+"</option>";
+        html += "<option value='"+i+"'>"+i+"º</option>";
     }
     
     //Popula <select> de Ano
@@ -422,7 +462,11 @@ function selListas(obj){
     }
     
     //Mensagem de aguarde
+    $("#statusListasTurmas").hide();
+    $("#statusListasTurmas").removeClass("success error warning");
+    $("#statusListasTurmas").addClass("warning");
     $("#txtStatus").html("Aguarde...");
+    $("#statusListasTurmas").show();
     
     $.post(
         'escolas/salvarTurmaLista',
@@ -432,11 +476,13 @@ function selListas(obj){
             tipo: tipo
         },
         function (ret){
+            $("#statusListasTurmas").removeClass("success", "error", "warning");
             if(ret.status){
-                $("#txtStatus").html(ret.msg);
+                $("#statusListasTurmas").addClass("success");
             }else{
-                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+                $("#statusListasTurmas").addClass("error");
             }
+            $("#txtStatus").html(ret.msg);
         },
         'json'
     );
@@ -457,7 +503,11 @@ function selTurmas(obj){
     }
     
     //Mensagem de aguarde
+    $("#statusListasTurmas").hide();
+    $("#statusListasTurmas").removeClass("success error warning");
+    $("#statusListasTurmas").addClass("warning");
     $("#txtStatus").html("Aguarde...");
+    $("#statusListasTurmas").show();
     
     $.post(
         'escolas/salvarTurmaLista',
@@ -467,11 +517,13 @@ function selTurmas(obj){
             tipo: tipo
         },
         function (ret){
+            $("#statusListasTurmas").removeClass("success error warning");
             if(ret.status){
-                $("#txtStatus").html(ret.msg);
+                $("#statusListasTurmas").addClass("success");
             }else{
-                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+                $("#statusListasTurmas").addClass("error");
             }
+            $("#txtStatus").html(ret.msg);
         },
         'json'
     );
@@ -485,7 +537,11 @@ function salvaRelacaoLista(obj){
     var tipo;
     
     //Mensagem de aguarde
+    $("#statusListasTurmas").hide();
+    $("#statusListasTurmas").removeClass("success error warning");
+    $("#statusListasTurmas").addClass("warning");
     $("#txtStatus").html("Aguarde...");
+    $("#statusListasTurmas").show();
     
     //Verifica se o check foi marcado ou desmarcado
     if(obj.checked){
@@ -502,11 +558,13 @@ function salvaRelacaoLista(obj){
             tipo: tipo
         },
         function (ret){
+            $("#statusListasTurmas").removeClass("success error warning");
             if(ret.status){
-                $("#txtStatus").html(ret.msg);
+                $("#statusListasTurmas").addClass("success");
             }else{
-                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+                $("#statusListasTurmas").addClass("error");
             }
+            $("#txtStatus").html(ret.msg);
         },
         'json'
     );
@@ -520,7 +578,11 @@ function salvaRelacaoTurma(obj){
     var tipo;
     
     //Mensagem de aguarde
+    $("#statusListasTurmas").hide();
+    $("#statusListasTurmas").removeClass("success error warning");
+    $("#statusListasTurmas").addClass("warning");
     $("#txtStatus").html("Aguarde...");
+    $("#statusListasTurmas").show();
     
     //Verifica se o check foi marcado ou desmarcado
     if(obj.checked){
@@ -537,11 +599,13 @@ function salvaRelacaoTurma(obj){
             tipo: tipo
         },
         function (ret){
+            $("#statusListasTurmas").removeClass("success error warning");
             if(ret.status){
-                $("#txtStatus").html(ret.msg);
+                $("#statusListasTurmas").addClass("success");
             }else{
-                $("#txtStatus").html("<span style='color:red'>" + ret.msg + "</span>");
+                $("#statusListasTurmas").addClass("error");
             }
+            $("#txtStatus").html(ret.msg);
         },
         'json'
     );

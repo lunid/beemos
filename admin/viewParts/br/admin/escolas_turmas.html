@@ -1,122 +1,111 @@
 <!-- começo conteudo -->
 <!-- Modal Turmas -->
 <div id="modal_turmas" style="display:none;">
-    <table style="width:750px;height:500px;border-collapse:collapse;border-spacing:0;">
-    <tr>
-        <td style="width:30%;vertical-align:top;text-align:left;">
-            <!-- Coluna Lista Turmas -->
-            <strong style="font-size: 14px;">
-                Turmas
-            </strong>
-            <br />
-            <div id="lista_turmas"></div>
-            <!-- Coluna Lista Turmas -->
-        </td>
-        <td style="width:100%;vertical-align:top;text-align:left;">
-            <!-- Coluna Form Turmas -->
-            <div style="font-size:14px;padding:0 0 15px 0;margin:0">
-                <strong>Escola</strong>
-                <br />
-                <span id="turmaEscola"></span>
+    <div class="col_12 visible column">  
+        <h5>Escola: <span id="turmaEscola"></span></h5>
+    </div>
+    <div class="col_7">   
+        <form name="form_turma" id="form_turma" method="post" action="escolas/salvarturma" onSubmit="return formTurma.validate(this, true, 'verSalvarTurma');">
+            <ul class="alt">
+                <li>Nova turma:</li>
+            </ul>
+            
+            <!-- Erros de validação no server -->
+            <div id="form_turma_erros" class="notice warning" style="display: none;">
+                <span class="icon medium" data-icon="!"></span> <span id="form_turma_erros_msg"></span>
+                <a href="#close" class="icon close" data-icon="x"></a>
+            </div>
+            <!-- Erros de validação no server --> 
+            
+            <div class="cinza">
+                <div class="col_3">Classe:</div>
+                <div class="col_9">
+                    <input type="text" id="turmaClasse" name="turmaClasse" maxlength="100" style="width:99%;" class="required" field_name="Nome da Classe" />
+                </div>
             </div>
             
-            <form name="form_turma" id="form_turma" method="post" action="escolas/salvarturma" onSubmit="return formTurma.validate(this, true, 'verSalvarTurma');">
-                <!-- Erros de validação no server -->
-                <div id="form_turma_erros" class="ui-state-error ui-corner-all" style="display:none;">
-                    <span id="form_turma_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
-                    <span id="form_turma_erros_msg"></span>
+            <div class="col_3">Ensino:</div>
+            <div class="col_3">
+                <input type="radio" id="turmaEnsinoMedio" name="turmaEnsino" value="M" onclick="javascript:mudaAno(this.value);" checked="checked" />
+                <label for="turmaEnsinoMedio" class="inline">Médio</label>
+            </div>
+            <div class="col_5">
+                <input type="radio" id="turmaEnsinoFundamental" name="turmaEnsino" value="F" onclick="javascript:mudaAno(this.value);" />
+                <label for="turmaEnsinoFundamental" class="inline">Fundamental</label>                
+            </div>
+
+            <div class="cinza">
+                <div class="col_3">Periodo:</div>
+                <div class="col_3">
+                    <input type="radio" id="turmaPeriodoManha" name="turmaPeriodo" value="M" checked="checked" />
+                    <label for="turmaPeriodoManha" class="inline">Manhã</label>
                 </div>
-                <!-- Erros de validação no server -->
-                <table style="width:100%;border-collapse:separate;border-spacing:0 7px;">
-                <tr>
-                    <td style="font-size:14px;padding-bottom:2px;">
-                        <strong id="turmaTitulo">Cadastrar Nova Turma</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Nome da Classe
-                        <br />
-                        <input type="text" id="turmaClasse" name="turmaClasse" maxlength="100" style="width:99%;" class="required" field_name="Nome da Classe" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="width:22%;float:left;">
-                            Ensino
-                            <br />
-                            <select id="turmaEnsino" name="turmaEnsino" onchange="javascript:mudaAno(this.value);" class="required" field_name="Ensino">
-                                <option value="M">Médio</option>
-                                <option value="F">Fundamental</option>
-                            </select>
-                        </div>
-                        <div style="width:9%;float:left;">
-                            Ano
-                            <br />
-                            <select id="turmaAno" name="turmaAno" class="required" field_name="Ano">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </div>
-                        <div style="width:30%;float:left;">
-                            Período
-                            <br />
-                            <select id="turmaPeriodo" name="turmaPeriodo" class="required" field_name="Período">
-                                <option value="M">Manhã</option>
-                                <option value="T">Tarde</option>
-                                <option value="N">Noite</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="hidden" id="turmaIdCliente" name="turmaIdCliente" value="" />    
-                        <input type="hidden" id="turmaIdEscola" name="turmaIdEscola" value="" />    
-                        <input type="hidden" id="turmaId" name="turmaId" value="" />    
-                        <input type="submit" value="Salvar" />
-                        <input type="button" id="btNovaTurma" value="Cadastrar Nova Turma" onclick="javascript:novaTurma();" style="display:none;" />
-                    </td>
-                </tr>
-                </table>
-            </form>
-            <!-- Coluna Form Turmas -->
-        </td>
-    </tr>
-    </table>
+                <div class="col_3">
+                    <input type="radio" id="turmaPeriodoTarde" name="turmaPeriodo" value="T" />
+                    <label for="turmaPeriodoTarde" class="inline">Tarde</label>
+                </div>
+                <div class="col_3">
+                    <input type="radio" id="turmaPeriodoNoite" name="turmaPeriodo" value="N" />
+                    <label for="turmaPeriodoNoite" class="inline">Tarde</label>
+                </div>
+            </div>      
+
+            <div class="col_3">Série:</div>
+            <div class="col_7">
+                <select id="turmaAno" name="turmaAno" class="required" field_name="Ano">
+                    <option value="1">1º</option>
+                    <option value="2">2º</option>
+                    <option value="3">3º</option>
+                </select>
+                <label for="turmaAno">Ano</label>
+            </div>
+
+            <div class="col_9"></div>
+            <div class="col_2">
+                <input type="hidden" id="turmaIdEscola" name="turmaIdEscola" value="" />    
+                <input type="hidden" id="turmaId" name="turmaId" value="" />    
+                <input type="submit" value="Salvar" />
+                <input type="button" id="btNovaTurma" value="Cadastrar Nova Turma" onclick="javascript:novaTurma();" style="display:none;" />                
+            </div> 
+        </form>
+    </div>
+
+    <div class="border"></div>
+
+    <div class="col_5">
+        <ul class="alt">
+            <li>Turmas da escola atual:</li>
+        </ul>
+        <div id="lista_turmas"></div>
+    </div>
 </div>
 <!-- Modal Turmas -->
+
 <!-- Modal Escola -->
 <div id="modal_escolas" style="display:none;">
     <table class="form_padrao">
-    <tr>
-        <td style="width:100%;">
-            <form name="form_escola" id="form_escola" method="post" action="escolas/salvarescola" onSubmit="return form.validate(this, true, 'atualizaGridEscolas');">
-                <!-- Erros de validação no server -->
-                <div id="form_escola_erros" class="ui-state-error ui-corner-all" style="display:none;">
-                    <span id="form_escola_erros_icone" style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>
-                    <span id="form_escola_erros_msg"></span>
-                </div>
-                <!-- Erros de validação no server -->
-                <table style="width:100%;">
-                <tr>
-                    <td style="width:100%;">
-                        Nome da Escola
-                        <br />
-                        <input type="text" id="escolaNome" name="escolaNome" maxlength="100" class="required" field_name="Nome da Escola" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="hidden" id="escolaIdCliente" name="escolaIdCliente" value="26436" />    
-                        <input type="submit" value="Salvar" />
-                    </td>
-                </tr>
-                </table>
-            </form>
-        </td>
-    </tr>
+        <tr>
+            <td style="width:100%;">
+                <form name="form_escola" id="form_escola" method="post" action="escolas/salvarescola" onSubmit="return form.validate(this, true, 'atualizarGridEscolas');">
+                    <!-- Erros de validação no server -->
+                    <div id="form_escola_erros" class="notice warning" style="display: none;">
+                        <span class="icon medium" data-icon="!"></span> <span id="form_escola_erros_msg"></span>
+                        <a href="#close" class="icon close" data-icon="x"></a>
+                    </div>
+                    <!-- Erros de validação no server -->
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:100%;">
+                                <h5>Nome da Escola</h5>
+                                <input type="text" id="escolaNome" name="escolaNome" maxlength="100" class="required" field_name="Nome da Escola" />
+                                <br /><br />
+                                <input type="submit" value="Salvar" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+        </tr>
     </table>
 </div>
 <!-- Modal Escola -->
@@ -130,20 +119,92 @@
             <a href="#turmasListas">Distribuir Listas</a>
         </li>
     </ul>
-    <div id="escolas" style="padding:10px;width:100%;">
+    
+    <!-- Aba Escolas -->
+    <div id="escolas" style="padding:3px;">
         <table id="grid_escola" style="width:100%;"></table>
         <div id="pg_escola"></div>
     </div>
-    <div id="turmasListas" style="padding:10px;width:100%;">
-        <div>
-            <input type="radio" name="tipoDistribuicao" value="optTurmaLista" checked="checked" onclick="javascript:exibeOpt(this.value);" /> Uma turma com uma ou mais listas
-            &nbsp;
-            <input type="radio" name="tipoDistribuicao" value="optListaTurma" onclick="javascript:exibeOpt(this.value);" /> Uma lista com uma ou mais turmas
+    <!-- Aba Escolas -->
+    
+    <!-- Aba Turmas Listas -->
+    <div id="turmasListas" style="padding:3px;">
+        <div class="col_6">
+            <input type="radio" id="listaTurmaRadio" name="tipoDistribuicao" value="optListaTurma" onclick="javascript:exibeOpt(this.value);" checked="checked" /> 
+            <label for="listaTurmaRadio" class="inline">Uma lista com uma ou mais turmas</label>
         </div>
-
-        <!-- Turmas > Listas -->
-        <div id="optTurmaLista" class="opts">
+        
+        <div class="col_6">
+            <input type="radio" id="tumaListaRadio" name="tipoDistribuicao" value="optTurmaLista" onclick="javascript:exibeOpt(this.value);" /> 
+            <label for="tumaListaRadio" class="inline">Uma turma com uma ou mais listas</label>
+        </div>
+        
+        <div class="col_12">
+            <blockquote>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+            </blockquote>
+        </div>
+        
+        <!-- Notificações -->
+        <div id="statusListasTurmas" class="notice success" style="display:none;">
+            <span class="icon medium" data-icon="!"></span>
+            <span id="txtStatus"></span>
+            <a href="#close" class="icon close" data-icon="x"></a>
+        </div>
+        <!-- Notificações -->
+        
+        <!-- Listas > Turmas -->
+        <div id="optListaTurma" class="opts col_12">
             <table style="width:100%;">
+                <tr>
+                    <td class="col_12" style="vertical-align:top;text-align:left">
+                        <h5>Selecione uma Lista de exercícios</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top;text-align:left">
+                        <!-- Grid de Turmas -->
+                        <table id="grid_listas_turmas" style="width:100%;"></table>
+                        <div id="pg_listas_turmas"></div>
+                        <input type="hidden" name="idsTurmas" id="idsTurmas" value=""/>
+                        <input type="hidden" name="idListaSel" id="idListaSel" value=""/>
+                        <!-- Grid de Turmas -->
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top;text-align:left">
+                        <!-- Grid de Listas -->
+                        <div id="turmas_inicio" class="col_12">
+                            <h5>Selecione uma Lista para continuar</h5>
+                        </div>
+                        <div id="turmas" style="display:none;">
+                            <div>
+                                <h5>Selecione uma ou mais Turmas</h5>
+                                <blockquote>
+                                    <p>Selecione abaixo a(s) turma(s) que deseja relacionar com a Lista atual.</p>
+                                </blockquote>
+                                <input type="checkbox" name="selTodasTurmas" id="selTodasTurmas" onclick="javascript:selTurmas(this);" /> Selecionar todas as Turmas
+                                &nbsp;
+                                <input type="checkbox" name="selTurmasUtilizadas" id="selTurmasUtilizadas" onclick="javascript:exibeTurmasUtilizadas(this);" /> Selecionar Turmas utilizadas
+                            </div>
+                            <table id="grid_turmas_listas" style="width:100%;"></table>
+                            <div id="pg_turmas_listas"></div>
+                        </div>
+                        <!-- Grid de Listas -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- Turmas > Listas -->
+        
+        <!-- Turmas > Listas -->
+        <div id="optTurmaLista" class="opts col_12" style="display:none;">
+            <table style="width:100%;">
+                <tr>
+                    <td class="col_12" style="vertical-align:top;text-align:left">
+                        <h5>Selecione uma Turma</h5>
+                    </td>
+                </tr>
                 <tr>
                     <td style="vertical-align:top;text-align:left">
                         <!-- Grid de Turmas -->
@@ -157,10 +218,14 @@
                 <tr>
                     <td style="vertical-align:top;text-align:left">
                         <!-- Grid de Listas -->
-                        <div id="listas_inicio">
-                            Selecione uma Turma para filtrar as Listas
+                        <div id="listas_inicio" class="col_12">
+                            <h5>Selecione uma Turma para continuar</h5>
                         </div>
                         <div id="listas" style="display:none;">
+                            <h5>Selecione uma ou mais Listas de exercícios</h5>
+                            <blockquote>
+                                <p>Selecione abaixo a(s) Lista(s) que deseja relacionar com a Turma atual.</p>
+                            </blockquote>
                             <div>
                                 <input type="checkbox" name="selTodasListas" id="selTodasListas" onclick="javascript:selListas(this);" /> Selecionar todas as Listas
                                 &nbsp;
@@ -176,46 +241,11 @@
         </div>
         <!-- Turmas > Listas -->
 
-        <!-- Listas > Turmas -->
-        <div id="optListaTurma" class="opts" style="display:none;">
-            <table style="width:100%;">
-                <tr>
-                    <td style="vertical-align:top;text-align:left">
-                        <!-- Grid de Turmas -->
-                        <table id="grid_listas_turmas" style="width:100%;"></table>
-                        <div id="pg_listas_turmas"></div>
-                        <input type="hidden" name="idsTurmas" id="idsTurmas" value=""/>
-                        <input type="hidden" name="idListaSel" id="idListaSel" value=""/>
-                        <!-- Grid de Turmas -->
-                    </td>
-                </tr>
-                <tr>
-                    <td style="vertical-align:top;text-align:left">
-                        <!-- Grid de Listas -->
-                        <div id="turmas_inicio">
-                            Selecione uma Lista para filtrar as Turmas
-                        </div>
-                        <div id="turmas" style="display:none;">
-                            <div>
-                                <input type="checkbox" name="selTodasTurmas" id="selTodasTurmas" onclick="javascript:selTurmas(this);" /> Selecionar todas as Turmas
-                                &nbsp;
-                                <input type="checkbox" name="selTurmasUtilizadas" id="selTurmasUtilizadas" onclick="javascript:exibeTurmasUtilizadas(this);" /> Selecionar Turmas utilizadas
-                            </div>
-                            <table id="grid_turmas_listas" style="width:100%;"></table>
-                            <div id="pg_turmas_listas"></div>
-                        </div>
-                        <!-- Grid de Listas -->
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <!-- Turmas > Listas -->
-
         <!-- Rodapé Grids -->
         <div style="width:750px;">
-            <div id="txtStatus" style="float:left"></div>
             <input type="button" value="Enviar Convite" style="float:right" onclick="javascript:enviaConvite();" />
         </div>
         <!-- Rodapé Grids -->
     </div>
+    <!-- Aba Turmas Listas -->
 </div>

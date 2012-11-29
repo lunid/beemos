@@ -22,6 +22,7 @@
                 $tpl->SUB_TITULO    = 'Escolas & Turmas';
                 
                 $tpl->setJs('admin/escolas_turmas');
+                $tpl->setCss('admin/escolas_turmas');
                 
                 $tpl->forceCssJsMinifyOn();
                 
@@ -112,7 +113,7 @@
                             $row->ID_ESCOLA,
                             $row->NOME,
                             "<input type='radio' name='status_{$row->ID_ESCOLA}' value='1' ".($row->STATUS == 1 ? "checked='checked'" : "")." onclick='javascript:alteraStatusEscola({$row->ID_ESCOLA}, this.value);' /> Ativa &nbsp; <input type='radio' name='status_{$row->ID_ESCOLA}' value='0' ".($row->STATUS == 0 ? "checked='checked'" : "")." onclick='javascript:alteraStatusEscola({$row->ID_ESCOLA}, this.value);' /> Inativa ",
-                            "<input type='button' value='Turmas' onclick='javascript:turmas({$row->ID_ESCOLA}, 26436, \"{$row->NOME}\");' />"        
+                            "<input type='button' value='Turmas' onclick='javascript:turmas({$row->ID_ESCOLA}, 26436, \"{$row->NOME}\");' style='padding: 0; font-size: 12px; font-weight: bold; height: 20px; width: 80px; margin: 1px;' />"        
                         );
                         $i++;
                     }
@@ -143,12 +144,11 @@
                 $ret->msg       = "Falha ao salvar nova Escola!";
                 
                 //Recebe dados do POST
-                $ID_CLIENTE = Request::post("escolaIdCliente", "NUMBER");
                 $NOME       = Request::post("escolaNome");
                 
                 //Executa chamada de model para salvar a nova escola
                 $mEscolasTurmas = new EscolasTurmasModel();
-                $ret            = $mEscolasTurmas->salvarEscola($ID_CLIENTE, $NOME);
+                $ret            = $mEscolasTurmas->salvarEscola(26436, $NOME);
 
                 echo json_encode($ret);
             }catch(Exception $e){
@@ -201,11 +201,10 @@
                 
                 //Recebe dados do POST
                 $ID_ESCOLA  = Request::post("ID_ESCOLA", "NUMBER");
-                $ID_CLIENTE = Request::post("ID_CLIENTE", "NUMBER");
                 
                 //Executa chamada de model para salvar a nova escola
                 $mEscolasTurmas = new EscolasTurmasModel();
-                $ret            = $mEscolasTurmas->listarTurmasCliente($ID_CLIENTE, $ID_ESCOLA);
+                $ret            = $mEscolasTurmas->listarTurmasCliente(26436, $ID_ESCOLA);
 
                 echo json_encode($ret);
             }catch(Exception $e){

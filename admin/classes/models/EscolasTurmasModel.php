@@ -300,11 +300,23 @@
                     return $ret;
                 }
                 
+                //Valida campo classe
+                if((int)$ID_ESCOLA <= 0){
+                    $ret->msg = "Escola inválida!";
+                    return $ret;
+                }
+                
+                //Valida ID_TURMA
+                $where = "";
+                if((int)$ID_TURMA > 0){
+                    $where = " AND ID_TURMA != {$ID_TURMA} ";
+                }
+                
                 //Instancia do ORM de SPRO_TURMA
                 $tbTurma    = new TB\Turma();
                 //VErifica se já existe o nome de classe para a escola
                 $tbTurma->setLimit(1);
-                $verClasse  = $tbTurma->findAll("CLASSE = '" . $CLASSE . "' AND ID_ESCOLA = " . $ID_ESCOLA);
+                $verClasse  = $tbTurma->findAll("CLASSE = '" . $CLASSE . "' AND ID_ESCOLA = " . $ID_ESCOLA . " {$where} ");
                 
                 if($verClasse->count() > 0){
                     $ret->msg = "Esse nome de Classe já existe!";
