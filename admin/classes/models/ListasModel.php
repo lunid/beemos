@@ -1,12 +1,8 @@
 <?php
     namespace admin\classes\models;
     use \sys\classes\util\Date;
-    use \sys\classes\mvc\Model;        
-    use \admin\classes\models\tables\HistoricoGeradoc;
-    use \admin\classes\models\tables\TurmaLista;
-    use \admin\classes\models\tables\TurmaConvite;
-    use \admin\classes\models\tables\LstUsuario;
-    use \admin\classes\models\tables\Escola;
+    use \sys\classes\mvc\Model;    
+    use \db_tables as TB;
     
     class ListasModel extends Model {
         /**
@@ -54,7 +50,7 @@
                 }
                 
                 //Instância da table SPRO_HISTORICO_GERADOC
-                $tbHistGeradoc  = new HistoricoGeradoc();
+                $tbHistGeradoc  = new TB\HistoricoGeradoc();
                 //Carrega listas do cliente
                 $ret            = $tbHistGeradoc->carregarListasCliente($ID_CLIENTE, $where, $utilizadas, $ID_TURMA, $arrPg);
                 
@@ -102,7 +98,7 @@
                 }
                 
                 //Instância da table SPRO_HISTORICO_GERADOC
-                $tbHistGeradoc  = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                $tbHistGeradoc  = new TB\HistoricoGeradoc($ID_HISTORICO_GERADOC);
                 //Carrega listas do cliente
                 $ret            = $tbHistGeradoc->carregarAlunosLista($where, $arrPg);
                 
@@ -134,7 +130,7 @@
                 //Percorre array limpando registros e adicionando relacionamentos
                 foreach($arrIdTurmas as $idTurma){
                     //Limpa as listas do com IDs enviados
-                    $tbTurmaLista   = new TurmaLista();
+                    $tbTurmaLista   = new TB\TurmaLista();
                     $sql            = "DELETE FROM SPRO_TURMA_LISTA WHERE ID_TURMA = {$idTurma} AND ID_HISTORICO_GERADOC IN({$idsListas});";
                     $tbTurmaLista->query($sql);
 
@@ -204,10 +200,10 @@
                 $ret->msg       = "Falha ao salvar disparo de convites!";
                 
                 //Instância da table SPRO_TURMA_CONVITE
-                $tbTurmaConvite                         = new TurmaConvite();
+                $tbTurmaConvite                         = new TB\TurmaConvite();
                 
                 //Carrega Lista e seus dados
-                $tbLista = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                $tbLista = new TB\HistoricoGeradoc($ID_HISTORICO_GERADOC);
                 
                 //Verifica se foi encontrada a lista
                 if($tbLista->ID_HISTORICO_GERADOC != $ID_HISTORICO_GERADOC){
@@ -261,11 +257,11 @@
                 $ret->status    = false;
                 $ret->msg       = "Falha ao carregar dados da lista!";
                 
-                //Carrega Lista e seus dados
-                $tbLista = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                //Carrega Lista e seus dados                
+                $tbLista = new TB\HistoricoGeradoc($ID_HISTORICO_GERADOC);
                 
                 //Verifica se foi encontrada a lista
-                if($tbLista->ID_HISTORICO_GERADOC != $ID_HISTORICO_GERADOC){
+                if($ID_HISTORICO_GERADOC == 0 || ($tbLista->ID_HISTORICO_GERADOC != $ID_HISTORICO_GERADOC)){
                     $ret->msg = "Lista não encontrada!";
                     return $ret;
                 }
@@ -304,7 +300,7 @@
                 $ret->msg       = "Falha ao salvar status Anticola!";
                 
                 //Carrega table Listas
-                $tbLista = new HistoricoGeradoc();
+                $tbLista = new TB\HistoricoGeradoc();
                 
                 //Seta valores para UPDATE
                 $tbLista->ANTICOLA = $status;
@@ -345,7 +341,7 @@
                 $ret->msg       = "Falha ao salvar Período de Validade!";
                 
                 //Carrega table Listas
-                $tbLista = new HistoricoGeradoc();
+                $tbLista = new TB\HistoricoGeradoc();
                 
                 switch ($tipo){
                     case 'INI':
@@ -395,7 +391,7 @@
                 $ret->msg       = "Falha ao salvar status de Resultado do Aluno!";
                 
                 //Carrega table Listas
-                $tbLista = new HistoricoGeradoc();
+                $tbLista = new TB\HistoricoGeradoc();
                 
                 //Seta valores para UPDATE
                 $tbLista->ST_RESULTADO_ALUNO = $status;
@@ -435,7 +431,7 @@
                 $ret->msg       = "Falha ao salvar status de Gabarito do Aluno!";
                 
                 //Carrega table Listas
-                $tbLista = new HistoricoGeradoc();
+                $tbLista = new TB\HistoricoGeradoc();
                 
                 //Seta valores para UPDATE
                 $tbLista->ST_GABARITO_ALUNO = $status;
@@ -475,7 +471,7 @@
                 $ret->msg       = "Falha ao salvar Tempo de Vida da Lista!";
                 
                 //Carrega table Listas
-                $tbLista = new HistoricoGeradoc();
+                $tbLista = new TB\HistoricoGeradoc();
                 
                 //Seta valores para UPDATE
                 $tbLista->TEMPO_VIDA = $tempo;
@@ -512,7 +508,7 @@
         public function calcularRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaRespostasLista
-                $tbLstUsuario = new LstUsuario();
+                $tbLstUsuario = new TB\LstUsuario();
                 return $tbLstUsuario->calcularRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
@@ -539,7 +535,7 @@
         public function calcularAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
-                $tbLstUsuario = new LstUsuario();
+                $tbLstUsuario = new TB\LstUsuario();
                 return $tbLstUsuario->calcularAlunosRespostasLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
@@ -566,7 +562,7 @@
         public function calcularAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
-                $tbLstUsuario = new LstUsuario();
+                $tbLstUsuario = new TB\LstUsuario();
                 return $tbLstUsuario->calcularAproveitamentoLista($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
@@ -599,7 +595,7 @@
         public function carregarEscolasTurmasLista($ID_HISTORICO_GERADOC, $ID_CLIENTE, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = ''){
             try{
                 //Instância o objeto da Tabela SPRO_HISORICO_GERADOC 
-                $tbLista = new HistoricoGeradoc($ID_HISTORICO_GERADOC);
+                $tbLista = new TB\HistoricoGeradoc($ID_HISTORICO_GERADOC);
                 return $tbLista->carregarEscolasTurmasLista($ID_CLIENTE, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO);
             }catch(Exception $e){
                 throw $e;
@@ -629,7 +625,7 @@
         public function calcularAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA = 0, $ENSINO = '', $PERIODO = '', $ANO = '', $TURMA = ''){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
-                $tbLstUsuario = new LstUsuario();
+                $tbLstUsuario = new TB\LstUsuario();
                 return $tbLstUsuario->calcularAproveitamentoQuestao($ID_HISTORICO_GERADOC, $ID_ESCOLA, $ENSINO, $PERIODO, $ANO, $TURMA);
             }catch(Exception $e){
                 throw $e;
@@ -655,7 +651,7 @@
         public function calcularAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE){
             try{
                 //Instância o objeto da Tabela SPRO_LST_USUARIO e retorna o calculo efetuado no método calculaAlunosRespostasLista
-                $tbLstUsuario = new LstUsuario();
+                $tbLstUsuario = new TB\LstUsuario();
                 return $tbLstUsuario->calcularAproveitamentoAluno($ID_HISTORICO_GERADOC, $ID_CLIENTE);
             }catch(Exception $e){
                 throw $e;

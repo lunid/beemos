@@ -2,21 +2,14 @@
     namespace admin\models;
     use \sys\classes\mvc\Model;        
     use \sys\classes\util\Date;
-    use \admin\models\tables\BcoQuestao;
-    use \admin\models\tables\MateriaQuestao;
-    use \admin\models\tables\FonteVestibular;
-    use \admin\models\tables\ClassificacaoQuestao;
-    use \admin\models\tables\AdmUsuario;
-    use \admin\models\tables\AdmTop10Log;
-    use \admin\models\tables\UsuarioAvaliaQuestao;
-    use \admin\models\tables\AvaliacaoQuestao;
+    use \db_tables as TB;
     
     class Top10Model extends Model {
         public function listaQuestoesTop10($id_materia = 0, $id_fonte_vestibular = 0){
             try{
                 $ret = array();
                 
-                $questao = new BcoQuestao();
+                $questao = new TB\BcoQuestao();
                 
                 $rs = $questao->listaQuestoesTop10($id_materia, $id_fonte_vestibular);
                 
@@ -29,20 +22,20 @@
                     
                         //Concatena as matérias que fazem relação com a questão carregada
                         if($id_materia <= 0){
-                            $tb_classificacao_questao   = new ClassificacaoQuestao();
+                            $tb_classificacao_questao   = new TB\ClassificacaoQuestao();
                             $ret_materias               = $tb_classificacao_questao->getMateriasQuestao($row['ID_BCO_QUESTAO']);
                             
                             $txt_materias   = $ret_materias->txt_materias;
                             $in_materias    = $ret_materias->in_materias;
                         }else{
-                            $tb_materias    = new MateriaQuestao();
+                            $tb_materias    = new TB\MateriaQuestao();
                             $ret_materias   = $tb_materias->traduzMateria($id_materia);
                             
                             $txt_materias   = $ret_materias[0]['MATERIA'];
                             $in_materias    = $ret_materias[0]['ID_MATERIA'];
                         }
                         
-                        $tb_admusuario = new AdmUsuario();
+                        $tb_admusuario = new TB\AdmUsuario();
                         $arr_usuarios  = $tb_admusuario->getUsuariosQuestao($in_materias);
 
                         $ret[$count]['questao']         = $row;
@@ -61,7 +54,7 @@
         
         public function getMateriasSelectBox(){
             try{
-                $t_materias = new MateriaQuestao();
+                $t_materias = new TB\MateriaQuestao();
                 
                 return $t_materias->getMateriasSelectBox();
             }catch(Exception $e){
@@ -71,7 +64,7 @@
         
         public function getFontesSelectBox(){
             try{
-                $t_materias = new FonteVestibular();
+                $t_materias = new TB\FonteVestibular();
                 
                 return $t_materias->getFontesSelectBox();
             }catch(Exception $e){
@@ -94,7 +87,7 @@
                     return $ret;
                 }*/
                 
-                $tb_top10   = new AdmTop10Log();
+                $tb_top10   = new TB\AdmTop10Log();
                 $rs         = $tb_top10->getTop10Periodo($data_inicio, $data_final, $id_materia, $id_fonte_vestibular);
                 
                 if($rs->count() > 0){
@@ -234,14 +227,14 @@
                 $ret->msg    = "Falha ao alterar usuário. Tente mais tarde.";
 
                 //Exclui todos registros do usuário na table Usuário Avalia Questão
-                $tbUsuarioAvaliaQuestao = new UsuarioAvaliaQuestao();
+                $tbUsuarioAvaliaQuestao = new TB\UsuarioAvaliaQuestao();
                 if(!$tbUsuarioAvaliaQuestao->excluiUsuario($id_questao, $id_usuario)){
                     $ret->msg = "Falha ao excluir Usuário de Avaliação";
                     return $ret;
                 }
 
                 //Exclui todos registros da questão na table Avalia Questão
-                $tbAvaliaQuestao = new AvaliacaoQuestao();
+                $tbAvaliaQuestao = new TB\AvaliacaoQuestao();
                 if(!$tbAvaliaQuestao->excluiQuestao($id_questao, $id_usuario)){
                     $ret->msg = "Falha ao excluir Avaliação da Questão";
                     return $ret;

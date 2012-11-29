@@ -1,9 +1,7 @@
 <?php
-    namespace admin\models\tables;
-    use \app\models\tables\AdmUsuario;
-    use \sys\classes\db\ORM;
+    namespace db_tables;  
 
-    class AvaliacaoQuestao extends ORM {
+    class AvaliacaoQuestao extends \Table {
         /**
          * Exclui todas as avaliações de uma questão.
          * 

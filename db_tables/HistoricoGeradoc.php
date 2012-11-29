@@ -1,7 +1,5 @@
 <?php
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
-    use \admin\classes\models\EscolasTurmasModel;
+    namespace db_tables;        
     
     /**
      * Representa uma entidade da tabela SPRO_HISTORICO_GERADOC
@@ -39,7 +37,7 @@
      * @property int DEL
      * @property string CACHE_NAV_LST
      */
-    class HistoricoGeradoc extends ORM {
+    class HistoricoGeradoc extends \Table {
         /**
          * Função que efetua o INNER JOIN de DOCs com Turmas e filtra resultados através dos parâmetros enviados
          * 

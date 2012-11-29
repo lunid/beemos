@@ -1,8 +1,7 @@
 <?php
-    namespace admin\models\tables;
-    use \sys\classes\db\ORM;
+    namespace db_tables;
 
-    class ClassificacaoQuestao extends ORM {
+    class ClassificacaoQuestao extends \Table {
         public function getMateriasQuestao($id_bco_questao){
             try{
                 $ret            = new \stdClass();
@@ -49,12 +48,7 @@
                             
                 return $ret;
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal - ClassificacaoQuestao - ORM <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;
             }
         }
     }

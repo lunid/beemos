@@ -1,7 +1,6 @@
 <?php
 
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
+    namespace db_tables;    
     
     /**
      * Representa uma entidade da tabela SPRO_CLIENTE
@@ -17,7 +16,7 @@
      * @property datetime DATA_REGISTRO
      */
 
-    class Cliente extends ORM {
+    class Cliente extends \Table {
         function joinUf(){
 
             self::debugOn();

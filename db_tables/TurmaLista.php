@@ -1,6 +1,5 @@
 <?php
-    namespace admin\classes\models\tables;
-    use \sys\classes\db\ORM;
+    namespace db_tables;   
     
     /**
      * Representa uma entidade da tabela SPRO_TURMA_LISTA
@@ -8,7 +7,7 @@
      * @property int ID_TURMA
      * @property int ID_HISTORICO_GERADOC
      */
-    class TurmaLista extends ORM {
+    class TurmaLista extends \Table {
         
     }
 ?>
