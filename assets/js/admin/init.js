@@ -23,6 +23,7 @@ Site.prototype = {
             draggable: false,
             modal: true,
             open: function(event, ui) { $(".ui-dialog-titlebar").hide(); },
+            beforeClose: function( event, ui ) { $(".ui-dialog-titlebar").show(); },
             width: '205',
             height: '115',
             zIndex: 9999

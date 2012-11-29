@@ -5,6 +5,6 @@
         <include id='cssInc'></include>
         <include id='js'>admin.init,util.dictionary,util.form</include>
         <include id='jsInc'></include>
-        <include id='plugins'>jquery_ui,jqgrid,modal,highcharts,kickstart</include>
+        <include id='plugins'>jquery_ui,jqgrid,highcharts,kickstart</include>
     </header>
 </root>

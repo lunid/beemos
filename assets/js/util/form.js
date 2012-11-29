@@ -56,30 +56,31 @@ Form.prototype = {
             "<div id='modal_" + id + "' class='modal_form'><table align='center'><tr><td align='center' valign='middle'><table align='center'><tr><td id='msg_" + id + "' align='center' class='msg_modal'>&nbsp;</td></tr></table></td></tr></table></div>"
         );
             
-        $('#modal_' + id).fancybox({
-            closeBtn: true,
-            closeClick: true,
-            scrollOutside: false,
-            helpers : { 
-                overlay : {closeClick: false}
-            }
-        });
-        
         this.modalId = id;
     },
     validate: function(form, ajax, callback, useSite){
         try{
             //oculta erros
-            $("#" + form.name + "_erros").css("display", "none");
+            $("#" + form.name + "_erros").hide();
             
+            //Remove todas possíveis classes
+            $("#" + form.name + "_erros").removeClass("warning");
+            $("#" + form.name + "_erros").removeClass("success");
+            $("#" + form.name + "_erros").removeClass("error");
+            
+            //Adiciona classe de warning - amarela
+            $("#" + form.name + "_erros").addClass("warning");
+        
             var validate = true;
             
             $(form).find(".required").each(function(){
                 if($.trim(this.value) == '' || this.value == null || parseInt(this.value) == 0){
                     $("#msg_error_" + this.id).show('normal');
+                    $(this).addClass("error");
                     this.focus();
                     validate = false;
                 }else{
+                    $(this).removeClass("error");
                     $("#msg_error_" + this.id).hide('fast');
                 }
             });
@@ -93,9 +94,11 @@ Form.prototype = {
 
                 if(!re.test($.trim(this.value))){
                     $("#msg_error_email_" + this.id).show('normal');
+                    $(this).addClass("error");
                     this.focus();
                     validate = false;
                 }else{
+                    $(this).removeClass("error");
                     $("#msg_error_email_" + this.id).hide('fast');
                 }
             });
@@ -115,8 +118,12 @@ Form.prototype = {
                         site.fechaAguarde();
                         
                         if(ret.status){
+                            //Limpa elemntos
                             $(dados).each(function(){
-                               $("#" + this.name).val(""); 
+                                //Se for HIDDEN não zera elemento, pois normalmente são constantes
+                                if($("#" + this.name).attr("type") != 'hidden'){
+                                    $("#" + this.name).val(""); 
+                                }
                             });
                         }
 
@@ -132,7 +139,12 @@ Form.prototype = {
                         }else{
                             if(modalId != ""){
                                 $("#msg_" + modalId).html(ret.msg);
-                                $("#modal_" + modalId).trigger('click');
+                               
+                                //Abre modal
+                                $("#modal_" + modalId).dialog({
+                                    title: "Aviso",
+                                    modal: true
+                                });
                             }else{
                                 alert(ret.msg);
                             }
@@ -141,7 +153,6 @@ Form.prototype = {
                     'json'
                 ).error(function(){
                         alert("Falha na requisição ao SERVIDOR! Tente daqui alguns minutos.");
-                        $.fancybox.close(true);
                 });
                 return false;
             }else if(validate){
