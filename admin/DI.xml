@@ -6,7 +6,7 @@ and open the template in the editor.
 
 
 <root>    
-    <map class='admin/classes/controllers/AdminController.php'>
-        <injection singleton='0' var='objViewPart' class='ViewPart' params='' />       
+    <map class='admin\classes\controllers\AdminController'>
+        <injection singleton='0' var='objViewPart' class='sys\classes\mvc\ViewPart' params='' />       
     </map>
 </root>

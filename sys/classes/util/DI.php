@@ -49,9 +49,7 @@
                                 } elseif ($var !== null && $class !== null) {
                                     $arrParams = ($params !== null)?explode(';',$params):null;
                                     DI::mapClass($var, $class,$params);
-                                    $obj = self::getInstanceOf_($class,$var,$params);
-                                    var_dump($obj);
-                                    die();
+                                    $obj = self::getInstanceOf_($classNamespace,$var,$params);                                    
                                 } else {
                                     echo 'Impossível fazer injeção de dependência para a classe '.$classNamespace;                                
                                 }
@@ -70,32 +68,42 @@
         
         public static function getInstanceOf_($className,$var,$params = null){
             //ReflectionClass
-            $reflection = new \ReflectionClass($className);
-            
-            //Cria uma instância da classe
-            if($arguments === null || count($arguments) == 0) {
-               $obj = new $className;
-            } else {
-                if(!is_array($arguments)) {
-                    $arguments = array($arguments);
-                }
-               $obj = $reflection->newInstanceArgs($arguments);
-            }  
-            
-            //Faz a injeção de Dependência
-            switch(self::$map->$var->type) {
-                case "value":
-                case "class":
-                    $obj->$var = self::$map->$var->value;
-                break;
-                case "classSingleton":
-                    if(self::$map->$var->instance === null) {
-                        $obj->$var = self::$map->$var->instance = self::$map->$var->value;
-                    } else {
-                        $obj->$var = self::$map->$var->instance;
+            echo $className;
+            $obj    = null;
+            $urlInc = str_replace("\\", "/" , $className.'.php');                
+            if (isset($className) && file_exists($urlInc)) {
+                require_once($urlInc);  
+                $reflection = new \ReflectionClass($className);
+
+                //Cria uma instância da classe
+                if($params === null || count($params) == 0) {
+                   $obj = new $className;
+                } else {
+                    if(!is_array($params)) {
+                        $params = array($params);
                     }
-                break;
-            }            
+                   $obj = $reflection->newInstanceArgs($params);
+                }  
+
+                //Faz a injeção de Dependência
+                
+                switch(self::$map->$var->type) {
+                    case "value":
+                    case "class":
+                        echo self::$map->$var->value.'<br>';
+                        $obj->$var = self::$map->$var->value;
+                    break;
+                    case "classSingleton":
+                        if(self::$map->$var->instance === null) {
+                            $obj->$var = self::$map->$var->instance = self::$map->$var->value;
+                        } else {
+                            $obj->$var = self::$map->$var->instance;
+                        }
+                    break;
+                }                          
+            }  
+            var_dump($obj);
+            die();
             //Retorna uma instância criada.
             return $obj;              
         }
