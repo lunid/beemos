@@ -8,11 +8,10 @@ body{
     width:auto;
     height:auto;
     margin:0px;
-    background:#efefef url("../../images/bm/bg_gray.gif") repeat-x center top;    
+    background:#fff url("../../images/bm/bg_gray.gif") repeat-x center top;    
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
 }
-
 
 .wrapPage {
     width:960px;/*960*/    
@@ -30,7 +29,40 @@ body{
     background: url("../../images/bm/bg_aba_logo.gif") no-repeat center top;           
 }
 
+.icon {
+    font-size:35px; 
+}
+
 #menu_top {
     margin-top:9px;
     float:left;
+}
+
+#menu_top .menu li a {
+    background: none;
+    font-size:1.2em;
+    padding:20px;
+    padding-right:25px;
+}
+
+#menu_top .menu li > a:hover, 
+#menu_top .menu li.hover > a {
+    color:#000;
+}
+
+#menu_top .menu,
+#menu_top .menu li.current > a, 
+#menu_top .menu li.current > a:hover, 
+#menu_top .menu li.current.hover > a {
+    background: none;
+    border:none;
+    font-size:1.2em;
+    color:#fff;     
+}
+
+#menu_top .menu li.current {
+    background: #000
+    -moz-box-shadow: inset 0px 0px 60px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0px 0px 60px rgba(0,0,0,0.5);
+    box-shadow: inset 0px 0px 60px rgba(0,0,0,0.5);        
 }

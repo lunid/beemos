@@ -10,6 +10,9 @@
     require_once('sys/classes/mvc/Module.php');      
     require_once('sys/classes/_init/LoadConfig.php');           
     require_once('sys/classes/util/Url.php');  
+    require_once('sys/classes/util/DI.php');
+    
+    use sys\classes\util\DI;
     
     class Application {
         
@@ -190,14 +193,14 @@
         * @param String $class (nome da classe requisitada).
         * return void
         */             
-        private static function loadClass($class){   
+        public static function loadClass($class){   
             //Tratamento para utilização do Hybridauth.
             if($class == 'FacebookApiException') return false;            
             
-            $urlInc = str_replace("\\", "/" , $class . '.php');     
-            //echo $urlInc.'<br>';
+            $urlInc = str_replace("\\", "/" , $class . '.php');                
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
+                //DI::loadMapXml($class);
             } else {           
                 die(" Classe $class não encontrada");
             }                      

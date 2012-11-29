@@ -301,7 +301,7 @@
             return $inc;
         }
         
-        private function getIncludes($ext,$exception=TRUE){    
+        private function getIncludes($ext){    
             try {
                 $objHeader = $this->getObjHeader();           
                 return $objHeader->getTags($ext,$this->layoutName);

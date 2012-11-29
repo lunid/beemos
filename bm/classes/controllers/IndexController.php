@@ -44,3 +44,13 @@
     }
 ?>
 
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
+            }
+        }               
+    }
+?>
+

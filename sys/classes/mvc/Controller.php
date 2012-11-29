@@ -10,10 +10,10 @@
     abstract class Controller {
         
         private $memCache;
-        private $nameCache;
+        private $nameCache = NULL;
         
         function __construct(){
-             $this->nameCache = NULL;
+             
         }                
         
         /*
