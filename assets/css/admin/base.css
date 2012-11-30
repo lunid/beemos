@@ -285,3 +285,8 @@
                     font-weight:bold;
                     padding:15px;
                 }
+                
+                .ui-widget-content {
+                    padding:50px;
+                    border:none;
+                }

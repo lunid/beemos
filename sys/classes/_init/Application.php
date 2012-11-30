@@ -24,8 +24,7 @@
          * Faz o carregamento dos arquivos comuns aos módulos do sistema (require_once),
          * identifica o módulo e seu respectivo Controller->action() a partir da URL e 
          * carrega as classes solicitadas na aplicação a partir de seu namespace.
-        */   
-        
+        */           
         private static $sessionLangName                 =  'GLB_LANG';
         private static $sessionModuleName               =  'GLB_MODULE';
         private static $sessionControllerName           =  'GLB_CONTROLLER';
@@ -203,7 +202,8 @@
             
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
-                //DI::loadMapXml($class);
+                //$obj = DI::loadMapXml($class);
+                //die();
             } else {                          
                die(" Classe $class não encontrada");
             }                      

@@ -381,7 +381,7 @@ class Header {
         if (is_array($arrParams)) {
             $string         = $arrParams['string'];
             $extension      = $arrParams['extension'];
-            $fileNameMin    = $arrParams['fileNameMin'];                              
+            $fileNameMin    = $arrParams['fileNameMin'];            
         }
                 
         try {            
