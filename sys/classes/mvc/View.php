@@ -235,7 +235,7 @@
                         
                         //1º - Faz a inclusão de cada PLUGIN definido no config.xml:
                         $plugins            = \LoadConfig::plugins();  
-                        
+                   
                         //Faz a inclusão de arquivos css e js padrão.
                         try {                                                                                                                                                                  
 
@@ -257,8 +257,7 @@
                         $arrExt             = Header::$arrExt;
                         foreach($arrExt as $fn) {
                             $key = array_search($fn, $arrIncludeCfgOff);
-                            if ($key === FALSE) {
-                                echo $fn.'<br>';
+                            if ($key === FALSE) {                         
                                 //A extensão atual NÃO consta na lista de exclusão. 
                                 //Portanto, os includes dessa extensão devem ser incluídos.
                                 $list   = \LoadConfig::$fn();                                

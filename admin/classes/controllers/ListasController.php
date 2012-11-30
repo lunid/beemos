@@ -265,7 +265,7 @@
                 $objViewPart            = new ViewPart("admin/imprimir_graficos");
                 $objViewPart->idLista   = Request::get('idLista', 'NUMBER');                                
                 
-                $objView->includeCfgOff();                
+                //$objView->includeCfgOff();                
                 $objView->setLayout($objViewPart);
                 
                 //Scripts necessários                

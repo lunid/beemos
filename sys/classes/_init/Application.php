@@ -48,6 +48,8 @@
        *  
        */          
         public static function setup(){
+            
+            //Faz a leitura dos parâmetros em config.xml na raíz do site
             $objLoadConfig  = new LoadConfig();            
             $objLoadConfig->loadConfigXml('config.xml');
             
@@ -58,6 +60,7 @@
             $action         = $arrPartsUrl['action'];            
             $method         = 'action'.ucfirst($action);                                                                                    
             
+            //Faz a leitura dos parâmetros em config.xml do módulo atual
             $configModule   = $module.'/config.xml';
             $objLoadConfig->loadConfigXml($configModule);                                             
                         
