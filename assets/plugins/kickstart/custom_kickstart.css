@@ -1,0 +1,276 @@
+.col_1, .col_2, .col_3, .col_4, .col_5, .col_6, .col_7, .col_8, .col_9, .col_10, .col_11, .col_12 {
+    display: block;
+    float: left;
+    margin: 0;
+}
+.col_3 {
+    width: 25%;
+}
+
+p {
+    color: #000;
+}
+
+textarea {
+    -moz-box-sizing: border-box;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    font-family: inherit;
+    font-size: 0.9em;
+    height: 177px;
+    margin-left: 4px;
+    padding: 5px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+
+input {
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    display: inline-block;
+    font-size: 15px;
+    margin: 0;
+    padding: 2px 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: auto;
+    height: 22px;
+}
+
+
+button, a.btn, a.btn:visited, a.button, a.button:visited, input[type="submit"], input[type="reset"], input[type="button"] {
+    height: 34px;
+    padding: 6px;
+}
+
+table {
+    margin: 0;
+    border-collapse: inherit;
+}
+
+
+/* começo grid ================================================== */
+
+.ui-jqgrid tr.jqgrow td {
+    border-bottom: 1px solid #D3D3D3;
+    font-weight: normal;
+    height: 24px;
+    overflow: hidden;
+    padding: 0 2px;
+    white-space: pre;
+}
+
+
+
+#gs_STATUS{
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0;
+    padding: 1px 9px 0 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 100%;
+    height: 22px;
+}
+
+th, td {
+    font-size: 0.9em;
+    text-align: none;
+}
+
+#gbox_grid_turmas, #gbox_grid_listas, #gbox_grid_listas_turmas, #gbox_grid_turmas_listas{
+    margin-left: -11px;
+}
+
+.ui-jqgrid .ui-pg-selbox {
+    display: block;
+    line-height: 6px;
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    display: inline-block;
+    font-size: 9px;
+    height: 17px;
+    margin: 0;
+    padding: 1px 9px 0 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+/* fim começo grid ================================================== */
+
+.border {
+    border-left: 1px solid #CCCCCC;
+    float: left;
+    height: 71%;
+    padding-top: 5px;
+    width: 0;
+}
+
+.cinza{
+    width:100%;
+    height:auto;
+    float:left;
+    background-color:#FAFAFA;
+}
+
+blockquote {
+    font-size: 14px;
+    margin: 2px 30px 15px 0;
+}
+
+.column .inner {
+    padding: 5px;
+}
+
+hr {
+    margin: 0;
+}
+
+
+ul.alt li {
+    background-position:6px 23px;
+}
+
+.espaco{
+    width:100%;
+    height:12px;
+    float:left;
+}
+
+#nav {
+    left: 0;
+    position: relative;
+    text-align: center;
+    top: 0;
+}
+
+strong, b {
+    background: none repeat scroll 0 0 ;
+}
+
+
+p {
+    margin: 0;
+    line-height: 100%;
+}
+
+.chzn-container-multi .chzn-choices .search-field input {
+    padding: 10px;
+}
+
+
+.chzn-container-single .chzn-single {
+    width: 98%;
+}
+
+
+.bt_e-mail{
+    background: -moz-linear-gradient(center top , #FCFCFC 0%, #E0E0E0 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    color: #666666;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    left: 0;
+    line-height: 100%;
+    margin: 0;
+    overflow: visible;
+    padding: 7px 15px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #FFFFFF;
+    top: 0;
+    vertical-align: middle;
+    width: 99%;
+    margin-bottom:8px;
+}
+
+
+#button-bar-esquerda{
+    float: right;
+    height: 94px;
+    margin: 1px 12px 0px 0px ;
+    width: auto;
+}
+
+/* menu horizontal top ================================================== */
+
+#menu_top {
+    border: 0px solid #CCCCCC;
+    text-shadow: 0 1px 1px #FFFFFF;
+    margin: -4px -1px;
+}
+
+#menu_top .menu li a {
+    background: none;
+    font-size:13px;
+    padding:20px;
+    padding-right:25px;
+}
+
+#menu_top .menu li > a:hover, 
+#menu_top .menu li.hover > a {
+    color:#000;
+}
+
+#menu_top .menu,
+#menu_top .menu li.current > a, 
+#menu_top .menu li.current > a:hover, 
+#menu_top .menu li.current.hover > a {
+    background: none;
+    border:none;
+    font-size:1.2em;
+    color:#fff;  
+}
+
+/* menu horizontal final ================================================== */
+
+/* menu vertical esquerda ================================================== */
+
+#menu_coluna_esquerda {
+    width: 172px;
+    border: 0px solid #CCCCCC;
+    text-shadow: 0 1px 1px #FFFFFF;
+    margin: 1px -1px;
+    float: left;
+}
+
+#menu_coluna_esquerda .menu li a {
+    background: none;
+    font-size:13px;
+    padding:20px;
+    padding-right:25px;
+}
+
+#menu_coluna_esquerda .menu li > a:hover, 
+#menu_coluna_esquerda .menu li.hover > a {
+    color:#000;
+}
+
+#menu_coluna_esquerda .menu,
+#menu_coluna_esquerda .menu li.current > a, 
+#menu_coluna_esquerda .menu li.current > a:hover, 
+#menu_coluna_esquerda .menu li.current.hover > a {
+    background: none;
+    border:none;
+    font-size:1.2em;
+    color:#fff;  
+}
+
+/* menu vertical esquerda ================================================== */
