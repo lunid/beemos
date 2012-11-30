@@ -1,7 +1,5 @@
-<?php
-
+<?php 
     class Url {
-        
         /**
          * Recebe um array associativo que será convertido em URL no formato
          * rootFolder/modulo/controller/action/...onde rootFolder é lido do arquivo config.xml.
