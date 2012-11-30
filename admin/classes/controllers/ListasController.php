@@ -323,12 +323,21 @@
                     if($TURMA != ''){
                         $where .= " AND T.CLASSE LIKE '%" . $TURMA . "%'";  
                     }
+                    
+                    //Filtro Concluída
+                    $CONCLUIDA = Request::get('CONCLUIDA', 'NUMBER');
+                    if($CONCLUIDA == 1){
+                        $where .= " AND HR.ID_LST_HIST_RESPOSTA IS NOT NULL ";  
+                    }else if($CONCLUIDA == 2){
+                        $where .= " AND HR.ID_LST_HIST_RESPOSTA IS NULL ";  
+                    }
                 }
                 
-                $ID_HISTORICO_GERADOC = Request::get('idLista', 'NUMBER');
+                $ID_HISTORICO_GERADOC   = Request::get('idLista', 'NUMBER');
+                $responderam            = Request::get('responderam', 'NUMBER') == 1 ? true : false;
                 
                 //Carrega todos alunos de uma lista
-                $rs = $mdListas->carregarAlunosLista($ID_HISTORICO_GERADOC, $where);
+                $rs = $mdListas->carregarAlunosLista($ID_HISTORICO_GERADOC, $where, $responderam);
                 
                 //Verifica se foram carregados os alunos
                 if($rs->status){
@@ -354,7 +363,8 @@
                                 "tipoOrdenacao"     => $orderType, 
                                 "inicio"            => $start, 
                                 "limite"            => $limit
-                            )
+                            ),
+                            $responderam
                     );
                     
                     $ret->page      = $page;
@@ -368,7 +378,8 @@
                             $row['ID_CLIENTE'],
                             $row['ALUNO'],
                             $row['ESCOLA'],
-                            $row['TURMA']
+                            $row['TURMA'],
+                            $row['CONCLUIDA'] == 1 ? 'Concluída' : 'Não Concluída'
                         );
                         $i++;
                     }

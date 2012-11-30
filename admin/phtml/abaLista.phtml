@@ -3,6 +3,7 @@
         <li><a href="javascript:void(0);"><span class="icon" data-icon="u"></span> Navegue como Aluno</a></li>
         <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="z"></span> Configurações</a></li>
         <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="k"></span> Resultado</a></li>
+        <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="k"></span> Alunos</a></li>
     </ul>
 </div>
 <div id="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>">
@@ -213,6 +214,11 @@
         </tr>
     </table>
 <!-- Resultados da Lista -->
+</div>
+
+<div id="lista_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
+    <table id="grid_alunos_status_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="width:100%;"></table>
+    <div id="pg_alunos_status_<?=$attrs['ID_HISTORICO_GERADOC']?>"></div>
 </div>
 
 <div id="modal_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
