@@ -15,7 +15,7 @@
                 //Home
                 $cache = TRUE;
                 if ($cache) {
-                    $this->cacheOn(__METHOD__);
+                    //$this->cacheOn(__METHOD__);
                 } else {
                     $this->cacheOff(__METHOD__);
                 }
@@ -33,22 +33,7 @@
                 
                 $tpl->render('index',$this->getMemCache());            
             }catch(Exception $e){
-                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
-            }
-        }               
-    }
-?>
-
-                echo "Erro: " . $e->getMessage() . "<br />\n";
-                echo "Arquivo:  " . $e->getFile() . "<br />\n";
-                echo "Linha:  " . $e->getLine() . "<br />\n";
-                echo "<br />\n";
-                die;
+                throw $e;
             }
         }               
     }
