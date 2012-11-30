@@ -8,19 +8,30 @@
         */
         public function actionIndex(){
             try{
-                //Registra função excluiUsuario no serviço
-                $this->server->register("excluiUsuario", 
-                        array(
-                            'xmlParams' => 'xsd:string'
-                        ), // Descriçao dos parâmetros de entrada
-                        array('return' => 'xsd:string'),      // Descrição da saída
-                        'urn:superproweb',                    // namespace
-                        'urn:superproweb#excluiUsuario',          // soapaction
-                        'rpc',                                // style
-                        'encoded',                            // use
-                        'Função que exclui um usuário da escola logada no WS' // descrição do serviço
+                $this->server->register("ShowString"                       
+                 ,array('name'=>'xsd:string')
+                 ,array('return'=>'xsd:string')
+                 ,$this->namespace
+                 ,$this->namespace . "/ShowString"
+                 ,'rpc'
+                 ,'encoded'
+                 ,'Sample of embedded classes...' 
                 );
                 
+                //Registra função excluiUsuario no serviço
+//                $this->server->register("Usuarios.excluiUsuario", 
+//                        array(
+//                            'xmlParams' => 'xsd:string'
+//                        ), // Descriçao dos parâmetros de entrada
+//                        array('return' => 'xsd:string'),      // Descrição da saída
+//                        'urn:superproweb',                    // namespace
+//                        'urn:superproweb#excluiUsuario',          // soapaction
+//                        'rpc',                                // style
+//                        'encoded',                            // use
+//                        'Função que exclui um usuário da escola logada no WS' // descrição do serviço
+//                );
+                
+                //Saída do Server
                 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ?
                 $HTTP_RAW_POST_DATA : '';
                 $this->server->service($HTTP_RAW_POST_DATA);
@@ -42,6 +53,7 @@
                $dados  = "";
 
                if($xmlParams){
+                   $this->imprimirErro("Teste");
                    $xml = new SimpleXMLElement($xmlParams);
 
                    if($xml){
@@ -139,4 +151,10 @@
            }
        }
     }
+    
+    function ShowString($mens){
+
+        return "\n##Remote Class :".__CLASS__."\n##Remote Method : ".__METHOD__."\n## mSG :{$mens}";
+
+     }
 ?>

@@ -13,6 +13,7 @@
     class ServerController extends Controller {
         //Armazena o SERVER NuSoap criado no contrutor
         protected $server;
+        protected $namespace    = "http://localhost/interbits/api/usuarios";
         
         /**
          * Cria um servidor WSDL (NuSoap) para utilização
@@ -21,11 +22,67 @@
             try{
                 //Inicia servidor WSDL e suas configuirações
                 $this->server = new \nusoap_server();
-                $this->server->configureWSDL("SuperProWeb", "urn:superproweb");
+                $this->server->configureWSDL("SuperProWeb", "urn:superproweb", $this->namespace);
+                
+                //Registra função na aplicação
+//                $this->server->register("ServerController.getToken", 
+//                        array(),
+//                        array('return' => 'xsd:string'),      // Descrição da saída
+//                        'urn:superproweb',                    // namespace
+//                        'urn:superproweb#getToken',           // soapaction
+//                        'rpc',                                // style
+//                        'encoded',                            // use
+//                        'Gera um novo Token de acesso'        // descrição do serviço
+//                );
             }catch(Exception $e){
                 $this->imprimirErro($e);
             }
         }
+        
+        
+        
+        /**
+        * Função que gera um novo token ao cliente
+        * 
+        * @return string XMLResult
+        */
+       public function getToken(){
+           try{
+               $ret = "<root>";
+               $ret .= "<status>";
+               $ret .= "<erro>333</erro>";
+               $ret .= "<msg>TEste</msg>";
+               $ret .= "</status>";
+               $ret .= "</root>";
+
+               return $ret;
+               
+               //Gera um novo TOKEN
+               $rs = $this->authenticate(null);
+
+               //Retorno da geração do Token
+               $erro   = $rs->erro;
+               $msg    = $rs->msg;
+
+               if($rs->status){
+                   $dados  = "<dados>";
+                   $dados .= "<token>{$rs->token}</token>";
+                   $dados .= "</dados>";
+               }
+               
+               $ret = "<root>";
+               $ret .= "<status>";
+               $ret .= "<erro>{$erro}</erro>";
+               $ret .= "<msg>" . utf8_encode($msg) . "</msg>";
+               $ret .= "</status>";
+               $ret .= $dados;
+               $ret .= "</root>";
+
+               return $ret;
+           }catch(Exception $e){
+               $this->imprimirErro($e);
+           }
+       }
         
         /**
          * Devolve o erro em forma XML
@@ -94,7 +151,7 @@
                $ret->msg       = "Erro inesperado!";
 
                //Captura o Usuário e Senha enviados via HTTP - Basic (Base64)
-               $server = new nusoap_server();
+               $server = new \nusoap_server();
                $server->parse_http_headers();
                $server->headers;
                $values = explode(" ", $server->headers['authorization']);
