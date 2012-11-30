@@ -257,7 +257,7 @@
                     if(!array_key_exists($row['ENSINO'], $arrEnsino)){
                         $arrEnsino[$row['ENSINO']] = array(
                             "ENSINO"    => $row['ENSINO'],
-                            "DESC"      => EscolasTurmasModel::traduzirEnsino($row['ENSINO']),
+                            "DESC"      => Ensino::traduzirEnsino($row['ENSINO']),
                         );
                     }
                     
@@ -265,7 +265,7 @@
                     if(!array_key_exists($row['PERIODO'], $arrPeriodo)){
                         $arrPeriodo[$row['PERIODO']] = array(
                             "PERIODO"   => $row['PERIODO'],
-                            "DESC"      => EscolasTurmasModel::traduzirPeriodo($row['PERIODO']),
+                            "DESC"      => Periodo::traduzirPeriodo($row['PERIODO']),
                         );
                     }
                     
