@@ -121,6 +121,37 @@ function abreLista(idLista, nomeAba){
                 
                 //Carrega gráficos da lista
                 geraGrafico(idLista);
+                
+                // ************************************************************************************************************
+                // ************************************** Ações para área de Alunos ***************************************
+                // ************************************************************************************************************
+                // 
+                //Carrega Grid de Alunos que estão atrelados na lista - Aba Alunos
+                $("#grid_alunos_status_" + idLista).jqGrid({
+                    url: 'listas/CarregarAlunosLista?idLista=' + idLista,
+                    datatype: "json",
+                    colNames:['Código', 'Aluno', 'Escola', 'Turma', 'Concluída'],
+                    colModel:[
+                            //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                            {name:'ID_CLIENTE', index:'ID_CLIENTE', width:15, align:'center', search: true, cellattr: site.formataGrid },
+                            {name:'ALUNO', index:'ALUNO', width:40, search: true},
+                            {name:'ESCOLA', index:'ESCOLA', width:20, search: true},
+                            {name:'TURMA', index:'TURMA', width:20, search: true},
+                            {name:'CONCLUIDA', index:'CONCLUIDA', width:20, search: true, stype: 'select', searchoptions:{ value: "0:Todas;1:Concluída;2:Não Concluída" }}
+                    ],
+                    rowNum:30,
+                    rowList:[30,60,100],
+                    pager: '#pg_alunos_status_' + idLista,
+                    sortname: 'ALUNO',
+                    viewrecords: true,
+                    sortorder: "ASC",
+                    caption:"Alunos",
+                    width: 750,
+                    height: 'auto',
+                    scrollOffset: 0
+                });
+
+                $("#grid_alunos_status_" + idLista).filterToolbar();
             }
         },
         'json'
@@ -484,7 +515,7 @@ function modalAluno(idLista){
     
     //Carrega Grid de Alunos
     $("#grid_alunos_" + idLista).jqGrid({
-        url: 'listas/CarregarAlunosLista?idLista=' + idLista,
+        url: 'listas/CarregarAlunosLista?idLista=' + idLista + '&responderam=1',
         datatype: "json",
         colNames:['Código', 'Aluno', 'Escola', 'Turma'],
         colModel:[
