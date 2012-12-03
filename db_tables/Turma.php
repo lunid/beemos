@@ -110,6 +110,31 @@
             }
         }
         
+        /**
+         * Carrega lista de alunos relacionados a um cliente e suas turmas e escolas
+         * 
+         * @param int $ID_CLIENTE
+         * @param string $where WHERE para filtro de SQL
+         * @param array $arrPg Array com dados de Ordenação e Paginação Ex:
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'NOME_PRINCIPAL', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->alunos    - Armazena os resultados (se encontrados)           <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function listarAlunosCliente($ID_CLIENTE = 0, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno

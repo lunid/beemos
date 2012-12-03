@@ -137,5 +137,54 @@
                 echo json_encode($ret);
             }
         }
+        
+        /**
+         * Dispara mensagem salvando no banco e por e-mail
+         */
+        public function actionEnviarMensagem(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao disparar Mensagem! Tente mais tarde.";
+                
+                //Instancia oModel e efetua disparo
+                $mdCaixaPostal  = new CaixaPostalModel();
+                $ret            = $mdCaixaPostal->salvarMensagem(
+                        26436, 
+                        Request::post('escrever_para'), 
+                        Request::post('escrever_assunto'), 
+                        Request::post('escrever_msg')
+                );
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Dispara SMS da mensagem atual
+         */
+        public function actionEnviarSms(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Implementar ação SMS.";
+                                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
+                
+                echo json_encode($ret);
+            }
+        }
     }
 ?>

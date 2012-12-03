@@ -152,6 +152,7 @@ Form.prototype = {
                     },
                     'json'
                 ).error(function(){
+                        site.fechaAguarde();
                         alert("Falha na requisição ao SERVIDOR! Tente daqui alguns minutos.");
                 });
                 return false;
