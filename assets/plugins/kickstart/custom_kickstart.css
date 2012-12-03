@@ -89,7 +89,7 @@ th, td {
 }
 
 #gbox_grid_turmas, #gbox_grid_listas, #gbox_grid_listas_turmas, #gbox_grid_turmas_listas{
-    margin-left: -11px;
+    margin-left: -2px;
 }
 
 .ui-jqgrid .ui-pg-selbox {
