@@ -6,15 +6,6 @@ body{
     background-repeat:repeat-y;
 }
 
-h5 {
-    font-size: 15px;
-    margin: 0;
-}
-
-label {
-    font-size: 14px;
-}
-
 #top{
     width:100%;
     height:46px;

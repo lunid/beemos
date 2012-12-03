@@ -7,6 +7,19 @@
     width: 25%;
 }
 
+h5 {
+    font-size: 15px;
+    margin: 0;
+}
+
+label {
+    font-size: 14px;
+}
+
+#txtStatus{
+    font-size: 13px;
+}
+
 p {
     color: #000;
 }
@@ -134,7 +147,7 @@ blockquote {
 
 .column .inner {
     font-size: 12px;
-    padding: 5px;
+    padding: 0 0 5px 5px;
 }
 
 hr {
