@@ -1,3 +1,10 @@
+<!-- titulo -->
+<div class="titulo">
+    Caixa postal
+</div>
+<!-- fim titulo -->
+<!-- conteudo abas -->
+    <div class="conteudo_abas">
 <!-- Modal Escrever -->
 <div id="modal_escrever" style="display:none;">
     <form id="form_enviar_msg" name="form_enviar_msg" action="caixapostal/enviarMensagem" onsubmit="return formEnviarMsg.validate(this, true, 'validaEnvio');">
@@ -15,8 +22,12 @@
                         Para:
                     </a>
                 </td>
-                <td width="90%" nowrap="nowrap" valign="top">
-                    <textarea id="escrever_para" name="escrever_para" style="width:100%;height:50px;" class="required" field_name="Para"></textarea>
+                <td width="90%" nowrap="nowrap" valign="top" >
+                    <select id="escrever_para" name="escrever_para" class="fancy " field_name="Para">
+                        <option value="1">Destinatário:</option>
+                        <option value="2">Penha de França</option>
+                        <option value="3">Madre Teresa</option>                        
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -34,9 +45,9 @@
                 </td>
             </tr>
         </table>
-        <div class="col_6"></div>
-        <div class="col_3"><a class="button" href=""><span class="icon gray small" data-icon="X"></span> Cancelar</a></div>
-        <div class="col_3"><input type="submit" value="Enviar" /></div>
+        <div class="col_9"></div>
+        <div class="col_2"><button class="medium"><span class="icon medium" data-icon="M"></span>Medium</button></div>
+        <div class="col_1"><input type="submit" value="Enviar" /></div>
     </form>
 </div>
 <!-- Modal Escrever -->
@@ -51,12 +62,6 @@
     <input type="button" value="OK" onclick="javascript:finalizaPara(true);" />
 </div>
 <!-- Modal Para -->
-
-<!-- titulo -->
-<div class="titulo">
-    Caixa postal
-</div>
-<!-- fim titulo -->
 
 <!-- conteudo box -->
 <div id="box">
@@ -91,5 +96,6 @@
     <!-- Espaçamento -->
     <div class="espaco"></div>
     <!-- fim Espaçamento -->
+ </div>
 </div>
 <!-- fim conteudo box -->
