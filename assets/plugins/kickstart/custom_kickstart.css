@@ -133,6 +133,7 @@ blockquote {
 }
 
 .column .inner {
+    font-size: 12px;
     padding: 5px;
 }
 
@@ -142,7 +143,7 @@ hr {
 
 
 ul.alt li {
-    background-position:6px 23px;
+    background-position:6px 13px;
 }
 
 .espaco{

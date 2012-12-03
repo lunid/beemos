@@ -6,6 +6,14 @@ body{
     background-repeat:repeat-y;
 }
 
+h5 {
+    font-size: 15px;
+    margin: 0;
+}
+
+label {
+    font-size: 14px;
+}
 
 #top{
     width:100%;
@@ -63,30 +71,36 @@ body{
 }
 
 #lista_turmas{
-                width:95%;
-                height: 183px;
+    width:95%;
+    height: 183px;
     margin-bottom: 29px;
-                margin-left: 20px;
-                overflow-y: scroll;
-                overflow-x: hidden;
+    margin-left: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 12px;
 }
 
 #lista_turmas a{
-                text-decoration:none;
-                color:#333333;
+    text-decoration:none;
+    color:#333333;
 }
 
 #lista_turmas a:hover{
-                color:#03F;
+    color:#03F;
 }
 
 #optListaTurma, #optTurmaLista{
-    margin-left: -14px;
+    margin:0px 0 0 -14px;
 }
 
 
 /* Padrão para botão fechar de Abas */
-#abas li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+
+#abas li .ui-icon-close { 
+    float: left; 
+    margin: 0.4em 0.2em 0 0; 
+    cursor: pointer; 
+}
 
 /* Form Padrão ================================================== */
 .form_padrao{
@@ -107,7 +121,6 @@ body{
 .form_padrao .msg_error{
     color: #FF0000;
 }
-
 
 .modal_form{
     width:400px;
@@ -134,6 +147,7 @@ body{
 }
 
 /* Classe de erro para Modal Padrão */
+
 .erro{
     color: #FF0000;
     font-weight: bold;
@@ -141,6 +155,7 @@ body{
 }
 
 /* Modal Aguarde ================================================== */
+
 .modal_aguarde{
     display:none;
 }
