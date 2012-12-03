@@ -407,17 +407,19 @@ function carregaListaTurmas(ID_ESCOLA){
             }else{
                 //Monta HTML do menu lateral de Turmas
                 var html;
-                html = "<ul style='list-style:circle;'>";
+                html = "<table cellspacing='0' cellpadding='0'>";
                 $(ret.turmas).each(function(){
-                    html += "<li>";
+                    html += "<thead><tr>";
+                    html += "<th width='26%'><span class='icon gray small' data-icon='{'></span></th>";
+                    html += "<th width='74%'>";
                     html += "<input type='hidden' id='turmaClasse_" + this.ID_TURMA + "' value='" + this.CLASSE + "' />";
                     html += "<input type='hidden' id='turmaEnsino_" + this.ID_TURMA + "' value='" + this.ENSINO + "' />";
                     html += "<input type='hidden' id='turmaAno_" + this.ID_TURMA + "' value='" + this.ANO + "' />";
                     html += "<input type='hidden' id='turmaPeriodo_" + this.ID_TURMA + "' value='" + this.PERIODO + "' />";
-                    html += "<a href='javascript:void(0);' onclick='javascript:editarTurmas(" + this.ID_TURMA + ")'>" + this.CLASSE + "</a><br/>";
-                    html += "</li>";
+                    html += "<a href='javascript:void(0);' onclick='javascript:editarTurmas(" + this.ID_TURMA + ")'>" + this.CLASSE + "</a></th>";
+                    html += "</tr></thead>";
                 });
-                html += "</ul>";
+                html += "</table>";
                 
                 $("#lista_turmas").html(html);
             }
