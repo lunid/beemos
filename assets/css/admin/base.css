@@ -48,17 +48,36 @@ body{
 
 #abas{
     border: none;
-    margin: 0 -5px 0 -13px;
+    margin: 0 0 0 -13px;
     padding: 0;
     width: 100%;
 }
 
 .conteudo_abas {
     width:100%;
+    max-width: 800px;
     height:100%;
     margin:auto;
     float:left;
     position:relative;
+}
+
+#lista_turmas{
+                width:95%;
+                height: 183px;
+    margin-bottom: 29px;
+                margin-left: 20px;
+                overflow-y: scroll;
+                overflow-x: hidden;
+}
+
+#lista_turmas a{
+                text-decoration:none;
+                color:#333333;
+}
+
+#lista_turmas a:hover{
+                color:#03F;
 }
 
 /* Padrão para botão fechar de Abas */
