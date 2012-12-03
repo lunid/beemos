@@ -7,6 +7,19 @@
     width: 25%;
 }
 
+h5 {
+    font-size: 15px;
+    margin: 0;
+}
+
+label {
+    font-size: 14px;
+}
+
+#txtStatus{
+    font-size: 13px;
+}
+
 p {
     color: #000;
 }
@@ -133,7 +146,8 @@ blockquote {
 }
 
 .column .inner {
-    padding: 5px;
+    font-size: 12px;
+    padding: 0 0 5px 5px;
 }
 
 hr {
@@ -142,7 +156,7 @@ hr {
 
 
 ul.alt li {
-    background-position:6px 23px;
+    background-position:6px 13px;
 }
 
 .espaco{
