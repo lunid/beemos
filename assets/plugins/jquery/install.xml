@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Biblioteca jquery.
+        Site: http://jquery.com/
+    </descricao>
+    <config>
+        <include id='jsInc'>jquery_1_8_1_min</include>
+    </config>
+</root>

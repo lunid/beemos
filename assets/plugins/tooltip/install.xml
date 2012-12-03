@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <descricao>
-        Componente para Dicas de formulário
-    </descricao>
-    <config>
-        <include id='jsInc'>jquery_qtip_100</include>
-    </config>
-</root>

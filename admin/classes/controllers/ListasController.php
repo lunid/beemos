@@ -156,7 +156,7 @@
                 //Carrega dados da lista solicitada
                 $mdListas   = new ListasModel();
                 $ret        = $mdListas->carregarDadosLista($idLista);
-                print_r($ret);
+                
                 //Se forem carregados os dados
                 if($ret->status){
                     //Objeto HTML para montar Aba
@@ -187,8 +187,7 @@
                     
                     $aba->setAttr('STATUS', $status);                    
                     
-                    //Informações de gráficos e Números
-                    var_dump($ret->lista->ID_HISTORICO_GERADOC);
+                    //Informações de gráficos e Números                   
                     $ret->GR_RESPOSTAS      = $mdListas->calcularRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
                     $ret->GR_ALUNOS         = $mdListas->calcularAlunosRespostasLista($ret->lista->ID_HISTORICO_GERADOC);
                     $ret->APROVEITAMENTO    = $mdListas->calcularAproveitamentoLista($ret->lista->ID_HISTORICO_GERADOC);
@@ -264,9 +263,9 @@
                  
                 //View com HTML de gráficos
                 $objViewPart            = new ViewPart("admin/imprimir_graficos");
-                $objViewPart->idLista   = Request::get('idLista', 'NUMBER');
+                $objViewPart->idLista   = Request::get('idLista', 'NUMBER');                                
                 
-                $objView->includeCfgOff();                
+                //$objView->includeCfgOff();                
                 $objView->setLayout($objViewPart);
                 
                 //Scripts necessários                
@@ -449,7 +448,7 @@
                 echo json_encode($ret);
             }catch(Exception $e){
                 //Objeto de retorno
-                $ret            = new stdClass();
+                $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = $e->getMessage();
                 

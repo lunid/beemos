@@ -1,5 +1,6 @@
 <?php    
     use \api\classes\controllers\ServerController;
+    use \api\classes\models\UsuariosModel;
     
     class Usuarios extends ServerController {
         /**
@@ -7,19 +8,30 @@
         */
         public function actionIndex(){
             try{
-                //Registra função excluiUsuario no serviço
-                $this->server->register("excluiUsuario", 
-                        array(
-                            'xmlParams' => 'xsd:string'
-                        ), // Descriçao dos parâmetros de entrada
-                        array('return' => 'xsd:string'),      // Descrição da saída
-                        'urn:superproweb',                    // namespace
-                        'urn:superproweb#excluiUsuario',          // soapaction
-                        'rpc',                                // style
-                        'encoded',                            // use
-                        'Função que exclui um usuário da escola logada no WS' // descrição do serviço
+                $this->server->register("ShowString"                       
+                 ,array('name'=>'xsd:string')
+                 ,array('return'=>'xsd:string')
+                 ,$this->namespace
+                 ,$this->namespace . "/ShowString"
+                 ,'rpc'
+                 ,'encoded'
+                 ,'Sample of embedded classes...' 
                 );
                 
+                //Registra função excluiUsuario no serviço
+//                $this->server->register("Usuarios.excluiUsuario", 
+//                        array(
+//                            'xmlParams' => 'xsd:string'
+//                        ), // Descriçao dos parâmetros de entrada
+//                        array('return' => 'xsd:string'),      // Descrição da saída
+//                        'urn:superproweb',                    // namespace
+//                        'urn:superproweb#excluiUsuario',          // soapaction
+//                        'rpc',                                // style
+//                        'encoded',                            // use
+//                        'Função que exclui um usuário da escola logada no WS' // descrição do serviço
+//                );
+                
+                //Saída do Server
                 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ?
                 $HTTP_RAW_POST_DATA : '';
                 $this->server->service($HTTP_RAW_POST_DATA);
@@ -41,6 +53,7 @@
                $dados  = "";
 
                if($xmlParams){
+                   $this->imprimirErro("Teste");
                    $xml = new SimpleXMLElement($xmlParams);
 
                    if($xml){
@@ -48,15 +61,15 @@
                        $params = $xml->params->param;
 
                        //Campos utilizados
-                       $token      = getXmlField($params, 'token');
-                       $id_usuario = getXmlField($params, 'id_usuario');
+                       $token      = $this->getXmlField($params, 'token');
+                       $id_usuario = $this->getXmlField($params, 'id_usuario');
 
                        if(!isset($token) || $token == null || $token == ""){
                            $erro   = 4;
                            $msg    = "Token inválido!";
                        }else{
                            //Autentica usuário e token
-                           $ret = authenticate($token);
+                           $ret = $this->authenticate($token);
 
                            if(!$ret->status){
                                $erro   = $ret->erro;
@@ -72,6 +85,9 @@
                                        $msg    = "Sem permissão para excluir seu próprio usuário!";
                                    }
                                }else{
+                                   //Model de usuários
+                                   $mdUsuarios = new UsuariosModel();
+                                   
                                    //Valida se o usuário é dependente do usuário logado
                                    $sql = "SELECT 
                                                ID_CLIENTE
@@ -92,7 +108,8 @@
                                        $erro   = 83;
                                        $msg    = "Usuário não é seu dependente ou não existe!";
                                    }else{
-                                       $rs = atualizaStatusUsuario($id_usuario, $ret->ID_CLIENTE, 'EXCLUIR');
+                                       
+                                       $rs = $mdUsuarios->atualizaStatusUsuario($id_usuario, $ret->ID_CLIENTE, 'EXCLUIR');
 
                                        //VErifica se o status foi atualizado
                                        if(!$rs->status){
@@ -134,4 +151,10 @@
            }
        }
     }
+    
+    function ShowString($mens){
+
+        return "\n##Remote Class :".__CLASS__."\n##Remote Method : ".__METHOD__."\n## mSG :{$mens}";
+
+     }
 ?>

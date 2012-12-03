@@ -10,7 +10,7 @@
     require_once('sys/classes/mvc/Controller.php');
     require_once('sys/classes/mvc/Model.php'); 
     require_once('sys/classes/mvc/Module.php');      
-    require_once('sys/classes/_init/LoadConfig.php');           
+    require_once('sys/classes/_init/LoadConfig.php');
     require_once('sys/classes/util/Url.php');  
     require_once('sys/classes/util/DI.php');
     
@@ -24,8 +24,7 @@
          * Faz o carregamento dos arquivos comuns aos módulos do sistema (require_once),
          * identifica o módulo e seu respectivo Controller->action() a partir da URL e 
          * carrega as classes solicitadas na aplicação a partir de seu namespace.
-        */   
-        
+        */           
         private static $sessionLangName                 =  'GLB_LANG';
         private static $sessionModuleName               =  'GLB_MODULE';
         private static $sessionControllerName           =  'GLB_CONTROLLER';
@@ -49,6 +48,8 @@
        *  
        */          
         public static function setup(){
+            
+            //Faz a leitura dos parâmetros em config.xml na raíz do site
             $objLoadConfig  = new LoadConfig();            
             $objLoadConfig->loadConfigXml('config.xml');
             
@@ -59,6 +60,7 @@
             $action         = $arrPartsUrl['action'];            
             $method         = 'action'.ucfirst($action);                                                                                    
             
+            //Faz a leitura dos parâmetros em config.xml do módulo atual
             $configModule   = $module.'/config.xml';
             $objLoadConfig->loadConfigXml($configModule);                                             
                         
@@ -203,7 +205,8 @@
             
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
-                //DI::loadMapXml($class);
+                //$obj = DI::loadMapXml($class);
+                //die();
             } else {                          
                die(" Classe $class não encontrada");
             }                      

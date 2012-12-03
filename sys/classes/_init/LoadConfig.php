@@ -88,8 +88,7 @@
                 
                 if (is_object($nodesPlugins)) {
                     $cfgFolderPlugins       = self::valueForAttrib($nodesPlugins,'id',$idFolderPlugins);
-                    $cfgAssetsFolderRoot    = self::valueForAttrib($nodesPlugins,'id',$idAssetsFolderRoot);
-                    //echo $cfgAssetsFolderRoot;
+                    $cfgAssetsFolderRoot    = self::valueForAttrib($nodesPlugins,'id',$idAssetsFolderRoot);        
                     
                     $this->setGlobalVar($idFolderPlugins,$cfgFolderPlugins);
                     $this->setGlobalVar($idAssetsFolderRoot,$cfgAssetsFolderRoot);
@@ -113,8 +112,7 @@
                     $this->setGlobalVar($idDefaultTpl,$cfgDefaultTemplate);                      
                 }                                             
                                  
-                //Configurações de cabeçalho (includes):
-                //$nodesHeader        = $objXml->app->header;                                                                                                                                                           
+                //Configurações de cabeçalho (includes):                                                                                                                                                                        
                 $nodesInclude       = $objXml->header->include;     
                 $arrNodesInclude    = self::convertNode2Array($nodesInclude);
                 
@@ -122,14 +120,14 @@
                     $nodeValue  = (string)$arrItem['value'];    
                     $attrib     = $arrItem['attrib'];                    
                     $extension  = (string)$attrib['id'];//css,cssInc,js,jsInc,plugins                    
-                    $concat     = (isset($attrib['concat']))?(int)$attrib['concat']:0;
-                    
+                    $concat     = (isset($attrib['concat']))?(int)$attrib['concat']:0;                    
                     if (strlen($extension) > 0) {   
                         
                         //Gera o nome da constante a partir do atributo id.
                         $varName    = $extension;                      
                         $newValue   = $nodeValue;
-                        $cacheValue = self::getGlobalVar($varName);                        
+                        $cacheValue = self::getGlobalVar($varName);                   
+                    
                         if ($concat == 1 && strlen($cacheValue) > 0) {
                             //Concatena o valor da propriedade atual 
                             //com a variável global caso já esteja definida.
@@ -173,10 +171,7 @@
                 $open               = fopen($pathFileTplDefault, "a+");
 
                 //Conteúdo do novo arquivo template:
-                $fileContent = "
-                    <!-- Arquivo criado dinâmicamente em LoadConfig.php em {$date} -->".chr(13)."
-                    <div>{BODY}</div>
-                ";
+                $fileContent = "<!-- Arquivo criado dinâmicamente em LoadConfig.php, em {$date} -->".chr(13)."<div>{BODY}</div>";
                     
                 if (fwrite($open, $fileContent) === false) {
                     $msgErr = "Um template padrão não foi definido no arquivo config.xml e a tentativa de 
@@ -196,7 +191,8 @@
         }
         
         private static function getGlobalVar($varName){
-            $value = (isset($_SESSION[$varName]))?$_SESSION[$varName]:'';
+            $varName    = self::PREFIXO_VAR.$varName;
+            $value      = (isset($_SESSION[$varName]))?$_SESSION[$varName]:'';
             return $value;
         }
         

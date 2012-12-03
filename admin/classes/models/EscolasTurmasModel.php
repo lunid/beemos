@@ -390,16 +390,7 @@
          */
         static function traduzirEnsino($ensino){
             try{
-                switch($ensino){
-                    case 'M': 
-                        return 'Médio';
-                        break;
-                    case 'F': 
-                        return 'Fundamental';
-                        break;
-                    default: 
-                        return $ensino;
-                }
+                return TB\Ensino::traduzirEnsino($ensino);
             }catch(Exception $e){
                 throw $e;
             }
@@ -414,19 +405,7 @@
          */
         static function traduzirPeriodo($periodo){
             try{
-                switch($periodo){
-                    case 'M': 
-                        return 'Manhã';
-                        break;
-                    case 'T': 
-                        return 'Tarde';
-                        break;
-                    case 'N': 
-                        return 'Noite';
-                        break;
-                    default: 
-                        return $periodo;
-                }
+                return TB\Periodo::traduzirPeriodo($periodo);
             }catch(Exception $e){
                 throw $e;
             }

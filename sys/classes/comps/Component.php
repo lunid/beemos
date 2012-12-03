@@ -12,7 +12,7 @@
             
             $ext         = strtolower($ext);
             $strInc      = (string)$strInc;            
-            if (strlen($strInc) == 0) return TRUE;
+            if (strlen($strInc) == 0) return FALSE;
             
             if (($ext == 'js' || $ext == 'css')) {            
                 //Comprime a string:

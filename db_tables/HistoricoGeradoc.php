@@ -257,7 +257,7 @@
                     if(!array_key_exists($row['ENSINO'], $arrEnsino)){
                         $arrEnsino[$row['ENSINO']] = array(
                             "ENSINO"    => $row['ENSINO'],
-                            "DESC"      => EscolasTurmasModel::traduzirEnsino($row['ENSINO']),
+                            "DESC"      => Ensino::traduzirEnsino($row['ENSINO']),
                         );
                     }
                     
@@ -265,7 +265,7 @@
                     if(!array_key_exists($row['PERIODO'], $arrPeriodo)){
                         $arrPeriodo[$row['PERIODO']] = array(
                             "PERIODO"   => $row['PERIODO'],
-                            "DESC"      => EscolasTurmasModel::traduzirPeriodo($row['PERIODO']),
+                            "DESC"      => Periodo::traduzirPeriodo($row['PERIODO']),
                         );
                     }
                     
@@ -301,6 +301,8 @@
          * 
          * @param string $where Where para comando SQL
          * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * @param boolean $responderam TRUE - Todos que responderam a lista | FALSE - Todos que abriram e/ou responderam a lista
+         * 
          * <code>
          * array(
          *   "campoOrdenacao"    => 'ALUNO', 
@@ -320,7 +322,7 @@
          * 
          * @throws Exception
          */
-        public function carregarAlunosLista($where = '', $arrPg = null){
+        public function carregarAlunosLista($where = '', $arrPg = null, $responderam = true){
             try{
                 //Obejto de retorno
                 $ret            = new \stdClass();
@@ -330,6 +332,9 @@
                 //Ordenação e Paginação
                 $orderPg = "";
                 if($arrPg != null){
+                    //VErifica se o usuário deseja ordenar por conclusão
+                    $arrPg['campoOrdenacao'] = $arrPg['campoOrdenacao'] == 'CONCLUIDA' ? 'HR.ID_LST_HIST_RESPOSTA' : $arrPg['campoOrdenacao'];
+                    
                     $orderPg = "ORDER BY
                                     {$arrPg['campoOrdenacao']} {$arrPg['tipoOrdenacao']}
                                 LIMIT
@@ -342,12 +347,13 @@
                             LU.ID_CLIENTE,
                             C.NOME_PRINCIPAL AS ALUNO,
                             E.NOME AS ESCOLA,
-                            T.CLASSE AS TURMA
+                            T.CLASSE AS TURMA,
+                            IF(HR.ID_LST_HIST_RESPOSTA IS NULL, 0, 1) CONCLUIDA
                         FROM
                             SPRO_HISTORICO_GERADOC L
                         INNER JOIN
                             SPRO_LST_USUARIO LU ON LU.ID_HISTORICO_GERADOC = L.ID_HISTORICO_GERADOC
-                        INNER JOIN
+                        " . ($responderam ? "INNER" : "LEFT") . " JOIN
                             SPRO_LST_HIST_RESPOSTA HR ON HR.ID_LST_USUARIO = LU.ID_LST_USUARIO
                         INNER JOIN
                             SPRO_CLIENTE C ON C.ID_CLIENTE = LU.ID_CLIENTE
