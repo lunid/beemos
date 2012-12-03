@@ -1,34 +1,43 @@
 <!-- Modal Escrever -->
 <div id="modal_escrever" style="display:none;">
-    <table width="100%" border="0">
-        <tr>
-            <td width="10%" nowrap="nowrap" valign="top">
-                <a href="javascript:void(0);" onclick="javascript:listarPara();">
-                    Para:
-                </a>
-            </td>
-            <td width="90%" nowrap="nowrap" valign="top">
-                <textarea id="escrever_para" name="escrever_para" style="width:100%;height:50px;"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td width="10%" nowrap="nowrap" valign="top">
-                Assunto:
-            </td>
-            <td width="90%" nowrap="nowrap" valign="top">
-                <input type="text" id="escrever_assunto" name="escrever_assunto" style="width:100%;" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" valign="top">
-                Mensagem:   
-                <textarea id="escrever_msg" name="escrever_msg" style="width:100%;"></textarea>
-            </td>
-        </tr>
-    </table>
-    <div class="col_6"></div>
-    <div class="col_3"><a class="button" href=""><span class="icon gray small" data-icon="T"></span> Limpar</a></div>
-    <div class="col_3"><a class="button" href=""><span class="icon gray small" data-icon="c"></span> Enviar</a></div>
+    <form id="form_enviar_msg" name="form_enviar_msg" action="caixapostal/enviarMensagem" onsubmit="return formEnviarMsg.validate(this, true, 'validaEnvio');">
+        <!-- Erros de validação no server -->
+        <div id="form_enviar_msg_erros" class="notice warning" style="display: none;">
+            <span class="icon medium" data-icon="!"></span> <span id="form_enviar_msg_erros_msg"></span>
+            <a href="#close" class="icon close" data-icon="x"></a>
+        </div>
+        <!-- Erros de validação no server --> 
+        
+        <table width="100%" border="0">
+            <tr>
+                <td width="10%" nowrap="nowrap" valign="top">
+                    <a href="javascript:void(0);" onclick="javascript:listarPara();">
+                        Para:
+                    </a>
+                </td>
+                <td width="90%" nowrap="nowrap" valign="top">
+                    <textarea id="escrever_para" name="escrever_para" style="width:100%;height:50px;" class="required" field_name="Para"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td width="10%" nowrap="nowrap" valign="top">
+                    Assunto:
+                </td>
+                <td width="90%" nowrap="nowrap" valign="top">
+                    <input type="text" id="escrever_assunto" name="escrever_assunto" style="width:100%;" class="required" field_name="Assunto" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" valign="top">
+                    Mensagem:   
+                    <textarea id="escrever_msg" name="escrever_msg" style="width:100%;" class="required" field_name="Mensagem"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div class="col_6"></div>
+        <div class="col_3"><a class="button" href=""><span class="icon gray small" data-icon="X"></span> Cancelar</a></div>
+        <div class="col_3"><input type="submit" value="Enviar" /></div>
+    </form>
 </div>
 <!-- Modal Escrever -->
 

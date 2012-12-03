@@ -1,3 +1,12 @@
+$(document).ready(function(){
+    //Formulário de envio
+    formEnviarMsg = new Form();
+    formEnviarMsg.init('form_enviar_msg');
+});
+
+/**
+ * Abre caixa de dialogo para enciar mensagens
+ */
 function escrever(){
     $("#modal_escrever").dialog({
         title: "Escrever Mensagem",
@@ -6,6 +15,9 @@ function escrever(){
     });
 }
 
+/**
+ * Abre dialogo com alunos do Cliente para seleção de envio Para
+ */
 function listarPara(){
     //Efetua chamada Ajax para montar grid de alunos
     //Inicializando o Grid de Escolas (Aba Escolas & Turmas)
@@ -52,6 +64,9 @@ function selecionarTodosAlunos(obj){
     });
 }
 
+/**
+ * Finaliza caixa de dialogo para seleção de alinos Para
+ */
 function finalizaPara(opt){
     if(opt == true){
         //Cancatena e-mails em um string separados por pont e vírgula
@@ -78,5 +93,66 @@ function finalizaPara(opt){
     }else if(opt == false){
         //Se clicar em cancelar, a caixa de dialogo é finalizada
         $("#modal_para").dialog("close");
+    }
+    
+    //Desmarca opções
+    $("#selecionar_todos_alunos").removeAttr("checked");
+    $(".check_aluno").removeAttr("checked");
+}
+
+/**
+ * Valida retorn odo envio de mensagens e abre opção de SMS ao cliente
+ */
+function validaEnvio(ret, modalId){
+    $("#form_enviar_msg_erros").removeClass("warning success error");
+    $("#form_enviar_msg_erros_msg").html(ret.msg);
+    
+    if(ret.status){
+        $("#form_enviar_msg_erros").addClass("success");
+        $("#form_enviar_msg_erros").show();
+        
+        if(ret.sms != false){
+            site.modal(
+                "Existe(m) " + ret.sms.length + " aluno(s) com celular cadatsrado.<br />Deseja enviar essa mensagem por SMS?<br />Isso consumirá " + (ret.sms.length*5) + " crédito(s) da sua conta.", 
+                "Envia SMS", 
+                null, 
+                [
+                    {
+                        text: "Sim", 
+                        click: function(){
+                            //Aramazeno objeto de dialogo para uso após Ajax
+                            dialogSms = this;
+                            //Requisição Ajaxa
+                            $.post(
+                                'caixapostal/enviarSms',
+                                {
+                                    idCaixaMsg: ret.id,
+                                    sms: ret.sms
+                                },
+                                function(retSms){
+                                    //Exibe retorno e fecha caixa
+                                    alert(retSms.msg);
+                                    $(dialogSms).dialog("close");
+                                },
+                                'json'
+                            ).error(function(){
+                                alert("Falha na requisição ao SERVIDOR! Entre em contato com o Suporte.");
+                            });
+                        }
+                    },
+                    {
+                        text: "Não", 
+                        click: function(){
+                            //Apenas cancela disparo SMS
+                            $(this).dialog("close");
+                        }
+                    }
+                ],
+                400
+            );
+        }
+    }else{
+        $("#form_enviar_msg_erros").addClass("error");
+        $("#form_enviar_msg_erros").show();
     }
 }
