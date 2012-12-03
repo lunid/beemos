@@ -20,7 +20,7 @@
         <config id='defaultTemplate'>padrao.html</config>
     </module>
     <header>        
-        <include id='css'>yaml402-121023.yaml.core.base_min</include>
+        <include id='css'></include>
         <include id='cssInc'></include>
         <include id='js'>app.init,util.form,util.dictionary</include>
         <include id='jsInc'></include>

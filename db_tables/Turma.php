@@ -109,5 +109,68 @@
                 throw $e;
             }
         }
+        
+        public function listarAlunosCliente($ID_CLIENTE = 0, $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha no ORM ao listar alunos do Cliente!";
+                
+                //Insere Ordenação e Paginação caso exista
+                $order = "";
+                $limit = "";
+                if(is_array($arrPg)){
+                    //Ordenação
+                    if(isset($arrPg['campoOrdenacao'])){
+                        $order = " ORDER BY " . $arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao'];
+                    }
+                    
+                    //Paginação
+                    if(isset($arrPg['inicio']) && isset($arrPg['limite'])){
+                        $limit = " LIMIT " . (int)$arrPg['inicio'] . ", " . (int)$arrPg['limite'];
+                    }
+                }
+                
+                $sql = "SELECT
+                            C.ID_CLIENTE,
+                            C.NOME_PRINCIPAL,
+                            C.EMAIL,
+                            T.CLASSE,
+                            E.NOME as ESCOLA
+                        FROM
+                            SPRO_TURMA T
+                        INNER JOIN
+                            SPRO_TURMA_ALUNO TA ON TA.ID_TURMA = T.ID_TURMA
+                        INNER JOIN
+                            SPRO_CLIENTE C ON C.ID_CLIENTE = TA.ID_CLIENTE
+                        INNER JOIN
+                            SPRO_ESCOLA E ON E.ID_ESCOLA = T.ID_ESCOLA
+                        WHERE
+                            E.ID_CLIENTE = {$ID_CLIENTE}
+                        {$where}
+                        GROUP BY
+                            C.ID_CLIENTE
+                        {$order}
+                        {$limit}
+                        ;";
+                
+                $rs = $this->query($sql);
+                
+                if(!is_array($rs) || sizeof($rs) <= 0){
+                    $ret->msg = "Nenhum Aluno encontrado!";
+                    return $ret;
+                }
+                
+                //Retorna o status TRUE e po Array de turmas
+                $ret->status    = true;
+                $ret->msg       = "Alunos listados com sucesso!";
+                $ret->alunos    = $rs;
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
 ?>
