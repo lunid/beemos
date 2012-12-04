@@ -47,6 +47,43 @@
             }
         }
         
+        public function apagarMensagens($idCliente, $idsCaixaMsg){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao apagar mensagens!";
+                
+                //Validações
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID_CLIENTE inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if($idsCaixaMsg <= 0){
+                    $ret->msg = "IDS_CAIXA_MSG inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Instância da table SPRO_CAIXA_MSG
+                $tbCaixa = new TB\CaixaMsg();
+                
+                //Executa UPDATE
+                $tbCaixa->update(array(
+                    "ID_CLIENTE = %i AND ID_CAIXA_MSG IN (%s)",
+                    $idCliente,
+                    $idsCaixaMsg
+                ));
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Mensagens apagadas com sucesso!";
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
         /**
          * Carrega informações e dados das mensagens recebidas por um determinado cliente.
          * 
