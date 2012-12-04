@@ -138,6 +138,9 @@
             }
         }
         
+        /**
+         * Monta jSon para Grid de mensagens recebidas
+         */
         public function actionGridRecebidas(){
             try{
                 //Obejto de retorno
@@ -230,6 +233,9 @@
             }
         }
         
+        /**
+         * Monta jSon para Grid de mensagens enviadas
+         */
         public function actionGridEnviadas(){
             try{
                 //Obejto de retorno
@@ -369,6 +375,9 @@
             }
         }
         
+        /**
+         * Carrega os dados de uma mensagem para visualização
+         */
         public function actionCarregarMensagem(){
             try{
                 //Objeto de retorno
@@ -399,6 +408,9 @@
             }
         }
         
+        /**
+         * Apaga mensagens do grid de recebidas
+         */
         public function actionApagarMensagens(){
             try{
                 //Objeto de retorno

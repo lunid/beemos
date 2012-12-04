@@ -88,6 +88,31 @@
             }
         }
         
+        /**
+         * Carrega informações e dados das mensagens enviadas por um determinado cliente.
+         * 
+         * @param int $idCliente ID do Cliente
+         * @param string $where Cláusula de filtro
+         * @param array $arrPg Array com dados de Ordenação e Paginação Ex:
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'NOME_PRINCIPAL', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->enviadas  - Armazena os resultados (se encontrados)           <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregarMensagensEnviadas($idCliente, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno
