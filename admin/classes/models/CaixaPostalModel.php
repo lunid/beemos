@@ -69,11 +69,14 @@
                 $tbCaixa = new TB\CaixaMsg();
                 
                 //Executa UPDATE
-                $tbCaixa->update(array(
+                //$tbCaixa->STATUS = 'apagada';
+                $sql            = "UPDATE SPRO_CAIXA_MSG SET STATUS = 'apagada' WHERE ID_CLIENTE = {$idCliente} AND ID_CAIXA_MSG IN ({$idsCaixaMsg})";
+                $tbCaixa->query($sql);
+                /*$tbCaixa->update(array(
                     "ID_CLIENTE = %i AND ID_CAIXA_MSG IN (%s)",
                     $idCliente,
                     $idsCaixaMsg
-                ));
+                ));*/
                 
                 //Retorno OK
                 $ret->status    = true;

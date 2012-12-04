@@ -63,6 +63,8 @@
                             CX.ID_CLIENTE = {$idCliente}
                         AND
                             CX.TIPO IN ('recebida', 'resposta')
+                        AND
+                            CX.STATUS != 'apagada'
                         {$where}
                         {$order}
                         {$limit}
