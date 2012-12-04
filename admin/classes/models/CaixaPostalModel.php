@@ -5,7 +5,7 @@
     use \db_tables as TB;
     
     class CaixaPostalModel extends Model {
-        public function carregarMensagem($idCaixaMsg){
+        public function carregarMensagem($idCaixaMsg, $tipo){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -35,15 +35,18 @@
                     "MSG"           => $tbCaixa->MSG
                 );
                 
-                //Marca msg como lida
-                $tbCaixa->STATUS = 'aberta';
-                $tbCaixa->update(array("ID_CAIXA_MSG = %i", $tbCaixa->ID_CAIXA_MSG));
+                //Se tipo igual a recebida, marca como lida
+                if($tipo == 'recebida'){
+                    $tbCaixa->STATUS = 'aberta';
+                    $tbCaixa->update(array("ID_CAIXA_MSG = %i", $tbCaixa->ID_CAIXA_MSG));
+                }
                 
                 return $ret;
             }catch(Exception $e){
                 throw $e;
             }
         }
+        
         /**
          * Carrega informações e dados das mensagens recebidas por um determinado cliente.
          * 
@@ -86,6 +89,30 @@
                 $tbCaixa    = new TB\CaixaMsg();
                 //Pesquisa mensagens recebidas do cliente
                 $ret        = $tbCaixa->carregarMensagensRecebidas($idCliente, $where, $arrPg);
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function carregarEnviadas($idCliente, $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar lista de mensagens enviadas!";
+                
+                //Valida ID_CLIENTE
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID_CLIENTE inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Instância da table SPRO_CAIXA_MSG
+                $tbCaixa    = new TB\CaixaMsg();
+                //Pesquisa mensagens recebidas do cliente
+                $ret        = $tbCaixa->carregarMensagensEnviadas($idCliente, $where, $arrPg);
                 
                 return $ret;
             }catch(Exception $e){
@@ -204,6 +231,7 @@
                 //Verifica usuários
                 $tbCliente  = new TB\Cliente();
                 $emails     = ""; //Variável para concatenação de e-mails
+                $nomes      = ""; //Variável para concatenação de nomes dos destinatários
                 $sms        = array(); //Array de clientes com celular para disparo de SMS
                 
                 foreach($arrPara as $email){
@@ -213,6 +241,10 @@
                     //Adiciona vírgula ao disparo
                     if($emails != ""){
                         $emails  .= ", ";
+                    }
+                    
+                    if($nomes != ""){
+                        $nomes  .= ", ";
                     }
                         
                     //Verifica se o cliente foi carregado
@@ -236,9 +268,11 @@
                         }
                         
                         $emails .= $email;
+                        $nomes  .= trim($cliente->APELIDO) != '' ? $cliente->APELIDO : $cliente->NOME_PRINCIPAL;
                     }else{
                         //Concatena e-mail para disparo simples
                         $emails .= $email;
+                        $nomes  .= $email;
                     }
                 }
                 
@@ -247,8 +281,9 @@
                 mail("mpcbarone@gmail.com", $assunto, $msg);
                 
                 //Atualiza status do registro
-                $tbCaixa            = new TB\CaixaMsg($idMsg);
-                $tbCaixa->STATUS    = 'enviada';
+                $tbCaixa                = new TB\CaixaMsg($idMsg);
+                $tbCaixa->STATUS        = 'enviada';
+                $tbCaixa->NOMES_PARA    = $nomes;
                 $tbCaixa->update(array('ID_CAIXA_MSG = %i', $idMsg));
                 
                 $ret->status    = true;

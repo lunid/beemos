@@ -52,13 +52,18 @@
                             CX.DT_ENVIO,
                             CX.STATUS,
                             CX_PAI.ID_CLIENTE,
-                            (SELECT C.NOME_PRINCIPAL FROM SPRO_CLIENTE C WHERE C.ID_CLIENTE = CX_PAI.ID_CLIENTE) as NOME_PRINCIPAL
+                            C.NOME_PRINCIPAL
                         FROM
                             SPRO_CAIXA_MSG CX
                         INNER JOIN
                             SPRO_CAIXA_MSG CX_PAI ON CX_PAI.ID_CAIXA_MSG = CX.SPRO_MSG_ID
+                        INNER JOIN
+                            SPRO_CLIENTE C ON C.ID_CLIENTE = CX_PAI.ID_CLIENTE
                         WHERE
                             CX.ID_CLIENTE = {$idCliente}
+                        AND
+                            CX.TIPO IN ('recebida', 'resposta')
+                        {$where}
                         {$order}
                         {$limit}
                         ;";
@@ -74,6 +79,41 @@
                 $ret->status    = true;
                 $ret->msg       = "Mensagens listadas com sucesso!";
                 $ret->recebidas = $rs;
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function carregarMensagensEnviadas($idCliente, $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao listar recebidas!";
+                
+                //Monta ORDER BY (se houver)
+                if($arrPg['campoOrdenacao'] != '' && $arrPg['tipoOrdenacao'] != ''){
+                    $this->setOrderBy($arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao']);
+                }
+                
+                //Monta LIMIT (se houver)
+                if((int)$arrPg['inicio'] > 0 && $arrPg['limite'] > 0){
+                    $this->setLimit($arrPg['inicio'], $arrPg['limite']);
+                }
+                
+                //Executa SELECT
+                $rs = $this->findAll("ID_CLIENTE = {$idCliente} AND TIPO = 'envio' AND STATUS = 'enviada' {$where}");
+                
+                if($rs->count() <= 0){
+                    $ret->msg = "Nenhuma mensagem enviada!";
+                    return $ret;
+                }
+                
+                $ret->status    = true;
+                $ret->msg       = "Mensagens listadas com sucesso!";
+                $ret->enviadas  = $rs->getRs();
                 
                 return $ret;
             }catch(Exception $e){
