@@ -1,6 +1,6 @@
 <?php
 /**
- * Classe para gerarmos elementos HTML que precisam interagir com PHP
+ * Classe utilizada para gerar elementos HTML que precisam interagir com PHP
  * Arquivos baseados em PHTML
  * 
  * @property string $html_path Caminho dos templates HTML padrões

@@ -15,6 +15,8 @@
     require_once('sys/classes/util/DI.php');
     
     use sys\classes\util\DI;
+    use sys\classes\mvc as MVC;
+    use sys\classes\util as UTIL;
     
     class Application {
         
@@ -63,7 +65,7 @@
             //Faz a leitura dos parâmetros em config.xml do módulo atual
             $configModule   = $module.'/config.xml';
             $objLoadConfig->loadConfigXml($configModule);                                             
-                        
+
             /*
              * Inicializa a conexão com o DB.
              * Necessário para evitar erro de conexão ao executar o Controller->action().
@@ -139,7 +141,7 @@
             $arrPartsUrl['controller']   = $controller;
             $arrPartsUrl['action']       = $action;
             return $arrPartsUrl;
-        }
+        }                   
         
         private static function getPartUrl($pathPart,$default='index'){
            $value = (isset($pathPart) && $pathPart != null)?$pathPart:$default; 
@@ -163,8 +165,56 @@
         }
         
         private static function setModule($module){
-            $_SESSION[self::$sessionModuleName] = $module;
+            $_SESSION[self::$sessionModuleName] = $module;                                                                  
+
+            try {                
+                $cfgFolderViews     = LoadConfig::folderViews();               
+                $cfgFolderTemplate  = LoadConfig::folderTemplate();
+                $pathTplFolder  = $module.'/'.$cfgFolderViews.'/'.self::getLanguage().'/'.$cfgFolderTemplate.'/'; 
+                self::vldTemplate($pathTplFolder);
+            } catch(\Exception $e) {
+                die('LoadConfig->loadVars(): '.$e->getMessage());
+            }            
         }
+        
+        
+        /**
+         * Valida o template padrão da aplicação e cria um arquivo novo 
+         * na pasta de templates caso ainda não exista.
+         * 
+         * @param string $pathTplFolder Path da pasta de templates
+         * @return void
+         */
+        private static function vldTemplate($pathTplFolder){
+            $cfgDefaultTemplate = LoadConfig::defaultTemplate();
+            $pathFileTplDefault = $pathTplFolder.$cfgDefaultTemplate;            
+            if (!file_exists($pathFileTplDefault)) {
+                //Arquivo template não existe                
+                if (!is_dir($pathTplFolder)) {
+                    //Diretório de templates ainda não existe. Tenta criá-lo.
+                    if (!mkdir($pathTplFolder, 0, true)) {
+                        $msgErr = 'A tentativa de criar a pasta de templates em '.$pathTplFolder.' falhou.';
+                        throw new \Exception( $msgErr );                           
+                    }                  
+                }   
+
+                $date               = date('d/m/Y H:i:s'); 
+                $pathFileTplDefault = str_replace('//','/',$pathFileTplDefault);
+                $open               = fopen($pathFileTplDefault, "a+");
+
+                //Conteúdo do novo arquivo template:
+                $fileContent = "<!-- Arquivo criado dinâmicamente em LoadConfig.php, em {$date} -->".chr(13)."<div>{BODY}</div>";
+                    
+                if (fwrite($open, $fileContent) === false) {
+                    $msgErr = "Um template padrão não foi definido no arquivo config.xml e a tentativa de 
+                    gerar um novo arquivo ({$pathFileTplDefault}) falhou. Verifique a tag 
+                    <fileName id='default'>nomeDoArquivoTemplate.html</fileName>";
+                    $msgErr = htmlentities($msgErr);                     
+                    throw new \Exception( $msgErr );                                                                  
+                }
+                fclose($open);                  
+            }            
+        }            
         
         public static function getModule(){
             return self::getVarApplication(self::$sessionModuleName);      
