@@ -88,7 +88,9 @@ table {
     white-space: pre;
 }
 
-
+#gbox_grid_caixa_postal{
+    width: 600px;
+}
 
 #gs_STATUS{
     -moz-box-sizing: border-box;
