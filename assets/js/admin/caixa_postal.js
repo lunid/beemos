@@ -1,8 +1,80 @@
 $(document).ready(function(){
+    //Carrega Grid de Mensagens Recebidas
+    $("#grid_caixa_postal").jqGrid({
+        url: 'caixapostal/gridRecebidas',
+        datatype: "json",
+        colNames:['', 'De', 'Assunto', 'Data', 'Status'],
+        colModel:[
+                //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                {name:'BOX', index:'BOX', width:10, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
+                {name:'NOME_PRINCIPAL', index:'NOME_PRINCIPAL', width:70, search: true, cellattr: verificaNaoLidas},
+                {name:'ASSUNTO', index:'ASSUNTO', search: true, cellattr: verificaNaoLidas},
+                {name:'DT_ENVIO', index:'DT_ENVIO', width:50, align:'center', search: true, cellattr: verificaNaoLidas},
+                {name:'STATUS', index:'STATUS', hidden: true, cellattr: verificaNaoLidas}
+        ],
+        rowNum:10,
+        rowList:[10,30,60],
+        pager: '#pg_caixa_postal',
+        sortname: 'DT_ENVIO',
+        viewrecords: true,
+        sortorder: "DESC",
+        caption:"Recebidas",
+        width: 750,
+        height: 'auto',
+        scrollOffset: 0
+    });
+
+    $("#grid_caixa_postal").filterToolbar();
+    
     //Formulário de envio
     formEnviarMsg = new Form();
     formEnviarMsg.init('form_enviar_msg');
 });
+
+/**
+ * Verifica mensagens que não foram lindas e troca cor do texto
+ */
+function verificaNaoLidas(rowId, tv, rawObject, cm, rdata) {
+    if(rawObject[4] == 'nao_lida'){
+        return " style='color:#2971D5;font-weight:bold;' ";
+    }
+}
+
+function abreMsg(id){
+    $.post(
+        'caixapostal/carregarMensagem',
+        {
+            idCaixaMsg: id
+        },
+        function(ret){
+            if(ret.status){
+                //Armaze HTML do link na celula DE
+                var cell    = $("#grid_caixa_postal").getCell(id, 1);
+                cell        = cell.replace("#2971D5", "#000");
+
+                $("#grid_caixa_postal").setCell(id, 1, cell, {color:'#000', fontWeight:'normal'});
+                $("#grid_caixa_postal").setCell(id, 2, '', {color:'#000', fontWeight:'normal'});
+                $("#grid_caixa_postal").setCell(id, 3, '', {color:'#000', fontWeight:'normal'});
+                
+                //Prenche campos do Modal e Abre para visualização
+                $("#abrir_msg").html(ret.mensagem.MSG);
+                
+                //Abre Modal
+                $("#modal_abrir").dialog({
+                    title: ret.mensagem.ASSUNTO,
+                    modal: true,
+                    width: 800,
+                    position: [null, 50]
+                });
+            }else{
+                alert(ret.msg);
+            }
+        },
+        'json'
+    ).error(function(){
+        alert("Falha na requisição ao SERVIDOR! Entre em contato com o Suporte.");
+    });
+}
 
 /**
  * Abre caixa de dialogo para enciar mensagens

@@ -5,6 +5,94 @@
     use \db_tables as TB;
     
     class CaixaPostalModel extends Model {
+        public function carregarMensagem($idCaixaMsg){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar mensagem!";
+                
+                //Valida ID_CLIENTE
+                if((int)$idCaixaMsg <= 0){
+                    $ret->msg = "ID_CAIXA_MSG inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Instância da table SPRO_CAIXA_MSG
+                $tbCaixa    = new TB\CaixaMsg($idCaixaMsg);
+                
+                if($tbCaixa->ID_CAIXA_MSG <= 0){
+                    $ret->msg = "Mensagem não encontrada!";
+                    return $ret;
+                }
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Mensagem carregada com sucesso!";
+                $ret->mensagem  = array(
+                    "ID_CAIXA_MSG"  => $tbCaixa->ID_CAIXA_MSG,
+                    "ASSUNTO"       => $tbCaixa->ASSUNTO,
+                    "MSG"           => $tbCaixa->MSG
+                );
+                
+                //Marca msg como lida
+                $tbCaixa->STATUS = 'aberta';
+                $tbCaixa->update(array("ID_CAIXA_MSG = %i", $tbCaixa->ID_CAIXA_MSG));
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        /**
+         * Carrega informações e dados das mensagens recebidas por um determinado cliente.
+         * 
+         * @param int $idCliente ID do Cliente
+         * @param string $where Cláusula de filtro
+         * @param array $arrPg Array com dados de Ordenação e Paginação Ex:
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'NOME_PRINCIPAL', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->recebidas - Armazena os resultados (se encontrados)           <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function carregarRecebidas($idCliente, $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar lista de mensagens recebidas!";
+                
+                //Valida ID_CLIENTE
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID_CLIENTE inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Instância da table SPRO_CAIXA_MSG
+                $tbCaixa    = new TB\CaixaMsg();
+                //Pesquisa mensagens recebidas do cliente
+                $ret        = $tbCaixa->carregarMensagensRecebidas($idCliente, $where, $arrPg);
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
         /**
          * Carrega lista de alunos relacionados a um cliente e suas turmas e escolas
          * 
@@ -161,7 +249,7 @@
                 //Atualiza status do registro
                 $tbCaixa            = new TB\CaixaMsg($idMsg);
                 $tbCaixa->STATUS    = 'enviada';
-                $tbCaixa->update(array('ID_SPRO_CAIXA_MSG = %i', $idMsg));
+                $tbCaixa->update(array('ID_CAIXA_MSG = %i', $idMsg));
                 
                 $ret->status    = true;
                 $ret->msg       = "E-mail enviado com sucesso!";
