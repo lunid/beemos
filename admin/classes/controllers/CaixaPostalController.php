@@ -138,6 +138,9 @@
             }
         }
         
+        /**
+         * Monta jSon para Grid de mensagens recebidas
+         */
         public function actionGridRecebidas(){
             try{
                 //Obejto de retorno
@@ -206,7 +209,7 @@
                     foreach($rs->recebidas as $row) {
                         $ret->rows[$i]['id']   = $row['ID_CAIXA_MSG'];
                         $ret->rows[$i]['cell'] = array(
-                            "<input type='checkbox' id='recebida_{$row['ID_CAIXA_MSG']}' name='recebida_{$row['ID_CAIXA_MSG']}' class='check_aluno' value='{$row['ID_CAIXA_MSG']}' />",
+                            "<input type='checkbox' id='recebida_{$row['ID_CAIXA_MSG']}' name='recebida_{$row['ID_CAIXA_MSG']}' class='check_recebida' value='{$row['ID_CAIXA_MSG']}' />",
                             "<a href='javascript:void(0);' onclick='javascript:abreMsgRecebida({$row['ID_CAIXA_MSG']})' style='color:".($row['STATUS'] == 'nao_lida' ? '#2971D5' : '#000').";'>" . $row['NOME_PRINCIPAL'] . "</a>",
                             $row['ASSUNTO'],
                             Date::formatDate($row['DT_ENVIO'], 'DD/MM/AAAA HH:MM:SS'),
@@ -230,6 +233,9 @@
             }
         }
         
+        /**
+         * Monta jSon para Grid de mensagens enviadas
+         */
         public function actionGridEnviadas(){
             try{
                 //Obejto de retorno
@@ -298,7 +304,6 @@
                     foreach($rs->enviadas as $row) {
                         $ret->rows[$i]['id']   = $row->ID_CAIXA_MSG;
                         $ret->rows[$i]['cell'] = array(
-                            "<input type='checkbox' id='recebida_{$row->ID_CAIXA_MSG}' name='recebida_{$row->ID_CAIXA_MSG}' class='check_aluno' value='{$row->ID_CAIXA_MSG}' />",
                             $row->NOMES_PARA,
                             "<a href='javascript:void(0);' onclick='javascript:abreMsgEnviada({$row->ID_CAIXA_MSG})'>" . $row->ASSUNTO . "</a>",
                             Date::formatDate($row->DT_ENVIO, 'DD/MM/AAAA HH:MM:SS')
@@ -370,6 +375,9 @@
             }
         }
         
+        /**
+         * Carrega os dados de uma mensagem para visualização
+         */
         public function actionCarregarMensagem(){
             try{
                 //Objeto de retorno
@@ -384,11 +392,43 @@
                 //Verifica ID
                 if($idCaixaMsg <= 0){
                     $ret->msg = "ID_CAIXA)MSG inválido ou nulo!";                    
+                }else{
+                    //Instância model e carrega mensagem através do ID enviado
+                    $mdCaixa    = new CaixaPostalModel();
+                    $ret        = $mdCaixa->carregarMensagem($idCaixaMsg, $tipo);
                 }
                 
-                //Instância model e carrega mensagem através do ID enviado
-                $mdCaixa    = new CaixaPostalModel();
-                $ret        = $mdCaixa->carregarMensagem($idCaixaMsg, $tipo);
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Erro: " . utf8_decode($e->getMessage()) . " - Arquivo: " . $e->getFile() . " - Linha: " . $e->getFile();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Apaga mensagens do grid de recebidas
+         */
+        public function actionApagarMensagens(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao apagar mensagens! Entre em contato com o suporte.";
+                                
+                //Recebe Dados
+                $idsCaixaMsg = Request::post('ids');
+                
+                //Verifica ID
+                if($idsCaixaMsg == ''){
+                    $ret->msg = "IDS_CAIXA_MSG inválido ou nulo!";                                        
+                }else{
+                    //Instância model e carrega mensagem através do ID enviado
+                    $mdCaixa    = new CaixaPostalModel();
+                    $ret        = $mdCaixa->apagarMensagens(26436, $idsCaixaMsg);
+                }
                 
                 echo json_encode($ret);
             }catch(Exception $e){

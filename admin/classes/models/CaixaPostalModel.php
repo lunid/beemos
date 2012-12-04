@@ -5,6 +5,21 @@
     use \db_tables as TB;
     
     class CaixaPostalModel extends Model {
+        /**
+         * Carrega os dados de uma determinada mensagem
+         * 
+         * @param int $idCaixaMsg ID da mensagem a ser carregada
+         * @param string $tipo enviada ou recebida
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregarMensagem($idCaixaMsg, $tipo){
             try{
                 //Objeto de retorno
@@ -41,6 +56,61 @@
                     $tbCaixa->update(array("ID_CAIXA_MSG = %i", $tbCaixa->ID_CAIXA_MSG));
                 }
                 
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Marca com o STATUS de 'apagada' a(s) mensagem(ns) enviadas via string $idsCaixaMsg
+         * 
+         * @param int $idCliente ID do cliente que deseja apagar mensagens
+         * @param string $idsCaixaMsg String com IDs de mensagens para cláusula IN. Ex: 1,33,75,4
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function apagarMensagens($idCliente, $idsCaixaMsg){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao apagar mensagens!";
+                
+                //Validações
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID_CLIENTE inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if($idsCaixaMsg <= 0){
+                    $ret->msg = "IDS_CAIXA_MSG inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Instância da table SPRO_CAIXA_MSG
+                $tbCaixa = new TB\CaixaMsg();
+                
+                //Executa UPDATE
+                //$tbCaixa->STATUS = 'apagada';
+                $sql            = "UPDATE SPRO_CAIXA_MSG SET STATUS = 'apagada' WHERE ID_CLIENTE = {$idCliente} AND ID_CAIXA_MSG IN ({$idsCaixaMsg})";
+                $tbCaixa->query($sql);
+                /*$tbCaixa->update(array(
+                    "ID_CLIENTE = %i AND ID_CAIXA_MSG IN (%s)",
+                    $idCliente,
+                    $idsCaixaMsg
+                ));*/
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Mensagens apagadas com sucesso!";
                 return $ret;
             }catch(Exception $e){
                 throw $e;
@@ -96,6 +166,31 @@
             }
         }
         
+        /**
+         * Carrega informações e dados das mensagens enviadas por um determinado cliente.
+         * 
+         * @param int $idCliente ID do Cliente
+         * @param string $where Cláusula de filtro
+         * @param array $arrPg Array com dados de Ordenação e Paginação Ex:
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'NOME_PRINCIPAL', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->enviadas  - Armazena os resultados (se encontrados)           <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregarEnviadas($idCliente, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno

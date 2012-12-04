@@ -292,11 +292,10 @@ function exibeCaixa(tipo){
         $("#grid_caixa_saida").jqGrid({
             url: 'caixapostal/gridEnviadas',
             datatype: "json",
-            colNames:['', 'Para', 'Assunto', 'Data'],
+            colNames:['Para', 'Assunto', 'Data'],
             colModel:[
                     //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
-                    {name:'BOX', index:'BOX', width:10, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
-                    {name:'NOMES_PARA', index:'NOMES_PARA', width:80, search: true},
+                    {name:'NOMES_PARA', index:'NOMES_PARA', width:90, search: true, cellattr: site.formataGrid},
                     {name:'ASSUNTO', index:'ASSUNTO', search: true},
                     {name:'DT_ENVIO', index:'DT_ENVIO', width:50, align:'center', search: true, 
                         searchoptions:{
@@ -328,4 +327,49 @@ function exibeCaixa(tipo){
         $("#recebidas").hide();
         $("#enviadas").show();
     }
+}
+
+/**
+ * Marca e Desmarca todas as msgs da caixa postal
+ */
+function selecionarTodas(obj){
+    $(".check_recebida").each(function(){
+        this.checked = obj.checked;
+    });
+}
+
+function apagar(){
+    var ids = ""; //Concatena IDs
+    
+    $(".check_recebida").each(function(){
+        if(this.checked){
+            if(ids != ""){
+                ids += ",";
+            }
+            ids += this.value;
+        }
+    });
+    
+    //Verifica se algum ID foi selecionado
+    if(ids == ""){
+        alert("Selecione uma ou mais mensagens!");
+        return false;
+    }
+    
+    $.post(
+        'caixapostal/apagarMensagens',
+        {
+            ids: ids
+        },
+        function(ret){
+            if(ret.status){
+                $("#grid_caixa_postal").trigger("reloadGrid");
+                $("#selecionarRecebidas").removeAttr("checked");
+            }
+            alert(ret.msg);
+        },
+        'json'
+    ).error(function(){
+        alert("Falha na requisição ao SERVIDOR! Entre em contato com o Suporte.");
+    });
 }
