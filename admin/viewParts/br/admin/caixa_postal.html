@@ -65,7 +65,7 @@
         </tr>
     </table>
     <div class="col_6"></div>
-    <div class="col_3"><a class="button" href=""><span class="icon gray small" data-icon="X"></span> Cancelar</a></div>
+    <div class="col_3"><a class="button" href="javascript:void(0);" onclick="javascript:$('#modal_abrir').dialog('close');"><span class="icon gray small" data-icon="X"></span> Fechar</a></div>
 </div>
 <!-- Modal Abrir -->
 
@@ -84,8 +84,12 @@
                 <span class="icon gray small" data-icon="7"></span> Escrever
             </button>
         </a>
-        <button class="bt_e-mail"><span class="icon gray small" data-icon="("></span> Entrada</button>
-        <button class="bt_e-mail"><span class="icon gray small" data-icon="A"></span> Enviados</button>
+        <button class="bt_e-mail" onclick="javascript:exibeCaixa('recebidas');">
+            <span class="icon gray small" data-icon="("></span> Entrada
+        </button>
+        <button class="bt_e-mail" onclick="javascript:exibeCaixa('enviadas');">
+            <span class="icon gray small" data-icon="A"></span> Enviados
+        </button>
         <!-- ========= fim  botoes navegacao caixa de e-mail  ================ -->
     </div>
 
@@ -99,11 +103,20 @@
             <button class="small"><span class="icon small" data-icon="x"></span> Apagar selecionadas</button>
         </div>
         <!-- ========= botoes superior caixa de e-mail  ================ -->
-
-        <!-- ========= grid e-mails  ================ -->
-        <table id="grid_caixa_postal" style="width:100%;"></table>
-        <div id="pg_caixa_postal"></div>
-        <!-- ========= fim grid e-mails  ================ -->
+        
+        <!-- ========= grid e-mails recebidos ================ -->
+        <div id="recebidas" style="width:100%;">
+            <table id="grid_caixa_postal" style="width:100%;"></table>
+            <div id="pg_caixa_postal"></div>
+        </div>
+        <!-- ========= fim grid e-mails recebidos ================ -->
+        
+        <!-- ========= grid e-mails enviadas ================ -->
+        <div id="enviadas" style="width:100%;display:none;">
+            <table id="grid_caixa_saida" style="width:100%;"></table>
+            <div id="pg_caixa_saida"></div>
+        </div>
+        <!-- ========= fim grid e-mails enviadas ================ -->
     </div>
     <!-- Espaçamento -->
     <div class="espaco"></div>

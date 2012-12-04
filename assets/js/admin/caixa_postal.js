@@ -9,7 +9,17 @@ $(document).ready(function(){
                 {name:'BOX', index:'BOX', width:10, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
                 {name:'NOME_PRINCIPAL', index:'NOME_PRINCIPAL', width:70, search: true, cellattr: verificaNaoLidas},
                 {name:'ASSUNTO', index:'ASSUNTO', search: true, cellattr: verificaNaoLidas},
-                {name:'DT_ENVIO', index:'DT_ENVIO', width:50, align:'center', search: true, cellattr: verificaNaoLidas},
+                {name:'DT_ENVIO', index:'DT_ENVIO', width:50, align:'center', search: true, 
+                    searchoptions:{
+                        dataInit:function(elem){
+                            $(elem).datepicker({
+                                onSelect: function() {
+                                    $("#grid_caixa_postal")[0].triggerToolbar();
+                                }
+                            });
+                        }
+                    }, 
+                    cellattr: verificaNaoLidas},
                 {name:'STATUS', index:'STATUS', hidden: true, cellattr: verificaNaoLidas}
         ],
         rowNum:10,
@@ -40,11 +50,16 @@ function verificaNaoLidas(rowId, tv, rawObject, cm, rdata) {
     }
 }
 
-function abreMsg(id){
+/**
+ * Abre uma mensagem recebida para exibição
+ * Controla cores no grid
+ */
+function abreMsgRecebida(id){
     $.post(
         'caixapostal/carregarMensagem',
         {
-            idCaixaMsg: id
+            idCaixaMsg: id,
+            tipo: 'recebida'
         },
         function(ret){
             if(ret.status){
@@ -56,6 +71,38 @@ function abreMsg(id){
                 $("#grid_caixa_postal").setCell(id, 2, '', {color:'#000', fontWeight:'normal'});
                 $("#grid_caixa_postal").setCell(id, 3, '', {color:'#000', fontWeight:'normal'});
                 
+                //Prenche campos do Modal e Abre para visualização
+                $("#abrir_msg").html(ret.mensagem.MSG);
+                
+                //Abre Modal
+                $("#modal_abrir").dialog({
+                    title: ret.mensagem.ASSUNTO,
+                    modal: true,
+                    width: 800,
+                    position: [null, 50]
+                });
+            }else{
+                alert(ret.msg);
+            }
+        },
+        'json'
+    ).error(function(){
+        alert("Falha na requisição ao SERVIDOR! Entre em contato com o Suporte.");
+    });
+}
+
+/**
+ * Abre uma mensagem enviada para exibição
+ */
+function abreMsgEnviada(id){
+    $.post(
+        'caixapostal/carregarMensagem',
+        {
+            idCaixaMsg: id,
+            tipo: 'enviada'
+        },
+        function(ret){
+            if(ret.status){
                 //Prenche campos do Modal e Abre para visualização
                 $("#abrir_msg").html(ret.mensagem.MSG);
                 
@@ -183,6 +230,10 @@ function validaEnvio(ret, modalId){
         $("#form_enviar_msg_erros").addClass("success");
         $("#form_enviar_msg_erros").show();
         
+        //Atualiza Grids
+        $("#grid_caixa_postal").trigger("reloadGrid");
+        $("#grid_caixa_saida").trigger("reloadGrid");
+        
         if(ret.sms != false){
             site.modal(
                 "Existe(m) " + ret.sms.length + " aluno(s) com celular cadatsrado.<br />Deseja enviar essa mensagem por SMS?<br />Isso consumirá " + (ret.sms.length*5) + " crédito(s) da sua conta.", 
@@ -226,5 +277,55 @@ function validaEnvio(ret, modalId){
     }else{
         $("#form_enviar_msg_erros").addClass("error");
         $("#form_enviar_msg_erros").show();
+    }
+}
+
+/**
+ * Exibe Caixa de Entrada ou Saída
+ */
+function exibeCaixa(tipo){
+    if(tipo == 'recebidas'){
+        $("#enviadas").hide();
+        $("#recebidas").show();
+    }else if(tipo == 'enviadas'){
+        //Carrega Grid de Mensagens Enviadas
+        $("#grid_caixa_saida").jqGrid({
+            url: 'caixapostal/gridEnviadas',
+            datatype: "json",
+            colNames:['', 'Para', 'Assunto', 'Data'],
+            colModel:[
+                    //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+                    {name:'BOX', index:'BOX', width:10, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
+                    {name:'NOMES_PARA', index:'NOMES_PARA', width:80, search: true},
+                    {name:'ASSUNTO', index:'ASSUNTO', search: true},
+                    {name:'DT_ENVIO', index:'DT_ENVIO', width:50, align:'center', search: true, 
+                        searchoptions:{
+                            dataInit:function(elem){
+                                $(elem).datepicker({
+                                    onSelect: function() {
+                                        $("#grid_caixa_saida")[0].triggerToolbar();
+                                    }
+                                });
+                            }
+                        }
+                    }
+            ],
+            rowNum:10,
+            rowList:[10,30,60],
+            pager: '#pg_caixa_saida',
+            sortname: 'DT_ENVIO',
+            viewrecords: true,
+            sortorder: "DESC",
+            caption:"Enviadas",
+            width: 750,
+            height: 'auto',
+            scrollOffset: 0
+        });
+
+        $("#grid_caixa_saida").filterToolbar();
+        
+        //Exibe tela
+        $("#recebidas").hide();
+        $("#enviadas").show();
     }
 }
