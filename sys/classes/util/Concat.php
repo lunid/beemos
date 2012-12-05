@@ -9,7 +9,7 @@ namespace sys\classes\util;
  * O exemplo abaixo define uma matriz a partir de uma string e imprime "Olá João. Seu pedido é 123456.":
  * <code>
  *      $objConcat = new Concat();
- *      $objConcat->setMatriz("Olá {NOME}. Seu pedido é {NUM_PEDIDO}");
+ *      $objConcat->setStrMatriz("Olá {NOME}. Seu pedido é {NUM_PEDIDO}");
  *      $objConcat->addParam('NOME','João');
  *      $objConcat->addParam('NUM_PEDIDO','123456');
  *      echo $objConcat->render();
@@ -51,7 +51,7 @@ class Concat {
      */
     function setFile($pathFile){
         if (file_exists($pathFile)){            
-            $this->setMatriz(file_get_contents($pathFile));
+            $this->setStrMatriz(file_get_contents($pathFile));
         } else {
             $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_FOUND');    
             $msgErr = str_replace('{FILE}',$pathFile,$msgErr);
@@ -63,10 +63,10 @@ class Concat {
      * Guarda uma string que servirá de matriz para mesclar uma ou mais variáveis a partir 
      * do método addParam();
      * 
-     * @param string $stringMatriz
+     * @param String $stringMatriz
      * @return void 
      */
-    function setMatriz($stringMatriz){
+    function setStrMatriz($stringMatriz){
         $this->stringMatriz = $stringMatriz;       
     }
     
@@ -79,7 +79,7 @@ class Concat {
      * O exemplo abaixo imprime "Olá João. Seu pedido é 123456.":
      * <code>
      *      $objConcat = new Concat();
-     *      $objConcat->setMatriz("Olá {NOME}. Seu pedido é {NUM_PEDIDO}");
+     *      $objConcat->setStrMatriz("Olá {NOME}. Seu pedido é {NUM_PEDIDO}");
      *      $objConcat->addParam('NOME','João');
      *      $objConcat->addParam('NUM_PEDIDO','123456');
      *      echo $objConcat->render();
@@ -91,7 +91,7 @@ class Concat {
      */
     function addParam($var,$value) {
         $stringConcat = $this->getStringConcat();//stringMatriz + variáveis concatenadas até o momento.
-        if (strlen($stringMatriz) > 0) {
+        if (strlen($stringConcat) > 0) {
             $tag             = "{{$var}}";
             $stringConcat    = str_replace($tag,$value,$stringConcat);
             $this->setStringConcat($stringConcat);

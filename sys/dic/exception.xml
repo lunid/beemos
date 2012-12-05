@@ -91,7 +91,7 @@
             <msg id='FILE_NOT_FOUND'>Arquivo {FILE} não localizado.</msg>
         </setFile>
         <addParam>
-            <msg id='STRING_NULL'>Uma string a ser usada como matriz deve ser informada. Use setFile() ou setString() antes de chamar o método addParam().</msg>
+            <msg id='STRING_NULL'>Um parâmetro string deve ser informado. Use setFile() ou setString() antes de chamar o método addParam().</msg>
         </addParam>        
     </Concat>
 </root>
