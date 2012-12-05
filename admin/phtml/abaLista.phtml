@@ -51,6 +51,7 @@
             &nbsp;
             <input type="text" placeholder="Fim" id="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
         </div>
+    <div class="espaco"></div>
         <hr class="alt1" />
     <!-- Período -->
 
@@ -119,17 +120,17 @@
         </div>
         <div class="col_12"> 
             <div class="col_2">
-                Tempo
+                <h5>Tempo</h5>
                 &nbsp;
-                <span class="icon gray" data-icon="t"><input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" /></input>
-</span>            </div>
+                <input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+            </div>
         </div>
         
     <!-- Tempo de Vida -->
 <div class="espaco"></div>
 <div class="espaco"></div>
     <!-- Opções de Configuração da Lista --> 
-
+</div>
 
 <div id="lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
 <!-- Resultados da Lista -->
