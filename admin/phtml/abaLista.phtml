@@ -41,15 +41,11 @@
         <div class="col_12">  
             <blockquote>Determina o período de validade da lista, entre uma data inicial e uma final.</blockquote>
         </div>     
-        <div class="col_3">
-            Início
-            &nbsp;
-            <input type="text" placeholder="Início" id="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_ini periodo" value="<?=$attrs['PERIODO_INICIO']?>" onchange="alteraPeriodo(this.value, 'INI', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+        <div class="col_1">Início</div>
+        <div class="col_3"><input type="text" placeholder="Início" id="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_inicio_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_ini periodo" value="<?=$attrs['PERIODO_INICIO']?>" onchange="alteraPeriodo(this.value, 'INI', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
         </div>
-        <div class="col_3">
-            Fim
-            &nbsp;
-            <input type="text" placeholder="Fim" id="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+        <div class="col_1">Fim</div>
+        <div class="col_2"><input type="text" placeholder="Fim" id="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_final_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="periodo_fim periodo" value="<?=$attrs['PERIODO_FINAL']?>" onchange="alteraPeriodo(this.value, 'FIM', <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
         </div>
     <div class="espaco"></div>
         <hr class="alt1" />
@@ -114,15 +110,15 @@
             <h5>Tempo de Vida:</h5>
         </div>
         <div class="col_12">  
-            <blockquote>Determina o tempo (em horas e minutos) que o Aluno possui para iniciar e finalizar a lista. Ex: 00:30 (Meia hora)
+            <blockquote>Determina o tempo (em horas e minutos) que o Aluno possui para iniciar e finalizar a lista.<p>Ex: 00:30 (Meia hora)</p>
             <br />
             Caso o tempo seja 00:00 o Aluno poderá finalizar a lista no tempo necessário para ele, sem limite.</blockquote>
         </div>
         <div class="col_12"> 
-            <div class="col_2">
-                <h5>Tempo</h5>
+            <div class="col_1">
+                <h5>Tempo</h5></div>
                 &nbsp;
-                <input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
+                <div class="col_2"><input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
             </div>
         </div>
         
