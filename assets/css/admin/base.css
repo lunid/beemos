@@ -17,6 +17,30 @@ body{
 }
 
 
+#logo{
+    widows: 200px;
+    height: 40px;
+    float: left;
+    margin: -3px 0 0 26px;
+    color: #777;
+}
+
+#logo h1{
+    float: left;
+    font-size: 24px;
+    font-family: "Trebuchet Ms",arial,verdana,sans-serif;
+    font-weight: normal;
+}
+
+
+#logo h2{
+    font-size: 12px;
+    text-top:-10px;
+    float: left;
+    font-family: "Trebuchet Ms",arial,verdana,sans-serif;
+    font-weight: normal;
+}
+
 #coluna_esquerda {
     width:168px;
     height: 500px;
