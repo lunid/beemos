@@ -100,13 +100,6 @@
                 if (is_object($nodesModule)) {
                     $cfgFolderTemplate      = self::valueForAttrib($nodesModule,'id',$idFolderTpl);                
                     $cfgDefaultTemplate     = self::valueForAttrib($nodesModule,'id',$idDefaultTpl);                
-                    $pathTplFolder          = $cfgDefaultModule.'/'.$cfgFolderViews.'/'.$cfgDefaultLang.'/'.$cfgFolderTemplate.'/';                               
-                    
-                    try {
-                        $this->vldTemplate($pathTplFolder,$cfgDefaultTemplate);
-                    } catch(\Exception $e) {
-                        die('LoadConfig->loadVars(): '.$e->getMessage());
-                    }
 
                     $this->setGlobalVar($idFolderTpl,$cfgFolderTemplate);
                     $this->setGlobalVar($idDefaultTpl,$cfgDefaultTemplate);                      
@@ -145,44 +138,7 @@
                 //Nenhuma mensagem foi localizada no XML informado.
                 echo 'O arquivo config.xml é válido, porém a estrutura XML epserada parece estar incorreta.';                    
             }            
-        }
-        
-        /**
-         * Valida o template padrão da aplicação e cria um arquivo novo 
-         * na pasta de templates caso ainda não exista.
-         * 
-         * @param string $pathTplFolder Path da pasta de templates
-         * @param string $cfgDefaultTemplate nome do arquivo template padrão
-         */
-        private function vldTemplate($pathTplFolder,$cfgDefaultTemplate){
-            $pathFileTplDefault = $pathTplFolder.$cfgDefaultTemplate;            
-            if (!file_exists($pathFileTplDefault)) {
-                //Arquivo template não existe
-                if (!is_dir($pathTplFolder)) {
-                    //Diretório de templates ainda não existe. Tenta criá-lo.
-                    if (!mkdir($pathTplFolder, 0, true)) {
-                        $msgErr = 'A tentativa de criar a pasta de templates em '.$pathTplFolder.' falhou.';
-                        throw new \Exception( $msgErr );                           
-                    }                  
-                }   
-
-                $date               = date('d/m/Y H:i:s'); 
-                $pathFileTplDefault = str_replace('//','/',$pathFileTplDefault);
-                $open               = fopen($pathFileTplDefault, "a+");
-
-                //Conteúdo do novo arquivo template:
-                $fileContent = "<!-- Arquivo criado dinâmicamente em LoadConfig.php, em {$date} -->".chr(13)."<div>{BODY}</div>";
-                    
-                if (fwrite($open, $fileContent) === false) {
-                    $msgErr = "Um template padrão não foi definido no arquivo config.xml e a tentativa de 
-                    gerar um novo arquivo ({$pathFileTplDefault}) falhou. Verifique a tag 
-                    <fileName id='default'>nomeDoArquivoTemplate.html</fileName>";
-                    $msgErr = htmlentities($msgErr);                     
-                    throw new \Exception( $msgErr );                                                                  
-                }
-                fclose($open);                  
-            }            
-        }               
+        }                
         
         private function setGlobalVar($varName,$value){
            $varName             = self::PREFIXO_VAR.$varName;  

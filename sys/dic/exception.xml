@@ -70,6 +70,9 @@
             <msg id='FILE_NOT_EXISTS'>Arquivo não localizado: {FILE}.</msg>
         </exists>
     </File>
+    <EmailComponent>
+        <msg id='EMAIL_NULL'>Um parâmetro obrigatório não foi informado.Uma conta de e-mail é obritatória ao solicitar a ação {ACTION}.</msg>
+    </EmailComponent>
     <Cache>
         <__construct>
             <msg id='ERR_MEMCACHE_CONN'>Falha ao se conectar com o MemCache.</msg>
@@ -83,4 +86,12 @@
             Verifique se os parâmetros informados estão corretos.</msg> 
         </setTime>
     </Cache>
+    <Concat>
+        <setFile>
+            <msg id='FILE_NOT_FOUND'>Arquivo {FILE} não localizado.</msg>
+        </setFile>
+        <addParam>
+            <msg id='STRING_NULL'>Um parâmetro string deve ser informado. Use setFile() ou setString() antes de chamar o método addParam().</msg>
+        </addParam>        
+    </Concat>
 </root>
