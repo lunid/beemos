@@ -6,7 +6,7 @@
      */
     class Wsdl {
         private $wsdl; //Objeto com a instância de WSDLCreator
-        private $class; //Classe da qual será gerado o WSDL
+        private $uri; //URL do WSDL
         
         /**
          * Inicia a geração do WSDL com seus parâmetros básicos
@@ -16,40 +16,35 @@
          * 
          * @throws Exception
          */
-        public function __construct($class = "SuperProWeb", $uri = null){
+        public function __construct($wsdlName = "SuperProWeb", $uri = "http://localhost/interbits/api/"){
             try{
+                //Aramazena URI
+                $this->uri = $uri . "/wsdl";
+                
                 //Trata caminhos de inclusão
                 $path       = preg_replace("/(sys)(.*)/", "", __DIR__);
                 $path_wsdl  = $path . "sys/lib/soap/src/wsdlcreator/WSDLCreator.php";
-                $path_soap  = $path . "sys/lib/soap/classes/Soap.php";
-                $path_class = $path . "api/classes/controllers/". ucfirst($class)."Controller.php";
                 
                 //Inclui bibilioteca WSDLCreator
                 include($path_wsdl);
                 
                 //Instância a classe WSDLCreator e inicia funções primárias
-                $this->wsdl = new \WSDLCreator("SuperProWeb", $uri . "/wsdl");
+                $this->wsdl = new \WSDLCreator($wsdlName, $this->uri);
                 
-                $this->wsdl->addFile($path_soap); //Adiciona classe Soap - Padrão
-                $this->wsdl->addFile($path_class); //Adiciona classe que será usada
-                
-                $this->wsdl->setClassesGeneralURL($uri); //Seta URL do serviço
-                
-                $this->wsdl->addURLToClass("Soap", $uri); //Seta url da classe
-                $this->wsdl->addURLToClass(ucfirst($class), $uri); //Seta url da classe
-                
-                //Ignora métodos da classe SOAP, mantendo apenas os de WebService
-                $this->wsdl->ignoreMethod(array("Soap" => "__construct"));
-                $this->wsdl->ignoreMethod(array("Soap" => "actionWsdl"));
-                $this->wsdl->ignoreMethod(array("Soap" => "actionIndex"));
-                $this->wsdl->ignoreMethod(array("Soap" => "addIgnore"));
-                $this->wsdl->ignoreMethod(array("Soap" => "validaUsuarioWS"));
-                
-                //Seta classe em uso
-                $this->class = $class;
+                $this->wsdl->setClassesGeneralURL($this->uri); //Seta URL do serviço
             }catch(Exception $e){
                 throw $e;
             }   
+        }
+        
+        public function addFile($file, $className){
+            try{
+                //Adiciona Arquivo
+                $this->wsdl->addFile($file); //Adiciona classe ao WSDL
+                $this->wsdl->addURLToClass(ucfirst($className), $this->uri); //Seta url da classe
+            }catch(Exception $e){
+                throw $e;
+            }
         }
         
         /**
@@ -59,10 +54,10 @@
          * 
          * @throws Exception
          */
-        public function addIgnore($metodo){
+        public function addIgnore($className, $metodo){
             try{
                 //Adiciona método a ser ignorado
-                $this->wsdl->ignoreMethod(array(ucfirst($this->class) => $metodo));
+                $this->wsdl->ignoreMethod(array(ucfirst($className) => $metodo));
             }catch(Exception $e){
                 throw $e;
             }
