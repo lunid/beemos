@@ -2,7 +2,7 @@
 
 namespace sys\classes\mvc;
 use \sys\classes\util\Dic;
-use \sys\classes\comps\Component;
+use \sys\classes\util\Component;
 
 class Header {
 
@@ -367,31 +367,24 @@ class Header {
     /**
      * Gera um arquivo compactado a partir dos dados recebidos em $arrParams.
      * 
-     * @param type $arrParams Array associativo com os dados do arquivo a ser compactado.
+     * @param type $arrParams Array associativo [string|extension|fileNameMin] com os dados do arquivo a ser compactado.
      * @return string Retorna o nome do arquivo compactado caso a operação tenha ocorrido com sucesso.
      * @throws Exception Caso algum erro tenha ocorrido ao executar YuiCompressor.
      */
     private function geraMinify($arrParams){
+
+        $out = FALSE;
         
-        $string         = '';
-        $extension      = '';
-        $fileNameMin    = ''; 
-        $out            = FALSE;
-        
-        if (is_array($arrParams)) {
-            $string         = $arrParams['string'];
-            $extension      = $arrParams['extension'];
-            $fileNameMin    = $arrParams['fileNameMin'];            
-        }
+        if (!is_array($arrParams)) $arrParams = array();            
                 
-        try {            
-            if (Component::yuiCompressor($string,$extension,$fileNameMin)){                                                        
+        try {                          
+            if (Component::yuiCompressor($arrParams)){                                                        
                 //Arquivo compactado com sucesso. Faz a inclusão do novo arquivo.
-                $out = $fileNameMin;
+                $out = $arrParams['fileNameMin'];      
             }  
         } catch(\Exception $e) {
             throw $e;
-        }         
+        }     
         return $out;
     }
  

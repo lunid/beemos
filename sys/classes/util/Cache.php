@@ -2,23 +2,54 @@
     
     namespace sys\classes\util;  
     
+    /**
+     * Classe usada para fazer o cache de objetos e strings no servidor.
+     * Utiliza a classe Memcache() do PHP.
+     * 
+     * IMPORTANTE: Memcache deve estar habilitado no PHP.
+     * 
+     * Exemplo de uso:
+     * 
+     * <code>     
+     *  $cacheName  = 'cacheDeObjTest';
+     *  $objCache   = new Cache($cacheName);
+     *  $objTest    = $objCache->getCache();
+     *  if (!$objTest) {
+     *      //Objeto ainda não armazenado em Cache. Gera o objeto e guarda em cache.
+     *      $objTest = new stdClass();
+     *      $objCache->setMin(5); //O cache irá durar 5 minutos.
+     *      $objCache->setCache($objTest);
+     *  }
+     * 
+     *  //Para excluir o objTest do cache:
+     *  $objCache->delete();
+     * </code>
+     */
     class Cache {
-            private $memcache;
+            private $memcache = NULL;
             private $version;
             private $timeSec;
             private $nameCache;
             
             function __construct($nameCache=''){
-                    $memcache = new \Memcache();
-                    if (!$memcache->connect('localhost', 11211)){
+                
+                if (extension_loaded('memcache')) {
+                    $memcache = new \Memcache();                   
+
+                    if (!@$memcache->connect('localhost', 11211)){
                         $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_MEMCACHE_CONN'); 
                         throw new \Exception( $msgErr );                         
                     }
-                    
+
                     $this->setNameCache($nameCache);
-                    
+
                     $this->version      = $memcache->getVersion();                   								
-                    $this->memcache     = $memcache;
+                    $this->memcache     = $memcache;        
+                 
+                } else {
+                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'MEMCACHE_EXTENSION_NOT_EXISTS'); 
+                    throw new \Exception( $msgErr );                            
+                }
             }
             
             function setNameCache($nameCache) {

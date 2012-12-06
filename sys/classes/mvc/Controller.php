@@ -124,6 +124,16 @@
             return $this->memCache;
         }
         
+        /**
+         * Cria um nome para o cache do conteúdo gerado pelo método ($action) informado.
+         * Por padrão, o nome do cache é formado pelo módulo atual + '_' + $action;
+         * 
+         * Exemplo:
+         * Ao chamar setNameCache('index') no módulo admin, o nome do cache será admin_index.
+         *  
+         * @param string $action Nome do método __METHOD__ a ser guardado em cache.
+         * @return string
+         */
         private function setNameCache($action){
             $nameCache      = \Application::getModule().'_'.$action;
             $nameCache      = str_replace('::','_',$nameCache); 
