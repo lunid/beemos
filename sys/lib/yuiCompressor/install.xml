@@ -3,8 +3,4 @@
     <descricao>
         Componente em java utilizado para fazer a compressão de conteúdo javascript e css.
     </descricao>
-    <config>
-        <include id='class'>modernizr</include>
-        <include id='css'>style</include>
-    </config>
 </root>

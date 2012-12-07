@@ -40,7 +40,7 @@ class Component {
      */
     public static function __callStatic($folder,$args=array()){
         $folderSys  = \LoadConfig::folderSys();
-        $class      = 'YuiCompressor';
+        $class      = ucfirst($folder);
         $classPath  = $folderSys.'/lib/'.$folder.'/classes/Lib'.$class.'.php';              
         if (file_exists($classPath)){
             include_once($classPath);
