@@ -388,6 +388,52 @@
                 throw $e;
             }
         }
+        
+        /**
+         * Soma os débitos de um cliente
+         * 
+         * @param int $idCliente ID do cliente
+         * @param string $dtRegistro Período de início da consulta
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->count     - Total de registros encontrados                    <br />
+         *  array   $ret->debitos   - Array com débitos encontrados                     <br />
+         * </code>
+         * @throws \db_tables\Exception
+         */
+        public function somarDebitosCliente($idCliente, $dtRegistro){
+            try{
+                $sql = "SELECT
+                            SUM(DEBITO) AS DEBITOS
+                        FROM
+                            SPRO_HISTORICO_GERADOC
+                        WHERE
+                            ID_LOGIN = {$idCliente}
+                        AND
+                            DATA_REGISTRO >= '{$dtRegistro}' 
+                        GROUP BY 
+                            ID_LOGIN
+                        ;";
+                            
+                //Executa Select
+                $rs = $this->query($sql);
+                
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = true;
+                $ret->msg       = "Consulta efetuada com sucesso!";
+                $ret->count     = sizeof($rs);
+                $ret->debitos   = $rs[0];
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
 
 ?>
