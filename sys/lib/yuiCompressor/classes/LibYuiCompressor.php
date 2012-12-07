@@ -23,8 +23,8 @@ class YuiCompressor extends LibComponent {
      *      
      * @return void
      * 
-     * @throws \Exception Se uma extensão válida não for informada (valores permitidos: css, js)
-     * @throws \Exception Se após a compactação de uma string válida de javascript o resultado for vazio
+     * @throws \Exception Se uma extensão válida não for informada (valores permitidos: css, js).
+     * @throws \Exception Se após a compactação de uma string válida de javascript o resultado for vazio.
      * @throws \Exception Se a tentativa de criar o arquivo de saída falhar.
      * @throws \Exception Se após a sua criação, o arquivo de saída possuir tamanho 0kb.
      */
@@ -37,8 +37,8 @@ class YuiCompressor extends LibComponent {
             $root           = 'sys/lib/yuiCompressor/src/yuicompressor-2_4_8/';                                    
             $pathJar        = $root.'build/yuicompressor-2_4_8pre.jar'; 
             
-            $ext         = strtolower($ext);
-            $strInc      = (string)$strInc; 
+            $ext         = strtolower($ext);//Extensão do arquivo (css ou cs)
+            $strInc      = (string)$strInc;//String a ser compactada.
            
             $this->setReturn(FALSE);           
             
@@ -77,6 +77,7 @@ class YuiCompressor extends LibComponent {
                         fwrite($fp, $strIncMin);
                         fclose($fp);
                     } else {
+                        //Não foi possível gerar o arquivo compactado.
                         $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'DIR_NOT_FOUND');
                         $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
                         throw new \Exception( $msgErr );                           
@@ -94,14 +95,14 @@ class YuiCompressor extends LibComponent {
                         $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
                         $msgErr = str_replace('{STR_MIN}',$strIncMin,$msgErr);
                         throw new \Exception( $msgErr );                                                                         
-                    }                      
-                    return TRUE;
+                    }                                          
                 } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
+                    //O conteúdo compactado está vazio e o trata-se de um conteúdo de javascript.
                     $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_JS_COMPRESS');
                     $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
                     throw new \Exception( $msgErr );              
                 }
-                return $strIncMin;
+                //return $strIncMin;
             } else {                            
                 $msgErr     = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_EXT');
                 $msgErr     = str_replace('{EXT}',$ext,$msgErr);

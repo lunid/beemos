@@ -388,6 +388,13 @@ class Header {
         return $out;
     }
  
+    /**
+     * Gera as tags de inclusão para arquivos externos de javascript e CSS.
+     * 
+     * @param string $file Arquivo a ser incluído (o path usa o formato padrão de assets/$ext/modulo/$file)
+     * @param string $ext Pode ser js, jsInc, css, cssInc
+     * @return string 
+     */
     private function setTag($file,$ext){       
         $inc                = '';        
         $cssJsExtension     = $this->getExtFile($ext);//Converte cssInc para css e jsInc para js, se necessário.                        

@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Lib
  *
@@ -19,16 +13,23 @@ abstract class LibComponent implements IComponent{
     private $return         = NULL;
     
     function __construct($folder,$args=array()){
-        $folderSys = \LoadConfig::folderSys();
-        echo $folderSys . 'fdsf';
-        die();
-        $exceptionFile = 'sys/lib/'.$folder.'/dic/exception.xml';
-        if (file_exists($exceptionFile)){            
-            $this->exceptionFile = $exceptionFile;
-        }
+        $folderSys      = \LoadConfig::folderSys();
+        $exceptionFile  = $folderSys.'/lib/'.$folder.'/dic/exception.xml';
+        
+        //Define o path do arquivo XML usado como dicionário das mensagens de Exception.
+        if (file_exists($exceptionFile)) $this->exceptionFile = $exceptionFile;
+        
         $this->setArgs($args);
     }
     
+    /**
+     * Armazena um array associativo de parâmetros a ser usados como variáveis
+     * na execução do método init(), da classe de inicialização do componente.
+     * 
+     * Estes parâmetros são opcionais
+     * 
+     * @param mixed[] $args 
+     */
     function setArgs($args){
         if (is_array($args) && count($args) > 0) $this->args = $args[0];
     }
@@ -42,6 +43,12 @@ abstract class LibComponent implements IComponent{
         return $this->exceptionFile;
     }
     
+    /**
+     * Método mágico para acessar os parâmetros recebidos em setArgs() como variáveis de objeto.
+     * 
+     * @param string $var Nome da variável requisitada.
+     * @return mixed Valor da variável. 
+     */
     function __get($var){
         $args   = $this->args;
         $value  = '';             
@@ -57,8 +64,9 @@ abstract class LibComponent implements IComponent{
     }
     
     /**
-     * Retorna
-     * @return type 
+     * Retorna o resultado gerado no método init() da classe de inicialização do componente.
+     * 
+     * @return mixed 
      */
     function getReturn(){
         return $this->return;

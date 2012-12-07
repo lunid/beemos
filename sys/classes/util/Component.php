@@ -1,8 +1,4 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Classe responsável por inicializar um componente.
@@ -43,21 +39,25 @@ class Component {
      * @throws \Exception Caso o arquivo de inicialização do Componente não seja localizado.
      */
     public static function __callStatic($folder,$args=array()){
+        $folderSys  = \LoadConfig::folderSys();
         $class      = 'YuiCompressor';
-        $classPath  = 'sys/lib/'.$folder.'/classes/Lib'.$class.'.php';              
+        $classPath  = $folderSys.'/lib/'.$folder.'/classes/Lib'.$class.'.php';              
         if (file_exists($classPath)){
             include_once($classPath);
             $cacheName  = $folder.'_'.$class;
             $objCache   = new Cache($cacheName);
             $objComp    = $objCache->getCache();
             //var_dump($objComp);
-            if (!is_object($objComp)) {
+            if (!is_object($objComp) || 1==1) {
                 $objComp = new $class($folder,$args);
                 $objCache->setDay(30);//30 dias de cache
                 $objCache->setCache($objComp);
             } else {
+                //O objeto já está em cache. 
+                //Guarda o array de parâmetros usados no método init().
                 $objComp->setArgs($args);                
             }
+            
             $objComp->init();           
             return $objComp->getReturn();
         } else {
