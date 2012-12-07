@@ -45,19 +45,27 @@ class Component {
         if (file_exists($classPath)){
             include_once($classPath);
             $cacheName  = $folder.'_'.$class;
-            $objCache   = new Cache($cacheName);
-            $objComp    = $objCache->getCache();
-            //var_dump($objComp);
-            if (!is_object($objComp) || 1==1) {
-                $objComp = new $class($folder,$args);
-                $objCache->setDay(30);//30 dias de cache
-                $objCache->setCache($objComp);
-            } else {
-                //O objeto já está em cache. 
-                //Guarda o array de parâmetros usados no método init().
-                $objComp->setArgs($args);                
-            }
+            $objCache   = Cache::newCache($cacheName);
             
+            if (is_object($objCache)) {
+                //Utiliza cache:
+                echo 'com cache';
+                $objComp = $objCache->getCache();                
+                if (!is_object($objComp) || 1==1) {
+                    $objComp = new $class($folder,$args);
+                    $objCache->setDay(30);//30 dias de cache
+                    $objCache->setCache($objComp);
+                } else {
+                    //O objeto já está em cache. 
+                    //Guarda o array de parâmetros usados no método init().
+                    $objComp->setArgs($args);                
+                }                                
+            } else {
+                //Não utiliza cache:
+               $objComp = new $class($folder,$args); 
+               echo 'sem cache';
+            }            
+            die();
             $objComp->init();           
             return $objComp->getReturn();
         } else {

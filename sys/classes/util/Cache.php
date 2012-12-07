@@ -31,24 +31,30 @@
             private $timeSec;
             private $nameCache;
             
-            function __construct($nameCache=''){
+           private function __construct($nameCache='',$memcache){                
+                $this->version  = $memcache->getVersion();                   								
+                $this->memcache = $memcache;                
                 
-                if (extension_loaded('memcache')) {
-                    $memcache = new \Memcache();                   
-
+                $this->setNameCache($nameCache);                
+            }
+            
+            public static function newCache($nameCache){
+                $objCache = NULL;                
+                if (extension_loaded('memcache')) {    
+                    $memcache = new \Memcache();  
                     if (!@$memcache->connect('localhost', 11211)){
+                        //Não foi possível estabelecer uma conexão com o Memcache                        
                         $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_MEMCACHE_CONN'); 
-                        //throw new \Exception( $msgErr );                         
+                        throw new \Exception( $msgErr );                         
                     } else {
-                        $this->setNameCache($nameCache);
-
-                        $this->version      = $memcache->getVersion();                   								
-                        $this->memcache     = $memcache;        
+                        //Conexão com cache Ok                        
+                        $objCache = new Cache($nameCache,$memcache);                                
                     }
                 } else {
                     $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'MEMCACHE_EXTENSION_NOT_EXISTS'); 
-                    throw new \Exception( $msgErr );                            
-                }
+                    //throw new \Exception( $msgErr );                            
+                }                
+                return $objCache;
             }
             
             function setNameCache($nameCache) {
