@@ -60,6 +60,14 @@
             }
         }
         
+        /**
+         * Verifica a se o cliente possui um token válido no momento
+         * 
+         * @param int $idCliente ID do CLIENTE
+         * 
+         * @return boolean
+         * @throws Exception
+         */
         public function verificarTokenCliente($idCliente){
             try{
                 //Datas para validação
@@ -84,6 +92,14 @@
             }
         }
         
+        /**
+         * Verifica se o token exista na base de dados
+         * 
+         * @param string $token Código do token
+         * 
+         * @return boolean
+         * @throws Exception
+         */
         public function validarToken($token){
             try{
                 //Tabela TOKEN_ACESSO
@@ -104,6 +120,15 @@
             }
         }
         
+        /**
+         * Verifica se o token do cliente está valido ou não
+         * 
+         * @param int $idCliente ID do cliente
+         * @param string $token Código token enviado
+         * 
+         * @return boolean
+         * @throws Exception
+         */
         public function validarTokenAtivoCliente($idCliente, $token){
             try{
                 //Data atual para validação
@@ -133,6 +158,16 @@
             }
         }
         
+        /**
+         * Salva um novo token para o clinete
+         * 
+         * @param int $idCliente ID do cliente
+         * @param string $login Login de acesso
+         * @param string $token Código do token
+         * 
+         * @return boolean
+         * @throws Exception
+         */
         public function salvarTokenCliente($idCliente, $login, $token){
             try{
                 //Define data de expiração do Token

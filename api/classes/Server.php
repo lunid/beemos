@@ -138,7 +138,12 @@
                 throw $ex;
             }
         }
-    
+        
+        /**
+         * Gera o WSDL do Serviço
+         * 
+         * @throws Exception
+         */
         public function actionWsdl(){
             try{
                 //Inicia WSDL
