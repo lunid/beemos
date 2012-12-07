@@ -38,14 +38,13 @@
 
                     if (!@$memcache->connect('localhost', 11211)){
                         $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_MEMCACHE_CONN'); 
-                        throw new \Exception( $msgErr );                         
+                        //throw new \Exception( $msgErr );                         
+                    } else {
+                        $this->setNameCache($nameCache);
+
+                        $this->version      = $memcache->getVersion();                   								
+                        $this->memcache     = $memcache;        
                     }
-
-                    $this->setNameCache($nameCache);
-
-                    $this->version      = $memcache->getVersion();                   								
-                    $this->memcache     = $memcache;        
-                 
                 } else {
                     $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'MEMCACHE_EXTENSION_NOT_EXISTS'); 
                     throw new \Exception( $msgErr );                            
