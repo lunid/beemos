@@ -1,1 +1,1 @@
-<?php echo "marcelo" ?>
+<?php echo phpinfo(); ?>
