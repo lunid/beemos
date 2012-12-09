@@ -2,21 +2,53 @@
 
 /**
  * Classe responsável por inicializar um componente.
- * O endereço padrão para 
+ * O endereço padrão para armazenar componentes é sys/lib/.
+ * 
+ * Exemplo de uso 1 - Inicializando um novo objeto Component:
+ * <code>
+ *      $objComp = new Component();
+ *      //O componente atual aceita 3 parâmetros:
+ *      $objComp->fileNameMin    = 'index';
+ *      $objComp->extension      = 'js';
+ *      $objComp->string         = 'Texto de exemplo';
+ * 
+ *      //Inicializa o objeto e guarda o retorno na variável $out:
+ *      $out = $objComp->yuiCompressor();
+ * </code>
  *
+ * Exemplo de uso 2 - Chamando um método estático na classe Component:
+ * <code>
+ *      $arrParams['fileNameMin']   = 'index';
+ *      $arrParams['extension']     = 'js';
+ *      $arrParams['string']        = 'Texto de exemplo';
+ * 
+ *      //Inicializa o objeto e guarda o retorno na variável $out:
+ *      $out = Component::yuiCompressor($arrParams);
+ * </code> 
  * @author Supervip
  */
 namespace sys\classes\util;
-use \sys\classes\util\Dic;
+use \sys\lib\classes\LibDic;
 
 class Component {
     
+    private $arrParams = array();//Array associativo para armazenar parâmetros na inicialização do componente.
+    
+    function __construct() {        
+    }
+    
+    function __set($name, $value) {
+        $this->arrParams[$name] = $value;
+    }
+    
+    //function __call($folder,$args=NULL){
+     //   $arrParams  = (!empty($args))?$args:$this->arrParams;
+    //    $args[0]    = $arrParams;
+    //    return Component::factory($folder,$args);
+    //}
+    
     /**
-     * Chama um método estático do componente solicitado.
-     * 
-     * IMPORTANTE:
-     * Caso o Memcache esteja ativo no php o objeto será guardado em cache.
-     * O tempo de vida padrão estipulado para o cache é de 30 dias.
+     * Inicializa o componente solicitado.
      * 
      * Exemplo que mostra a utilização do componente YuiCompressor:
      * <code>     
@@ -32,24 +64,37 @@ class Component {
      *  }
      * </code>
      * 
-     * @param string $folder Pasta que contém o componente a ser inicializado.
-     * @param mixed $args Array associativo contendo as variáveis usadas no método init() do objeto.
      * @return mixed
-     * 
-     * @throws \Exception Caso o arquivo de inicialização do Componente não seja localizado.
      */
     public static function __callStatic($folder,$args=array()){
+        return self::factory($folder,$args);
+    }
+    
+    /**
+     * Fábrica de objetos de componentes.
+     * 
+     * IMPORTANTE:
+     * Caso o módulo Memcache esteja ativo (php.ini) o objeto será guardado em cache.
+     * O tempo de vida padrão estipulado para o cache é de 30 dias.
+     * 
+     * @param string $folder Pasta que contém o componente a ser inicializado.
+     * @param mixed[] $args Parâmetros usados no construtor do novo objeto
+     * @return mixed 
+     * @throws \Exception Caso a classe do componente não tenha sido localizada.
+     */
+    private static function factory($folder,$args=array()){
         $folderSys  = \LoadConfig::folderSys();
         $class      = ucfirst($folder);
+
         $classPath  = $folderSys.'/lib/'.$folder.'/classes/Lib'.$class.'.php';              
         if (file_exists($classPath)){
             include_once($classPath);
             $cacheName  = $folder.'_'.$class;
             $objCache   = Cache::newCache($cacheName);
+            $objComp    = NULL;
             
             if (is_object($objCache)) {
                 //Utiliza cache:
-                echo 'com cache';
                 $objComp = $objCache->getCache();                
                 if (!is_object($objComp) || 1==1) {
                     $objComp = new $class($folder,$args);
@@ -63,14 +108,17 @@ class Component {
             } else {
                 //Não utiliza cache:
                $objComp = new $class($folder,$args); 
-               echo 'sem cache';
-            }            
-            die();
-            $objComp->init();           
-            return $objComp->getReturn();
+            }         
+            
+            $out = NULL;
+            if ($objComp instanceof \sys\lib\classes\IComponent) {               
+                $objComp->init();           
+                $out = $objComp->getReturn();
+            }
+            return $out;
         } else {
             //Arquivo não existe
-            $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_EXISTS');
+            $msgErr = LibDic::loadMsgComp($folder,__METHOD__,'FILE_NOT_FOUND');
             $msgErr = str_replace('{FILE}',$classPath,$msgErr);
             throw new \Exception( $msgErr );                
         }

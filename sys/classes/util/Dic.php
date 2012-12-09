@@ -52,12 +52,12 @@
                     } 
                     $msg = "<b>".$func."()</b>:<br/>".$msg;
                 } else {
-                    $msgErr = "Não foi possível carregar um objeto XML para $class->$func->$codMsg.";
+                    $msgErr = "Não foi possível carregar um objeto XML para {$func->$codMsg}";
                 }                
             } else {
-                $msgErr = "Arquivo $xml não localizado";                
+                $msgErr = "Arquivo {$xmlPath} não localizado";                
             }
-            if (strlen($msgErr) > 0) self::setErr($method, $msgErr);
+            if (strlen($msgErr) > 0) self::setErr($func, $msgErr);
             return $msg;
         }
  

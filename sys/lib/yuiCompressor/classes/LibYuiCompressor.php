@@ -77,8 +77,8 @@ class YuiCompressor extends LibComponent {
                         fwrite($fp, $strIncMin);
                         fclose($fp);
                     } else {
-                        //Não foi possível gerar o arquivo compactado.
-                        $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'DIR_NOT_FOUND');
+                        //Não foi possível gerar o arquivo compactado.                        
+                        $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_FILE_INC');
                         $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
                         throw new \Exception( $msgErr );                           
                     }
@@ -98,13 +98,13 @@ class YuiCompressor extends LibComponent {
                     }                                          
                 } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
                     //O conteúdo compactado está vazio e o trata-se de um conteúdo de javascript.
-                    $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_JS_COMPRESS');
-                    $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
-                    throw new \Exception( $msgErr );              
+                    $msgErr     = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_JS_COMPRESS');                
+                    $msgErr     = str_replace('{FILE}',$ext,$msgErr);
+                    throw new \Exception( $msgErr );                                
                 }
                 //return $strIncMin;
-            } else {                            
-                $msgErr     = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_EXT');
+            } else {   
+                $msgErr     = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_EXT');                
                 $msgErr     = str_replace('{EXT}',$ext,$msgErr);
                 throw new \Exception( $msgErr );     
             }

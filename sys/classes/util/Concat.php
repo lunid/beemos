@@ -70,6 +70,15 @@ class Concat {
         $this->stringMatriz = $stringMatriz;       
     }
     
+    function addParams($params=array()){
+        if (is_array($params)) {          
+            foreach($params as $var=>$value){
+                //echo "$var - $value<br>;";
+                $this->addParam($var,$value);                              
+            }            
+        }
+    }
+    
     /**
      * Concatena um valor no marcador (tag) da string carregada em setString().
      * Uma tag é formada por {$var}.
@@ -103,7 +112,7 @@ class Concat {
     
     private function getStringConcat(){
         $stringConcat = $this->stringConcat;
-        if (strlen($stringConcat) == 0) $stringConcat = $this->stringMatriz;
+        if (strlen($stringConcat) == 0) $stringConcat = $this->stringMatriz;        
         return $stringConcat;
     }
     

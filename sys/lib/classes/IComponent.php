@@ -8,6 +8,7 @@
  * @author Claudio Rubens Silva Filho
  */
 namespace sys\lib\classes;
+
 interface IComponent {
     
     /**

@@ -377,7 +377,7 @@ class Header {
         
         if (!is_array($arrParams)) $arrParams = array();            
                 
-        try {                          
+        try {             
             if (Component::yuiCompressor($arrParams)){                                                        
                 //Arquivo compactado com sucesso. Faz a inclusão do novo arquivo.
                 $out = $arrParams['fileNameMin'];      

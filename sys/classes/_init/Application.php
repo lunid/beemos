@@ -1,8 +1,5 @@
 <?php
     
-    //require_once('sys/classes/comps/files/YUICompressor.php');
-    //require_once('sys/classes/comps/HtmlComponent.php');
-    //require_once('sys/classes/comps/ChartComponent.php');
     require_once('sys/classes/db/Meekrodb_2_1.php');
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/db/ORM.php');
@@ -13,6 +10,7 @@
     require_once('sys/classes/_init/LoadConfig.php');
     require_once('sys/classes/util/Url.php');  
     require_once('sys/classes/util/DI.php');
+    require_once('sys/classes/util/Dic.php');
     
     use sys\classes\util\DI;
     use sys\classes\mvc as MVC;
