@@ -1,25 +1,19 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of Setup
+ * COMPONENTE YuiCompressor:
+ * Faz a compressão de uma string javascript ou css para um arquivo externo.
+ * Utiliza JAVA (arquivo.jar) para fazer a compressão.
  *
- * @author Supervip
  */
 use \sys\lib\classes\LibComponent;
+use \sys\lib\classes\Url;
 use \sys\classes\util\Dic;
-
-require_once('sys/lib/yuiCompressor/classes/YUICompressor.php');
 
 class YuiCompressor extends LibComponent {
     
     /**
      * Faz a compactação de uma string gravando o resultado em um arquivo externo.
-     * Os formatos 
+     * Os formatos permitidos são js, para conteúdo javascript, e css para conteúdo de folhas de estilo em cascata.
      *      
      * @return void
      * 
@@ -33,13 +27,16 @@ class YuiCompressor extends LibComponent {
             $ext            = $this->extension;
             $strInc         = $this->string; 
             $outFileMin     = $this->fileNameMin;
+            $rootComps      = Url::pathRootComps('yuiCompressor');                        
             
-            $root           = 'sys/lib/yuiCompressor/src/yuicompressor-2_4_8/';                                    
+            $root           = $rootComps.'/src/yuicompressor-2_4_8/';                                    
             $pathJar        = $root.'build/yuicompressor-2_4_8pre.jar'; 
             
-            $ext         = strtolower($ext);//Extensão do arquivo (css ou cs)
-            $strInc      = (string)$strInc;//String a ser compactada.
+            $ext            = strtolower($ext);//Extensão do arquivo (css ou cs)
+            $strInc         = (string)$strInc;//String a ser compactada.
            
+            require_once($rootComps.'classes/YUICompressor.php');
+            
             $this->setReturn(FALSE);           
             
             if (strlen($strInc) == 0) return;                       
@@ -77,36 +74,29 @@ class YuiCompressor extends LibComponent {
                         fwrite($fp, $strIncMin);
                         fclose($fp);
                     } else {
-                        //Não foi possível gerar o arquivo compactado.                        
-                        $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_FILE_INC');
-                        $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
-                        throw new \Exception( $msgErr );                           
+                        //Não foi possível gerar o arquivo compactado.  
+                        $arrVars = array('FILE'=>$outFileMin);
+                        $this->Exception(__METHOD__,'ERR_FILE_INC',$arrVars);                        
                     }
           
                     if (!file_exists($outFileMin)){
-                        $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_FILE_INC');
-                        $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
-                        throw new \Exception( $msgErr );                           
+                        $arrVars = array('FILE'=>$outFileMin);
+                        $this->Exception(__METHOD__,'ERR_FILE_INC',$arrVars);                        
                     }
 
                     $size = filesize($outFileMin);
                     if ($size == 0){
-                        $msgErr = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_FILE_SIZE_ZERO');
-                        $msgErr = str_replace('{FILE}',$outFileMin,$msgErr);
-                        $msgErr = str_replace('{STR_MIN}',$strIncMin,$msgErr);
-                        throw new \Exception( $msgErr );                                                                         
+                        $arrVars = array('FILE'=>$outFileMin,'STR_MIN'=>$strIncMin);
+                        $this->Exception(__METHOD__,'ERR_FILE_SIZE_ZERO',$arrVars);                                                                       
                     }                                          
                 } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
                     //O conteúdo compactado está vazio e o trata-se de um conteúdo de javascript.
-                    $msgErr     = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_JS_COMPRESS');                
-                    $msgErr     = str_replace('{FILE}',$ext,$msgErr);
-                    throw new \Exception( $msgErr );                                
-                }
-                //return $strIncMin;
+                    $arrVars = array('FILE'=>$outFileMin);
+                    $this->Exception(__METHOD__,'ERR_JS_COMPRESS',$arrVars);                                
+                }                
             } else {   
-                $msgErr     = Dic::loadMsgForXml($pathXmlDic,__METHOD__,'ERR_EXT');                
-                $msgErr     = str_replace('{EXT}',$ext,$msgErr);
-                throw new \Exception( $msgErr );     
+                $arrVars = array('EXT'=>$ext);
+                $this->Exception(__METHOD__,'ERR_EXT',$arrVars);     
             }
             
             $this->setReturn(TRUE);   

@@ -50,7 +50,9 @@
                             $msg    = ($atrib == $codMsg)?$msgNodes->msg:'Erro desconhecido';
                         }                                                
                     } 
-                    $msg = "<b>".$func."()</b>:<br/>".$msg;
+                    
+                    $msg    = nl2br(htmlentities(utf8_decode($msg)));                    
+                    $msg    = "<b>".$func."()</b>:<br/>".$msg;
                 } else {
                     $msgErr = "Não foi possível carregar um objeto XML para {$func->$codMsg}";
                 }                
@@ -71,7 +73,7 @@
             
             $module         = \Application::getModule();
             $fileException  = $module.'/dic/e'.$class.'.xml';
-
+            
             $method = __CLASS__.'\\'.__FUNCTION__."()";//Monta uma string ref. ao método atual. Usado para mostrar erro do método setErr()
             
             $xml = $fileException;
@@ -104,7 +106,8 @@
                             $msg    = ($atrib == $codMsg)?$msgNodes->msg:'Erro desconhecido';
                         }                                                
                     } 
-                    $msg = '<b>'.$class.'/'.$func."()</b>:<br/>".$msg;
+                    $msg    = htmlentities(utf8_decode($msg));
+                    $msg    = '<b>'.$class.'/'.$func."()</b>:<br/>".$msg;
                 } else {
                     $msgErr = "Não foi possível carregar um objeto XML para $class->$func->$codMsg.";
                 }

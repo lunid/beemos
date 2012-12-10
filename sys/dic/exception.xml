@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
+    <Url>
+        <Url::getUrlLibInitComponent>
+            <msg id="COMPS_UNDEFINED">
+                Não é possível utilizar componentes pois as pastas necessárias para localizá-los 
+            não foram definidas no arquivo global config.xml. Exemplo do config.xml para habilitar componentes:
+            <![CDATA[
+                <components>
+                    <config id='folderLib'>lib</config>
+                    <config id='folderComps'>comps</config>
+                </components>
+            ]]>
+            </msg>            
+        </Url::getUrlLibInitComponent>
+    </Url>
     <Component>
         <factory>
             <msg id="FILE_NOT_FOUND">O arquivo {FILE} referente à classe do componente {COMP} solicitado não existe.</msg>

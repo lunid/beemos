@@ -83,12 +83,12 @@ class Component {
      * @throws \Exception Caso a classe do componente não tenha sido localizada.
      */
     private static function factory($folder,$args=array()){
-        $folderSys  = \LoadConfig::folderSys();
-        $class      = ucfirst($folder);
-
-        $classPath  = $folderSys.'/lib/'.$folder.'/classes/Lib'.$class.'.php';              
-        if (file_exists($classPath) && 1==0){
+                
+        $classPath = \Url::getUrlLibInitComponent($folder);
+     
+        if (file_exists($classPath)){
             include_once($classPath);
+            $class      = ucfirst($folder);
             $cacheName  = $folder.'_'.$class;
             $objCache   = Cache::newCache($cacheName);
             $objComp    = NULL;

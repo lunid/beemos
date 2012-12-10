@@ -1,8 +1,14 @@
 <?php
 /**
- * Description of Lib
- *
- * @author Supervip
+ * Classe abstrata que deve ser herdada por todas as classes que inicializam um componente.
+ * Uma classe de componente deve existir em sys/lib/comps/componentFolder/classes/, onde o path sys/lib/comps/
+ * pode ser alterado no arquvo config.xml global.
+ * 
+ * O nome de uma classe de componente deve iniciar obrigatóriamente com o prefixo Lib.
+ * Por exemplo, um componente cujo path é sys/lib/comps/componentTest, a classe de componente 
+ * será sys/lib/comps/componentTest/classes/LibComponentTest.
+ * 
+ * @abstract
  */
 namespace sys\lib\classes;
 use \sys\lib\classes\IComponent;
@@ -90,6 +96,25 @@ abstract class LibComponent implements IComponent {
             $value = $params[$var];
         }                
         return $value;
+    }
+    
+    /**
+     * Captura e dispara exceções.
+     * 
+     * @param string $method Método que fez a chamada. Use __METHOD__ ao chamar Exception().
+     * @param string $codErr Código referente ao atributo id da mensagem a ser capturada: <msg id='codErr'>...</msg>
+     * @param mixed[] $arrVars Array associativo, opcional. Se informado, é utilizado para mesclar valores com marcadores da mensagem.
+     */
+    protected function Exception($method,$codErr,$arrVars=array()){
+        $pathXmlDic = $this->getXmlDic();
+        $msgErr     = Dic::loadMsgForXml($pathXmlDic,$method,$codErr);
+        if (is_array($arrVars)) {
+            foreach($arrVars as $var=>$value) {
+                $tag        = "{{$var}}";                
+                $msgErr     = str_replace($tag,$value,$msgErr);
+            }
+        }        
+        throw new \Exception( $msgErr );            
     }
     
     

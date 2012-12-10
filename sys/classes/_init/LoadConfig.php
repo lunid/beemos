@@ -8,6 +8,7 @@
     class LoadConfig extends sys\classes\util\Xml {
                 
         private $nodes;
+        private $cfgGlobal = FALSE;//Se TRUE significa que o arquivo config.xml está na raíz do site.
         const PREFIXO_VAR = 'GLB_';
         function __construct(){            
             //$this->loadConfigXml('config.xml');            
@@ -16,7 +17,10 @@
         function loadConfigXml($pathXml){
             $msgErr         = '';           
             
-            if (file_exists($pathXml)) {                
+            if (file_exists($pathXml)) {   
+                $this->cfgGlobal = FALSE;
+                if (strcmp($pathXml,'config.xml') == 0) $this->cfgGlobal = TRUE;//config.xml global.
+              
                 $arrPath        = pathinfo($pathXml);                
                 $extension      = $arrPath['extension'];
                 if ($extension == 'xml') {                    
@@ -41,71 +45,99 @@
         private function loadVars($objXml){                           
             $nodesHeader        = $objXml->header;
             $numItens           = count($nodesHeader);
-            $pathTplFolder      = '';
-            
-            $idModules          = 'modules';
-            $idRootFolder       = 'rootFolder';
-            $idBaseUrlHttp      = 'baseUrlHttp';
-            $idBaseUrlHttps     = 'baseUrlHttps';
-            $idDefaultModule    = 'defaultModule';            
-            $idFolderSys        = 'folderSys';
-            $idFolderViews      = 'folderViews';   
-            $idAssetsFolderRoot = 'assetsFolderRoot';
-            $idFolderPlugins    = 'folderPlugins';
-            $idLangs            = 'langs';
-            $idDefaultLang      = 'defaultLang';
+            $pathTplFolder      = '';                                             
             
             if ($numItens > 0) {
-                //Configurações da aplicação:
-                $nodesApp               = $objXml->app->config;
-                if (is_object($nodesApp)) {                    
-                    $cfgModules             = self::valueForAttrib($nodesApp,'id',$idModules);   
-                    $cfgRootFolder          = self::valueForAttrib($nodesApp,'id',$idRootFolder);   
-                    $cfgBaseUrlHttp         = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttp);   
-                    $cfgBaseUrlHttps        = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttps);   
-                    $cfgFolderSys           = self::valueForAttrib($nodesApp,'id',$idFolderSys);   
-                    $cfgFolderViews         = self::valueForAttrib($nodesApp,'id',$idFolderViews);   
-                    $cfgDefaultModule       = self::valueForAttrib($nodesApp,'id',$idDefaultModule);                
-                    $cfgLangs               = self::valueForAttrib($nodesApp,'id',$idLangs);  
-                    $cfgDefaultLang         = self::valueForAttrib($nodesApp,'id',$idDefaultLang); 
-
-                    $this->setGlobalVar($idModules,$cfgModules);
-                    $this->setGlobalVar($idBaseUrlHttp,$cfgBaseUrlHttp);
-                    $this->setGlobalVar($idBaseUrlHttps,$cfgBaseUrlHttps);
-                    $this->setGlobalVar($idFolderSys,$cfgFolderSys);
-                    $this->setGlobalVar($idFolderViews,$cfgFolderViews);
-                    $this->setGlobalVar($idRootFolder,$cfgRootFolder);
-                    $this->setGlobalVar($idDefaultModule,$cfgDefaultModule);
-                    $this->setGlobalVar($idLangs,$cfgLangs);
-                    $this->setGlobalVar($idDefaultLang,$cfgDefaultLang);
-                }
-                
-                //Configurações de módulo:
-                $idFolderTpl            = 'folderTemplate';
-                $idDefaultTpl           = 'defaultTemplate';
-                
-                $nodesPlugins           = $objXml->assets->config;
-                
-                if (is_object($nodesPlugins)) {
-                    $cfgFolderPlugins       = self::valueForAttrib($nodesPlugins,'id',$idFolderPlugins);
-                    $cfgAssetsFolderRoot    = self::valueForAttrib($nodesPlugins,'id',$idAssetsFolderRoot);        
+                if ($this->cfgGlobal) {
+                    /*
+                     * O arquivo atual é o config.xml global que encontra-se na raíz da aplicação.
+                     * Carrega as configurações específicas da aplicação e que não podem
+                     * ser sobrepostas por um config.xml de módulo.
+                     */
                     
-                    $this->setGlobalVar($idFolderPlugins,$cfgFolderPlugins);
-                    $this->setGlobalVar($idAssetsFolderRoot,$cfgAssetsFolderRoot);
+                    //CARREGA AS CONFIGURAÇÕES GERAIS DA APLICAÇÃO:
+                    //========================================================== 
+                    $idModules          = 'modules';
+                    $idRootFolder       = 'rootFolder';
+                    $idBaseUrlHttp      = 'baseUrlHttp';
+                    $idBaseUrlHttps     = 'baseUrlHttps';
+                    $idFolderSys        = 'folderSys';
+                    $idFolderViews      = 'folderViews';  
+                    $idDefaultModule    = 'defaultModule';                                                                        
+                    $idLangs            = 'langs';
+                    $idDefaultLang      = 'defaultLang';
+                    
+                    $nodesApp               = $objXml->app->config;
+                    if (is_object($nodesApp)) {                    
+                        $cfgModules             = self::valueForAttrib($nodesApp,'id',$idModules);   
+                        $cfgRootFolder          = self::valueForAttrib($nodesApp,'id',$idRootFolder);   
+                        $cfgBaseUrlHttp         = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttp);   
+                        $cfgBaseUrlHttps        = self::valueForAttrib($nodesApp,'id',$idBaseUrlHttps);   
+                        $cfgFolderSys           = self::valueForAttrib($nodesApp,'id',$idFolderSys);   
+                        $cfgFolderViews         = self::valueForAttrib($nodesApp,'id',$idFolderViews);   
+                        $cfgDefaultModule       = self::valueForAttrib($nodesApp,'id',$idDefaultModule);                
+                        $cfgLangs               = self::valueForAttrib($nodesApp,'id',$idLangs);  
+                        $cfgDefaultLang         = self::valueForAttrib($nodesApp,'id',$idDefaultLang); 
+
+                        $this->setGlobalVar($idModules,$cfgModules);
+                        $this->setGlobalVar($idBaseUrlHttp,$cfgBaseUrlHttp);
+                        $this->setGlobalVar($idBaseUrlHttps,$cfgBaseUrlHttps);
+                        $this->setGlobalVar($idFolderSys,$cfgFolderSys);
+                        $this->setGlobalVar($idFolderViews,$cfgFolderViews);
+                        $this->setGlobalVar($idRootFolder,$cfgRootFolder);
+                        $this->setGlobalVar($idDefaultModule,$cfgDefaultModule);
+                        $this->setGlobalVar($idLangs,$cfgLangs);
+                        $this->setGlobalVar($idDefaultLang,$cfgDefaultLang);
+                    }
+
+                    //CARREGA AS CONFIGURAÇÕES DE ASSETS:
+                    //==========================================================  
+                    $idFolderPlugins    = 'folderPlugins';   
+                    $idAssetsFolderRoot = 'assetsFolderRoot';                    
+                    $nodesPlugins       = $objXml->assets->config;
+
+                    if (is_object($nodesPlugins)) {
+                        $cfgFolderPlugins       = self::valueForAttrib($nodesPlugins,'id',$idFolderPlugins);
+                        $cfgAssetsFolderRoot    = self::valueForAttrib($nodesPlugins,'id',$idAssetsFolderRoot);        
+
+                        $this->setGlobalVar($idFolderPlugins,$cfgFolderPlugins);
+                        $this->setGlobalVar($idAssetsFolderRoot,$cfgAssetsFolderRoot);
+                    }
+
+                    //CARREGA AS CONFIGURAÇÕES DE MÓDULOS:
+                    //==========================================================
+                    $idFolderTpl            = 'folderTemplate';
+                    $idDefaultTpl           = 'defaultTemplate';
+                    $nodesModule            = $objXml->module->config; 
+
+                    if (is_object($nodesModule)) {
+                        $cfgFolderTemplate      = self::valueForAttrib($nodesModule,'id',$idFolderTpl);                
+                        $cfgDefaultTemplate     = self::valueForAttrib($nodesModule,'id',$idDefaultTpl);                
+
+                        $this->setGlobalVar($idFolderTpl,$cfgFolderTemplate);
+                        $this->setGlobalVar($idDefaultTpl,$cfgDefaultTemplate);                      
+                    } 
+
+                    //CARREGA AS CONFIGURAÇÕES DE COMPONENTES:
+                    //==========================================================                    
+                    $idCompFolderLib    = 'folderLib';
+                    $idCompFolderComps  = 'folderComps';  
+                    $nodesComponents    = $objXml->components->config; 
+                    
+                    $this->setGlobalVar($idCompFolderLib,'');
+                    $this->setGlobalVar($idCompFolderComps,'');   
+
+                    if (is_object($nodesComponents)) {
+                        $cfgCompFolderLib       = self::valueForAttrib($nodesComponents,'id',$idCompFolderLib);                
+                        $cfgCompFolderComps     = self::valueForAttrib($nodesComponents,'id',$idCompFolderComps);                
+
+                        $this->setGlobalVar($idCompFolderLib,$cfgCompFolderLib);
+                        $this->setGlobalVar($idCompFolderComps,$cfgCompFolderComps);                      
+                    }
                 }
                 
-                
-                $nodesModule            = $objXml->module->config; 
-                
-                if (is_object($nodesModule)) {
-                    $cfgFolderTemplate      = self::valueForAttrib($nodesModule,'id',$idFolderTpl);                
-                    $cfgDefaultTemplate     = self::valueForAttrib($nodesModule,'id',$idDefaultTpl);                
-
-                    $this->setGlobalVar($idFolderTpl,$cfgFolderTemplate);
-                    $this->setGlobalVar($idDefaultTpl,$cfgDefaultTemplate);                      
-                }                                             
-                                 
-                //Configurações de cabeçalho (includes):                                                                                                                                                                        
+                //CARREGA AS CONFIGURAÇÕES DE HEADER (INCLUDES CSS E JS):
+                //==============================================================                                                                                                                                                                    
                 $nodesInclude       = $objXml->header->include;     
                 $arrNodesInclude    = self::convertNode2Array($nodesInclude);
                 
