@@ -72,5 +72,59 @@
                 throw $e;
             }
         }
+        
+        public function consultarLancamentosMatriz($idMatriz, $arrWhere = array()){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao consultar lançamentos da Matriz!";
+                
+                //Tabela SPRO_CREDITO_CONSOLIDADO
+                $tbCredito = $this;
+                $tbCredito->alias = "CC";
+                $tbCredito->fieldsJoin = "OPERACAO,
+                                          CREDITO,
+                                          DATA_REGISTRO";
+                
+                //Tabela SPRO_CLIENTE
+                $tbCliente = new Cliente();
+                $tbCliente->alias = "C";
+                $tbCliente->fieldsJoin = "ID_CLIENTE,
+                                          NOME_PRINCIPAL";
+                
+                //Adiciona ORDER
+                $this->setOrderBy("CC.DATA_REGISTRO");
+                
+                //Monda Join
+                $this->joinFrom($tbCredito, $tbCliente, "ID_CLIENTE");
+                
+                //Where para SQL
+                $where = "";
+                
+                //Monta where com campos enviados
+                foreach($arrWhere as $campo => $clausula){
+                    $where .= " AND " . $campo . " " . $clausula;
+                }
+                
+                //Executa JOIN
+                $rs = $this->setJoin("C.ID_MATRIZ = {$idMatriz} AND CC.NUM_PEDIDO <= 0 " . $where);
+                
+                if(!is_array($rs) || sizeof($rs) <= 0){
+                    $ret->msg = "Nenhum lançamento encontrado!";
+                    return $ret;
+                }
+                
+                //Objeto de retorno OK
+                $ret->status        = true;
+                $ret->msg           = "Lançamentos listados com sucesso!";
+                $ret->count         = sizeof($rs);
+                $ret->lancamentos   = $rs;
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
 ?>
