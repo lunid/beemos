@@ -7,7 +7,6 @@
  */
 use \sys\lib\classes\LibComponent;
 use \sys\lib\classes\Url;
-use \sys\classes\util\Dic;
 
 class YuiCompressor extends LibComponent {
     
@@ -22,8 +21,7 @@ class YuiCompressor extends LibComponent {
      * @throws \Exception Se a tentativa de criar o arquivo de saída falhar.
      * @throws \Exception Se após a sua criação, o arquivo de saída possuir tamanho 0kb.
      */
-    function init(){	
-            $pathXmlDic     = $this->getXmlDic();
+    function init(){	            
             $ext            = $this->extension;
             $strInc         = $this->string; 
             $outFileMin     = $this->fileNameMin;
