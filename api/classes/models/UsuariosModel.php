@@ -279,7 +279,7 @@
          *  itn     $ret->erro      - Código de erro                                    <br />
          *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
          *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
-         *  array   $ret->saldo     - Cálcuçlo final de saldo do cliente                <br />
+         *  int     $ret->saldo     - Cálculo final de saldo do cliente                <br />
          * </code>
          * @throws Exception
          */
