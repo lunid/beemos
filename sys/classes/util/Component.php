@@ -28,7 +28,7 @@
  * @author Supervip
  */
 namespace sys\classes\util;
-use \sys\lib\classes\LibDic;
+//use \sys\classes\util\Dic;
 
 class Component {
     
@@ -87,7 +87,7 @@ class Component {
         $class      = ucfirst($folder);
 
         $classPath  = $folderSys.'/lib/'.$folder.'/classes/Lib'.$class.'.php';              
-        if (file_exists($classPath)){
+        if (file_exists($classPath) && 1==0){
             include_once($classPath);
             $cacheName  = $folder.'_'.$class;
             $objCache   = Cache::newCache($cacheName);
@@ -118,9 +118,10 @@ class Component {
             return $out;
         } else {
             //Arquivo não existe
-            $msgErr = LibDic::loadMsgComp($folder,__METHOD__,'FILE_NOT_FOUND');
+            $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'FILE_NOT_FOUND');
             $msgErr = str_replace('{FILE}',$classPath,$msgErr);
-            throw new \Exception( $msgErr );                
+            $msgErr = str_replace('{COMP}',$folder,$msgErr);
+            throw new \Exception( $msgErr );                                    
         }
     }
 }

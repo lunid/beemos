@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <Component>
-        <__callStatic>
-            <msg id="FILE_NOT_EXISTS">O arquivo {FILE} referente à classe do componente solicitado não existe.</msg>
-        </__callStatic>
+        <factory>
+            <msg id="FILE_NOT_FOUND">O arquivo {FILE} referente à classe do componente {COMP} solicitado não existe.</msg>
+        </factory>
     </Component>
     <ORM>
         <default>
