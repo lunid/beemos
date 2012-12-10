@@ -1,5 +1,5 @@
 <?php
-    namespace sys\lib\soap\classes;
+    namespace sys\lib\comps\webservice\classes;
     
     /**
      * Abstração da Lobrary WSDLCreator para geração de WSDL
@@ -23,7 +23,7 @@
                 
                 //Trata caminhos de inclusão
                 $path       = preg_replace("/(sys)(.*)/", "", __DIR__);
-                $path_wsdl  = $path . "sys/lib/soap/src/wsdlcreator/WSDLCreator.php";
+                $path_wsdl  = $path . "sys/lib/comps/webservice/src/wsdlcreator/WSDLCreator.php";
                 
                 //Inclui bibilioteca WSDLCreator
                 include($path_wsdl);

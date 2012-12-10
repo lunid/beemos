@@ -1,7 +1,7 @@
 <?php
-    namespace sys\lib\soap\classes;
+    namespace sys\lib\comps\webservice\classes;
     
-    abstract class Soap extends Wsdl{
+    class Soap extends Wsdl{
         private $server; //Aramazena SoapServer
         private $uri; //Aramazena URI do serviço
         private $class; //Classe onde esta baseado o serviço
@@ -33,7 +33,7 @@
          * 
          * @throws SoapFault
          */
-        public function actionIndex(){
+        public function index(){
             try{
                 //Inicia serviço SoapServer
                 $this->server = new \SoapServer(null, 
@@ -50,15 +50,6 @@
                 throw $e;
             }
         }
-        
-        /**
-         * Valida o usuário que está acessando o serviço - HTTP
-         * 
-         * @param mixed $args Argumento(s) para autenticação
-         * 
-         * Implemente sua validação
-         */
-        abstract function authenticate($args);
         
         /**
          * Monta o WSDL para o Controller de API

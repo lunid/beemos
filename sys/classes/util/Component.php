@@ -86,8 +86,8 @@ class Component {
         $folderSys  = \LoadConfig::folderSys();
         $class      = ucfirst($folder);
 
-        $classPath  = $folderSys.'/lib/'.$folder.'/classes/Lib'.$class.'.php';              
-        if (file_exists($classPath) && 1==0){
+        $classPath  = $folderSys.'/lib/comps/'.$folder.'/classes/Lib'.$class.'.php';              
+        if (file_exists($classPath)){
             include_once($classPath);
             $cacheName  = $folder.'_'.$class;
             $objCache   = Cache::newCache($cacheName);

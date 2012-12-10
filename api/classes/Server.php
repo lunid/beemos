@@ -1,23 +1,44 @@
 <?php
     namespace api\classes;
     
-    use \sys\lib\soap\classes\Soap;
+    use \sys\classes\util\Component;
     use \api\classes\models\ServerModel;
     
-    class Server extends Soap {
+    class Server {
         private $class; //Classe que está utilizando o Server
         private $classIdgnoredMethods; //Métodos a serem ignorados no WSDL pela classe que utiliza Server
+        private $ws;
         
-        public function __construct($class, $metodos = array()) {
+        public function __construct($class, $ignoredMetodos = array()) {
             try{
+                //Parâmetros para inicio do Serviço
+                $arrParams = array(
+                    "class"             => $class,
+                    "ignoredMetodos"    => $ignoredMetodos
+                );
+                
                 //Inicia o ServerSoap
-                parent::__construct($class);
+                $this->ws = Component::webservice($arrParams);
                 
                 //Aramazena classe
                 $this->class = $class;
                 
                 //Armazena métodos a serem ignorados no WSDL
-                $this->classIdgnoredMethods = $metodos;
+                $this->classIdgnoredMethods = $ignoredMetodos;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Inicia o servico SOAP
+         * 
+         * @throws Exception
+         */
+        public function actionIndex(){
+            try{
+                //Inicia o SoapServer
+                $this->ws->index();
             }catch(Exception $e){
                 throw $e;
             }
@@ -147,7 +168,7 @@
         public function actionWsdl(){
             try{
                 //Inicia WSDL
-                parent::wsdl("SuperProWeb");
+                $this->ws->wsdl("SuperProWeb");
                 
                 //Trata caminhos de inclusão
                 $path               = preg_replace("/(api)(.*)/", "", __DIR__);
@@ -155,22 +176,23 @@
                 $path_server        = $path . "api/classes/Server.php";
                 
                 //Inclui Arquivos no WSDL
-                $this->addFile($path_server, "Server");
-                $this->addFile($path_controller, $this->class);
+                $this->ws->addFile($path_server, "Server");
+                $this->ws->addFile($path_controller, $this->class);
                 
                 //Ignora métodos da classe Server, mantendo apenas os globais
-                $this->addIgnore("Server", "__construct");
-                $this->addIgnore("Server", "xmlException");
-                $this->addIgnore("Server", "actionWsdl");
-                $this->addIgnore("Server", "getXmlField");
+                $this->ws->addIgnore("Server", "__construct");
+                $this->ws->addIgnore("Server", "actionIndex");
+                $this->ws->addIgnore("Server", "xmlException");
+                $this->ws->addIgnore("Server", "actionWsdl");
+                $this->ws->addIgnore("Server", "getXmlField");
                 
                 //Ignora métodos da classe
                 foreach($this->classIdgnoredMethods as $metodo){
-                    $this->addIgnore($this->class, $metodo);
+                    $this->ws->addIgnore($this->class, $metodo);
                 }
                 
                 //Exibe WSDL
-                $this->showWsdl();
+                $this->ws->showWsdl();
             }catch(Exception $e){
                 throw $e;
             }

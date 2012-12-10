@@ -8,12 +8,12 @@
         public function __construct() {
             try{
                 //Métodos a serem ignorados no WSDL
-                $metodos = array(
+                $ignoredMetodos = array(
                     "__construct"
                 );
                 
                 //Inicia o ServerSoap
-                parent::__construct(__CLASS__, $metodos);
+                parent::__construct(__CLASS__, $ignoredMetodos);
             }catch(Exception $e){
                 die(utf8_decode("<b>Erro Fatal:</b> " . $e->getMessage() . " - Entre em contato com suporte!"));
             }
@@ -117,11 +117,11 @@
          * Função que atualiza os dados de um cliente através de um cliente logado
          * Apenas clientes já cadastrados e dependentes do cliente podem ser alterados
          * 
-         * @param type $xmlParams String com campos de entrada
+         * @param string $xmlParams String com campos de entrada
          * @return string
          */
-        function atualizaUsuario($xmlParams){
-            try{
+        public function atualizaUsuario($xmlParams){
+            try {
                 $erro   = 0;
                 $msg    = "Consulta efetuada com sucesso!";
                 $dados  = "";
@@ -263,99 +263,99 @@
             }
         }
         
-       /**
-        * Função que bloqueia o acesso de um usuário da escola logada no WS
-        * 
-        * @param string $xmlParams String com o XML dos campos de entrada
-        * @return string $xmlResult
-        */
-       function bloqueiaUsuario($xmlParams){
-            try{
-                $erro   = 0;
-                $msg    = "Usuário bloqueado com sucesso!";
-                $dados  = "";
+        /**
+         * Função que bloqueia o acesso de um usuário da escola logada no WS
+         * 
+         * @param string $xmlParams String com o XML dos campos de entrada
+         * @return string $xmlResult
+         */
+        public function bloqueiaUsuario($xmlParams){
+             try{
+                 $erro   = 0;
+                 $msg    = "Usuário bloqueado com sucesso!";
+                 $dados  = "";
 
-                if($xmlParams){
-                    $xml = new SimpleXMLElement($xmlParams);
+                 if($xmlParams){
+                     $xml = new SimpleXMLElement($xmlParams);
 
-                    if($xml){
-                        //Array de parâmetros
-                        $params = $xml->params->param;
+                     if($xml){
+                         //Array de parâmetros
+                         $params = $xml->params->param;
 
-                        //Campos utilizados
-                        $token      = $this->getXmlField($params, 'token');
-                        $idUsuario  = $this->getXmlField($params, 'id_usuario');
+                         //Campos utilizados
+                         $token      = $this->getXmlField($params, 'token');
+                         $idUsuario  = $this->getXmlField($params, 'id_usuario');
 
-                        if(!isset($token) || $token == null || $token == ""){
-                            $erro   = 4;
-                            $msg    = "Token inválido!";
-                        }else{
-                            //Autentica usuário e token
-                            $ret = $this->authenticate($token);
+                         if(!isset($token) || $token == null || $token == ""){
+                             $erro   = 4;
+                             $msg    = "Token inválido!";
+                         }else{
+                             //Autentica usuário e token
+                             $ret = $this->authenticate($token);
 
-                            if(!$ret->status){
-                                $erro   = $ret->erro;
-                                $msg    = $ret->msg;
-                            }else{
-                                //Valida envio do id_usuario
-                                if($idUsuario <= 0 || $idUsuario == $ret->ID_CLIENTE){
-                                    if($idUsuario <= 0){
-                                        $erro   = 71;
-                                        $msg    = "ID_USUARIO inválido ou nulo!";
-                                    }else{
-                                        $erro   = 72;
-                                        $msg    = "Sem permissão para bloquear seu próprio usuário!";
-                                    }
-                                }else{
-                                    //Model de Usuários
-                                    $mdUsuarios = new UsuariosModel();
-                                    
-                                    //Valida se o usuário é dependente do usuário logado
-                                    if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
-                                        $erro   = 73;
-                                        $msg    = "Usuário não é dependente de sua matriz!";
-                                    }else{
-                                        $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_CLIENTE, 'BLOQ');
+                             if(!$ret->status){
+                                 $erro   = $ret->erro;
+                                 $msg    = $ret->msg;
+                             }else{
+                                 //Valida envio do id_usuario
+                                 if($idUsuario <= 0 || $idUsuario == $ret->ID_CLIENTE){
+                                     if($idUsuario <= 0){
+                                         $erro   = 71;
+                                         $msg    = "ID_USUARIO inválido ou nulo!";
+                                     }else{
+                                         $erro   = 72;
+                                         $msg    = "Sem permissão para bloquear seu próprio usuário!";
+                                     }
+                                 }else{
+                                     //Model de Usuários
+                                     $mdUsuarios = new UsuariosModel();
 
-                                        //VErifica se o status foi atualizado
-                                        if(!$rs->status){
-                                            $erro   = 74;
-                                            $msg    = $rs->msg;
-                                        }
-                                    } //Verifica dependencia do usuário
-                                } //Valida envio de id_usuario
-                            }
-                        }
-                    }else{
-                        $erro   = 6;
-                        $msg    = "XML de entrada fora do padrão!";
-                    }
-                }else{
-                    $erro   = 5;
-                    $msg    = "XML Params inválido ou nulo!";
-                }
+                                     //Valida se o usuário é dependente do usuário logado
+                                     if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
+                                         $erro   = 73;
+                                         $msg    = "Usuário não é dependente de sua matriz!";
+                                     }else{
+                                         $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_CLIENTE, 'BLOQ');
 
-                //$ret  = "<?xml version='1.0' encoding='UTF-8'>";
-                $ret = "<root>";
-                $ret .= "<status>";
-                $ret .= "<erro>{$erro}</erro>";
-                $ret .= "<msg>" . $msg . "</msg>";
-                $ret .= "</status>";
-                $ret .= $dados;
-                $ret .= "</root>";
+                                         //VErifica se o status foi atualizado
+                                         if(!$rs->status){
+                                             $erro   = 74;
+                                             $msg    = $rs->msg;
+                                         }
+                                     } //Verifica dependencia do usuário
+                                 } //Valida envio de id_usuario
+                             }
+                         }
+                     }else{
+                         $erro   = 6;
+                         $msg    = "XML de entrada fora do padrão!";
+                     }
+                 }else{
+                     $erro   = 5;
+                     $msg    = "XML Params inválido ou nulo!";
+                 }
 
-                return $ret;
-            }catch(Exception $e){
-                $ret = "<root>";
-                $ret .= "<status>";
-                $ret .= "<erro>1</erro>";
-                $ret .= "<msg>". $e->getMessage() ."</msg>";
-                $ret .= "</status>";
-                $ret .= "</root>";
+                 //$ret  = "<?xml version='1.0' encoding='UTF-8'>";
+                 $ret = "<root>";
+                 $ret .= "<status>";
+                 $ret .= "<erro>{$erro}</erro>";
+                 $ret .= "<msg>" . $msg . "</msg>";
+                 $ret .= "</status>";
+                 $ret .= $dados;
+                 $ret .= "</root>";
 
-                return $ret;
-            }
-       }
+                 return $ret;
+             }catch(Exception $e){
+                 $ret = "<root>";
+                 $ret .= "<status>";
+                 $ret .= "<erro>1</erro>";
+                 $ret .= "<msg>". $e->getMessage() ."</msg>";
+                 $ret .= "</status>";
+                 $ret .= "</root>";
+
+                 return $ret;
+             }
+        }
     
         /**
          * Função que desbloqueia o acesso de um usuário da escola logada no WS
@@ -363,7 +363,7 @@
          * @param string $xmlParams String com o XML dos campos de entrada
          * @return string $xmlResult
          */
-        function desbloqueiaUsuario($xmlParams){
+        public function desbloqueiaUsuario($xmlParams){
             try{
                 $erro   = 0;
                 $msg    = "Usuário desbloqueado com sucesso!";
@@ -403,7 +403,7 @@
                                 }else{
                                     //Model de Usuários
                                     $mdUsuarios = new UsuariosModel();
-                                    
+
                                     //Valida se o usuário é dependente do usuário logado
                                     if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
                                         $erro   = 83;
@@ -458,7 +458,7 @@
          * @param string $xmlParams XML de parâmetros
          * @return string
          */
-        function listaUsuarios($xmlParams){
+        public function listaUsuarios($xmlParams){
             try{
                 $erro   = 0;
                 $msg    = "Consulta efetuada com sucesso!";
@@ -610,10 +610,10 @@
         * Função que cadastra novos clientes através de um cliente logado
         * Por isso, o novo cliente será atrelado ao cliente logado através do ID_MATRIZ
         * 
-        * @param type $xmlParams String XML com campos de entrada
+        * @param string $xmlParams String XML com campos de entrada
         * @return string
         */
-        function novoUsuario($xmlParams){
+        public function novoUsuario($xmlParams){
             try{
                 $erro   = 0;
                 $msg    = "Consulta efetuada com sucesso!";

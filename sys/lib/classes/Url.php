@@ -15,7 +15,7 @@
                 } else {
                     $folderSys = \LoadConfig::folderSys();    
                     $folder    = (isset($args[0]))?$args[0].'/':'';
-                    $rootComp  = $folderSys.'/lib/'.$folder;
+                    $rootComp  = $folderSys.'/lib/comps/'.$folder;
                     if ($func == 'exceptionXml') {
                         $path  = $rootComp.'dic/exception.xml';
                     } elseif ($func == 'installXml') {
