@@ -338,7 +338,8 @@
                     }
 
                     //Transforma resultado em objeto
-                    $saldo = $rs->getRs()[0];
+                    $saldo = $rs->getRs();
+                    $saldo = $saldo[0];
 
                     /* O sistema busca todas as operações de crédito e débito
                      * feitas pelas escola após a aquisição do último crédito 
@@ -383,7 +384,8 @@
                         return $ret;
                     }
 
-                    $saldoFinal = $rs->getRs()[0];
+                    $saldoFinal = $rs->getRs();
+                    $saldoFinal = $saldoFinal[0];
 
                     //Verifica se o cliente já utilizou algo do saldo dele
                     $tbHistorico = new TB\HistoricoGeradoc();
@@ -443,10 +445,13 @@
                     return $ret;
                 }
                 
+                //Armazena Resultado
+                $tmpRs = $rs->getRs();
+                
                 //Retorno OK
                 $ret->status    = true;
                 $ret->msg       = "Usuário encontrado!";
-                $ret->usuario   = $rs->getRs()[0];
+                $ret->usuario   = $tmpRs[0];
                 
                 return $ret;
             }catch(Exception $e){

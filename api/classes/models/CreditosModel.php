@@ -149,7 +149,8 @@
                 }
                 
                 //Armazena retorno 
-                $rsOperacao = $rs->getRs()[0];
+                $rsOperacao = $rs->getRs();
+                $rsOperacao = $rsOperacao[0];
                 
                 //Retorno OK
                 $ret->status        = true;

@@ -94,10 +94,13 @@
                     return $ret;
                 }               
                 
+                //Armazena resultado
+                $tmpRs = $rs->getRs();
+                
                 //Senão, Retorno OK
                 $ret->status    = true;
                 $ret->msg       = "Pedido superior encontrado";
-                $ret->pedido    = $rs->getRs()[0];
+                $ret->pedido    = $tmpRs[0];
                 
                 return $ret;
             }catch(Exception $e){

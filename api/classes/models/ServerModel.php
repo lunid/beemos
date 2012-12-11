@@ -144,7 +144,8 @@
                 //Se não houver retorno valida token
                 if($rs->count() > 0){
                     //Captura retorno 
-                    $ret = $rs->getRs()[0];
+                    $ret = $rs->getRs();
+                    $ret = $ret[0];
                     
                     //Se token encontrado igual ao token enviado
                     if($ret->TOKEN == $token){
