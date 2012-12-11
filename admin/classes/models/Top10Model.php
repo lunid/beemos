@@ -2,7 +2,7 @@
     namespace admin\models;
     use \sys\classes\mvc\Model;        
     use \sys\classes\util\Date;
-    use \db_tables as TB;
+    use  \common\db_tables as TB;
     
     class Top10Model extends Model {
         public function listaQuestoesTop10($id_materia = 0, $id_fonte_vestibular = 0){

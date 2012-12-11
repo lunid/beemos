@@ -1,6 +1,6 @@
 <?php
 
-    namespace db_tables;    
+    namespace common\db_tables;    
     
     /**
      * Representa uma entidade da tabela SPRO_CLIENTE

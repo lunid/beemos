@@ -1,6 +1,6 @@
 <?php
 
-    namespace db_tables;
+    namespace common\db_tables;  
    
     class MateriaQuestao extends \Table {
         public function getMateriasSelectBox(){

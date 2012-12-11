@@ -1,5 +1,5 @@
 <?php
-    namespace db_tables;
+    namespace common\db_tables;  
 
     class ClassificacaoQuestao extends \Table {
         public function getMateriasQuestao($id_bco_questao){

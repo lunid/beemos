@@ -1,5 +1,5 @@
 <?php
-    namespace db_tables;
+    namespace common\db_tables;  
  
     class UsuarioAvaliaQuestao extends \Table {
         /**

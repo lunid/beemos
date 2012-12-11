@@ -1,6 +1,6 @@
 <?php
 
-    namespace db_tables;    
+    namespace common\db_tables;  
 
     class FonteVestibular extends \Table {
         public function getFontesSelectBox(){

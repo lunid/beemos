@@ -1,6 +1,6 @@
 <?php
 
-    namespace db_tables;  
+    namespace common\db_tables;  
     
     class AdmUsuario extends \Table {
         public function getUsuariosQuestao($in_materias){

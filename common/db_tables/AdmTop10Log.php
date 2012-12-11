@@ -1,6 +1,6 @@
 <?php
 
-    namespace db_tables;    
+    namespace common\db_tables;  
    
     class AdmTop10Log extends \Table {
         public function getTop10Periodo($data_inicio, $data_final, $id_materia = 0, $id_fonte_vestibular = 0){

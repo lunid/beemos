@@ -1,5 +1,5 @@
 <?php
-    namespace db_tables;    
+    namespace common\db_tables;  
     
     /**
      * Classe fake para controles de dados do ENSINO

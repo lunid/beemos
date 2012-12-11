@@ -1,5 +1,5 @@
 <?php
-    namespace db_tables;
+    namespace common\db_tables;  
     
     class BcoQuestao extends \Table {
         public function listaQuestoesTop10($id_materia = 1, $id_fonte_vestibular = 0){
