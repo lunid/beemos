@@ -51,7 +51,7 @@
                         $objCache = new Cache($nameCache,$memcache);                                
                     }
                 } else {
-                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'MEMCACHE_EXTENSION_NOT_EXISTS'); 
+                    //$msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'MEMCACHE_EXTENSION_NOT_EXISTS'); 
                     //throw new \Exception( $msgErr );                            
                 }                
                 return $objCache;
