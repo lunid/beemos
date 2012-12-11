@@ -2,7 +2,7 @@
     use \api\classes\Server;
     use \api\classes\Util;
     use \api\classes\Security;
-    use \api\classes\models\UsuariosModel;
+    use \common\classes\models\UsuariosModel;
     
     class Usuarios extends Server {
         public function __construct() {

@@ -1,5 +1,5 @@
 <?php
-    namespace api\classes\models;
+    namespace common\classes\models;
     
     use \sys\classes\mvc\Model;    
     use \common\db_tables as TB;
@@ -458,7 +458,5 @@
                 throw $e;
             }
         }
-        
-        
     }
 ?>

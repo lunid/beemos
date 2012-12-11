@@ -1,7 +1,7 @@
 <?php
     use \api\classes\Server;
     use \api\classes\models\CreditosModel;
-    use \api\classes\models\UsuariosModel;
+    use \common\classes\models\UsuariosModel;
     
     class Creditos extends Server {
         public function __construct() {
