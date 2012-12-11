@@ -58,7 +58,9 @@ class YuiCompressor extends LibComponent {
                     }                                         
                 } catch(\Exception $e){
                     die($e->getMessage()); 
-                }         
+                }  
+                
+                if (strlen($strIncMin) == 0) $strIncMin = $strInc;
                                 
                 if (strlen($strIncMin) > 0 && strlen($outFileMin) > 0){
                     //Gera um arquivo físico com o conteúdo compactado:                       
@@ -90,7 +92,7 @@ class YuiCompressor extends LibComponent {
                 } elseif (strlen($strIncMin) == 0 && $ext == 'js') {
                     //O conteúdo compactado está vazio e o trata-se de um conteúdo de javascript.
                     $arrVars = array('FILE'=>$outFileMin);
-                    $this->Exception(__METHOD__,'ERR_JS_COMPRESS',$arrVars);                                
+                    //$this->Exception(__METHOD__,'ERR_JS_COMPRESS',$arrVars);                                
                 }                
             } else {   
                 $arrVars = array('EXT'=>$ext);
