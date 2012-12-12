@@ -1,0 +1,113 @@
+<!-- ===================================== conteúdo pagina  ===================================== -->	 
+<div id="modal_usuario" style="display:none;">
+    <div class="abas_usuario">
+        <ul>
+            <li>
+                <a href="#dados">Dados</a>
+            </li>
+            <li>
+                <a href="#info">Informações</a>
+            </li>
+            <li>
+                <a href="#carga">Carga</a>
+            </li>
+        </ul>
+        <div id="dados">
+            <form name="form_usuario" id="form_usuario" method="post" action="salvarusuario" onSubmit="return formUsuario.validate(this, true, 'verSalvarUsuario');">
+                <!-- Erros de validação no server -->
+                <div id="form_usuario_erros" class="notice warning" style="display: none;">
+                    <span class="icon medium" data-icon="!"></span> <span id="form_usuario_erros_msg"></span>
+                    <a href="#close" class="icon close" data-icon="x"></a>
+                </div>
+                <!-- Erros de validação no server --> 
+                
+                <table style="width:100%">
+                    <tr>
+                        <td>
+                            Nome
+                            <br />
+                            <input type="text" id="NOME_PRINCIPAL" name="NOME_PRINCIPAL" maxlength="100" class="required" field_name="Nome" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Apelido
+                            <br />
+                            <input type="text" id="APELIDO" name="APELIDO" maxlength="25" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            E-mail
+                            <br />
+                            <input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email" field_name="E-mail" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Cargo / Função
+                            <br />
+                            <select id="ID_AUTH_FUNCAO" name="ID_AUTH_FUNCAO" class="required" field_name="Cargo / Função">
+                                <option value="0">Selecione uma função</option>
+                                <option value="1">Teste</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Login
+                            <br />
+                            <input type="text" id="LOGIN" name="LOGIN" maxlength="15" class="required" field_name="Login" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="SENHA_SISTEMA" name="SENHA_SISTEMA" checked="checked" onclick="javascript:checkSenha(this);">
+                            &nbsp;Gerar senha automaticamente
+                            <div id="senha" style="display:none">
+                                <div>
+                                    Senha
+                                    <br />
+                                    <input type="password" id="PASSWD" name="PASSWD" maxlength="10" />
+                                </div>
+                                <div>
+                                    Confirmar Senha
+                                    <br />
+                                    <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" id="ID_CLIENTE" name="ID_CLIENTE" value="0" />
+                            <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:$('#form_usuario').submit();">
+                                Salvar<span class="ui-icon ui-icon-disk"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="info" style="display:none;">
+            Teste 1
+        </div>
+        <div id="carga" style="display:none;">
+            Teste 2
+        </div>
+    </div>
+</div>
+<div id="abas">
+    <div class="conteudo_abas">
+        <ul>
+            <li>
+                <a href="#usuarios">Usuários</a>
+            </li>
+        </ul>
+        <div id="usuarios">
+            <table id="grid_usuarios" style="width:100%;"></table>
+            <div id="pg_usuarios"></div>
+        </div>
+    </div>    
+</div>
+<!-- ===================================== fim conteúdo pagina  ===================================== -->	 

@@ -3,6 +3,7 @@
     
     use \sys\classes\mvc\Model;    
     use \common\db_tables as TB;
+    use \common\classes\models as MD;
     
     class CreditosModel extends Model{
         /**
@@ -129,35 +130,9 @@
          */
         public function consultarUltimaOperacao($idCliente){
             try{
-                //Objeto de Retorno
-                $ret            = new \stdClass();
-                $ret->status    = false;
-                $ret->msg       = "Falha ao consultar última operação!";
-                
-                //Tabela SPRO_CREDITO_CONSOLIDADO
-                $tbCredito = new TB\CreditoConsolidado();
-                $tbCredito->setLimit(1); //Define LIMIT 1
-                $tbCredito->setOrderBy("DATA_REGISTRO DESC");
-                
-                //Executa o Select
-                $rs = $tbCredito->findAll("ID_CLIENTE = {$idCliente}");
-                
-                //Se não encontrar retorno 
-                if($rs->count() <= 0){
-                    $ret->msg = "Operação não encontrada!";
-                    return $ret;
-                }
-                
-                //Armazena retorno 
-                $rsOperacao = $rs->getRs();
-                $rsOperacao = $rsOperacao[0];
-                
-                //Retorno OK
-                $ret->status        = true;
-                $ret->msg           = "Operação encontrada!";
-                $ret->operacao      = $rsOperacao;  
-                
-                return $ret;
+                //Model de usuários
+                $mdUsuarios = new MD\UsuariosModel();
+                return $mdUsuarios->consultarUltimaOperacaoCliente($idCliente);
             }catch(Exception $e){
                 throw $e;
             }
