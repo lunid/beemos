@@ -145,15 +145,60 @@
                 //Tabela de clientes
                 $tbCliente = new TB\Cliente();
                 
-                //Campo de bloqueio
-                $tbCliente->BLOQ = (int)$status;
-                
-                //Executa update
-                $tbCliente->update(array("ID_CLIENTE = %i AND ID_MATRIZ = %i", $idCliente, $idMatriz));
+                //Ewxwcuta UPDATE
+                $tbCliente->query("UPDATE SPRO_CLIENTE SET BLOQ = " . ((int)$status) . " WHERE ID_CLIENTE IN ({$idCliente}) AND ID_MATRIZ = " . ((int)$idMatriz));
                 
                 //Retorno OK
                 $ret->status    = true;
                 $ret->msg       = "Bloqueio atualizado com sucesso!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Exclui um ou mais usuários de uma escola
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idCliente ID do Usuário (Cliente) ou string com vários IDs ex: 23,44,67 
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * @throws \admin\classes\models\Exception
+         */
+        public function excluirUsuario($idMatriz, $idCliente){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir usuário!";
+                
+                //Validações
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID Matriz inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID Cliente inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Tabela de clientes
+                $tbCliente = new TB\Cliente();
+                
+                //Ewxwcuta UPDATE
+                $tbCliente->query("UPDATE SPRO_CLIENTE SET DEL = 1 WHERE ID_CLIENTE IN ({$idCliente}) AND ID_MATRIZ = " . ((int)$idMatriz));
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Usuário excluido com sucesso!";
                 
                 return $ret;
             }catch(Exception $e){
