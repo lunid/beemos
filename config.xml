@@ -30,6 +30,12 @@
         <include id='jsInc'></include>
         <include id='plugins'>jquery</include>
     </header>
+    <mail>
+        <include id='emailFrom'>claudio@supervip.com.br</include>
+        <include id='nameFrom'>Claudio Rubens</include>
+        <include id='emailReplyTo'></include>
+        <include id='emailReplyTo'></include>
+    </mail>
     <cache>
         <cache id='components'>On</cache>
         <cache id=''>On</cache>        
