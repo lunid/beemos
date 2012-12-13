@@ -426,3 +426,10 @@ body{
     margin: -5px 0 0 -53px;
     width: 83px;
 }
+
+
+.modal{
+    width: 550px;
+    height: 550px;
+    float: left;
+}
