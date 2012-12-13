@@ -245,4 +245,41 @@ p {
     color:#fff;  
 }
 
+#menu_coluna_esquerda .menu li a {
+    background: none repeat scroll 0 0 transparent;
+    font-size: 13px;
+    padding: 20px 0 20px 20px;
+}
+
 /* menu vertical esquerda ================================================== */
+
+/* tabela ================================================== */
+
+table.striped {
+	
+}
+table.striped tr.alt {
+    background: none repeat scroll 0 0 #F5F5F5;
+	
+}
+table.striped thead th {
+    background: none repeat scroll 0 0 #FFFFFF;
+	text-align: center;
+}
+table.striped tbody th {
+    background: none repeat scroll 0 0 #F5F5F5;
+    border-right: 1px dotted #E5E5E5;
+    padding-right: 15px;
+    text-align: center;
+}
+table.striped tbody tr.alt th {
+    background: none repeat scroll 0 0 #EFEFEF;
+	text-align: center;
+}
+
+th, td {
+    text-align: center;
+}
+
+
+/* final tabela ================================================== */
