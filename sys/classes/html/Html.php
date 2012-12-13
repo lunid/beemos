@@ -110,23 +110,23 @@
                 
                 //Inicializa todos os parâmetros do objeto atual:
                 if (is_array($arrConfigParam)) {                    
-                    foreach($arrConfigParam as $name) {                        
-                        $$name = '';
+                    foreach($arrConfigParam as $nameParam) {                        
+                        $$nameParam = '';
                     }                
                 }
                 
                 if (is_array($params)) {                    
-                    foreach($params as $name=>$value) {                        
-                        $$name = $value;
+                    foreach($params as $nameParam=>$value) {                        
+                        $$nameParam = $value;
                     }                
                 }
                 
-                
-                if (strlen($name) == 0 && strlen($id) > 0)  $name       = $id;
-                if (strlen(@$onchange) > 0)                 $onchange   = "onchange=\"{$onchange}\"";
-                if (strlen(@$onclick) > 0)                  $onclick    = "onchange=\"{$onclick}\"";
-                if (strlen(@$css) > 0)                      $css        = "style=\"{$css}\"";                
-                if (strlen(@$cls) > 0)                      $cls        = "class=\"{$cls}\"";                               
+                if (strlen($name) == 0 && strlen($id) > 0)  $name           = $id;
+                if (strlen(@$onchange) > 0)                 $onchange       = "onchange=\"{$onchange}\"";
+                if (strlen(@$onclick) > 0)                  $onclick        = "onchange=\"{$onclick}\"";
+                if (strlen(@$css) > 0)                      $css            = "style=\"{$css}\"";                
+                if (strlen(@$cls) > 0)                      $cls            = "class=\"{$cls}\"";                               
+                if (strlen(@$field_name) > 0)               $field_name     = "field_name=\"{$field_name}\"";                               
                                 
                 ob_start();
                               

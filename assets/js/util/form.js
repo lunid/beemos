@@ -9,13 +9,15 @@
 Form = function(){};
 
 Form.prototype = {
-    init: function(form_id){
+    init: function(id){
         try{
+            form_id = id;
+            
             if($.trim(form_id) == ''){
                 //If not ID defined
                 throw new Error(Dic.loadMsg("Form", "ERROR_ID", "init"));
             }
-
+            
             $("#" + form_id + " .required").each(function(){
                 $(this).after("<span id='msg_error_" + this.id + "' style='display:none;' class='msg_error'>" + Dic.loadMsg("Form", "FIELD_REQUIRED", "init").replace("%%NAME%%", $.trim($(this).attr('field_name'))) + "</span>");
                 
@@ -58,6 +60,20 @@ Form.prototype = {
             
         this.modalId = id;
     },
+    
+    clearForm: function(){
+        //Array de campos
+        var dados = $("#" + form_id).serializeArray();
+        
+        //Limpa elementos
+        $(dados).each(function(){
+            //Se for HIDDEN não zera elemento, pois normalmente são constantes
+            if($("#" + this.name).attr("type") != 'hidden'){
+                $("#" + this.name).val(""); 
+            }
+        });
+    },
+    
     validate: function(form, ajax, callback, useSite){
         try{
             //oculta erros
@@ -118,7 +134,7 @@ Form.prototype = {
                         site.fechaAguarde();
                         
                         if(ret.status){
-                            //Limpa elemntos
+                            //Limpa elementos
                             $(dados).each(function(){
                                 //Se for HIDDEN não zera elemento, pois normalmente são constantes
                                 if($("#" + this.name).attr("type") != 'hidden'){

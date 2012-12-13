@@ -237,6 +237,8 @@
                 $ret->msg       = "Falha ao listar clientes!";
                 
                 //Paginação e Ordenação
+                $order = "";
+                $limit = "";                
                 if($arrPg != null){
                     //Monta ordenação
                     if(isset($arrPg['campoOrdenacao']) && isset($arrPg['tipoOrdenacao'])){
