@@ -110,14 +110,14 @@
                 
                 //Inicializa todos os parâmetros do objeto atual:
                 if (is_array($arrConfigParam)) {                    
-                    foreach($arrConfigParam as $name) {                        
-                        $$name = '';
+                    foreach($arrConfigParam as $nameParam) {                        
+                        $$nameParam = '';
                     }                
                 }
                 
                 if (is_array($params)) {                    
-                    foreach($params as $name=>$value) {                        
-                        $$name = $value;
+                    foreach($params as $nameParam=>$value) {                        
+                        $$nameParam = $value;
                     }                
                 }
                 

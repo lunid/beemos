@@ -4,8 +4,8 @@
         
         private $module;
         
-        function __construct(){
-            $this->module = \Application::getModule();
+        function __construct($module=''){
+            $this->module = (strlen($module) > 0)?$module:\Application::getModule();
         }
 
         function tplLangFile($path){
