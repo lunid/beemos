@@ -201,7 +201,8 @@
                             $row['EMAIL'],
                             utf8_decode($row['LOGIN']),
                             $html_bloq,
-                            Date::formatDate($row['DATA_REGISTRO'])
+                            Date::formatDate($row['DATA_REGISTRO']),
+                            '<span class="icon gray" data-icon="m"></span>'
                         );
                         $i++;
                     }

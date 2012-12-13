@@ -21,82 +21,81 @@
                 </div>
                 <!-- Erros de validação no server --> 
                 
-                <table style="width:100%">
-                    <tr>
-                        <td>
-                            Nome
-                            <br />
+                <div id="tabr2" class="tab-content">
+                    <div class="col_12">
+                        <div class="col_3">
+                            <h5>Nome:</h5>
+                            <div class="espaco"></div>
+                            <h5>Cargo/Função:</h5>
+                            <div class="espaco"></div>
+                            <h5>E-mail:</h5>
+                            <div class="espaco"></div>
+                            <h5>Login:</h5>
+                            <div class="espaco"></div>
+                            <h5>Senha:</h5>
+                            <div class="espaco"></div>
+                            <h5>Confirmar senha:</h5>
+                        </div>
+
+                        <div class="col_8">
                             <input type="text" id="NOME_PRINCIPAL" name="NOME_PRINCIPAL" maxlength="100" class="required" field_name="Nome" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Apelido
-                            <br />
-                            <input type="text" id="APELIDO" name="APELIDO" maxlength="25" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            E-mail
-                            <br />
-                            <input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email" field_name="E-mail" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Cargo/Função
-                            <br />
+                            <div class="espaco"></div>
                             {CB_FUNCOES}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Login
-                            <br />
+                            <div class="espaco"></div>
+                            <input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email" field_name="E-mail" />
+                            <div class="espaco"></div>
                             <input type="text" id="LOGIN" name="LOGIN" maxlength="15" class="required" field_name="Login" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <!-- Senha para cadastro -->
-                            <div id="SENHA_CADASTRO">
-                                <input type="checkbox" id="SENHA_SISTEMA" name="SENHA_SISTEMA" checked="checked" onclick="javascript:checkSenha(this);" value="1">
-                                &nbsp;Gerar senha automaticamente
-                            </div>
-                            
-                            <!-- Senha para aleteração -->
-                            <div id="SENHA_ALTERACAO">
-                                <input type="checkbox" id="SENHA_NOVA_AUTOMATICA" name="SENHA_NOVA_AUTOMATICA" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
-                                &nbsp;Gerar nova senha temporária
-                                <input type="checkbox" id="SENHA_NOVA_MANUAL" name="SENHA_NOVA_MANUAL" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
-                                &nbsp;Alterar senha atual do Usuário
-                            </div>
-                            
-                            
-                            <div id="senha" style="display:none">
-                                <div>
-                                    Senha
-                                    <br />
-                                    <input type="password" id="PASSWD" name="PASSWD" maxlength="10" />
+                            <div class="espaco"></div>
+                                <!-- Senha para cadastro -->
+                                <div id="SENHA_CADASTRO">
+                                    <input type="checkbox" id="SENHA_SISTEMA" name="SENHA_SISTEMA" checked="checked" onclick="javascript:checkSenha(this);" value="1">
+                                    &nbsp;Gerar senha automaticamente
                                 </div>
-                                <div>
-                                    Confirmar Senha
-                                    <br />
-                                    <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" />
+
+                                <!-- Senha para aleteração -->
+                                <div id="SENHA_ALTERACAO">
+                                    <input type="checkbox" id="SENHA_NOVA_AUTOMATICA" name="SENHA_NOVA_AUTOMATICA" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
+                                    &nbsp;Gerar nova senha temporária
+                                    <input type="checkbox" id="SENHA_NOVA_MANUAL" name="SENHA_NOVA_MANUAL" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
+                                    &nbsp;Alterar senha atual do Usuário
                                 </div>
+                                <div id="senha" style="display:none">
+                                    <div>
+                                        Senha
+                                        <br />
+                                        <input type="password" id="PASSWD" name="PASSWD" maxlength="10" />
+                                    </div>
+                                    <div>
+                                        Confirmar Senha
+                                        <br />
+                                        <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" />
+                                    </div>
+                                </div>
+                            <div class="espaco"></div>
+
+                            <div class="col_6"></div> 
+                            <div class="col_6">
+                                <input type="checkbox" id="check1" />
+                                <label for="check1" class="inline">Enviar acesso por e-mail</label>
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="hidden" id="ID_CLIENTE" name="ID_CLIENTE" value="0" />
-                            <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:$('#form_usuario').submit();">
-                                Salvar<span class="ui-icon ui-icon-disk"></span>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
+                            <div class="espaco"></div>
+
+                            <div class="col_6"></div>
+                            <div class="bt_excluir">
+                                <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:excluirUsuario();">
+                                    <strong style="color:red;">Excluir</strong><span class="ui-icon ui-icon-closethick"></span>
+                                </a>
+                            </div>
+                            <div class="bt_alterar_dados">
+                                <input type="hidden" id="ID_CLIENTE" name="ID_CLIENTE" value="0" />
+                                <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:$('#form_usuario').submit();">
+                                    Salvar<span class="ui-icon ui-icon-disk"></span>
+                                </a>
+                            </div>
+                            <div class="espaco"></div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div id="info" style="display:none;">
@@ -115,8 +114,47 @@
             </li>
         </ul>
         <div id="usuarios">
-            <table id="grid_usuarios" style="width:100%;"></table>
-            <div id="pg_usuarios"></div>
+            <div id="tabr1">
+                <div class="linha"></div>
+                <div class="col_12">
+                    <div class="col_3">
+                    <h5>Créditos dispóniveis:</h5>
+                    </div>
+                    <div class="col_3">
+                    <h5>2540</h5>
+                    </div>
+                    <div class="col_3">
+                    <h5>Créditos válidos até:</h5>
+                    </div>
+                    <div class="col_2">
+                    <h5>25/11/2013</h5>
+                    </div>
+                </div>
+                <div class="linha"></div>
+                <div class="col_3">
+                    <input type="checkbox" id="check1" />
+                    <label for="check1" class="inline">Selecionar todas</label>
+                    </div>
+                <div class="col_4">
+                    <select id="select1">
+                    <option value="0">Ações</option>
+                    <option value="1">Bloquear</option>
+                    <option value="2">LIberar</option>
+                    <option value="3">Excluir</option>
+                    <option value="4">Enviar acesso</option>
+                    </select>
+                </div>
+                <div class="col_3">
+                    <div class="btok_correção">
+                            <button class="small">OK</button>
+                    </div>
+                </div>
+
+                <div class="col_12">
+                    <table id="grid_usuarios" style="width:100%;"></table>
+                    <div id="pg_usuarios"></div>
+                </div>
+            </div>
         </div>
     </div>    
 </div>
