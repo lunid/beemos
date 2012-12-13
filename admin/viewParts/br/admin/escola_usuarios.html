@@ -1,9 +1,9 @@
 <!-- ===================================== conteúdo pagina  ===================================== -->	 
 <div id="modal_usuario" style="display:none;">
     <div class="abas_usuario">
-        <ul>
+        <ul id="painel_abas">
             <li>
-                <a href="#dados">Dados</a>
+                <a id="aba_dados" href="#dados">Dados</a>
             </li>
             <li>
                 <a href="#info">Informações</a>
@@ -45,12 +45,9 @@
                     </tr>
                     <tr>
                         <td>
-                            Cargo / Função
+                            Cargo/Função
                             <br />
-                            <select id="ID_AUTH_FUNCAO" name="ID_AUTH_FUNCAO" class="required" field_name="Cargo / Função">
-                                <option value="0">Selecione uma função</option>
-                                <option value="1">Teste</option>
-                            </select>
+                            {CB_FUNCOES}
                         </td>
                     </tr>
                     <tr>
@@ -62,8 +59,21 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="checkbox" id="SENHA_SISTEMA" name="SENHA_SISTEMA" checked="checked" onclick="javascript:checkSenha(this);">
-                            &nbsp;Gerar senha automaticamente
+                            <!-- Senha para cadastro -->
+                            <div id="SENHA_CADASTRO">
+                                <input type="checkbox" id="SENHA_SISTEMA" name="SENHA_SISTEMA" checked="checked" onclick="javascript:checkSenha(this);" value="1">
+                                &nbsp;Gerar senha automaticamente
+                            </div>
+                            
+                            <!-- Senha para aleteração -->
+                            <div id="SENHA_ALTERACAO">
+                                <input type="checkbox" id="SENHA_NOVA_AUTOMATICA" name="SENHA_NOVA_AUTOMATICA" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
+                                &nbsp;Gerar nova senha temporária
+                                <input type="checkbox" id="SENHA_NOVA_MANUAL" name="SENHA_NOVA_MANUAL" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
+                                &nbsp;Alterar senha atual do Usuário
+                            </div>
+                            
+                            
                             <div id="senha" style="display:none">
                                 <div>
                                     Senha

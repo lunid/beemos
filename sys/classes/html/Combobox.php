@@ -30,6 +30,7 @@
             $this->addParam('multiple');            
             $this->addParam('options');                                 
             $this->addParam('select');            
+            $this->addParam('field_name');            
             
             //Carrega as propriedades do objeto atual a partir de objParams:
             $this->popParams($objParams);            
