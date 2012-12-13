@@ -264,21 +264,21 @@ table.striped tr.alt {
 }
 table.striped thead th {
     background: none repeat scroll 0 0 #FFFFFF;
-	text-align: center;
+	text-align: none;
 }
 table.striped tbody th {
     background: none repeat scroll 0 0 #F5F5F5;
     border-right: 1px dotted #E5E5E5;
     padding-right: 15px;
-    text-align: center;
+    text-align: none;
 }
 table.striped tbody tr.alt th {
     background: none repeat scroll 0 0 #EFEFEF;
-	text-align: center;
+	text-align: none;
 }
 
 th, td {
-    text-align: center;
+    text-align: none;
 }
 
 
