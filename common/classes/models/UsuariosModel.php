@@ -1,5 +1,5 @@
 <?php
-    namespace api\classes\models;
+    namespace common\classes\models;
     
     use \sys\classes\mvc\Model;    
     use \common\db_tables as TB;
@@ -210,6 +210,16 @@
          * 
          * @param int $idMatriz ID da Matriz logada no WS (Cliente)
          * @param string $where String com a cláusula WHERE. Ex: ID_CLIENTE = 9
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
          * @return stdClass $ret
          * <code>
          *  <br />
@@ -219,12 +229,27 @@
          * </code>
          * @throws \api\classes\models\Exception
          */
-        public function listarUsuarios($idMatriz, $where){
+        public function listarUsuarios($idMatriz, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
                 $ret->msg       = "Falha ao listar clientes!";
+                
+                //Paginação e Ordenação
+                if($arrPg != null){
+                    //Monta ordenação
+                    if(isset($arrPg['campoOrdenacao']) && isset($arrPg['tipoOrdenacao'])){
+                        $order = " ORDER BY " . $arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao'];
+                    }
+                    
+                    //Monta paginação
+                    if(isset($arrPg['inicio']) && isset($arrPg['limite'])){
+                        $limit = " LIMIT " . $arrPg['inicio'] . ", " . $arrPg['limite'];
+                    }
+                }else{
+                    $order = " ORDER BY NOME_PRINCIPAL ";
+                }
                 
                 //Table SPRO_CLIENTE
                 $tbCliente = new TB\Cliente();
@@ -238,14 +263,17 @@
                             C.DATA_REGISTRO,
                             C.BLOQ,
                             C.DEL,
+                            F.FUNCAO,
                             (SELECT SUM(DEBITO) FROM SPRO_HISTORICO_GERADOC WHERE ID_LOGIN = C.ID_CLIENTE) AS CONSUMO
                         FROM
                             SPRO_CLIENTE C
+                        INNER JOIN
+                            SPRO_AUTH_FUNCAO F ON F.ID_AUTH_FUNCAO = C.ID_AUTH_FUNCAO
                         WHERE
                             C.ID_MATRIZ = {$idMatriz}
                         $where
-                        ORDER BY
-                            C.NOME_PRINCIPAL
+                        $order
+                        $limit
                         ;";
                 
                 $rs = $tbCliente->query($sql);
@@ -360,7 +388,7 @@
                     //Almarzena o saldo total da escola
                     $saldo_total = (int)$saldo->SALDO_FINAL;
                     
-                    foreach($rs as $row){
+                    foreach($rs->creditos as $row){
                         if($row['OPERACAO'] == 'C'){
                             $saldo_total -= (int)$row['TOTAL'];
                         }else if($row['OPERACAO'] == 'D'){
@@ -459,6 +487,54 @@
             }
         }
         
-        
+        /**
+         * Consulta os dados da última operação efetuada pelo cliente
+         * 
+         * @param int $idCliente Código do cliente a ser consultado
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool        $ret->status        - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string      $ret->msg           - Armazena mensagem ao usuário                      <br />
+         *  stdClass    $ret->operacao      - Dados da operação                                 <br />
+         * </code>
+         * @throws Exception
+         */
+        public function consultarUltimaOperacaoCliente($idCliente){
+            try{
+                //Objeto de Retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao consultar última operação!";
+                
+                //Tabela SPRO_CREDITO_CONSOLIDADO
+                $tbCredito = new TB\CreditoConsolidado();
+                $tbCredito->setLimit(1); //Define LIMIT 1
+                $tbCredito->setOrderBy("DATA_REGISTRO DESC");
+                
+                //Executa o Select
+                $rs = $tbCredito->findAll("ID_CLIENTE = {$idCliente}");
+                
+                //Se não encontrar retorno 
+                if($rs->count() <= 0){
+                    $ret->msg = "Operação não encontrada!";
+                    return $ret;
+                }
+                
+                //Armazena retorno 
+                $rsOperacao = $rs->getRs();
+                $rsOperacao = $rsOperacao[0];
+                
+                //Retorno OK
+                $ret->status        = true;
+                $ret->msg           = "Operação encontrada!";
+                $ret->operacao      = $rsOperacao;  
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
 ?>

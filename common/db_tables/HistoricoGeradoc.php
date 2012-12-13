@@ -87,8 +87,8 @@
                     }
                     
                     //Monta paginação
-                    if(isset($arrPg['inicio']) && isset($arrPg['limit3'])){
-                        $order = " LIMIT " . $arrPg['inicio'] . ", " . $arrPg['limit3'];
+                    if(isset($arrPg['inicio']) && isset($arrPg['limite'])){
+                        $limit = " LIMIT " . $arrPg['inicio'] . ", " . $arrPg['limite'];
                     }
                 }
                 

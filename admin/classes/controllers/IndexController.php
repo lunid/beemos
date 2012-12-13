@@ -12,7 +12,7 @@
         *Conteúdo da página home do admin.
         */
         function actionIndex(){
-            try{
+            try{                
                 //Home
                 $objViewPart = $this->mkViewPart('home');
                 
@@ -33,7 +33,7 @@
                 echo "<br />\n";
                 die;
             }
-        }               
+        }          
     }
 ?>
 
