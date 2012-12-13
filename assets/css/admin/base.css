@@ -17,6 +17,30 @@ body{
 }
 
 
+#logo{
+    widows: 200px;
+    height: 40px;
+    float: left;
+    margin: -3px 0 0 26px;
+    color: #777;
+}
+
+#logo h1{
+    float: left;
+    font-size: 24px;
+    font-family: "Trebuchet Ms",arial,verdana,sans-serif;
+    font-weight: normal;
+}
+
+
+#logo h2{
+    font-size: 12px;
+    text-top:-10px;
+    float: left;
+    font-family: "Trebuchet Ms",arial,verdana,sans-serif;
+    font-weight: normal;
+}
+
 #coluna_esquerda {
     width:168px;
     height: 500px;
@@ -42,12 +66,17 @@ body{
     height: 37px;
     margin: 0 0 8px -14px;
     padding: 8px 16px 0;
-    width: 99%;
+    width: 98%;
 }
 
+.espaco{
+    width:100%;
+    height:12px;
+    float:left;
+}
 #abas{
     border: none;
-    margin: 0 0 0 -13px;
+    margin: 2px 0 0 -13px;
     padding: 0;
     width: 100%;
 }
@@ -161,4 +190,239 @@ body{
     font-size:16px;
     font-weight:bold;
     padding:15px;
+}
+
+
+/* começo grid ================================================== */
+
+.ui-jqgrid tr.jqgrow td {
+    border-bottom: 1px solid #D3D3D3;
+    font-weight: normal;
+    height: 24px;
+    overflow: hidden;
+    padding: 0 2px;
+    white-space: pre;
+}
+
+#gbox_grid_caixa_postal{
+    width: 600px;
+}
+
+#gs_STATUS{
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0;
+    padding: 1px 9px 0 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 100%;
+    height: 22px;
+}
+
+#gbox_grid_turmas, #gbox_grid_listas, #gbox_grid_listas_turmas, #gbox_grid_turmas_listas{
+    margin-left: -2px;
+}
+
+.ui-jqgrid .ui-pg-selbox {
+    display: block;
+    line-height: 6px;
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    display: inline-block;
+    font-size: 9px;
+    height: 17px;
+    margin: 0;
+    padding: 1px 9px 0 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+/* fim começo grid ================================================== */
+
+#box{
+    float: left;
+    height: 411px;
+    margin: auto;
+    position: relative;
+    width: 631px;
+}
+
+#box {
+	width:631px;
+	height:411px;
+	margin:auto;
+	float:left;
+	position:relative;
+}
+
+#lista_turmas{
+	width:95%;
+	height: 183px;
+    margin-bottom: 29px;
+	margin-left: 20px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+#lista_turmas a{
+	text-decoration:none;
+	color:#333333;
+}
+
+#lista_turmas a:hover{
+	color:#03F;
+}
+
+.border {
+	border-left: 1px solid #CCCCCC;
+	float: left;
+	height: 71%;
+	padding-top: 5px;
+	width: 0;
+}
+
+.cinza{
+	width:100%;
+	height:auto;
+	float:left;
+	background-color:#FAFAFA;
+}
+
+
+
+.espaco{
+	width:100%;
+	height:15px;
+	float:left;
+}
+
+.linha{
+	width:100%;
+	height:8px;
+	float:left;
+	border-bottom:1px solid #ECECEC;
+	margin-bottom:10px;
+}
+
+
+#nav {
+	left: 0;
+	position: relative;
+	text-align: center;
+	top: 0;
+}
+
+
+.bt_e-mail{
+	background: -moz-linear-gradient(center top , #FCFCFC 0%, #E0E0E0 100%) repeat scroll 0 0 transparent;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px 5px 5px 5px;
+	color: #666666;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: normal;
+	left: 0;
+	line-height: 100%;
+	margin: 0;
+	overflow: visible;
+	padding: 7px 15px;
+	position: relative;
+	text-decoration: none;
+	text-shadow: 0 1px 0 #FFFFFF;
+	top: 0;
+	vertical-align: middle;
+	width: 99%;
+	margin-bottom:8px;
+}
+
+
+.menu {
+	border: 0px solid #CCCCCC;
+	text-shadow: 0 1px 1px #FFFFFF;
+	margin: 0 -1px;
+}
+
+.menu li a {
+	padding: 15px 12px;
+}
+
+
+.icone_home {
+    float: left;
+    height: 20px;
+    padding-top: 22px;
+    width: 25px;
+}
+
+.titulo_home{
+	float:left;
+	width:120px;
+	height:62px;
+	margin:auto;
+}
+
+
+.titulo_home h4{
+	width:120px;
+	height:62px;
+	vertical-align: middle;
+	display: table-cell;
+	line-height:100%;
+	color:#999999;
+}
+
+#guia_redes_sociais_home{
+    height: 20px;
+    width: 504px;
+	float:left;
+}
+
+.btok_correção{
+	height: 38px;
+    margin: -5px 0px 0px 4px;
+    width: 40px;
+}
+
+#bt_anexar_arquivo{
+	width:171px;
+	height:50px;
+	margin: 13px 1px 0 39px;
+}
+
+.bt_limpar_formulario{
+	width:129px;
+	height:50px;
+	float:left;
+	margin:0px 0px 0px 25px;
+}
+
+.bt_alterar_dados {
+    float: left;
+    height: 50px;
+    margin: 0 1px 0 13px;
+    width: 99px;
+}
+
+.bt_excluir {
+    float: left;
+    height: 50px;
+    margin: 0 1px 0 34px;
+    width: 50px;
+}
+
+.bt_filtrar{
+   	float: left;
+    height: 40px;
+    margin: -5px 0 0 -53px;
+    width: 83px;
 }

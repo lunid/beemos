@@ -3,6 +3,7 @@
     use \admin\classes\models\EscolaModel;
     use \sys\classes\util\Date;
     use \sys\classes\util\Request;
+    use \sys\classes\html\Combobox;
 
     class Escola extends AdminController {
         /**
@@ -45,16 +46,59 @@
             }
         }
         
+        /**
+         * Inicializa a página de usuários de uma escola
+         * Carrega dados de funções da escola
+         */
         public function actionUsuarios(){
             try{
+                //Consulta dados do usuários
+                $mdEscola   = new EscolaModel();
+                $rs         = $mdEscola->carregaDadosClienteHome(26436);
+                
+                //Valida retorno
+                if(!$rs->status){
+                    throw new Exception($rs->msg);
+                }
+                
                 //View do Grid de Escolas
                 $objViewPart = $this->mkViewPart('admin/escola_usuarios');
+                
+                //Atribui valores para marcações do TPL
+                $objViewPart->CREDITOS  = $rs->saldo;
+                $objViewPart->VALIDADE  = Date::formatDate($rs->validade);
+                
+                //Model de Escola
+                $rs = $mdEscola->carregarFuncoesEscola(26436);
+                
+                //Atributos para combo
+                $objAttr                = new stdClass();
+                $objAttr->id            = "ID_AUTH_FUNCAO";
+                $objAttr->name          = "ID_AUTH_FUNCAO";
+                $objAttr->cls           = "required";
+                $objAttr->field_name    = "Cargo/Função";
+                
+                //Inicia Combo Funções com parâmetros
+                $objCb = new Combobox($objAttr);
+                
+                //Verifica retorno de Select
+                if(!$rs->status){
+                    $objCb->addOption(0, $rs->msg);
+                }else{
+                    $objCb->addOption(0, "Selecione um Cargo/Função");
+                    foreach($rs->funcoes as $funcao){
+                        $objCb->addOption($funcao->ID_AUTH_FUNCAO, utf8_decode($funcao->FUNCAO));
+                    }
+                }
+                
+                //Envia HTML de Combo para View
+                $objViewPart->CB_FUNCOES = $objCb->render();
                 
                 //Template
                 $tpl                = $this->mkView();
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE         = 'ADM | SuperPro | Escola | Usuários';
-                
+                                
                 //Instância de JS
                 $tpl->setJs('admin/escola_usuarios');
                 $tpl->forceCssJsMinifyOn();
@@ -70,6 +114,9 @@
             }
         }
         
+        /**
+         * Lista informações pata grid jSon de Usuários da Escola
+         */
         public function actionGridUsuarios(){
             try{
                 //Objeto de retorno
@@ -79,7 +126,7 @@
                 $mdEscola   = new EscolaModel();
                 
                 //Verifica filtros
-                $where  = "";
+                $where  = " AND (DEL <> 1 OR DEL IS NULL) ";
                 $search = Request::get('_search'); 
                 if($search == true){
                     //Filtro Nome
@@ -155,18 +202,19 @@
 
                     $i=0;
                     foreach($rs->usuarios as $row) {
-                        $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' />";
-                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
+                        $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' class='checkGrid' />";
+                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
                         
                         $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
                         $ret->rows[$i]['cell'] = array(
                             $html_check,
-                            $row['NOME_PRINCIPAL'],
-                            $row['FUNCAO'],
+                            utf8_decode($row['NOME_PRINCIPAL']),
+                            utf8_decode($row['FUNCAO']),
                             $row['EMAIL'],
-                            $row['LOGIN'],
+                            utf8_decode($row['LOGIN']),
                             $html_bloq,
-                            Date::formatDate($row['DATA_REGISTRO'])
+                            Date::formatDate($row['DATA_REGISTRO']),
+                            '<span class="icon gray" data-icon="m"></span>'
                         );
                         $i++;
                     }
@@ -186,6 +234,9 @@
             }
         }
         
+        /**
+         * Altera status de bloquio de um usuário vindo do grid
+         */
         public function actionBloquearUsuario(){
             try{
                 //Objeto de retorno
@@ -194,13 +245,12 @@
                 $ret->msg       = "Falha ao alterar bloqueio do usuário!";
                 
                 //Dados enviados
-                $idMatriz   = Request::post("idMatriz", "NUMBER");
-                $idCliente  = Request::post("idCliente", "NUMBER");
+                $idCliente  = Request::post("idCliente");
                 $status     = Request::post("status", "NUMBER");
                 
                 //Model de Escola
                 $mdEscola   = new EscolaModel();
-                $ret        = $mdEscola->alterarBloqueioUsuario($idMatriz, $idCliente, $status);
+                $ret        = $mdEscola->alterarBloqueioUsuario(26436, $idCliente, $status);
                 
                 echo json_encode($ret);
             }catch(Exception $e){
@@ -212,6 +262,36 @@
             }
         }
         
+        /**
+         * Altera status de bloquio de um usuário vindo do grid
+         */
+        public function actionExcluirUsuario(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir usuário!";
+                
+                //Dados enviados
+                $idCliente  = Request::post("idCliente");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->excluirUsuario(26436, $idCliente);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Salva dados do usuário
+         */
         public function actionSalvarUsuario(){
             try{
                 //Objeto de retorno
@@ -220,9 +300,12 @@
                 $ret->msg       = "Falha ao alterar bloqueio do usuário!";
                 
                 //Dados enviados
-                $GERAR_SENHA    = Request::post("SENHA_SISTEMA");
-                $PASSWD         = Request::post("PASSWD");
-                $C_PASSWD       = Request::post("C_PASSWD");
+                $ID_CLIENTE             = Request::post("ID_CLIENTE", "NUMBER");
+                $GERAR_SENHA            = Request::post("SENHA_SISTEMA", "NUMBER");
+                $SENHA_NOVA_AUTOMATICA  = Request::post("SENHA_NOVA_AUTOMATICA", "NUMBER");
+                $SENHA_NOVA_MANUAL      = Request::post("SENHA_NOVA_MANUAL", "NUMBER");
+                $PASSWD                 = Request::post("PASSWD");
+                $C_PASSWD               = Request::post("C_PASSWD");
                 
                 //Model de Escola
                 $mdEscola = new EscolaModel();
@@ -244,14 +327,41 @@
                         die;
                     }
                     
-                    $arrDados['PASSWD'] = md5($PASSWD);
-                }else if($GERAR_SENHA == "on"){
+                    $arrDados['PASSWD_TMP'] = '';
+                    $arrDados['PASSWD']     = md5($PASSWD);
+                }else if($GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1){
                     $arrDados['PASSWD']     = '';
                     $arrDados['PASSWD_TMP'] = md5("snPdSPRW" . date("Y"));
+                }else if(trim($PASSWD) == '' && ($ID_CLIENTE <= 0 || $SENHA_NOVA_MANUAL == 1)){
+                    $ret->msg = "O campo Senha é obrigatório!";
+                    echo json_encode($ret);
+                    die;
                 }
                 
                 //Salva e armazena retorno
                 $ret = $mdEscola->salvarUsuario(26436, $arrDados);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        public function actionCarregaDadosUsuario(){
+            try{
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar dados do Usuário!";
+                
+                //Model de Escola
+                $mdEscola = new EscolaModel();
+                
+                //Carrega dados do Usuário
+                $ret = $mdEscola->carregarDadosUsuario(Request::post("idCliente", "NUMBER"));
                 
                 echo json_encode($ret);
             }catch(Exception $e){
