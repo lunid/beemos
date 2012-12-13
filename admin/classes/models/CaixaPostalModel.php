@@ -2,7 +2,7 @@
     namespace admin\classes\models;
     use \sys\classes\util\Date;
     use \sys\classes\mvc\Model;    
-    use \db_tables as TB;
+    use \common\db_tables as TB;
     
     class CaixaPostalModel extends Model {
         /**
@@ -344,8 +344,9 @@
                         
                     //Verifica se o cliente foi carregado
                     if($rsCliente->count() > 0){
-                        $tbCaixa = new TB\CaixaMsg();
-                        $cliente = $rsCliente->getRs()[0]; //Obtem retorno
+                        $tbCaixa    = new TB\CaixaMsg();
+                        $tmpCliente = $rsCliente->getRs(); //Obtem retorno
+                        $cliente    = $tmpCliente[0]; 
                         
                         $tbCaixa->ID_CLIENTE    = $cliente->ID_CLIENTE;
                         $tbCaixa->SPRO_MSG_ID   = $idMsg;

@@ -106,15 +106,20 @@
         function cacheOn($action,$period='DAY',$time=30){            
             try {
                 $nameCache          = $this->setNameCache($action);                
-                $this->nameCache    = $nameCache;
-                $memCache           = new Cache($nameCache);                   
-                $content            = $memCache->getCache();
-                $memCache->setTime($period,$time);            
-                $this->memCache     = $memCache;
-                if (strlen($content) > 0) {
-                    //Um conteúdo ref. ao parâmetro action foi localizado.
-                    die($content);
-                }
+                $this->nameCache    = $nameCache;                
+                $objCache           = Cache::newCache($nameCache);
+            
+                if (is_object($objCache)) {
+                   //Utiliza cache:
+                   $objCache->setTime($period,$time);            
+                   $this->memCache = $objCache;                     
+                   $content        = $objCache->getCache();              
+                   if (strlen($content) > 0) {
+                        //Um conteúdo ref. ao parâmetro action foi localizado.
+                       //Imprime o conteúdo em cache.
+                       die($content);                       
+                   }                                                  
+                }           
             }catch(Exception $e){
                 throw $e;
             }                        
@@ -124,6 +129,16 @@
             return $this->memCache;
         }
         
+        /**
+         * Cria um nome para o cache do conteúdo gerado pelo método ($action) informado.
+         * Por padrão, o nome do cache é formado pelo módulo atual + '_' + $action;
+         * 
+         * Exemplo:
+         * Ao chamar setNameCache('index') no módulo admin, o nome do cache será admin_index.
+         *  
+         * @param string $action Nome do método __METHOD__ a ser guardado em cache.
+         * @return string
+         */
         private function setNameCache($action){
             $nameCache      = \Application::getModule().'_'.$action;
             $nameCache      = str_replace('::','_',$nameCache); 
@@ -147,9 +162,12 @@
         function cacheOff($action){
             if (strlen($action) > 0) {
                 $nameCache  = $this->setNameCache($action);                    
-                if (strlen($nameCache) > 0) {                    
-                    $memCache = new Cache($nameCache);                    
-                    $memCache->delete();
+                if (strlen($nameCache) > 0) { 
+                    $objCache = Cache::newCache($nameCache);
+                    if (is_object($objCache)) {
+                        //Um objeto Cache válido está disponível
+                        $objCache->delete();
+                    }                    
                 }
                 $this->memCache = NULL;
             }

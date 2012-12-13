@@ -1,4 +1,6 @@
 /nbproject/private/
 
-/sys/classes/db/Conn.php
+
+/sys/classes/db/ConnConfig.php
+
 .htaccess

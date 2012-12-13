@@ -8,6 +8,7 @@ $(document).ready(function(){
     $("#grid_listas").jqGrid({
         url: 'listas/gridlistas',
         datatype: "json",
+        hidegrid: false,
         colNames:['Código', 'Nome', 'Data Criação', 'Impressão', 'Resultado', 'Status', ''],
         colModel:[
                 //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna

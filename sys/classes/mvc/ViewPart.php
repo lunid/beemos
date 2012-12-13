@@ -2,6 +2,7 @@
 
     namespace sys\classes\mvc;
     use \sys\classes\util\File;
+    use \sys\classes\util\Concat;
     
     class ViewPart {               
         
@@ -62,11 +63,11 @@
             $bodyContent    = $this->bodyContent;
             if (strlen($bodyContent) > 0) {
                 $params          = $this->params;                      
-
-                if (is_array($params)) {
-                    foreach($params as $key=>$value){
+                 
+                if (is_array($params)) {                                     
+                    foreach($params as $key=>$value){                        
                         $bodyContent = str_replace('{'.$key.'}',$value,$bodyContent);                
-                    }
+                    }                    
                 }
             }
             return $bodyContent;            

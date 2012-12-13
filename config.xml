@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>
-        <config id='modules'>app,admin,bm,api</config>
+        <config id='modules'>app,admin,bm,api,auth</config>
         <config id='langs'>br,en</config>
         <config id='defaultModule'>admin</config>  
         <config id='defaultLang'>br</config>
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
         <config id='rootFolder'>interbits</config>        
-        <config id='folderSys'>sys</config>        
+        <config id='folderSys'>sys</config>                    
         <config id='folderViews'>viewParts</config>
-    </app>
+    </app>    
+    <components>
+        <config id='folderLib'>lib</config>                    
+        <config id='folderComps'>comps</config>                    
+    </components>
     <assets>
         <config id='assetsFolderRoot'>assets</config>
         <config id='folderPlugins'>plugins</config>
@@ -26,4 +30,14 @@
         <include id='jsInc'></include>
         <include id='plugins'>jquery</include>
     </header>
+    <mail>
+        <include id='emailFrom'>claudio@supervip.com.br</include>
+        <include id='nameFrom'>Claudio Rubens</include>
+        <include id='emailReplyTo'></include>
+        <include id='emailReplyTo'></include>
+    </mail>
+    <cache>
+        <cache id='components'>On</cache>
+        <cache id=''>On</cache>        
+    </cache>
 </root>

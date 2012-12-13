@@ -1,9 +1,9 @@
 <?php
     
-    require_once('sys/classes/comps/files/YUICompressor.php');
-    require_once('sys/classes/comps/HtmlComponent.php');
-    require_once('sys/classes/comps/ChartComponent.php');
     require_once('sys/classes/db/Meekrodb_2_1.php');
+    require_once('sys/classes/db/IConnInfo.php');
+    require_once('sys/classes/db/ConnInfo.php');
+    require_once('sys/classes/db/ConnConfig.php');
     require_once('sys/classes/db/Conn.php');
     require_once('sys/classes/db/ORM.php');
     require_once('sys/classes/db/Table.php');
@@ -13,6 +13,7 @@
     require_once('sys/classes/_init/LoadConfig.php');
     require_once('sys/classes/util/Url.php');  
     require_once('sys/classes/util/DI.php');
+    require_once('sys/classes/util/Dic.php');
     
     use sys\classes\util\DI;
     use sys\classes\mvc as MVC;
@@ -32,7 +33,7 @@
         private static $sessionControllerName           =  'GLB_CONTROLLER';
         private static $sessionActionName               = 'GLB_ACTION';       
         private static $sessionAbsolutePathIncludes     = 'GLB_ROOT_INCLUDES';
-        private static $arrModules                      = array('app','admin');
+        private static $arrModules                      = array('app','admin');        
         
       /**
        * Identifica o módulo, controller e action a partir da URL e faz a chamada
@@ -49,8 +50,8 @@
        * actionFaleConosco().                         
        *  
        */          
-        public static function setup(){
-            
+        public static function setup(){                       
+        
             //Faz a leitura dos parâmetros em config.xml na raíz do site
             $objLoadConfig  = new LoadConfig();            
             $objLoadConfig->loadConfigXml('config.xml');
@@ -78,7 +79,7 @@
             //Faz o include do Controller atual
             $urlFileController = $module . '/classes/controllers/'.ucfirst($controller).'Controller.php';
             if (!file_exists($urlFileController)) {
-                $msgErr = 'Arquivo de inclusão '.$urlFileController.' não localizado';
+                $msgErr = 'Arquivo de inclusão '.$urlFileController.' não localizado, ou então o módulo solicitado não foi informado no item \'modules\' do arquivo global config.xml';
                 throw new \Exception( $msgErr );  
             }
                 
@@ -141,7 +142,70 @@
             $arrPartsUrl['controller']   = $controller;
             $arrPartsUrl['action']       = $action;
             return $arrPartsUrl;
-        }                   
+        }  
+        
+        /**
+         * Define o nome da pasta, a partir da raíz do ambiente web, onde se localiza a aplicação.
+         * 
+         * @param string $folder 
+         * @return void
+         */
+        public static function folder($folder) {
+            //Define o path do diretório da aplicação:
+            defined('APPLICATION_PATH') 
+                || define ('APPLICATION_PATH', realpath(dirname(__FILE__).'/../'.$folder));
+        }
+        
+        /**
+         * Habilita o ambiente de desenvolvimento.
+         * 
+         * @return void
+         * @see setEnv() 
+         */
+        public static function dev(){
+            self::setEnv('dev');
+        }        
+        
+        /**
+         * Habilita o ambiente de testes.
+         * 
+         * @return void
+         * @see setEnv() 
+         */
+        public static function test(){
+            self::setEnv('test');
+        }
+        
+        /**
+         * Habilita o ambiente de produção.
+         * 
+         * @return void
+         * @see setEnv() 
+         */
+        public static function prod(){
+            self::setEnv('prod');
+        }        
+        
+        /**
+         * Define o ambiente atual. Valores possíveis:
+         * - test   = define o ambiente atual como ambiente de teste.
+         * - dev    = define o ambiente atual como ambiente de desenvolvimento.
+         * - prod   = define o ambiente atual como ambiente de produção
+         * 
+         * @param string $env Pode ser test | dev | prod
+         */
+        private static function setEnv($env){
+            //Define o ambiente da aplicação caso a constante ainda não tenha sido definida
+            if (defined('APPLICATION_ENV')) {
+                echo "A constante APPLICATION_ENV não pode ser definida duas vezes.";
+            } else {
+                define ('APPLICATION_ENV',$env);
+            }
+        }
+        
+        public static function getEnv(){
+            return APPLICATION_ENV;
+        }
         
         private static function getPartUrl($pathPart,$default='index'){
            $value = (isset($pathPart) && $pathPart != null)?$pathPart:$default; 

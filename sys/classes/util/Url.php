@@ -1,4 +1,7 @@
 <?php 
+    
+    use sys\classes\util\Dic;
+    
     class Url {
         /**
          * Recebe um array associativo que será convertido em URL no formato
@@ -106,6 +109,21 @@
             $uri          = $protocol.'//'.$baseUrl.'/'.$rootFolder.'/'.$params;
             
             return $uri;
+        }
+        
+        public static function getUrlLibInitComponent($folderComponent){
+            $folderSys      = \LoadConfig::folderSys();
+            $folderLib      = \LoadConfig::folderLib();
+            $folderComps    = \LoadConfig::folderComps(); 
+            
+            if (strlen($folderLib) == 0 || strlen($folderComps) == 0) {
+                //Arquivo não existe
+                $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'COMPS_UNDEFINED');
+                throw new \Exception( $msgErr );              
+            }
+            $class          = ucfirst($folderComponent);
+            $classPath      = "{$folderSys}/{$folderLib}/{$folderComps}/{$folderComponent}/classes/Lib{$class}.php";
+            return $classPath;
         }
     }
 ?>

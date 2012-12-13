@@ -22,6 +22,46 @@
             $out = str_replace($ns,'',$item);
             return $out;            
         }
+        
+        public static function loadMsgForXml($xmlPath,$func,$codMsg=''){  
+            $msgErr = ''; 
+            $msg    = '';               
+            if (file_exists($xmlPath)){
+                list($ns,$action)   = explode('::',$func);
+                $strXml             = file_get_contents($xmlPath);
+                $objXml             = @simplexml_load_string($strXml);
+                $arrNodes           = $objXml->$action;//object se for um único nó <msg..>, array se for maior que um.    
+                
+                if (is_object($objXml) && (is_object($arrNodes) || is_array($arrNodes))){
+                    //Arquivo xml carregado com sucesso.                    
+                    foreach($arrNodes as $msgNodes){              
+                        if (count($msgNodes->msg) > 1){ 
+                            //Existe mais de uma mensagem (<msg...>) para a $class->$func atual.
+                            foreach($msgNodes as $msgNode) {
+                                $atrib = $msgNode->attributes();
+                                if ($atrib == strtoupper($codMsg)) {
+                                    $msg = $msgNode;                                   
+                                    break;
+                                }
+                            }
+                        } else {
+                            //Existe um único nó <msg...> para a $class->$func atual.
+                            $atrib  = $msgNodes->msg->attributes();                            
+                            $msg    = ($atrib == $codMsg)?$msgNodes->msg:'Erro desconhecido';
+                        }                                                
+                    } 
+                    
+                    $msg    = nl2br(htmlentities(utf8_decode($msg)));                    
+                    $msg    = "<b>".$func."()</b>:<br/>".$msg;
+                } else {
+                    $msgErr = "Não foi possível carregar um objeto XML para {$func->$codMsg}";
+                }                
+            } else {
+                $msgErr = "Arquivo {$xmlPath} não localizado";                
+            }
+            if (strlen($msgErr) > 0) self::setErr($func, $msgErr);
+            return $msg;
+        }
  
         public static function loadMsg($class,$func,$ns,$codMsg=''){
             $msgErr         = ''; 
@@ -31,8 +71,9 @@
             $class          = self::getNameItem($class,$ns.'\\');
             $func           = ($func == NULL)?'default':self::getNameItem($func,$ns.'\\'.$class.'::');
             
-            $fileException  = 'app/dic/e'.$class.'.xml';
-           
+            $module         = \Application::getModule();
+            $fileException  = $module.'/dic/e'.$class.'.xml';
+            
             $method = __CLASS__.'\\'.__FUNCTION__."()";//Monta uma string ref. ao método atual. Usado para mostrar erro do método setErr()
             
             $xml = $fileException;
@@ -65,7 +106,8 @@
                             $msg    = ($atrib == $codMsg)?$msgNodes->msg:'Erro desconhecido';
                         }                                                
                     } 
-                    $msg = '<b>'.$class.'/'.$func."()</b>:<br/>".$msg;
+                    $msg    = htmlentities(utf8_decode($msg));
+                    $msg    = '<b>'.$class.'/'.$func."()</b>:<br/>".$msg;
                 } else {
                     $msgErr = "Não foi possível carregar um objeto XML para $class->$func->$codMsg.";
                 }
