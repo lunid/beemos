@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>
-        <config id='modules'>app,admin,bm,api</config>
+        <config id='modules'>app,admin,bm,api,auth</config>
         <config id='langs'>br,en</config>
         <config id='defaultModule'>admin</config>  
         <config id='defaultLang'>br</config>
@@ -10,7 +10,7 @@
         <config id='rootFolder'>interbits</config>        
         <config id='folderSys'>sys</config>                    
         <config id='folderViews'>viewParts</config>
-    </app>
+    </app>    
     <components>
         <config id='folderLib'>lib</config>                    
         <config id='folderComps'>comps</config>                    
