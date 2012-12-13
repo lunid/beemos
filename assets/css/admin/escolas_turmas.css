@@ -6,3 +6,7 @@
     width: 100px;
     margin: 3px;
 }
+
+tr.ui-search-toolbar input {
+    margin: -2px 0 0;
+}
