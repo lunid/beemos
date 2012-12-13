@@ -7,6 +7,10 @@
     width: 25%;
 }
 
+.col_2 {
+    width: 12%;
+}
+
 h5 {
     font-size: 15px;
     margin: 0;
@@ -22,6 +26,7 @@ label {
 
 p {
     color: #000;
+    color: #888;
 }
 
 textarea {
@@ -43,8 +48,8 @@ input {
     -moz-box-sizing: border-box;
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #CCCCCC;
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 1px 6px #CCCCCC inset;
+    border-radius: 0px 0px 0px 0px;
+    box-shadow: 0 0px 0px #CCCCCC inset;
     display: inline-block;
     font-size: 15px;
     margin: 0;
@@ -66,64 +71,20 @@ table {
     border-collapse: inherit;
 }
 
-
-/* começo grid ================================================== */
-
-.ui-jqgrid tr.jqgrow td {
-    border-bottom: 1px solid #D3D3D3;
-    font-weight: normal;
-    height: 24px;
-    overflow: hidden;
-    padding: 0 2px;
-    white-space: pre;
+#msg_error_escrever_assunto{
+    width: 100%;
+    height: 10px;
+    float: left;
 }
 
-
-
-#gs_STATUS{
-    -moz-box-sizing: border-box;
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 1px 6px #CCCCCC inset;
-    display: inline-block;
-    font-size: 12px;
-    margin: 0;
-    padding: 1px 9px 0 0;
-    text-indent: 5px;
-    vertical-align: middle;
-    width: 100%;
-    height: 22px;
+input[type="text"], textarea, button, a.button, a, input[type="file"] {
+    font-size: 13px;
 }
 
 th, td {
     font-size: 0.9em;
     text-align: none;
 }
-
-#gbox_grid_turmas, #gbox_grid_listas, #gbox_grid_listas_turmas, #gbox_grid_turmas_listas{
-    margin-left: -2px;
-}
-
-.ui-jqgrid .ui-pg-selbox {
-    display: block;
-    line-height: 6px;
-    -moz-box-sizing: border-box;
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 1px 6px #CCCCCC inset;
-    display: inline-block;
-    font-size: 9px;
-    height: 17px;
-    margin: 0;
-    padding: 1px 9px 0 0;
-    text-indent: 5px;
-    vertical-align: middle;
-    width: 100%;
-}
-
-/* fim começo grid ================================================== */
 
 .border {
     border-left: 1px solid #CCCCCC;
@@ -159,12 +120,6 @@ ul.alt li {
     background-position:6px 13px;
 }
 
-.espaco{
-    width:100%;
-    height:12px;
-    float:left;
-}
-
 #nav {
     left: 0;
     position: relative;
@@ -188,14 +143,17 @@ p {
 
 
 .chzn-container-single .chzn-single {
-    width: 98%;
+    width: 643px;
 }
 
+#escrever_para {
+    width: 643px;
+}
 
 .bt_e-mail{
     background: -moz-linear-gradient(center top , #FCFCFC 0%, #E0E0E0 100%) repeat scroll 0 0 transparent;
     border: 1px solid #CCCCCC;
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 3px 3px 3px 3px;
     color: #666666;
     cursor: pointer;
     display: inline-block;

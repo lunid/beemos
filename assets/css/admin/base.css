@@ -17,6 +17,30 @@ body{
 }
 
 
+#logo{
+    widows: 200px;
+    height: 40px;
+    float: left;
+    margin: -3px 0 0 26px;
+    color: #777;
+}
+
+#logo h1{
+    float: left;
+    font-size: 24px;
+    font-family: "Trebuchet Ms",arial,verdana,sans-serif;
+    font-weight: normal;
+}
+
+
+#logo h2{
+    font-size: 12px;
+    text-top:-10px;
+    float: left;
+    font-family: "Trebuchet Ms",arial,verdana,sans-serif;
+    font-weight: normal;
+}
+
 #coluna_esquerda {
     width:168px;
     height: 500px;
@@ -42,12 +66,17 @@ body{
     height: 37px;
     margin: 0 0 8px -14px;
     padding: 8px 16px 0;
-    width: 99%;
+    width: 98%;
 }
 
+.espaco{
+    width:100%;
+    height:12px;
+    float:left;
+}
 #abas{
     border: none;
-    margin: 0 0 0 -13px;
+    margin: 2px 0 0 -13px;
     padding: 0;
     width: 100%;
 }
@@ -161,4 +190,64 @@ body{
     font-size:16px;
     font-weight:bold;
     padding:15px;
+}
+
+
+/* começo grid ================================================== */
+
+.ui-jqgrid tr.jqgrow td {
+    border-bottom: 1px solid #D3D3D3;
+    font-weight: normal;
+    height: 24px;
+    overflow: hidden;
+    padding: 0 2px;
+    white-space: pre;
+}
+
+#gbox_grid_caixa_postal{
+    width: 600px;
+}
+
+#gs_STATUS{
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0;
+    padding: 1px 9px 0 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 100%;
+    height: 22px;
+}
+
+#gbox_grid_turmas, #gbox_grid_listas, #gbox_grid_listas_turmas, #gbox_grid_turmas_listas{
+    margin-left: -2px;
+}
+
+.ui-jqgrid .ui-pg-selbox {
+    display: block;
+    line-height: 6px;
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 6px #CCCCCC inset;
+    display: inline-block;
+    font-size: 9px;
+    height: 17px;
+    margin: 0;
+    padding: 1px 9px 0 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+/* fim começo grid ================================================== */
+
+#box{
+    width: 80%;
 }
