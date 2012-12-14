@@ -200,38 +200,36 @@ function bloquearUsuario(idCliente, status){
  * Excluir um ou mais usuário(s)
  */
 function excluirUsuario(idCliente, modal){
-    if(!confirm("Tem certeza que deseja excluir o(s) Usuário(s)?")){
-        return false;
-    }
+    if(confirm("Tem certeza que deseja excluir o(s) Usuário(s)?")){
+        site.aguarde();
     
-    site.aguarde();
-    
-    $.post(
-        'excluirUsuario',
-        {
-            idCliente: idCliente
-        },
-        function(ret){
-            site.fechaAguarde();
-            
-            if(ret.status){
-                $("#grid_usuarios").trigger('reloadGrid');
-                
-                if(modal == true){
-                    formUsuario.clearForm();
-                    $("#modal_usuario").dialog("close");
+        $.post(
+            'excluirUsuario',
+            {
+                idCliente: idCliente
+            },
+            function(ret){
+                site.fechaAguarde();
+
+                if(ret.status){
+                    $("#grid_usuarios").trigger('reloadGrid');
+
+                    if(modal == true){
+                        formUsuario.clearForm();
+                        $("#modal_usuario").dialog("close");
+                    }
+                }else{
+                    alert(ret.msg);
                 }
-            }else{
-                alert(ret.msg);
+            },
+            'json'
+        ).error(
+            function(){
+                site.fechaAguarde();
+                alert("Falha no servidor! Entre em contato com o Suporte.");
             }
-        },
-        'json'
-    ).error(
-        function(){
-            site.fechaAguarde();
-            alert("Falha no servidor! Entre em contato com o Suporte.");
-        }
-    );
+        );
+    }
 }
 
 /**
@@ -248,8 +246,12 @@ function enviarLinkAcesso(idCliente){
                         "enviarLinkAcesso",
                         {idCliente:idCliente},
                         function(ret){
-                            alert(ret.status);
-                            tmpModal.dialog( "close" );
+                            site.fechaAguarde();
+                                                       
+                            //Fecha modal
+                            $(tmpModal).dialog( "close" );
+                            //Exibe retorno
+                            alert(ret.msg);
                         },
                         'json'
                     ).error(

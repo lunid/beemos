@@ -1,6 +1,7 @@
 <?php
     namespace admin\classes\models;
     
+    use \sys\classes\security\Password;
     use \sys\classes\mvc\Model;    
     use \common\db_tables as TB;
     use \common\classes\models as MD;
@@ -122,14 +123,14 @@
          *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
          *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
          * </code>
-         * @throws \admin\classes\models\Exception
+         * @throws Exception
          */
         public function alterarBloqueioUsuario($idMatriz, $idCliente, $status){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
-                $ret->msg       = "Falha ao alterar blqoueio do usuário!";
+                $ret->msg       = "Falha ao alterar bloqueio do usuário!";
                 
                 //Validações
                 if((int)$idMatriz <= 0){
@@ -151,6 +152,71 @@
                 //Retorno OK
                 $ret->status    = true;
                 $ret->msg       = "Bloqueio atualizado com sucesso!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        
+        /**
+         * Cria uma senha temporária para o usuário
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idCliente ID do Usuário (Cliente)
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  string  $ret->senha     - Senha gerada                                      <br />
+         * </code>
+         * @throws Exception
+         */
+        public function criarSenhaTmp($idMatriz = 0, $idCliente = 0){
+            try{
+                //Gera senha
+                $senha = Password::newPassword();
+                
+                //Se não forem enviados dados, apenas retorna a senha
+                if((int)$idCliente <= 0 && (int)$idCliente <= 0){
+                    return $senha;
+                }
+                
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao criar senhas temporárias!";
+                
+                //Validações
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID Matriz inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID Cliente inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if($senha == ''){
+                    $ret->msg = "Falha ao gerar senha!";
+                    return $ret;
+                }
+                
+                //Tabela de clientes
+                $tbCliente = new TB\Cliente($idCliente);
+                
+                //Ewxwcuta UPDATE
+                $tbCliente->query("UPDATE SPRO_CLIENTE SET PASSWD_TMP = '" . ($senha) . "' WHERE ID_CLIENTE IN ({$idCliente}) AND ID_MATRIZ = " . ((int)$idMatriz));
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Senha criada com sucesso!";
+                $ret->senha     = $senha;
+                $ret->cliente   = $tbCliente;
                 
                 return $ret;
             }catch(Exception $e){
@@ -314,6 +380,54 @@
                 $ret->status    = true;
                 $ret->msg       = "Usuário carregado com sucesso!";
                 $ret->usuario   = $objUsuario;
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Exclui um ou mais usuários de uma escola
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idCliente ID do Usuário (Cliente) ou string com vários IDs ex: 23,44,67 
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * @throws \admin\classes\models\Exception
+         */
+        public function excluirUsuario($idMatriz, $idCliente){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir usuário!";
+                
+                //Validações
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID Matriz inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID Cliente inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Tabela de clientes
+                $tbCliente = new TB\Cliente();
+                
+                //Ewxwcuta UPDATE
+                $tbCliente->query("UPDATE SPRO_CLIENTE SET DEL = 1 WHERE ID_CLIENTE IN ({$idCliente}) AND ID_MATRIZ = " . ((int)$idMatriz));
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Usuário excluido com sucesso!";
                 
                 return $ret;
             }catch(Exception $e){

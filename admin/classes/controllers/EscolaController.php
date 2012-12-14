@@ -4,7 +4,8 @@
     use \sys\classes\util\Date;
     use \sys\classes\util\Request;
     use \sys\classes\html\Combobox;
-
+    use \sys\classes\util\Component;
+    
     class Escola extends AdminController {
         /**
          * Inicializa a página de Escola
@@ -230,7 +231,7 @@
                     $i=0;
                     foreach($rs->usuarios as $row) {
                         $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' class='checkGrid' />";
-                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
+                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
                         
                         $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
                         $ret->rows[$i]['cell'] = array(
@@ -290,6 +291,97 @@
         }
         
         /**
+         * Altera status de bloquio de um usuário vindo do grid
+         */
+        public function actionExcluirUsuario(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir usuário!";
+                
+                //Dados enviados
+                $idCliente  = Request::post("idCliente");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->excluirUsuario(26436, $idCliente);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Envia link de acesso para um ou mais usuarios
+         */
+        public function actionEnviarLinkAcesso(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao enviar links de acesso!";
+                
+                //Dados enviados
+                $idCliente  = Request::post("idCliente");
+                
+                //Valida ID Cliente
+                if($idCliente == ""){
+                    $ret->msg = "Nenhum ID cliente enviado!";
+                    echo json_encode($ret);
+                    die;
+                }
+                
+                //Array de IDs
+                $arrId = explode(",", $idCliente);
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                
+                foreach($arrId as $id){
+                    $ret = $mdEscola->criarSenhaTmp(26436, $id);
+                    
+                    //Valida retorno
+                    if($ret->status){
+                        $objMail = Component::mail();    
+                        $objMail->setHtml(utf8_decode("
+                            <b>{$ret->cliente->NOME_PRINCIPAL}</b>, sua senha de acesso ao SuperProWeb precisa ser Redefinida.
+                            <br /><br />
+                            <b>Acese o sitema através do link abaixo e redefina sua senha agora mesmo!</b>
+                            <br />
+                            <a href='http://www.sprweb.com.br' target='_blank'>http://www.sprweb.com.br</a>
+                        "));
+
+                        $objMail->addAddress('prg.pacheco@interbits.com.br', $ret->cliente->NOME_PRINCIPAL);
+                        $objMail->setFrom('prg.pacheco@interbits.com.br', 'SuperProWeb');
+                        $objMail->setSubject('Redefina sua senha de acesso ao SuperProWeb');
+
+                        if(!$objMail->send()){
+                            $ret->msg = $ret->msg . "<br><font color='red'>Falha ao disparar e-mail de acesso! Tente mais tarde.</font>";
+                        }
+                    }
+                }
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Links de acesso enviados com sucesso!";
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
          * Salva dados do usuário
          */
         public function actionSalvarUsuario(){
@@ -306,6 +398,7 @@
                 $SENHA_NOVA_MANUAL      = Request::post("SENHA_NOVA_MANUAL", "NUMBER");
                 $PASSWD                 = Request::post("PASSWD");
                 $C_PASSWD               = Request::post("C_PASSWD");
+                $ENVIAR_ACESSO          = Request::post("ENVIAR_ACESSO", "NUMBER");
                 
                 //Model de Escola
                 $mdEscola = new EscolaModel();
@@ -327,11 +420,10 @@
                         die;
                     }
                     
-                    $arrDados['PASSWD_TMP'] = '';
-                    $arrDados['PASSWD']     = md5($PASSWD);
+                    $arrDados['PASSWD'] = md5($PASSWD);                    
                 }else if($GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1){
-                    $arrDados['PASSWD']     = '';
-                    $arrDados['PASSWD_TMP'] = md5("snPdSPRW" . date("Y"));
+                    $PASSWD             = $mdEscola->criarSenhaTmp(); //Gera senha
+                    $arrDados['PASSWD'] = md5($PASSWD);
                 }else if(trim($PASSWD) == '' && ($ID_CLIENTE <= 0 || $SENHA_NOVA_MANUAL == 1)){
                     $ret->msg = "O campo Senha é obrigatório!";
                     echo json_encode($ret);
@@ -340,6 +432,32 @@
                 
                 //Salva e armazena retorno
                 $ret = $mdEscola->salvarUsuario(26436, $arrDados);
+                
+                //Verifica retorno e envia acesso se solicitado
+                if($ret->status && ($ENVIAR_ACESSO == 1 || $GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1)){
+                    $objMail = Component::mail();    
+                    $objMail->setHtml(utf8_decode("
+                        <b>Parabéns! Você acaba de ser cadastrado(a) no SuperProWeb!</b>
+                        <br /><br />
+                        <b>Dados de acesso:</b>
+                        <br />
+                        <b>Login:</b> {$arrDados['LOGIN']}
+                        <br />
+                        <b>Senha:</b> {$PASSWD}
+                        <br /><br />
+                        <b>Acese o sitema através do link abaixo:</b>
+                        <br />
+                        <a href='http://www.sprweb.com.br' target='_blank'>http://www.sprweb.com.br</a>
+                    "));
+                    
+                    $objMail->addAddress('prg.pacheco@interbits.com.br', $arrDados['NOME_PRINCIPAL']);
+                    $objMail->setFrom('prg.pacheco@interbits.com.br', 'SuperProWeb');
+                    $objMail->setSubject('Dados de acesso ao sistema SuperProWeb');
+                    
+                    if(!$objMail->send()){
+                        $ret->msg = $ret->msg . "<br><font color='red'>Falha ao disparar e-mail de acesso! Tente mais tarde.</font>";
+                    }
+                }
                 
                 echo json_encode($ret);
             }catch(Exception $e){
@@ -351,6 +469,9 @@
             }
         }
         
+        /**
+         * Carrega dados de um usário e retorna jSon
+         */
         public function actionCarregaDadosUsuario(){
             try{
                 $ret            = new stdClass();
@@ -370,6 +491,134 @@
                 $ret->msg       = $e->getMessage();
                 
                 echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Inicia a página de Escola -> Suporte
+         */
+        public function actionSuporte(){
+            try{
+                //View do Grid de Escolas
+                $objViewPart            = $this->mkViewPart('admin/escola_suporte');
+                $objViewPart->RETORNO   = "";
+                
+                //Verifica se o formulário foi enviado
+                if($_POST){
+                    //Armazena campos
+                    $nome   = Request::post("suporte_nome");
+                    $area   = Request::post("suporte_area", "NUMBER");
+                    $msg    = Request::post("suporte_msg");
+                    $anexo  = isset($_FILES['suporte_arquivo']) ? true : false;
+                    
+                    //Define destino
+                    switch ($area) {
+                        case 1:
+                            //Suporte
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                        case 2:
+                            //Comercial
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                        case 3:
+                            //Outro
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                        default:
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                    }
+                    
+                    //Dados do usuário
+                    $usuario = new common\db_tables\Cliente(26436);
+                    
+                    if($usuario->ID_CLIENTE <= 0){
+                        $objViewPart->ERRO  = "Cliente não encontrado! Entre em contato com o suporte.";
+                    }else{
+                        //Component de e-mail
+                        $objMail = Component::mail();    
+                        $objMail->setHtml(utf8_decode("
+                            <b>Data de Envio:</b> ".(date("d/m/Y H:i:s"))."
+                            <br />    
+                            <b>Nome/Contato:</b> {$nome}
+                            <br />    
+                            <b>Login Usuário:</b> {$usuario->LOGIN}
+                            <br />
+                            <b>E-mail usuário:</b> {$usuario->EMAIL}
+                            <br />
+                            <b>Código de acesso:</b> {$usuario->ID_CLIENTE}
+                            <br /><br />
+                            <b>Mensagem:</b>
+                            <p><i>{$msg}</i></p>
+                            <br /><br />
+                            <a href='http://www.sprweb.com.br' target='_blank'>http://www.sprweb.com.br</a>
+                        "));
+
+                        $objMail->addAddress('prg.pacheco@interbits.com.br');
+                        $objMail->setFrom('prg.pacheco@interbits.com.br', 'SuperProWeb - Suporte');
+                        $objMail->setSubject("[ESCOLAS] Mensagem enviada por {$usuario->NOME_PRINCIPAL}");
+                        
+                        //Variável de verificação
+                        $verEnvio = true;
+                        
+                        //Adiciona anexo
+                        if($anexo){
+                            //Dados do arquivo
+                            if($_FILES['suporte_arquivo']['error'] == 1){
+                                $verEnvio = false;
+                                $objViewPart->RETORNO = "<font size='3' color='red'>O anexo não pode possuir mais de 5MB.</font>";
+                            }else{
+                                $arquivo    = $_SERVER['DOCUMENT_ROOT'] . "/interbits/tmp/" . $_FILES['suporte_arquivo']['name'];
+                                $tam        = $_FILES['suporte_arquivo']['size'] / 1024000;
+                                
+                                if($tam > 5){
+                                    $verEnvio = false;
+                                    $objViewPart->RETORNO = "<font size='3' color='red'>O anexo não pode possuir mais de 5MB.</font>";
+                                }else{
+                                    //Transfere arquivo para TMP
+                                    if(copy($_FILES['suporte_arquivo']['tmp_name'], $arquivo)){
+                                        //Anexa o arquivo
+                                        $objMail->addAnexo($arquivo);
+                                    }else{
+                                        $verEnvio               = false;
+                                        $objViewPart->RETORNO   = "<font size='3' color='red'>Falha ao copiar arquivo de anexo! Entre em contato com o suporte.</font>";
+                                    }
+                                }
+                            }
+                        }
+                        
+                        //Verifica erros de anexo (caso exista) e envia
+                        if($verEnvio){
+                            if($objMail->send()){
+                                if($anexo){
+                                    @unlink($arquivo);
+                                }
+                                $objViewPart->RETORNO = "<font size='3' color='blue'>E-mail enviado com sucesso! Em breve responderemos sua dúvida.</font>";
+                            }else{
+                                $objViewPart->RETORNO = "<font size='3' color='red'>Falha ao disparar e-mail de suporte! Tente mais tarde.</font>";
+                            }
+                        }
+                    }
+                }
+                
+                //Template
+                $tpl                = $this->mkView();
+                $tpl->setLayout($objViewPart);
+                $tpl->TITLE         = 'ADM | SuperPro | Área da Escola | Suporte';
+                $tpl->SUBTITLE      = 'Suporte';
+                
+                //Js
+                $tpl->setJs("admin/escola_suporte");
+                
+                $tpl->render('escola_suporte');
+            }catch(Exception $e){
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
             }
         }
     }

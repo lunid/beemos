@@ -23,7 +23,7 @@
                 
                 <div id="tabr2" class="tab-content">
                     <div class="col_12">
-                        <div class="col_3">
+                        <div class="col_4">
                             <h5>Nome:</h5>
                             <div class="espaco"></div>
                             <h5>Cargo/Função:</h5>
@@ -32,9 +32,6 @@
                             <div class="espaco"></div>
                             <h5>Login:</h5>
                             <div class="espaco"></div>
-                            <h5>Senha:</h5>
-                            <div class="espaco"></div>
-                            <h5>Confirmar senha:</h5>
                         </div>
 
                         <div class="col_8">
@@ -54,12 +51,17 @@
 
                                 <!-- Senha para aleteração -->
                                 <div id="SENHA_ALTERACAO">
+                                    <div class="col_12">
                                     <input type="checkbox" id="SENHA_NOVA_AUTOMATICA" name="SENHA_NOVA_AUTOMATICA" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
                                     &nbsp;Gerar nova senha temporária
+                                    </div>
+                                    <div class="col_12">
                                     <input type="checkbox" id="SENHA_NOVA_MANUAL" name="SENHA_NOVA_MANUAL" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
                                     &nbsp;Alterar senha atual do Usuário
+                                    </div>
                                 </div>
                                 <div id="senha" style="display:none">
+                                    <div class="linha"></div>
                                     <div>
                                         Senha
                                         <br />
@@ -70,28 +72,28 @@
                                         <br />
                                         <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" />
                                     </div>
+                                     
+                                    <div class="col_12">
+                                        <input type="checkbox" id="ENVIAR_ACESSO" name="ENVIAR_ACESSO" value="1" onclick="javascript:this.checked ? this.value='1' : this.value='0';" checked="checked" />
+                                        <label for="ENVIAR_ACESSO" class="inline">Enviar acesso por e-mail</label>
+                                    </div>
+                                    <div class="linha"></div>
                                 </div>
                             <div class="espaco"></div>
 
-                            <div class="col_6"></div> 
-                            <div class="col_6">
-                                <input type="checkbox" id="check1" />
-                                <label for="check1" class="inline">Enviar acesso por e-mail</label>
-                            </div>
-                            <div class="espaco"></div>
-
-                            <div class="col_6"></div>
-                            <div class="bt_excluir">
-                                <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:excluirUsuario();">
-                                    <strong style="color:red;">Excluir</strong><span class="ui-icon ui-icon-closethick"></span>
-                                </a>
-                            </div>
                             <div class="bt_alterar_dados">
                                 <input type="hidden" id="ID_CLIENTE" name="ID_CLIENTE" value="0" />
                                 <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:$('#form_usuario').submit();">
                                     Salvar<span class="ui-icon ui-icon-disk"></span>
                                 </a>
                             </div>
+                            
+                            <div class="bt_excluir"> 
+                                <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="btExcluirUsuario" href="javascript:void(0)">
+                                    <strong style="color:red;">Excluir</strong><span class="ui-icon ui-icon-closethick"></span>
+                                </a>
+                            </div>
+                           
                             <div class="espaco"></div>
                         </div>
                     </div>
@@ -107,12 +109,13 @@
     </div>
 </div>
 <div id="abas">
-    <div class="conteudo_abas">
+    
         <ul>
             <li>
                 <a href="#usuarios">Usuários</a>
             </li>
         </ul>
+    <div class="conteudo_abas">
         <div id="usuarios">
             <div id="tabr1">
                 <div class="linha"></div>
@@ -136,17 +139,17 @@
                     <label for="check1" class="inline">Selecionar todas</label>
                     </div>
                 <div class="col_4">
-                    <select id="select1">
-                    <option value="0">Ações</option>
-                    <option value="1">Bloquear</option>
-                    <option value="2">Desbloquear</option>
-                    <option value="3">Excluir</option>
-                    <option value="4">Enviar Acesso</option>
+                    <select id="acaoMassa" name="acaoMassa">
+                        <option value="0">Ações</option>
+                        <option value="1">Bloquear</option>
+                        <option value="2">Desbloquear</option>
+                        <option value="3">Excluir</option>
+                        <option value="4">Enviar Acesso</option>
                     </select>
                 </div>
                 <div class="col_3">
                     <div class="btok_correção">
-                            <button class="small">OK</button>
+                        <button class="small" onclick="javascript:excutaAcao();">OK</button>
                     </div>
                 </div>
 
