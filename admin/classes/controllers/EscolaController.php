@@ -494,6 +494,9 @@
             }
         }
         
+        /**
+         * Inicia a página de Escola -> Suporte
+         */
         public function actionSuporte(){
             try{
                 //View do Grid de Escolas
