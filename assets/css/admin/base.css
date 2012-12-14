@@ -427,9 +427,11 @@ body{
     width: 83px;
 }
 
-
-.modal{
-    width: 550px;
-    height: 550px;
+.modal_interno{
+    border: 1px solid #CCCCCC;
     float: left;
+    height: 49px;
+    padding: 10px;
+    width: 320px;
+    margin: 10px 0;
 }
