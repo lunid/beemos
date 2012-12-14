@@ -407,18 +407,27 @@ body{
 }
 
 .bt_alterar_dados {
-    float: left;
+    float: right;
     height: 50px;
     margin: 0 1px 0 13px;
-    width: 99px;
+    width: 76px;
 }
 
 .bt_excluir {
-    float: left;
+    float: right;
     height: 50px;
     margin: 0 1px 0 34px;
     width: 85px;
 }
+
+.msg_error{
+    color: #FF0000;
+}
+
+#ltr, input{
+    width: auto;
+}
+
 
 .bt_filtrar{
    	float: left;
