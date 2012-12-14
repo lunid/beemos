@@ -300,29 +300,14 @@ class Mail extends LibComponent {
      * @throws \Exception Se o arquivo informado não existir.     
      */
     function setHtmlFile($filename,$arrParams=NULL){
-        $template   = $this->pathTemplate;
-        $pathFile   = $this->setPath($filename);
-        $message    = '';       
-        $hoje       = date('d/m/Y');
-        $hora       = date('H:i:s');
-        $agora      = $hoje.' às '.$hora;
-        $arrDefault = array('DT_HR_ENVIO'=>$agora,'DT_ENVIO'=>$hoje,'HR_ENVIO'=>$hora);
-        $arrLabels  = (is_array($arrParams))?array_merge($arrParams,$arrDefault):$arrDefault;
+        
+        $pathFile = $this->setPath($filename);
         
         if (strlen($pathFile) > 0) {
-            
-            
             if (file_exists($pathFile)) {
                 //Faz a junção do arquivo template com o arquivo do conteúdo da mensagem.
-                $body   = file_get_contents($pathFile);                
-                $tpl    = file_get_contents($template);
-                $message = str_replace("{BODY}",$body,$tpl);
-                
-                foreach($arrLabels as $key=>$value){
-                    $message = str_replace("{{$key}}",utf8_decode($value),$message);
-                }
-                
-                $this->setHtml($message);
+                $body   = file_get_contents($pathFile); 
+                $this->setHtml($body,$arrParams);
             } else {
                 $arrVars = array('FILE'=>$pathFile);
                 $this->Exception(__METHOD__,'ERR_FILE_NOT_FOUND',$arrVars);                  
@@ -332,18 +317,43 @@ class Mail extends LibComponent {
         }
     }
     
+    
     /**
-     * Informa uma mensagem HTML a ser enviada por e-mail.
+     * Concatena uma string (parâmetro $body) com o template informado 
+     * e atribui o valor ao campo de mensagem do objeto PHPMailer.     
      * 
-     * @param string $msgHtml 
+     * @param string $body Corpo da mensagem que será mesclado com o template.
+     * @param string $arrParams Array associativo usado para substituir tags no template com variáveis.
+     * @return void
      */
-    function setHtml($msgHtml){
-        if (strlen($msgHtml) > 0) {
-            $this->AltBody = 'Para visualizar essa mensagem é necessário usar um programa de e-mail compatível com HTML.';
-            $this->objMailer->MsgHTML($msgHtml);
-            $this->message = $msgHtml;
+    function setHtml($body,$arrParams=NULL){
+        $template   = $this->pathTemplate;
+        $message    = '';       
+        $hoje       = date('d/m/Y');
+        $hora       = date('H:i:s');
+        $agora      = $hoje.' às '.$hora;
+        $arrDefault = array('DT_HR_ENVIO'=>$agora,'DT_ENVIO'=>$hoje,'HR_ENVIO'=>$hora);
+        $arrLabels  = (is_array($arrParams))?array_merge($arrParams,$arrDefault):$arrDefault;  
+        
+        if (is_string($body) && strlen($body) > 0) {
+            $tpl        = file_get_contents($template);
+            $message    = str_replace("{BODY}",$body,$tpl);
+
+            foreach($arrLabels as $key=>$value){
+                $message = str_replace("{{$key}}",utf8_decode($value),$message);
+            }
+        } else {
+            
         }
-    }
+        
+        if (strlen($message) > 0) {
+            $this->AltBody = 'Para visualizar essa mensagem é necessário usar um programa de e-mail compatível com HTML.';
+            $this->objMailer->MsgHTML($message);
+            $this->message = $message; 
+        } else {
+            
+        }
+    }    
     
     /**
      * Imprime a mensagem a ser enviada por e-mail.
@@ -394,7 +404,6 @@ class Mail extends LibComponent {
         if (is_array($arrSmtpConfig)) {
             //Um servidor de SMTP foi definido.        
             $mail->IsSMTP();
-            echo 'SMTP';
             $mail->SMTPAuth = $arrSmtpConfig['auth'];
             $mail->Host     = $arrSmtpConfig['host'];
             $mail->Port     = $arrSmtpConfig['port'];

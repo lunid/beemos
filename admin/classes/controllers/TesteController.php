@@ -4,7 +4,8 @@
     use \sys\classes\util\Date;
     use \sys\classes\util\Request;
     use \sys\classes\util\Component;
-
+    use \sys\classes\security\Password;
+    
     class Teste extends AdminController {
         
         function actionIndex(){
@@ -15,7 +16,7 @@
             $objMail = Component::mail();    
             $objMail->smtpDebugOn();
             //$objMail->setTemplate('pasta/dsfdsf.txt');
-            $objMail->setHtmlFile('teste');
+            $objMail->setHtml('teste');
             
             $objMail->addAddress('claudio@supervip.com.br','Claudio');
             $objMail->setFrom('claudio@supervip.com.br','E-mail de contato');
@@ -29,6 +30,10 @@
             //$objMail->setFrom('teste@supervip.com.br','Claudio');           
             
            
+        }
+        
+        function actionPasswd(){
+            echo Password::newPassword('llnnnlll');
         }
     }
 ?>
