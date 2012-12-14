@@ -68,7 +68,16 @@ $(document).ready(function(){
 
                         //Esconde abas desnecessárias
                         $("#painel_abas").show();
-
+                        
+                        //Oculta Erros e exibe excluir
+                        $("#form_usuario_erros").hide();
+                        
+                        //Ação do Botão Excluir
+                        $("#btExcluirUsuario").bind('click', null, function(){
+                            excluirUsuario(rowid, true);
+                        });
+                        $("#btExcluirUsuario").show();
+                        
                         //Carrega dados do usuário
                         $("#ID_CLIENTE").val(ret.usuario.ID_CLIENTE);
                         $("#NOME_PRINCIPAL").val(ret.usuario.NOME_PRINCIPAL);
@@ -123,6 +132,10 @@ $(document).ready(function(){
                 //Esconde abas desnecessárias
                 $("#painel_abas").hide();
                 
+                //Oculta erros e Excluir
+                $("#form_usuario_erros").hide();
+                $("#btExcluirUsuario").hide();
+                
                 //Limpa form
                 formUsuario.clearForm();
                 
@@ -156,13 +169,12 @@ $(document).ready(function(){
 /**
  * Altera status de bloqueio do usuário
  */
-function bloquearUsuario(idMatriz, idCliente, status){
+function bloquearUsuario(idCliente, status){
     site.aguarde();
     
     $.post(
         'bloquearUsuario',
         {
-            idMatriz: idMatriz,
             idCliente: idCliente,
             status: status                
         },
@@ -185,6 +197,79 @@ function bloquearUsuario(idMatriz, idCliente, status){
 }
 
 /**
+ * Excluir um ou mais usuário(s)
+ */
+function excluirUsuario(idCliente, modal){
+    if(!confirm("Tem certeza que deseja excluir o(s) Usuário(s)?")){
+        return false;
+    }
+    
+    site.aguarde();
+    
+    $.post(
+        'excluirUsuario',
+        {
+            idCliente: idCliente
+        },
+        function(ret){
+            site.fechaAguarde();
+            
+            if(ret.status){
+                $("#grid_usuarios").trigger('reloadGrid');
+                
+                if(modal == true){
+                    formUsuario.clearForm();
+                    $("#modal_usuario").dialog("close");
+                }
+            }else{
+                alert(ret.msg);
+            }
+        },
+        'json'
+    ).error(
+        function(){
+            site.fechaAguarde();
+            alert("Falha no servidor! Entre em contato com o Suporte.");
+        }
+    );
+}
+
+/**
+ * Excluir um ou mais usuário(s)
+ */
+function enviarLinkAcesso(idCliente){
+    //Abre modal explicando ação ao usuário
+    site.modal("Ao enviar o <b>link de acesso</b> os usuários selecionados serão obrigados a cadastrar uma nova senha em seu próximo acesso ao sistema.<br/><br/>Tem certeza que deseja enviar o link de acesso?", "Link de Acesso", null, 
+            {
+                "Sim": function() {
+                    site.aguarde();
+                    tmpModal = this;
+                    $.post(
+                        "enviarLinkAcesso",
+                        {idCliente:idCliente},
+                        function(ret){
+                            site.fechaAguarde();
+                                                       
+                            //Fecha modal
+                            $(tmpModal).dialog( "close" );
+                            //Exibe retorno
+                            alert(ret.msg);
+                        },
+                        'json'
+                    ).error(
+                        function(){
+                            site.fechaAguarde();
+                            alert("Falha no servidor! Entre em contato com o Suporte.");
+                        }
+                    );
+                },
+                "Não": function() {
+                    $( this ).dialog( "close" );
+                }
+            }, 400);
+}
+
+/**
  * Verifica a geração de senha manual ou automática
  */
 function checkSenha(obj){
@@ -194,12 +279,15 @@ function checkSenha(obj){
     //Limpa os campos de senha
     $("#PASSWD").val("");
     $("#C_PASSWD").val("");
-        
     if(obj.checked){
         //Esconde campos de senha
+        $("#ENVIAR_ACESSO").val("0");
+        $("#ENVIAR_ACESSO").removeAttr("checked");
         $("#senha").css("display", "none");
     }else{
         //Exibe campos de senha
+        $("#ENVIAR_ACESSO").val("1");
+        $("#ENVIAR_ACESSO").attr("checked", "checked");
         $("#senha").css("display", "");
     }
 }
@@ -245,11 +333,65 @@ function checkSenhaAlt(obj){
         $("#" + id).val("1");
         
         if(id == "SENHA_NOVA_MANUAL"){
+            $("#ENVIAR_ACESSO").val("1");
+            $("#ENVIAR_ACESSO").attr("checked", "checked");
             $("#senha").show();
         }else{
+            $("#ENVIAR_ACESSO").val("0");
+            $("#ENVIAR_ACESSO").removeAttr("checked");
             $("#senha").hide();
         }
     }else{
         $("#senha").hide();
+    }
+}
+
+/**
+ * Marca ou Desmarca todas as opções de grid
+ */
+function selTodos(obj){
+    if(obj.checked){
+        $(".checkGrid").attr("checked", "checked");
+    }else{
+        $(".checkGrid").removeAttr("checked");
+    }
+}
+
+function excutaAcao(){
+    var ids = "";
+    $(".checkGrid:checked").each(function(){
+        if(ids != ""){
+            ids += ",";
+        }
+        
+        ids += this.value;
+    });
+    
+    //Verifica se foi selecionado algum usuário
+    if(ids == ""){
+        alert("Selecione no mínimo um Usuário!");
+        return false;
+    }
+    
+    //Valida ação
+    if($("#acaoMassa").val() <= 0){
+        alert("Selecione uma Ação!");
+        return false;
+    }
+
+    //Executa ação solicitada
+    switch($("#acaoMassa").val()){
+        case '1':
+            bloquearUsuario(ids, 1);
+            break;
+        case '2':
+            bloquearUsuario(ids, 0);
+            break;
+        case '3':
+            excluirUsuario(ids, false);
+            break;
+        case '4':
+            enviarLinkAcesso(ids);
+            break;
     }
 }

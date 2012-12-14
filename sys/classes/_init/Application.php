@@ -28,9 +28,9 @@
          * identifica o módulo e seu respectivo Controller->action() a partir da URL e 
          * carrega as classes solicitadas na aplicação a partir de seu namespace.
         */           
-        private static $sessionLangName                 =  'GLB_LANG';
-        private static $sessionModuleName               =  'GLB_MODULE';
-        private static $sessionControllerName           =  'GLB_CONTROLLER';
+        private static $sessionLangName                 = 'GLB_LANG';
+        private static $sessionModuleName               = 'GLB_MODULE';
+        private static $sessionControllerName           = 'GLB_CONTROLLER';
         private static $sessionActionName               = 'GLB_ACTION';       
         private static $sessionAbsolutePathIncludes     = 'GLB_ROOT_INCLUDES';
         private static $arrModules                      = array('app','admin');        

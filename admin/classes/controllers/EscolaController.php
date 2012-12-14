@@ -4,7 +4,8 @@
     use \sys\classes\util\Date;
     use \sys\classes\util\Request;
     use \sys\classes\html\Combobox;
-
+    use \sys\classes\util\Component;
+    
     class Escola extends AdminController {
         /**
          * Inicializa a página de Escola
@@ -52,8 +53,47 @@
          */
         public function actionUsuarios(){
             try{
+                //Consulta dados do usuários
+                $mdEscola   = new EscolaModel();
+                $rs         = $mdEscola->carregaDadosClienteHome(26436);
+                
+                //Valida retorno
+                if(!$rs->status){
+                    throw new Exception($rs->msg);
+                }
+                
                 //View do Grid de Escolas
                 $objViewPart = $this->mkViewPart('admin/escola_usuarios');
+                
+                //Atribui valores para marcações do TPL
+                $objViewPart->CREDITOS  = $rs->saldo;
+                $objViewPart->VALIDADE  = Date::formatDate($rs->validade);
+                
+                //Model de Escola
+                $rs = $mdEscola->carregarFuncoesEscola(26436);
+                
+                //Atributos para combo
+                $objAttr                = new stdClass();
+                $objAttr->id            = "ID_AUTH_FUNCAO";
+                $objAttr->name          = "ID_AUTH_FUNCAO";
+                $objAttr->cls           = "required";
+                $objAttr->field_name    = "Cargo/Função";
+                
+                //Inicia Combo Funções com parâmetros
+                $objCb = new Combobox($objAttr);
+                
+                //Verifica retorno de Select
+                if(!$rs->status){
+                    $objCb->addOption(0, $rs->msg);
+                }else{
+                    $objCb->addOption(0, "Selecione um Cargo/Função");
+                    foreach($rs->funcoes as $funcao){
+                        $objCb->addOption($funcao->ID_AUTH_FUNCAO, utf8_decode($funcao->FUNCAO));
+                    }
+                }
+                
+                //Envia HTML de Combo para View
+                $objViewPart->CB_FUNCOES = $objCb->render();
                 
                 //Model de Escola
                 $mdEscola   = new EscolaModel();
@@ -114,7 +154,7 @@
                 $mdEscola   = new EscolaModel();
                 
                 //Verifica filtros
-                $where  = "";
+                $where  = " AND (DEL <> 1 OR DEL IS NULL) ";
                 $search = Request::get('_search'); 
                 if($search == true){
                     //Filtro Nome
@@ -190,8 +230,8 @@
 
                     $i=0;
                     foreach($rs->usuarios as $row) {
-                        $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' />";
-                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
+                        $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' class='checkGrid' />";
+                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
                         
                         $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
                         $ret->rows[$i]['cell'] = array(
@@ -233,13 +273,103 @@
                 $ret->msg       = "Falha ao alterar bloqueio do usuário!";
                 
                 //Dados enviados
-                $idMatriz   = Request::post("idMatriz", "NUMBER");
-                $idCliente  = Request::post("idCliente", "NUMBER");
+                $idCliente  = Request::post("idCliente");
                 $status     = Request::post("status", "NUMBER");
                 
                 //Model de Escola
                 $mdEscola   = new EscolaModel();
-                $ret        = $mdEscola->alterarBloqueioUsuario($idMatriz, $idCliente, $status);
+                $ret        = $mdEscola->alterarBloqueioUsuario(26436, $idCliente, $status);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera status de bloquio de um usuário vindo do grid
+         */
+        public function actionExcluirUsuario(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir usuário!";
+                
+                //Dados enviados
+                $idCliente  = Request::post("idCliente");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->excluirUsuario(26436, $idCliente);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Envia link de acesso para um ou mais usuarios
+         */
+        public function actionEnviarLinkAcesso(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao enviar links de acesso!";
+                
+                //Dados enviados
+                $idCliente  = Request::post("idCliente");
+                
+                //Valida ID Cliente
+                if($idCliente == ""){
+                    $ret->msg = "Nenhum ID cliente enviado!";
+                    echo json_encode($ret);
+                    die;
+                }
+                
+                //Array de IDs
+                $arrId = explode(",", $idCliente);
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                
+                foreach($arrId as $id){
+                    $ret = $mdEscola->criarSenhaTmp(26436, $id);
+                    
+                    //Valida retorno
+                    if($ret->status){
+                        $objMail = Component::mail();    
+                        $objMail->setHtml(utf8_decode("
+                            <b>{$ret->cliente->NOME_PRINCIPAL}</b>, sua senha de acesso ao SuperProWeb precisa ser Redefinida.
+                            <br /><br />
+                            <b>Acese o sitema através do link abaixo e redefina sua senha agora mesmo!</b>
+                            <br />
+                            <a href='http://www.sprweb.com.br' target='_blank'>http://www.sprweb.com.br</a>
+                        "));
+
+                        $objMail->addAddress('prg.pacheco@interbits.com.br', $ret->cliente->NOME_PRINCIPAL);
+                        $objMail->setFrom('prg.pacheco@interbits.com.br', 'SuperProWeb');
+                        $objMail->setSubject('Redefina sua senha de acesso ao SuperProWeb');
+
+                        if(!$objMail->send()){
+                            $ret->msg = $ret->msg . "<br><font color='red'>Falha ao disparar e-mail de acesso! Tente mais tarde.</font>";
+                        }
+                    }
+                }
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Links de acesso enviados com sucesso!";
                 
                 echo json_encode($ret);
             }catch(Exception $e){
@@ -268,6 +398,7 @@
                 $SENHA_NOVA_MANUAL      = Request::post("SENHA_NOVA_MANUAL", "NUMBER");
                 $PASSWD                 = Request::post("PASSWD");
                 $C_PASSWD               = Request::post("C_PASSWD");
+                $ENVIAR_ACESSO          = Request::post("ENVIAR_ACESSO", "NUMBER");
                 
                 //Model de Escola
                 $mdEscola = new EscolaModel();
@@ -289,11 +420,10 @@
                         die;
                     }
                     
-                    $arrDados['PASSWD_TMP'] = '';
-                    $arrDados['PASSWD']     = md5($PASSWD);
+                    $arrDados['PASSWD'] = md5($PASSWD);                    
                 }else if($GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1){
-                    $arrDados['PASSWD']     = '';
-                    $arrDados['PASSWD_TMP'] = md5("snPdSPRW" . date("Y"));
+                    $PASSWD             = "snPdSPRW" . date("Y"); //Gera senha
+                    $arrDados['PASSWD'] = md5($PASSWD);
                 }else if(trim($PASSWD) == '' && ($ID_CLIENTE <= 0 || $SENHA_NOVA_MANUAL == 1)){
                     $ret->msg = "O campo Senha é obrigatório!";
                     echo json_encode($ret);
@@ -302,6 +432,32 @@
                 
                 //Salva e armazena retorno
                 $ret = $mdEscola->salvarUsuario(26436, $arrDados);
+                
+                //Verifica retorno e envia acesso se solicitado
+                if($ret->status && ($ENVIAR_ACESSO == 1 || $GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1)){
+                    $objMail = Component::mail();    
+                    $objMail->setHtml(utf8_decode("
+                        <b>Parabéns! Você acaba de ser cadastrado(a) no SuperProWeb!</b>
+                        <br /><br />
+                        <b>Dados de acesso:</b>
+                        <br />
+                        <b>Login:</b> {$arrDados['LOGIN']}
+                        <br />
+                        <b>Senha:</b> {$PASSWD}
+                        <br /><br />
+                        <b>Acese o sitema através do link abaixo:</b>
+                        <br />
+                        <a href='http://www.sprweb.com.br' target='_blank'>http://www.sprweb.com.br</a>
+                    "));
+                    
+                    $objMail->addAddress('prg.pacheco@interbits.com.br', $arrDados['NOME_PRINCIPAL']);
+                    $objMail->setFrom('prg.pacheco@interbits.com.br', 'SuperProWeb');
+                    $objMail->setSubject('Dados de acesso ao sistema SuperProWeb');
+                    
+                    if(!$objMail->send()){
+                        $ret->msg = $ret->msg . "<br><font color='red'>Falha ao disparar e-mail de acesso! Tente mais tarde.</font>";
+                    }
+                }
                 
                 echo json_encode($ret);
             }catch(Exception $e){

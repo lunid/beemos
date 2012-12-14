@@ -125,5 +125,12 @@
             $classPath      = "{$folderSys}/{$folderLib}/{$folderComps}/{$folderComponent}/classes/Lib{$class}.php";
             return $classPath;
         }
+        
+        public static function getUrlEmailTpl(){
+            $folderSys      = \LoadConfig::folderSys();
+            $folderLib      = \LoadConfig::folderLib();
+            $folderComps    = \LoadConfig::folderComps();       
+            $classPath      = "{$folderSys}/common/{$folderComps}/{$folderComponent}/classes/Lib{$class}.php";
+        }
     }
 ?>

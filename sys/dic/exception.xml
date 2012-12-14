@@ -104,5 +104,11 @@
         <addParam>
             <msg id='STRING_NULL'>Um parâmetro string deve ser informado. Use setFile() ou setString() antes de chamar o método addParam().</msg>
         </addParam>        
-    </Concat>
+    </Concat>    
+    <Password>
+        <newPassword>
+            <msg id='ERR_MASK'>A máscara informada possui caracteres inválidos. Utilize apenas 'L' para letras e 'N' para números.</msg> 
+            <msg id='MASK_IS_EMPTY'>Impossível gerar uma senha. Um parâmetro obrigatório não foi informado.</msg>               
+        </newPassword>
+    </Password>    
 </root>

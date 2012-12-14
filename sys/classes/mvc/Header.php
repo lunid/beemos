@@ -32,6 +32,9 @@ class Header {
         );
       
         if (isset($layoutName) && strlen($layoutName) > 0) $this->layoutName = $layoutName;
+        
+        //Em ambiente de desenvolvimento, força a compactação de arquvios css e js mesmo que o arquivo _min já existir.
+        if (APPLICATION_ENV == 'dev') $this->forceCssJsMinifyOn();
     }   
         
     function forceCssJsMinifyOn(){
