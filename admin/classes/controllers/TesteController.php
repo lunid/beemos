@@ -22,10 +22,10 @@
             //$objMail->setHtml('<b>Teste</b>');
             $objMail->setSubject('Teste de e-mail');
             //$objMail->addAnexo();
-            $objMail->printMsg();
-            //if ($objMail->send()){
-             //   echo 'mensagem enviada com sucesso.';
-            //}
+            //$objMail->printMsg();
+            if ($objMail->send()){
+                echo 'mensagem enviada com sucesso.';
+            }
             //$objMail->setFrom('teste@supervip.com.br','Claudio');           
             
            
