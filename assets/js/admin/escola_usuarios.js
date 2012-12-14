@@ -248,8 +248,12 @@ function enviarLinkAcesso(idCliente){
                         "enviarLinkAcesso",
                         {idCliente:idCliente},
                         function(ret){
-                            alert(ret.status);
-                            tmpModal.dialog( "close" );
+                            site.fechaAguarde();
+                                                       
+                            //Fecha modal
+                            $(tmpModal).dialog( "close" );
+                            //Exibe retorno
+                            alert(ret.msg);
                         },
                         'json'
                     ).error(
