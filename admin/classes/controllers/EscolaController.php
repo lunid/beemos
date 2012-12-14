@@ -231,7 +231,7 @@
                     $i=0;
                     foreach($rs->usuarios as $row) {
                         $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' class='checkGrid' />";
-                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario(26436, {$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
+                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
                         
                         $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
                         $ret->rows[$i]['cell'] = array(
