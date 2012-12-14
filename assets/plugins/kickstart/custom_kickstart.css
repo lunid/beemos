@@ -57,7 +57,7 @@ input {
     padding: 2px 0;
     text-indent: 5px;
     vertical-align: middle;
-    width: 100%;
+    width: auto;
     height: 22px;
 }
 
