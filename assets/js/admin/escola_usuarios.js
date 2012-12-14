@@ -238,56 +238,31 @@ function excluirUsuario(idCliente, modal){
  * Excluir um ou mais usuário(s)
  */
 function enviarLinkAcesso(idCliente){
-    
+    //Abre modal explicando ação ao usuário
     site.modal("Ao enviar o <b>link de acesso</b> os usuários selecionados serão obrigados a cadastrar uma nova senha em seu próximo acesso ao sistema.<br/><br/>Tem certeza que deseja enviar o link de acesso?", "Link de Acesso", null, 
             {
                 "Sim": function() {
+                    site.aguarde();
+                    tmpModal = this;
                     $.post(
                         "enviarLinkAcesso",
                         {idCliente:idCliente},
                         function(ret){
-                            
+                            alert(ret.status);
+                            tmpModal.dialog( "close" );
                         },
                         'json'
+                    ).error(
+                        function(){
+                            site.fechaAguarde();
+                            alert("Falha no servidor! Entre em contato com o Suporte.");
+                        }
                     );
                 },
                 "Não": function() {
                     $( this ).dialog( "close" );
                 }
             }, 400);
-                
-    if(!confirm("Tem certeza que deseja excluir o(s) Usuário(s)?")){
-        return false;
-    }
-    return false;
-    site.aguarde();
-    
-    $.post(
-        'excluirUsuario',
-        {
-            idCliente: idCliente
-        },
-        function(ret){
-            site.fechaAguarde();
-            
-            if(ret.status){
-                $("#grid_usuarios").trigger('reloadGrid');
-                
-                if(modal == true){
-                    formUsuario.clearForm();
-                    $("#modal_usuario").dialog("close");
-                }
-            }else{
-                alert(ret.msg);
-            }
-        },
-        'json'
-    ).error(
-        function(){
-            site.fechaAguarde();
-            alert("Falha no servidor! Entre em contato com o Suporte.");
-        }
-    );
 }
 
 /**
