@@ -175,8 +175,16 @@
          * </code>
          * @throws Exception
          */
-        public function criarSenhaTmp($idMatriz, $idCliente){
+        public function criarSenhaTmp($idMatriz = 0, $idCliente = 0){
             try{
+                //Gera senha
+                $senha = Password::newPassword();
+                
+                //Se não forem enviados dados, apenas retorna a senha
+                if((int)$idCliente <= 0 && (int)$idCliente <= 0){
+                    return $senha;
+                }
+                
                 //Objeto de retorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
@@ -192,9 +200,6 @@
                     $ret->msg = "ID Cliente inválido ou nulo!";
                     return $ret;
                 }
-                
-                //Gera senha
-                $senha = Password::newPassword();
                 
                 if($senha == ''){
                     $ret->msg = "Falha ao gerar senha!";

@@ -1,0 +1,75 @@
+<!-- titulo -->
+<div class="titulo">
+    {SUBTITLE}
+</div>
+<!-- fim titulo -->
+<!-- conteudo box -->
+<div id="box">
+    <form name="form_suporte" id="form_suporte" method="post" action="suporte" enctype="multipart/form-data" onSubmit="return formSuporte.validate(this, false);">
+        
+        <div class="col_12">
+            {RETORNO}
+            <h4>Lorem ipsum dolor sit:</h4>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+
+            <div class="espaco"></div>
+            <div class="espaco"></div>
+
+            <!-- ===================================== descrição campos  ===================================== -->
+
+            <div class="col_3">
+                <h5>*Nome/ Contato:</h5>
+                <div class="espaco"></div>
+                <h5>*Assunto:</h5>
+                <div class="espaco"></div>
+                <h5>*Mensagem:</h5>
+            </div>
+
+            <!-- ===================================== fim descrição campos  ===================================== -->
+
+            <!-- ===================================== campos de texts  ===================================== -->
+
+            <div class="col_8">
+
+                <input type="text" id="suporte_nome" name="suporte_nome" class="required" field_name="Nome"  />
+
+                <div class="espaco"></div>
+
+                <select id="suporte_area" name="suporte_area" class="required" field_name="Área de atendimento">
+                    <option value="1">Suporte</option>
+                    <option value="2">Comercial</option>
+                    <option value="3">Outros</option>
+                </select>
+
+                <div class="espaco"></div>
+
+                <textarea id="suporte_msg" name="suporte_msg" class="required" field_name="Mensagem"></textarea>
+
+                <!-- ===================================== fim campos de texts  ===================================== -->
+
+                <div class="col_6"></div>
+                <!-- ===================================== Bt- anexar arquivo  ===================================== -->	 
+                <div class="col_6">
+                    <div id="bt_anexar_arquivo">
+                        <ul class="button-bar">
+                            <li>
+                                <a href=""><span class="icon" data-icon="("></span> Anexar um arquivo </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input type="file" id="suporte_arquivo" name="suporte_arquivo" />
+                </div>
+                <!-- ===================================== fim Bt- anexar arquivo  ===================================== -->	 
+
+                <div class="col_5"></div>
+                <div class="bt_limpar_formulario"><button class="medium">Limpar Formulário</button>
+                </div>
+                <div class="col_2">
+                    <button class="medium" onclick="javascript:$('#form_suporte').submit();site.aguarde();">Prosseguir</button>
+                </div>
+                <div class="espaco"></div>
+            </div>
+            <!-- ===================================== fim campos de texts  ===================================== -->
+        </div>
+    </form>
+</div>

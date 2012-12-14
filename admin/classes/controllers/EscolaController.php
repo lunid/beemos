@@ -422,7 +422,7 @@
                     
                     $arrDados['PASSWD'] = md5($PASSWD);                    
                 }else if($GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1){
-                    $PASSWD             = "snPdSPRW" . date("Y"); //Gera senha
+                    $PASSWD             = $mdEscola->criarSenhaTmp(); //Gera senha
                     $arrDados['PASSWD'] = md5($PASSWD);
                 }else if(trim($PASSWD) == '' && ($ID_CLIENTE <= 0 || $SENHA_NOVA_MANUAL == 1)){
                     $ret->msg = "O campo Senha é obrigatório!";
@@ -469,6 +469,9 @@
             }
         }
         
+        /**
+         * Carrega dados de um usário e retorna jSon
+         */
         public function actionCarregaDadosUsuario(){
             try{
                 $ret            = new stdClass();
@@ -488,6 +491,131 @@
                 $ret->msg       = $e->getMessage();
                 
                 echo json_encode($ret);
+            }
+        }
+        
+        public function actionSuporte(){
+            try{
+                //View do Grid de Escolas
+                $objViewPart            = $this->mkViewPart('admin/escola_suporte');
+                $objViewPart->RETORNO   = "";
+                
+                //Verifica se o formulário foi enviado
+                if($_POST){
+                    //Armazena campos
+                    $nome   = Request::post("suporte_nome");
+                    $area   = Request::post("suporte_area", "NUMBER");
+                    $msg    = Request::post("suporte_msg");
+                    $anexo  = isset($_FILES['suporte_arquivo']) ? true : false;
+                    
+                    //Define destino
+                    switch ($area) {
+                        case 1:
+                            //Suporte
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                        case 2:
+                            //Comercial
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                        case 3:
+                            //Outro
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                        default:
+                            $emailDestino = "prg.pacheco@interbits.com.br";
+                            break;
+                    }
+                    
+                    //Dados do usuário
+                    $usuario = new common\db_tables\Cliente(26436);
+                    
+                    if($usuario->ID_CLIENTE <= 0){
+                        $objViewPart->ERRO  = "Cliente não encontrado! Entre em contato com o suporte.";
+                    }else{
+                        //Component de e-mail
+                        $objMail = Component::mail();    
+                        $objMail->setHtml(utf8_decode("
+                            <b>Data de Envio:</b> ".(date("d/m/Y H:i:s"))."
+                            <br />    
+                            <b>Nome/Contato:</b> {$nome}
+                            <br />    
+                            <b>Login Usuário:</b> {$usuario->LOGIN}
+                            <br />
+                            <b>E-mail usuário:</b> {$usuario->EMAIL}
+                            <br />
+                            <b>Código de acesso:</b> {$usuario->ID_CLIENTE}
+                            <br /><br />
+                            <b>Mensagem:</b>
+                            <p><i>{$msg}</i></p>
+                            <br /><br />
+                            <a href='http://www.sprweb.com.br' target='_blank'>http://www.sprweb.com.br</a>
+                        "));
+
+                        $objMail->addAddress('prg.pacheco@interbits.com.br');
+                        $objMail->setFrom('prg.pacheco@interbits.com.br', 'SuperProWeb - Suporte');
+                        $objMail->setSubject("[ESCOLAS] Mensagem enviada por {$usuario->NOME_PRINCIPAL}");
+                        
+                        //Variável de verificação
+                        $verEnvio = true;
+                        
+                        //Adiciona anexo
+                        if($anexo){
+                            //Dados do arquivo
+                            if($_FILES['suporte_arquivo']['error'] == 1){
+                                $verEnvio = false;
+                                $objViewPart->RETORNO = "<font size='3' color='red'>O anexo não pode possuir mais de 5MB.</font>";
+                            }else{
+                                $arquivo    = $_SERVER['DOCUMENT_ROOT'] . "/interbits/tmp/" . $_FILES['suporte_arquivo']['name'];
+                                $tam        = $_FILES['suporte_arquivo']['size'] / 1024000;
+                                
+                                if($tam > 5){
+                                    $verEnvio = false;
+                                    $objViewPart->RETORNO = "<font size='3' color='red'>O anexo não pode possuir mais de 5MB.</font>";
+                                }else{
+                                    //Transfere arquivo para TMP
+                                    if(copy($_FILES['suporte_arquivo']['tmp_name'], $arquivo)){
+                                        //Anexa o arquivo
+                                        $objMail->addAnexo($arquivo);
+                                    }else{
+                                        $verEnvio               = false;
+                                        $objViewPart->RETORNO   = "<font size='3' color='red'>Falha ao copiar arquivo de anexo! Entre em contato com o suporte.</font>";
+                                    }
+                                }
+                            }
+                        }
+                        
+                        //Verifica erros de anexo (caso exista) e envia
+                        if($verEnvio){
+                            if($objMail->send()){
+                                if($anexo){
+                                    @unlink($arquivo);
+                                }
+                                $objViewPart->RETORNO = "<font size='3' color='blue'>E-mail enviado com sucesso! Em breve responderemos sua dúvida.</font>";
+                            }else{
+                                $objViewPart->RETORNO = "<font size='3' color='red'>Falha ao disparar e-mail de suporte! Tente mais tarde.</font>";
+                            }
+                        }
+                    }
+                }
+                
+                //Template
+                $tpl                = $this->mkView();
+                $tpl->setLayout($objViewPart);
+                $tpl->TITLE         = 'ADM | SuperPro | Área da Escola | Suporte';
+                $tpl->SUBTITLE      = 'Suporte';
+                
+                //Js
+                $tpl->setJs("admin/escola_suporte");
+                
+                $tpl->render('escola_suporte');
+            }catch(Exception $e){
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
             }
         }
     }
