@@ -184,35 +184,6 @@ function bloquearUsuario(idCliente, status){
 }
 
 /**
- * Excluir um ou mais usuário(s)
- */
-function excluirUsuario(idCliente){
-    site.aguarde();
-    
-    $.post(
-        'excluirUsuario',
-        {
-            idCliente: idCliente
-        },
-        function(ret){
-            site.fechaAguarde();
-            
-            if(ret.status){
-                $("#grid_usuarios").trigger('reloadGrid');
-            }else{
-                alert(ret.msg);
-            }
-        },
-        'json'
-    ).error(
-        function(){
-            site.fechaAguarde();
-            alert("Falha no servidor! Entre em contato com o Suporte.");
-        }
-    );
-}
-
-/**
  * Verifica a geração de senha manual ou automática
  */
 function checkSenha(obj){
@@ -280,53 +251,5 @@ function checkSenhaAlt(obj){
     }else{
         $("#senha").hide();
     }
-}
 
-/**
- * Marca ou Desmarca todas as opções de grid
- */
-function selTodos(obj){
-    if(obj.checked){
-        $(".checkGrid").attr("checked", "checked");
-    }else{
-        $(".checkGrid").removeAttr("checked");
-    }
-}
-
-function excutaAcao(){
-    var ids = "";
-    $(".checkGrid:checked").each(function(){
-        if(ids != ""){
-            ids += ",";
-        }
-        
-        ids += this.value;
-    });
-    
-    //Verifica se foi selecionado algum usuário
-    if(ids == ""){
-        alert("Selecione no mínimo um Usuário!");
-        return false;
-    }
-    
-    //Valida ação
-    if($("#acaoMassa").val() <= 0){
-        alert("Selecione uma Ação!");
-        return false;
-    }
-
-    //Executa ação solicitada
-    switch($("#acaoMassa").val()){
-        case '1':
-            bloquearUsuario(ids, 1);
-            break;
-        case '2':
-            bloquearUsuario(ids, 0);
-            break;
-        case '3':
-            if(confirm("Você tem certeza que deseja Excluir todos os usuários selecionados?")){
-                excluirUsuario(ids);
-            }
-            break;
-    }
 }

@@ -94,6 +94,33 @@
                 //Envia HTML de Combo para View
                 $objViewPart->CB_FUNCOES = $objCb->render();
                 
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $rs         = $mdEscola->carregarFuncoesEscola(26436);
+                
+                //Atributos para combo
+                $objAttr                = new stdClass();
+                $objAttr->id            = "ID_AUTH_FUNCAO";
+                $objAttr->name          = "ID_AUTH_FUNCAO";
+                $objAttr->cls           = "required";
+                $objAttr->field_name    = "Cargo/Função";
+                
+                //Inicia Combo Funções com parâmetros
+                $objCb = new Combobox($objAttr);
+                
+                //Verifica retorno de Select
+                if(!$rs->status){
+                    $objCb->addOption(0, $rs->msg);
+                }else{
+                    $objCb->addOption(0, "Selecione um Cargo/Função");
+                    foreach($rs->funcoes as $funcao){
+                        $objCb->addOption($funcao->ID_AUTH_FUNCAO, utf8_decode($funcao->FUNCAO));
+                    }
+                }
+                
+                //Envia HTML de Combo para View
+                $objViewPart->CB_FUNCOES = $objCb->render();
+                
                 //Template
                 $tpl                = $this->mkView();
                 $tpl->setLayout($objViewPart);
@@ -251,33 +278,6 @@
                 //Model de Escola
                 $mdEscola   = new EscolaModel();
                 $ret        = $mdEscola->alterarBloqueioUsuario(26436, $idCliente, $status);
-                
-                echo json_encode($ret);
-            }catch(Exception $e){
-                $ret            = new stdClass();
-                $ret->status    = false;
-                $ret->msg       = $e->getMessage();
-                
-                echo json_encode($ret);
-            }
-        }
-        
-        /**
-         * Altera status de bloquio de um usuário vindo do grid
-         */
-        public function actionExcluirUsuario(){
-            try{
-                //Objeto de retorno
-                $ret            = new stdClass();
-                $ret->status    = false;
-                $ret->msg       = "Falha ao excluir usuário!";
-                
-                //Dados enviados
-                $idCliente  = Request::post("idCliente");
-                
-                //Model de Escola
-                $mdEscola   = new EscolaModel();
-                $ret        = $mdEscola->excluirUsuario(26436, $idCliente);
                 
                 echo json_encode($ret);
             }catch(Exception $e){
