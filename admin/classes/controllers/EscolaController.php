@@ -4,6 +4,7 @@
     use \sys\classes\util\Date;
     use \sys\classes\util\Request;
     use \sys\classes\html\Combobox;
+    use \sys\classes\util\Component;
 
     class Escola extends AdminController {
         /**
@@ -306,6 +307,7 @@
                 $SENHA_NOVA_MANUAL      = Request::post("SENHA_NOVA_MANUAL", "NUMBER");
                 $PASSWD                 = Request::post("PASSWD");
                 $C_PASSWD               = Request::post("C_PASSWD");
+                $ENVIAR_ACESSO          = Request::post("ENVIAR_ACESSO", "NUMBER");
                 
                 //Model de Escola
                 $mdEscola = new EscolaModel();
@@ -327,11 +329,10 @@
                         die;
                     }
                     
-                    $arrDados['PASSWD_TMP'] = '';
-                    $arrDados['PASSWD']     = md5($PASSWD);
+                    $arrDados['PASSWD'] = md5($PASSWD);                    
                 }else if($GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1){
-                    $arrDados['PASSWD']     = '';
-                    $arrDados['PASSWD_TMP'] = md5("snPdSPRW" . date("Y"));
+                    $PASSWD             = "snPdSPRW" . date("Y"); //Gera senha
+                    $arrDados['PASSWD'] = md5($PASSWD);
                 }else if(trim($PASSWD) == '' && ($ID_CLIENTE <= 0 || $SENHA_NOVA_MANUAL == 1)){
                     $ret->msg = "O campo Senha é obrigatório!";
                     echo json_encode($ret);
@@ -340,6 +341,32 @@
                 
                 //Salva e armazena retorno
                 $ret = $mdEscola->salvarUsuario(26436, $arrDados);
+                
+                //Verifica retorno e envia acesso se solicitado
+                if($ret->status && ($ENVIAR_ACESSO == 1 || $GERAR_SENHA == 1 || $SENHA_NOVA_AUTOMATICA == 1)){
+                    $objMail = Component::mail();    
+                    $objMail->setHtml(utf8_decode("
+                        <b>Parabéns! Você acaba de ser cadastrado(a) no SuperProWeb!</b>
+                        <br /><br />
+                        <b>Dados de acesso:</b>
+                        <br />
+                        <b>Login:</b> {$arrDados['LOGIN']}
+                        <br />
+                        <b>Senha:</b> {$PASSWD}
+                        <br /><br />
+                        <b>Acese o sitema através do link abaixo:</b>
+                        <br />
+                        <a href='http://www.sprweb.com.br' target='_blank'>http://www.sprweb.com.br</a>
+                    "));
+                    
+                    $objMail->addAddress('prg.pacheco@interbits.com.br', $arrDados['NOME_PRINCIPAL']);
+                    $objMail->setFrom('prg.pacheco@interbits.com.br', 'SuperProWeb');
+                    $objMail->setSubject('Dados de acesso ao sistema SuperProWeb');
+                    
+                    if(!$objMail->send()){
+                        $ret->msg = $ret->msg . "<br><font color='red'>Falha ao disparar e-mail de acesso! Tente mais tarde.</font>";
+                    }
+                }
                 
                 echo json_encode($ret);
             }catch(Exception $e){

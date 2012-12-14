@@ -70,19 +70,17 @@
                                         <br />
                                         <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" />
                                     </div>
+                                    <div class="col_6"></div> 
+                                    <div class="col_6">
+                                        <input type="checkbox" id="ENVIAR_ACESSO" name="ENVIAR_ACESSO" value="1" onclick="javascript:this.checked ? this.value='1' : this.value='0';" checked="checked" />
+                                        <label for="ENVIAR_ACESSO" class="inline">Enviar acesso por e-mail</label>
+                                    </div>
                                 </div>
-                            <div class="espaco"></div>
-
-                            <div class="col_6"></div> 
-                            <div class="col_6">
-                                <input type="checkbox" id="check1" />
-                                <label for="check1" class="inline">Enviar acesso por e-mail</label>
-                            </div>
                             <div class="espaco"></div>
 
                             <div class="col_6"></div>
                             <div class="bt_excluir">
-                                <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:excluirUsuario();">
+                                <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="btExcluirUsuario" href="javascript:void(0)">
                                     <strong style="color:red;">Excluir</strong><span class="ui-icon ui-icon-closethick"></span>
                                 </a>
                             </div>

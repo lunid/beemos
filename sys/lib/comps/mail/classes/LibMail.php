@@ -394,7 +394,6 @@ class Mail extends LibComponent {
         if (is_array($arrSmtpConfig)) {
             //Um servidor de SMTP foi definido.        
             $mail->IsSMTP();
-            echo 'SMTP';
             $mail->SMTPAuth = $arrSmtpConfig['auth'];
             $mail->Host     = $arrSmtpConfig['host'];
             $mail->Port     = $arrSmtpConfig['port'];
