@@ -387,7 +387,7 @@ body{
 	float:left;
 }
 
-.btok_correção{
+.bt_ok{
 	height: 38px;
     margin: -5px 0px 0px 4px;
     width: 40px;
@@ -417,7 +417,7 @@ body{
     float: left;
     height: 50px;
     margin: 0 1px 0 34px;
-    width: 50px;
+    width: 85px;
 }
 
 .bt_filtrar{
@@ -434,4 +434,11 @@ body{
     padding: 10px;
     width: 320px;
     margin: 10px 0;
+}
+
+#btExcluirUsuario{
+    background: url("images/ui-bg_glass_75_e6e6e6_1x400.png") repeat-x scroll 50% 50% #E6E6E6;
+    border: 1px solid #D3D3D3;
+    color: #555555;
+    font-weight: normal;
 }
