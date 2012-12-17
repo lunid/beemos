@@ -9,7 +9,7 @@
     class Security {
 
         /**
-         * Função que gera um novo TOKEN, sempre gerando um númeor único de acordo com
+         * Função que gera um novo TOKEN, sempre gerando um número único de acordo com
          * o banco de dados.
          * 
          * @return string $token
@@ -160,6 +160,11 @@
             }
         }
 
+        /**
+         * Criptografa uma string usando md5.
+         * @param type $string
+         * @return type 
+         */
         public static function md5_salt($string) {
             //CRIPTOGRAFIA DE UMA STRING
             $chars = str_split('~`!@#$%^&*()[]{}-_\/|\'";:,.+=<>?');

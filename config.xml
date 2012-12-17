@@ -3,7 +3,7 @@
     <app>
         <config id='modules'>app,admin,bm,api,auth</config>
         <config id='langs'>br,en</config>
-        <config id='defaultModule'>admin</config>  
+        <config id='defaultModule'>app</config>  
         <config id='defaultLang'>br</config>
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
@@ -26,7 +26,7 @@
     <header>        
         <include id='css'></include>
         <include id='cssInc'></include>
-        <include id='js'>app.init,util.form,util.dictionary</include>
+        <include id='js'>util.form,util.dictionary</include>
         <include id='jsInc'></include>
         <include id='plugins'>jquery</include>
     </header>

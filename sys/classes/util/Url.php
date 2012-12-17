@@ -32,6 +32,11 @@
             return $url;
         }
         
+        public static function mvc($module='',$controller='',$action=''){
+            $arrOptions = array('module'=>$module,'controller'=>$controller,'action'=>$action);
+            return self::setUrl($arrOptions);
+        }
+        
         /**
          * Retorna o caminho físico da URI informada.
          * 

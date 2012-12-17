@@ -19,6 +19,15 @@
             $tpl = new ViewAdmin(); 
             return $tpl;
         }
+        
+        /**
+         * Método executado antes da chamada da action informada na URL.
+         * Na classe atual implementa o acesso para usuários não autenticados. 
+         */
+        function before(){
+            $redirect   = \Url::mvc('app','');
+            \Auth::checkAuth($redirect);
+        }
     }
 
 ?>

@@ -79,7 +79,7 @@
             $xml = $fileException;
             if (!file_exists($fileException)) {
                 //Verifica na pasta sys
-                $fileException  = str_replace('app/','sys/',$fileException);
+                $fileException  = str_replace($module.'/','sys/',$fileException);
                 $xml            = (!file_exists($fileException))?'sys/dic/exception.xml':$fileException;
             }            
             

@@ -14,6 +14,8 @@
     require_once('sys/classes/util/Url.php');  
     require_once('sys/classes/util/DI.php');
     require_once('sys/classes/util/Dic.php');
+    require_once('sys/classes/security/Token.php');
+    require_once('sys/classes/security/Auth.php');
     
     use sys\classes\util\DI;
     use sys\classes\mvc as MVC;
@@ -87,6 +89,10 @@
                         
             $objController  = new $controller;
             if (!method_exists($objController,$method)) die('Método '.$controller.'Controller->'.$method.'() não existe.');
+            if (method_exists($objController, 'before')) {
+                $objController->before();//Executa o método before(), caso esteja implementado.
+            }
+                 
             $objController->$method();//Executa o Controller->method()            
         }
         
