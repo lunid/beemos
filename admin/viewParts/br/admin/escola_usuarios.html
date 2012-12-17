@@ -101,20 +101,123 @@
             </form>
         </div>
         <div id="info" style="display:none;">
-            Teste 1
+            <table class="striped" cellspacing="0" cellpadding="0">
+                <tbody><tr>
+                        <th align="right">Total de acessos:</th>
+                        <td id="totalAcessos" align="left"></td>
+                    </tr><tr>
+                        <th align="right">Docs gerados:</th>
+                        <td id="docsGerados" align="left">0</td>
+                    </tr><tr>
+                        <th align="right">Listas geradas:</th>
+                        <td id="listasGeradas" align="left">30</td>
+                    </tr><tr>
+                        <th align="right">Ultimo acesso:</th>
+                        <td id="ultimoAcesso" align="left"></td>
+                    </tr><tr>
+                        <th align="right">Saldo atual:</th>
+                        <td id="saldoUsuario" align="left"></td>
+                    </tr><tr>
+                        <th align="right">Consumo / Créditos:</th>
+                        <td id="debitos" align="left">30 créditos mês</td>
+                    </tr></tbody>
+            </table>
         </div>
         <div id="carga" style="display:none;">
-            Teste 2
+            <div class="col_12">
+                <h5>Lorem ipsum dolor sit:</h5> 
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+            </div>
+
+            <div class="modal_interno">
+                <div class="col_7">Escolha a ação desejada</div>
+                <div class="col_5">
+                    <input type="radio" name="opt_credito" checked="checked" onclick="javascript:verOptCredito(1)" value="1" />&nbsp;Creditar
+                    &nbsp;
+                    <input type="radio" name="opt_credito" onclick="javascript:verOptCredito(2)" value="2" />&nbsp;Debitar
+                </div>
+                <div class="col_12">
+                    <h5>Operação solicitada</h5> 
+                    <p id="optCreditoTxt"><strong style="color:blue">Crédito:</strong>Crédito: Incluir crédito(s)na conta do usuário atual.</p>
+                </div>
+                <div class="col_7">Informe o número de créditos</div>
+                <div class="col_2">
+                    <input type="text" id="creditos" name="creditos" maxlength="5" />
+                    <h5>Limite: <strong id="limite"></strong> créditos</h5> 
+                </div>    
+            </div>
+    
+            <div class="col_12">
+                <button class="medium" onclick="javascript:executaOperacaoCredito();">Confirmar</button>
+            </div>
         </div>
     </div>
 </div>
+
+<div id="modal_cargos" style="display:none;">
+    <form name="form_cargo" id="form_cargo" method="post" action="salvarCargo" onSubmit="return formCargo.validate(this, true, 'verSalvarCargo');">
+        <!-- Erros de validação no server -->
+        <div id="form_cargo_erros" class="notice warning" style="display: none;">
+            <span class="icon medium" data-icon="!"></span> <span id="form_cargo_erros_msg"></span>
+            <a href="#close" class="icon close" data-icon="x"></a>
+        </div>
+        <!-- Erros de validação no server --> 
+
+        <div>
+            <div class="col_12">
+                <div class="col_4">
+                    <h5>Cargo/Função:</h5>
+                    <div class="espaco"></div>
+                    <h5>Código:</h5>
+                    <div class="espaco"></div>
+                    <h5>Limite/Crédito:</h5>
+                    <div class="espaco"></div>
+                    <h5>Recarga:</h5>
+                    <div class="espaco"></div>
+                </div>
+
+                <div class="col_8">
+                    <input type="text" id="FUNCAO" name="FUNCAO" maxlength="30" class="required" field_name="Cargo/Função" />
+                    <div class="espaco"></div>
+                    <input type="text" id="CODIGO" name="CODIGO" maxlength="5" class="required" field_name="Código" />
+                    <div class="espaco"></div>
+                    <input type="text" id="LIM_CREDITO" name="LIM_CREDITO" maxlength="5" class="required" field_name="Limite de Créditos" />
+                    <div class="espaco"></div>
+                    <input type="radio" id="RECARGA_AUTO_SIM" name="RECARGA_AUTO" value="1" checked="checked" />&nbsp;Sim
+                    &nbsp;
+                    <input type="radio" id="RECARGA_AUTO_NAO" name="RECARGA_AUTO" value="0" />&nbsp;Não
+                    
+                    <div class="espaco"></div>
+
+                    <div class="bt_alterar_dados">
+                        <input type="hidden" id="ID_AUTH_FUNCAO" name="ID_AUTH_FUNCAO" value="0" />
+                        <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:$('#form_cargo').submit();">
+                            Salvar<span class="ui-icon ui-icon-disk"></span>
+                        </a>
+                    </div>
+
+                    <div class="bt_excluir"> 
+                        <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="btExcluirCargo" href="javascript:void(0)">
+                            <strong style="color:red;">Excluir</strong><span class="ui-icon ui-icon-closethick"></span>
+                        </a>
+                    </div>
+
+                    <div class="espaco"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div id="abas">
-    
-        <ul>
-            <li>
-                <a href="#usuarios">Usuários</a>
-            </li>
-        </ul>
+    <ul>
+        <li>
+            <a href="#usuarios">Usuários</a>
+        </li>
+        <li>
+            <a href="#cargos" onclick="javascript:carregaCargos();">Cargos e Funções</a>
+        </li>
+    </ul>
     <div class="conteudo_abas">
         <div id="usuarios">
             <div id="tabr1">
@@ -159,6 +262,30 @@
                 </div>
             </div>
         </div>
-    </div>    
+        
+        <div id="cargos">
+            <div class="col_12">
+            <h4>CARGO/FUNÇÃO</h4> 
+
+            <p>Ao efetuar um novo cadastro de colaborador (consumidor de créditos) é necessário vinculá-lo com uma função.
+            A função define a quantidade de créditos a cada recarga e o total permitido de recargas automáticas (Recarga/Auto).
+            Legenda das colunas:</p>
+                    <br/>
+                <blockquote>
+                <p>Cargo/Função: Descrição que será usada no momento do cadastramento do usuário (consumidor de créditos).</p><br/>
+                <p>Código: Opcional. Preencha-o caso queira carregar um arquivo externo para cadastro automático de muitos usuários.</p><br/>
+                <p>Lim/Créd.: número de créditos atribuídos a cada recarga do usuário.</p><br/>
+                <p>Recarga/Auto: número de recargas automáticas permitidas.</p><br/>
+                <p>Usuários: mostra o número de usuários vinculados ao cargo/função atual.</p>
+                </blockquote>
+
+            </div>
+            <div class="espaco"></div>
+            <div class="col_12">
+                <table id="grid_cargos" style="width:100%;"></table>
+                <div id="pg_cargos"></div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- ===================================== fim conteúdo pagina  ===================================== -->	 

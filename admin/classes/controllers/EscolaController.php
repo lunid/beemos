@@ -25,10 +25,10 @@
                 $objViewPart = $this->mkViewPart('admin/escola');
                 
                 //Atribui valores para marcações do TPL
-                $objViewPart->CODIGO    = $rs->cliente->ID_CLIENTE;
-                $objViewPart->ESCOLA    = $rs->cliente->NOME_PRINCIPAL;
-                $objViewPart->CREDITOS  = $rs->saldo;
-                $objViewPart->VALIDADE  = Date::formatDate($rs->validade);
+                $objViewPart->CODIGO        = $rs->cliente->ID_CLIENTE;
+                $objViewPart->ESCOLA        = $rs->cliente->NOME_PRINCIPAL;
+                $objViewPart->CREDITOS      = $rs->saldo;
+                $objViewPart->VALIDADE      = Date::formatDate($rs->validade);
                 
                 //Template
                 $tpl                = $this->mkView();
@@ -66,43 +66,16 @@
                 $objViewPart = $this->mkViewPart('admin/escola_usuarios');
                 
                 //Atribui valores para marcações do TPL
-                $objViewPart->CREDITOS  = $rs->saldo;
-                $objViewPart->VALIDADE  = Date::formatDate($rs->validade);
+                $objViewPart->CREDITOS      = $rs->saldo;
+                $objViewPart->VALIDADE      = Date::formatDate($rs->validade);
                 
                 //Model de Escola
                 $rs = $mdEscola->carregarFuncoesEscola(26436);
                 
                 //Atributos para combo
                 $objAttr                = new stdClass();
-                $objAttr->id            = "ID_AUTH_FUNCAO";
-                $objAttr->name          = "ID_AUTH_FUNCAO";
-                $objAttr->cls           = "required";
-                $objAttr->field_name    = "Cargo/Função";
-                
-                //Inicia Combo Funções com parâmetros
-                $objCb = new Combobox($objAttr);
-                
-                //Verifica retorno de Select
-                if(!$rs->status){
-                    $objCb->addOption(0, $rs->msg);
-                }else{
-                    $objCb->addOption(0, "Selecione um Cargo/Função");
-                    foreach($rs->funcoes as $funcao){
-                        $objCb->addOption($funcao->ID_AUTH_FUNCAO, utf8_decode($funcao->FUNCAO));
-                    }
-                }
-                
-                //Envia HTML de Combo para View
-                $objViewPart->CB_FUNCOES = $objCb->render();
-                
-                //Model de Escola
-                $mdEscola   = new EscolaModel();
-                $rs         = $mdEscola->carregarFuncoesEscola(26436);
-                
-                //Atributos para combo
-                $objAttr                = new stdClass();
-                $objAttr->id            = "ID_AUTH_FUNCAO";
-                $objAttr->name          = "ID_AUTH_FUNCAO";
+                $objAttr->id            = "SEL_ID_AUTH_FUNCAO";
+                $objAttr->name          = "SEL_ID_AUTH_FUNCAO";
                 $objAttr->cls           = "required";
                 $objAttr->field_name    = "Cargo/Função";
                 
@@ -409,7 +382,7 @@
                                 "APELIDO"           => Request::post("APELIDO"),
                                 "EMAIL"             => Request::post("EMAIL"),
                                 "LOGIN"             => Request::post("LOGIN"),
-                                "ID_AUTH_FUNCAO"    => Request::post("ID_AUTH_FUNCAO", "NUMBER"),
+                                "ID_AUTH_FUNCAO"    => Request::post("SEL_ID_AUTH_FUNCAO", "NUMBER"),
                             );
                 
                 //Se houver senha, ela é inserida
@@ -472,7 +445,7 @@
         /**
          * Carrega dados de um usário e retorna jSon
          */
-        public function actionCarregaDadosUsuario(){
+        public function actionCarregarDadosUsuario(){
             try{
                 $ret            = new stdClass();
                 $ret->status    = false;
@@ -619,6 +592,251 @@
                 echo "Linha:  " . $e->getLine() . "<br />\n";
                 echo "<br />\n";
                 die;
+            }
+        }
+        
+        /**
+         * Lista informações para grid jSon de Cargos e Funções da Escola
+         */
+        public function actionGridCargos(){
+            try{
+                //Objeto de retorno
+                $ret = new stdClass();
+                
+                //Model de Escola
+                $mdEscola = new EscolaModel();
+                
+                //Verifica filtros
+                $where  = "";
+                $search = Request::get('_search'); 
+                if($search == true){
+                    //Filtro Nome
+                    $FUNCAO = Request::get('FUNCAO');
+                    if($FUNCAO != ''){
+                        $where = " AND FUNCAO LIKE '%" . $FUNCAO . "%'";  
+                    }
+                    
+                    //Filtro Código
+                    $CODIGO = Request::get('CODIGO');
+                    if($CODIGO != ''){
+                        $where = " AND CODIGO LIKE '%" . $CODIGO . "%'";  
+                    }
+                    
+                    //Filtro Limite de créditos
+                    $LIM_CREDITO = Request::get('LIM_CREDITO', 'NUMBER');
+                    if($LIM_CREDITO > 0){
+                        $where = " AND LIM_CREDITO = " . $LIM_CREDITO;  
+                    }
+                    
+                    //Filtro Limite de créditos
+                    $RECARGA_AUTO = Request::get('RECARGA_AUTO', 'NUMBER');
+                    if($RECARGA_AUTO > 0){
+                        $where = " AND RECARGA_AUTO " . ($RECARGA_AUTO == 1 ? " > 0" : " <= 0");  
+                    }
+                }
+                
+                //Carrega cargos e funções da escola
+                $rs = $mdEscola->carregarCargosFuncoes(26436, $where);
+                
+                //Verifica se foram carregadas as listas
+                if($rs->status){
+                    $page           = Request::get('page', 'NUMBER'); 
+                    $limit          = Request::get('rows', 'NUMBER'); 
+                    $orderField     = Request::get('sidx'); 
+                    $orderType      = Request::get('sord'); 
+                            
+                    if(!$orderField) $orderField = 1;
+
+                    //Total de registros
+                    $count          = sizeof($rs->cargos);
+                    $total_pages    = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
+                    $page           = $page > $total_pages ? $total_pages : $page;
+                    $start          = $limit * $page - $limit;
+                    
+                    //Efetua select com ordenação e paginação
+                    $rs = $mdEscola->carregarCargosFuncoes(
+                        26436,
+                        $where,
+                        array(
+                            "campoOrdenacao"    => $orderField, 
+                            "tipoOrdenacao"     => $orderType, 
+                            "inicio"            => $start, 
+                            "limite"            => $limit
+                        )
+                    );
+                    
+                    $ret->page      = $page;
+                    $ret->total     = $total_pages;
+                    $ret->records   = $count;
+
+                    $i=0;
+                    foreach($rs->cargos as $row) {
+                        $html_recarga  = (int)$row->RECARGA_AUTO <= 0 ? "<a href='javascript:void(0);' onclick='javascript:alterarRecargaCargo({$row->ID_AUTH_FUNCAO}, 1)'>Liberar</a>" : "<a href='javascript:void(0);' onclick='javascript:alterarRecargaCargo({$row->ID_AUTH_FUNCAO}, 0)'>Bloquear</a>";
+                        
+                        $ret->rows[$i]['id']   = $row->ID_AUTH_FUNCAO;
+                        $ret->rows[$i]['cell'] = array(
+                            $row->ID_AUTH_FUNCAO,
+                            $row->FUNCAO,
+                            $row->CODIGO,
+                            $row->LIM_CREDITO,
+                            $html_recarga
+                        );
+                        $i++;
+                    }
+                }else{
+                    $ret                    = new stdClass();
+                    $ret->rows[0]['id']     = 0;
+                    $ret->rows[0]['cell']   = array($rs->msg);
+                }
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret                    = new stdClass();
+                $ret->rows[0]['id']     = 0;
+                $ret->rows[0]['cell']   = array('Erro: ' . $e->getMessage() . " <br /> Arquivo: " . $e->getFile() . " <br /> Linha: " . $e->getLine());
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Salva um novo cargo e devolve resposta em jSon
+         */
+        public function actionSalvarCargo(){
+            try{
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar Cargo!";
+                
+                //Model de Escola
+                $mdEscola = new EscolaModel();
+                
+                //Carrega dados do Usuário
+                $ret = $mdEscola->salvarCargoEscola(26436, array(
+                                "ID_AUTH_FUNCAO"    => Request::post("ID_AUTH_FUNCAO", "NUMBER"),
+                                "FUNCAO"            => Request::post("FUNCAO"),
+                                "CODIGO"            => Request::post("CODIGO"),
+                                "LIM_CREDITO"       => Request::post("LIM_CREDITO", "NUMBER"),
+                                "RECARGA_AUTO"      => Request::post("RECARGA_AUTO", "NUMBER")
+                            )
+                       );
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Carrega dados de um usário e retorna jSon
+         */
+        public function actionCarregarCargo(){
+            try{
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar dados do Cargo/Função!";
+                
+                //Model de Escola
+                $mdEscola = new EscolaModel();
+                
+                //Carrega dados do Usuário
+                $ret = $mdEscola->carregarCargo(Request::post("idCargo", "NUMBER"));
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera status de recarga automática de um Cargo/Função
+         */
+        public function actionAlterarRecargaCargo(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao alterar Recarga Automática do Cargo!";
+                
+                //Dados enviados
+                $idCargo  = Request::post("idCargo");
+                $status   = Request::post("status", "NUMBER");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->alterarRecargaAutoCargo(26436, $idCargo, $status);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Exclui um Cargo/Função da Escola
+         */
+        public function actionExcluirCargo(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir Cargo/Função!";
+                
+                //Dados enviados
+                $idCargo  = Request::post("idCargo");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->excluirCargo(26436, $idCargo);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Executa uma operação de crédito ou estorno de uma escola para um cliente
+         */
+        public function actionExecutaOperacaoCredito(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao executar a operação de crédito!";
+                
+                //Model de escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->operacaoCredito(
+                                26436, 
+                                Request::post("idCliente", "NUMBER"), 
+                                Request::post("operacao", "NUMBER"), 
+                                Request::post("creditos", "NUMBER")
+                              );
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
             }
         }
     }
