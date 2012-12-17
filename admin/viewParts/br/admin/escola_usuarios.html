@@ -101,10 +101,55 @@
             </form>
         </div>
         <div id="info" style="display:none;">
-            Teste 1
+            <table class="striped" cellspacing="0" cellpadding="0">
+                <tbody><tr>
+                        <th align="right">Total de acessos:</th>
+                        <td id="totalAcessos" align="left"></td>
+                    </tr><tr>
+                        <th align="right">Docs gerados:</th>
+                        <td id="docsGerados" align="left">0</td>
+                    </tr><tr>
+                        <th align="right">Listas geradas:</th>
+                        <td id="listasGeradas" align="left">30</td>
+                    </tr><tr>
+                        <th align="right">Ultimo acesso:</th>
+                        <td id="ultimoAcesso" align="left"></td>
+                    </tr><tr>
+                        <th align="right">Saldo atual:</th>
+                        <td id="saldoUsuario" align="left"></td>
+                    </tr><tr>
+                        <th align="right">Consumo / Créditos:</th>
+                        <td id="debitos" align="left">30 créditos mês</td>
+                    </tr></tbody>
+            </table>
         </div>
         <div id="carga" style="display:none;">
-            Teste 2
+            <div class="col_12">
+                <h5>Lorem ipsum dolor sit:</h5> 
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+            </div>
+
+            <div class="modal_interno">
+                <div class="col_7">Escolha a ação desejada</div>
+                <div class="col_5">
+                    <input type="radio" name="opt_credito" checked="checked" onclick="javascript:verOptCredito(1)" value="1" />&nbsp;Creditar
+                    &nbsp;
+                    <input type="radio" name="opt_credito" onclick="javascript:verOptCredito(2)" value="2" />&nbsp;Debitar
+                </div>
+                <div class="col_12">
+                    <h5>Operação solicitada</h5> 
+                    <p id="optCreditoTxt"><strong style="color:blue">Crédito:</strong>Crédito: Incluir crédito(s)na conta do usuário atual.</p>
+                </div>
+                <div class="col_7">Informe o número de créditos</div>
+                <div class="col_2">
+                    <input type="text" id="creditos" name="creditos" maxlength="5" />
+                    <h5>Limite: <strong id="limite"></strong> créditos</h5> 
+                </div>    
+            </div>
+    
+            <div class="col_12">
+                <button class="medium" onclick="javascript:executaOperacaoCredito();">Confirmar</button>
+            </div>
         </div>
     </div>
 </div>

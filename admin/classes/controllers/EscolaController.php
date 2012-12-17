@@ -25,10 +25,10 @@
                 $objViewPart = $this->mkViewPart('admin/escola');
                 
                 //Atribui valores para marcações do TPL
-                $objViewPart->CODIGO    = $rs->cliente->ID_CLIENTE;
-                $objViewPart->ESCOLA    = $rs->cliente->NOME_PRINCIPAL;
-                $objViewPart->CREDITOS  = $rs->saldo;
-                $objViewPart->VALIDADE  = Date::formatDate($rs->validade);
+                $objViewPart->CODIGO        = $rs->cliente->ID_CLIENTE;
+                $objViewPart->ESCOLA        = $rs->cliente->NOME_PRINCIPAL;
+                $objViewPart->CREDITOS      = $rs->saldo;
+                $objViewPart->VALIDADE      = Date::formatDate($rs->validade);
                 
                 //Template
                 $tpl                = $this->mkView();
@@ -66,8 +66,8 @@
                 $objViewPart = $this->mkViewPart('admin/escola_usuarios');
                 
                 //Atribui valores para marcações do TPL
-                $objViewPart->CREDITOS  = $rs->saldo;
-                $objViewPart->VALIDADE  = Date::formatDate($rs->validade);
+                $objViewPart->CREDITOS      = $rs->saldo;
+                $objViewPart->VALIDADE      = Date::formatDate($rs->validade);
                 
                 //Model de Escola
                 $rs = $mdEscola->carregarFuncoesEscola(26436);
@@ -784,5 +784,60 @@
             }
         }
         
+        /**
+         * Exclui um Cargo/Função da Escola
+         */
+        public function actionExcluirCargo(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir Cargo/Função!";
+                
+                //Dados enviados
+                $idCargo  = Request::post("idCargo");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->excluirCargo(26436, $idCargo);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Executa uma operação de crédito ou estorno de uma escola para um cliente
+         */
+        public function actionExecutaOperacaoCredito(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao executar a operação de crédito!";
+                
+                //Model de escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->operacaoCredito(
+                                26436, 
+                                Request::post("idCliente", "NUMBER"), 
+                                Request::post("operacao", "NUMBER"), 
+                                Request::post("creditos", "NUMBER")
+                              );
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
     }
 ?>

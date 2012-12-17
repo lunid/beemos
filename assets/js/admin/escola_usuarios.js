@@ -97,6 +97,15 @@ $(document).ready(function(){
                         $("#SENHA_ALTERACAO").show();
                         $("#senha").hide();
                         
+                        //Informações
+                        $("#totalAcessos").html(ret.usuario.totalAcessos);
+                        $("#ultimoAcesso").html(ret.usuario.ultimoAcesso);
+                        $("#docsGerados").html(ret.usuario.docsGerados);
+                        $("#listasGeradas").html(ret.usuario.listasGeradas);
+                        $("#saldoUsuario").html(ret.usuario.saldo);
+                        $("#debitos").html(ret.usuario.debitos);
+                        $("#limite").html(ret.usuario.limite);
+                        
                         //Abre modal
                         $("#modal_usuario").dialog({
                             title: "Editar Usuário",
@@ -169,6 +178,7 @@ $(document).ready(function(){
     formCargo = new Form();
     formCargo.init('form_cargo');
     $("#LIM_CREDITO").mask("9?9999");
+    $("#creditos").mask("9?9999");
 });
 
 /**
@@ -559,6 +569,88 @@ function alterarRecargaCargo(idCargo, status){
             }else{
                 alert(ret.msg);
             }
+        },
+        'json'
+    ).error(
+        function(){
+            site.fechaAguarde();
+            alert("Falha no servidor! Entre em contato com o Suporte.");
+        }
+    );
+}
+
+/**
+ * Excluir um Cargo/Função
+ */
+function excluirCargo(idCargo){
+    if(confirm("Tem certeza que deseja excluir o Cargo/Função?")){
+        site.aguarde();
+    
+        $.post(
+            'excluirCargo',
+            {
+                idCargo: idCargo
+            },
+            function(ret){
+                site.fechaAguarde();
+
+                if(ret.status){
+                    $("#grid_cargos").trigger('reloadGrid');
+                    formUsuario.clearForm();
+                    $("#modal_cargos").dialog("close");
+                }else{
+                    $("#form_cargo_erros").removeClass("warning success error");
+                    $("#form_cargo_erros").addClass("error");
+                    $("#form_cargo_erros_msg").html(ret.msg);
+                    $("#form_cargo_erros").show();
+                }
+            },
+            'json'
+        ).error(
+            function(){
+                site.fechaAguarde();
+                alert("Falha no servidor! Entre em contato com o Suporte.");
+            }
+        );
+    }
+}
+
+function verOptCredito(opt){
+    var txt = "";
+    
+    //Se crédito
+    if(opt == 1){
+        txt = "<strong style='color:blue'>Crédito:</strong>Incluir crédito(s)na conta do usuário atual.";
+    }else if(opt == 2){
+        //Se débito
+        txt = "<strong style='color:red'>Débito:</strong>Retirar crédito(s) da conta do usuário atual.";
+    }
+    
+    $("#optCreditoTxt").html(txt);
+}
+
+function executaOperacaoCredito(){
+    var operacao    = $("input[name=opt_credito]:checked").val();
+    var creditos    = $("#creditos").val();
+    var idCliente   = $("#ID_CLIENTE").val();
+    
+    //Validação
+    if(creditos <= 0){
+        alert("Para efetuar a operação, digite um número de créditos maior que zero!");
+        return false;
+    }
+    
+    site.aguarde();
+    
+    $.post(
+        "executaOperacaoCredito",
+        {
+            idCliente: idCliente,
+            operacao:operacao,
+            creditos:creditos
+        },
+        function(ret){
+            site.fechaAguarde();
         },
         'json'
     ).error(

@@ -405,16 +405,17 @@
          * </code>
          * @throws \db_tables\Exception
          */
-        public function somarDebitosCliente($idCliente, $dtRegistro){
+        public function somarDebitosCliente($idCliente, $dtRegistro = ""){
             try{
+                $where = $dtRegistro != "" ? " AND DATA_REGISTRO >= '{$dtRegistro}' " : "";
+                
                 $sql = "SELECT
                             SUM(DEBITO) AS DEBITOS
                         FROM
                             SPRO_HISTORICO_GERADOC
                         WHERE
                             ID_LOGIN = {$idCliente}
-                        AND
-                            DATA_REGISTRO >= '{$dtRegistro}' 
+                        {$where}
                         GROUP BY 
                             ID_LOGIN
                         ;";
@@ -427,9 +428,39 @@
                 $ret->status    = true;
                 $ret->msg       = "Consulta efetuada com sucesso!";
                 $ret->count     = sizeof($rs);
-                $ret->debitos   = $rs[0];
+                $ret->debitos   = sizeof($rs) > 0 ? $rs[0] : array("DEBITOS" => 0);
                 
                 return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Calcula a quantidade de documentos gerados pelo Cliente 
+         * 
+         * @param int $idCliente ID do Cliente
+         * @param string $formato Formato de documento. Ex: 'DOC' ou 'LST'
+         * @return int
+         * @throws Exception
+         */
+        public function calcularDocs($idCliente, $formato){
+            try{
+                $sql = "SELECT
+                            COUNT(1) AS QTD
+                        FROM
+                            SPRO_HISTORICO_GERADOC
+                        WHERE
+                            ID_LOGIN = {$idCliente}
+                        AND
+                            FORMATO = '{$formato}' 
+                        ;";
+                            
+                //Executa Select
+                $rs = $this->query($sql);
+                
+                //Objeto de retorno
+                return $rs[0]['QTD'];
             }catch(Exception $e){
                 throw $e;
             }
