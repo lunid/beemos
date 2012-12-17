@@ -53,7 +53,7 @@ $(document).ready(function(){
             
             //Carrega dados via Ajax
             $.post(
-                "carregaDadosUsuario",
+                "carregarDadosUsuario",
                 {
                     idCliente: rowid
                 },
@@ -84,7 +84,7 @@ $(document).ready(function(){
                         $("#EMAIL").val(ret.usuario.EMAIL);
                         $("#LOGIN").val(ret.usuario.LOGIN);
                         $("#APELIDO").val(ret.usuario.APELIDO);
-                        $("#ID_AUTH_FUNCAO").val(ret.usuario.ID_AUTH_FUNCAO);
+                        $("#SEL_ID_AUTH_FUNCAO").val(ret.usuario.ID_AUTH_FUNCAO);
                         
                         //Controles de senha
                         $("#PASSWD").val("");
@@ -161,9 +161,14 @@ $(document).ready(function(){
             position:"last"
     });
     
-    //Inicia formulário
+    //Inicia formulário de Usuários
     formUsuario = new Form();
     formUsuario.init('form_usuario');
+    
+    //Inicia formulário de Cargos
+    formCargo = new Form();
+    formCargo.init('form_cargo');
+    $("#LIM_CREDITO").mask("9?9999");
 });
 
 /**
@@ -392,4 +397,174 @@ function excutaAcao(){
             enviarLinkAcesso(ids);
             break;
     }
+}
+
+function carregaCargos(){
+    //Carrega Grid de Listas - Aba principal
+    $("#grid_cargos").jqGrid({
+        url: 'gridcargos',
+        datatype: "json",
+        hidegrid: false,
+        colNames:['', 'Cargo/Função', 'Código', 'Limite/Crédito', 'Recaraga'],
+        colModel:[
+            //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
+            {name:'ID_AUTH_FUNCAO', index:'ID_AUTH_FUNCAO', width:8, align:'right', search: false, cellattr: site.formataGrid, sortable: false },
+            {name:'FUNCAO', index:'FUNCAO', width:50, search: true},
+            {name:'CODIGO', index:'CODIGO', width:10, search: true, align:'right'},
+            {name:'LIM_CREDITO', index:'LIM_CREDITO', width:8, search: true, align:'right'},
+            {name:'RECARGA_AUTO', index:'RECARGA_AUTO', width:8, search: true, align:'center', stype:'select', searchoptions:{ value: "0:Todos;1:Sim;2:Não" }}
+        ],
+        rowNum:10,
+        rowList:[10,20,30],
+        pager: '#pg_cargos',
+        sortname: 'FUNCAO',
+        viewrecords: true,
+        sortorder: "ASC",
+        caption:"Cargos e Funções",
+        width: 900,
+        height: 'auto',
+        scrollOffset: 0,
+        ondblClickRow: function(rowid, iRow, iCol, e){
+            //Verifica ID
+            if(rowid <= 0){
+                alert("Selecione um Cargo/Função para edição!");
+                return false;
+            }
+            
+            //Aguarde 
+            site.aguarde();
+            
+            //Carrega dados via Ajax
+            $.post(
+                "carregarCargo",
+                {
+                    idCargo: rowid
+                },
+                function(ret){
+                    //Esconde aguarde
+                    site.fechaAguarde();
+                    
+                    //Valida retorno jSon
+                    if(ret.status){
+                        //Oculta Erros e exibe excluir
+                        $("#form_cargo_erros").hide();
+                        
+                        //Ação do Botão Excluir
+                        $("#btExcluirCargo").bind('click', null, function(){
+                            excluirCargo(rowid, true);
+                        });
+                        $("#btExcluirCargo").show();
+                        
+                        //Carrega dados do usuário
+                        $("#ID_AUTH_FUNCAO").val(ret.cargo.ID_AUTH_FUNCAO);
+                        $("#FUNCAO").val(ret.cargo.FUNCAO);
+                        $("#CODIGO").val(ret.cargo.CODIGO);
+                        $("#LIM_CREDITO").val(ret.cargo.LIM_CREDITO);
+                        
+                        $("input[name=RECARGA_AUTO]").removeAttr("checked");
+                        
+                        if(ret.cargo.RECARGA_AUTO == 1){
+                            $("#RECARGA_AUTO_SIM").attr("checked", "checked");
+                        }else{
+                            $("#RECARGA_AUTO_NAO").attr("checked", "checked");
+                        }
+                        
+                        //Abre modal
+                        $("#modal_cargos").dialog({
+                            title: "Editar Cargo/Função",
+                            modal: true,
+                            width: "550",
+                            height: "550"
+                        });
+                    }else{
+                        alert(ret.msg);
+                    }
+                },
+                'json'
+            ).error(
+                function(){
+                    site.fechaAguarde();
+                    alert("Falha no servidor! Entre em contato com o Suporte.");
+                }
+            );
+        }
+    });
+                
+    $("#grid_cargos").filterToolbar();
+    
+    $("#grid_cargos")
+        .navGrid('#pg_cargos',{edit:false,add:false,del:false,search:false})
+        .navButtonAdd('#pg_cargos',{
+            caption: "Novo Cargo/Função", 
+            buttonicon: "ui-icon-plus", 
+            onClickButton: function(){ 
+                //Oculta erros e Excluir
+                $("#form_cargo_erros").hide();
+                $("#btExcluirCargo").hide();
+                
+                //Limpa form
+                formCargo.clearForm();
+                $("input[name=RECARGA_AUTO]").removeAttr("checked");
+                $("#RECARGA_AUTO_SIM").attr("checked", "checked");
+                
+                //Abre modal
+                $("#modal_cargos").dialog({
+                    title: "Novo Cargo/Função",
+                    modal: true,
+                    width: "550",
+                    height: "550"
+                });
+            }, 
+            position:"last"
+    });
+}
+
+/**
+ * Verifica retorno da operação de cadastro de cargos
+ */
+function verSalvarCargo(ret, modalId){
+    //Remove todas possíveis classes
+    $("#form_cargo_erros").removeClass("warning success error");
+        
+    if(ret.status){
+        $("#form_cargo_erros").addClass("success"); //Adiciona classe de sucesso
+        $("#form_cargo_erros_msg").html(ret.msg); //Adiciona mensagem
+        $("#form_cargo_erros").show(); //Exibe notificações
+        
+        $("#grid_cargos").trigger('reloadGrid');
+    }else{
+        $("#form_cargo_erros").addClass("error");
+        $("#form_cargo_erros_msg").html(ret.msg);
+        $("#form_cargo_erros").show();
+    }
+}
+
+/**
+ * Altera status de bloqueio do usuário
+ */
+function alterarRecargaCargo(idCargo, status){
+    site.aguarde();
+    
+    $.post(
+        'alterarRecargaCargo',
+        {
+            idCargo: idCargo,
+            status: status
+        },
+        function(ret){
+            site.fechaAguarde();
+            
+            if(ret.status){
+                $("#grid_cargos").trigger('reloadGrid');
+            }else{
+                alert(ret.msg);
+            }
+        },
+        'json'
+    ).error(
+        function(){
+            site.fechaAguarde();
+            alert("Falha no servidor! Entre em contato com o Suporte.");
+        }
+    );
 }

@@ -94,6 +94,11 @@
          */
         public function carregarUsuariosEscola($idMatriz, $where = '', $arrPg = null){
             try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao cunsultar usuários!";
+                
                 //Valida ID
                 if((int)$idMatriz <= 0){
                     $ret->msg = "ID da Escola não definido ou nulo!";
@@ -351,6 +356,19 @@
             }
         }
         
+        /**
+         * Carrega dados de um determinado usuário no sistema
+         * 
+         * @param type $idCliente ID do Usuário (Cliente)
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->usuario   - Objeto com os dados carregado do Usuário          <br />
+         * </code>
+         * @throws Exception
+         */
         public function carregarDadosUsuario($idCliente){
             try{
                 //Objeto de retorno
@@ -428,6 +446,280 @@
                 //Retorno OK
                 $ret->status    = true;
                 $ret->msg       = "Usuário excluido com sucesso!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Carrega Cargos/Funções de uma escola
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param string $where String com a cláusula WHERE. Ex: ID_CLIENTE = 9
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'FUNCAO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         *  
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->cargos    - Array com cargos encontrados                      <br />
+         * </code>
+         * @throws Exception
+         */
+        public function carregarCargosFuncoes($idMatriz, $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao consultar Cargos e Funções!";
+                
+                //Valida ID
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID da Escola não definido ou nulo!";
+                    return $ret;
+                }
+                
+                //Tabela Funções
+                $tbFuncoes = new TB\AuthFuncao();
+                
+                //Paginação e Ordenação
+                $order = "";
+                $limit = "";                
+                if($arrPg != null){
+                    //Monta ordenação
+                    if(isset($arrPg['campoOrdenacao']) && isset($arrPg['tipoOrdenacao'])){
+                        $tbFuncoes->setOrderBy($arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao']);
+                    }
+                    
+                    //Monta paginação
+                    if(isset($arrPg['inicio']) && isset($arrPg['limite'])){
+                        $tbFuncoes->setLimit($arrPg['limite'], $arrPg['inicio']);
+                    }
+                }else{
+                    $tbFuncoes->setOrderBy("FUNCAO");
+                }
+                
+                //Efetua consulta
+                $rs = $tbFuncoes->findAll("ID_CLIENTE = {$idMatriz} {$where}");
+                
+                if($rs->count() > 0){
+                    $ret->status    = true;
+                    $ret->msg       = "Usuários listados com sucesso!";
+                    $ret->cargos    = $rs;
+                }else{
+                    $ret->msg = "Nenhum Cargo/Função encontrado!";
+                }
+                
+                //Consulta usuários da Escola
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Salva novo Cargo/Função de uma escola
+         * 
+         * @param int $idMatriz ID da Escola
+         * @param array $arrDados Array com dados para cadastro
+         * <code>
+         * <br />
+         * $arrDados['NOME_PRINCIPAL']  = 'Interbits Informática';  <br />
+         * $arrDados['APELIDO']         = 'Interbits';              <br />
+         * $arrDados['EMAIL']           = 'intertis@sistema.com';   <br />
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * @throws Exception
+         */
+        public function salvarCargoEscola($idMatriz, $arrDados = array()){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar Cargo!";
+                
+                //Validações
+                if($idMatriz <= 0){
+                    $ret->msg = "ID matriz é inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if(sizeof($arrDados) <= 0){
+                    $ret->msg = "Dados de cadatsro não enviados!";
+                    return $ret;
+                }
+                
+                if(!isset($arrDados['FUNCAO'])){
+                    $ret->msg = "Nome do Cargo/Função não definido!";
+                    return $ret;
+                }
+                
+                if(!isset($arrDados['CODIGO'])){
+                    $ret->msg = "Código do Cargo não definido!";
+                    return $ret;
+                }
+                
+                if(!isset($arrDados['LIM_CREDITO'])){
+                    $ret->msg = "Limite de Créditos não definido!";
+                    return $ret;
+                }
+                
+                if((int)$arrDados['LIM_CREDITO'] <= 0){
+                    $ret->msg = "Limite de Créditos deve ser maior que zero!";
+                    return $ret;
+                }
+                
+                //Tabela de Funções
+                $tbFuncoes = new TB\AuthFuncao();
+                
+                //Valida nome do cargo
+                $rs = $tbFuncoes->findAll("FUNCAO = '".trim($arrDados['FUNCAO'])."' AND ID_CLIENTE = {$idMatriz} " . (isset($arrDados['ID_AUTH_FUNCAO']) ? " AND ID_AUTH_FUNCAO != " . $arrDados['ID_AUTH_FUNCAO'] : ""));
+                
+                if($rs->count() > 0){
+                    $ret->msg = "Nome do Cargo/Função já existe!";
+                    return $ret;
+                }
+                
+                //Valida código do cargo
+                $rs = $tbFuncoes->findAll("CODIGO = '".trim($arrDados['CODIGO'])."' AND ID_CLIENTE = {$idMatriz} " . (isset($arrDados['ID_AUTH_FUNCAO']) ? " AND ID_AUTH_FUNCAO != " . $arrDados['ID_AUTH_FUNCAO'] : ""));
+                
+                if($rs->count() > 0){
+                    $ret->msg = "Esse Código de Cargo já existe!";
+                    return $ret;
+                }
+                
+                //Monta dados para o INSERT / UPDATE
+                foreach($arrDados as $campo => $valor){
+                    $tbFuncoes->$campo = $valor;
+                }
+                $tbFuncoes->ID_CLIENTE = $idMatriz;
+                
+                //Verifica qual a ação
+                if(isset($arrDados['ID_AUTH_FUNCAO']) && $arrDados['ID_AUTH_FUNCAO'] > 0){
+                    $tbFuncoes->update(array("ID_AUTH_FUNCAO = %i", $arrDados['ID_AUTH_FUNCAO']));
+                }else{
+                    $tbFuncoes->save();
+                }
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Cargo/Função salvo com sucesso!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Carrega dados de um determinado cargo/função no sistema
+         * 
+         * @param type $idCargo ID do Cargo/Função
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->cargo     - Objeto com os dados carregado do Cargo/Função     <br />
+         * </code>
+         * @throws Exception
+         */
+        public function carregarCargo($idCargo){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar dados do Cargo/Função!";
+                
+                //Table SPRO_AUTH_FUNCAO
+                $tbCargo = new TB\AuthFuncao($idCargo);
+                
+                //Verifica retorno
+                if($tbCargo->ID_AUTH_FUNCAO <= 0){
+                    $ret->msg = "Nenhum Cargo/Função encontrado!";
+                    return $ret;
+                }
+                
+                //Objeto para dados de retorno
+                $objCargo                   = new \stdClass();
+                $objCargo->ID_AUTH_FUNCAO   = $tbCargo->ID_AUTH_FUNCAO;
+                $objCargo->FUNCAO           = $tbCargo->FUNCAO;
+                $objCargo->CODIGO           = $tbCargo->CODIGO;
+                $objCargo->LIM_CREDITO      = $tbCargo->LIM_CREDITO;
+                $objCargo->RECARGA_AUTO     = $tbCargo->RECARGA_AUTO;
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Cargo/Função carregado com sucesso!";
+                $ret->cargo     = $objCargo;
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Bloqueia ou Desbloqueia recarga automática de um carga doa escola
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idCargo ID do Cargo/Função
+         * @param int $status 0 - Desbloqueado 1 - Bloqueado
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * @throws Exception
+         */
+        public function alterarRecargaAutoCargo($idMatriz, $idCargo, $status){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao alterar Recarga Automática do Cargo/Função!";
+                
+                //Validações
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID Matriz inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if((int)$idCargo <= 0){
+                    $ret->msg = "ID Cargo/Função inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Tabela de Cargos/Funções
+                $tbCargo = new TB\AuthFuncao($idCargo);
+                
+                //Executa UPDATE
+                $tbCargo->RECARGA_AUTO = $status;
+                
+                $tbCargo->update(array("ID_CLIENTE = %i AND ID_AUTH_FUNCAO = %i", (int)$idMatriz, (int)$idCargo));
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Recarga Automática atualizada com sucesso!";
                 
                 return $ret;
             }catch(Exception $e){
