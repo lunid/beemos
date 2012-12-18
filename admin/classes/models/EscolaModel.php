@@ -875,5 +875,54 @@
                 throw $e;
             }
         }
+        
+        public function carregarUsuariosAcesso($idMatriz, $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao consultar usuários de acesso!";
+                
+                //Valida ID
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID da Escola não definido ou nulo!";
+                    return $ret;
+                }
+                
+                //Model de usuários
+                $mdAdmUsuarios = new MD\AdmUsuariosModel();
+                
+                //Consulta usuários da Escola
+                return $mdAdmUsuarios->listarUsuariosMatriz($idMatriz, $where, $arrPg);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        public function carregarPerfisAcesso(){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao consultar perfis de acesso!";
+                
+                //Tablea de Perfis
+                $tbPerfis   = new TB\AdmPerfil();
+                $tbPerfis->setOrderBy("DESCRICAO");
+                $rs         = $tbPerfis->findAll();
+                
+                if($rs->count() <= 0){
+                    $ret->msg = "Nenhum perfil encontrado!";
+                    return $ret;
+                }
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Perfis listados com sucesso!";
+                $ret->perfis    = $rs->getRs();
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
 ?>
