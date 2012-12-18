@@ -124,10 +124,10 @@
                 $ret = new stdClass();
                 
                 //Consulta dados do usuários
-                $mdEscola   = new EscolaModel();
+                $mdEscola = new EscolaModel();
                 
                 //Verifica filtros
-                $where  = " AND (DEL <> 1 OR DEL IS NULL) ";
+                $where = " AND (DEL <> 1 OR DEL IS NULL) ";
                 $search = Request::get('_search'); 
                 if($search == true){
                     //Filtro Nome
@@ -835,6 +835,152 @@
                 $ret            = new stdClass();
                 $ret->status    = false;
                 $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Inicializa a página de Escola
+         */
+        public function actionAcessos(){
+            try{
+                //View do Grid de Escolas
+                $objViewPart = $this->mkViewPart('admin/escola_acessos');
+                
+                //Template
+                $tpl                = $this->mkView();
+                $tpl->setLayout($objViewPart);
+                $tpl->TITLE         = 'ADM | SuperPro | Área da Escola | Contas de Acesso';
+                $tpl->SUBTITLE      = 'Escola';
+                
+                //Instância de JS
+                $tpl->setJs('admin/escola_acessos');
+                $tpl->forceCssJsMinifyOn();
+                
+                $tpl->render('escola_acessos');
+            }catch(Exception $e){
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
+            }
+        }
+        
+        public function actionGridUsuariosAcesso(){
+            try{
+                //Objeto de retorno
+                $ret = new stdClass();
+                
+                //Consulta dados do usuários
+                $mdEscola = new EscolaModel();
+                
+                //Verifica filtros
+                $where = " AND (DEL <> 1 OR DEL IS NULL) ";
+                $search = Request::get('_search'); 
+                if($search == true){
+                    //Filtro Nome
+                    $NOME_PRINCIPAL = Request::get('NOME_PRINCIPAL');
+                    if($NOME_PRINCIPAL != ''){
+                        $where = " AND C.NOME_PRINCIPAL LIKE '%" . $NOME_PRINCIPAL . "%'";  
+                    }
+                    
+                    //Filtro Função
+                    $FUNCAO = Request::get('FUNCAO');
+                    if($FUNCAO != ''){
+                        $where = " AND F.FUNCAO LIKE '%" . $FUNCAO . "%'";  
+                    }
+                    
+                    //Filtro E-mail
+                    $EMAIL = Request::get('EMAIL');
+                    if($EMAIL != ''){
+                        $where = " AND C.EMAIL LIKE '%" . $EMAIL . "%'";  
+                    }
+                    
+                    //Filtro Login
+                    $LOGIN = Request::get('LOGIN');
+                    if($LOGIN != ''){
+                        $where = " AND C.LOGIN LIKE '%" . $LOGIN . "%'";  
+                    }
+                    
+                    //Filtro de Bloqueados
+                    $BLOQ = Request::get('BLOQ');
+                    if((int)$BLOQ > 0){
+                        $where = " AND C.BLOQ = " . ((int)$BLOQ == 1 ? 1 : 0) . "";  
+                    }
+                    
+                    //Filtro de Data
+                    $DATA_REGISTRO = Request::get('DATA_REGISTRO');
+                    if($DATA_REGISTRO != ''){
+                        $where = " AND DATE(C.DATA_REGISTRO) = '" . (Date::formatDate($DATA_REGISTRO, 'AAAA-MM-DD')) . "'";  
+                    }
+                }
+                
+                //Carrega usuários da escola
+                $rs = $mdEscola->carregarUsuariosEscola(26436, $where);
+                
+                //Verifica se foram carregadas as listas
+                if($rs->status){
+                    $page           = Request::get('page', 'NUMBER'); 
+                    $limit          = Request::get('rows', 'NUMBER'); 
+                    $orderField     = Request::get('sidx'); 
+                    $orderType      = Request::get('sord'); 
+                            
+                    if(!$orderField) $orderField = 1;
+
+                    //Total de registros
+                    $count          = sizeof($rs->usuarios);
+                    $total_pages    = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
+                    $page           = $page > $total_pages ? $total_pages : $page;
+                    $start          = $limit * $page - $limit;
+                    
+                    //Efetua select com ordenação e paginação
+                    $rs = $mdEscola->carregarUsuariosEscola(
+                        26436,
+                        $where,
+                        array(
+                            "campoOrdenacao"    => $orderField, 
+                            "tipoOrdenacao"     => $orderType, 
+                            "inicio"            => $start, 
+                            "limite"            => $limit
+                        )
+                    );
+                    
+                    $ret->page      = $page;
+                    $ret->total     = $total_pages;
+                    $ret->records   = $count;
+
+                    $i=0;
+                    foreach($rs->usuarios as $row) {
+                        $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' class='checkGrid' />";
+                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
+                        
+                        $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
+                        $ret->rows[$i]['cell'] = array(
+                            $html_check,
+                            utf8_decode($row['NOME_PRINCIPAL']),
+                            utf8_decode($row['FUNCAO']),
+                            $row['EMAIL'],
+                            utf8_decode($row['LOGIN']),
+                            $html_bloq,
+                            Date::formatDate($row['DATA_REGISTRO']),
+                            '<span class="icon gray" data-icon="m"></span>'
+                        );
+                        $i++;
+                    }
+                }else{
+                    $ret                    = new stdClass();
+                    $ret->rows[0]['id']     = 0;
+                    $ret->rows[0]['cell']   = array($rs->msg);
+                }
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret                    = new stdClass();
+                $ret->rows[0]['id']     = 0;
+                $ret->rows[0]['cell']   = array('Erro: ' . $e->getMessage() . " <br /> Arquivo: " . $e->getFile() . " <br /> Linha: " . $e->getLine());
                 
                 echo json_encode($ret);
             }

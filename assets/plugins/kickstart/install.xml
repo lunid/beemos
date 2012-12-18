@@ -6,7 +6,7 @@
     <config>
         <include id='js'>js.prettify</include>
         <include id='jsInc'>js.kickstart</include>
-        <include id='cssInc'>css.kickstart</include>
+        <include id='cssInc'>css.kickstart,custom_kickstart</include>
         <include id='css'>style</include>
     </config>
 </root>

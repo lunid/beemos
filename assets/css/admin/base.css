@@ -424,8 +424,8 @@ body{
     color: #FF0000;
 }
 
-#ltr, input{
-    width: auto;
+.input2{
+    width: 100%;
 }
 
 

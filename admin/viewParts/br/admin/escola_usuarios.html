@@ -35,13 +35,13 @@
                         </div>
 
                         <div class="col_8">
-                            <input type="text" id="NOME_PRINCIPAL" name="NOME_PRINCIPAL" maxlength="100" class="required" field_name="Nome" />
+                            <input type="text" id="NOME_PRINCIPAL" name="NOME_PRINCIPAL" maxlength="100" class="required input2" field_name="Nome" />
                             <div class="espaco"></div>
                             {CB_FUNCOES}
                             <div class="espaco"></div>
-                            <input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email" field_name="E-mail" />
+                            <input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email input2" field_name="E-mail" />
                             <div class="espaco"></div>
-                            <input type="text" id="LOGIN" name="LOGIN" maxlength="15" class="required" field_name="Login" />
+                            <input type="text" id="LOGIN" name="LOGIN" maxlength="15" class="required input2" field_name="Login" />
                             <div class="espaco"></div>
                                 <!-- Senha para cadastro -->
                                 <div id="SENHA_CADASTRO">
@@ -52,7 +52,7 @@
                                 <!-- Senha para aleteração -->
                                 <div id="SENHA_ALTERACAO">
                                     <div class="col_12">
-                                    <input type="checkbox" id="SENHA_NOVA_AUTOMATICA" name="SENHA_NOVA_AUTOMATICA" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
+                                    <input type="checkbox" id="SENHA_NOVA_AUTOMATICA" name="SENHA_NOVA_AUTOMATICA" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0"  />
                                     &nbsp;Gerar nova senha temporária
                                     </div>
                                     <div class="col_12">
@@ -65,12 +65,12 @@
                                     <div>
                                         Senha
                                         <br />
-                                        <input type="password" id="PASSWD" name="PASSWD" maxlength="10" />
+                                        <input type="password" id="PASSWD" name="PASSWD" maxlength="10" class="input2" />
                                     </div>
                                     <div>
                                         Confirmar Senha
                                         <br />
-                                        <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" />
+                                        <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" class="input2" />
                                     </div>
                                      
                                     <div class="col_12">
@@ -124,6 +124,13 @@
             </table>
         </div>
         <div id="carga" style="display:none;">
+            <!-- Erros de validação no server -->
+            <div id="creditos_erros" class="notice error" style="display: none;">
+                <span class="icon medium" data-icon="!"></span> <span id="creditos_erros_msg"></span>
+                <a href="#close" class="icon close" data-icon="x"></a>
+            </div>
+            <!-- Erros de validação no server --> 
+                
             <div class="col_12">
                 <h5>Lorem ipsum dolor sit:</h5> 
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>

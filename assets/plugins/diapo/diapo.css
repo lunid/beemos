@@ -75,8 +75,8 @@
 	.display: inline-block;
 	float: left;
 	list-style: none;
-	margin: 0 10px 0 0;
-	padding: 10px 8px 0;
+	margin: 0px 2px;
+	padding: 10px 0px 0;
 	text-align: center;
 	text-indent: -9999px;
 	width: 16px;
@@ -99,9 +99,9 @@
 	border-radius: 8px;
 	display: block;
 	float: left;
-	height: 8px;
-	margin: 4px;
-	width: 8px;
+	height: 6px;
+	margin: 0px;
+	width:6px;
 }
 #pix_pag_ul > li.diapocurrent > span > span {
 	background: #06658d;
@@ -120,7 +120,7 @@
 	-webkit-box-shadow: 0 1px 8px #000;
 	box-shadow: 0 1px 8px #000;
 	height: 58px;
- 	left: -17px;
+ 	left: -40px;
 	position: absolute;
 	top: -40px;
 	width: 58px;
@@ -131,6 +131,7 @@
     border-top: 4px solid  #e6e6e6;
 	top: 26px;
 	left: 12px;
+	margin-left: -12px;
 	position: absolute;
 }
 .pix_relativize {

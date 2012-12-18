@@ -865,7 +865,12 @@
                 
                 //Model de usuários
                 $mdUsuarios = new MD\UsuariosModel();
-                return $mdUsuarios->inserirCredito($idMatriz, $idCliente, $creditos);
+                
+                if($operacao == 1){
+                    return $mdUsuarios->inserirCredito($idMatriz, $idCliente, $creditos);
+                }else{
+                    return $mdUsuarios->estornarCredito($idMatriz, $idCliente, $creditos);
+                }
             }catch(Exception $e){
                 throw $e;
             }

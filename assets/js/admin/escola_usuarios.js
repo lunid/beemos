@@ -72,6 +72,19 @@ $(document).ready(function(){
                         //Oculta Erros e exibe excluir
                         $("#form_usuario_erros").hide();
                         
+                        //Ocultando Erros de Crédito
+                        $("#creditos_erros").removeClass("success error warning");
+                        $("#creditos_erros").hide();
+                        $("input[name=opt_credito]").each(function(){
+                            if(this.value == 1){
+                                this.checked = true;
+                            }else{
+                                this.checked = false;
+                            }
+                        });
+                        $("#optCreditoTxt").html("<strong style='color:blue'>Crédito:</strong>Incluir crédito(s)na conta do usuário atual.");
+                        
+                        
                         //Ação do Botão Excluir
                         $("#btExcluirUsuario").bind('click', null, function(){
                             excluirUsuario(rowid, true);
@@ -104,6 +117,9 @@ $(document).ready(function(){
                         $("#listasGeradas").html(ret.usuario.listasGeradas);
                         $("#saldoUsuario").html(ret.usuario.saldo);
                         $("#debitos").html(ret.usuario.debitos);
+                        
+                        //Créditos
+                        $("#creditos").val(ret.usuario.limite);
                         $("#limite").html(ret.usuario.limite);
                         
                         //Abre modal
@@ -634,9 +650,15 @@ function executaOperacaoCredito(){
     var creditos    = $("#creditos").val();
     var idCliente   = $("#ID_CLIENTE").val();
     
+    //Ocultando Erros
+    $("#creditos_erros").removeClass("success error warning");
+    $("#creditos_erros").hide();
+    
     //Validação
     if(creditos <= 0){
-        alert("Para efetuar a operação, digite um número de créditos maior que zero!");
+        $("#creditos_erros").addClass("warning");
+        $("#creditos_erros_msg").html("Para efetuar a operação, digite um número de créditos maior que zero!");
+        $("#creditos_erros").show();
         return false;
     }
     
@@ -651,6 +673,20 @@ function executaOperacaoCredito(){
         },
         function(ret){
             site.fechaAguarde();
+            
+            //Verifica o retorno
+            if(ret.status){
+                //Adiciona classe de sucesso
+                $("#creditos_erros").addClass("success");
+                $("#creditos").val("");
+            }else{
+                //Adiciona classe de erros
+                $("#creditos_erros").addClass("error");
+            }
+            
+            //Adiciona MSG ao HTML e exibe notificação
+            $("#creditos_erros_msg").html(ret.msg);
+            $("#creditos_erros").show();
         },
         'json'
     ).error(
