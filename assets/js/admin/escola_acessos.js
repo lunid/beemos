@@ -1,10 +1,10 @@
 $(document).ready(function(){
     //Carrega Grid de Acessos
     $("#grid_acessos").jqGrid({
-        url: 'gridusuarios',
+        url: 'gridUsuariosAcesso',
         datatype: "json",
         hidegrid: false,
-        colNames:['', 'Nome Completo', 'Cargo/Função', 'E-mail', 'Login', 'Bloq', 'Data', 'Carga'],
+        colNames:['', 'Nome', 'Perfil', 'E-mail', 'Login',  'Data'],
         colModel:[
             //site.formataGrid é a função responsável por tratar os erros do jSon, assim como o estilo da primeira coluna
             {name:'ID_CLIENTE', index:'ID_CLIENTE', width:10, align:'center', search: false, cellattr: site.formataGrid, sortable: false },
@@ -12,7 +12,6 @@ $(document).ready(function(){
             {name:'FUNCAO', index:'FUNCAO', width:40, search: true},
             {name:'EMAIL', index:'EMAIL', width:80, search: true},
             {name:'LOGIN', index:'LOGIN', width:40, search: true},
-            {name:'BLOQ', index:'BLOQ', width:30, search: true, stype:'select', searchoptions:{ value: "0:Todos;1:Bloqueado;2:Não Bloqueados" }, align:'center'},
             {
                 name:'DATA_REGISTRO', index:'DATA_REGISTRO', width:30, align:'center', search: true,
                 searchoptions:{
@@ -24,8 +23,7 @@ $(document).ready(function(){
                         });
                     }
                 }
-            },
-            {name:'CARGA', index:'CARGA', width:15, align:'center', search: false, sortable: false}
+            }
         ],
         rowNum:10,
         rowList:[10,20,30],
@@ -66,7 +64,7 @@ $(document).ready(function(){
                         $("#painel_abas").show();
                         
                         //Oculta Erros e exibe excluir
-                        $("#form_usuario_erros").hide();
+                        $("#form_acesso_erros").hide();
                         
                         //Ocultando Erros de Crédito
                         $("#creditos_erros").removeClass("success error warning");
@@ -148,7 +146,7 @@ $(document).ready(function(){
             buttonicon: "ui-icon-plus", 
             onClickButton: function(){ 
                 //Oculta erros e Excluir
-                $("#form_usuario_erros").hide();
+                $("#form_acesso_erros").hide();
                 $("#btExcluirUsuario").hide();
                 
                 //Limpa form
@@ -177,14 +175,8 @@ $(document).ready(function(){
     });
     
     //Inicia formulário de Usuários
-    formUsuario = new Form();
-    formUsuario.init('form_usuario');
-    
-    //Inicia formulário de Cargos
-    formCargo = new Form();
-    formCargo.init('form_cargo');
-    $("#LIM_CREDITO").mask("9?9999");
-    $("#creditos").mask("9?9999");
+    formAcesso = new Form();
+    formAcesso.init('form_acesso');
 });
 
 /**
@@ -254,41 +246,6 @@ function excluirUsuario(idCliente, modal){
 }
 
 /**
- * Excluir um ou mais usuário(s)
- */
-function enviarLinkAcesso(idCliente){
-    //Abre modal explicando ação ao usuário
-    site.modal("Ao enviar o <b>link de acesso</b> os usuários selecionados serão obrigados a cadastrar uma nova senha em seu próximo acesso ao sistema.<br/><br/>Tem certeza que deseja enviar o link de acesso?", "Link de Acesso", null, 
-            {
-                "Sim": function() {
-                    site.aguarde();
-                    tmpModal = this;
-                    $.post(
-                        "enviarLinkAcesso",
-                        {idCliente:idCliente},
-                        function(ret){
-                            site.fechaAguarde();
-                                                       
-                            //Fecha modal
-                            $(tmpModal).dialog( "close" );
-                            //Exibe retorno
-                            alert(ret.msg);
-                        },
-                        'json'
-                    ).error(
-                        function(){
-                            site.fechaAguarde();
-                            alert("Falha no servidor! Entre em contato com o Suporte.");
-                        }
-                    );
-                },
-                "Não": function() {
-                    $( this ).dialog( "close" );
-                }
-            }, 400);
-}
-
-/**
  * Verifica a geração de senha manual ou automática
  */
 function checkSenha(obj){
@@ -316,20 +273,20 @@ function checkSenha(obj){
  */
 function verSalvarUsuario(ret, modalId){
     //Remove todas possíveis classes
-    $("#form_usuario_erros").removeClass("warning");
-    $("#form_usuario_erros").removeClass("success");
-    $("#form_usuario_erros").removeClass("error");
+    $("#form_acesso_erros").removeClass("warning");
+    $("#form_acesso_erros").removeClass("success");
+    $("#form_acesso_erros").removeClass("error");
         
     if(ret.status){
-        $("#form_usuario_erros").addClass("success"); //Adiciona classe de sucesso
-        $("#form_usuario_erros_msg").html(ret.msg); //Adiciona mensagem
-        $("#form_usuario_erros").show(); //Exibe notificações
+        $("#form_acesso_erros").addClass("success"); //Adiciona classe de sucesso
+        $("#form_acesso_erros_msg").html(ret.msg); //Adiciona mensagem
+        $("#form_acesso_erros").show(); //Exibe notificações
         
         $("#grid_usuarios").trigger('reloadGrid');
     }else{
-        $("#form_usuario_erros").addClass("error");
-        $("#form_usuario_erros_msg").html(ret.msg);
-        $("#form_usuario_erros").show();
+        $("#form_acesso_erros").addClass("error");
+        $("#form_acesso_erros_msg").html(ret.msg);
+        $("#form_acesso_erros").show();
     }
 }
 

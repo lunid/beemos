@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>    
     <header>
-        <include id='css'>admin/base</include>
+        <include id='css'>admin/custom_kickstart,admin/base</include>
         <include id='cssInc'></include>
         <include id='js'>admin.init,util.dictionary,util.form</include>
         <include id='jsInc'></include>
