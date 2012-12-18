@@ -1,6 +1,7 @@
 <?php
     use \sys\classes\mvc\View;
     use \sys\classes\mvc\ViewPart;
+    use \sys\classes\util\Request;
     
     /**
     * Classe Controller usada com default quando nenhuma outra é informada.
@@ -13,9 +14,12 @@
         * Conteúdo da página home de criação.
         */
         function actionIndex(){
-            try{                
+            try{
+                //Parâmetro de página
+                $pag = trim(Request::get("pag")) != "" ? trim(Request::get("pag")) : "home";
+                
                 //Home
-                $objViewPart = new ViewPart('tutorial');
+                $objViewPart = new ViewPart($pag);
                 
                 //Template
                 $tpl = new View();
