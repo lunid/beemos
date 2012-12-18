@@ -27,8 +27,14 @@
                 $tpl->TITLE = 'Index | Criação';
                 
                 //Instância de JS
-                $tpl->setJs('app/home');
-                $tpl->setPlugin('diapo');
+                
+                /** Home **/
+                if($pag == "home"){
+                    $tpl->setJs('app/home');
+                    $tpl->setPlugin('diapo');
+                }
+                /** Home **/
+                
                 $tpl->forceCssJsMinifyOn();
                 
                 $tpl->render('index');            
