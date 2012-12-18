@@ -150,7 +150,7 @@ $(document).ready(function(){
                 $("#btExcluirUsuario").hide();
                 
                 //Limpa form
-                formUsuario.clearForm();
+                formAcesso.clearForm();
                 
                 //Controles de senha
                 $("#PASSWD").val("");
@@ -164,7 +164,7 @@ $(document).ready(function(){
                 $("#senha").hide();
                 
                 //Abre modal
-                $("#modal_usuario").dialog({
+                $("#modal_acesso").dialog({
                     title: "Novo Usuário",
                     modal: true,
                     width: "550",
@@ -228,7 +228,7 @@ function excluirUsuario(idCliente, modal){
                     $("#grid_usuarios").trigger('reloadGrid');
 
                     if(modal == true){
-                        formUsuario.clearForm();
+                        formAcesso.clearForm();
                         $("#modal_usuario").dialog("close");
                     }
                 }else{
@@ -559,7 +559,7 @@ function excluirCargo(idCargo){
 
                 if(ret.status){
                     $("#grid_cargos").trigger('reloadGrid');
-                    formUsuario.clearForm();
+                    formAcesso.clearForm();
                     $("#modal_cargos").dialog("close");
                 }else{
                     $("#form_cargo_erros").removeClass("warning success error");
