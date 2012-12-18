@@ -226,6 +226,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	Novas classes (Foram criadas pra o site)
 -----------------------------------*/
 
+#redes_sociais_rodape{
+    margin-top: -22px;
+}
+
 
 #mapa {
     float: left;
