@@ -15,7 +15,7 @@
         function actionIndex(){
             try{                
                 //Home
-                $objViewPart = new ViewPart('home');
+                $objViewPart = new ViewPart('tutorial');
                 
                 //Template
                 $tpl = new View();
