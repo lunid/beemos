@@ -16,6 +16,7 @@
                 $ret = new \StdClass();
                 $ret->rows[0]['id']     = 0;
                 $ret->rows[0]['cell']   = array('teste');
+                json_encode($ret);
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";

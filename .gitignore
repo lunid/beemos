@@ -3,4 +3,7 @@
 
 /sys/classes/db/ConnConfig.php
 
+/tmp/
+
+
 .htaccess

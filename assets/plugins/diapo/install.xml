@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Componente utilizado para criar banner rotativo.        
+    </descricao>
+    <config>
+        <include id='js'>scripts.jquery_easing_1_3,scripts.jquery_hoverIntent_minified,scripts.diapo_min</include>
+        <include id='jsInc'></include>
+        <include id='css'>diapo</include>
+        <include id='cssInc'></include>
+    </config>
+</root>

@@ -1,0 +1,23 @@
+<div id="wrap" class="clearfix">
+    <form accept-charset="UTF-8" action="authLogin" method="post" class="vertical">
+        <h1>Assine já <a href="https://github.com/plans">Planos & Preços</a></h1>
+        <div class="col_6 column">
+            <div class="inner">                    
+                {TOKEN_FIELD}                
+                <div>
+                    <!-- Text Field -->
+                    <label for="user">Usuário ou e-mail</label>                        
+                    <input autocapitalize="off" type="text" autofocus="autofocus" id="user" name="user" />                       
+
+                    <label for="passwd">Senha</label>  
+                    <input autocomplete="disabled" id="passwd" name="passwd" type="password" />
+                    
+                    <label for="text6" class="error">Mensagem erro</label>
+                    <input id="text6" class="error" type="text" />
+                    
+                    <button type="submit">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
