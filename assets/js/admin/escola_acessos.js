@@ -1,10 +1,6 @@
 $(document).ready(function(){
-    //Habilitando componente de Abas
-    $( "#abas" ).tabs();
-    $( "#modal_usuario" ).tabs();
-    
-    //Carrega Grid de Listas - Aba principal
-    $("#grid_usuarios").jqGrid({
+    //Carrega Grid de Acessos
+    $("#grid_acessos").jqGrid({
         url: 'gridusuarios',
         datatype: "json",
         hidegrid: false,
@@ -33,11 +29,11 @@ $(document).ready(function(){
         ],
         rowNum:10,
         rowList:[10,20,30],
-        pager: '#pg_usuarios',
+        pager: '#pg_acessos',
         sortname: 'NOME_PRINCIPAL',
         viewrecords: true,
         sortorder: "ASC",
-        caption:"Usuários",
+        caption:"Contas de Acesso",
         width: 900,
         height: 'auto',
         scrollOffset: 0,
@@ -143,20 +139,14 @@ $(document).ready(function(){
         }
     });
                 
-    $("#grid_usuarios").filterToolbar();
+    $("#grid_acessos").filterToolbar();
     
-    $("#grid_usuarios")
-        .navGrid('#pg_usuarios',{edit:false,add:false,del:false,search:false})
-        .navButtonAdd('#pg_usuarios',{
+    $("#grid_acessos")
+        .navGrid('#pg_acessos',{edit:false,add:false,del:false,search:false})
+        .navButtonAdd('#pg_acessos',{
             caption: "Novo Usuário", 
             buttonicon: "ui-icon-plus", 
             onClickButton: function(){ 
-                //Seleciona aba de Dados
-                $("#aba_dados").trigger('click');
-                
-                //Esconde abas desnecessárias
-                $("#painel_abas").hide();
-                
                 //Oculta erros e Excluir
                 $("#form_usuario_erros").hide();
                 $("#btExcluirUsuario").hide();

@@ -636,22 +636,46 @@
          * </code>
          * @throws Exception
          */
-        public function inserirEstorno($idUsuario, $idRegAnterior, $saldoAnt, $estorno, $saldoFinal, $vencimento){
+        public function estornarCredito($idMatriz, $idUsuario, $debito){
             try{
                 //Objeto de Retorno
                 $ret            = new \stdClass();
                 $ret->status    = false;
-                $ret->msg       = "Falha ao inserir estorno!";
+                $ret->msg       = "Falha ao lançar débito!";
+                
+                //Última opeção do Cliente e Matriz
+                $ultimaOperacaoCliente  = $this->consultarUltimaOperacaoCliente($idUsuario);
+                $ultimaOperacaoMatriz   = $this->consultarUltimaOperacaoCliente($idMatriz);
+                
+                //Se houver falha nos dados da Matriz
+                if(!$ultimaOperacaoMatriz->status){
+                    return $ultimaOperacaoMatriz;
+                }
+                
+                if($ultimaOperacaoCliente->status){
+                    //Dados do INSERT
+                    $idRegAnterior  = $ultimaOperacaoCliente->operacao->ID_CREDITO_CONSOLIDADO;
+                    $saldoAnt       = $ultimaOperacaoCliente->operacao->SALDO_FINAL;
+                    $saldoFinal     = $ultimaOperacaoCliente->operacao->SALDO_FINAL - $debito;
+                    $vencimento     = $ultimaOperacaoMatriz->operacao->VENCIMENTO;
+                }else{
+                    //Dados do INSERT
+                    $idRegAnterior  = 0;
+                    $saldoAnt       = 0;
+                    $saldoFinal     = $debito;
+                    $vencimento     = $ultimaOperacaoMatriz->operacao->VENCIMENTO;
+                }
                 
                 //Tabela SPRO_CREDITO_CONSOLIDADO
                 $tbCredito = new TB\CreditoConsolidado();
-                $tbCredito->OPERACAO            = "D";
+                $tbCredito->OPERACAO            = "C";
                 $tbCredito->NUM_PEDIDO          = 0;
                 $tbCredito->DATA_REGISTRO       = date("Y-m-d H:i:s");
+                $tbCredito->ID_MATRIZ           = (int)$idMatriz;
                 $tbCredito->ID_CLIENTE          = (int)$idUsuario;
                 $tbCredito->ID_REG_SALDO_ANT    = (int)$idRegAnterior;
                 $tbCredito->SALDO_ANT           = $saldoAnt;
-                $tbCredito->CREDITO             = $estorno;
+                $tbCredito->CREDITO             = $debito;
                 $tbCredito->SALDO_FINAL         = $saldoFinal;
                 $tbCredito->VENCIMENTO          = $vencimento;
                         
@@ -661,7 +685,7 @@
                 if($id > 0){
                     //Retorno OK
                     $ret->status    = true;
-                    $ret->msg       = "Crédito lançado com suceeo";
+                    $ret->msg       = "Débito lançado com sucesso!";
                     $ret->id        = $id;
                 }
                 
