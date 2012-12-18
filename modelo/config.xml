@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>    
+    <!--
+    FUNÇÃO:
+    Arquivo responsável por listar as dependências comuns (css e js) a todas as páginas do módulo atual.
+    Caso uma determinada tag não seja definida aqui, a lista contida na mesma tag, porém em config.xml global (raíz do projeto),
+    será utilizada. Todos os arquivos de inclusão, por padrão, serão compactados via YUICompressor.
+    Caso o servidor não possua recursos para a execução de JAVA o conteúdo não sofrerá compactação.
+    
+    SUBSTITUIÇÃO E CONCATENÇAÃO DE INCLUDES
+    Caso uma tag seja definida no config.xml do módulo atual, ela irá sobrepor qualquer definição da mesma tag
+    existente no config.xml global. Exceto se o atributo concat='1' for incluído. Neste caso, 
+    a definição atual será adicionada à lista existente em config.xml (caso de CONCATENAÇÃO).
+    
+    Exemplos:
+    /config.xml (arquivo global)
+    <include id='plugins'>jquery,kickstart</include>
+    
+    /modulo/config.xml (arquivo do módulo atual)
+    <include id='plugins' concat='1'>jqgrid</include>
+    
+    No exemplo acima, a lista de plugins será jquery,kickstart,jqgrid pelo fato de o atributo concat='1' ter sido definido com valor '1'.
+    
+    Todo o conteúdo definido nas tags <include>...</include> deve estar armazenado em /assets. 
+    
+    O atributo 'id' das tags <include id='tipoInclude'>...</include>, definem a ação
+    de inclusão. Valores possíveis:
+    
+    - css:      = Os arquivos da lista serão concatenados em único arquivo, que será o arquivo final de inclusão.                  
+                  
+    - js:       = O mesmo de css.
+    
+    - cssInc    = O conteúdo de cada arquivo da lista será compactado e guardado em um arquivo separado.
+                  O html resultante terá cada arquivo incluído individualmente.
+                  
+    - jsInc     = O mesmo de cssInc.
+    
+    - plugins   = Contém a lista de plugins usados no módulo.
+                  Todos os plugins são guardados em /assets/plugins/ e seus respectivos includes
+                  são definidos no arquivo install.xml. Este arquivo deve estar na raíz da respectiva pasta do plugin.
+    
+    
+    Alguns exemplos:
+    
+   EXEMPLO DE CONCATENAÇÃO EM UM ÚNICO ARQUIVO COMPACTADO:   
+   <include id='css'>modelo.site,util</include> ou 
+   <include id='css'>modelo/site,util</include>:
+    Arquivos que serão incluídos:
+    
+    /assets/css/modelo/site.css
+    /assets/css/util.css
+    
+    OBS: Todos os arquivos serão concatenados em um único arquivo.
+    
+    
+    EXEMPLO DE INCLUSÃO INDIVIDUAL APÓS COMPACTAÇÃO DE CADA ARQUIVO:  
+    <include id='cssInc'>modelo.site,util</include> ou 
+    <include id='cssInc'>modelo/site,util</include>:
+    Arquivos que serão incluídos:
+    
+    /assets/css/modelo/site.css
+    /assets/css/util.css
+    
+    OBS: Arquivos incluídos separadamente.
+    
+    -->
+    <header>
+        <include id='css'       concat='0'>modelo/site</include>
+        <include id='cssInc'    concat='0'></include>
+        <include id='js'        concat='0'></include>
+        <include id='jsInc'     concat='0'></include>
+        <include id='plugins'   concat='0'>jquery</include>
+    </header>
+</root>

@@ -1,0 +1,18 @@
+ul{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+.menuVertical {
+    float:left;
+    border:1px dotted #000;
+    margin-right:10px;
+    padding:10px;
+}
+
+.titulo {
+    font-size: 14px;
+    margin-bottom:20px;
+    font-weight: bold;
+}

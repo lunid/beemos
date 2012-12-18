@@ -25,7 +25,7 @@
          * Na classe atual implementa o acesso para usuários não autenticados. 
          */
         function before(){
-            $redirect   = \Url::mvc('app','');
+            $redirect = \Url::mvc('app','');
             \Auth::checkAuth($redirect);
         }
     }

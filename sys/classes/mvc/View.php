@@ -462,7 +462,7 @@
                             $this->showErr('Erro ao memorizar arquivo(s) de inclusão(ões) css | js -> '.$listFiles,$e);                    
                         }
                     } else {
-                       echo "Inclusão não realizada $listFiles<br>"; 
+                       echo "View->{$fn}(): Inclusão não realizada $listFiles<br>"; 
                     }
                 } elseif ($fn == 'forceCssJsMinifyOn') {
                     //Força a compactação e junção dos includes (css e js), mesmo que o arquivo _min já exista.
