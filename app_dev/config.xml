@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>    
     <header>
-        <include id='css'>criacao/estilo</include>
+        <include id='css'>app/estilo</include>
         <include id='cssInc'></include>
         <include id='js'></include>
         <include id='jsInc'></include>
