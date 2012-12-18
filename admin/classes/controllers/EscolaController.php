@@ -919,7 +919,7 @@
                 }
                 
                 //Carrega usuários da escola
-                $rs = $mdEscola->carregarUsuariosEscola(26436, $where);
+                $rs = $mdEscola->carregarUsuariosAcesso(26436, $where);
                 
                 //Verifica se foram carregadas as listas
                 if($rs->status){
@@ -937,7 +937,7 @@
                     $start          = $limit * $page - $limit;
                     
                     //Efetua select com ordenação e paginação
-                    $rs = $mdEscola->carregarUsuariosEscola(
+                    $rs = $mdEscola->carregarUsuariosAcesso(
                         26436,
                         $where,
                         array(
