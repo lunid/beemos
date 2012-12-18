@@ -123,7 +123,8 @@ h1,h2,h3,h4,h5,h6{
 
 #bg_banner_home{
     height: 280px;
-    width: 950px;
+    width: 940px;
+    margin-top: 4px;
 	border-bottom: 1px solid #E4E4E4;
 	 /* fallback */ 
 	 background-color: #f5f6f3; 

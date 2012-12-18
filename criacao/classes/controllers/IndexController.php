@@ -26,6 +26,9 @@
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'Index | Criação';
                 
+                //Instância de JS
+                $tpl->setJs('criacao/home');
+                $tpl->setPlugin('diapo');
                 $tpl->forceCssJsMinifyOn();
                 
                 $tpl->render('index');            
