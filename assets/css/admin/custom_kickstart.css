@@ -72,7 +72,7 @@ select {
 
 
 button, a.btn, a.btn:visited, a.button, a.button:visited, input[type="submit"], input[type="reset"], input[type="button"] {
-    height: 34px;
+    height: auto;
     padding: 6px;
 }
 

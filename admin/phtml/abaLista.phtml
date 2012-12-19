@@ -1,6 +1,8 @@
 <div class="conteudo_abas">
-    <div class="espaco"></div>   
-<div id="nav">
+
+   <div class="espaco"></div>
+
+   <div id="nav">
     <ul class="button-bar">
         <li><a href="javascript:void(0);"><span class="icon" data-icon="u"></span> Navegue como Aluno</a></li>
         <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="z"></span> Configurações</a></li>
@@ -8,6 +10,9 @@
         <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="k"></span> Alunos</a></li>
     </ul>
 </div>
+   
+     <div class="espaco"></div>
+   
 <div id="lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>">
 <!-- Opções de Configuração da Lista -->
     <!-- Anticola -->
@@ -30,8 +35,6 @@
 
     <!-- Espaçamento -->
         <div class="espaco"></div>
-        <div class="espaco"></div>
-        <div class="espaco"></div>
     <!-- fim Espaçamento -->
 
     <!-- Período -->
@@ -52,8 +55,6 @@
     <!-- Período -->
 
     <!-- Espaçamento -->
-        <div class="espaco"></div>
-        <div class="espaco"></div>
         <div class="espaco"></div>
     <!-- fim Espaçamento -->
 
@@ -77,8 +78,6 @@
 
     <!-- Espaçamento -->
         <div class="espaco"></div>
-        <div class="espaco"></div>
-        <div class="espaco"></div>
     <!-- fim Espaçamento -->
 
     <!-- Gabarito -->
@@ -101,8 +100,6 @@
 
     <!-- Espaçamento -->
         <div class="espaco"></div>
-        <div class="espaco"></div>
-        <div class="espaco"></div>
     <!-- fim Espaçamento -->
 
     <!-- Tempo de Vida -->
@@ -121,7 +118,7 @@
                 <div class="col_2"><input type="text" id="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="tempo_vida_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="tempo_vida" value="<?=$attrs['TEMPO_VIDA']?>" onkeyup="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" onchange="alteraTempoVida(this.value, <?=$attrs['ID_HISTORICO_GERADOC']?>);" />
             </div>
         </div>
-        
+            <div class="linha"></div>
     <!-- Tempo de Vida -->
 <div class="espaco"></div>
 <div class="espaco"></div>
@@ -131,34 +128,36 @@
 <div id="lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
 <!-- Resultados da Lista -->
     <table class="tb_resultados_listas">
-        <tr>
-            <td style="width:10px;vertical-align:top;white-space:nowrap;">
-                <h5>Escola</h5>
-                <select id="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
-            </td>
-            <td style="width:10px;vertical-align:top;white-space:nowrap;">
-                <h5>Ensino</h5>
-                <select id="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
-            </td>
-            <td style="width:10px;vertical-align:top;white-space:nowrap;">
-                <h5>Período</h5>
-                <select id="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
-            </td>
-            <td style="width:10px;vertical-align:top;white-space:nowrap;">
-                <h5>Ano</h5>
-                <select id="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
-            </td>
-            <td style="width:10px;vertical-align:top;white-space:nowrap;">
-                <h5>Turmas</h5>
+  <tr>
+    <td colspan="4">
+        <h6>Escola</h6>
+        <select id="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="escolas_<?=$attrs['ID_HISTORICO_GERADOC']?>" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <h6>Ensino</h6>
+        <select id="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ensino_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+    </td>
+    <td>
+        <h6>Período</h6>
+        <select id="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="periodo_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+    </td>
+    <td>
+        <h6>Ano</h6>
+       <select id="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="ano_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple" onchange="javascript:filtrosResultados(<?=$attrs['ID_HISTORICO_GERADOC']?>);"></select>
+</td>
+    <td>  <h6>Turmas</h6>
                 <select id="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" name="turmas_<?=$attrs['ID_HISTORICO_GERADOC']?>" multiple="multiple"></select>
-            </td>
-            <td style="width:90%;vertical-align:bottom;white-space:nowrap;text-align:left;">
-                <input type="button" value="Filtrar" onclick="javascript:geraGrafico(<?=$attrs['ID_HISTORICO_GERADOC']?>);" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="6">
+</td>
+  </tr>
+  <tr>
+    <td colspan="4"><input type="button" value="Filtrar" onclick="javascript:geraGrafico(<?=$attrs['ID_HISTORICO_GERADOC']?>);" /></td>
+  </tr>
+</table>
+
                 <!-- Gráficos e Dados -->
+                <div class="col_4">
                 <div id="aproveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
                     <p>
                         Aproveitamento
@@ -166,6 +165,8 @@
                         <span id="num_proveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>">0</span>%
                     </p>
                 </div>
+                </div>
+                <div class="col_4">
                 <div id="gr_respostas_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
                     <p>
                         Respostas
@@ -173,6 +174,8 @@
                         <span>0</span>
                     </p>
                 </div>
+                </div>
+                <div class="col_4">
                 <div id="gr_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista">
                     <p>
                         Alunos
@@ -180,12 +183,11 @@
                         <span>0</span>
                     </p>
                 </div>
+                </div>
                 <!-- Gráficos e Dados --> 
-            </td>
-        </tr>
-        <tr>
-            <td colspan="6">
+
                 <!-- Gráficos Aproveitamento Questões -->
+                <div class="col_12">
                 <div id="gr_questoes_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista" style="height:auto;">
                     <p>
                         Questões
@@ -193,30 +195,32 @@
                         <span>0</span>
                     </p>
                 </div>
+                </div>
+                <div class="col_3">
+               
                 <!-- Gráficos Aproveitamento Questões --> 
-            </td>
-        </tr>
-        <tr>
-            <td colspan="6">
                 <input type="button" value="Gráfico Aluno x Universo" onclick="javascript:modalAluno(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="6">
+               
+                </div>
+                
+                <div class="col_3">
+                <!-- Gráficos Aluno x Universo -->
+                <input type="button" value="Imprimir Gráficos" onclick="javascript:imprimirGraficos(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
+
+                </div>
+                
+                
+                <div class="col_4">
+              
                 <!-- Gráficos Aluno x Universo -->
                 <div id="gr_aluno_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="gr_config_lista" style="display:none;height:310px;">&nbsp;</div>
-                <!-- Gráficos Aluno x Universo -->
-            </td>
-        </tr>
-        <tr>
-            <td colspan="6">
-                <input type="button" value="Imprimir Gráficos" onclick="javascript:imprimirGraficos(<?=$attrs['ID_HISTORICO_GERADOC']?>)" />
-            </td>
-        </tr>
-    </table>
+                
+                </div>
+                
 <!-- Resultados da Lista -->
 </div>
-
+     <div class="col_12">
+         <div id="grid_alunos">
 <div id="lista_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>" class="opt_lista <?=$attrs['ID_HISTORICO_GERADOC']?>" style="display:none;">
     <table id="grid_alunos_status_<?=$attrs['ID_HISTORICO_GERADOC']?>" style="width:100%;"></table>
     <div id="pg_alunos_status_<?=$attrs['ID_HISTORICO_GERADOC']?>"></div>
@@ -227,4 +231,7 @@
     <div id="pg_alunos_<?=$attrs['ID_HISTORICO_GERADOC']?>"></div>
     <input type="hidden" id="tmp_aproveitamento_<?=$attrs['ID_HISTORICO_GERADOC']?>" value="10" />
 </div>
-</div>    
+         </div>
+     </div>
+</div>
+<div class="espaco"></div>

@@ -3,8 +3,6 @@
     Caixa postal
 </div>
 <!-- fim titulo -->
-<!-- conteudo abas -->
-    <div class="conteudo_abas">
 <!-- Modal Escrever -->
 <div id="modal_escrever" style="display:none;">
     <form id="form_enviar_msg" name="form_enviar_msg" action="caixapostal/enviarMensagem" onsubmit="return formEnviarMsg.validate(this, true, 'validaEnvio');">
@@ -76,7 +74,11 @@
         </tr>
     </table>
     <div class="col_6"></div>
-    <div class="col_3"><a class="button" href="javascript:void(0);" onclick="javascript:$('#modal_abrir').dialog('close');"><span class="icon gray small" data-icon="X"></span> Fechar</a></div>
+    <div class="col_6">
+        <div class="botão_ok_enviar">
+        <a class="button" href="javascript:void(0);" onclick="javascript:$('#modal_abrir').dialog('close');"><span class="icon gray small" data-icon="X"></span> Fechar</a>
+        </div>
+        </div>
 </div>
 <!-- Modal Abrir -->
 
@@ -127,6 +129,5 @@
     <!-- Espaçamento -->
     <div class="espaco"></div>
     <!-- fim Espaçamento -->
- </div>
 </div>
 <!-- fim conteudo box -->

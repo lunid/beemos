@@ -18,13 +18,13 @@
             <!-- Erros de validação no server --> 
             
             <div class="cinza">
-                <div class="col_3">Classe:</div>
+                <div class="col_2">Classe:</div>
                 <div class="col_9">
                     <input type="text" id="turmaClasse" name="turmaClasse" maxlength="100" style="width:99%;" class="required" field_name="Nome da Classe" />
                 </div>
             </div>
             
-            <div class="col_3">Ensino:</div>
+            <div class="col_2">Ensino:</div>
             <div class="col_3">
                 <input type="radio" id="turmaEnsinoMedio" name="turmaEnsino" value="M" onclick="javascript:mudaAno(this.value);" checked="checked" />
                 <label for="turmaEnsinoMedio" class="inline">Médio</label>
@@ -35,7 +35,7 @@
             </div>
 
             <div class="cinza">
-                <div class="col_3">Periodo:</div>
+                <div class="col_2">Periodo:</div>
                 <div class="col_3">
                     <input type="radio" id="turmaPeriodoManha" name="turmaPeriodo" value="M" checked="checked" />
                     <label for="turmaPeriodoManha" class="inline">Manhã</label>
@@ -44,23 +44,25 @@
                     <input type="radio" id="turmaPeriodoTarde" name="turmaPeriodo" value="T" />
                     <label for="turmaPeriodoTarde" class="inline">Tarde</label>
                 </div>
-                <div class="col_3">
+                <div class="col_2">
                     <input type="radio" id="turmaPeriodoNoite" name="turmaPeriodo" value="N" />
                     <label for="turmaPeriodoNoite" class="inline">Tarde</label>
                 </div>
             </div>      
 
-            <div class="col_3">Série:</div>
-            <div class="col_7">
+            <div class="col_2">Série:</div>
+                <div class="col_2">
                 <select id="turmaAno" name="turmaAno" class="required" field_name="Ano">
                     <option value="1">1º</option>
                     <option value="2">2º</option>
                     <option value="3">3º</option>
                 </select>
+                </div>
+                <div class="col_2">
                 <label for="turmaAno">Ano</label>
-            </div>
+                </div>
 
-            <div class="col_9"></div>
+            
             <div class="col_12">
                 <input type="hidden" id="turmaIdEscola" name="turmaIdEscola" value="" />    
                 <input type="hidden" id="turmaId" name="turmaId" value="" />    
