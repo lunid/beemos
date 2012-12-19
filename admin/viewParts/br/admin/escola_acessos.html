@@ -1,7 +1,7 @@
 <!-- ===================================== conteúdo pagina  ===================================== -->	 
 <div id="modal_acesso" style="display:none;">
     <div id="dados">
-        <form name="form_acesso" id="form_acesso" method="post" action="salvarusuario" onSubmit="return formAcesso.validate(this, true, 'verSalvarUsuario');">
+        <form name="form_acesso" id="form_acesso" method="post" action="salvarusuarioacesso" onSubmit="return formAcesso.validate(this, true, 'verSalvarAcesso');">
             <!-- Erros de validação no server -->
             <div id="form_acesso_erros" class="notice warning" style="display: none;">
                 <span class="icon medium" data-icon="!"></span> <span id="form_acesso_erros_msg"></span>
@@ -13,63 +13,45 @@
                 <div class="col_4">
                     <h5>Nome:</h5>
                     <div class="espaco"></div>
-                    <h5>Cargo/Função:</h5>
+                    <h5>Perfil:</h5>
                     <div class="espaco"></div>
                     <h5>E-mail:</h5>
                     <div class="espaco"></div>
                     <h5>Login:</h5>
+                    <div class="espaco"></div>
+                    <h5>Telefone:</h5>
+                    <div class="espaco"></div>
+                    <h5>Senha:</h5>
+                    <div class="espaco"></div>
+                    <h5>Confirmar Senha:</h5>
                     <div class="espaco"></div>
                 </div>
 
                 <div class="col_8">
                     <input type="text" id="NOME" name="NOME" maxlength="100" class="required" field_name="Nome" />
                     <div class="espaco"></div>
-                    {CB_FUNCOES}
+                    {CB_PERFIS}
                     <div class="espaco"></div>
                     <input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email" field_name="E-mail" />
                     <div class="espaco"></div>
                     <input type="text" id="LOGIN" name="LOGIN" maxlength="15" class="required" field_name="Login" />
                     <div class="espaco"></div>
-                        <!-- Senha para cadastro -->
-                        <div id="SENHA_CADASTRO">
-                            <input type="checkbox" id="SENHA_SISTEMA" name="SENHA_SISTEMA" checked="checked" onclick="javascript:checkSenha(this);" value="1">
-                            &nbsp;Gerar senha automaticamente
-                        </div>
+                    <input type="text" id="TELEFONE" name="TELEFONE" maxlength="14" />
+                    <div class="espaco"></div>
+                    
+                    <div id="senhaMsg" style="color:#FF0000;font-weight:bold;display:none;">Só preencha o campo senha se você deseja alterá-la</div>
+                    
+                    <input type="password" id="SENHA" name="SENHA" maxlength="10" class="required" field_name="Senha" />
+                    <div class="espaco"></div>
+                    <input type="password" id="C_SENHA" name="C_SENHA" maxlength="10" class="required" field_name="Confirmar Senha" />
+                    <div class="espaco"></div>
 
-                        <!-- Senha para aleteração -->
-                        <div id="SENHA_ALTERACAO">
-                            <div class="col_12">
-                            <input type="checkbox" id="SENHA_NOVA_AUTOMATICA" name="SENHA_NOVA_AUTOMATICA" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
-                            &nbsp;Gerar nova senha temporária
-                            </div>
-                            <div class="col_12">
-                            <input type="checkbox" id="SENHA_NOVA_MANUAL" name="SENHA_NOVA_MANUAL" onclick="javascript:checkSenhaAlt(this);" class="SENHA_NOVA" value="0" />
-                            &nbsp;Alterar senha atual do Usuário
-                            </div>
-                        </div>
-                        <div id="senha" style="display:none">
-                            <div class="linha"></div>
-                            <div>
-                                Senha
-                                <br />
-                                <input type="password" id="PASSWD" name="PASSWD" maxlength="10" />
-                            </div>
-                            <div>
-                                Confirmar Senha
-                                <br />
-                                <input type="password" id="C_PASSWD" name="C_PASSWD" maxlength="10" />
-                            </div>
-
-                            <div class="col_12">
-                                <input type="checkbox" id="ENVIAR_ACESSO" name="ENVIAR_ACESSO" value="1" onclick="javascript:this.checked ? this.value='1' : this.value='0';" checked="checked" />
-                                <label for="ENVIAR_ACESSO" class="inline">Enviar acesso por e-mail</label>
-                            </div>
-                            <div class="linha"></div>
-                        </div>
+                    <div class="linha"></div>
+                        
                     <div class="espaco"></div>
 
                     <div class="bt_alterar_dados">
-                        <input type="hidden" id="ID_CLIENTE" name="ID_CLIENTE" value="0" />
+                        <input type="hidden" id="ID_USUARIO" name="ID_USUARIO" value="0" />
                         <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:$('#form_acesso').submit();">
                             Salvar<span class="ui-icon ui-icon-disk"></span>
                         </a>
