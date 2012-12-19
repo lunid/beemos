@@ -1,19 +1,14 @@
 <?php
-    use \api\classes\Server;
+    use \sys\classes\webservice\WsServer;
     use \api\classes\Util;
     use \api\classes\Security;
     use \common\classes\models\UsuariosModel;
     
-    class Usuarios extends Server {
+    class Usuarios extends WsServer {
         public function __construct() {
-            try{
-                //Métodos a serem ignorados no WSDL
-                $ignoredMetodos = array(
-                    "__construct"
-                );
-                
+            try{                
                 //Inicia o ServerSoap
-                parent::__construct(__CLASS__, $ignoredMetodos);
+                parent::__construct(__CLASS__);
             }catch(Exception $e){
                 die(utf8_decode("<b>Erro Fatal:</b> " . $e->getMessage() . " - Entre em contato com suporte!"));
             }

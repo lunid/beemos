@@ -2,6 +2,7 @@
     namespace api\classes;
     
     use \sys\classes\util\Component;
+    use \sys\classes\security\Token;
     use \api\classes\models\ServerModel;
     
     class Server {
@@ -92,31 +93,45 @@
         }
         
         /**
-         * Função que gera um novo token ao cliente
+         * Gera um token de sessão.
          * 
          * @return string
          */
         public function getToken(){
             try{
-                //Gera um novo TOKEN
-                $rs = $this->authenticate(null);
+                //Gera um novo TOKEN                
+                $objToken       = new Token();
+                $token          = $objToken->tokenGen();                                                           
+                
+                $objRet         = new \stdClass();
 
-                //Retorno da geração do Token
-                $erro   = $rs->erro;
-                $msg    = $rs->msg;
+                $objRet->erro      = 7;
+                $objRet->msg       = "Token inválido!";
+                $xmlToken          = '';
 
-                if($rs->status){
-                    $dados  = "<dados>";
-                    $dados .= "<token>".$rs->token."</token>";
-                    $dados .= "</dados>";
+                if (strlen($token) == 40) {
+                    //Token gerado com sucesso.
+                                        
+                    $objServerModel = new ServerModel();                    
+                    
+                    //Grava o novo TOKEN no banco de dados
+                    if(!$objServerModel->salvarTokenCliente($idCliente, $login, $token)){
+                        throw new Exception("Falha ao inserir novo Token");
+                    }                    
+                    $objRet->erro   = 0;
+                    $objRet->msg    = 'Token gerado com sucesso.';                    
+
+                    $xmlToken       .= "<dados>";
+                    $xmlToken       .= "<token>".$token."</token>";
+                    $xmlToken       .= "</dados>";
                 }
                 
                 $ret = "<root>";
                 $ret .= "<status>";
-                $ret .= "<erro>{$erro}</erro>";
-                $ret .= "<msg>{$msg}</msg>";
+                $ret .= "<erro>{$objRet->erro}</erro>";
+                $ret .= "<msg>{$objRet->msg}</msg>";
                 $ret .= "</status>";
-                $ret .= $dados;
+                $ret .= $xmlToken;
                 $ret .= "</root>";
                 
                 return $ret;

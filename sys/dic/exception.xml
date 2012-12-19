@@ -110,5 +110,24 @@
             <msg id='ERR_MASK'>A máscara informada possui caracteres inválidos. Utilize apenas 'L' para letras e 'N' para números.</msg> 
             <msg id='MASK_IS_EMPTY'>Impossível gerar uma senha. Um parâmetro obrigatório não foi informado.</msg>               
         </newPassword>
-    </Password>    
+    </Password>  
+    <WsClient>
+        <loadParams>
+            <msg id='ERR_DADOS_CONFIG'>
+                Os dados de acesso ao webservice não foram informados. 
+                É necessário definir valores para $webserviceAlias e $wsInterface no método init(). 
+            </msg>
+            <msg id='ERR_LOAD_XML'>
+                O arquivo XML {FILE} foi localizado. Porém o objeto XML esperado não foi criado corretamente.
+            </msg>
+            <msg id='ERR_INFO_AUTH_WS'>
+                As configurações contidas em {FILE_XML} para o webservice {WS} estão incompletas ou são inválidas.
+                Informe corretamente os valores para as tags host, user e passwd.
+            </msg>
+        </loadParams>
+        <setSoapClient>
+            <msg id='ERR_OPTIONS_SOAP_CLIENT'>Impossível inicializar um serviço SoapClient. O parâmetro esperado é nulo ou está incorreto.</msg>
+            <msg id='ERR_CREATE_SOAP_CLIENT'>Falha ao inicializar o serviço SoapClient: {ERR_SERVER}</msg>
+        </setSoapClient>
+    </WsClient>
 </root>

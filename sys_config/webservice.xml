@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <server id='superpro'>
+        <host>http://www.interbits.provisorio.ws/interbits/api/</host>
+        <user>marcelo</user>
+        <passwd>teste</passwd>
+    </server>    
+</root>
