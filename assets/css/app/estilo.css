@@ -226,6 +226,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	Novas classes (Foram criadas pra o site)
 -----------------------------------*/
 
+#titulo_depoimento{
+    margin-left: 20px;
+}
+
+
+
 .lembrar_senha{
     font-size: 12px;
 }
