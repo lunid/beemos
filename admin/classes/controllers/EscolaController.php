@@ -264,7 +264,7 @@
         }
         
         /**
-         * Altera status de bloquio de um usuário vindo do grid
+         * Exclui um usuário da escola
          */
         public function actionExcluirUsuario(){
             try{
@@ -866,14 +866,14 @@
                 if(!$rs->status){
                     $objCb->addOption(0, $rs->msg);
                 }else{
-                    $objCb->addOption(0, "Selecione um Cargo/Função");
-                    foreach($rs->funcoes as $funcao){
-                        $objCb->addOption($funcao->ID_AUTH_FUNCAO, utf8_decode($funcao->FUNCAO));
+                    $objCb->addOption(0, "Selecione um Perfil");
+                    foreach($rs->perfis as $perfil){
+                        $objCb->addOption($perfil->ID_PERFIL, $perfil->DESCRICAO);
                     }
                 }
                 
                 //Envia HTML de Combo para View
-                $objViewPart->CB_FUNCOES = $objCb->render();
+                $objViewPart->CB_PERFIS = $objCb->render();
                 
                 //Template
                 $tpl                = $this->mkView();
@@ -909,39 +909,39 @@
                 $search = Request::get('_search'); 
                 if($search == true){
                     //Filtro Nome
-                    $NOME_PRINCIPAL = Request::get('NOME_PRINCIPAL');
-                    if($NOME_PRINCIPAL != ''){
-                        $where = " AND C.NOME_PRINCIPAL LIKE '%" . $NOME_PRINCIPAL . "%'";  
+                    $NOME = Request::get('NOME');
+                    if($NOME != ''){
+                        $where = " AND U.NOME LIKE '%" . $NOME . "%'";  
                     }
                     
-                    //Filtro Função
-                    $FUNCAO = Request::get('FUNCAO');
-                    if($FUNCAO != ''){
-                        $where = " AND F.FUNCAO LIKE '%" . $FUNCAO . "%'";  
+                    //Filtro Perfil
+                    $PERFIL = Request::get('PERFIL');
+                    if($PERFIL != ''){
+                        $where = " AND P.DESCRICAO LIKE '%" . $PERFIL . "%'";  
                     }
                     
                     //Filtro E-mail
                     $EMAIL = Request::get('EMAIL');
                     if($EMAIL != ''){
-                        $where = " AND C.EMAIL LIKE '%" . $EMAIL . "%'";  
+                        $where = " AND U.EMAIL LIKE '%" . $EMAIL . "%'";  
                     }
                     
                     //Filtro Login
                     $LOGIN = Request::get('LOGIN');
                     if($LOGIN != ''){
-                        $where = " AND C.LOGIN LIKE '%" . $LOGIN . "%'";  
+                        $where = " AND U.LOGIN LIKE '%" . $LOGIN . "%'";  
                     }
                     
-                    //Filtro de Bloqueados
-                    $BLOQ = Request::get('BLOQ');
-                    if((int)$BLOQ > 0){
-                        $where = " AND C.BLOQ = " . ((int)$BLOQ == 1 ? 1 : 0) . "";  
+                    //Filtro Bloqueio
+                    $BLOQ = Request::get('BLOQ', 'NUMBER');
+                    if($BLOQ > 0){
+                        $where = " AND U.BLOQ = " . ($BLOQ == 1 ? 0 : 1);  
                     }
                     
-                    //Filtro de Data
+                    //Filtro Bloqueio
                     $DATA_REGISTRO = Request::get('DATA_REGISTRO');
-                    if($DATA_REGISTRO != ''){
-                        $where = " AND DATE(C.DATA_REGISTRO) = '" . (Date::formatDate($DATA_REGISTRO, 'AAAA-MM-DD')) . "'";  
+                    if($DATA_REGISTRO > 0){
+                        $where = " AND DATE(U.DATA_REGISTRO) = '" . (Date::formatDate($DATA_REGISTRO, 'AAAA-MM-DD')) . "'";  
                     }
                 }
                 
@@ -981,19 +981,17 @@
 
                     $i=0;
                     foreach($rs->usuarios as $row) {
-                        $html_check = "<input type='checkbox' value='{$row['ID_CLIENTE']}' class='checkGrid' />";
-                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_CLIENTE']}, 0)'>Desbloquear</a>";
+                        $html_bloq  = (int)$row['BLOQ'] == 0 ? "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_USUARIO']}, 1)'>Bloquear</a>" : "<a href='javascript:void(0);' onclick='javascript:bloquearUsuario({$row['ID_USUARIO']}, 0)'>Desbloquear</a>";
                         
-                        $ret->rows[$i]['id']   = $row['ID_CLIENTE'];
+                        $ret->rows[$i]['id']   = $row['ID_USUARIO'];
                         $ret->rows[$i]['cell'] = array(
-                            $html_check,
-                            utf8_decode($row['NOME_PRINCIPAL']),
-                            utf8_decode($row['FUNCAO']),
+                            $row['ID_USUARIO'],
+                            $row['NOME'],
+                            $row['DESCRICAO'],
                             $row['EMAIL'],
-                            utf8_decode($row['LOGIN']),
-                            $html_bloq,
+                            $row['LOGIN'],
                             Date::formatDate($row['DATA_REGISTRO']),
-                            '<span class="icon gray" data-icon="m"></span>'
+                            $html_bloq
                         );
                         $i++;
                     }
@@ -1008,6 +1006,133 @@
                 $ret                    = new stdClass();
                 $ret->rows[0]['id']     = 0;
                 $ret->rows[0]['cell']   = array('Erro: ' . $e->getMessage() . " <br /> Arquivo: " . $e->getFile() . " <br /> Linha: " . $e->getLine());
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Salva um novo usuário de acesso da escola e devolve resposta em jSon
+         */
+        public function actionSalvarUsuarioAcesso(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar usuário de acesso!";
+                
+                //Dados para execução
+                $arrDados = array(
+                                "NOME"      => Request::post("NOME"),
+                                "EMAIL"     => Request::post("EMAIL"),
+                                "LOGIN"     => Request::post("LOGIN"),
+                                "TELEFONE"  => Request::post("TELEFONE"),
+                                "ID_PERFIL" => Request::post("SEL_ID_PERFIL", "NUMBER"),
+                            );
+                
+                //Verificação de senha
+                $SENHA      = Request::post("SENHA");
+                $C_SENHA    = Request::post("C_SENHA");
+                
+                if($SENHA != ""){
+                    if($SENHA != $C_SENHA){
+                        $ret->msg = "Os campos Senha e Confirmar Senha devem ser igauis!";
+                        echo json_encode($ret);
+                        die;
+                    }else{
+                        $arrDados['SENHA'] = md5($SENHA);
+                    }
+                }
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->salvarUsuarioAcesso(26436, $arrDados, Request::post("ID_USUARIO", "NUMBER"));
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Carrega dados de um usário e retorna jSon
+         */
+        public function actionCarregarDadosUsuarioAcesso(){
+            try{
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar dados do Usuário!";
+                
+                //Model de Escola
+                $mdEscola = new EscolaModel();
+                
+                //Carrega dados do Usuário
+                $ret = $mdEscola->carregarDadosUsuarioAcesso(26436, Request::post("idUsuario", "NUMBER"));
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Altera status de bloqueio de um usuário de acesso vindo do grid
+         */
+        public function actionBloquearUsuarioAcesso(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao alterar bloqueio do usuário!";
+                
+                //Dados enviados
+                $idUsuario  = Request::post("idUsuario");
+                $status     = Request::post("status", "NUMBER");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->alterarBloqueioUsuarioAcesso(26436, $idUsuario, $status);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
+                
+                echo json_encode($ret);
+            }
+        }
+        
+        /**
+         * Exclui um usuário de acesso da escola
+         */
+        public function actionExcluirUsuarioAcesso(){
+            try{
+                //Objeto de retorno
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir usuário!";
+                
+                //Dados enviados
+                $idUsuario  = Request::post("idUsuario");
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $ret        = $mdEscola->excluirUsuarioAcesso(26436, $idUsuario);
+                
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret            = new stdClass();
+                $ret->status    = false;
+                $ret->msg       = $e->getMessage();
                 
                 echo json_encode($ret);
             }

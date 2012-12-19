@@ -5,7 +5,32 @@
     use \common\db_tables as TB;
     
     class AdmUsuariosModel extends Model{
-        public function listarUsuariosMatriz($idMatriz, $where = '', $arrPg = null){
+        /**
+         * Carrega os usuários de uma determinada escola 
+         * 
+         * @param int $idMatriz ID da Escola(Cliente)
+         * @param string $where Cláusula WHERE do SQL. Ex: BLOQ = 1
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->usuarios  - Armazena o array de usuários encontrados no Banco <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function carregarUsuariosEscola($idMatriz, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno
                 $ret            = new \stdClass();
@@ -14,39 +39,7 @@
                 
                 //Table SPRO_CLIENTE
                 $tbAdmUser = new TB\AdmUsuario();
-                
-                //Paginação e Ordenação
-                $order = "";
-                $limit = "";                
-                if($arrPg != null){
-                    //Monta ordenação
-                    if(isset($arrPg['campoOrdenacao']) && isset($arrPg['tipoOrdenacao'])){
-                        $order = $arrPg['campoOrdenacao'] . " " . $arrPg['tipoOrdenacao'];
-                    }
-                    
-                    //Monta paginação
-                    if(isset($arrPg['inicio']) && isset($arrPg['limite'])){
-                        $tbAdmUser->setLimit($arrPg['inicio'], $arrPg['limite']);
-                    }
-                }else{
-                    $order = " ORDER BY NOME ";
-                }
-                
-                //Monta order no SQL               
-                $tbAdmUser->setOrderBy($order);
-
-                $rs = $tbAdmUser->findAll("ID_MATRIZ = {$idMatriz} {$where}");
-                
-                if($rs->count() > 0){
-                    $ret->status    = true;
-                    $ret->msg       = "Usuários listados com sucesso!";
-                    $ret->usuarios  = $rs->getRs();
-                }else{
-                    $ret->msg = "Nenhum usuário encontrado!";
-                }
-                
-                //Retorno
-                return $ret;
+                return $tbAdmUser->carregarUsuariosEscola($idMatriz, $where, $arrPg);
             }catch(Exception $e){
                 throw $e;
             }
