@@ -436,11 +436,16 @@ class Header {
      * @return boolean
      */
     private function verifRecriarArquivo($url){
+        $out = FALSE;
         if ($this->forceNewIncMin){ 
             $pathFile = \Url::relativeUrl($url);
-            if (file_exists($pathFile)) return unlink($pathFile);             
+            if (file_exists($pathFile)) {
+                @chmod($pathFile, 0777);
+                $out = @unlink($pathFile);                             
+                if (!$out) echo "Impossível excluir {$pathFile}. Acesso negado.<br>";
+            }
         }
-        return FALSE;
+        return $out;
     }
     
     private function showErr($msg,$e,$die=TRUE){

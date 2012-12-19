@@ -848,6 +848,33 @@
                 //View do Grid de Escolas
                 $objViewPart = $this->mkViewPart('admin/escola_acessos');
                 
+                //Atributos para combo
+                $objAttr                = new stdClass();
+                $objAttr->id            = "SEL_ID_PERFIL";
+                $objAttr->name          = "SEL_ID_PERFIL";
+                $objAttr->cls           = "required";
+                $objAttr->field_name    = "Perfil";
+                
+                //Model de Escola
+                $mdEscola   = new EscolaModel();
+                $rs         = $mdEscola->carregarPerfisAcesso();
+                
+                //Inicia Combo de Perfis com parâmetros
+                $objCb = new Combobox($objAttr);
+                
+                //Verifica retorno de Select
+                if(!$rs->status){
+                    $objCb->addOption(0, $rs->msg);
+                }else{
+                    $objCb->addOption(0, "Selecione um Cargo/Função");
+                    foreach($rs->funcoes as $funcao){
+                        $objCb->addOption($funcao->ID_AUTH_FUNCAO, utf8_decode($funcao->FUNCAO));
+                    }
+                }
+                
+                //Envia HTML de Combo para View
+                $objViewPart->CB_FUNCOES = $objCb->render();
+                
                 //Template
                 $tpl                = $this->mkView();
                 $tpl->setLayout($objViewPart);

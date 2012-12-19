@@ -39,7 +39,8 @@
             $this->checkUrlFile($urlTpl);                       
             
             $htmlTpl            = file_get_contents($urlTpl);
-            $objParams->BODY    = utf8_encode(file_get_contents($urlFile));            
+            $objParams->BODY    = utf8_encode(file_get_contents($urlFile)); 
+            
             if (is_object($objParams)) {
                 foreach($objParams as $key=>$value){
                     $htmlTpl = str_replace('{'.$key.'}',$value,$htmlTpl);                

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Biblioteca autoajax.
+        Site: http://www.steve.org.uk/jquery/autoajax/
+    </descricao>
+    <config>
+        <include id='js'>autoajax,custom_autoajax</include>
+    </config>
+</root>

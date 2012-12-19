@@ -12,7 +12,7 @@
         */
         function actionIndex(){
             try{                     
-                //$this->cacheOff(__METHOD__);
+                $this->cacheOn(__METHOD__);
                 
                 //Home
                 $objViewPart = new ViewPart('home');
