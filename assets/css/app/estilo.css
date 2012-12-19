@@ -443,10 +443,16 @@ table {
     margin: auto;
     text-align: center;
     width: 100%;
+    border: 0px solid #666666;
+    
 }	
 
 
 table.striped tbody th {
     text-align: left;
 }
+  
 
+.ac-container {
+    width: 90%;
+}
