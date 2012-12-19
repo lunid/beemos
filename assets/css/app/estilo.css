@@ -226,6 +226,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	Novas classes (Foram criadas pra o site)
 -----------------------------------*/
 
+.lembrar_senha{
+    font-size: 12px;
+}
+
+
+.lembrar_senha a:hover{
+    color: #1D6DC1;
+}
+
+#botao_logar_home{
+    float: left;
+    height: 20px;
+    margin: 25px 0px 0px 10px;
+    width: 77px;
+}
+
+
 #redes_sociais_rodape{
     margin-top: -22px;
 }
