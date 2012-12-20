@@ -250,7 +250,7 @@ body{
 
 /* fim começo grid ================================================== */
 
-#box {
+.box {
     width:769px;
     height:411px;
     margin:auto auto auto -17px;
@@ -452,4 +452,8 @@ body{
     border: 1px solid #D3D3D3;
     color: #555555;
     font-weight: normal;
+}
+
+tr.ui-search-toolbar input {
+    margin: 0px 0 0;
 }
