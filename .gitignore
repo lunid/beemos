@@ -1,7 +1,8 @@
 /nbproject/private/
 
-
 /sys/classes/db/ConnConfig.php
+
+/assets/js/admin/_*
 
 /tmp/
 
