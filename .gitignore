@@ -3,6 +3,7 @@
 /sys/classes/db/ConnConfig.php
 
 /assets/js/*/_*
+/assets/css/*/_*
 
 /tmp/
 
