@@ -1,4 +1,10 @@
 <?php
+    $path   = ini_get('session.save_path');
+    $chmod  = substr(sprintf('%o', fileperms($path)), -4);
+    
+    echo $chmod;
+    echo "\n\n<br />";
+    die;
     session_start();
     error_reporting(-1);
     
