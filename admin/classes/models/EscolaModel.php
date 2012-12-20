@@ -1241,5 +1241,52 @@
                 throw $e;
             }
         }
+        
+        /**
+         * Lista os Pedidos Financeiros de uma Escola
+         * 
+         * @param int $idCliente ID da Escola (Cliente)
+         * @param string $status Filtro de Status dos Pedidos - PAGO / AVENCER / PENDENTE
+         * @param string $where String com a cláusula WHERE. Ex: PARCELAS = 2
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->pedidos   - Array com pedidos encontrados                    <br />
+         * </code>
+         * @throws \api\classes\models\Exception
+         */
+        public function carregarPedidosEscola($idCliente, $status = '', $where = '', $arrPg = null){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao consultar dados financeiros da escola!";
+                
+                //Valida ID
+                if((int)$idCliente <= 0){
+                    $ret->msg = "ID da Escola não definido ou nulo!";
+                    return $ret;
+                }
+                
+                //Tabela de Pedidos
+                $tbPedidos = new TB\EcommPedido();
+                
+                return $tbPedidos->carregarPedidosEscola($idCliente, $status, $where, $arrPg);
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
     }
 ?>

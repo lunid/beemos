@@ -1166,5 +1166,149 @@
                 die;
             }
         }
+        
+        /**
+         * Lista os pedidos financeiros de uma escola para um jqgrid
+         * Devolução em jSon
+         */
+        public function actionGridFinanceiro(){
+            try{
+                //Objeto de retorno
+                $ret = new stdClass();
+                
+                //Consulta dados do usuários
+                $mdEscola = new EscolaModel();
+                
+                //Verifica filtros
+                $where  = "";
+                $status = "";
+                $search = Request::get('_search'); 
+                if($search == true){
+                    //Filtro Pedido Pai
+                    $NUM_PEDIDO_PAI = Request::get('NUM_PEDIDO_PAI', 'NUMBER');
+                    if($NUM_PEDIDO_PAI > 0){
+                        $where = " AND P.NUM_PEDIDO_PAI = " . $NUM_PEDIDO_PAI;  
+                    }
+                    
+                    //Filtro Pedido
+                    $NUM_PEDIDO = Request::get('NUM_PEDIDO', 'NUMBER');
+                    if($NUM_PEDIDO > 0){
+                        $where = " AND P.NUM_PEDIDO = " . $NUM_PEDIDO;  
+                    }
+                    
+                    //Filtro Data de Registro
+                    $DATA_REGISTRO = Request::get('DATA_REGISTRO');
+                    if($DATA_REGISTRO != ""){
+                        $where = " AND DATE(P.DATA_REGISTRO) = '" . (Date::formatDate($DATA_REGISTRO, 'AAAA-MM-DD')) . "'";  
+                    }
+                    
+                    //Filtro Parcelas
+                    $PARCELAS = Request::get('PARCELAS', 'NUMBER');
+                    if($PARCELAS > 0){
+                        $where = " AND P.PARCELAS = " . $PARCELAS;  
+                    }
+                    
+                    //Filtro Valor de Parcela
+                    $VALOR_PARCELA = (double)str_replace(",", ".", str_replace(".", "", Request::get('VALOR_PARCELA')));
+                    if($VALOR_PARCELA > 0){
+                        $where = " AND P.VALOR_PARCELA = " . $VALOR_PARCELA;  
+                    }
+                    
+                    //Filtro Data de Vencimento do Boleto
+                    $DATA_VENC_BOLETO = Request::get('DATA_VENC_BOLETO');
+                    if($DATA_VENC_BOLETO != ""){
+                        $where = " AND DATE(P.DATA_VENC_BOLETO) = '" . (Date::formatDate($DATA_VENC_BOLETO, 'AAAA-MM-DD')) . "'";  
+                    }
+                    
+                    //Filtro Data de Pagamento do Boleto
+                    $DATA_PGTO = Request::get('DATA_PGTO');
+                    if($DATA_PGTO != ""){
+                        $where = " AND DATE(P.DATA_PGTO) = '" . (Date::formatDate($DATA_PGTO, 'AAAA-MM-DD')) . "'";  
+                    }
+                    
+                    //Status
+                    $CB_STATUS = Request::get('STATUS', 'NUMBER');
+                    switch ($CB_STATUS){
+                        case 1:
+                            $status = "AVENCER";
+                            break;
+                        case 2:
+                            $status = "PAGO";
+                            break;
+                        case 3:
+                            $status = "PENDENTE";
+                            break;
+                        default:
+                            $status = "";
+                            break;
+                    }
+                }
+                
+                //Carrega usuários da escola
+                $rs = $mdEscola->carregarPedidosEscola(26436, $status, $where);
+                
+                //Verifica se foram carregadas as listas
+                if($rs->status){
+                    $page           = Request::get('page', 'NUMBER'); 
+                    $limit          = Request::get('rows', 'NUMBER'); 
+                    $orderField     = Request::get('sidx'); 
+                    $orderType      = Request::get('sord'); 
+                            
+                    if(!$orderField) $orderField = 1;
+
+                    //Total de registros
+                    $count          = sizeof($rs->pedidos);
+                    $total_pages    = ($count > 0 && $limit > 0) ? ceil($count/$limit) : 0;
+                    $page           = $page > $total_pages ? $total_pages : $page;
+                    $start          = $limit * $page - $limit;
+                    
+                    //Efetua select com ordenação e paginação
+                    $rs = $mdEscola->carregarPedidosEscola(
+                        26436,
+                        $status,
+                        $where,
+                        array(
+                            "campoOrdenacao"    => $orderField, 
+                            "tipoOrdenacao"     => $orderType, 
+                            "inicio"            => $start, 
+                            "limite"            => $limit
+                        )
+                    );
+                    
+                    $ret->page      = $page;
+                    $ret->total     = $total_pages;
+                    $ret->records   = $count;
+
+                    $i=0;
+                    foreach($rs->pedidos as $row) {
+                        $html_gerar_boleto = "<input type='button' value='Gerar Boleto' />";
+                        $ret->rows[$i]['id']   = $row['ID_PEDIDO'];
+                        $ret->rows[$i]['cell'] = array(
+                            $row['NUM_PEDIDO_PAI'],
+                            $row['NUM_PEDIDO'],
+                            Date::formatDate($row['DATA_REGISTRO']),
+                            $row['PARCELAS'],
+                            number_format($row['VALOR_PARCELA'], 2, ",", "."),
+                            Date::formatDate($row['DATA_VENC_BOLETO']),
+                            trim($row['DATA_PGTO']) != "" && trim($row['DATA_PGTO']) != "0000-00-00" ? Date::formatDate($row['DATA_PGTO']) : $html_gerar_boleto,
+                            $row['STATUS']
+                        );
+                        $i++;
+                    }
+                }else{
+                    $ret                    = new stdClass();
+                    $ret->rows[0]['id']     = 0;
+                    $ret->rows[0]['cell']   = array($rs->msg);
+                }
+
+                echo json_encode($ret);
+            }catch(Exception $e){
+                $ret                    = new stdClass();
+                $ret->rows[0]['id']     = 0;
+                $ret->rows[0]['cell']   = array('Erro: ' . $e->getMessage() . " <br /> Arquivo: " . $e->getFile() . " <br /> Linha: " . $e->getLine());
+                
+                echo json_encode($ret);
+            }
+        }
     }
 ?>
