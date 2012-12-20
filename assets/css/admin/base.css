@@ -424,17 +424,13 @@ body{
 
 .msg_error{
     color: #FF0000;
+    float: left;
 }
-
-
 
 .input2{
     width: 100%;
 }
 
-.input2 input{
-    width: 100%;
-}
 
 .bt_filtrar{
    	float: left;

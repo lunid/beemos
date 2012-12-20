@@ -11,44 +11,40 @@
             <!-- Erros de validação no server --> 
 
             <div class="col_12">
-                <div class="col_4">
-                    <h5>Nome:</h5>
-                    <div class="espaco"></div>
-                    <h5>Perfil:</h5>
-                    <div class="espaco"></div>
-                    <h5>E-mail:</h5>
-                    <div class="espaco"></div>
-                    <h5>Login:</h5>
-                    <div class="espaco"></div>
-                    <h5>Telefone:</h5>
-                    <div class="espaco"></div>
-                    <h5>Senha:</h5>
-                    <div class="espaco"></div>
-                    <h5>Confirmar Senha:</h5>
-                    <div class="espaco"></div>
-                </div>
-
-                <div class="col_7">
-                    <div class="input2">
-                    <input type="text" id="NOME" name="NOME" maxlength="100" class="required" field_name="Nome" />
-                    <div class="espaco"></div>
-                    {CB_PERFIS}
-                    <div class="espaco"></div>
-                    <input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email" field_name="E-mail" />
-                    <div class="espaco"></div>
-                    <input type="text" id="LOGIN" name="LOGIN" maxlength="15" class="required" field_name="Login" />
-                    <div class="espaco"></div>
-                    <input type="text" id="TELEFONE" name="TELEFONE" maxlength="14" />
-                    <div class="espaco"></div>
-                    
-                    <div id="senhaMsg" style="color:#FF0000;font-weight:bold;display:none;">Só preencha o campo senha se você deseja alterá-la</div>
-                    
-                    <input type="password" id="SENHA" name="SENHA" maxlength="10" class="required" field_name="Senha" />
-                    <div class="espaco"></div>
-                    <input type="password" id="C_SENHA" name="C_SENHA" maxlength="10" class="required" field_name="Confirmar Senha" />
-                    <div class="espaco"></div>
-
-                    <div class="bt_alterar_dados">
+                
+<table width="626" border="0">
+    <tr>
+    <td width="200"><h5>Nome:</h5></td>
+    <td><input type="text" id="NOME" name="NOME" maxlength="100" class="required" field_name="Nome" /></td>
+    </tr>
+    <tr>
+    <td><h5>Perfil:</h5></td>
+    <td>{CB_PERFIS}</td>
+    </tr>
+    <tr>
+    <td><h5>E-mail:</h5></td>
+    <td><input type="text" id="EMAIL" name="EMAIL" maxlength="25" class="required email" field_name="E-mail" /></td>
+    </tr>
+    <tr>
+    <td><h5>Login:</h5></td>
+    <td><input type="text" id="LOGIN" name="LOGIN" maxlength="15" class="required" field_name="Login" /></td>
+    </tr>
+    <tr>
+    <td><h5>Telefone:</h5></td>
+    <td><input type="text" id="TELEFONE" name="TELEFONE" maxlength="14" /></td>
+    </tr>
+    <tr>
+        <td><h5>Senha:</h5></td>
+    <td><div id="senhaMsg" style="color:#FF0000;font-weight:bold;display:none;">Só preencha o campo senha se você deseja alterá-la</div>
+    <input type="password" id="SENHA" name="SENHA" maxlength="10" class="required" field_name="Senha" /></td>
+    </tr>
+    <tr>
+        <td><h5>Confirmar Senha:</h5></td>
+    <td><input type="password" id="C_SENHA" name="C_SENHA" maxlength="10" class="required" field_name="Confirmar Senha" /></td>
+    </tr>   
+</table>      
+                <div class="col_12"> 
+                   <div class="bt_alterar_dados">
                         <input type="hidden" id="ID_USUARIO" name="ID_USUARIO" value="0" />
                         <a class="fm-button ui-state-default ui-corner-all fm-button-icon-left" id="sData" href="javascript:void(0)" onclick="javascript:$('#form_acesso').submit();">
                             Salvar<span class="ui-icon ui-icon-disk"></span>
@@ -60,18 +56,17 @@
                             <strong style="color:red;">Excluir</strong><span class="ui-icon ui-icon-closethick"></span>
                         </a>
                     </div>
-
-                    <div class="espaco"></div>
                 </div>
                 </div>
             </div>
         </form>
     </div>
-</div>
+
 
 <div class="col_12">
     <table id="grid_acessos" style="width:100%;"></table>
     <div id="pg_acessos"></div>
 </div>
-</div>    
+</div> 
+</div>
 <!-- ===================================== fim conteúdo pagina  ===================================== -->	 
