@@ -1137,5 +1137,34 @@
                 echo json_encode($ret);
             }
         }
+        
+        /**
+         * Inicializa a página Financeiro de Escolas
+         */
+        public function actionFinanceiro(){
+            try{
+                //View do Grid de Escolas
+                $objViewPart = $this->mkViewPart('admin/escola_financeiro');
+                
+                //Template
+                $tpl                = $this->mkView();
+                $tpl->setLayout($objViewPart);
+                $tpl->TITLE         = 'ADM | SuperPro | Área da Escola | Financeiro';
+                $tpl->SUBTITLE      = 'Escola';
+                
+                //Instância de JS
+                $tpl->setJs('admin/escola_financeiro');
+                $tpl->forceCssJsMinifyOn();
+                
+                $tpl->render('escola_financeiro');
+            }catch(Exception $e){
+                echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
+                echo "Erro: " . $e->getMessage() . "<br />\n";
+                echo "Arquivo:  " . $e->getFile() . "<br />\n";
+                echo "Linha:  " . $e->getLine() . "<br />\n";
+                echo "<br />\n";
+                die;
+            }
+        }
     }
 ?>
