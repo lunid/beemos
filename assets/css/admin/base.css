@@ -1,6 +1,6 @@
 body{
-    width:auto;
-    height:auto;
+    width:99.2%;
+    height:autoo;
     background-image:url("../../images/admin/bg_lateral.jpg");
     background-position:top left;
     background-repeat:repeat-y;
@@ -207,6 +207,7 @@ body{
 
 #gbox_grid_caixa_postal{
     width: 600px;
+    margin-top:15px;
 }
 
 #gs_STATUS{
@@ -317,7 +318,7 @@ body{
 }
 
 .botão_ok_enviar{
-    width: 50px;
+    width: auto;
     height: 20px;
     float: left;
 }

@@ -3,6 +3,11 @@
     Caixa postal
 </div>
 <!-- fim titulo -->
+
+
+
+
+
 <!-- Modal Escrever -->
 <div id="modal_escrever" style="display:none;">
     <form id="form_enviar_msg" name="form_enviar_msg" action="caixapostal/enviarMensagem" onsubmit="return formEnviarMsg.validate(this, true, 'validaEnvio');">
@@ -43,7 +48,7 @@
                 </td>
             </tr>
         </table>
-        <div class="col_9"></div>
+        <div class="col_8"></div>
         <div class="col_2"><button class="medium"><span class="icon medium" data-icon="T" value="Enviar"></span>Limpar</button></div>
         <div class="col_2"><button class="medium"><span class="icon medium" data-icon="c" value="Enviar"></span>Enviar</button></div>
     </form>
@@ -84,6 +89,18 @@
 
 <!-- conteudo box -->
 <div id="box">
+    
+    
+       <div id="nav">
+    <ul class="button-bar">
+        <li><a href="javascript:void(0);"><span class="icon" data-icon="7"></span> Escrever</a></li>
+        <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="("></span> Entrada</a></li>
+        <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="A"></span> Enviados</a></li>
+    </ul>
+</div>
+    
+    
+    
     <div class="col_3">
         <!-- ========= botoes navegacao caixa de e-mail  ================ -->
         <a href="javascript:void(0);" onclick="javascript:escrever();">
@@ -112,6 +129,7 @@
                     <span class="icon small" data-icon="x"></span> Apagar selecionadas
                 </button>
             </div>
+            <div class="espaco"></div>
             <!-- ========= botoes superior caixa de e-mail  ================ -->
             
             <table id="grid_caixa_postal" style="width:100%;"></table>
