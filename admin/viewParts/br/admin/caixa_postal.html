@@ -17,16 +17,19 @@
         <table width="100%" border="0">
             <tr>
                 <td width="10%" nowrap="nowrap" valign="top">
-                    <a href="javascript:void(0);" onclick="javascript:listarPara();">
-                        Para:
-                    </a>
+                    
+                    <ul class="button-bar">
+                <li><a href="javascript:void(0);" onclick="javascript:listarPara();">Para:</a></li>
+                    </ul>
                 </td>
                 <td width="90%" nowrap="nowrap" valign="top" >
-                    <select id="escrever_para" name="escrever_para" class="fancy " field_name="Para">
-                        <option value="1">Destinatário:</option>
-                        <option value="2">Penha de França</option>
-                        <option value="3">Madre Teresa</option>                        
-                    </select>
+
+                <select id="select3" multiple="multiple" class="fancy" style="width:259px;">
+                    <option value="0">-- Choose --</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                </select>
                 </td>
             </tr>
             <tr>
@@ -88,12 +91,12 @@
     
     <!-- ========= botoes navegacao caixa de e-mail  ================ -->
        <div id="nav_e-mail">
-    <ul class="button-bar">
-        <li><a href="javascript:void(0);" onclick="javascript:escrever();"><span class="icon" data-icon="7"></span> Escrever</a></li>
-        <li><a  onclick="javascript:exibeCaixa('recebidas');"><span class="icon" data-icon="("></span> Entrada</a></li>
-        <li><a  onclick="javascript:exibeCaixa('enviadas');"><span class="icon" data-icon="A"></span> Enviados</a></li>
-    </ul>
-</div>
+            <ul class="button-bar">
+                <li><a href="javascript:void(0);" onclick="javascript:escrever();"><span class="icon" data-icon="7"></span> Escrever</a></li>
+                <li><a  onclick="javascript:exibeCaixa('recebidas');"><span class="icon" data-icon="("></span> Entrada</a></li>
+                <li><a  onclick="javascript:exibeCaixa('enviadas');"><span class="icon" data-icon="A"></span> Enviados</a></li>
+            </ul>
+        </div>
     <!-- ========= fim  botoes navegacao caixa de e-mail  ================ -->
     
     
