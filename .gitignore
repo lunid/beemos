@@ -2,7 +2,7 @@
 
 /sys/classes/db/ConnConfig.php
 
-/assets/js/admin/_*
+/assets/js/*/_*
 
 /tmp/
 
