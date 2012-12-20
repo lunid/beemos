@@ -1,6 +1,7 @@
 body{
     width:99.2%;
     height:autoo;
+    font: 0.9em/150% 'Arimo',"Trebuchet MS",arial,verdana,sans-serif;
     background-image:url("../../images/admin/bg_lateral.jpg");
     background-position:top left;
     background-repeat:repeat-y;
@@ -84,7 +85,7 @@ body{
 
 .conteudo_abas {
     width:100%;
-    max-width: 756px;
+    max-width: 690px;
     height:100%;
     margin:auto;
     float:left;
@@ -137,6 +138,11 @@ body{
 
 .form_padrao input[type='text']{
     width: 98%;
+}
+
+input[type="text"], textarea, button, a.button, a, input[type="file"] {
+    font-size: 11px;
+    text-decoration: none;
 }
 
 .form_padrao .msg_error{
@@ -221,6 +227,7 @@ body{
     margin: 0;
     padding: 1px 9px 0 0;
     text-indent: 5px;
+    text-decoration: none;
     vertical-align: middle;
     width: 100%;
     height: 22px;
@@ -246,6 +253,7 @@ body{
     text-indent: 5px;
     vertical-align: middle;
     width: 100%;
+    text-decoration: none;
 }
 
 /* fim começo grid ================================================== */
@@ -314,8 +322,18 @@ body{
     text-align: center;
     top: 0;
     float: left;
-    margin-left: 31%;
+    margin-left: 15%;
 }
+
+#nav_e-mail {
+    left: 0;
+    position: relative;
+    text-align: center;
+    top: 0;
+    float: left;
+    margin-left: 30%;
+}
+
 
 .botão_ok_enviar{
     width: auto;
