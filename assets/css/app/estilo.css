@@ -315,9 +315,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 
 #youtube{
 	width:141px;
-	height:31px;
+	height:45px;
 	float:left;
-	margin: 10px 0 0 8px;
+	margin: 11px 0 0 8px;
 }
 
 .linha{
@@ -333,7 +333,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	height:2px;
 	border-top:1px solid #ccc;
 	float:left;
-	margin:14px 0px 14px 0px;
+	margin:18px 0px 18px 0px;
 }
 
 
