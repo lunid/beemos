@@ -69,24 +69,50 @@
 		if(!isset($_SESSION)) session_start();
 		$this->tokenSet();
 	}
-
+        
 	/**
-	 * Gera tokens. 
-         * Tecnica para gerar token de {@link http://www.playhack.net Seride}.
-	 * 
+	 * Cria um token
+	 *
 	 * @access private
 	 */
-	private function tokenGen() {
+	private function tokenSet() {
+		$this->token                        = $this->tokenGen(8);//Token com 8 caracteres.
+		$_SESSION["spackt_".$this->token]   = time();
+	}        
+
+	/**
+	 * Gera um token. 
+         * Técnica para gerar token de {@link http://www.playhack.net Seride}.
+	 * 
+         * @param $length 
+         * Se zero, retorna um token com 40 caracteres. 
+         * Se > 0 retorna uma string com o tamanho informado em $length.
+	 * 
+         * @return string
+	 */
+	function tokenGen($length=0) {
 		// Hashes a randomized UniqId.
-		$hash = sha1(uniqid(rand(), true));
-		
-                // Seleciona um número randômico entre 1 e 32 (40-8)
-		$n = rand(1, 32);
+                $uId    = uniqid(rand(), true);
+                $str    = $uId.date('dmYHis');
+		$hash   = sha1($str);
+                $tam    = strlen($hash);
+		$token  = $hash;
                 
-		// Gera o token retornando uma parte do hash com 8 caracteres, iniciando do número randômico $n                 
-		$token = substr($hash, $n, 8);
+                if ($length > 0 && $length < $tam) {
+                    //Retorna apenas uma string randômnica com tamanho $length.
+                    
+                    // Seleciona um número randômico entre 1 e 32 (40-8)                    
+                    $n = rand(1, 32);
+
+                    // Gera o token retornando uma parte do hash com 8 caracteres, iniciando do número randômico $n                 
+                    $token = substr($hash, $n, $length);
+                }
 		return $token;
 	}
+        
+        function getToken(){
+            return $this->token;
+        }
 
 	/**
 	 * Destrói um token.
@@ -106,16 +132,6 @@
 		foreach ($sessvars as $var) if(substr_compare($var,"spackt_",0,7)==0) $tokens[]=$var;
 		unset($tokens[array_search("spackt_".$this->token,$tokens)]);
 		foreach ($tokens as $token) unset($_SESSION[$token]);
-	}
-
-	/**
-	 * Cria um token
-	 *
-	 * @access private
-	 */
-	private function tokenSet() {
-		$this->token                        = $this->tokenGen();
-		$_SESSION["spackt_".$this->token]   = time();
 	}
 
 	/**
@@ -166,7 +182,7 @@
 		if($this->error==0) return true;
 		else return false;
 	}
-
+        
 	/**
 	 * Retorna um código de erro.
          * 

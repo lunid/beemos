@@ -16,6 +16,31 @@
         }                
         
         
+        /**
+         * Retorna o valor contido em um atributo do nó informado.
+         * 
+         * Exemplo para o arquivo XML abaixo:
+         * <root>
+         *      <config id='item1'>...</config>
+         *      <config id='item2'>...</config>
+         * </root>
+         * 
+         * <code>
+         *  $objXml = new Xml();
+         *  //Localiza os dados de uma tag <config> a partir de seu id:
+         *  foreach($nodesServer as $node){
+         *      $id = $objXml->getAttrib($node,'id');
+         *      if ($id == 'item2') {
+         *          echo 'Item2 localizado.';
+         *          break;
+         *      }         
+         *  }
+         * </code>
+         * 
+         * @param simplexml $nodes Nó XML a ser lido.
+         * @param string $attrib Nome do atributo a ser lido.
+         * @return string. 
+         */
         public static function getAttrib($nodes,$attrib){
            $value = '';           
            if (get_class($nodes) == 'SimpleXMLElement' && $nodes->attributes() !== NULL) {

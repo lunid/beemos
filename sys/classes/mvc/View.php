@@ -82,14 +82,14 @@
         
         /**
          * Retorna um template válido. Caso um arquivo de Template não tenha sido informado 
-         * um template padrão (sys_blank.html) é criado no módulo atual, pasta de templates.
+         * um template padrão (blank.html) é criado no módulo atual, pasta de templates.
          * 
          * @return string
          * @throws \Exception Caso ocorra erro ao tentar criar um template padrão. 
          */
         private function getTemplate(){
             $pathTpl        = $this->pathTpl;
-            $fileTplDefault = 'sys_blank.html';
+            $fileTplDefault = 'blank.html';
             
             if (strlen($pathTpl) == 0) {
                 //Um template não foi informado. Gera um arquivo template padrão.  

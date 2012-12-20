@@ -819,6 +819,22 @@
             }
         }
         
+        /**
+         * Efetua uma operação de crédito para escola, seja crédito ou débito
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idCliente ID do usuário que recebrá o crédito o estorno (Cliente)
+         * @param int $operacao 1 - Crédito / 2 - Estorno
+         * @param int $creditos Quantidade de créditos para operação
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * @throws Exception
+         */
         public function operacaoCredito($idMatriz, $idCliente, $operacao, $creditos){
             try{
                 //Objeto de retorno
@@ -876,6 +892,31 @@
             }
         }
         
+        /**
+         * Listas usuário de Acesso de uma escola - SPRO_ADM_USUARIO
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param string $where Cláusula where para sql. Ex: NOME LIKE '%Claudio%'
+         * @param array $arrPg Array com parâmetros para Ordenação e Paginação
+         * <code>
+         * array(
+         *   "campoOrdenacao"    => 'DATA_REGISTRO', 
+         *   "tipoOrdenacao"     => 'DESC', 
+         *   "inicio"            => 1, 
+         *   "limite"            => 10
+         * )
+         * </code>
+         *  
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->usuarios  - Array com usuários encontrados                    <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregarUsuariosAcesso($idMatriz, $where = '', $arrPg = null){
             try{
                 //Objeto de retorno
@@ -890,15 +931,28 @@
                 }
                 
                 //Model de usuários
-                $mdAdmUsuarios = new MD\AdmUsuariosModel();
+                $tbAdmUsuarios = new TB\AdmUsuario();
                 
                 //Consulta usuários da Escola
-                return $mdAdmUsuarios->listarUsuariosMatriz($idMatriz, $where, $arrPg);
+                return $tbAdmUsuarios->carregarUsuariosEscola($idMatriz, $where, $arrPg);
             }catch(Exception $e){
                 throw $e;
             }
         }
         
+        /**
+         * Carrega lista de Perfis de Acesso cadastrados no Banco - SPRO_ADM_PERFIL
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->perfis    - Array com perfis encontrados                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
         public function carregarPerfisAcesso(){
             try{
                 //Objeto de retorno
@@ -920,6 +974,269 @@
                 $ret->status    = true;
                 $ret->msg       = "Perfis listados com sucesso!";
                 $ret->perfis    = $rs->getRs();
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Salva um novo usuário de acesso da Escola Logada
+         * 
+         * @param int $idMatriz ID da Escola (cliente)
+         * @param array $arrDados Array com dados para cadastro
+         * <code>
+         * <br />
+         * $arrDados['NOME']  = 'Interbits Informática';  <br />
+         * $arrDados['EMAIL'] = 'intertis@sistema.com';   <br />
+         * </code>
+         * @param int $idUsuario ID do Usuário caso seja uma Alteração (UPDATE)
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * 
+         * @throws Exception
+         */
+        public function salvarUsuarioAcesso($idMatriz, $arrDados, $idUsuario = 0){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao salvar usuário de acesso!";
+                
+                //Tablea de Perfis
+                $tbAdmUsuario = new TB\AdmUsuario();
+                
+                //Validação
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID da Escola não definido ou nulo!";
+                    return $ret;
+                }
+                
+                //Carrega escola
+                $tbClienteEscola = new TB\Cliente($idMatriz);
+                
+                if($tbClienteEscola->ID_CLIENTE <= 0){
+                    $ret->msg = "Escola não encontrada!";
+                    return $ret;
+                }
+                
+                if(!isset($arrDados['EMAIL'])){
+                    $ret->msg = "E-mail não definido ou nulo!";
+                    return $ret;
+                }
+                
+                if(!isset($arrDados['LOGIN'])){
+                    $ret->msg = "Login não definido ou nulo!";
+                    return $ret;
+                }
+                
+                //Valida e-mail
+                $tbAdmUsuario->setLimit(1);
+                $rs = $tbAdmUsuario->findAll("ID_MATRIZ = {$idMatriz} AND EMAIL = '{$arrDados['EMAIL']}' " . ($idUsuario > 0 ? " AND ID_USUARIO != {$idUsuario} " : ""));
+                
+                if($rs->count() > 0){
+                    $ret->msg = "Esse e-mail já possui cadastro!";
+                    return $ret;
+                }
+                
+                //Valida login
+                $tbAdmUsuario->setLimit(1);
+                //Verifica PREFIXO da Escola
+                $arrDados['LOGIN']  = strtolower($tbClienteEscola->PREFIXO != "" ? $tbClienteEscola->PREFIXO . "_" . trim($arrDados['LOGIN']) : trim($arrDados['LOGIN']));
+                $rs                 = $tbAdmUsuario->findAll("LOGIN = '".$arrDados['LOGIN']."'");
+                
+                if($rs->count() > 0){
+                    $ret->msg = "Esse login já possui cadastro!";
+                    return $ret;
+                }
+                
+                //Monta dados para INSERT / UPDATE
+                foreach($arrDados as $campo => $valor){
+                    $tbAdmUsuario->$campo = $valor;
+                }
+                $tbAdmUsuario->ID_MATRIZ = $idMatriz;
+                
+                if($idUsuario > 0){
+                    $tbAdmUsuario->update(array("ID_USUARIO = %i AND ID_MATRIZ = %i", $idUsuario, $idMatriz));
+                }else{
+                    $tbAdmUsuario->DATA_REGISTRO = date("Y-m-d H:i:s");
+                    $tbAdmUsuario->save();
+                }
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Usuário de Acesso salvo com sucesso!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Carrega dados de um determinado usuário de acesso de uma Escola
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idUsuario ID do Usuário (Cliente)
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         *  array   $ret->usuario   - Objeto com os dados carregado do Usuário          <br />
+         * </code>
+         * @throws Exception
+         */
+        public function carregarDadosUsuarioAcesso($idMatriz, $idUsuario){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao carregar dados do Usuário!";
+                
+                //Table APRO_AUTH_FUNCAO
+                $tbCliente = new TB\AdmUsuario($idUsuario);
+                
+                //Validação
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID da Escola não definido ou nulo!";
+                    return $ret;
+                }
+                
+                //Carrega escola
+                $tbClienteEscola = new TB\Cliente($idMatriz);
+                
+                if($tbClienteEscola->ID_CLIENTE <= 0){
+                    $ret->msg = "Escola não encontrada!";
+                    return $ret;
+                }
+                
+                //Verifica retorno
+                if($tbCliente->ID_USUARIO <= 0){
+                    $ret->msg = "Nenhum Usuário encontrado!";
+                    return $ret;
+                }
+                
+                //Objeto para dados de retorno
+                $objUsuario                 = new \stdClass();
+                $objUsuario->ID_USUARIO     = $tbCliente->ID_USUARIO;
+                $objUsuario->NOME           = $tbCliente->NOME;
+                $objUsuario->EMAIL          = $tbCliente->EMAIL;
+                $objUsuario->LOGIN          = $tbClienteEscola->PREFIXO != "" ? str_replace($tbClienteEscola->PREFIXO . "_", "", $tbCliente->LOGIN) : $tbCliente->LOGIN;
+                $objUsuario->ID_PERFIL      = $tbCliente->ID_PERFIL;
+                $objUsuario->TELEFONE       = $tbCliente->TELEFONE != "" ? $tbCliente->TELEFONE : "";
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Usuário carregado com sucesso!";
+                $ret->usuario   = $objUsuario;
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Bloqueia ou Desbloqueia um usuário de acesso da escola
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idUsuario ID do Usuário 
+         * @param int $status 0 - Desbloqueado 1 - Bloqueado
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * @throws Exception
+         */
+        public function alterarBloqueioUsuarioAcesso($idMatriz, $idUsuario, $status){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao alterar bloqueio do usuário!";
+                
+                //Validações
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID Matriz inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if((int)$idUsuario <= 0){
+                    $ret->msg = "ID Usuário inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Tabela de clientes
+                $tbAdmUsuario = new TB\AdmUsuario($idUsuario);
+                
+                //Executa UPDATE
+                $tbAdmUsuario->BLOQ = (int)$status;
+                $tbAdmUsuario->update(array("ID_MATRIZ = %i AND ID_USUARIO = %i", $idMatriz, $idUsuario));
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Bloqueio atualizado com sucesso!";
+                
+                return $ret;
+            }catch(Exception $e){
+                throw $e;
+            }
+        }
+        
+        /**
+         * Exclui um ou mais usuários de uma escola
+         * 
+         * @param int $idMatriz ID da Escola (Cliente)
+         * @param int $idUsuario ID do Usuário a ser excluido
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  string  $ret->msg       - Armazena mensagem ao usuário                      <br />
+         * </code>
+         * @throws Exception
+         */
+        public function excluirUsuarioAcesso($idMatriz, $idUsuario){
+            try{
+                //Objeto de retorno
+                $ret            = new \stdClass();
+                $ret->status    = false;
+                $ret->msg       = "Falha ao excluir usuário!";
+                
+                //Validações
+                if((int)$idMatriz <= 0){
+                    $ret->msg = "ID Matriz inválido ou nulo!";
+                    return $ret;
+                }
+                
+                if((int)$idUsuario <= 0){
+                    $ret->msg = "ID Usuário inválido ou nulo!";
+                    return $ret;
+                }
+                
+                //Tabela de Usuarios Acesso
+                $tbAdmUsuario = new TB\AdmUsuario($idUsuario);
+                
+                //Executa UPDATE
+                $tbAdmUsuario->DEL = 1;
+                $tbAdmUsuario->update(array("ID_MATRIZ = %i AND ID_USUARIO = %i", $idMatriz, $idUsuario));
+                
+                //Retorno OK
+                $ret->status    = true;
+                $ret->msg       = "Usuário excluido com sucesso!";
+                
+                return $ret;
             }catch(Exception $e){
                 throw $e;
             }
