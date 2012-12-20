@@ -426,10 +426,15 @@ body{
     color: #FF0000;
 }
 
+
+
 .input2{
     width: 100%;
 }
 
+.input2 input{
+    width: 100%;
+}
 
 .bt_filtrar{
    	float: left;
