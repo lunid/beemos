@@ -90,34 +90,19 @@
 <!-- conteudo box -->
 <div id="box">
     
-    
+    <!-- ========= botoes navegacao caixa de e-mail  ================ -->
        <div id="nav">
     <ul class="button-bar">
-        <li><a href="javascript:void(0);"><span class="icon" data-icon="7"></span> Escrever</a></li>
-        <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_config_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="("></span> Entrada</a></li>
-        <li><a href="javascript:void(0);" onclick="javascript:menuLista('lista_resultados_<?=$attrs['ID_HISTORICO_GERADOC']?>');"><span class="icon" data-icon="A"></span> Enviados</a></li>
+        <li><a href="javascript:void(0);" onclick="javascript:escrever();"><span class="icon" data-icon="7"></span> Escrever</a></li>
+        <li><a  onclick="javascript:exibeCaixa('recebidas');"><span class="icon" data-icon="("></span> Entrada</a></li>
+        <li><a  onclick="javascript:exibeCaixa('enviadas');"><span class="icon" data-icon="A"></span> Enviados</a></li>
     </ul>
 </div>
+    <!-- ========= fim  botoes navegacao caixa de e-mail  ================ -->
     
     
-    
-    <div class="col_3">
-        <!-- ========= botoes navegacao caixa de e-mail  ================ -->
-        <a href="javascript:void(0);" onclick="javascript:escrever();">
-            <button class="bt_e-mail">
-                <span class="icon gray small" data-icon="7"></span> Escrever
-            </button>
-        </a>
-        <button class="bt_e-mail" onclick="javascript:exibeCaixa('recebidas');">
-            <span class="icon gray small" data-icon="("></span> Entrada
-        </button>
-        <button class="bt_e-mail" onclick="javascript:exibeCaixa('enviadas');">
-            <span class="icon gray small" data-icon="A"></span> Enviados
-        </button>
-        <!-- ========= fim  botoes navegacao caixa de e-mail  ================ -->
-    </div>
-
-    <div class="col_9">
+    <div class="col_12">
+        <div class="linha"></div>
         <!-- ========= grid e-mails recebidos ================ -->
         <div id="recebidas" style="width:100%;">
             <!-- ========= botoes superior caixa de e-mail  ================ -->

@@ -251,7 +251,7 @@ body{
 /* fim começo grid ================================================== */
 
 #box {
-    width:631px;
+    width:769px;
     height:411px;
     margin:auto auto auto -17px;
     float:left;
@@ -314,7 +314,7 @@ body{
     text-align: center;
     top: 0;
     float: left;
-    margin-left: 15%;
+    margin-left: 31%;
 }
 
 .botão_ok_enviar{
