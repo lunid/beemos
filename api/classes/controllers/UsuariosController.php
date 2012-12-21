@@ -1,14 +1,14 @@
-<?php
+<?php   
     use \sys\classes\webservice\WsServer;
     use \api\classes\Util;
     use \api\classes\Security;
-    use \common\classes\models\UsuariosModel;
+    use \common\classes\models\UsuariosModel;   
     
     class Usuarios extends WsServer {
+        
         public function __construct() {
-            try{                
-                //Inicia o ServerSoap
-                parent::__construct(__CLASS__);
+            try{      
+                $this->setWsInterfaceClass(__CLASS__);                
             }catch(Exception $e){
                 die(utf8_decode("<b>Erro Fatal:</b> " . $e->getMessage() . " - Entre em contato com suporte!"));
             }

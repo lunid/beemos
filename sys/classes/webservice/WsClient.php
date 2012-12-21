@@ -1,10 +1,9 @@
 <?php
 
 namespace sys\classes\webservice;
-use \sys\classes\util\Xml;
 use \sys\classes\util\Dic;
 
-abstract class WsClient extends Xml {
+abstract class WsClient extends WsConfigXml {
         
     private $httpUser;
     private $httpPass;    
@@ -47,10 +46,10 @@ abstract class WsClient extends Xml {
             throw new \Exception( $msgErr );            
         }
         
-        $pathXml    = "sys_config/webservice.xml";
+        $pathXml    = "sys_config/webserviceClient.xml";
         $objXml     = Xml::loadXml($pathXml);
         if (is_object($objXml)) {
-            $nodesServer = $objXml->server;
+            $nodesServer = $objXml->client;
             
             foreach($nodesServer as $node){
                 $id = $this->getAttrib($node,'id');

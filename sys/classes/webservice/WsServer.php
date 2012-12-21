@@ -1,25 +1,29 @@
 <?php
 
 namespace sys\classes\webservice;
+use \sys\classes\util\Component;
 
 class WsServer {
-        private $class; //Classe a ser consumida no webservice.
-        private $arrIdgnoredMethods; //Métodos de $class que NÃO devem ser consumidos no webservice.
-        private $wsComp;
+        private $wsInterfaceClass; //Classe a ser consumida no webservice.
+        private $arrIgnoredMethods; //Métodos de $class que NÃO devem ser consumidos no webservice.
+        
         
         public function __construct($class, $arrIgnoredMethods = array()) {
-            try{
-
-                //Inicia o ServerSoap
-                $this->wsComp   = Component::webservice();                                
-                $this->class    = $class;
-                
-                //Armazena métodos a serem ignorados no WSDL
-                $this->arrIdgnoredMethods = $arrIgnoredMethods;
+            try{                
+                $this->setClass($class);    
+                $this->setArrIgnoredMethods($arrIgnoredMethods); //Armazena métodos a serem ignorados no WSDL   
             }catch(Exception $e){
                 throw $e;
             }
-        }   
+        } 
+        
+        protected function setWsInterfaceClass($wsInterfaceClass){
+            $this->wsInterfaceClass = $wsInterfaceClass;
+        }
+        
+        protected function setArrIgnoredMethods($arrIgnoredMethods){
+            $this->arrIgnoredMethods = $arrIgnoredMethods;
+        }
         
         /**
          * Inicia o servico SOAP.
@@ -29,11 +33,11 @@ class WsServer {
         public function actionIndex(){
             try{
                 //Inicia o SoapServer
-                $this->wsComp->index();
+                $this->getSoap()->index();
             }catch(Exception $e){
                 throw $e;
             }
-        } 
+        }      
         
         /**
          * Gera o WSDL do Serviço.
@@ -42,39 +46,48 @@ class WsServer {
          */
         public function actionWsdl(){
             try{
-                //Inicia WSDL
-                $this->wsComp->wsdl("SuperProWeb");
-                $className      = ucfirst($this->class);
-                $thisClassName  = "WsServer";
+                //Inicia WSDL                   
+                $wsInterfaceClass   =  $this->wsInterfaceClass;
+                $objSoap            = $this->getSoap();
                 
-                //Trata caminhos de inclusão
-                $path               = preg_replace("/(api)(.*)/", "", __DIR__);
-                $path_controller    = $path . "api/classes/controllers/" . $className . "Controller.php";
-                $path_server        = $path . "api/classes/WsServer.php";
+                $objSoap->wsdlGenerate($wsInterfaceClass);
+                                                
                 
-                //Inclui Arquivos no WSDL
-                $this->wsComp->addFile($path_server, $thisClassName);
-                $this->wsComp->addFile($path_controller, $this->class);
+                //Trata caminhos de inclusão                
+                $path                   = preg_replace("/(api)(.*)/", "", __DIR__);
+          
+                list($realPath,$uri)    = explode('\sys',$path);                
+                $pathController         = $realPath."\api\classes\controllers\UsuariosController.php";                
+                $pathController         = $realPath."\api\classes\controllers\TesteController.php";                
+                $pathServer             = $path."\WsServer.php";
+                                
+                $objSoap->addFile($pathController, $wsInterfaceClass);
+                //$objSoap->addFile($pathServer, $thisClassName);       
                 
                 //Ignora métodos da classe Server, mantendo apenas os globais
-                $this->wsComp->addIgnore($className, "__construct");
-                $this->wsComp->addIgnore($thisClassName, "__construct");                
-                $this->wsComp->addIgnore($thisClassName, "actionIndex");
-                $this->wsComp->addIgnore($thisClassName, "xmlException");
-                $this->wsComp->addIgnore($thisClassName, "actionWsdl");
-                $this->wsComp->addIgnore($thisClassName, "getXmlField");
-                
-                //Ignora métodos da classe
-                foreach($this->classIdgnoredMethods as $method){
-                    $this->wsComp->addIgnore($this->class, $method);
-                }
+                $objSoap->addIgnore($wsInterfaceClass, "__construct");    
+                //$objSoap->addIgnore($thisClassName, "__construct");                
+                //$objSoap->addIgnore($thisClassName, "actionIndex");
+                //$objSoap->addIgnore($thisClassName, "xmlException");
+                //$objSoap->addIgnore($thisClassName, "actionWsdl");
+                //$objSoap->addIgnore($thisClassName, "getXmlField");
                 
                 //Exibe WSDL
-                $this->wsComp->showWsdl();
+                $objSoap->showWsdl();
             }catch(Exception $e){
                 throw $e;
             }
-        }        
+        }     
+        
+        /**
+         * Retorna um objeto SOAP a partir da chamada do componente webservice().
+         * 
+         * @return Soap
+         */
+        private function getSoap(){
+            $objSoap = Component::webservice();                                
+            return $objSoap;
+        }           
 }
 
 ?>
