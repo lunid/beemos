@@ -2,7 +2,7 @@
     $path   = ini_get('session.save_path');
     $chmod  = substr(sprintf('%o', fileperms($path)), -4);
     
-    if($chmod != 0777){
+    if($chmod != '0777'){
         ini_set("session.save_path", "session");
     }
     
