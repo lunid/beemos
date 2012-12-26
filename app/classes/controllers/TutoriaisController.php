@@ -4,31 +4,24 @@
     use \sys\classes\mvc\ViewPart;
     use \app\classes\views\ViewSite;
     
-    class Index extends Controller {
-
+    class Tutoriais extends Controller {
         /**
-        *Conteúdo da página home
-        */
+         * Conteúdo da página Empresa
+         */
         function actionIndex(){
             try{                     
                 $this->cacheOn(__METHOD__);
                 
                 //Home
-                $objViewPart = new ViewPart('home');
-
+                $objViewPart = new ViewPart('tutoriais');
+                
                 //Template
                 $tpl        = new ViewSite();
                 
                 $tpl->setLayout($objViewPart);
-                $tpl->TITLE = 'SuperPro Web';
+                $tpl->TITLE = 'SuperPro Web | Tutoriais';
 
-                $tpl->setJsInc('app/home');                
-                $tpl->setPlugin('diapo');
-                $tpl->setCss('app/site');
-                //$tpl->forceCssJsMinifyOn();
-                $tpl->onlyExternalCssJs();
-
-                $tpl->render('home');            
+                $tpl->render('tutoriais');            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
                 echo "Erro: " . $e->getMessage() . "<br />\n";
@@ -37,7 +30,7 @@
                 echo "<br />\n";
                 die;
             }
-        }    
+        }
     }
 
 ?>
