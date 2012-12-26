@@ -53,6 +53,7 @@ Form.prototype = {
             alert(Dic.loadMsg("Form", "CATCH", "init") + " " + err.message);
         }
     },
+    
     initModal:function(id){
         $('body').append(
             "<div id='modal_" + id + "' class='modal_form'><table align='center'><tr><td align='center' valign='middle'><table align='center'><tr><td id='msg_" + id + "' align='center' class='msg_modal'>&nbsp;</td></tr></table></td></tr></table></div>"
@@ -72,6 +73,11 @@ Form.prototype = {
                 $("#" + this.name).val(""); 
             }
         });
+    },
+    
+    enviar: function(){
+        //Envio do Form
+        $("#" + form_id).submit();
     },
     
     validate: function(form, ajax, callback, useSite){

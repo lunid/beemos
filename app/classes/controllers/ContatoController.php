@@ -16,10 +16,12 @@
                 $objViewPart = new ViewPart('contato');
                 
                 //Template
-                $tpl        = new ViewSite();
+                $tpl = new ViewSite();
                 
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'SuperPro Web | Contato';
+                
+                $tpl->setJs('app/contato');
                 
                 $tpl->render('contato');            
             }catch(Exception $e){
