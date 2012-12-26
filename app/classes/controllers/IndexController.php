@@ -23,7 +23,7 @@
                 $tpl->TITLE = 'SuperPro Web';
 
                 $tpl->setPlugin('diapo');
-                $tpl->setJsInc('app/home');                
+                $tpl->setJs('app/home');                
                 
                 $tpl->render('home');            
             }catch(Exception $e){
