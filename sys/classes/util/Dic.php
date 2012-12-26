@@ -73,6 +73,7 @@
             
             $module         = \Application::getModule();
             $fileException  = $module.'/dic/e'.$class.'.xml';
+            if (!file_exists($fileException)) $fileException = 'sys/dic/e'.$class.'.xml';
             
             $method = __CLASS__.'\\'.__FUNCTION__."()";//Monta uma string ref. ao método atual. Usado para mostrar erro do método setErr()
             
