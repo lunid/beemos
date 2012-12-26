@@ -22,12 +22,9 @@
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'SuperPro Web';
 
-                $tpl->setJsInc('app/home');                
                 $tpl->setPlugin('diapo');
-                $tpl->setCss('app/site');
-                //$tpl->forceCssJsMinifyOn();
-                $tpl->onlyExternalCssJs();
-
+                $tpl->setJsInc('app/home');                
+                
                 $tpl->render('home');            
             }catch(Exception $e){
                 echo ">>>>>>>>>>>>>>> Erro Fatal <<<<<<<<<<<<<<< <br />\n";
