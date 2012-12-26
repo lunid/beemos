@@ -2,12 +2,10 @@
     namespace sys\lib\comps\webservice\classes;
     
     class Soap extends Wsdl{
-        private $server; //Aramazena SoapServer
-        private $uri; //Aramazena URI do serviço
-        private $class; //Classe onde esta baseado o serviço
+        private $server; //Aramazena SoapServer       
         
         /**
-         * Constrói um SoapServer baseado em uma classe Controller em API
+         * Constrói um SoapServer baseado em uma classe Controller (/api)
          * @param string $class Nome do Controller
          * @throws Exception
          */
@@ -20,9 +18,7 @@
                 
                 //Trata o vamos de class
                 $this->class = trim(strtolower((string)$class));
-                
-                //Inicia valor de URI
-                $this->uri = "http://localhost/interbits/api/{$this->class}/";
+                                
             }catch(Exception $e){
                 throw $e;
             }
@@ -46,19 +42,6 @@
                 //Cadastra Classe com métodos a serem utilizados
                 $this->server->setClass(ucfirst($this->class));  
                 $this->server->handle();
-            }catch(Exception $e){
-                throw $e;
-            }
-        }
-        
-        /**
-         * Monta o WSDL para o Controller de API
-         * @throws Exception
-         */
-        public function wsdl($wsdlName){
-            try{
-                //Inicia WSDL
-                parent::__construct($wsdlName, $this->uri);
             }catch(Exception $e){
                 throw $e;
             }

@@ -18,6 +18,10 @@ h1,h2,h3,h4,h5,h6{
 	margin: 0;
 }
 
+.icon.small {
+    font-size: 14px;
+}
+
 
 thead th,
 tbody th{
@@ -145,6 +149,7 @@ button.blue, a.btn.blue, a.button.blue, input.blue[type="submit"], input.blue[ty
 }
 
 
+
 /*---------------------------------
 	BLUE
 -----------------------------------*/
@@ -226,6 +231,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	Novas classes (Foram criadas pra o site)
 -----------------------------------*/
 
+
+#titulo_blog_home{
+    margin:0px 0px 10px 15px;
+}
+
+
+#ainda_n_assinante{
+    float: left;
+    height: 39px;
+    margin: -13px 0 13px 27px;
+    text-align: center;
+    width: 178px;
+}
+
+
 #titulo_depoimento{
     margin-left: 20px;
 }
@@ -249,10 +269,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 }
 
 
-#redes_sociais_rodape{
-    margin-top: -22px;
+.coluna_rodape{
+    width: 177px;
+    height: 160px;
+    float: left; 
 }
 
+.coluna_rodape_midias{
+    width: 167px;
+    height: 160px;
+    float: left;
+    padding-left: 10px;
+}
+
+
+.coluna_rodape_direita{
+    width: 183px;
+    height: 160px;
+    float: left; 
+}
+
+
+.midias, ul{
+    list-style-type: none;
+    margin:-14px 0px 0px 0px; 
+}
 
 #mapa {
     float: left;
@@ -315,9 +356,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 
 #youtube{
 	width:141px;
-	height:31px;
+	height:45px;
 	float:left;
-	margin: 10px 0 0 8px;
+	margin: 11px 0 0 8px;
 }
 
 .linha{
@@ -333,7 +374,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	height:2px;
 	border-top:1px solid #ccc;
 	float:left;
-	margin:14px 0px 14px 0px;
+	margin:18px 0px 18px 0px;
 }
 
 
@@ -425,7 +466,7 @@ body{
 
 #link-top{
 	position: absolute;
-	top:10px;
+	top:175px;
 	right:10px;
 	*right:25px;/*IE 7 ONLY*/
 	left:auto;

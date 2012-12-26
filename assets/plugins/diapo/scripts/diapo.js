@@ -25,11 +25,11 @@
 		
 		loaderOpacity		: .8,	//0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1
 		
-		loaderColor			: '#ffff00', 
+		loaderColor			: '#07668e', 
 		
-		loaderBgColor		: '#222222', 
+		loaderBgColor		: '#ffffff', 
 		
-		pieDiameter			: 50,
+		pieDiameter			: 20,
 		
 		piePosition			: 'top:5px; right:5px',	//this option accepts any CSS value
 		

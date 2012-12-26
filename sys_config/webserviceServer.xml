@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <server>
+        <wsdlName>Superpro Web</wsdlName>
+        <wsdl>http://www.superprofessorweb.com.br/interbits/api/</wsdl>        
+    </server>    
+</root>

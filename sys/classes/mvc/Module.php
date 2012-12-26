@@ -7,6 +7,10 @@
         function __construct($module=''){
             $this->module = (strlen($module) > 0)?$module:\Application::getModule();
         }
+        
+        function getModule(){
+            return $this->module;
+        }
 
         function tplLangFile($path){
             $rootModule     = $this->viewPartsLangFile('');

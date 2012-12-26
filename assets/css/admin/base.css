@@ -1,6 +1,7 @@
 body{
-    width:99.2%;
-    height:autoo;
+    width:100%;
+    height:100%;
+    overflow-x: hidden;
     font: 0.9em/150% 'Arimo',"Trebuchet MS",arial,verdana,sans-serif;
     background-image:url("../../images/admin/bg_lateral.jpg");
     background-position:top left;
@@ -80,7 +81,7 @@ body{
     border: none;
     margin: 2px 0 0 -13px;
     padding: 0;
-    width: 101%;
+    width: 100.8%;
 }
 
 .conteudo_abas {
@@ -217,14 +218,10 @@ input[type="text"], textarea, button, a.button, a, input[type="file"] {
 }
 
 #gs_STATUS{
-    -moz-box-sizing: border-box;
-    background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #CCCCCC;
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 1px 6px #CCCCCC inset;
     display: inline-block;
     font-size: 12px;
-    margin: 0;
+    margin: -1px 0 0;
     padding: 1px 9px 0 0;
     text-indent: 5px;
     text-decoration: none;
@@ -240,16 +237,13 @@ input[type="text"], textarea, button, a.button, a, input[type="file"] {
 .ui-jqgrid .ui-pg-selbox {
     display: block;
     line-height: 6px;
-    -moz-box-sizing: border-box;
     background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #CCCCCC;
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 1px 6px #CCCCCC inset;
     display: inline-block;
     font-size: 9px;
     height: 17px;
     margin: 0;
-    padding: 1px 9px 0 0;
+    padding: 0 5px 0 0;
     text-indent: 5px;
     vertical-align: middle;
     width: 100%;
@@ -474,5 +468,13 @@ input[type="text"], textarea, button, a.button, a, input[type="file"] {
 }
 
 tr.ui-search-toolbar input {
-    margin: 0px 0 0;
+    margin: -1px 0 0;
+}
+
+tr.ui-search-toolbar select {
+    margin: -1px 0 0;
+}
+
+select {
+    padding: 1px;
 }
