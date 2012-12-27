@@ -694,5 +694,46 @@
                 throw $e;
             }
         }
+        
+        public function salvarUsuarioVistante($arrDados){
+            //Objeto de retorno
+            $ret            = new \stdClass();
+            $ret->status    = false;
+            $ret->msg       = "Falha ao salvar usuário! Tente mais tarde.";
+            
+            //Tabela de Visitantes
+            $tbVisitante = new TB\Visitante();
+            
+            //Valida e-mail
+            if(!isset($arrDados['EMAIL'])){
+                $ret->msg = "Campo de e-mail inválido ou nulo!";
+                return $ret;
+            }
+            
+            //Valida existência do e-mail
+            $tbVisitante->setLimit(1);
+            $rs = $tbVisitante->findAll("EMAIL = '{$arrDados['EMAIL']}'");
+            
+            if($rs->count() > 0){
+                $ret->msg = "Esse e-mail já possui cadastro!";
+                return $ret;
+            }
+            
+            //Atribui dados a serem salvos
+            $tbVisitante->NOME          = isset($arrDados['NOME']) ? $arrDados['NOME'] : '';
+            $tbVisitante->EMAIL         = isset($arrDados['EMAIL'])? $arrDados['EMAIL'] : '';
+            $tbVisitante->CELULAR       = isset($arrDados['CELULAR']) ? $arrDados['CELULAR'] : '';
+            $tbVisitante->SENHA         = isset($arrDados['SENHA']) ? $arrDados['SENHA'] : '';
+            $tbVisitante->FB_ID         = isset($arrDados['FB_ID']) ? $arrDados['FB_ID'] : '';
+            $tbVisitante->GOOGLE_ID     = isset($arrDados['GOOGLE_ID']) ? $arrDados['GOOGLE_ID'] : '';
+            $tbVisitante->DATA_REGISTRO = date("Y-m-d H:i:s");
+            
+            $tbVisitante->save();
+            
+            //Retorno OK
+            $ret->status    = true;
+            $ret->msg       = "Usuário cadastrado com sucesso!";
+            return $ret;
+        }
     }
 ?>

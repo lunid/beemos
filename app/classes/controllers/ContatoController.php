@@ -36,6 +36,9 @@
             }
         }
         
+        /**
+         * Envia a mensagem do usuário via E-mail para o setor escolhido
+         */
         public function actionEnviar(){
             try{
                 //Objeto de retorno
@@ -74,9 +77,15 @@
                 //Componente para disparo de e-mail
                 $objMail = Component::mail();
                 
-                $objMail->setFrom($email, $nome);
+                $objMail->setFrom("prg.pacheco@interbits.com.br", "Contato Site");
                 $objMail->addAddress($para);
-                $objMail->setSubject($assuntoTxt);
+                $objMail->setSubject(utf8_decode($assuntoTxt));
+                
+                $html = "<b>Nome:</b> " . $nome . "<br />";
+                $html .= "<b>E-mail:</b> " . $email . "<br /><br />";
+                $html .= "<b>Mensagem</b><br />" . utf8_decode($msg);
+                
+                $objMail->setHtml($html);
                 
                 if (!$objMail->send()){
                     $ret->msg = "Falha ao disparar e-mail! Tente mais tarde.";
@@ -84,7 +93,7 @@
                 }else{
                     //Retorno OK
                     $ret->status    = true;
-                    $ret->msg       = "E-mail enviado com sucesso! Em breve entraremos em contato com você.";
+                    $ret->msg       = "E-mail enviado com sucesso!<br />Em breve entraremos em contato com você.";
                 }
                 
                 echo json_encode($ret);
