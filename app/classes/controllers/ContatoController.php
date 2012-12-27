@@ -36,6 +36,9 @@
             }
         }
         
+        /**
+         * Envia a mensagem do usuário via E-mail para o setor escolhido
+         */
         public function actionEnviar(){
             try{
                 //Objeto de retorno
