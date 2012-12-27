@@ -3,6 +3,10 @@
     use \sys\classes\mvc\Controller;        
     use \sys\classes\mvc\ViewPart;
     use \app\classes\views\ViewSite;
+    use \common\classes\models\UsuariosModel;
+    use \sys\classes\util\Request;
+    use \common\classes\Util;
+    use \sys\classes\util\Component;
     
     class Index extends Controller {
 
@@ -36,7 +40,7 @@
             }
         }
         
-        public function actionExperimente(){
+        public function actionSalvarVisitante(){
             try{
                 //Objeto de retorno
                 $ret            = new stdClass();
@@ -50,26 +54,51 @@
                 
                 //Salva usuário no banco de dados
                 if(true){
-                    $para = "mpcbarone@gmail.com";
-                
+                    //Model de Usuários
+                    $mdUsuarios = new UsuariosModel();
+                    
+                    //Dados a serem cadastrados
+                    $arrDados = array(
+                        "NOME"      => trim($nome),
+                        "EMAIL"     => trim(strtolower($email)),
+                        "CELULAR"   => Util::limpaTel($celular),
+                        "SENHA"     => md5("teste123")
+                    );
+                    
+                    //Efetua cadastro
+                    $rs = $mdUsuarios->salvarUsuarioVistante($arrDados);
+                    
+                    if(!$rs->status){
+                        echo json_encode($rs);
+                        die;
+                    }
+                    
                     //Componente para disparo de e-mail
                     $objMail = Component::mail();
 
-                    $objMail->setFrom("prg.pacheco@interbits.com.br", "Contato Site");
-                    $objMail->addAddress($para);
-                    $objMail->setSubject(utf8_decode($assuntoTxt));
+                    $objMail->setFrom("prg.pacheco@interbits.com.br", "Interbits - SuperPro Web");
+                    $objMail->addAddress($email);
+                    $objMail->setSubject("Bem-vindo ao SuperProWeb");
 
-                    $html = "<b>Nome:</b> " . $nome . "<br />";
-                    $html .= "<b>E-mail:</b> " . $email . "<br /><br />";
-                    $html .= "<b>Mensagem</b><br />" . utf8_decode($msg);
+                    $html = "Olá <b>{$nome}</b>!<br /><br />";
+                    
+                    $html .= "Sua conta no <b>SuperPro® Web</b> foi criada com sucesso.<br />";
+                    $html .= "Por favor, clique no link abaixo para confirmar seu e-mail e definir sua senha de acesso.<br /><br />";
+                    
+                    $html .= "<a href=''>Confirmar meu e-mail e definir senha de acesso</a><br /><br />";
+                    
+                    $html .= "Obrigado<br /><br />";
+                    
+                    $html .= "-----------------------------------------------------------------------------<br />";
+                    $html .= "<b>Equipe SuperPro®</b><br />";
+                    $html .= "Mensagem automática - não é necessário respondê-la.<br />";
 
-                    $objMail->setHtml($html);
+                    $objMail->setHtml(utf8_decode($html));
                     
                     $objMail->send();
                     
                     //Retorno OK
-                    $ret->status    = true;
-                    $ret->msg       = "E-mail cadastrado com sucesso!";
+                    $ret = $rs;
                 }else{
                     $ret->msg = "Falha ao cadastrar usuário! Tente mais tarde.";
                 }
