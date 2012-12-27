@@ -41,8 +41,8 @@
         <config id='smtpHost'>smtp.interbits.com.br</config>
         <config id='smtpPort'>587</config>
         <config id='smtpAuth'>1</config>        
-        <config id='smtpUsername'></config>
-        <config id='smtpPassword'></config>   
+        <config id='smtpUsername'>prg.pacheco@interbits.com.br</config>
+        <config id='smtpPassword'>ADvw140812</config>   
     </smtp>      
     <cache>
         <cache id='components'>On</cache>
