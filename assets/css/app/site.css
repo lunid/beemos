@@ -522,6 +522,25 @@ table.striped tbody th {
 }
   
 
+<<<<<<< HEAD
 .ac-container {
     width: 90%;
+=======
+/* Modal Aguarde ================================================== */
+
+.modal_aguarde{
+    display:none;
+}
+
+.modal_aguarde .img{
+    float:left;
+    padding:10px;
+}
+
+.modal_aguarde .txt{
+    font-family:Verdana,Arial;
+    font-size:16px;
+    font-weight:bold;
+    padding:15px;
+>>>>>>> branch 'intranet' of github.com:marclebon/dev.git
 }
