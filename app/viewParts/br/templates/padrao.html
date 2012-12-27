@@ -18,9 +18,21 @@
         {INCLUDE_CSS}
                
         {INCLUDE_JS}
+        <!--[if !IE]><!--><script src='/interbits/assets/plugins/diapo/scripts/jquery_mobile-1_0rc2_customized_min.js'></script><!--<![endif]-->
+        <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
-<body>
 <!-- ===================================== END HEADER ===================================== -->
+<body>
+<!-- modal aguarde -->
+<div id="modal_aguarde" class="modal_aguarde">
+    <div class="img">
+        <img src="assets/images/ajax-load.gif" border="0" />
+    </div>
+    <div class="txt">
+        Aguarde...
+    </div>
+</div>
+<!-- modal aguarde -->
 
 <div id="header" class="clearfix">
 <!-- top -->   
