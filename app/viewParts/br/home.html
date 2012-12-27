@@ -53,23 +53,27 @@
         <div class="col_3">
 
             <div id="experimente_gratis_home">
-                <!-- are cliente home -->
-                <div class="col_12">
-                    <label for="usuario">Seu nome:</label>
-                    <input id="usuario" type="text" />
-                    <label for="email">Seu e-mail:</label>
-                    <input id="email" type="text" />
-                    <label for="celular">Telefone Celular:</label>
-                    <input id="celular" type="text" />
-                </div>
-                <div class="espaco"></div>
-                <div  align="center" class="col_12" >
-                    <button class="medium green">Experimente Grátis!</button>
-                </div>
-                <div  align="center" class="col_12" >
-                    <a href="">Veja planos e preços</a>
-                </div>
-                <!-- are cliente home -->  
+                <!-- área cliente home -->
+                <form name="form_experimente" id="form_experimente" method="post" action="index/experimente" onSubmit="return formExperimente.validate(this, true, 'verSalvarUsuario');">
+                    <div class="col_12">
+                        <label for="nome">Seu nome:</label>
+                        <input type="text" id="nome" name="nome" class="required" field_name="Nome" />
+                        
+                        <label for="email">Seu e-mail:</label>
+                        <input type="text" id="email" name="email" class="required" field_name="E-mail" />
+                        
+                        <label for="celular">Telefone Celular:</label>
+                        <input type="text" id="celular" name="celular" class="required" field_name="Celular" />
+                    </div>
+                    <div class="espaco"></div>
+                    <div  align="center" class="col_12" >
+                        <input type="submit" value="Experimente Grátis!" class="medium green" />
+                    </div>
+                    <div  align="center" class="col_12" >
+                        <a href="">Veja planos e preços</a>
+                    </div>
+                </form>
+                <!-- área cliente home -->
             </div>
 
         </div>
