@@ -13,6 +13,24 @@
 	Correções do KS
 -----------------------------------*/
 
+
+#tiptip_content {
+    background-color: #CCCCCC;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 3px #555555;
+    color: #000000;
+    float: right;
+    font-size: 11px;
+    height: auto;
+    margin-right: -47px;
+    margin-top: -11px;
+    padding: 9px 8px;
+    text-shadow: 0 0 0 #000000;
+    width: 440px;
+}
+
+
 h1,h2,h3,h4,h5,h6{
 	font-family: "Trebuchet Ms", arial, verdana, sans-serif;
 	margin: 0;
@@ -247,6 +265,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 /*---------------------------------
 	Novas classes (Foram criadas pra o site)
 -----------------------------------*/
+
+.caixa_plano
+
+
+#planos_precos{
+    float: left;
+    height: auto;
+    margin-left: 48px;
+    width: 900px;
+}
+
+#planos_precos_titulo{
+    float: left;
+    height: auto;
+    margin-left: 90px;
+    width: 798px;
+}
+
+
+#informacoes_planos{
+    width: 186px;
+    height: 7px;
+    float: right;
+    vertical-align: top;
+}
 
 
 #titulo_blog_home{
@@ -522,11 +565,9 @@ table.striped tbody th {
 }
   
 
-<<<<<<< HEAD
 .ac-container {
     width: 90%;
-=======
-/* Modal Aguarde ================================================== */
+}
 
 .modal_aguarde{
     display:none;
@@ -542,5 +583,4 @@ table.striped tbody th {
     font-size:16px;
     font-weight:bold;
     padding:15px;
->>>>>>> branch 'intranet' of github.com:marclebon/dev.git
 }
