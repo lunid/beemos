@@ -37,6 +37,6 @@
             $folderViews  = \LoadConfig::folderViews();//viewParts
             $url          = $module.'/'.$folderViews.'/'.$path;
             return $url;
-        }
+        }       
     }
 ?>

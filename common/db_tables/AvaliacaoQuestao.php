@@ -26,10 +26,32 @@
                 $ret->status    = false;
                 $ret->msg       = "Falha ao salvar avaliação! Tente mais tarde.";
                 
+                $arrFields= array(
+                    'ID_USUARIO',
+                    'ID_BCO_QUESTAO',
+                    'NOTA_ENUNCIADO',
+                    'NOTA_ABRANGENCIA',
+                    'NOTA_ILUSTRACAO',
+                    'NOTA_INTERDISCIPLINARIDADE',
+                    'NOTA_HABILIDADE_COMPETENCIA',
+                    'NOTA_ORIGINALIDADE'
+                );
+                
+                $arrErr = array();
+                foreach($arrFields as $field) {
+                    $value = (int)$this->$field;
+                    if ($value == 0 || $value == NULL) $arrErr[] = "O campo {$field} é obrigatório para salvar a Avaliação";
+                }
+                if (count($arrErr) > 0) {
+                    $msgErr = join('\n',$arrErr);
+                    return $msgErr;
+                }
+                
+                /*
                 //Valida valor ID_USUARIO
                 if($this->ID_USUARIO <= 0 || $this->ID_USUARIO == null){
                     $ret->msg = "O campo ID_USUARIO é obrigatório para salvar a Avaliação";
-                    return $ret;
+                    return $ret
                 }
 
                 //Valida valor ID_BCO_QUESTAO
@@ -68,7 +90,7 @@
                     $ret->msg = "O campo NOTA_ORIGINALIDADE é obrigatório para salvar a Avaliação";
                     return $ret;
                 }
-                
+                */
                 $this->DATA_AVALIACAO = date("Y-m-d H:i:s");
                 $this->save();
                 
@@ -120,22 +142,23 @@
                 $rs = $this->setJoin("ID_BCO_QUESTAO = " . $this->ID_BCO_QUESTAO);
                 
                 if(is_array($rs) && sizeof($rs) == 1){
-                    $ret->ID_USUARIO                   = $rs[0]['ID_USUARIO'];
-                    $ret->ID_BCO_QUESTAO               = $rs[0]['ID_BCO_QUESTAO'];
-                    $ret->NOTA_ENUNCIADO               = $rs[0]['NOTA_ENUNCIADO'];
-                    $ret->SOBRE_ENUNCIADO              = $rs[0]['SOBRE_ENUNCIADO'];
-                    $ret->NOTA_ABRANGENCIA             = $rs[0]['NOTA_ABRANGENCIA'];
-                    $ret->SOBRE_ABRANGENCIA            = $rs[0]['SOBRE_ABRANGENCIA'];
-                    $ret->NOTA_ILUSTRACAO              = $rs[0]['NOTA_ILUSTRACAO'];
-                    $ret->SOBRE_ILUSTRACAO             = $rs[0]['SOBRE_ILUSTRACAO'];
-                    $ret->NOTA_INTERDISCIPLINARIDADE   = $rs[0]['NOTA_INTERDISCIPLINARIDADE'];
-                    $ret->SOBRE_INTERDISCIPLINARIDADE  = $rs[0]['SOBRE_INTERDISCIPLINARIDADE'];
-                    $ret->NOTA_HABILIDADE_COMPETENCIA  = $rs[0]['NOTA_HABILIDADE_COMPETENCIA'];
-                    $ret->SOBRE_HABILIDADE_COMPETENCIA = $rs[0]['SOBRE_HABILIDADE_COMPETENCIA'];
-                    $ret->NOTA_ORIGINALIDADE           = $rs[0]['NOTA_ORIGINALIDADE'];
-                    $ret->SOBRE_ORIGINALIDADE          = $rs[0]['SOBRE_ORIGINALIDADE'];
-                    $ret->DATA_AVALIACAO               = $rs[0]['DATA_AVALIACAO'];
-                    $ret->NOME_USUARIO                 = $rs[0]['NOME'];
+                    $row                               = $rs[0];
+                    $ret->ID_USUARIO                   = $row['ID_USUARIO'];
+                    $ret->ID_BCO_QUESTAO               = $row['ID_BCO_QUESTAO'];
+                    $ret->NOTA_ENUNCIADO               = $row['NOTA_ENUNCIADO'];
+                    $ret->SOBRE_ENUNCIADO              = $row['SOBRE_ENUNCIADO'];
+                    $ret->NOTA_ABRANGENCIA             = $row['NOTA_ABRANGENCIA'];
+                    $ret->SOBRE_ABRANGENCIA            = $row['SOBRE_ABRANGENCIA'];
+                    $ret->NOTA_ILUSTRACAO              = $row['NOTA_ILUSTRACAO'];
+                    $ret->SOBRE_ILUSTRACAO             = $row['SOBRE_ILUSTRACAO'];
+                    $ret->NOTA_INTERDISCIPLINARIDADE   = $row['NOTA_INTERDISCIPLINARIDADE'];
+                    $ret->SOBRE_INTERDISCIPLINARIDADE  = $row['SOBRE_INTERDISCIPLINARIDADE'];
+                    $ret->NOTA_HABILIDADE_COMPETENCIA  = $row['NOTA_HABILIDADE_COMPETENCIA'];
+                    $ret->SOBRE_HABILIDADE_COMPETENCIA = $row['SOBRE_HABILIDADE_COMPETENCIA'];
+                    $ret->NOTA_ORIGINALIDADE           = $row['NOTA_ORIGINALIDADE'];
+                    $ret->SOBRE_ORIGINALIDADE          = $row['SOBRE_ORIGINALIDADE'];
+                    $ret->DATA_AVALIACAO               = $row['DATA_AVALIACAO'];
+                    $ret->NOME_USUARIO                 = $row['NOME'];
                     
                     $ret->status = true;
                     $ret->msg    = "Avaliação carregada com sucesso!";

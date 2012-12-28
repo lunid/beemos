@@ -148,7 +148,7 @@
                 //Tabela de clientes
                 $tbCliente = new TB\Cliente();
                 
-                //Ewxwcuta UPDATE
+                //Faz UPDATE
                 $tbCliente->query("UPDATE SPRO_CLIENTE SET BLOQ = " . ((int)$status) . " WHERE ID_CLIENTE IN ({$idCliente}) AND ID_MATRIZ = " . ((int)$idMatriz));
                 
                 //Retorno OK
@@ -264,6 +264,8 @@
                     return $ret;
                 }
                 
+                $idCliente = (int)$arrDados['ID_CLIENTE'];
+                
                 //Tabela de clientes
                 $tbCliente = new TB\Cliente();
                 
@@ -278,12 +280,12 @@
                 //Valida e-mail
                 $mdUsusarios = new MD\UsuariosModel();
                 
-                if(!$mdUsusarios->validarEmailUsuarioMatriz($arrDados['EMAIL'], $arrDados['ID_CLIENTE'])){
+                if(!$mdUsusarios->validarEmailUsuarioMatriz($arrDados['EMAIL'], $idCliente)){
                     $ret->msg = "Esse e-mail já possui cadastro!";
                     return $ret;
                 }
                 
-                if(!$mdUsusarios->validarLoginUsuario($arrDados['LOGIN'], $arrDados['ID_CLIENTE'])){
+                if(!$mdUsusarios->validarLoginUsuario($arrDados['LOGIN'], $idCliente)){
                     $ret->msg = "Esse login já existe!";
                     return $ret;
                 }
@@ -296,7 +298,8 @@
                     $tbCliente->save();
                 }else{
                     //Usuário existente
-                    $tbCliente->update(array("ID_CLIENTE = %i AND ID_MATRIZ = %i", (int)$arrDados['ID_CLIENTE'], $idMatriz));
+                    $arrWhere    = array('ID_CLIENTE=%i AND ID_MATRIZ=%i',$idCliente,$idMatriz);
+                    $tbCliente->update($arrWhere);
                 }
                 
                 //Retorno OK
@@ -472,7 +475,7 @@
                 //Tabela de clientes
                 $tbCliente = new TB\Cliente();
                 
-                //Ewxwcuta UPDATE
+                //Faz UPDATE               
                 $tbCliente->query("UPDATE SPRO_CLIENTE SET DEL = 1 WHERE ID_CLIENTE IN ({$idCliente}) AND ID_MATRIZ = " . ((int)$idMatriz));
                 
                 //Retorno OK

@@ -1,12 +1,14 @@
 <?php
+
+    session_start();
+    
     $path   = ini_get('session.save_path');
     $chmod  = substr(sprintf('%o', fileperms($path)), -4);
     
     if($chmod != '0777'){
         ini_set("session.save_path", "session");
     }
-    
-    session_start();
+        
     error_reporting(-1);
     
     if (!ini_get('display_errors')) {

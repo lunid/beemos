@@ -7,6 +7,7 @@
     use \sys\classes\util\Request;
     use \sys\classes\util\Date;
     use \admin\classes\views\ViewAdmin;                        
+    use \sys\classes\util\Redirect;
     
     class AdminController extends Controller {
         
@@ -22,11 +23,12 @@
         
         /**
          * Método executado antes da chamada da action informada na URL.
-         * Na classe atual implementa o acesso para usuários não autenticados. 
+         * Na classe atual permite o acesso apenas para usuários autenticados. 
          */
         function before(){
-            //$redirect   = \Url::mvc('app','');
-            //\Auth::checkAuth($redirect);
+            $objRedirect    = new Redirect('auth/redirect.xml');
+            $redirect       = $objRedirect->LOGOUT;   
+            \Auth::checkAuth($redirect);//Se a sessão NÃO estiver ativa redireciona para a página de $redirect.
         }
     }
 

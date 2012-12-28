@@ -14,17 +14,18 @@
          * 
          * @return string 
          */                
-        public static function setUrl(array $arrOptions){   
+        public static function setUrl(array $arrOptions,$langPath=TRUE){   
             $url            = '/';
             $rootFolder     = \LoadConfig::rootFolder();
             $lang           = \Application::getLanguage();            
             
             if (strlen($rootFolder) > 0) $url .= $rootFolder.'/';
-            if (strlen($lang) > 0) $url .= $lang.'/';
+            if (strlen($lang) > 0 && $langPath) $url .= $lang.'/';
             
             foreach($arrOptions as $key=>$value) {
-                if (($key == 'module' || $key == 'controller' || $key == 'action')) {
-                    if (strlen(trim($value)) > 0) $url .= $value.'/';
+                $value = trim($value);
+                if (($key == 'module' || $key == 'controller' || $key == 'action')) {                   
+                    if (strlen($value) > 0) $url .= $value.'/';
                 } else {
                     $url .= $key.'/'.$value;                
                 }
@@ -32,9 +33,15 @@
             return $url;
         }
         
+        public static function mvcForModel($controller,$action){
+            $module = \Application::getModule();
+            return self::mvc($module,$controller,$action);                       
+        }
+        
         public static function mvc($module='',$controller='',$action=''){
             $arrOptions = array('module'=>$module,'controller'=>$controller,'action'=>$action);
-            return self::setUrl($arrOptions);
+            $langPath   = FALSE;
+            return self::setUrl($arrOptions,$langPath);
         }
         
         /**

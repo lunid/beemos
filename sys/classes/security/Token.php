@@ -139,8 +139,8 @@
          * 
          * @return string Retorna um campo hidden com o token.
 	 */
-	function protectForm() {
-            return "<input type=\"hidden\" name=\"spack_token\" value=\"".$this->token."\" />";
+	function protectForm($id='token') {
+            return "<input type=\"hidden\" id=\"{$id}\" name=\"{$id}\" value=\"".$this->token."\" />";
 	}
 
 	/**
@@ -160,14 +160,14 @@
          * 
          * @return boolean Retorna TRUE se a requisição está ok, ou FALSE caso contrário.         
 	 */
-	function Check() {
+	function Check($id='token') {
 		// Verifica se o token foi enviado.
-		if(isset($_REQUEST['spack_token'])) {
+		if(isset($_REQUEST[$id])) {
 			// Verifica se o token existe.
-			if(isset($_SESSION["spackt_".$_REQUEST['spack_token']])) {
+			if(isset($_SESSION["spackt_".$_REQUEST[$id]])) {
 				// Verifica se o token não está vazio.
-				if(isset($_SESSION["spackt_".$_REQUEST['spack_token']])) {
-					$age = time()-$_SESSION["spackt_".$_REQUEST['spack_token']];
+				if(isset($_SESSION["spackt_".$_REQUEST[$id]])) {
+					$age = time()-$_SESSION["spackt_".$_REQUEST[$id]];
 					// Verifica se o token não expirou.
 					if($age > $this->timeout*60) $this->error = 4;
 				}

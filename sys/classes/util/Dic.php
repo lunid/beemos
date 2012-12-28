@@ -63,7 +63,7 @@
             return $msg;
         }
  
-        public static function loadMsg($class,$func,$ns,$codMsg=''){
+        public static function loadMsg($class,$func,$ns,$codMsg='',$concatInfoMsg=TRUE){
             $msgErr         = ''; 
             $msg            = '';
             
@@ -108,14 +108,17 @@
                         }                                                
                     } 
                     $msg    = htmlentities(utf8_decode($msg));
-                    $msg    = '<b>'.$class.'/'.$func."()</b>:<br/>".$msg;
+                    $msg    = ($concatInfoMsg == TRUE)?'<b>'.$class.'/'.$func."()</b>:<br/>".$msg:$msg;
                 } else {
                     $msgErr = "Não foi possível carregar um objeto XML para $class->$func->$codMsg.";
                 }
             } else {
                 $msgErr = "Arquivo $xml não localizado";                
             }
-            if (strlen($msgErr) > 0) self::setErr($method, $msgErr);
+            if (strlen($msgErr) > 0) {
+                $msg = ($concatInfoMsg == TRUE)?self::setErr($method, $msgErr):$msgErr;
+                die($msg);
+            }
             return $msg;
         }
         
@@ -126,7 +129,8 @@
          * @param type $msgErr Mensagem de erro a mostrar na tela
          */
         public static function setErr($method,$msgErr){
-            die($method." : $msgErr");
+            $msg = "{$method} : {$msgErr}";
+            return $msg;
         }
     }
 ?>

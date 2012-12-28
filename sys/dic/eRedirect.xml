@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <Redirect>
+        <__construct>
+            <msg id='XML_FILE_NOT_EXISTS'>o arquivo XML {FILE} não foi localizado. Por padrão este arquivo localiza-se na raíz do módulo atual.</msg>               
+        </__construct>   
+        <__get>
+            <msg id='ERR_LOAD_XML'>O arquivo {FILE} existe, porém é impossível carregar sua estrutura XML.</msg>
+            <msg id='ERR_XML_REDIRECT'>
+                O arquivo XML {FILE} foi carregado corretamente, porém a estrutura XML esperada está errada. A tag redirect não existe
+                ou foi grafada de forma errada. As tags XML são case sensitive, por isso verifique se estão em caixa baixa (formato esperado).
+            </msg>
+        </__get>     
+    </Redirect>
+</root> 
