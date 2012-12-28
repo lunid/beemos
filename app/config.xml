@@ -3,8 +3,8 @@
     <header>
         <include id='css'>app.site</include>
         <include id='cssInc'></include>
-        <include id='js'>app.site</include>
+        <include id='js'>app.site,util.dictionary,util.form</include>
         <include id='jsInc'></include>
-        <include id='plugins'>jquery,kickstart</include>
+        <include id='plugins'>jquery,jquery_ui,kickstart</include>
     </header>
 </root>

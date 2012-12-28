@@ -5,6 +5,7 @@
 /assets/js/*/_*
 /assets/css/*/_*
 
+/session/
 /tmp/
 
 

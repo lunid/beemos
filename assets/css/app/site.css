@@ -13,9 +13,32 @@
 	Correções do KS
 -----------------------------------*/
 
+
+#tiptip_content {
+    background-color: #CCCCCC;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 3px #555555;
+    color: #000000;
+    float: right;
+    font-size: 11px;
+    height: auto;
+    margin-right: -47px;
+    margin-top: -11px;
+    padding: 9px 8px;
+    text-shadow: 0 0 0 #000000;
+    width: 440px;
+}
+
+
 h1,h2,h3,h4,h5,h6{
 	font-family: "Trebuchet Ms", arial, verdana, sans-serif;
 	margin: 0;
+}
+
+
+.icon.small {
+    font-size: 14px;
 }
 
 
@@ -43,6 +66,15 @@ ul.alt a:hover{
 }
 
 
+
+ul li a{
+	color:#666;
+}
+
+ul li a:hover{
+	color:#044e6e;
+}
+
 .menu{
 	font-family: "Trebuchet Ms", arial, verdana, sans-serif;
 	text-align: left;
@@ -63,9 +95,24 @@ p{
 }
 
 a{
-	text-decoration:none;
+    text-decoration:none;
 }
 
+a, a:visited {
+    color: #FF6C00;
+}
+
+a: hover{
+    color: #1D6DC1;
+}
+
+.checks a:visited{
+    color:#999;
+}
+
+.coluna_rodape, #midias h5{
+    color: #696969;
+}
 .col_1, .col_2, .col_3, .col_4, .col_5, .col_6, .col_7, .col_8, .col_9, .col_10, .col_11, .col_12 {
     margin: 5px 0px 0px 5px;
 }
@@ -121,6 +168,7 @@ blockquote {
 }
 
 .menu li.current > a, .menu li.current > a:hover, .menu li.current.hover > a {
+	background: #FFF; /* Old browsers */
     background: -moz-linear-gradient(center top , #EBEAEA 0%, #F8F8F8 44%, #FFFFFF 100%) repeat scroll 0 0 transparent;
     color: #FF6C00;
     cursor: default;
@@ -134,6 +182,7 @@ button.blue, a.btn.blue, a.button.blue, input.blue[type="submit"], input.blue[ty
     color: #FFFFFF;
     text-shadow: 0 -1px 0 #1D6DC1;
 }
+
 
 
 /*---------------------------------
@@ -217,6 +266,94 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	Novas classes (Foram criadas pra o site)
 -----------------------------------*/
 
+.caixa_plano
+
+
+#planos_precos{
+    float: left;
+    height: auto;
+    margin-left: 48px;
+    width: 900px;
+}
+
+#planos_precos_titulo{
+    float: left;
+    height: auto;
+    margin-left: 90px;
+    width: 798px;
+}
+
+
+#informacoes_planos{
+    width: 186px;
+    height: 7px;
+    float: right;
+    vertical-align: top;
+}
+
+
+#titulo_blog_home{
+    margin:0px 0px 10px 15px;
+}
+
+
+#ainda_n_assinante{
+    float: left;
+    height: 39px;
+    margin: -13px 0 13px 27px;
+    text-align: center;
+    width: 178px;
+}
+
+
+#titulo_depoimento{
+    margin-left: 20px;
+}
+
+
+
+.lembrar_senha{
+    font-size: 12px;
+}
+
+
+.lembrar_senha a:hover{
+    color: #1D6DC1;
+}
+
+#botao_logar_home{
+    float: left;
+    height: 20px;
+    margin: 25px 0px 0px 10px;
+    width: 77px;
+}
+
+
+.coluna_rodape{
+    width: 177px;
+    height: 160px;
+    float: left; 
+}
+
+.coluna_rodape_midias{
+    width: 167px;
+    height: 160px;
+    float: left;
+    padding-left: 10px;
+}
+
+
+.coluna_rodape_direita{
+    width: 183px;
+    height: 160px;
+    float: left; 
+}
+
+
+.midias, ul{
+    list-style-type: none;
+    margin:-14px 0px 0px 0px; 
+}
 
 #mapa {
     float: left;
@@ -230,6 +367,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	padding:0px 20px 0px 20px;
 }
 
+.titulos{
+	padding: 10px 27px;
+}
 
 .espaco{
 	width:100%;
@@ -260,9 +400,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 
 #login_top {
     float: right;
-    height: 62px;
-    margin: 4px 0 0;
+    height: 46px;
+    margin: 19px -8px 0 0;
     width: 224px;
+}
+
+.botao_login_top {
+    float: right;
+    height: 30px;
+    width: 70px;
 }
 
 .botao_cadastrar_top {
@@ -271,17 +417,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
     width: 145px;
 }
 
-.botao_login_top {
-    float: right;
-    height: 30px;
-    width: 79px;
-}
 
 #youtube{
-	width:141px;
-	height:31px;
-	float:left;
-	margin: 10px 0 0 8px;
+    width:141px;
+    height:45px;
+    float:left;
+    margin: 11px 0 0 8px;
 }
 
 .linha{
@@ -297,7 +438,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	height:2px;
 	border-top:1px solid #ccc;
 	float:left;
-	margin:14px 0px 14px 0px;
+	margin:18px 0px 18px 0px;
 }
 
 
@@ -313,6 +454,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 #bg_banner_home{
     height: 280px;
     width: 950px;
+     margin: 5px 0 0 4px;
 	border-bottom: 1px solid #E4E4E4;
 	 /* fallback */ 
 	 background-color: #f5f6f3; 
@@ -350,7 +492,7 @@ body{
 	margin:0;
 	padding:0;
 	color:#000;
-	/*background:#efefef url(css/img/grid.png) repeat center top;*/
+	background:#efefef url(css/img/grid.png) repeat center top;
 	font:normal 0.9em/150% 'Arimo', "Trebuchet MS", arial, verdana, sans-serif;
 	text-shadow: 0px 0px 1px transparent; /* google font pixelation fix */
 }
@@ -389,7 +531,7 @@ body{
 
 #link-top{
 	position: absolute;
-	top:10px;
+	top:175px;
 	right:10px;
 	*right:25px;/*IE 7 ONLY*/
 	left:auto;
@@ -413,10 +555,34 @@ table {
     margin: auto;
     text-align: center;
     width: 100%;
+    border: 0px solid #666666;
+    
 }	
 
 
 table.striped tbody th {
     text-align: left;
 }
+  
 
+.ac-container {
+    width: 90%;
+}
+
+/* Modal Aguarde ================================================== */
+
+.modal_aguarde{
+    display:none;
+}
+
+.modal_aguarde .img{
+    float:left;
+    padding:10px;
+}
+
+.modal_aguarde .txt{
+    font-family:Verdana,Arial;
+    font-size:16px;
+    font-weight:bold;
+    padding:15px;
+}
