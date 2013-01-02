@@ -569,6 +569,8 @@ table.striped tbody th {
     width: 90%;
 }
 
+/* Modal Aguarde ================================================== */
+
 .modal_aguarde{
     display:none;
 }
