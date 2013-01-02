@@ -42,34 +42,41 @@
     <div class="col_3">
 
         <div id="experimente_gratis_home">
-            <form accept-charset="UTF-8" action="authLogin" method="post" class="vertical">
+            <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth" method="post" class="vertical" onsubmit="return formLogin.validate(this, true, 'validaLogin');">
                 <!-- are cliente home -->
+                
+                <!-- Erros de validação no server -->
+                <div id="form_login_erros" class="notice warning" style="display: none;">
+                    <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
+                    <a href="#close" class="icon close" data-icon="x"></a>
+                </div>
+                <!-- Erros de validação no server -->          
+                
                 <div class="col_12">
-                    <label for="login">Login/E-mail:</label>
-                    <input id="login" name="login" type="text" />
+                    <label for="email">E-mail:</label>
+                    <input type="text" id="email" name="email" maxlength="80" class="required email" field_name="E-mail" />
                 </div>
                 <div class="col_7">        
-                    <label for="text2">Senha:</label>
-                    <input id="text2" type="text" />
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" maxlength="20" class="required" field_name="Senha" />
                 </div>
-
                 <div class="col_4">
                     <div id="botao_logar_home">
-                        <button class="small"><span class="icon gray small" data-icon="l" style="display: inline-block;"></span>Logar</button>
+                        <input type="submit" value="Logar" />
                     </div>
                 </div>
                 <div  align="center" class="col_12">
                     <div class="espaco"></div>
                     <div class="lembrar_senha">
-                        <input type="checkbox" id="check1" />
-                        <label for="check1" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label>
+                        <input type="checkbox" id="memorizar" name="memorizar" />
+                        <label for="memorizar" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label>
                     </div>
                 </div>
             </form>
             <div class="linha_home"></div>
             <div id="ainda_n_assinante">
                 <p>Ainda não é assinante?</p>
-                <button class="medium green">Experimente GrÃ¡tis!</button>
+                <button class="medium green">Experimente Grátis!</button>
             </div>
             <div class="linha_home"></div>
             <!-- are cliente home -->  
