@@ -183,6 +183,15 @@ button.blue, a.btn.blue, a.button.blue, input.blue[type="submit"], input.blue[ty
     text-shadow: 0 -1px 0 #1D6DC1;
 }
 
+ button .ativo{
+    background: -moz-linear-gradient(center top , #FFA84C 0%, #FF7B0D 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #FC730A;
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 #FC730A;
+}
+
+
+
 
 
 /*---------------------------------
@@ -266,7 +275,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	Novas classes (Foram criadas pra o site)
 -----------------------------------*/
 
-.caixa_plano
+.caixa_plano{
+    width: 233px;
+    height: 237px;
+    float: left;
+    margin-left: 27px;
+    text-align: center;
+}
 
 
 #planos_precos{
@@ -280,7 +295,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
     float: left;
     height: auto;
     margin-left: 90px;
-    width: 798px;
+    width: 705px;
+    margin-bottom: 40px;
 }
 
 
@@ -568,6 +584,15 @@ table.striped tbody th {
 .ac-container {
     width: 90%;
 }
+
+
+th, td {
+    border-bottom: 0px dotted #DDDDDD;
+    font-size: 0.9em;
+    padding: 7px 10px;
+    text-align: left;
+}
+
 
 /* Modal Aguarde ================================================== */
 
