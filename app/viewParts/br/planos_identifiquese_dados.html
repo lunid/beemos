@@ -1,0 +1,215 @@
+
+<div class="titulos">
+    <h4>Assinaturas SuperPro® Web</h4>
+    <br/>
+    <h5>Assine Já</h5>
+</div>
+<div class="texto">
+    <div class="col_3">
+       <button class="medium pill" data-content="#tooltipcontentID" title="" onclick="window.location.href='/interbits/planos';"><span class="icon" data-icon="^"></span>Escolha o Plano</button>
+    </div>
+    <div class="col_3">
+        <!-- Plano selecionado -->
+        <input type="hidden" id="idPlano" name="idPlano" value="{ID_PLANO}" />
+        
+       <button class="medium green pill" data-content="#tooltipcontentID" title="" onclick="javascript:identificacao();"><span class="icon" data-icon="u"></span>Identifique-se</button>
+    </div>
+    <div class="col_3">
+       <button class="medium orange pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="c"></span>Finaliza sua compra</button>
+    </div>
+    <div class="col_3">
+	</div>
+        <div id="fisica_juridica_cadastro">
+        Por favor, verifique se os campos preenchidos estão corretos e clique em prosseguir.<br/>
+        Os campos assinalados com asterisco (*) são obrigatórios.
+        </div>
+        
+    <div class="col_2">
+        <input type="radio" name="radio" id="radio1" />
+        <label for="radio" class="inline">Pessoa Física</label>   
+    </div>
+    <div class="col_2">
+        <input type="radio" name="radio" id="radio1" />
+        <label for="radio2" class="inline">Pessoa Jurídica</label>
+ 
+    </div>
+   
+
+
+    <div class="linha_home"></div>
+    <div id="pg_formulario">    
+    <div class="col_12">
+      <h5>Dados Cadastrais</h5>
+    </div>
+    <div class="col_5">
+        
+ <table>
+        <tr>
+          <td><label for="text1">* Nome Completo :</label></td>
+        </tr>
+        <tr>
+          <td><input id="text1" type="text" /></td>
+        </tr>
+        <tr>
+          <td><label for="text1">* Apelido :</label></td>
+        </tr>
+        <tr>
+          <td><input id="text1" type="text" /></td>
+        </tr>
+        <tr>
+          <td><label for="text1">CPF :</label></td>
+        </tr>
+        <tr>
+          <td><input id="text1" type="text" /></td>
+        </tr>
+        <tr>
+          <td><label for="select1">Data de Nascimento:</label></td>
+        </tr>
+        <tr>
+          <td>
+            <select id="select1">
+            <option value="0">-- Choose --</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+            <option value="3">Option 3</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>*Sexo:</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="col_3">
+            <input type="radio" name="radio" id="radio1" />
+            <label for="radio" class="inline">Masculino</label>   
+            </div>
+            <div class="col_3">
+            <input type="radio" name="radio" id="radio1" />
+            <label for="radio2" class="inline">Feminino</label>
+            </div> 
+          </td>
+        </tr>
+</table>
+         
+    </div>
+    <DIV class="col_1"></div>
+    <div class="col_5">
+        
+<table>
+  <tr>
+    <td colspan="3"><label for="text1">* E-mail :</label></td>
+  </tr>
+  <tr>
+    <td colspan="3"><input id="text1" type="text" /></td>
+  </tr>
+  <tr>
+    <td width="117"><label for="text1">* DDD:</label></td>
+    <td width="357"><label for="text1">Telefone residencial:</label></td>
+    <td width="130">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><input id="text1" type="text" /></td>
+    <td><input id="text1" type="text" /></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><label for="text1">* DDD:</label></td>
+    <td><label for="text1">Telefone celular:</label></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><input id="text1" type="text" /></td>
+    <td><input id="text1" type="text" /></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><label for="text1">* DDD:</label></td>
+    <td><label for="text1">Telefone/PABX:</label></td>
+    <td><label for="text1">Ramal:</label></td>
+  </tr>
+  <tr>
+    <td><input id="text1" type="text" /></td>
+    <td><input id="text1" type="text" /></td>
+    <td><input id="text1" type="text" /></td>
+  </tr>
+</table>
+        <div class="espaco"></div>
+<table>
+  <tr>
+    <td>* Senha (8 a 15 caracteres):<br/>Use letras e números:</td>
+    <td>Confirmar senha:<br/>Ao definir nova/alterar:</td>
+  </tr>
+  <tr>
+    <td><input id="text1" type="text" /></td>
+    <td><input id="text1" type="text" /></td>
+  </tr>
+</table> 
+    </div>
+    </div>   
+    
+    <ul class="tabs left">
+    <li><a href="#tabr1">Endereço</a></li>
+    <li><a href="#tabr2">Observações/Comentários</a></li>
+</ul>
+
+<div id="tabr1" class="tab-content">
+    
+    <table width="300">
+  <tr>
+    <td width="100"><label for="text1">* CEP :</label></td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td><input id="text1" type="text" /></td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><label for="text1">* Logradouro :</label></td>
+    <td width="80"><label for="text1">* Número :</label></td>
+  </tr>
+  <tr>
+    <td colspan="2"><input id="text1" type="text" /></td>
+    <td><input id="text1" type="text" /></td>
+  </tr>
+  <tr>
+    <td colspan="3"><label for="text1">Complemento :</label></td>
+  </tr>
+  <tr>
+    <td colspan="3"><input id="text1" type="text" /></td>
+  </tr>
+  <tr>
+    <td colspan="3"><label for="text1">Bairro :</label></td>
+  </tr>
+  <tr>
+    <td colspan="3"><input id="text1" type="text" /></td>
+  </tr>
+</table>
+<table>    
+  <tr>
+    <td ><label for="text1">* Cidade :</label></td>
+    <td colspan="2"><label for="text1">* UF :</label></td>
+  </tr>
+  <tr>
+    <td><input id="text1" type="text" /></td>
+    <td colspan="2"  width="40">
+        <select id="select1">
+        <option value="0">-- Choose --</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+        </select>
+    </td>
+  </tr>
+</table>
+    
+    
+</div>
+<div id="tabr2" class="tab-content">Tab2</div>
+
+<div class="col_12"  align="right">
+<button class="small" onclick="">Prosseguir</button>
+<button class="small" onclick="javascript:formContato.clearForm();">Limpar formulario</button>
+</div>
+    <hr/>
+ </div>
