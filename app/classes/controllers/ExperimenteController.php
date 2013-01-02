@@ -48,6 +48,7 @@
                 
                 //Recebe valores
                 $nome       = Request::post("nome");
+                $apelido    = Request::post("apelido");
                 $email      = strtolower(Request::post("email"));
                 $celular    = Util::limpaTel(Request::post("celular"));
                 $senha      = md5(Request::post("senha"));
@@ -68,9 +69,10 @@
                     //Dados a serem cadastrados
                     $arrDados = array(
                         "NOME"      => $nome,
+                        "APELIDO"   => $apelido,
                         "EMAIL"     => strtolower($email),
                         "CELULAR"   => Util::limpaTel($celular),
-                        "SENHA"     => $senha
+                        "PASSWD"    => $senha
                     );
                     
                     //Efetua cadastro
