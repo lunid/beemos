@@ -52,6 +52,7 @@
         
         static function limpaTel($tel){
             $tel = trim($tel);
+            $tel = str_replace(" ", "", $tel);
             $tel = str_replace("(", "", $tel);
             $tel = str_replace(")", "", $tel);
             $tel = str_replace("-", "", $tel);
