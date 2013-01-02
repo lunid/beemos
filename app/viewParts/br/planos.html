@@ -6,10 +6,17 @@
 </div>
 <div class="texto">
     <div class="col_3">
-       <button class="medium green pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="^"></span>Escolha o Plano</button>
+        <button class="medium green pill" data-content="#tooltipcontentID" title="" onclick="window.location.href='planos';">
+           <span class="icon" data-icon="^"></span>Escolha o Plano
+        </button>
     </div>
     <div class="col_3">
-       <button class="medium orange pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="u"></span>Identifique-se</button>
+        <!-- Plano selecionado -->
+        <input type="hidden" id="idPlano" name="idPlano" value="0" />
+        
+        <button class="medium orange pill" data-content="#tooltipcontentID" title="" onclick="javascript:identificacao();">
+           <span class="icon" data-icon="u"></span>Identifique-se
+        </button>
     </div>
     <div class="col_3">
        <button class="medium orange pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="c"></span>Finaliza sua compra</button>
@@ -64,7 +71,7 @@ CARTÃO: até 6x s/ juros de<br/>
 R$ 29,90 **<br/>
 ou R$ 179,40 à vista<br/>
 <br/>
-        <button class="blue">Assinar</button>
+<button class="blue" onclick="javascript:selPlano(1);">Assinar</button>
     </div>
     
         <div class="caixa_plano">
@@ -75,7 +82,7 @@ CARTÃO: até 6x s/ juros de<br/>
 R$ 43,90 **<br/>
 ou R$ 263,40 à vista<br/>
 <br/>
-<button class="blue">Assinar</button>
+<button class="blue"onclick="javascript:selPlano(2);">Assinar</button>
     </div>
     
         <div class="caixa_plano">
@@ -86,7 +93,7 @@ CARTÃO: até 6x s/ juros de<br/>
 R$ 65,90 **<br/>
 ou R$ 395,40 à vista<br/>
 <br/>
-<button class="blue">Assinar</button>
+<button class="blue" onclick="javascript:selPlano(3);">Assinar</button>
     </div>
     <div class="espaco"></div>
     <div class="col_12">

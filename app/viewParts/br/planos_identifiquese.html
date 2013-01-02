@@ -6,10 +6,13 @@
 </div>
 <div class="texto">
     <div class="col_3">
-       <button class="medium pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="^"></span>Escolha o Plano</button>
+       <button class="medium pill" data-content="#tooltipcontentID" title="" onclick="window.location.href='/interbits/planos';"><span class="icon" data-icon="^"></span>Escolha o Plano</button>
     </div>
     <div class="col_3">
-       <button class="medium green pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="u"></span>Identifique-se</button>
+        <!-- Plano selecionado -->
+        <input type="hidden" id="idPlano" name="idPlano" value="{ID_PLANO}" />
+        
+       <button class="medium green pill" data-content="#tooltipcontentID" title="" onclick="javascript:identificacao();"><span class="icon" data-icon="u"></span>Identifique-se</button>
     </div>
     <div class="col_3">
        <button class="medium orange pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="c"></span>Finaliza sua compra</button>
