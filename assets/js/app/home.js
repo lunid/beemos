@@ -2,14 +2,14 @@
 $(document).ready(function() {
     $('.pix_diapo').diapo();
     
-    //Formulário experimente
-    formExperimente = new Form();
-    formExperimente.init("form_experimente");
+    //Formulário Login
+    formLogin = new Form();
+    formLogin.init("form_login");
 });
 
 /**
  * Verifica retorno da operação de cadastro de visitantes
  */
-function verSalvarVisitante(ret, modalId){
+function validaLogin(ret, modalId){
     alert(ret.msg);
 }
