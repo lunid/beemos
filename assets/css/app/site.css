@@ -183,17 +183,6 @@ button.blue, a.btn.blue, a.button.blue, input.blue[type="submit"], input.blue[ty
     text-shadow: 0 -1px 0 #1D6DC1;
 }
 
- button .ativo{
-    background: -moz-linear-gradient(center top , #FFA84C 0%, #FF7B0D 100%) repeat scroll 0 0 transparent;
-    border: 1px solid #FC730A;
-    color: #FFFFFF;
-    text-shadow: 0 -1px 0 #FC730A;
-}
-
-
-
-
-
 /*---------------------------------
 	BLUE
 -----------------------------------*/
@@ -313,15 +302,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 }
 
 
-#ainda_n_assinante{
-    float: left;
-    height: 39px;
-    margin: -13px 0 13px 27px;
-    text-align: center;
-    width: 178px;
-}
-
-
 #titulo_depoimento{
     margin-left: 20px;
 }
@@ -394,17 +374,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 }
 
 #numero_questoes{
-	width:100%;
+	width:157px;
 	height:40px;
 	float:left;
-	margin:-6px 0px 0px 0px;
+	margin:-3px 3px 0;
 }
 
 #numero_questoes_enem{
-	width:100%;
+	width:206px;
 	height:40px;
 	float:left;
-	margin:7px 0px 0px 0px;
+	margin:6px 5px 0;
 }
 
 #logo{
@@ -418,14 +398,42 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
     float: right;
     height: 46px;
     margin: 19px -8px 0 0;
-    width: 224px;
+    width: 281px;
 }
 
 .botao_login_top {
     float: right;
     height: 30px;
     width: 70px;
+    margin-top: 3px;
 }
+
+.botao_experimente{
+    background-image: url("../../images/bg_botao_verde.jpg");
+    border-radius: 5px 5px 5px 5px;
+    font-size: 12px;
+    height: 19px;
+    margin: 0 auto;
+    padding: 5px 0 7px;
+    text-align: center;
+    width: 124px
+}
+
+.botao_experimente a{
+    color: #fff;
+}
+
+.botao_experimente a:hover{
+    background-image: url("../../images/bg_botao_verde_ativo.jpg");
+    height: 20px;
+    padding: 8px;
+    width: 136px;
+    margin:5px auto 0px;
+    border-radius: 5px 5px 5px 5px;
+    color: #fff;
+}
+
+
 
 .botao_cadastrar_top {
     float: right;
@@ -454,23 +462,26 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	height:2px;
 	border-top:1px solid #ccc;
 	float:left;
-	margin:18px 0px 18px 0px;
+	margin:15px 0px 15px 0px;
 }
 
 
 #bg_enem{
-	width: 50%;
-	height: 58px;
-	background-color: #F0F0F0;
-	float: left;
-	padding-left: 12px;
-	margin-bottom: 6px;   
+        background-color: #F0F0F0;
+        float: left;
+        height: 56px;
+        margin-bottom: 6px;
+        padding-left: 15px;
+        width: 47%;
 }
 
 #bg_banner_home{
-    height: 280px;
+    height: auto;
+    min-height: 280px;
     width: 950px;
      margin: 5px 0 0 4px;
+     position: relative;
+        display: table;
 	border-bottom: 1px solid #E4E4E4;
 	 /* fallback */ 
 	 background-color: #f5f6f3; 
@@ -492,6 +503,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	height:auto;
 	float:left;
 	margin: 6px 0 0 -13px;
+        position: relative;
 }
 
 
@@ -579,20 +591,17 @@ table {
 table.striped tbody th {
     text-align: left;
 }
-  
-
-.ac-container {
-    width: 90%;
-}
-
 
 th, td {
     border-bottom: 0px dotted #DDDDDD;
     font-size: 0.9em;
-    padding: 7px 10px;
+    padding: 0px 6px;
     text-align: left;
 }
 
+.home_assinate{
+    text-align: center;
+}
 
 /* Modal Aguarde ================================================== */
 

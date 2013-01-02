@@ -39,52 +39,69 @@
         </section> 
         <!-- fim banner -->
     </div>
-    <div class="col_3">
 
-        <div id="experimente_gratis_home">
-            <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth" method="post" class="vertical" onsubmit="return formLogin.validate(this, true, 'validaLogin');">
-                <!-- are cliente home -->
-                
-                <!-- Erros de validação no server -->
-                <div id="form_login_erros" class="notice warning" style="display: none;">
-                    <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
-                    <a href="#close" class="icon close" data-icon="x"></a>
-                </div>
-                <!-- Erros de validação no server -->          
-                
-                <div class="col_12">
-                    <label for="email">E-mail:</label>
-                    <input type="text" id="email" name="email" maxlength="80" class="required email" field_name="E-mail" />
-                </div>
-                <div class="col_7">        
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" maxlength="20" class="required" field_name="Senha" />
-                </div>
-                <div class="col_4">
-                    <div id="botao_logar_home">
-                        <input type="submit" value="Logar" />
-                    </div>
-                </div>
-                <div  align="center" class="col_12">
-                    <div class="espaco"></div>
-                    <div class="lembrar_senha">
-                        <input type="checkbox" id="memorizar" name="memorizar" />
-                        <label for="memorizar" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label>
-                    </div>
-                </div>
-            </form>
-            <div class="linha_home"></div>
-            <div id="ainda_n_assinante">
-                <p>Ainda não é assinante?</p>
-                <a href="/interbits/experimente">Experimente Grátis!</a>
+    <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth" method="post" class="vertical" onsubmit="return formLogin.validate(this, true, 'validaLogin');">
+    <!-- are cliente home -->  
+        <!-- Erros de validação no server -->
+        <div id="form_login_erros" class="notice warning" style="display: none;">
+        <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
+        <a href="#close" class="icon close" data-icon="x"></a>
+        </div>
+        <!-- Erros de validação no server --> 
+        <div id="experimente_gratis_home">              
+<table>
+  <tr>
+    <td colspan="2">
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" name="email" maxlength="80" class="required email" field_name="E-mail" />
+    </td>
+  </tr>
+  <tr>
+      <td><label  for="senha">Senha:</label></td>
+  </tr>
+  <tr>
+    <td>
+       
+        <input  type="password" id="senha" name="senha" maxlength="20" class="required" field_name="Senha" />
+    </td>
+        <td>
+     <input type="submit" value="Logar" class="small" />  
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <input type="checkbox" id="memorizar" name="memorizar" />
+    <label for="memorizar" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label></td>
+  </tr>
+   <tr>
+       <td colspan="2">
+           <div class="linha_home"></div>
+       </td>
+  </tr>
+    <tr>
+        <td colspan="2" class="home_assinate">
+    <p>Ainda não é assinante?</p>
+    </td>
+  </tr>
+  <tr>
+        <td colspan="2" class="home_assinate">
+            <div class="botao_experimente">
+    <a href="/interbits/experimente">Experimente Grátis!</a>
             </div>
-            <div class="linha_home"></div>
+    </td>
+  </tr>
+   <tr>
+       <td colspan="2">
+           <div class="linha_home"></div>
+       </td>
+  </tr>
+  
+</table>
+        </div>
             <!-- are cliente home -->  
         </div>
 
-    </div>
 
-</div>
 
 <!-- box esquerda -->
 <div class="col_9">    
@@ -107,6 +124,7 @@
             <ul class="breadcrumbs"><li><a href="">Saiba mais</a></li></ul>
             <button class="medium"><span class="icon medium" data-icon="$"></span>Comprar agora</button><br />
         </div>
+    </div>  
         <div class="col_4">
             <div class="col_5"><img src="assets/plugins/diapo/images/plano_alunos.jpg" width="76" height="55"></div>
             <div class="col_6"><h4>Alunos</h4></div>
@@ -115,18 +133,18 @@
 			Seu professor enviou-lhe uma Lista de Exercícios?
             <p><a href="">Clique aqui para abri-la</a></p>
         </div>
-    </div>
+    </div>       
     <!-- fim planos -->
     <div class="espaco"></div>
     <div class="linha"></div>
     <!-- enem -->
-    <div class="col_12">
-        <div class="col_3">
+<div class="col_12">
+        <div class="col_6">
             <div id="numero_questoes">
                 <h1>104180</h1>
             </div>
             <div class="col_3"><h5>Questões disponíveis</h5></div>
-         
+         </div>
           <div id="bg_enem">  
             <div class="col_4"><h5>Prepare-se para o ENEM</h5></div>
             <div class="col_8">
@@ -135,9 +153,11 @@
                 </div>
             </div>
         </div> 
-    </div>
+    
+</div>         
     <!-- fim enem -->
     <div class="linha"></div>
+    <div class="espaco"></div>
 
 </div>
 <!-- fim box esquerda -->
@@ -161,6 +181,16 @@
     <div align="center" class="col_12">
         <img src="assets/images/doc.jpg" width="168" height="76">
     </div>
+    
+        <div class="linha_home"></div>
+
+    <div align="center" class="col_12">
+        <img src="assets/images/doc.jpg" width="168" height="76">
+    </div>
+    
+    <div class="linha_home"></div>    
+        
+</div>    
     <!-- fim box direita -->
         <!-- blog -->
         <div class="col_12">
