@@ -593,7 +593,7 @@ body{
 -----------------------------------*/
 
 table {
-    border-collapse: collapse;
+    border-collapse: separate;
     margin: auto;
     text-align: center;
     width: 100%;
