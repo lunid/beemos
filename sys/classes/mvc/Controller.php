@@ -174,6 +174,15 @@
             }
         }
         
+
+        function getView(){
+            return new View();
+        }                
+        
+        function getViewPart($pathViewHtml){
+            return new ViewPart($pathViewHtml);            
+        }
+        
         function __set($var,$value){
            if (
                 isset($value) && is_string($value) && 
@@ -211,6 +220,6 @@
                    foreach($arrInc as $inc)  $this->arrJsCssInc[$ext][] = $inc;
                }
            }
-        }
+        }        
     }
 ?>

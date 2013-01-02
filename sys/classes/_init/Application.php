@@ -15,7 +15,7 @@
     require_once('sys/classes/util/DI.php');
     require_once('sys/classes/util/Dic.php');
     require_once('sys/classes/security/Token.php');
-    require_once('sys/classes/security/Auth.php');
+    require_once('sys/classes/security/Auth.php');    
     
     use sys\classes\util\DI;
     use sys\classes\mvc as MVC;
@@ -90,10 +90,18 @@
             $objController  = new $controller;
             if (!method_exists($objController,$method)) die('Método '.$controller.'Controller->'.$method.'() não existe.');
             if (method_exists($objController, 'before')) {
-                $objController->before();//Executa o método before(), caso esteja implementado.
+                try {
+                    $objController->before();//Executa o método before(), caso esteja implementado.
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
             }
                  
-            $objController->$method();//Executa o Controller->method()            
+            try {
+                $objController->$method();//Executa o Controller->method()            
+            } catch(\Exception $e) {          
+                $objController->actionError($e);
+            }
         }
         
         private static function processaUrl(){
@@ -320,13 +328,14 @@
         public static function loadClass($class){   
             //Tratamento para utilização do Hybridauth.
             if($class == 'FacebookApiException') return false; 
-
+           
+            
             $urlInc = str_replace("\\", "/" , $class . '.php');                           
             
             if (isset($class) && file_exists($urlInc)){          
                 require_once($urlInc);  
                 //$obj = DI::loadMapXml($class);
-                //die();
+                //die();            
             } else {                          
                die(" Classe $class não encontrada");
             }                      

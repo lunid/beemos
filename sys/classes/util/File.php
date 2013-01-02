@@ -23,5 +23,35 @@
             }
             return TRUE;
         }        
+        
+        public static function appendOrCreate($pathFile,$content){    
+            $save = FALSE;
+            if (strlen($pathFile) > 0) {
+                $folderLogExists    = FALSE;
+                $pathParts          = pathinfo($pathFile);
+                $dirName            = $pathParts['dirname'];
+                $folderLog          = \Url::physicalPath($dirName);
+                
+                if (!is_dir($folderLog)) {
+                    //Diretório informado ainda não existe. Tenta criá-lo.
+                    $folderLogExists = mkdir($folderLog);                        
+                } else {
+                    //Pasta de logs já existe
+                    $folderLogExists = TRUE;
+                }           
+                
+                if ($folderLogExists) {
+                    //Diretório informado existe ou foi criado com sucesso.
+                    $fh = fopen($pathFile, 'a');
+                    if ($fh !== FALSE) {
+                        $content = (string)$content;
+                        fwrite($fh, $content);                    
+                        fclose($fh);  
+                        $save = TRUE;
+                    }
+                }
+            }
+            return $save;
+        }
     }
 ?>

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <Login>
-        <Login::actionProcessAuth>
-            <msg id='ERR_LOGIN'>Usuário e/ou senha incorretos.</msg>               
-            <msg id='ERR_PARAMS_REQUIRED'>Usuário e/ou senha não informados.</msg>
-            <msg id='ERR_TOKEN'>A tentativa de autenticar o usuário informado falhou. Por favor, tente novamente.</msg>
-        </Login::actionProcessAuth>        
-    </Login>
+    <errors>
+        <error id='LOGIN'>Usuário e/ou senha incorretos.</error>               
+        <error id='PARAMS_REQUIRED'>Usuário e/ou senha não informados.</error>
+        <error id='TOKEN'>A tentativa de autenticar o usuário informado falhou. Por favor, tente novamente.</error>
+    </errors>        
 </root>

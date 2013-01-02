@@ -16,21 +16,27 @@
                 $arrParts           = explode('/',$pathViewHtml);
                 $numParts           = count($arrParts);
                 $this->layoutName   = (is_array($arrParts) && $numParts > 1)?$arrParts[$numParts-1]:$pathViewHtml; 
+                
+                //Coloca a extensão no nome do arquivo, caso não tenha sido informada.                
                 $keyHtm             = strpos($pathViewHtml,'.htm');//Verifica se o path possui extensão .htm
                 $keyHtml            = strpos($pathViewHtml,'.html');//Verifica se o path possui extensão .html
                 $extHtml            = ($keyHtm !== false && $keyHtml !== false)?'':'.html';//Coloca a extensão html caso não tenha sido informada
+                
+                $folderViews        = \LoadConfig::folderViews();      
                 $lang               = \Application::getLanguage();
                 $module             = \Application::getModule();
-                $folderViews        = \LoadConfig::folderViews();      
+                
                 
                 if (strlen($lang) > 0) $lang = $lang.'/';
-                $viewFile = $module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;    
-                
+                $viewFile       = $module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template no módulo atual    
+                $viewFileCommon = 'common/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template na pasta common   
+
                 try {                    
-                    if (File::exists($viewFile)){
+                    if (file_exists($viewFile)){
                         //Arquivo existe.
-                        $this->bodyContent  = file_get_contents($viewFile);
-                        $this->viewFile     = $viewFile;       
+                        $this->setBodyContent($viewFile);    
+                    } elseif (File::exists($viewFileCommon)){                        
+                        $this->setBodyContent($viewFileCommon); 
                     }
                 } catch(\Exception $e){
                     $this->showErr('Erro ao instanciar a view solicitada -> '.$viewFile,$e);                    
@@ -38,6 +44,11 @@
             } else {
                 //die('ViewPart(): Impossível continuar. O nome referente ao conteúdo HTML não foi informado'); 
             }
+        }
+        
+        private function setBodyContent($viewFile){
+            $this->bodyContent  = file_get_contents($viewFile);
+            $this->viewFile     = $viewFile;                 
         }
         
         /**

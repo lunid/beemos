@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ESTRUTURA XML DE DICIONÁRIO DE ERROS:
+É recomendável cirar um arquivo XML com a estrutura atual para cada Controller, em cada módulo do sistema.
+Por padrão, os arquivos de dicionário de erros devem ficar na pasta dic/.
+
+Mensagens de erros comuns a dois ou mais módulos:
+Utilize o arquivo sys/dic/eException.xml para guardar erros comuns.
+-->
+<root>
+    <errors>
+        <error id='ERRO_A'>Mensagem referente ao erro A</error>               
+        <error id='ERRO_B'>Mensagem referente ao erro B</error>
+        <error id='ERRO_C'>Mensagem referente ao erro C</error>
+    </errors>        
+</root>

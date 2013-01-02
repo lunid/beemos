@@ -144,5 +144,17 @@
             $folderComps    = \LoadConfig::folderComps();       
             $classPath      = "{$folderSys}/common/{$folderComps}/{$folderComponent}/classes/Lib{$class}.php";
         }
+        
+        public static function getPathTemplate($tplName,$module){
+            $objModule  = new \Module($module);
+            $newUrlTpl  = $objModule->tplLangFile($tplName);
+            $folderTpl  = \LoadConfig::folderTemplate();                  
+            $pathTpl    = $folderTpl.'/'.$tplName;  
+            return $pathTpl;            
+        }
+        
+        public static function findFile($path){
+            
+        }
     }
 ?>

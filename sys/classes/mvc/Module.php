@@ -12,6 +12,7 @@
             return $this->module;
         }
 
+        
         function tplLangFile($path){
             $rootModule     = $this->viewPartsLangFile('');
             $tplFolder      = \LoadConfig::folderTemplate(); 

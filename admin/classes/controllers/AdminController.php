@@ -28,7 +28,7 @@
         function before(){
             $objRedirect    = new Redirect('auth/redirect.xml');
             $redirect       = $objRedirect->LOGOUT;   
-            \Auth::checkAuth($redirect);//Se a sessão NÃO estiver ativa redireciona para a página de $redirect.
+            //\Auth::checkAuth($redirect);//Se a sessão NÃO estiver ativa redireciona para a página de $redirect.
         }
     }
 

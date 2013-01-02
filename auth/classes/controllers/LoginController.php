@@ -1,19 +1,16 @@
 <?php
-    
-    //use \auth\classes\models\AuthModel;
-    use \sys\classes\mvc\View; 
-    use \sys\classes\mvc\ViewPart; 
-    use \sys\classes\security\Token;
-    use \sys\classes\util\Request;
+           
+    use \sys\classes\mvc as Mvc;    
+    use \sys\classes\security\Token;    
     use \auth\classes\models\AuthModel;
-    use \sys\classes\util\Dic;
-    use \sys\classes\util\Redirect;
+    use \auth\classes\helpers\Error;
+    use \sys\classes\util;
     
-    class Login {
+    class Login extends Mvc\ExceptionController {
         
-        public static function actionFormAuth(){
+        function actionFormAuth(){
             //Formulário de autenticação
-            $objViewPart = new ViewPart('formAuth');
+            $objViewPart = Mvc\MvcFactory::getViewPart('formAuth');
                 
             $objTk              = new Token(2);
             $tkField            = $objTk->protectForm();
@@ -26,7 +23,7 @@
             }
             
             //Template
-            $tpl                = new View();
+            $tpl                = Mvc\MvcFactory::getView();
             $tpl->setLayout($objViewPart);
             $tpl->TITLE         = 'Autenticação';
             $tpl->ERROR_MESSAGE = $divErrorMessage;
@@ -42,12 +39,12 @@
         /**
          * Recebe dados de acesso (login, senha e token) e faz a autenticação.
          */
-        public static function actionProcessAuth(){
-                $user           = Request::post('user');
-                $passwd         = Request::post('passwd'); 
-                $token          = Request::post('token');
+       function actionProcessAuth(){
+                $user           = util\Request::post('user');
+                $passwd         = util\Request::post('passwd'); 
+                $token          = util\Request::post('token');
                        
-                $objRedirect    = new Redirect('auth/redirect.xml');
+                $objRedirect    = new util\Redirect('auth/redirect.xml');
                 $redirect       = $objRedirect->FORM;
                 
                 //Verifica se o token é válido.
@@ -60,7 +57,7 @@
                         $admin          = $objAuthModel->passwdAdmin($passwdMd5);
                         $objUser        = $objAuthModel->authAcesso($user,$passwdMd5,$admin);
                         
-                        if ($objUser !== FALSE && 1==0) {
+                        if ($objUser !== FALSE) {
                             //Autenticação feita com sucesso!
                             $idUser = $objUser->id;
                             $perfil = $objUser->perfil;
@@ -69,20 +66,18 @@
                             \Auth::initSession($idUser);//Inicializa variáveis da sessão atual.
                             $redirect = $objRedirect->$perfil;                            
                         } else {
-                            //Autenticação falhou.
-                            $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_LOGIN',FALSE);
-                            \Auth::setMessage($msgErr);
+                            //Autenticação falhou.      
+                            $msgErr = Error::eLogin('LOGIN');                                                             
+                            throw new \Exception($msgErr);
                         }
                    } else {
-                       //Parâmetros obrigatórios não informados.
-                       $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_PARAMS_REQUIRED',FALSE);
-                       \Auth::setMessage($msgErr);                        
+                        $msgErr = Error::eLogin('PARAMS_REQUIRED');                                                             
+                        throw new \Exception($msgErr);                                            
                    }
                 } else {
-                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_TOKEN',FALSE);
-                    \Auth::setMessage($msgErr);    
+                    $msgErr = Error::eLogin('TOKEN');                                                             
+                    throw new \Exception($msgErr);                      
                 }      
-                
                 Header('Location:'.$redirect);               
         }        
     }
