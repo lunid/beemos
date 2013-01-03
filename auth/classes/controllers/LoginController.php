@@ -67,15 +67,17 @@
                             $redirect = $objRedirect->$perfil;                            
                         } else {
                             //Autenticação falhou.      
-                            $msgErr = Error::eLogin('LOGIN');                                                             
+                            $msgErr = Error::eLogin('LOGIN');          
+                            Error::log($msgErr);//Grava um log de erro em data/logs/log_dataAtual.log
                             throw new \Exception($msgErr);
                         }
                    } else {
-                        $msgErr = Error::eLogin('PARAMS_REQUIRED');                                                             
+                        $msgErr = Error::eLogin('PARAMS_REQUIRED');                            
                         throw new \Exception($msgErr);                                            
                    }
                 } else {
-                    $msgErr = Error::eLogin('TOKEN');                                                             
+                    $msgErr = Error::eLogin('TOKEN');  
+                    Error::log($msgErr);//Grava um log de erro em data/logs/log_dataAtual.log
                     throw new \Exception($msgErr);                      
                 }      
                 Header('Location:'.$redirect);               
