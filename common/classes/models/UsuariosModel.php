@@ -702,7 +702,7 @@
             $ret->msg       = "Falha ao salvar usuário! Tente mais tarde.";
             
             //Tabela de Visitantes
-            $tbVisitante = new TB\Visitante();
+            $tbVisitante = new TB\User();
             
             //Valida e-mail
             if(!isset($arrDados['EMAIL'])){
@@ -720,13 +720,20 @@
             }
             
             //Atribui dados a serem salvos
-            $tbVisitante->NOME          = isset($arrDados['NOME']) ? $arrDados['NOME'] : '';
-            $tbVisitante->EMAIL         = isset($arrDados['EMAIL'])? $arrDados['EMAIL'] : '';
-            $tbVisitante->CELULAR       = isset($arrDados['CELULAR']) ? $arrDados['CELULAR'] : '';
-            $tbVisitante->SENHA         = isset($arrDados['SENHA']) ? $arrDados['SENHA'] : '';
-            $tbVisitante->FB_ID         = isset($arrDados['FB_ID']) ? $arrDados['FB_ID'] : '';
-            $tbVisitante->GOOGLE_ID     = isset($arrDados['GOOGLE_ID']) ? $arrDados['GOOGLE_ID'] : '';
-            $tbVisitante->DATA_REGISTRO = date("Y-m-d H:i:s");
+            $tbVisitante->ID_USER_PERFIL        = isset($arrDados['ID_USER_PERFIL']) ? $arrDados['ID_USER_PERFIL'] : 1;
+            $tbVisitante->ID_CAMPANHA_ORIG_CAD  = isset($arrDados['ID_CAMPANHA_ORIG_CAD']) ? $arrDados['ID_CAMPANHA_ORIG_CAD'] : 0;
+            $tbVisitante->ID_MATRIZ             = isset($arrDados['ID_MATRIZ']) ? $arrDados['ID_MATRIZ'] : 0;
+            $tbVisitante->NOME                  = isset($arrDados['NOME']) ? $arrDados['NOME'] : '';
+            $tbVisitante->APELIDO               = isset($arrDados['APELIDO']) ? $arrDados['APELIDO'] : '';
+            $tbVisitante->EMAIL                 = isset($arrDados['EMAIL'])? $arrDados['EMAIL'] : '';
+            $tbVisitante->DDD_CELULAR           = isset($arrDados['CELULAR']) ? substr($arrDados['CELULAR'], 0, 2) : '';
+            $tbVisitante->CELULAR               = isset($arrDados['CELULAR']) ? substr($arrDados['CELULAR'], 2) : '';
+            $tbVisitante->LOGIN                 = isset($arrDados['LOGIN']) ? $arrDados['LOGIN'] : '';
+            $tbVisitante->PASSWD                = isset($arrDados['PASSWD']) ? $arrDados['PASSWD'] : '';
+            $tbVisitante->PASSWD_TEMPORARY      = isset($arrDados['PASSWD_TEMPORARY']) ? $arrDados['PASSWD_TEMPORARY'] : '';
+//            $tbVisitante->FB_ID         = isset($arrDados['FB_ID']) ? $arrDados['FB_ID'] : '';
+//            $tbVisitante->GOOGLE_ID     = isset($arrDados['GOOGLE_ID']) ? $arrDados['GOOGLE_ID'] : '';
+            $tbVisitante->DATA_REGISTRO         = date("Y-m-d H:i:s");
             
             $tbVisitante->save();
             

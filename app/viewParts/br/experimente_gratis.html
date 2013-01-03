@@ -17,19 +17,22 @@
                 <!-- Erros de validação no server -->
                 
                 <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" class="required" field_name="Nome" />
+                <input type="text" id="nome" name="nome" class="required" field_name="Nome" maxlength="100" />
+                
+                <label for="apelido">Apelido:</label>
+                <input type="text" id="apelido" name="apelido" maxlength="25" />
 
                 <label for="email">E-mail</label>
-                <input type="text" id="email" name="email" class="required email" field_name="E-mail" />
+                <input type="text" id="email" name="email" class="required email" field_name="E-mail" maxlength="80" />
                 
                 <label for="celular">Celular</label>
                 <input type="text" id="celular" name="celular" class="required" field_name="Celular" />
 
                 <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" field_name="Senha" class="required" />
+                <input type="password" id="senha" name="senha" field_name="Senha" class="required" maxlength="10" />
 
                 <label for="c_senha">Confirme a Senha</label>
-                <input type="password" id="c_senha" name="c_senha" class="required" field_name="Confirmar Senha" />
+                <input type="password" id="c_senha" name="c_senha" class="required" field_name="Confirmar Senha" maxlength="10" />
                 <div class="espaco"></div>
 
                 <div class="col_12">
