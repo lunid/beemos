@@ -5,6 +5,7 @@ use \sys\classes\mvc\View;
 use \sys\classes\util as util;
 
 class Index {
+    
     function actionIndex(){
         try {
             $objConcat = new util\Concat('email/teste.html'); 
