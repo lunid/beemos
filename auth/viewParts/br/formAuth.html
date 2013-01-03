@@ -1,10 +1,12 @@
 <div id="wrap" class="clearfix">
-    <form accept-charset="UTF-8" action="authLogin" method="post" class="vertical">
-        <h1>Assine já <a href="https://github.com/plans">Planos & Preços</a></h1>
+    <form accept-charset="UTF-8" action="/interbits/auth/login/processAuth" method="post" id="formAuth" name="formAuth" class="vertical" onsubmit="checkAuth(this);return false">
+        <h3>Assine já</h3>
         <div class="col_6 column">
             <div class="inner">                    
                 {TOKEN_FIELD}                
                 <div>
+                    <!-- Error -->
+                    {ERROR_MESSAGE}
                     <!-- Text Field -->
                     <label for="user">Usuário ou e-mail</label>                        
                     <input autocapitalize="off" type="text" autofocus="autofocus" id="user" name="user" />                       

@@ -12,6 +12,7 @@
             return $this->module;
         }
 
+        
         function tplLangFile($path){
             $rootModule     = $this->viewPartsLangFile('');
             $tplFolder      = \LoadConfig::folderTemplate(); 
@@ -37,6 +38,6 @@
             $folderViews  = \LoadConfig::folderViews();//viewParts
             $url          = $module.'/'.$folderViews.'/'.$path;
             return $url;
-        }
+        }       
     }
 ?>

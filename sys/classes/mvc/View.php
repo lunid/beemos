@@ -3,9 +3,9 @@
     namespace sys\classes\mvc;
     use \sys\classes\util\Dic;
     use \sys\classes\util\Plugin;
-    use \sys\classes\mvc\Header;
+    //use \sys\classes\mvc\Header;
     use \sys\classes\util\File;
-    use \sys\classes\mvc\ViewPart;
+    //use \sys\classes\mvc\ViewPart;
     
     class View extends ViewPart {
 
@@ -30,6 +30,86 @@
             $fileTpl = \LoadConfig::defaultTemplate();                 
             $this->setTemplate($fileTpl);
         }
+        
+        /**
+         * Define um novo template html para a view atual.
+         * O arquivo informado deve existir na pasta padrão de template, previamente definida no arquivo config.xml.
+         * 
+         * Exemplo:
+         * $objView->setTemplate('novoModelo.html');
+         * 
+         * @param string $fileTpl Deve conter um nome ou path de um arquivo contendo a extensão (htm ou html)
+         */
+        function setTemplate($fileTpl=''){
+            $pathTpl = '';
+            if (strlen($fileTpl) > 0) {
+                $physicalTplPath    = \Url::physicalPath($fileTpl);
+                if (file_exists($physicalTplPath)) {
+                    $pathTpl = $fileTpl;
+                } else {
+                    $folderTpl          = \LoadConfig::folderTemplate();                  
+                    $pathTpl            = $folderTpl.'/'.$fileTpl;                     
+                    $pathTpl            = str_replace('//', '/', $pathTpl);                            
+                }
+            }
+            
+            $this->pathTpl  = $pathTpl;
+        }
+                
+        /**
+         * Retorna um nome de arquivo a ser usado como template. Caso um arquivo de Template não tenha sido informado 
+         * um template padrão (blank.html) é criado no módulo atual, pasta de templates.
+         * 
+         * @return string
+         * @throws \Exception Caso ocorra erro ao tentar criar um template padrão. 
+         */
+        private function getTemplate(){
+            $pathTpl        = $this->pathTpl;
+            if (strlen($pathTpl) == 0 || 1==1) {
+                if (!$this->createNewTemplate()) {
+                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_CREATE_TEMPLATE'); 
+                    $msgErr = str_replace('{PATH_TPL}',$pathTemplate,$msgErr);
+                    throw new \Exception( $msgErr );                                           
+                }
+            } 
+            return $pathTpl;
+        }                   
+        
+        /**
+         * Cria um novo arquivo template caso ainda não exista e guarda o nome em $pathTpl.
+         * 
+         * Exemplo:
+         * Caso o arquivo seja criado em modulo/viewParts/br/templates/blank.html, o valor da 
+         * variávei $pathTpl será apenas templates/blank.html.
+         * 
+         * @return boolean Retorna TRUE caso o arquivo tenha sido criado com sucesso.
+         */
+        private function createNewTemplate(){
+            $tplExists      = FALSE;
+            $blankFilename  = 'blank.html';
+            $objModule      = MvcFactory::getModule();
+            $pathTemplate   = $objModule->tplLangFile($blankFilename); 
+            $physicalPath   = \Url::physicalPath($pathTemplate);
+            if (file_exists($physicalPath)){
+                //O arquivo padrão não existe. Não precisa ser criado.
+                $tplExists = TRUE;
+            } else {
+                //O arquivo padrão ainda não existe. Deve ser criado.
+                $fp = @fopen($pathTemplate, "wb+");               
+                if ($fp !== FALSE) {
+                    fwrite($fp, "<div>{BODY}</div>");
+                    fclose($fp);
+                    $tplExists = TRUE;
+                }
+            }
+            
+            if ($tplExists) {
+                $folderTpl      = \LoadConfig::folderTemplate();                  
+                $this->pathTpl  = $folderTpl.'/'.$blankFilename; 
+            }
+            return $tplExists;
+        }
+        
         
         /**
          * Método usado para gerar um link para um controller/action no módulo atualmente ativo.
@@ -57,63 +137,8 @@
            $arrUrl = array('module'=>$module,'controller'=>$controller,'action'=>$action);           
            $url = \Url::setUrl($arrUrl);               
            return $url;
-        }        
+        }                        
         
-        /**
-         * Define um novo template html para a view atual.
-         * O arquivo informado deve existir na pasta padrão de template, previamente definida no arquivo config.xml.
-         * 
-         * Exemplo:
-         * $objView->setTemplate('novoModelo.html');
-         * 
-         * @param string $fileTpl Deve conter um nome de arquivo contendo a extensão (htm ou html)
-         */
-        function setTemplate($fileTpl=''){
-            $pathTpl = '';
-            if (strlen($fileTpl) > 0) {
-                $folderTpl   = \LoadConfig::folderTemplate();                  
-                $pathTpl     = $folderTpl.'/'.$fileTpl;                     
-                $pathTpl     = str_replace('//', '/', $pathTpl);                            
-            }
-            
-            $this->pathTpl  = $pathTpl;
-        }
-        
-        
-        /**
-         * Retorna um template válido. Caso um arquivo de Template não tenha sido informado 
-         * um template padrão (blank.html) é criado no módulo atual, pasta de templates.
-         * 
-         * @return string
-         * @throws \Exception Caso ocorra erro ao tentar criar um template padrão. 
-         */
-        private function getTemplate(){
-            $pathTpl        = $this->pathTpl;
-            $fileTplDefault = 'blank.html';
-            
-            if (strlen($pathTpl) == 0) {
-                //Um template não foi informado. Gera um arquivo template padrão.  
-                $objModule  = new \Module();
-                $newUrlTpl  = $objModule->tplLangFile($fileTplDefault);
-                $folderTpl   = \LoadConfig::folderTemplate();                  
-                $pathTpl     = $folderTpl.'/'.$fileTplDefault; 
-                
-                if (!file_exists($newUrlTpl)) {
-                    $content = "<div>{BODY}</div>";
-                    $fp = @fopen($newUrlTpl, "wb+");   
-                    if ($fp !== FALSE) {
-                        fwrite($fp, $content);
-                        fclose($fp);                                             
-                    } else {
-                        $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_CREATE_TEMPLATE'); 
-                        $msgErr = str_replace('{PATH_TPL}',$pathTpl,$msgErr);
-                        throw new \Exception( $msgErr );                           
-                    }                
-                }
-                $this->pathTpl = $pathTpl;
-            } 
-            return $pathTpl;
-        }          
         
         /**
          * Desabilita a inclusão da lista de javascript definida em config.xml, conforme o nó abaixo:
@@ -215,16 +240,14 @@
                 $this->getObjHeader();//Inicializa um objeto Header
                 
                 $pathTpl                        = $this->getTemplate();                  
-                $objViewTpl                     = new ViewPart($pathTpl);
+                $objViewTpl                     = MvcFactory::getViewPart($pathTpl);
                 $objViewTpl->BODY               = $objViewPart->render();                               
                 $this->bodyContent              = $objViewTpl->render();
                 $this->layoutName               = $objViewPart->layoutName;                
                 
                 if (strlen($pathTpl) > 0){    
                     
-                    //Configurações lidas do arquivo config.xml:   
-                    //$objHeader  = $this->getObjHeader(); 
-                    //$objHeader  = new Header();            
+                    //Configurações lidas do arquivo config.xml:           
                     $plugins    = '';                    
                         
                     if (!$this->includeCfgAllOff) {    
@@ -323,17 +346,19 @@
          * 
          * @return string Conteúdo HMTL
          */
-        function render($layoutName='',$objMemCache=NULL){    
-            //$this->objHeader->getMemos();
+        function render($layoutName='',$objMemCache=NULL){                
+            $css    = '';
+            $js     = '';
+            
             if (isset($layoutName) && strlen($layoutName) > 0) {
                 $this->layoutName   = $layoutName;                
-            }            
             
-            /*
-             * Gera as tags de inclusões js e css.             
-             */
-            $css                       = $this->getIncludesCss();
-            $js                        = $this->getIncludesJs();            
+                /*
+                 * Gera as tags de inclusões js e css.             
+                 */
+                $css  = $this->getIncludesCss();
+                $js   = $this->getIncludesJs();                   
+            }                     
             
             $bodyContent               = trim($this->bodyContent);
             $params                    = $this->params;                                       
