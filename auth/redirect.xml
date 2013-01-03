@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Opções de redirect de acordo com o perfil do usuário.
+Arquivo necessário em um módulo que possui formulário para autenticação via login e senha.
+Configure aqui os redirecionamentos respectivos para cada perfil de acesso.
+O usuário será direcionado para a área protegida, após logon, de acordo com o seu perfil.
+
+IMPORTANTE:
+Os blocos de perfil igual a 'FORM' e 'LOGOUT' são obrigatórios e devem ser configurados de 
+acordo com sua necessidade.
+-->
+<root>   
+    <redirect perfil='FORM'>        
+        <controller>login</controller>
+        <action>FormAuth</action>        
+    </redirect>    
+    <redirect perfil='LOGOUT'>        
+        <module>auth</module>
+        <controller>login</controller>
+        <action>FormAuth</action>        
+    </redirect>
+    <redirect perfil='PRO'>
+        <module>admin</module>
+        <controller>usuarios</controller>
+        <action></action>
+    </redirect>
+    <redirect perfil='ALN'>
+        <module>admin</module>
+        <controller></controller>
+        <action></action>
+    </redirect>
+    <redirect perfil='ESC'>
+        <module>admin</module>
+        <controller></controller>
+        <action></action>
+    </redirect>        
+</root>

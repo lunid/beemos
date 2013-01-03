@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <errors>
+        <error id='LOGIN'>Usuário e/ou senha incorretos.</error>               
+        <error id='PARAMS_REQUIRED'>Usuário e/ou senha não informados.</error>
+        <error id='TOKEN'>A tentativa de autenticar o usuário informado falhou. Por favor, tente novamente.</error>
+    </errors>        
+</root>

@@ -1,27 +1,35 @@
 <?php
-    
-    //use \auth\classes\models\AuthModel;
-    use \sys\classes\mvc\View; 
-    use \sys\classes\mvc\ViewPart; 
-    use \sys\classes\security\Token;
-    use \sys\classes\util\Request;
+           
+    use \sys\classes\mvc as Mvc;    
+    use \sys\classes\security\Token;    
     use \auth\classes\models\AuthModel;
-    class Login {
+    use \auth\classes\helpers\Error;
+    use \sys\classes\util;
+    
+    class Login extends Mvc\ExceptionController {
         
-        public static function actionFormAuth(){
+        function actionFormAuth(){
             //Formulário de autenticação
-            $objViewPart = new ViewPart('formAuth');
+            $objViewPart = Mvc\MvcFactory::getViewPart('formAuth');
                 
-            $objTk      = new Token(2);
-            $tkField    = $objTk->protectForm();
+            $objTk              = new Token(2);
+            $tkField            = $objTk->protectForm();
+            $errorMessage       = \Auth::getMessage();
+            $divErrorMessage    = '';
+            
+            if (strlen($errorMessage) > 0) {
+                $divErrorMessage = "<div class='notice error'>{$errorMessage}</div>";
+                \Auth::unsetMessage();    
+            }
             
             //Template
-            $tpl                = new View();
+            $tpl                = Mvc\MvcFactory::getView();
             $tpl->setLayout($objViewPart);
             $tpl->TITLE         = 'Autenticação';
+            $tpl->ERROR_MESSAGE = $divErrorMessage;
             $tpl->TOKEN_FIELD   = $tkField;
             //Instância de JS
-            //$tpl->setJs('criacao/javascript');
+            $tpl->setJs('auth/submitAuth');
             $tpl->setCss('auth/formAuth');
             //$tpl->forceCssJsMinifyOn();
             
@@ -31,21 +39,48 @@
         /**
          * Recebe dados de acesso (login, senha e token) e faz a autenticação.
          */
-        public static function actionAuthLogin(){
-                $user   = Request::post('user');
-                $passwd = Request::post('passwd'); 
-                $token  = Request::post('spack_token');
+       function actionProcessAuth(){
+                $user           = util\Request::post('user');
+                $passwd         = util\Request::post('passwd'); 
+                $token          = util\Request::post('token');
+                       
+                $objRedirect    = new util\Redirect('auth/redirect.xml');
+                $redirect       = $objRedirect->FORM;
                 
                 //Verifica se o token é válido.
                 $objTk = new Token(1);
                 if ($objTk->Check()) {
-                    //Token válido.
-                    
+                   //Token válido.
+                   if (strlen($user) > 0 && strlen($passwd) > 0) {
+                        $objAuthModel   = new AuthModel(); 
+                        $passwdMd5      = md5($passwd);
+                        $admin          = $objAuthModel->passwdAdmin($passwdMd5);
+                        $objUser        = $objAuthModel->authAcesso($user,$passwdMd5,$admin);
+                        
+                        if ($objUser !== FALSE) {
+                            //Autenticação feita com sucesso!
+                            $idUser = $objUser->id;
+                            $perfil = $objUser->perfil;
+                            
+                            \Auth::unsetMessage();//Limpa mensagens de erro que por ventura tenham ocorrido em tentativas anteriores.
+                            \Auth::initSession($idUser);//Inicializa variáveis da sessão atual.
+                            $redirect = $objRedirect->$perfil;                            
+                        } else {
+                            //Autenticação falhou.      
+                            $msgErr = Error::eLogin('LOGIN');          
+                            Error::log($msgErr);//Grava um log de erro em data/logs/log_dataAtual.log
+                            throw new \Exception($msgErr);
+                        }
+                   } else {
+                        $msgErr = Error::eLogin('PARAMS_REQUIRED');                            
+                        throw new \Exception($msgErr);                                            
+                   }
                 } else {
-                    //
-                }
-                
-                echo "$user - $passwd - $token";
-        }
+                    $msgErr = Error::eLogin('TOKEN');  
+                    Error::log($msgErr);//Grava um log de erro em data/logs/log_dataAtual.log
+                    throw new \Exception($msgErr);                      
+                }      
+                Header('Location:'.$redirect);               
+        }        
     }
 ?>
