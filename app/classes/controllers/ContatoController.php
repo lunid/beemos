@@ -75,6 +75,8 @@
                 $para = "mpcbarone@gmail.com";
                 
                 //Componente para disparo de e-mail
+                
+                /* @var $objMail Mail */
                 $objMail = Component::mail();
                 
                 $objMail->setFrom("prg.pacheco@interbits.com.br", "Contato Site");
