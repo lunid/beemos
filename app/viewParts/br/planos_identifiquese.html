@@ -33,37 +33,46 @@
     <div class="linha_home"></div>
     <div class="col_6">
         <h5>Já sou cadastrado</h5>
+        <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth/login/authLogin" method="post" onsubmit="return formLogin.validate(this, true, 'verLogin');">
+            <!-- Erros de validação no server -->
+            <div id="form_login_erros" class="notice warning" style="display: none;">
+                <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
+                <a href="#close" class="icon close" data-icon="x"></a>
+            </div>
+            <!-- Erros de validação no server -->
+            <table cellspacing="8">
+                <tr>
+                    <td>E-mail ou Login:</td>
+                    <td><input type="text" id="user" name="user" class="required" field_name="E-mail/Login" /></td>
+                </tr>
+                <tr>
+                    <td>Senha:</td>
+                    <td><input type="password" id="passwd" name="passwd" class="required" field_name="Senha" /></td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        {TOKEN}
+                        <input type="submit" value="Entrar" class="small" />
+                        <input type="reset" value="Limpar" class="small" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
 
-        <table cellspacing="8">
-            <tr>
-                <td>E-mail ou Login:</td>
-                <td><input id="text1" type="text" /></td>
-            </tr>
-            <tr>
-                <td>Senha:</td>
-                <td><input id="text1" type="text" /></td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <button class="small">Limpar</button>
-                    <button class="small">Entrar</button></td>
-            </tr>
-            <tr>
-                <td>
-
-                </td>
-                <td>
-                    <input type="checkbox" id="check1" />
-                    <label for="check1" class="inline">Memorizar e-mail</label>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td> Esqueceu sua senha? <a href="">Clique aqui</a> </td>
-            </tr>
-        </table>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="check1" />
+                        <label for="check1" class="inline">Memorizar e-mail</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td> Esqueceu sua senha? <a href="">Clique aqui</a> </td>
+                </tr>
+            </table>
+        </form>
     </div>
     <div class="col_1"></div>
     <div class="col_5">

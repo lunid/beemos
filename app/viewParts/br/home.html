@@ -39,64 +39,65 @@
         </section> 
         <!-- fim banner -->
     </div>
-
-    <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth" method="post" class="vertical" onsubmit="return formLogin.validate(this, true, 'validaLogin');">
-    <!-- are cliente home -->  
-        <!-- Erros de validação no server -->
-        <div id="form_login_erros" class="notice warning" style="display: none;">
-        <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
-        <a href="#close" class="icon close" data-icon="x"></a>
-        </div>
+        
         <!-- Erros de validação no server --> 
-        <div id="experimente_gratis_home">              
-<table>
-  <tr>
-    <td colspan="2">
-        <label for="email">E-mail:</label>
-        <input type="text" id="email" name="email" maxlength="80" class="required email" field_name="E-mail" />
-    </td>
-  </tr>
-  <tr>
-      <td><label  for="senha">Senha:</label></td>
-  </tr>
-  <tr>
-    <td>
-       
-        <input  type="password" id="senha" name="senha" maxlength="20" class="required" field_name="Senha" />
-    </td>
-        <td>
-     <input type="submit" value="Logar" class="small" />  
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-    <input type="checkbox" id="memorizar" name="memorizar" />
-    <label for="memorizar" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label></td>
-  </tr>
-   <tr>
-       <td colspan="2">
-           <div class="linha_home"></div>
-       </td>
-  </tr>
-    <tr>
-        <td colspan="2" class="home_assinate">
-    <p>Ainda não é assinante?</p>
-    </td>
-  </tr>
-  <tr>
-        <td colspan="2" class="home_assinate">
-            <div class="botao_experimente">
-    <a href="/interbits/experimente">Experimente Grátis!</a>
-            </div>
-    </td>
-  </tr>
-   <tr>
-       <td colspan="2">
-           <div class="linha_home"></div>
-       </td>
-  </tr>
-  
-</table>
+        <div id="experimente_gratis_home">
+            <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth/login/authLogin" method="post" onsubmit="return formLogin.validate(this, true, 'verLogin');">
+                <!-- Erros de validação no server -->
+                <div id="form_login_erros" class="notice warning" style="display: none;">
+                <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
+                <a href="#close" class="icon close" data-icon="x"></a>
+                </div>
+                <table>
+                  <tr>
+                    <td colspan="2">
+                        <label for="email">E-mail/Login:</label>
+                        <input type="text" id="user" name="user" class="required" field_name="E-mail/Login" />
+                    </td>
+                  </tr>
+                  <tr>
+                      <td><label  for="senha">Senha:</label></td>
+                  </tr>
+                  <tr>
+                    <td>
+
+                        <input type="password" id="passwd" name="passwd" class="required" field_name="Senha" />
+                    </td>
+                        <td>
+                            {TOKEN}
+                            <input type="submit" value="Logar" class="small" />  
+                        </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                    <input type="checkbox" id="memorizar" name="memorizar" />
+                    <label for="memorizar" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label></td>
+                  </tr>
+                   <tr>
+                       <td colspan="2">
+                           <div class="linha_home"></div>
+                       </td>
+                  </tr>
+                    <tr>
+                        <td colspan="2" class="home_assinate">
+                    <p>Ainda não é assinante?</p>
+                    </td>
+                  </tr>
+                  <tr>
+                        <td colspan="2" class="home_assinate">
+                            <div class="botao_experimente">
+                    <a href="/interbits/experimente">Experimente Grátis!</a>
+                            </div>
+                    </td>
+                  </tr>
+                   <tr>
+                       <td colspan="2">
+                           <div class="linha_home"></div>
+                       </td>
+                  </tr>
+
+                </table>
+            </form>
         </div>
             <!-- are cliente home -->  
         </div>
