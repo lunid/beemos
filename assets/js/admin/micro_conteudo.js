@@ -10,7 +10,7 @@ $(document).ready(function(){
             {title: "Avançada", key: "1-1-2" }
           ]
         },
-        {title: "Aritimética", isFolder: true, key: "1-2",
+        {title: "Geometria", isFolder: true, key: "1-2",
           children: [
             {title: "Básica", key: "1-2-1" },
             {title: "Avançada", key: "1-2-2" }

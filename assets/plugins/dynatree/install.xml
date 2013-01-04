@@ -4,7 +4,7 @@
         Componente para Criação de Árvores (estilo windows explorer) de Tópicos
     </descricao>
     <config>
-        <include id='js'>jquery/jquery_ui_custom,jquery/jquery_cookie,src/jquery_dynatree</include>
+        <include id='js'>jquery/jquery_cookie,src/jquery_dynatree</include>
         <include id='jsInc'></include>
         <include id='cssInc'></include>
         <include id='css'>src/skin_vista/ui_dynatree</include>
