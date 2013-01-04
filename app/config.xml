@@ -5,6 +5,6 @@
         <include id='cssInc'></include>
         <include id='js'>app.site,util.dictionary,util.form</include>
         <include id='jsInc'></include>
-        <include id='plugins'>jquery,jquery_ui,kickstart</include>
+        <include id='plugins' concat='1'>jquery_ui,kickstart</include>
     </header>
 </root>

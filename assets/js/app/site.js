@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $.ajax({
-        url: "sys/dic/pt/javascript.xml",
+        url: "/interbits/sys/dic/pt/javascript.xml",
         success: function(xml){
             xml_dic = xml;
             
@@ -43,3 +43,21 @@ Site.prototype = {
         $( "#modal_aguarde" ).dialog("close");
     }
 };
+
+/**
+ * Verifica retorno da autenticação do usuário via módulo Auth
+ */
+function verLogin() {
+    //Remove todas possíveis classes
+    $("#form_login_erros").removeClass("warning success error");
+            
+    if(ret.status){
+        $("#form_login_erros").addClass("success"); //Adiciona classe de sucesso
+        $("#form_login_erros_msg").html(ret.msg); //Adiciona mensagem
+        $("#form_login_erros").show(); //Exibe notificações
+    }else{
+        $("#form_login_erros").addClass("error");
+        $("#form_login_erros_msg").html(ret.msg);
+        $("#form_login_erros").show();
+    }
+}

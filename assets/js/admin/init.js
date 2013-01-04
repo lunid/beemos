@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $.ajax({
-        url: "sys/dic/pt/javascript.xml",
+        url: "/interbits/sys/dic/pt/javascript.xml",
         success: function(xml){
             xml_dic = xml;
             

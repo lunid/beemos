@@ -8,6 +8,7 @@
     use \sys\classes\html\Combobox;
     use \sys\classes\util as Util;
     use \common\classes\models\UsuariosModel;
+    use \sys\classes\security\Token;
     
     class Planos extends Controller {
         /**
@@ -22,12 +23,12 @@
                 
                 //Template
                 $tpl        = new ViewSite();
-                
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'SuperPro Web | Planos';
                 
                 //Js para inclusão
-                $tpl->setJs('app/planos');           
+                $tpl->setJs('app/planos');
+                $tpl->forceCssJsMinifyOn();
                 
                 $tpl->render('planos');            
             }catch(Exception $e){
@@ -90,14 +91,18 @@
                     $objViewPart->CB_PJ_UF = $cbPfUf->render();
                 }
                 
+                //Token
+                $objTk              = new Token(2);
+                $objViewPart->TOKEN = $objTk->protectForm();
+                
                 //Template
-                $tpl = new ViewSite();
-                
-                //Js para inclusão
-                $tpl->setJs('app/planos');           
-                
+                $tpl        = new ViewSite();
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'SuperPro Web | Identifique-se';
+                
+                //Js para inclusão
+                $tpl->setJs('app/planos');  
+                $tpl->forceCssJsMinifyOn();
                 
                 $tpl->render('planos_identifiquese');            
             }catch(Exception $e){
@@ -200,11 +205,12 @@
                     
                     //Completa cadastro
                     $arrDadosCadastro = array(
-                        "PJ_PJ"             => "PF",
-                        "CPJ_CNPJ"          => Util\Number::clearNumber(Request::post("PJ_CPF")),
+                        "PF_PJ"             => "PJ",
+                        "CPF_CNPJ"          => Util\Number::clearNumber(Request::post("PJ_CPF_CNPJ")),
                         "RAZAO_SOCIAL"      => Request::post("PJ_RAZAO_SOCIAL"),
                         "INSC_ESTADUAL"     => Util\Number::clearNumber(Request::post("PJ_INSC_ESTADUAL")),
                         "INSC_MUNICIPAL"    => Util\Number::clearNumber(Request::post("PJ_INSC_MUNICIPAL")),
+                        "NOME_CONTATO"      => Request::post("PJ_NOME_CONTATO"),
                         "WEBSITE"           => strtolower(Request::post("PJ_WEBSITE")),
                         "COD_POSTAL"        => Util\Number::clearNumber(Request::post("PJ_CEP")),
                         "LOGRADOURO"        => Request::post("PJ_LOGRADOURO"),
@@ -226,14 +232,14 @@
                 $mdUsuarios = new UsuariosModel();
                 $ret        = $mdUsuarios->salvarUsuario($arrDados);
                 
-                //Atribui ID criado para o cadastro
-                $arrDadosCadastro["ID_USER"] = $ret->id;
-                
                 //Verifica retorno 
                 if(!$ret->status){
                     echo json_encode($ret);
                     die;
                 }
+                
+                //Atribui ID criado para o cadastro
+                $arrDadosCadastro["ID_USER"] = $ret->id;
                 
                 //Completa dados cadastrais
                 $ret = $mdUsuarios->salvarUsuarioCadastro($arrDadosCadastro);

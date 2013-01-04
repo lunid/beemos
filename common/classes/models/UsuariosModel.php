@@ -884,6 +884,16 @@
             $tbUserCadastro->CIDADE                 = isset($arrDados['CIDADE']) ? $arrDados['CIDADE'] : '';
             $tbUserCadastro->UF                     = isset($arrDados['UF']) ? $arrDados['UF'] : '';
             $tbUserCadastro->WEBSITE                = isset($arrDados['WEBSITE']) ? $arrDados['WEBSITE'] : '';
+            $tbUserCadastro->NOME_CONTATO           = isset($arrDados['NOME_CONTATO']) ? $arrDados['NOME_CONTATO'] : '';
+            $tbUserCadastro->RAZAO_SOCIAL           = isset($arrDados['RAZAO_SOCIAL']) ? $arrDados['RAZAO_SOCIAL'] : '';
+            $tbUserCadastro->INSC_ESTADUAL          = isset($arrDados['INSC_ESTADUAL']) ? $arrDados['INSC_ESTADUAL'] : '';
+            $tbUserCadastro->INSC_MUNICIPAL         = isset($arrDados['INSC_MUNICIPAL']) ? $arrDados['INSC_MUNICIPAL'] : '';
+            $tbUserCadastro->DDD_TEL_2              = isset($arrDados['DDD_TEL_2']) ? $arrDados['DDD_TEL_2'] : 0;
+            $tbUserCadastro->TEL_2                  = isset($arrDados['TEL_2']) ? $arrDados['TEL_2'] : 0;
+            $tbUserCadastro->RAMAL_TEL_2            = isset($arrDados['RAMAL_TEL_2']) ? $arrDados['RAMAL_TEL_2'] : 0;
+            $tbUserCadastro->DDD_FAX                = isset($arrDados['DDD_FAX']) ? $arrDados['DDD_FAX'] : 0;
+            $tbUserCadastro->FAX                    = isset($arrDados['FAX']) ? $arrDados['FAX'] : 0;
+            $tbUserCadastro->RAMAL_FAX              = isset($arrDados['RAMAL_FAX']) ? $arrDados['RAMAL_FAX'] : 0;
             $tbUserCadastro->DATA_REGISTRO          = date("Y-m-d H:i:s");
             
             //Executa insert e aramazena ID do novo usuário

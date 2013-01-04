@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    //Monta Formulário Login
+    formLogin = new Form();
+    formLogin.init("form_login");
+    
     //Monta Formulário PF
     formPF = new Form();
     formPF.init("form_pf");
@@ -46,7 +50,7 @@ $(document).ready(function(){
     formPJ.init("form_pj");
     
     //Máscara CPF
-    $("#PJ_CNPJ").mask("99.999.999/9999-99");
+    $("#PJ_CPF_CNPJ").mask("99.999.999/9999-99");
     
     //Máscara Telefones
     $("#PJ_DDD_TEL_COM").css("text-align", "center");
@@ -70,8 +74,8 @@ $(document).ready(function(){
     $("#PJ_DDD_FAX").css("text-align", "center");
     $("#PJ_DDD_FAX").mask("99");
     
-    $("#PJ_RAMAL_FAX").css("text-align", "center");
-    $("#PJ_RAMAL_FAX").mask("9999-9999");
+    $("#PJ_FAX").css("text-align", "center");
+    $("#PJ_FAX").mask("9999-9999");
     
     //Máscara CEP
     $("#PJ_CEP").mask("99999-999");

@@ -4,6 +4,7 @@
     
     use \sys\classes\mvc\View;      
     use \app\classes\html\Menu;
+    use \sys\classes\security\Token;
     
     class ViewSite extends View {       
         function render($layoutName='', $objMemCache = NULL){
@@ -22,6 +23,10 @@
                 $objMenu->setItemSel($layoutName);
                 
                 $this->MENU = $objMenu->render($layoutName);
+                
+                //Token para Login
+                $objTk          = new Token(2);
+                $this->TOKEN    = $objTk->protectForm();
                 
                 parent::render($layoutName, $objMemCache = NULL);
             } catch(\Exception $e) {

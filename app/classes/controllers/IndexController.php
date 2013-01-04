@@ -3,10 +3,7 @@
     use \sys\classes\mvc\Controller;        
     use \sys\classes\mvc\ViewPart;
     use \app\classes\views\ViewSite;
-    use \common\classes\models\UsuariosModel;
-    use \sys\classes\util\Request;
-    use \common\classes\Util;
-    use \sys\classes\util\Component;
+    use \sys\classes\security\Token;
     
     class Index extends Controller {
 
@@ -19,13 +16,17 @@
                 
                 //Home
                 $objViewPart = new ViewPart('home');
-
+                
+                //Token para Login
+                $objTk              = new Token(2);
+                $objViewPart->TOKEN = $objTk->protectForm();
+                
                 //Template
                 $tpl        = new ViewSite();
-                
                 $tpl->setLayout($objViewPart);
                 $tpl->TITLE = 'SuperPro Web';
-
+                
+                //JS
                 $tpl->setPlugin('diapo');
                 $tpl->setJs('app/home');                
                 
