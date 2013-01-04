@@ -1,10 +1,14 @@
-
+<!-- class conteudo (texto) -->
+<div class="texto">
+<!-- começo titulo --> 
 <div class="titulos">
     <h4>Assinaturas SuperPro® Web</h4>
     <br/>
     <h5>Assine Já</h5>
 </div>
-<div class="texto">
+<!-- fim titulo --> 
+<!-- navegação 3 passos --> 
+    <div class="espaco"></div>
     <div class="col_3">
         <button class="medium pill" data-content="#tooltipcontentID" title="" onclick="window.location.href='/interbits/planos';"><span class="icon" data-icon="^"></span>Escolha o Plano</button>
     </div>
@@ -29,72 +33,80 @@
             </div>
         </div>
     </div>
-
+<!-- fim navegação 3 passos --> 
     <div class="linha_home"></div>
     <div class="col_6">
         <h5>Já sou cadastrado</h5>
         <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth/login/authLogin" method="post" onsubmit="return formLogin.validate(this, true, 'verLogin');">
-            <!-- Erros de validação no server -->
-            <div id="form_login_erros" class="notice warning" style="display: none;">
-                <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
-                <a href="#close" class="icon close" data-icon="x"></a>
-            </div>
-            <!-- Erros de validação no server -->
-            <table cellspacing="8">
+        <!-- Erros de validação no server -->
+        <div id="form_login_erros" class="notice warning" style="display: none;">
+        <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
+        <a href="#close" class="icon close" data-icon="x"></a>
+        </div>
+        <!-- Erros de validação no server -->
+                <table cellspacing="8">
                 <tr>
-                    <td>E-mail ou Login:</td>
-                    <td><input type="text" id="user" name="user" class="required" field_name="E-mail/Login" /></td>
+                <td width="95px" valign="top">E-mail ou Login:</td>
+                <td><input type="text" id="user" name="user" class="required" field_name="E-mail/Login" /></td>
                 </tr>
                 <tr>
-                    <td>Senha:</td>
-                    <td><input type="password" id="passwd" name="passwd" class="required" field_name="Senha" /></td>
+                <td valign="top">Senha:</td>
+                <td><input type="password" id="passwd" name="passwd" class="required" field_name="Senha" /></td>
                 </tr>
                 <tr>
-                    <td>
-                    </td>
-                    <td>
-                        {TOKEN}
-                        <input type="submit" value="Entrar" class="small" />
-                        <input type="reset" value="Limpar" class="small" />
-                    </td>
+                <td>
+                </td>
+                <td>
+                {TOKEN}
+                <div class="bt_padrao"> 
+                <div class="face">
+                <img src="assets/images/bt_logar_face.png" width="125" height="28" />
+                </div>
+                <input type="submit" value="Entrar" class="botao" />
+                </div>
+                </td>
                 </tr>
                 <tr>
-                    <td>
-
-                    </td>
-                    <td>
-                        <input type="checkbox" id="check1" />
-                        <label for="check1" class="inline">Memorizar e-mail</label>
-                    </td>
+                <td>
+                </td>
+                <td>
+                <input type="checkbox" id="check1" />
+                <label for="check1" class="inline">Memorizar e-mail</label>
+                </td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td> Esqueceu sua senha? <a href="">Clique aqui</a> </td>
+                <td></td>
+                <td> Esqueceu sua senha? <a href="">Clique aqui</a> </td>
                 </tr>
-            </table>
+                </table>
         </form>
     </div>
     <div class="col_1"></div>
+    <!-- começo ainda não sou cadastrado --> 
     <div class="col_5">
         <h5>Ainda não sou cadastrado</h5>
 
         <table>
-            <tr>
-                <td colspan="2">
-                    Se você é um novo usuário faça agora mesmo o seu cadastro.<br/>
-                    É simples e rápido. Para iniciar o seu cadastro informe o e-mail que deseja usar como login: </td>
+            <tr height="110px">
+            <td colspan="2">
+            Se você é um novo usuário faça agora mesmo o seu cadastro.<br/>
+            É simples e rápido. Para iniciar o seu cadastro informe o e-mail que deseja usar como login:</td>
             </tr>
             <tr>
-                <td colspan="2">
-                    <button class="blue" onclick="javascript:novoUsuario();">Faça meu cadastro agora</button>
-                </td>
+            <td colspan="2">
+            <button class="blue" onclick="javascript:novoUsuario();">Faça meu cadastro agora</button>
+            </td>
             </tr>
         </table>
     </div>    
+    <!-- fim ainda não sou cadastrado -->
     
+    <!-- começo formularios cadastro -->
     <div id="cadastro" style="display:none;">
         <div class="linha_home"></div>
     
+        
+        <!-- começo formularios cadastro (botões radio -->
         <div id="fisica_juridica_cadastro">
             Por favor, verifique se os campos preenchidos estão corretos e clique em prosseguir.<br/>
             Os campos assinalados com asterisco (*) são obrigatórios.
@@ -108,9 +120,11 @@
             <input type="radio" name="tipoPessoa" value="PJ" onclick="javascript:selTipoPessoa(this.value);" />
             <label for="PJ" class="inline">Pessoa Jurídica</label>
         </div>
-
+        <!-- fim formularios cadastro (botões radio -->
+        
         <div class="linha_home"></div>
         
+ <!-- cont de cadastro -->
         <div id="pg_formulario">    
             <div class="col_12">
                 <h5>Dados Cadastrais</h5>
@@ -174,7 +188,7 @@
                     
                     <div class="col_1"></div>
                     
-                    <div class="col_5">
+                    <div class="col_6">
                         <table>
                             <tr>
                                 <td colspan="3"><label for="EMAIL">* E-mail :</label></td>
@@ -220,8 +234,8 @@
                                 <td>Confirmar senha:<br/>Ao definir nova/alterar:</td>
                             </tr>
                             <tr>
-                                <td><input type="password" id="PF_PASSWD" name="PF_PASSWD" maxlength="10" class="required" field_name="Senha" /></td>
-                                <td><input type="password" id="PF_C_PASSWD" name="PF_C_PASSWD" maxlength="10" class="required" field_name="Confirmar Senha" /></td>
+                                <td width="178px"><input type="password" id="PF_PASSWD" name="PF_PASSWD" maxlength="10" class="required" field_name="Senha" /></td>
+                                <td width="178px"><input type="password" id="PF_C_PASSWD" name="PF_C_PASSWD" maxlength="10" class="required" field_name="Confirmar Senha" /></td>
                             </tr>
                         </table> 
                     </div>
@@ -234,7 +248,7 @@
                     <div id="enderecoPF" class="tab-content">
                         <table width="300">
                             <tr>
-                                <td width="100"><label for="PF_CEP">* CEP :</label></td>
+                                <td width="140"><label for="PF_CEP">* CEP :</label></td>
                                 <td colspan="2"></td>
                             </tr>
                             <tr>
@@ -243,7 +257,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2"><label for="PF_LOGRADOURO">* Logradouro :</label></td>
-                                <td width="80"><label for="PF_NUMERO">* Número :</label></td>
+                                <td width="150"><label for="PF_NUMERO">* Número :</label></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><input type="text" id="PF_LOGRADOURO" name="PF_LOGRADOURO" maxlength="120" class="required" field_name="Logradouro" /></td>
@@ -268,8 +282,8 @@
                                 <td colspan="2"><label for="PF_UF">* UF :</label></td>
                             </tr>
                             <tr>
-                                <td><input type="text" id="PF_CIDADE" name="PF_CIDADE" maxlength="50" class="required" field_name="Cidade" /></td>
-                                <td colspan="2"  width="40">
+                                <td width="671px"><input type="text" id="PF_CIDADE" name="PF_CIDADE" maxlength="50" class="required" field_name="Cidade" /></td>
+                                <td colspan="2" valign="top">
                                     {CB_PF_UF}
                                 </td>
                             </tr>
@@ -280,8 +294,10 @@
                     </div>
 
                     <div class="col_12"  align="right">
+                        <div class="bt_padrao">
                         <input type="submit" value="Cadastrar" />
                         <input type="reset" value="Limpar Formulário" />
+                        </div>
                     </div>
                 </form>
             </div>
@@ -423,8 +439,8 @@
                     <div id="enderecoPJ" class="tab-content">
                         <table width="300">
                             <tr>
-                                <td width="100"><label for="PJ_CEP">* CEP :</label></td>
-                                <td colspan="2"></td>
+                                <td width="140"><label for="PJ_CEP">* CEP :</label></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><input type="text" id="PJ_CEP" name="PJ_CEP" maxlength="9" class="required" field_name="CEP" /></td>
@@ -432,7 +448,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2"><label for="PJ_LOGRADOURO">* Logradouro :</label></td>
-                                <td width="80"><label for="PJ_NUMERO">* Número :</label></td>
+                                <td width="150"><label for="PJ_NUMERO">* Número :</label></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><input type="text" id="PJ_LOGRADOURO" name="PJ_LOGRADOURO" maxlength="120" class="required" field_name="Logradouro" /></td>
@@ -457,8 +473,8 @@
                                 <td colspan="2"><label for="PJ_UF">* UF :</label></td>
                             </tr>
                             <tr>
-                                <td><input type="text" id="PJ_CIDADE" name="PJ_CIDADE" maxlength="50" class="required" field_name="Cidade" /></td>
-                                <td colspan="2"  width="40">
+                                <td width="671px"><input type="text" id="PJ_CIDADE" name="PJ_CIDADE" maxlength="50" class="required" field_name="Cidade" /></td>
+                                <td colspan="2" valign="top">
                                     {CB_PJ_UF}
                                 </td>
                             </tr>
@@ -469,12 +485,18 @@
                     </div>
 
                     <div class="col_12"  align="right">
+                        <div class="bt_padrao">
                         <input type="submit" value="Cadastrar" />
                         <input type="reset" value="Limpar Formulário" />
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
+    <!-- fim cont de cadastro -->
+    
     </div>
+    <!-- fim formularios de cadastro -->
 </div>
+<!-- fim class conteudo (texto) -->
 <hr/>

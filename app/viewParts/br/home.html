@@ -56,22 +56,31 @@
                     </td>
                   </tr>
                   <tr>
-                      <td><label  for="senha">Senha:</label></td>
+                      <td colspan="2"><label  for="senha">Senha:</label>
+                      <input type="password" id="passwd" name="passwd" class="required" field_name="Senha" />
+                      </td>
                   </tr>
                   <tr>
                     <td>
 
-                        <input type="password" id="passwd" name="passwd" class="required" field_name="Senha" />
+                        
                     </td>
                         <td>
                             {TOKEN}
-                            <input type="submit" value="Logar" class="small" />  
+                            <div class="logar_home">
+                                <img src="assets/images/bt_logar_face.png" width="125" height="28" /> 
+                            <input type="submit" value="Logar"/>
+                            </div>
                         </td>
                   </tr>
                   <tr>
                     <td colspan="2">
+                        <div id="memorizar_home">      
                     <input type="checkbox" id="memorizar" name="memorizar" />
-                    <label for="memorizar" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label></td>
+                    <label for="memorizar" class="inline">Memorizar <a href=""> . Esqueceu sua senha?</a></label>
+                        </div>
+                        </td>
+                    
                   </tr>
                    <tr>
                        <td colspan="2">
