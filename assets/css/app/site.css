@@ -272,12 +272,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
     text-align: center;
 }
 
+.caixa_plano h5{
+    color: #FFFFFF;
+    font-size: 26px;
+    height: 30px;
+    margin: -38px 0 23px;
+    width: 233px;
+}
+
+.caixa_plano h6{
+    color: #2d5368;
+    font-size: 18px;
+}
+
+.caixa_plano span{
+    color: #FFFFFF;
+    font-size: 20px;
+}
 
 #planos_precos{
     float: left;
     height: auto;
     margin-left: 48px;
     width: 900px;
+    background-image:url("../../images/bg_planos.jpg");
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
 }
 
 #planos_precos_titulo{
