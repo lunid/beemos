@@ -695,6 +695,25 @@
             }
         }
         
+        /**
+         * Salva um novo visitante no banco de dados realizando suas validações
+         * 
+         * @param array $arrDados
+         * <code>
+         *  <br />
+         *  $arrDados = array(                          <br />
+         *      "NOME"  => "Claudio Rubens",            <br />
+         *      "EMAIL" => "interbits@interbits.com.br  <br />
+         *  )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  int     $ret->erro      - Código de erro                                    <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         * </code>
+         */
         public function salvarUsuarioVistante($arrDados){
             //Objeto de retorno
             $ret            = new \stdClass();
@@ -740,6 +759,140 @@
             //Retorno OK
             $ret->status    = true;
             $ret->msg       = "Usuário cadastrado com sucesso!";
+            return $ret;
+        }
+        
+        /**
+         * Salva um novo usuário no banco de dados realizando suas validações
+         * 
+         * @param array $arrDados
+         * <code>
+         *  <br />
+         *  $arrDados = array(                          <br />
+         *      "NOME"  => "Claudio Rubens",            <br />
+         *      "EMAIL" => "interbits@interbits.com.br  <br />
+         *  )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  int     $ret->erro      - Código de erro                                    <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         * </code>
+         */
+        public function salvarUsuario($arrDados){
+            //Objeto de retorno
+            $ret            = new \stdClass();
+            $ret->status    = false;
+            $ret->msg       = "Falha ao salvar usuário! Tente mais tarde.";
+            
+            //Tabela de Visitantes
+            $tbUser = new TB\User();
+            
+            //Valida e-mail
+            if(!isset($arrDados['EMAIL'])){
+                $ret->msg = "Campo de e-mail inválido ou nulo!";
+                return $ret;
+            }
+            
+            //Valida existência do e-mail
+            $tbUser->setLimit(1);
+            $rs = $tbUser->findAll("EMAIL = '{$arrDados['EMAIL']}'");
+            
+            if($rs->count() > 0){
+                $ret->msg = "Esse e-mail já possui cadastro!";
+                return $ret;
+            }
+            
+            //Atribui dados a serem salvos
+            $tbUser->ID_USER_PERFIL        = isset($arrDados['ID_USER_PERFIL']) ? $arrDados['ID_USER_PERFIL'] : 1;
+            $tbUser->ID_CAMPANHA_ORIG_CAD  = isset($arrDados['ID_CAMPANHA_ORIG_CAD']) ? $arrDados['ID_CAMPANHA_ORIG_CAD'] : 0;
+            $tbUser->ID_MATRIZ             = isset($arrDados['ID_MATRIZ']) ? $arrDados['ID_MATRIZ'] : 0;
+            $tbUser->NOME                  = isset($arrDados['NOME']) ? $arrDados['NOME'] : '';
+            $tbUser->APELIDO               = isset($arrDados['APELIDO']) ? $arrDados['APELIDO'] : '';
+            $tbUser->EMAIL                 = isset($arrDados['EMAIL'])? $arrDados['EMAIL'] : '';
+            $tbUser->DDD_CELULAR           = isset($arrDados['CELULAR']) ? substr($arrDados['CELULAR'], 0, 2) : '';
+            $tbUser->CELULAR               = isset($arrDados['CELULAR']) ? substr($arrDados['CELULAR'], 2) : '';
+            $tbUser->LOGIN                 = isset($arrDados['LOGIN']) ? $arrDados['LOGIN'] : '';
+            $tbUser->DT_NASCIMENTO         = isset($arrDados['DT_NASCIMENTO']) ? $arrDados['DT_NASCIMENTO'] : '';
+            $tbUser->DDD_TEL_RES           = isset($arrDados['DDD_TEL_RES']) ? $arrDados['DDD_TEL_RES'] : '';
+            $tbUser->TEL_RES               = isset($arrDados['TEL_RES']) ? $arrDados['TEL_RES'] : '';
+            $tbUser->DDD_TEL_COM           = isset($arrDados['DDD_TEL_COM']) ? $arrDados['DDD_TEL_COM'] : '';
+            $tbUser->TEL_COM               = isset($arrDados['TEL_COM']) ? $arrDados['TEL_COM'] : '';
+            $tbUser->RAMAL_TEL_COM         = isset($arrDados['RAMAL_TEL_COM']) ? $arrDados['RAMAL_TEL_COM'] : '';
+            $tbUser->OBS                   = isset($arrDados['OBS']) ? $arrDados['OBS'] : '';
+            $tbUser->PASSWD                = isset($arrDados['PASSWD']) ? $arrDados['PASSWD'] : '';
+            $tbUser->PASSWD_TEMPORARY      = isset($arrDados['PASSWD_TEMPORARY']) ? $arrDados['PASSWD_TEMPORARY'] : '';
+            $tbUser->FB_ID                 = isset($arrDados['FB_ID']) ? $arrDados['FB_ID'] : '';
+            $tbUser->GOOGLE_ID             = isset($arrDados['GOOGLE_ID']) ? $arrDados['GOOGLE_ID'] : '';
+            $tbUser->DATA_REGISTRO         = date("Y-m-d H:i:s");
+            
+            //Executa insert e aramazena ID do novo usuário
+            $id = $tbUser->save();
+            
+            //Retorno OK
+            $ret->status    = true;
+            $ret->msg       = "Usuário cadastrado com sucesso!";
+            $ret->id        = $id;
+            return $ret;
+        }
+        
+        /**
+         * Salva um novo usuário de cadastro no banco de dados realizando suas validações
+         * 
+         * @param array $arrDados
+         * <code>
+         *  <br />
+         *  $arrDados = array(                          <br />
+         *      "NOME"  => "Claudio Rubens",            <br />
+         *      "EMAIL" => "interbits@interbits.com.br  <br />
+         *  )
+         * </code>
+         * 
+         * @return stdClass $ret
+         * <code>
+         *  <br />
+         *  int     $ret->erro      - Código de erro                                    <br />
+         *  bool    $ret->status    - Retorna TRUE ou FALSE para o status do Método     <br />
+         *  int     $ret->id        - ID do novo Usuário de Cadastro                    <br />
+         * </code>
+         */
+        public function salvarUsuarioCadastro($arrDados){
+            //Objeto de retorno
+            $ret            = new \stdClass();
+            $ret->status    = false;
+            $ret->msg       = "Falha ao salvar usuário! Tente mais tarde.";
+            
+            //Tabela de Visitantes
+            $tbUserCadastro = new TB\UserCadastro();
+            
+            //Atribui dados a serem salvos
+            $tbUserCadastro->ID_USER_CADASTRO       = isset($arrDados['ID_USER_CADASTRO']) ? $arrDados['ID_USER_CADASTRO'] : 0;
+            $tbUserCadastro->ID_USER                = isset($arrDados['ID_USER']) ? $arrDados['ID_USER'] : 0;
+            $tbUserCadastro->HASH                   = isset($arrDados['HASH']) ? $arrDados['HASH'] : '';
+            $tbUserCadastro->PF_PJ                  = isset($arrDados['PF_PJ']) ? $arrDados['PF_PJ'] : 'PF';
+            $tbUserCadastro->CPF_CNPJ               = isset($arrDados['CPF_CNPJ'])? $arrDados['CPF_CNPJ'] : '';
+            $tbUserCadastro->DATA_CONTRATO_RECEB    = isset($arrDados['DATA_CONTRATO_RECEB']) ? $arrDados['DATA_CONTRATO_RECEB'] : '';
+            $tbUserCadastro->RAZAO_SOCIAL           = isset($arrDados['RAZAO_SOCIAL']) ? $arrDados['RAZAO_SOCIAL'] : '';
+            $tbUserCadastro->SEXO                   = isset($arrDados['SEXO']) ? $arrDados['SEXO'] : '';
+            $tbUserCadastro->COD_POSTAL             = isset($arrDados['COD_POSTAL']) ? $arrDados['COD_POSTAL'] : '';
+            $tbUserCadastro->LOGRADOURO             = isset($arrDados['LOGRADOURO']) ? $arrDados['LOGRADOURO'] : '';
+            $tbUserCadastro->NUMERO                 = isset($arrDados['NUMERO']) ? $arrDados['NUMERO'] : 0;
+            $tbUserCadastro->COMPLEMENTO            = isset($arrDados['COMPLEMENTO']) ? $arrDados['COMPLEMENTO'] : '';
+            $tbUserCadastro->BAIRRO                 = isset($arrDados['BAIRRO']) ? $arrDados['BAIRRO'] : '';
+            $tbUserCadastro->CIDADE                 = isset($arrDados['CIDADE']) ? $arrDados['CIDADE'] : '';
+            $tbUserCadastro->UF                     = isset($arrDados['UF']) ? $arrDados['UF'] : '';
+            $tbUserCadastro->WEBSITE                = isset($arrDados['WEBSITE']) ? $arrDados['WEBSITE'] : '';
+            $tbUserCadastro->DATA_REGISTRO          = date("Y-m-d H:i:s");
+            
+            //Executa insert e aramazena ID do novo usuário
+            $id = $tbUserCadastro->save();
+            
+            //Retorno OK
+            $ret->status    = true;
+            $ret->msg       = "Usuário cadastrado com sucesso!";
+            $ret->id        = $id;
             return $ret;
         }
     }
