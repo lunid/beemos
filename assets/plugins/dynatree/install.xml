@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Componente para Criação de Árvores (estilo windows explorer) de Tópicos
+    </descricao>
+    <config>
+        <include id='js'>jquery/jquery_cookie,src/jquery_dynatree</include>
+        <include id='jsInc'></include>
+        <include id='cssInc'></include>
+        <include id='css'>src/skin_vista/ui_dynatree</include>
+    </config>
+</root>

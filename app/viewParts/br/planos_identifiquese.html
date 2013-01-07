@@ -1,286 +1,502 @@
-
+<!-- class conteudo (texto) -->
+<div class="texto">
+<!-- começo titulo --> 
 <div class="titulos">
     <h4>Assinaturas SuperPro® Web</h4>
     <br/>
     <h5>Assine Já</h5>
 </div>
-<div class="texto">
+<!-- fim titulo --> 
+<!-- navegação 3 passos --> 
+    <div class="espaco"></div>
     <div class="col_3">
-       <button class="medium pill" data-content="#tooltipcontentID" title="" onclick="window.location.href='/interbits/planos';"><span class="icon" data-icon="^"></span>Escolha o Plano</button>
+        <button class="medium pill" data-content="#tooltipcontentID" title="" onclick="window.location.href='/interbits/planos';"><span class="icon" data-icon="^"></span>Escolha o Plano</button>
     </div>
     <div class="col_3">
         <!-- Plano selecionado -->
         <input type="hidden" id="idPlano" name="idPlano" value="{ID_PLANO}" />
-        
-       <button class="medium green pill" data-content="#tooltipcontentID" title="" onclick="javascript:identificacao();"><span class="icon" data-icon="u"></span>Identifique-se</button>
+
+        <button class="medium green pill" data-content="#tooltipcontentID" title="" onclick="javascript:identificacao();"><span class="icon" data-icon="u"></span>Identifique-se</button>
     </div>
     <div class="col_3">
-       <button class="medium orange pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="c"></span>Finaliza sua compra</button>
+        <button class="medium orange pill" data-content="#tooltipcontentID" title=""><span class="icon" data-icon="c"></span>Finaliza sua compra</button>
     </div>
     <div class="col_3">
         <div id="informacoes_planos">
-       	<button class="tooltip medium pill" data-content="#tooltipcontentID" data-action="click">O que são créditos?</button>
-       <div class="tooltip-content" id="tooltipcontentID"><h5>O que são créditos?</h5>
-	<p>Ao fazer a assinatura do Super Professor® Web o usuário fará uma opção de consumo anual de questões.</p>
-        <p>Isto quer dizer que ele poderá navegar, explorar e consultar em todas as disciplinas e todas as questões. A consulta é livre.</p>
-        <p>Após marcar as questões que desejar efetivamente usar em uma avaliação, o usuário dará um comando ao sistema para que gere um documento no formato MS-Word e que poderá ser baixado para o computador do cliente.</p>
-        <p>Supondo que este documento contenha 10 questões, este será o número de créditos consumidos do total pré-contratado.</p>
-        <p>O plano 800, por exemplo, permitirá ao professor, baixar até 800 exercícios ao longo do período de validade de sua assinatura à medida de sua necessidade. </p>
-       </div>
-	</div>
+            <button class="tooltip medium pill" data-content="#tooltipcontentID" data-action="click">O que são créditos?</button>
+            <div class="tooltip-content" id="tooltipcontentID"><h5>O que são créditos?</h5>
+                <p>Ao fazer a assinatura do Super Professor® Web o usuário fará uma opção de consumo anual de questões.</p>
+                <p>Isto quer dizer que ele poderá navegar, explorar e consultar em todas as disciplinas e todas as questões. A consulta é livre.</p>
+                <p>Após marcar as questões que desejar efetivamente usar em uma avaliação, o usuário dará um comando ao sistema para que gere um documento no formato MS-Word e que poderá ser baixado para o computador do cliente.</p>
+                <p>Supondo que este documento contenha 10 questões, este será o número de créditos consumidos do total pré-contratado.</p>
+                <p>O plano 800, por exemplo, permitirá ao professor, baixar até 800 exercícios ao longo do período de validade de sua assinatura à medida de sua necessidade. </p>
+            </div>
+        </div>
     </div>
-    
+<!-- fim navegação 3 passos --> 
     <div class="linha_home"></div>
     <div class="col_6">
         <h5>Já sou cadastrado</h5>
-        
-         <table cellspacing="8">
-            <tr>
-            <td>E-mail ou Login:</td>
-            <td><input id="text1" type="text" /></td>
-            </tr>
-            <tr>
-            <td>Senha:</td>
-            <td><input id="text1" type="text" /></td>
-            </tr>
-            <tr>
-            <td>
-            </td>
-            <td>
-                <button class="small">Limpar</button>
-                 <button class="small">Entrar</button></td>
-            </tr>
-            <tr>
-            <td>
-             
-            </td>
-            <td>
-             <input type="checkbox" id="check1" />
-             <label for="check1" class="inline">Memorizar e-mail</label>
-            </td>
-            </tr>
-            <tr>
-            <td></td>
-            <td> Esqueceu sua senha? <a href="">Clique aqui</a> </td>
-            </tr>
-         </table>
+        <form id="form_login" name="form_login" accept-charset="UTF-8" action="/interbits/auth/login/authLogin" method="post" onsubmit="return formLogin.validate(this, true, 'verLogin');">
+        <!-- Erros de validação no server -->
+        <div id="form_login_erros" class="notice warning" style="display: none;">
+        <span class="icon medium" data-icon="!"></span> <span id="form_login_erros_msg"></span>
+        <a href="#close" class="icon close" data-icon="x"></a>
+        </div>
+        <!-- Erros de validação no server -->
+                <table cellspacing="8">
+                <tr>
+                <td width="95px" valign="top">E-mail ou Login:</td>
+                <td><input type="text" id="user" name="user" class="required" field_name="E-mail/Login" /></td>
+                </tr>
+                <tr>
+                <td valign="top">Senha:</td>
+                <td><input type="password" id="passwd" name="passwd" class="required" field_name="Senha" /></td>
+                </tr>
+                <tr>
+                <td>
+                </td>
+                <td>
+                {TOKEN}
+                <div class="bt_padrao"> 
+                <div class="face">
+                <img src="assets/images/bt_logar_face.png" width="125" height="28" />
+                </div>
+                <input type="submit" value="Entrar" class="botao" />
+                </div>
+                </td>
+                </tr>
+                <tr>
+                <td>
+                </td>
+                <td>
+                <input type="checkbox" id="check1" />
+                <label for="check1" class="inline">Memorizar e-mail</label>
+                </td>
+                </tr>
+                <tr>
+                <td></td>
+                <td> Esqueceu sua senha? <a href="">Clique aqui</a> </td>
+                </tr>
+                </table>
+        </form>
     </div>
     <div class="col_1"></div>
+    <!-- começo ainda não sou cadastrado --> 
     <div class="col_5">
         <h5>Ainda não sou cadastrado</h5>
-        
-           <table>
-            <tr>
+
+        <table>
+            <tr height="110px">
             <td colspan="2">
-                Se você é um novo usuário faça agora mesmo o seu cadastro.<br/>
-É simples e rápido. Para iniciar o seu cadastro informe o e-mail que deseja usar como login: </td>
-            </tr>
-            <tr>
-            <td colspan="2"><input id="text1" type="text" /></td>
+            Se você é um novo usuário faça agora mesmo o seu cadastro.<br/>
+            É simples e rápido. Para iniciar o seu cadastro informe o e-mail que deseja usar como login:</td>
             </tr>
             <tr>
             <td colspan="2">
-                <button class="blue">Faça meu cadastro agora</button>
+            <button class="blue" onclick="javascript:novoUsuario();">Faça meu cadastro agora</button>
             </td>
             </tr>
-         </table>
-        
+        </table>
     </div>    
-   <div class="linha_home"></div>
-
-   <div class="col_3">
-	</div>
+    <!-- fim ainda não sou cadastrado -->
+    
+    <!-- começo formularios cadastro -->
+    <div id="cadastro" style="display:none;">
+        <div class="linha_home"></div>
+    
+        
+        <!-- começo formularios cadastro (botões radio -->
         <div id="fisica_juridica_cadastro">
-        Por favor, verifique se os campos preenchidos estão corretos e clique em prosseguir.<br/>
-        Os campos assinalados com asterisco (*) são obrigatórios.
+            Por favor, verifique se os campos preenchidos estão corretos e clique em prosseguir.<br/>
+            Os campos assinalados com asterisco (*) são obrigatórios.
         </div>
-        
-    <div class="col_2">
-        <input type="radio" name="radio" id="radio1" />
-        <label for="radio" class="inline">Pessoa Física</label>   
-    </div>
-    <div class="col_2">
-        <input type="radio" name="radio" id="radio1" />
-        <label for="radio2" class="inline">Pessoa Jurídica</label>
- 
-    </div>
-   
 
-
-    <div class="linha_home"></div>
-    <div id="pg_formulario">    
-    <div class="col_12">
-      <h5>Dados Cadastrais</h5>
-    </div>
-    <div class="col_5">
+        <div class="col_2">
+            <input type="radio" name="tipoPessoa" value="PF" checked="checked" onclick="javascript:selTipoPessoa(this.value);" />
+            <label for="PF" class="inline">Pessoa Física</label>   
+        </div>
+        <div class="col_2">
+            <input type="radio" name="tipoPessoa" value="PJ" onclick="javascript:selTipoPessoa(this.value);" />
+            <label for="PJ" class="inline">Pessoa Jurídica</label>
+        </div>
+        <!-- fim formularios cadastro (botões radio -->
         
- <table>
-        <tr>
-          <td><label for="text1">* Nome Completo :</label></td>
-        </tr>
-        <tr>
-          <td><input id="text1" type="text" /></td>
-        </tr>
-        <tr>
-          <td><label for="text1">* Apelido :</label></td>
-        </tr>
-        <tr>
-          <td><input id="text1" type="text" /></td>
-        </tr>
-        <tr>
-          <td><label for="text1">CPF :</label></td>
-        </tr>
-        <tr>
-          <td><input id="text1" type="text" /></td>
-        </tr>
-        <tr>
-          <td><label for="select1">Data de Nascimento:</label></td>
-        </tr>
-        <tr>
-          <td>
-            <select id="select1">
-            <option value="0">-- Choose --</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>*Sexo:</td>
-        </tr>
-        <tr>
-          <td>
-            <div class="col_3">
-            <input type="radio" name="radio" id="radio1" />
-            <label for="radio" class="inline">Masculino</label>   
+        <div class="linha_home"></div>
+        
+ <!-- cont de cadastro -->
+        <div id="pg_formulario">    
+            <div class="col_12">
+                <h5>Dados Cadastrais</h5>
             </div>
-            <div class="col_3">
-            <input type="radio" name="radio" id="radio1" />
-            <label for="radio2" class="inline">Feminino</label>
-            </div> 
-          </td>
-        </tr>
-</table>
-         
-    </div>
-    <DIV class="col_1"></div>
-    <div class="col_5">
-        
-<table>
-  <tr>
-    <td colspan="3"><label for="text1">* E-mail :</label></td>
-  </tr>
-  <tr>
-    <td colspan="3"><input id="text1" type="text" /></td>
-  </tr>
-  <tr>
-    <td width="117"><label for="text1">* DDD:</label></td>
-    <td width="357"><label for="text1">Telefone residencial:</label></td>
-    <td width="130">&nbsp;</td>
-  </tr>
-  <tr>
-    <td><input id="text1" type="text" /></td>
-    <td><input id="text1" type="text" /></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><label for="text1">* DDD:</label></td>
-    <td><label for="text1">Telefone celular:</label></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><input id="text1" type="text" /></td>
-    <td><input id="text1" type="text" /></td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td><label for="text1">* DDD:</label></td>
-    <td><label for="text1">Telefone/PABX:</label></td>
-    <td><label for="text1">Ramal:</label></td>
-  </tr>
-  <tr>
-    <td><input id="text1" type="text" /></td>
-    <td><input id="text1" type="text" /></td>
-    <td><input id="text1" type="text" /></td>
-  </tr>
-</table>
-        <div class="espaco"></div>
-<table>
-  <tr>
-    <td>* Senha (8 a 15 caracteres):<br/>Use letras e números:</td>
-    <td>Confirmar senha:<br/>Ao definir nova/alterar:</td>
-  </tr>
-  <tr>
-    <td><input id="text1" type="text" /></td>
-    <td><input id="text1" type="text" /></td>
-  </tr>
-</table> 
-    </div>
-    </div>   
-    
-    <ul class="tabs left">
-    <li><a href="#tabr1">Endereço</a></li>
-    <li><a href="#tabr2">Observações/Comentários</a></li>
-</ul>
+            
+            <div id="formPF">
+                <form id="form_pf" name="form_pf" accept-charset="UTF-8" action="/interbits/planos/SalvarUsuario" method="post" onsubmit="return formPF.validate(this, true, 'verSalvarUsuarioPF');">
+                    <input type="hidden" id="TIPO_PESSOA" name="TIPO_PESSOA" value="PF" />
+                    <!-- Erros de validação no server -->
+                    <div id="form_pf_erros" class="notice warning" style="display: none;">
+                        <span class="icon medium" data-icon="!"></span> <span id="form_pf_erros_msg"></span>
+                        <a href="#close" class="icon close" data-icon="x"></a>
+                    </div>
+                    <!-- Erros de validação no server -->
+                
+                    <div class="col_5">
+                        <table>
+                            <tr>
+                                <td><label for="PF_NOME">* Nome Completo :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PF_NOME" name="PF_NOME" maxlength="100" class="required" field_name="Nome" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PF_APELIDO">* Apelido :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PF_APELIDO" name="PF_APELIDO" maxlength="100" class="required" field_name="Apelido" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PF_CPF">CPF :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PF_CPF" name="PF_CPF" maxlength="14" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PF_DT_NASCIMENTO">Data de Nascimento:</label></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" id="PF_DT_NASCIMENTO" name="PF_DT_NASCIMENTO" maxlength="10" style="width:100px;text-align:center;float:left;margin-right:5px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>*Sexo:</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="col_3">
+                                        <input type="radio" name="PF_SEXO" id="PF_SEXO_M" value="M" checked="checked" />
+                                        <label for="PF_SEXO_M" class="inline">Masculino</label>   
+                                    </div>
+                                    <div class="col_3">
+                                        <input type="radio" name="PF_SEXO" id="PF_SEXO_F" value="F" />
+                                        <label for="PF_SEXO_F" class="inline">Feminino</label>
+                                    </div> 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="col_1"></div>
+                    
+                    <div class="col_6">
+                        <table>
+                            <tr>
+                                <td colspan="3"><label for="EMAIL">* E-mail :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input type="text" id="PF_EMAIL" name="PF_EMAIL" maxlength="80" class="required email" field_name="E-mail" /></td>
+                            </tr>
+                            <tr>
+                                <td width="117"><label for="PF_DDD_TEL_RES">DDD:</label></td>
+                                <td width="357"><label for="PF_TEL_RES">Telefone residencial:</label></td>
+                                <td width="130">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PF_DDD_TEL_RES" name="PF_DDD_TEL_RES" maxlength="2" /></td>
+                                <td><input type="text" id="PF_TEL_RES" name="PF_TEL_RES" maxlength="9" /></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><label for="PF_DDD_CELULAR">DDD:</label></td>
+                                <td><label for="PF_CELULAR">Telefone celular:</label></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PF_DDD_CELULAR" name="PF_DDD_CELULAR" maxlength="2" /></td>
+                                <td><input type="text" id="PF_CELULAR" name="PF_CELULAR" maxlength="10" /></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><label for="PF_DDD_TEL_COM">DDD:</label></td>
+                                <td><label for="PF_TEL_COM">Telefone/PABX:</label></td>
+                                <td><label for="PF_RAMAL_TEL_COM">Ramal:</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PF_DDD_TEL_COM" name="PF_DDD_TEL_COM" maxlength="2" /></td>
+                                <td><input type="text" id="PF_TEL_COM" name="PF_TEL_COM" maxlength="10" /></td>
+                                <td><input type="text" id="PF_RAMAL_TEL_COM" name="PF_RAMAL_TEL_COM" maxlength="10" /></td>
+                            </tr>
+                        </table>
+                        <div class="espaco"></div>
+                        <table>
+                            <tr>
+                                <td>* Senha (8 a 15 caracteres):<br/>Use letras e números:</td>
+                                <td>Confirmar senha:<br/>Ao definir nova/alterar:</td>
+                            </tr>
+                            <tr>
+                                <td width="178px"><input type="password" id="PF_PASSWD" name="PF_PASSWD" maxlength="10" class="required" field_name="Senha" /></td>
+                                <td width="178px"><input type="password" id="PF_C_PASSWD" name="PF_C_PASSWD" maxlength="10" class="required" field_name="Confirmar Senha" /></td>
+                            </tr>
+                        </table> 
+                    </div>
+                    
+                    <ul class="tabs left">
+                        <li><a href="#enderecoPF">Endereço</a></li>
+                        <li><a href="#obsPF">Observações/Comentários</a></li>
+                    </ul>
+                    
+                    <div id="enderecoPF" class="tab-content">
+                        <table width="300">
+                            <tr>
+                                <td width="140"><label for="PF_CEP">* CEP :</label></td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PF_CEP" name="PF_CEP" maxlength="9" class="required" field_name="CEP" /></td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><label for="PF_LOGRADOURO">* Logradouro :</label></td>
+                                <td width="150"><label for="PF_NUMERO">* Número :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="text" id="PF_LOGRADOURO" name="PF_LOGRADOURO" maxlength="120" class="required" field_name="Logradouro" /></td>
+                                <td><input type="text" id="PF_NUMERO" name="PF_NUMERO" maxlength="10" class="required" field_name="Número" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><label for="PF_COMPLEMENTO">Complemento :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input type="text" id="PF_COMPLEMENTO" name="PF_COMPLEMENTO" maxlength="50" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><label for="PF_BAIRRO">Bairro :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input type="text" id="PF_BAIRRO" name="PF_BAIRRO" maxlength="50" /></td>
+                            </tr>
+                        </table>
+                        <table>    
+                            <tr>
+                                <td ><label for="PF_CIDADE">* Cidade :</label></td>
+                                <td colspan="2"><label for="PF_UF">* UF :</label></td>
+                            </tr>
+                            <tr>
+                                <td width="671px"><input type="text" id="PF_CIDADE" name="PF_CIDADE" maxlength="50" class="required" field_name="Cidade" /></td>
+                                <td colspan="2" valign="top">
+                                    {CB_PF_UF}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="obsPF" class="tab-content">
+                        <textarea id="PF_OBS" name="PF_OBS"></textarea>
+                    </div>
 
-<div id="tabr1" class="tab-content">
-    
-    <table width="300">
-  <tr>
-    <td width="100"><label for="text1">* CEP :</label></td>
-    <td colspan="2"></td>
-  </tr>
-  <tr>
-    <td><input id="text1" type="text" /></td>
-    <td colspan="2"></td>
-  </tr>
-  <tr>
-    <td colspan="2"><label for="text1">* Logradouro :</label></td>
-    <td width="80"><label for="text1">* Número :</label></td>
-  </tr>
-  <tr>
-    <td colspan="2"><input id="text1" type="text" /></td>
-    <td><input id="text1" type="text" /></td>
-  </tr>
-  <tr>
-    <td colspan="3"><label for="text1">Complemento :</label></td>
-  </tr>
-  <tr>
-    <td colspan="3"><input id="text1" type="text" /></td>
-  </tr>
-  <tr>
-    <td colspan="3"><label for="text1">Bairro :</label></td>
-  </tr>
-  <tr>
-    <td colspan="3"><input id="text1" type="text" /></td>
-  </tr>
-</table>
-<table>    
-  <tr>
-    <td ><label for="text1">* Cidade :</label></td>
-    <td colspan="2"><label for="text1">* UF :</label></td>
-  </tr>
-  <tr>
-    <td><input id="text1" type="text" /></td>
-    <td colspan="2"  width="40">
-        <select id="select1">
-        <option value="0">-- Choose --</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-        </select>
-    </td>
-  </tr>
-</table>
-    
-    
-</div>
-<div id="tabr2" class="tab-content">Tab2</div>
+                    <div class="col_12"  align="right">
+                        <div class="bt_padrao">
+                        <input type="submit" value="Cadastrar" />
+                        <input type="reset" value="Limpar Formulário" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="formPJ" style="display:none;">
+                <form id="form_pj" name="form_pj" accept-charset="UTF-8" action="/interbits/planos/SalvarUsuario" method="post" onsubmit="return formPJ.validate(this, true, 'verSalvarUsuarioPJ');">
+                    <input type="hidden" id="TIPO_PESSOA" name="TIPO_PESSOA" value="PJ" />
+                    <!-- Erros de validação no server -->
+                    <div id="form_pj_erros" class="notice warning" style="display: none;">
+                        <span class="icon medium" data-icon="!"></span> <span id="form_pj_erros_msg"></span>
+                        <a href="#close" class="icon close" data-icon="x"></a>
+                    </div>
+                    <!-- Erros de validação no server -->
+                    
+                    <div class="col_5">
+                        <table>
+                            <tr>
+                                <td><label for="PJ_NOME">* Nome Comercial :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_NOME" name="PJ_NOME" maxlength="120" class="required" field_name="Nome Comercial" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_RAZAO_SOCIAL">* Razão Social :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_RAZAO_SOCIAL" name="PJ_RAZAO_SOCIAL" maxlength="100" class="required" field_name="Razão Social" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_CPF_CNPJ">CNPJ :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_CPF_CNPJ" name="PJ_CPF_CNPJ" maxlength="18" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_INSC">Inscr. Estadual :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_INSC_ESTADUAL" name="PJ_INSC_ESTADUAL" maxlength="30" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="text1">Inscr. Municipal :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_INSC_MUNICIPAL" name="PJ_INSC_MUNICIPAL" maxlength="30" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_WEBSITE">Website (Ex.: www.seudominio.com.br) :</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_WEBSITE" name="PJ_WEBSITE" maxlength="100" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_DT_NASCIMENTO">Data/Fundação:</label></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" id="PJ_DT_NASCIMENTO" name="PJ_DT_NASCIMENTO" maxlength="10" style="width:100px;text-align:center;float:left;margin-right:5px;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-<div class="col_12"  align="right">
-<button class="small" onclick="">Prosseguir</button>
-<button class="small" onclick="javascript:formContato.clearForm();">Limpar formulario</button>
+                    <div class="col_1"></div>
+
+                    <div class="col_5">
+                        <table>
+                            <tr>
+                                <td colspan="3"><label for="PJ_NOME_CONTATO">* Nome/Contato :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input type="text" id="PJ_NOME_CONTATO" name="PJ_NOME_CONTATO" maxlength="100" class="required" field_name="Nome/Contato" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><label for="PJ_EMAIL">* E-mail :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input type="text" id="PJ_EMAIL" name="PJ_EMAIL" maxlength="100" class="required email" field_name="E-mail" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="text1">* DDD:</label></td>
+                                <td><label for="text1">Telefone/PABX:</label></td>
+                                <td><label for="text1">Ramal:</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_DDD_TEL_COM" name="PJ_DDD_TEL_COM" maxlength="2" class="required" field_name="DDD Telefone" /></td>
+                                <td><input type="text" id="PJ_TEL_COM" name="PJ_TEL_COM" maxlength="10" class="required" field_name="Telefone" /></td>
+                                <td><input type="text" id="PJ_RAMAL_TEL_COM" name="PJ_RAMAL_TEL_COM" maxlength="10" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_DDD_TEL_2">DDD:</label></td>
+                                <td><label for="PJ_TEL_2">Telefone 2:</label></td>
+                                <td><label for="PJ_RAMAL_TEL_2">Ramal:</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_DDD_TEL_2" name="PJ_DDD_TEL_2" maxlength="2" /></td>
+                                <td><input type="text" id="PJ_TEL_2" name="PJ_TEL_2" maxlength="10" /></td>
+                                <td><input type="text" id="PJ_RAMAL_TEL_2" name="PJ_RAMAL_TEL_2" maxlength="10" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_DDD_CELULAR">DDD:</label></td>
+                                <td><label for="PJ_CELULAR">Celular:</label></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_DDD_CELULAR" name="PJ_DDD_CELULAR" maxlength="2" /></td>
+                                <td><input type="text" id="PJ_CELULAR" name="PJ_CELULAR" maxlength="10" /></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><label for="PJ_DDD_FAX">DDD:</label></td>
+                                <td><label for="PJ_FAX">FAX:</label></td>
+                                <td><label for="PJ_RAMAL_FAX">Ramal:</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_DDD_FAX" name="PJ_DDD_FAX" maxlength="2" /></td>
+                                <td><input type="text" id="PJ_FAX" name="PJ_FAX" maxlength="10" /></td>
+                                <td><input type="text" id="PJ_RAMAL_FAX" name="PJ_RAMAL_FAX" maxlength="10" /></td>
+                            </tr>
+                        </table>
+                        <div class="espaco"></div>
+                        <table>
+                            <tr>
+                                <td>* Senha (8 a 15 caracteres):<br/>Use letras e números:</td>
+                                <td>Confirmar senha:<br/>Ao definir nova/alterar:</td>
+                            </tr>
+                            <tr>
+                                <td><input type="password" id="PJ_PASSWD" name="PJ_PASSWD" maxlength="10" class="required" field_name="Senha" /></td>
+                                <td><input type="password" id="PJ_C_PASSWD" name="PJ_C_PASSWD" maxlength="10" class="required" field_name="Confirmar Senha" /></td>
+                            </tr>
+                        </table> 
+                    </div>
+
+                    <ul class="tabs left">
+                        <li><a href="#enderecoPJ">Endereço</a></li>
+                        <li><a href="#obsPJ">Observações/Comentários</a></li>
+                    </ul>
+
+                    <div id="enderecoPJ" class="tab-content">
+                        <table width="300">
+                            <tr>
+                                <td width="140"><label for="PJ_CEP">* CEP :</label></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="PJ_CEP" name="PJ_CEP" maxlength="9" class="required" field_name="CEP" /></td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><label for="PJ_LOGRADOURO">* Logradouro :</label></td>
+                                <td width="150"><label for="PJ_NUMERO">* Número :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="text" id="PJ_LOGRADOURO" name="PJ_LOGRADOURO" maxlength="120" class="required" field_name="Logradouro" /></td>
+                                <td><input type="text" id="PJ_NUMERO" name="PJ_NUMERO" maxlength="10" class="required" field_name="Número" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><label for="PJ_COMPLEMENTO">Complemento :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input type="text" id="PJ_COMPLEMENTO" name="PJ_COMPLEMENTO" maxlength="50" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><label for="PJ_BAIRRO">Bairro :</label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input type="text" id="PJ_BAIRRO" name="PJ_BAIRRO" maxlength="50" /></td>
+                            </tr>
+                        </table>
+                        <table>    
+                            <tr>
+                                <td ><label for="PJ_CIDADE">* Cidade :</label></td>
+                                <td colspan="2"><label for="PJ_UF">* UF :</label></td>
+                            </tr>
+                            <tr>
+                                <td width="671px"><input type="text" id="PJ_CIDADE" name="PJ_CIDADE" maxlength="50" class="required" field_name="Cidade" /></td>
+                                <td colspan="2" valign="top">
+                                    {CB_PJ_UF}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="obsPJ" class="tab-content">
+                        <textarea id="PJ_OBS" name="PJ_OBS"></textarea>
+                    </div>
+
+                    <div class="col_12"  align="right">
+                        <div class="bt_padrao">
+                        <input type="submit" value="Cadastrar" />
+                        <input type="reset" value="Limpar Formulário" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- fim cont de cadastro -->
+    
+    </div>
+    <!-- fim formularios de cadastro -->
 </div>
-   </div>
-    <hr/>
+<!-- fim class conteudo (texto) -->
+<hr/>

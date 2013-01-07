@@ -13,7 +13,7 @@
 
             //Instância de JS
             $tpl->setJs('criacao/javascript');
-            $tpl->setCss('criacao/estilo');
+            $tpl->setCss('admin/criacao/estilo');
             $tpl->forceCssJsMinifyOn();
             
             $tpl->render('escola');
@@ -30,7 +30,7 @@
 
             //Instância de JS
             $tpl->setJs('criacao/javascript');
-            $tpl->setCss('criacao/estilo');
+            $tpl->setCss('admin/criacao/estilo');
             $tpl->forceCssJsMinifyOn();
             
             $tpl->render('escola');

@@ -1,0 +1,48 @@
+th, td {
+    border-bottom: 0px dotted #DDDDDD;
+    font-size: 0.9em;
+    padding: 0 4px 2px;
+    text-align: left;
+}
+
+#box_inserir_arquivo{
+    float: left;
+    width: 95%;
+    height: auto;
+    border: 1px solid #DDDDDD;
+    padding: 10px;
+    margin-bottom: 16px;
+}
+
+#box_micro_conteudo{
+    float: left;
+    width: 600px;
+    max-height: 400px;
+    height: auto;
+    margin: -5px 0 10px 2px;
+    padding: 10px;
+    border: 1px solid #DDDDDD;
+    overflow-x:hidden;
+    background-color: #f7f7f7;
+}
+
+.tipo_arquivo{
+    float: left;
+    width: 96%;
+    height: auto;
+    border:1px solid #DDDDDD;
+    margin-left: 10px;
+    background-color: #f7f7f7;
+}
+
+.box_micro_conteudo{
+    width: 584px;
+    height: auto;
+    border: 1px solid #DDDDDD;
+    display: inline-block;
+    background-color: #ffffff;
+}
+
+input {
+    width: 100%;
+}

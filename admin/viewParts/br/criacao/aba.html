@@ -1,22 +1,277 @@
+<!-- começo abas -->  
 <div id="abas">
     <ul>
         <li>
-            <a href="#aba1">Aba1</a>
+            <a href="#aba1">Início</a>
         </li>
         <li>
-            <a href="#aba2">Aba2</a>
-        </li>
-        <li>
-            <a href="#aba3">Aba3</a>
+            <a href="#aba2">Novo</a>
         </li>
     </ul>
+    <!-- conteúdo abas -->
+    <div class="conteudo_abas">
+          
     <div id="aba1">
-        Teste 1
-    </div>    
+    <!-- começo aba1 -->   
+        <!-- descrição -->
+        <div class="col_5">
+            <h5>Lorem ipsum</h5>
+            <br/>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, egestas 
+            vitae fermentum in, molestie a lectus. Etiam ipsum sapien, porta eget congue et, tempus quis 
+            est. Cras pharetra fermentum quam, eu.</p>
+            </div>
+        <!-- fim descrição -->
+        <div class="col_7">
+            <!-- meus conteúdos -->
+            <div class="col_6">
+            <h5>Meus conteúdos</h5>
+            <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="col_5">
+            <br/>
+            <p><button class="small">Novo Conteúdo</button></p>
+            </div>
+            <!-- fim meus conteúdos -->
+            <div class="linha"></div>
+            <!-- conteúdo público -->
+            <div class="col_6">
+            <h5>Conteúdo público</h5>
+            <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="col_5">
+            <p><h2>10.000</h2></p>
+            </div>
+            <!-- fim conteúdo público -->
+        </div>
+    <!-- fim aba1 -->
+    </div>
+
     <div id="aba2">
-        Teste 2
-    </div>    
-    <div id="aba3">
-        Teste 3
-    </div>    
+      <!-- começo aba2 (mestre)  --> 
+<!--------------------- xx ---------------------->
+        <h5>Assunto</h5>
+        <!-- grid busca --> 
+         <div class="col_12"></div>
+         <!-- fim grid busca -->
+         
+        <!-- começo abas --> 
+        <ul class="tabs left">
+        <li><a href="#tabr1">Novo conteúdo</a></li>
+        <li><a href="#tabr2">Lista de conteúdo</a></li>
+        </ul>
+        <!-- fim abas -->
+        
+    <!-- abas1 (novo conteúdo) -->     
+<div id="tabr1" class="tab-content">
+    
+    <!-- migalha de pão -->
+<ul class="breadcrumbs alt1">
+<li><a href="">Categoria 1</a></li>
+<li><a href="">Categoria 2</a></li>
+<li><a href="">Sub Categoria</a></li>
+<li><a href="">Sub Categoria</a></li>
+</ul>
+      <!-- inicio cadastro --> 
+      
+    <table width="500px">
+        <tr>
+        <td colspan="2"><label for="text1">Titulo:</label></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input id="text1" type="text" /></td>
+        </tr>
+        <tr>
+        <td colspan="2"><label for="text1">Descrição:</label></td>
+        </tr>
+        <tr>
+        <td colspan="2"><input id="text1" type="text" /></td>
+        </tr>
+        <tr>
+        <td><label for="text1">Visibilidade: </label></td>
+        <td><span class="icon gray small" data-icon="?"></span></td>
+        </tr>
+        <tr>
+        <td width="65">
+        <input type="radio" name="radio" id="radio1" />
+        <label for="radio1" class="inline">Público</label>
+        </td>
+        <td width="475">
+        <input type="radio" name="radio" id="radio1" />
+        <label for="radio1" class="inline">Privado</label>
+        </td>
+        </tr>
+    </table>
+      
+<!-- inicio upload --> 
+
+       <div id="box_inserir_arquivo">  
+          <h5>Conteúdo:</h5>
+      
+        <table>
+        <tr>
+        <td>
+        <input type="radio" name="radio" id="radio1" />
+        <label for="radio1" class="inline">Informar um Link</label>    
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <input type="radio" name="radio" id="radio1" />
+        <label for="radio1" class="inline">Enviar um arquivo ( Upload )</label>
+        </td>
+        </tr>
+        </table>
+       </div>
+
+    <div class="col_12">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, 
+        egestas vitae fermentum in, molestie a lectus. Etiam ipsum sapien, 
+        porta eget congue et, tempus quis est.</p>
+    </div>
+
+    <div class="espaco"></div>
+    
+<!-- exemplo upload --> 
+    <table>
+      <tr>
+        <td width="620px"><input id="text1" type="text" /></td>
+        <td width="38px"><button class="medium">Procurar</button></td>
+        <td width="72px"><button class="medium">Salvar</button></td>
+      </tr>
+      <tr>
+          <td>*Tamanho máximo 5mb</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+<!-- fim exemplo upload -->  
+<div class="linha"></div>
+<!-- exemplo link -->  
+     <table>
+         <tr>
+         <td width="620px">Informe o link</td>
+         </tr>
+      <tr>
+        <td width="620px"><input id="text1" type="text" /></td>
+        <td width="72px"><button class="medium">Salvar</button></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+<!-- fim exemplo link --> 
+    
+<!-- fim upload -->
+<!-- fim abas1 (novo conteúdo) -->
 </div>
+    
+<!-- abas2 ( lista de conteúdo) -->
+<div id="tabr2" class="tab-content">
+
+    <!-- migalha de pão -->
+<ul class="breadcrumbs alt1">
+<li><a href="">Categoria 1</a></li>
+<li><a href="">Categoria 2</a></li>
+<li><a href="">Sub Categoria</a></li>
+<li><a href="">Sub Categoria</a></li>
+</ul>    
+  <!-- Filtro -->
+  <div class="col_12">  
+    <table>
+    <tr>
+    <td width="61px">
+    <input type="radio" name="radio" id="radio1" />
+    <label for="radio1" class="inline">Todos</label> </td>
+    <td>
+    <input type="radio" name="radio" id="radio1" />
+    <label for="radio1" class="inline">Meus conteúdos</label></td>
+    </tr>
+    </table>
+ </div>
+    <!-- fim Filtro -->
+    
+    <div id="box_micro_conteudo">
+
+<!-- box conteudo cadastrado -->
+<div class="box_micro_conteudo">
+<div class="col_12"><h5>Titulo: Novo Conteúdo</h5></div>
+<div class="linha"></div>
+<div class="col_2">Descrição:</div>
+<div class="col_9">Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur</div>
+<div class="tipo_arquivo">
+    <div class="col_3">Tipo de arquivo:</div>
+    <div class="col_1">
+    <img src="../../assets/images/admin/pdf.jpg" />
+    </div>
+    <div class="col_2">
+    5mb
+    </div>
+</div>
+<div class="linha"></div>
+<div class="col_3"><button class="medium">Adcionar a lista</button></div>
+<div class="col_2"><button class="medium">Deletar</button></div>
+<div class="col_2"><button class="medium">Visualizar</button></div>
+</div>
+<!-- fim box conteudo cadastrado -->
+        
+<!-- box conteudo cadastrado -->
+<div class="box_micro_conteudo">
+<div class="col_12"><h5>Titulo: Novo Conteúdo</h5></div>
+<div class="linha"></div>
+<div class="col_2">Descrição:</div>
+<div class="col_9">Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur</div>
+<div class="tipo_arquivo">
+    <div class="col_3">Tipo de arquivo:</div>
+    <div class="col_1">
+    <img src="../../assets/images/admin/pdf.jpg" />
+    </div>
+    <div class="col_2">
+    5mb
+    </div>
+</div>
+<div class="linha"></div>
+<div class="col_3"><button class="medium">Adcionar a lista</button></div>
+<div class="col_2"><button class="medium">Deletar</button></div>
+<div class="col_2"><button class="medium">Visualizar</button></div>
+</div>
+<!-- fim box conteudo cadastrado -->
+
+<!-- box conteudo cadastrado -->
+<div class="box_micro_conteudo">
+<div class="col_12"><h5>Titulo: Novo Conteúdo</h5></div>
+<div class="linha"></div>
+<div class="col_2">Descrição:</div>
+<div class="col_9">Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sit amet, consectetur</div>
+<div class="tipo_arquivo">
+    <div class="col_3">Tipo de arquivo:</div>
+    <div class="col_1">
+    <img src="../../assets/images/admin/pdf.jpg" />
+    </div>
+    <div class="col_2">
+    5mb
+    </div>
+</div>
+<div class="linha"></div>
+<div class="col_3"><button class="medium">Adcionar a lista</button></div>
+<div class="col_2"><button class="medium">Deletar</button></div>
+<div class="col_2"><button class="medium">Visualizar</button></div>
+</div>
+<!-- fim box conteudo cadastrado -->
+
+
+    </div>
+    
+<!-- fim abas2 ( lista de conteúdo) -->    
+</div>
+
+<!--------------------- xx ---------------------->
+<!-- fim abas2 (mestre) -->            
+</div>
+        
+        
+    <!-- fim conteúdo abas -->  
+    </div>
+    <!-- fim abas -->      
+    </div>  
