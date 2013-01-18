@@ -208,7 +208,7 @@
         
         public static function __callStatic($varName,$args) {                      
             $varName = self::PREFIXO_VAR.$varName;           
-            $value = (isset($_SESSION[$varName]))?$_SESSION[$varName]:'';
+            $value = (isset($_SESSION[$varName]))?trim($_SESSION[$varName]):'';
             return $value;                        
         }
     }

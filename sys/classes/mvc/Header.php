@@ -402,8 +402,9 @@ class Header {
         $inc                = '';        
         $cssJsExtension     = $this->getExtFile($ext);//Converte cssInc para css e jsInc para js, se necessário.                        
         if (strlen($file) > 0){                        
-            $rootFolder     = \LoadConfig::rootFolder();
-            $pathFile       = '/'.$rootFolder.'/'.\Url::relativeUrl($file);       
+            $rootFolder     = \LoadConfig::rootFolder();                     
+            $pathFile       = ((strlen($rootFolder) > 0)? "/{$rootFolder}" : '').'/'.\Url::relativeUrl($file);       
+            $pathFile       = str_replace('//','/',$pathFile);
             
             if ($cssJsExtension == self::EXT_JS) {
                 $inc = "<script type='text/javascript' src='".$pathFile."'></script>".chr(13);

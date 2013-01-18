@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <app>
-        <config id='modules'>modelo,app,app_dev,admin,bm,api,auth</config>
+        <config id='modules'>site,admin,api,auth</config>
         <config id='langs'>br,en</config>
-        <config id='defaultModule'>app</config>  
+        <config id='defaultModule'>site</config>  
         <config id='defaultLang'>br</config>
         <config id='baseUrlHttp'>localhost</config>
         <config id='baseUrlHttps'>https://superprofessorweb.websiteseguro.com</config>
-        <config id='rootFolder'>interbits</config>        
+        <config id='rootFolder'></config>        
         <config id='folderSys'>sys</config>                    
         <config id='folderViews'>viewParts</config>
     </app>    

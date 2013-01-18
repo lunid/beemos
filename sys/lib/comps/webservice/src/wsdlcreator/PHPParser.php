@@ -529,21 +529,21 @@ class PHPParser {
 	private function parseClasses () {
 		$classes = $this->classes;
 		$this->classes = array();
-		foreach ($classes as $class=>$methods) {
+		foreach ($classes as $class=>$methods) {                        
 			foreach ($methods as $method=>$attributes) {
 				$this->classes[$class][$method]["type"] = $attributes["type"];
 				$commentParsed = $this->parseComment($attributes["comment"]);
 				$this->classes[$class][$method]["returnType"] = !isset($commentParsed["return"]) ? false : $commentParsed["return"];
-				$this->classes[$class][$method]["description"] = isset($commentParsed["description"]) ? $commentParsed["description"] : "";
+				$this->classes[$class][$method]["description"] = isset($commentParsed["description"]) ? $commentParsed["description"] : "";                                
 				if (is_array($attributes["params"])) {
 					foreach ($attributes["params"] as $param) {
 						$paramName = substr($param, 1);
-						$this->classes[$class][$method]["params"][$paramName]["varName"] = $param;
-						if (isset($commentParsed["params"][$param]))
+						$this->classes[$class][$method]["params"][$paramName]["varName"] = $param;                
+						if (is_array($commentParsed) && isset($commentParsed["params"][$param]))
 							$this->classes[$class][$method]["params"][$paramName]["varType"] = $commentParsed["params"][$param];
 					}
 				}
-			}
+			}                       
 		}
 	}
 	

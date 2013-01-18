@@ -55,7 +55,7 @@
             $pathXml    = $this->pathXml;
             $objXml     = Xml::loadXml($pathXml);                        
             $rootFolder = \LoadConfig::rootFolder();
-            if (strlen($rootFolder) > 0) $path = '/'.$rootFolder.'/';
+            if (strlen($rootFolder) > 0) $path = ($rootFolder != '' ? "/{$rootFolder}/" : "");
             if (is_object($objXml)) {            
                 $nodesRoot      = $objXml->redirect;
                 if (is_object($nodesRoot) && count($nodesRoot) > 0) {                     

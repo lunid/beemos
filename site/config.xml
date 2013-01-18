@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>    
+    <header>
+        <include id='css'></include>
+        <include id='cssInc'>site.common</include>
+        <include id='js'>site.common,util.dictionary,util.form</include>
+        <include id='jsInc'></include>
+        <include id='plugins' concat='1'>jquery_ui,kickstart</include>
+    </header>
+</root>

@@ -1,0 +1,10 @@
+#banner {
+    background: url("../../images/site/banners/home_1.jpg") no-repeat scroll 0 0 transparent;
+    width: 958px;
+    height:338px;    
+}
+
+#bannerContent {
+    padding-top:280px;
+    text-align: center;
+}

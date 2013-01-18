@@ -25,7 +25,7 @@
         }
         
         /**
-         * Inicia o serviço SoapServer - WS de Usuários
+         * Inicia o serviço SoapServer
          * 
          * @throws SoapFault
          */

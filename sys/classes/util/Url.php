@@ -49,8 +49,8 @@
             $path = $uri;
             if (strlen($uri) > 0) {
                 $root           = $_SERVER['DOCUMENT_ROOT'];
-                $rootFolder     = \LoadConfig::rootFolder();
-                $path           = $root.'/'.$rootFolder.'/'.$uri;
+                
+                $path           = $root.'/'.self::getRootFolder().$uri;
                 $path           = str_replace('//','/',$path);
             }
             return $path;
@@ -77,12 +77,18 @@
            if (strlen($uri) > 0) {                    
                $root            = $_SERVER['DOCUMENT_ROOT'];
                $rootFolder      = \LoadConfig::rootFolder();               
-               $physicalPath    = $root.'/'.$rootFolder.'/';
+               $physicalPath    = $root.'/'.self::getRootFolder();
                $physicalPath    = str_replace('//','/',$physicalPath);
                $path            = str_replace($physicalPath,'',$uri);               
            }
            $path = str_replace('//','/',$path);
            return $path;
+        }
+        
+        public static function getRootFolder(){
+            $rootFolder     = \LoadConfig::rootFolder();
+            $folder         = (strlen($rootFolder) > 0)?$rootFolder.'/':'';
+            return $folder;
         }
         
         public static function siteUrlHttp($params){
@@ -111,7 +117,8 @@
             $baseUrl      = ($protocol == 'http')?\LoadConfig::baseUrlHttp():\LoadConfig::baseUrlHttps();
             $baseUrl      = str_replace($protocol.'://','',$baseUrl);
             $rootFolder   = \LoadConfig::rootFolder();
-            $uri          = $protocol.'//'.$baseUrl.'/'.$rootFolder.'/'.$params;
+            $folder       = (strlen($rootFolder) > 0)?$rootFolder.'/':'';
+            $uri          = $protocol.'//'.$baseUrl.'/'.$folder.$params;
             
             return $uri;
         }

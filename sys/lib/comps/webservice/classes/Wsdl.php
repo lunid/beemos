@@ -27,7 +27,7 @@
 
                 //Trata caminhos de inclusão
                 $path      = preg_replace("/(sys)(.*)/", "", __DIR__);
-                $pathWsdl  = $path . "sys\lib\comps\webservice\src\wsdlcreator\WSDLCreator.php";
+                $pathWsdl  = $path . "sys/lib/comps/webservice/src/wsdlcreator/WSDLCreator.php";
                
                 //Inclui bibilioteca WSDLCreator
                 include($pathWsdl);
