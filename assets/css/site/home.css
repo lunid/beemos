@@ -1,10 +1,36 @@
-#banner {
-    background: url("../../images/site/banners/home_1.jpg") no-repeat scroll 0 0 transparent;
-    width: 958px;
-    height:338px;    
+#bannerTexto {
+    margin-top:15px;
+    padding-right:10px;
 }
 
-#bannerContent {
-    padding-top:280px;
-    text-align: center;
+#bannerTexto h4, #bannerTexto p{
+    margin-top:0px;
+    margin-left:10px;    
+    color:#fff;
+}
+
+#bannerTexto h4 {
+    padding-bottom:10px;
+}
+
+#bannerTexto p {
+    font-size:1.2em;
+}
+
+#bannerTexto .col_4 {
+    width:30.666666666667%;
+    padding:5px;
+}
+
+#bannerBtn {
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+.divisoria {    
+    margin-top:10px;
+    border-right: 1px solid #313140;
+    height:120px;
+    width:1px;
+    float:left;
 }

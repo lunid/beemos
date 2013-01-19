@@ -18,7 +18,7 @@
     include('sys/classes/_init/Application.php');
      
     try {
-        Application::folder('interbits');
+        Application::folder('beemos');
         
         /*
          * Define o ambiente atual.
