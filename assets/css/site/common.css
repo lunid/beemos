@@ -32,9 +32,8 @@
 
 
 h1,h2,h4,h5,h6{	
-        color:#fff;
-	margin: 5px 0px 10px 0px;        
-        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);      
+        color:#000;
+	margin: 5px 0px 10px 0px;                   
 }
 
 h3 {
@@ -430,9 +429,10 @@ body{
 }
 
 #page, #pageWhite {       
-    background-color:#1D1F20;
-    color:#FFF;
+    background:url("../../images/site/bg_white.jpg") repeat-x;
+    color:#000;
     padding:0px;
+    margin-top:-7px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -443,20 +443,26 @@ body{
     color:#000;    
 }
 
-#wrap{
+.wrap{
 	width:960px;/*960*/	
 	margin:10px auto 10px auto;		
 }
 
 
 #footer{
-	text-align:center;
-	padding:20px 0px 0px 0px;
-	margin:0;
-	font-size:0.8em;
-	position: relative;
-	top:0;
-	left:0;
+    text-align:center;
+    padding:0px 0px 0px 0px;
+    margin:0;
+    font-size:0.8em;
+    position: relative;
+    top:0;
+    left:0;
+    background: url("../../images/site/bg_footer.jpg") repeat-x;        
+}
+
+#btnInicio {
+    padding-top:15px;
+    height:40px;
 }
 
 /*---------------------------------
@@ -514,7 +520,7 @@ th, td {
 
 .col_title {
     font-size: 17px;
-    font-weight: bold;
+    font-weight: normal;
     margin: 0;
     padding: 20px 0;
     text-shadow: 0 1px 1px #000000;
@@ -622,7 +628,7 @@ hr {
 }
 
 #siteTabs ul #tabLogin {
-    margin-left:530px;    
+    margin-left:570px;    
 }
 #siteTabs ul #tabLogin a, #siteTabs ul #tabLogin a:visited {
     background: none repeat scroll 0 0 rgba(217, 0, 0, 1);    
