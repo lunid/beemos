@@ -1,0 +1,221 @@
+
+#page {
+    height:400px;
+}
+
+#tituloPagina {
+    height:50px;
+    background-color: #66ABD8;
+    color:#fff; 
+    font-size:30px;
+    padding:30px 10px 0px 50px;
+    text-align:left;
+}
+
+input {
+    -moz-box-sizing: none;
+    background: none;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;    
+    margin: 0;
+    padding: 5px 0;
+    text-indent: 5px;
+    vertical-align: middle;
+    width: 300px;   
+    color:#000;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #E9E9E9;
+    border-color: #BFBFBF #FEFDFD #FEFDFD;
+    border-image: none;
+    border-right: 1px solid #FEFDFD;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 2px 6px #E4E4E4 inset;
+    font-size: 13px;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    text-shadow: 1px 1px 0 #FFFFFF;    
+}
+
+.input-gray-big:-moz-placeholder {
+    color: #9A9A9A;
+}
+
+input[type="text"],  
+input[type="password"] {
+   none;
+}
+
+.lucida, input.lucida, .lucida input {
+    font-family: "Lucida Grande",Arial;
+}
+
+.smartbox {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #D9DCDE;
+    padding: 1px;
+}
+.smartbox .i-light {
+    background: none repeat scroll 0 0 #F8F7F7;
+    padding: 20px;
+}
+
+.round4 {
+    border-radius: 4px 4px 4px 4px;
+}
+
+.round5 {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.coupon_in .input-gray-big {
+    background: none repeat scroll 0 0 #F9F7F7;
+}
+
+.input-gray-big.wide {
+    width: 340px;
+}
+
+smartbox .tform {
+    overflow: hidden;
+}
+.smartbox .tform .error {
+    background: url("images/error.png?7825028852") no-repeat scroll left center transparent;
+    color: #878787;
+    display: none;
+    font-size: 13px;
+    height: 15px;
+    line-height: 15px;
+    margin-left: 190px;
+    padding-left: 20px;
+    padding-top: 0;
+}
+
+.smartbox .tform label {
+    color: #606060;
+    float: left;
+    font-size: 13px;
+    margin-right: 10px;
+    overflow: hidden;
+    padding-top: 8px;
+    text-align: right;
+    width: 180px;
+}
+.input-gray-big.wide {
+    width: 340px;
+}
+.input-gray-big.half {
+    width: 157px;
+}
+fieldset {
+    border: medium none;
+    margin: 4px 0 0;
+    padding: 0;
+    text-align: left;
+}
+legend {
+    color: #595F65;
+    font-size: 13px;
+    margin: 0 0 8px;
+    text-align: left;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+.smartbox .ccs {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #E9E9E9;
+    border-color: #BFBFBF #E4E4E4 #E4E4E4;
+    border-image: none;
+    border-right: 0 none #E4E4E4;
+    border-style: solid none none;
+    border-width: 1px 0 0;
+    display: block;
+    font-size: 13px;
+    padding: 6px 2px;
+}
+.smartbox .ccs select, .smartbox .ccs option {
+    background: none repeat scroll 0 0 #E9E9E9;
+    border: 1px solid #E9E9E9;
+}
+.smartbox *:focus {
+    outline: medium none;
+}
+a.ttbutton {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: -moz-linear-gradient(center top , #6DB2DF 0%, #4B8FBC 100%) repeat scroll 0 0 transparent;
+    border-color: #4483AB #4483AB #346B8F;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    margin: auto;
+    text-decoration: none;
+}
+a.ttbutton:hover {
+    background: -moz-linear-gradient(center top , #369CDB 0%, #167BBA 100%) repeat scroll 0 0 transparent;
+}
+.ttbutton .ins {
+    border: 1px solid #79B8E1;
+    color: #FFFFFF;
+    display: block;
+    font-size: 20px;
+    padding: 19px 15px;
+}
+.ttbutton .ar {
+    font-family: "Consolas","Franklin Gothic",Georgia;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 10px;
+    text-shadow: 1px 1px 1px #2C4F65;
+}
+a.tnbutton {
+    background: -moz-linear-gradient(center top , #F1F1F1 0%, #D2D2D2 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #B4B4B4;
+    display: block;
+    text-decoration: none;
+}
+a.tnbutton:hover {
+    background: -moz-linear-gradient(center top , #E8E8E8 0%, #BFBFBF 100%) repeat scroll 0 0 transparent;
+}
+.tnbutton .ins {
+    border: 1px solid #FFFFFF;
+    color: #4C90BD;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 9px 15px;
+    text-align: center;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+
+.validation_suggest {
+    display: block;
+    line-height: 31px;
+    vertical-align: middle;
+    color: #585B55;
+}

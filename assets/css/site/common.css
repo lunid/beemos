@@ -403,8 +403,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 
 body{    
 	margin:0;
-	padding:0;
-	color:#000;               
+	padding:0;	
+        color: #585B55;
         background: none repeat scroll 0 0 white;
         background: url("../../images/site/bg_repeat.jpg") repeat scroll 0 0;
         color: #62615C;
@@ -628,13 +628,16 @@ hr {
 }
 
 #siteTabs ul #tabLogin {
-    margin-left:570px;    
+    margin-left:545px;    
 }
-#siteTabs ul #tabLogin a, #siteTabs ul #tabLogin a:visited {
+#siteTabs ul #siteTabs ul {
     background: none repeat scroll 0 0 rgba(217, 0, 0, 1);    
     font-size: 1em;
 }
 
+#siteTabs #tabLogin a, #siteTabs #tabLogin a:visited {
+    background: none;
+}
 #nav {
     float: right;
     padding-top: 25px;
