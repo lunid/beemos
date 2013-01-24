@@ -11,27 +11,13 @@ acordo com sua necessidade.
 -->
 <root>   
     <redirect perfil='FORM'>        
+        <module>site</module>
         <controller>login</controller>
-        <action>FormAuth</action>        
+        <action></action>         
     </redirect>    
-    <redirect perfil='LOGOUT'>        
-        <module>auth</module>
-        <controller>login</controller>
-        <action>FormAuth</action>        
-    </redirect>
-    <redirect perfil='PRO'>
-        <module>admin</module>
-        <controller>usuarios</controller>
-        <action></action>
-    </redirect>
-    <redirect perfil='ALN'>
-        <module>admin</module>
-        <controller></controller>
-        <action></action>
-    </redirect>
-    <redirect perfil='ESC'>
-        <module>admin</module>
-        <controller></controller>
-        <action></action>
+    <redirect perfil='BEEMOS'>        
+        <module>site</module>
+        <controller>app_beemos</controller>
+        <action></action>         
     </redirect>        
 </root>

@@ -1,0 +1,30 @@
+.boxTitulo h4 {
+    margin-top:5px;
+    margin-bottom:15px;
+}
+.tituloBgColor {
+    background-color: #FF5C26;
+}
+
+#menu_lateral {
+    float: left;
+    width: 200px;
+    height:300px;
+    margin: 0px;
+    background-color: #000;
+}
+#menu_lateral_base {
+    background: #dbdbdb;
+    padding-top: 12px;
+}
+
+#texto {
+    float: left;
+    margin-left: 0px;
+    margin-top: 0px;
+    width: auto;
+    padding-top: 20px;
+    padding-bottom: 998em;
+    margin-bottom: -1000em;
+}
+

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <errors>
+        <error id='FALHA_PADRAO'>Ops, falha no Servidor! Tente mais tarde.</error>               
         <error id='LOGIN'>Usuário e/ou senha incorretos.</error>               
+        <error id='LOGIN_ALUNO'>Você não tem permissão para cessar a área de Alunos.</error>               
         <error id='PARAMS_REQUIRED'>Usuário e/ou senha não informados.</error>
         <error id='TOKEN'>A tentativa de autenticar o usuário informado falhou. Por favor, tente novamente.</error>
+        <error id='FB_USER'>Falha ao identificar usuário com Facebook! Tente mais tarde.</error>               
+        <error id='FB_TOKEN'>Falha ao gerar token de acesso no Facebook! Tente mais tarde.</error>               
+        <error id='FB_CODE'>Falha no recebimento do Código de acesso do Facebook! Tente mais tarde.</error>               
+        <error id='FB_USER_EXISTS'>Esta conta de Facebook já possui cadastro.</error>               
     </errors>        
 </root>

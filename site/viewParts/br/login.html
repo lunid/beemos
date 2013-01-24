@@ -1,26 +1,31 @@
 <div id='page' class="center">
-    <div id='tituloPagina'>Login</div>   
-    <div class="smartbox round5 left" style="width:703px; padding:20px; margin:30px 100px 30px 100px; background: #f8f7f7;">
-        <div>            
-            <div>
-                <div class="floatLeft alignRight" style="width:362px">
-                    <input id="step1Regloginfield" class="input-gray-big wide round4" type="text" placeholder="E-mail" value="" name="login">
+    <div id='tituloPagina'>Login</div>      
+    {MSG_ERR}
+    <form accept-charset="UTF-8" action="/auth/login/processAuth" method="post">
+        <div id="formGray" class="smartbox round5 left boxForm">            
+            <div>             
+                <div>
+                    <div class="floatLeft alignRight widthInput">
+                        <input id="step1Regloginfield" class="input-gray-big wide round4" type="text" placeholder="E-mail" value="" name="login">
+                    </div>
+                    <div class="floatRight alignLeft" style="width:270px;">
+                        <span class="validation_suggest" style="display:block" step1msg="login">Qual é o seu e-mail?</span>
+                    </div>
                 </div>
-                <div class="floatRight alignLeft" style="width:270px;">
-                    <span class="validation_suggest" style="display:block" step1msg="login">Qual é o seu e-mail?</span>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px">
+                        <input id="step1Regpassfield" class="input-gray-big wide round4" type="password" placeholder="Password" value="" name="password">
+                    </div>
+                    <div class="floatRight alignLeft" style="width:270px;">
+                        <span class="validation_suggest" style="display:block" step1msg="password">Defina uma senha.</span>
+                    </div>
                 </div>
-            </div>
-            <div class="clearfix"></div>
-            <div>
-                <div class="floatLeft alignRight" style="width:362px">
-                    <input id="step1Regpassfield" class="input-gray-big wide round4" type="password" placeholder="Password" value="" name="password">
-                </div>
-                <div class="floatRight alignLeft" style="width:270px;">
-                    <span class="validation_suggest" style="display:block" step1msg="password">Defina uma senha.</span>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>                
-    </div>    
+                <div class="clearfix"></div>
+                <div class="floatLeft alignRight" style="width:362px"><input type="submit" class="green" value="Entrar" /></div>
+                <div class="clearfix"></div>
+            </div>                
+        </div>    
+    </form>
     <br/><br/>    
 </div>
