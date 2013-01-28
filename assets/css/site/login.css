@@ -1,4 +1,13 @@
 
+#msgAssineJa {
+    margin-left:30px;
+}
+
+#msgAssineJa h3 {
+    font-size:18px;
+    font-weight: normal;
+}
+
 #page {
     height:400px;
 }
@@ -11,6 +20,7 @@
 
 #formGray {
     padding:20px;
+    padding-top:50px;
     background: #f8f7f7;
 }
 

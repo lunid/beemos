@@ -28,3 +28,16 @@
     margin-bottom: -1000em;
 }
 
+#opcoesRecursos {
+    padding:50px;
+    padding-bottom:50px;
+}
+
+#opcoesRecursos h3, #opcoesRecursos h4 {
+    font-size:24px;
+}
+
+#opcoesRecursos h4 {
+    font-size:16px;
+    font-weight: normal;
+}
