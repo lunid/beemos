@@ -1,0 +1,18 @@
+.boxForm {
+    width:703px; 
+    padding:0px; 
+    margin:0px; 
+}
+
+#aceitoPoliticas {
+    margin-bottom: 20px;
+    margin-left:22px;
+}
+
+label {
+    margin-left:20px;
+}
+
+#formGray {
+    padding-top:20px;
+}

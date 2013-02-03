@@ -8,11 +8,89 @@
 	IMPORTS
 -----------------------------------*/
 @import url(http://fonts.googleapis.com/css?family=Arimo:400,700);
+@import url(http://fonts.googleapis.com/css?family=Oswald);
 
+@font-face {
+	font-family: 'MuseoSans500Regular';
+	src: url('../fonts/MuseoSans_500-webfont.eot');
+	src: url('../fonts/MuseoSans_500-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('../fonts/MuseoSans_500-webfont.woff') format('woff'),
+			 url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'),
+			 url('../fonts/MuseoSans_500-webfont.svg#MuseoSans500Regular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	}
+
+@font-face {
+	font-family: 'MuseoSans500Italic';
+	src: url('../fonts/MuseoSans_500_Italic-webfont.eot');
+	src: url('../fonts/MuseoSans_500_Italic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('../fonts/MuseoSans_500_Italic-webfont.woff') format('woff'),
+			 url('../fonts/MuseoSans_500_Italic-webfont.ttf') format('truetype'),
+			 url('../fonts/MuseoSans_500_Italic-webfont.svg#MuseoSans500Italic') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	}
+        
 /*---------------------------------
 	Correções do KS
 -----------------------------------*/
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'MuseoSans500Regular',Arial,sans-serif;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin: 0 0 1.5em;
+    text-shadow: 0 1px 0 #FFFFFF;
+    color: #00303F;
+}
+
+#boxTituloPage {
+    background-color: #66ABD8;
+    height: 125px;
+    color:#fff;        
+    text-align:left;       
+}
+
+#tituloPage {
+    padding-top: 30px;
+    padding-left:50px;  
+}
+
+#tituloPage h1 {
+    font-family: 'Oswald',sans-serif;
+    font-size: 30px;
+    line-height: 1em;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+    text-transform: uppercase;
+    word-spacing: 0.1em;
+}
+
+#tituloPage h3, #tituloPage h1 {
+    text-shadow: none;
+    color:#fff;
+}
+
+
+
+#titulo {
+    padding-top: 30px;
+    padding-left:50px;    
+}
+
+#titulo h1 {
+    font-family: 'Oswald',sans-serif;
+    font-size: 30px;
+    line-height: 1em;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+    text-shadow: none;
+    text-transform: uppercase;
+    word-spacing: 0.1em;
+}
 
 #tiptip_content {
     background-color: #CCCCCC;
@@ -28,16 +106,6 @@
     padding: 9px 8px;
     text-shadow: 0 0 0 #000000;
     width: 440px;
-}
-
-
-h1,h2,h4,h5,h6{	
-        color:#000;
-	margin: 5px 0px 10px 0px;                   
-}
-
-h3 {
-    color:#000;
 }
 
 .tituloBgColor {
@@ -185,10 +253,11 @@ blockquote {
 }
 
 .menu li.current > a, .menu li.current > a:hover, .menu li.current.hover > a {
-	background: #FFF; /* Old browsers */
+    background: #FFF; /* Old browsers */
     background: -moz-linear-gradient(center top , #EBEAEA 0%, #F8F8F8 44%, #FFFFFF 100%) repeat scroll 0 0 transparent;
     color: #FF6C00;
     cursor: default;
+    font-family: 'MuseoSans500Regular',Arial,sans-serif;
     text-shadow: 0 0px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -442,28 +511,6 @@ body{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.boxTitulo {    
-    background-color: #66ABD8;
-    color:#fff; 
-    font-size:30px;
-    padding:30px 20px 0px 30px;
-    text-align:left;   
-    border-bottom:1px solid #696969;
-}
-
-.boxTitulo h4, .boxTitulo h5 {
-    padding:0px;    
-    margin:0px;
-    font-size:30px;
-    color:#FFF;
-    font-weight: normal;
-}
-
-.boxTitulo h5 {
-    font-size:22px;    
-    margin-bottom: 30px;
-}
-
 .margemPage {
     margin:50px;
 }
@@ -492,9 +539,33 @@ body{
     background: url("../../images/site/bg_footer.jpg") repeat-x;        
 }
 
+#footer ul li a {
+    font-size: 14px;
+    line-height: 15.5px;
+    list-style: none outside none;    
+    color: #8C8C8C;
+}
+
+#footer ul li a:hover {
+    color: #BFFF00;
+}
+
+#footerCopy a {
+    color: #8C8C8C;
+}
+
+#footerCopy a:hover {
+    color: #BFFF00;
+}
 #btnInicio {
     padding-top:15px;
     height:40px;
+}
+
+#footerCopy h5 {
+    text-shadow: none;
+    color: #BBBBBB;
+    font-size:10px;
 }
 
 /*---------------------------------
@@ -544,10 +615,34 @@ th, td {
 }
 
 .rodape_col {
-    width:280px;
-    padding:15px;
-    float:left;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: left;
+}
+
+.rodape_col h4 {
+    font-family: 'Oswald',sans-serif;
+    font-size: 16px;
+    line-height: 1em;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 0;
+    text-transform: uppercase;
+    word-spacing: 0.1em; 
+    text-shadow: none;
+    color:#fff;
+}
+
+.rodape_col h5 {
+    font-size: 15px;
+    text-shadow: none;
+    color:#FFF;
+    margin-bottom: 5px;
+}
+
+
+.rodape_col address {
+    font-size:12px;
 }
 
 .col_title {
@@ -709,6 +804,7 @@ hr {
     padding:5px;  
     width: auto;
     color:#ECECFB;
+    font-family: 'MuseoSans500Regular',Arial,sans-serif;
 }
 
 #navVertical ul li a {
@@ -726,12 +822,12 @@ hr {
 
 #nav ul li a:hover, #navVertical ul li a:hover {
     /*background: url("../../images/site/main_nav_bg.png") no-repeat scroll 0 0 transparent;*/
-    color: #FA8409 !important;
+    color: #BFFF00 !important;
 }
 
 #nav ul li a:hover span {
     /*background: url("../../images/site/main_nav_bg.png") no-repeat scroll right -36px transparent;*/
-    color: #FA8409 !important;
+    color: #BFFF00 !important;
 }
 
 #navVertical ul li a.active {
@@ -743,7 +839,7 @@ hr {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.25);
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 0 1px rgba(255, 255, 255, 0.3), 0 0 5px #000000 inset;
-    color: #FA8409 !important;         
+    color: #BFFF00 !important;         
     font-size: 12px;        
 }
 

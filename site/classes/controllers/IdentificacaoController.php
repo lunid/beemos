@@ -1,13 +1,12 @@
 <?php
-
     use \sys\classes\mvc as mvc;   
     use \sys\classes\util\Request;
     use \common\classes\Menu;
     
-    class Login extends mvc\ExceptionController {
+    class Identificacao extends mvc\ExceptionController {
         
-        public function actionIndex(){
-                $bodyHtmlName   = 'login';
+        function actionIndex(){
+                $bodyHtmlName   = 'identificacao';
                 $objViewPart    = mvc\MvcFactory::getViewPart($bodyHtmlName);                               
                 $objView        = mvc\MvcFactory::getView();
                 $authMsgErr     = \Auth::getMessage();
@@ -24,12 +23,12 @@
                 }
 
                 $objView->setLayout($objViewPart);
-                $objView->TITLE     = 'Supervip - Área do Assinante';
+                $objView->TITLE     = 'Supervip - Identifique-se';
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
                 $objView->MSG_ERR   = $msgErr;
                 
-                $listCss    = 'common.formulario';
-                $listJs     = '';
+                $listCss    = 'common.formulario,site.identificacao';
+                $listJs     = 'site.identificacao';
                 $listCssInc = '';
                 $listJsInc  = '';
                 $listPlugin = '';
@@ -44,9 +43,16 @@
                 $objView->setPlugin($listPlugin);
                 */             
                 $layoutName = $bodyHtmlName;
-                $objView->render($layoutName);            
+                $objView->render($layoutName);              
+        }
+        
+        function actionNovo(){
             
         }
-                
+        
+        function actionNovoCadastroConf(){
+            
+        }
     }
+        
 ?>

@@ -1,0 +1,95 @@
+<div id='page' class="center">
+    <div id="boxTituloPage">
+        <div id="tituloPage">
+            <h1>Identifique-se</h1>
+            <h3>Nova assinatura</h3>
+        </div>
+    </div>    
+      
+    {MSG_ERR}
+    <form accept-charset="UTF-8" action="/site/identificacao/cadastro/" method="post">
+        <div id="formGray" class="smartbox left boxForm">            
+            <div class="floatLeft">    
+                <label><h4>Dados de contato:</h4></label>
+                <div>
+                    <div class="floatLeft alignRight widthInput">
+                        <input id="CONTATO_NOME" name="CONTATO_NOME" class="input-gray-big wide round4" type="text" placeholder="Nome/Contato" value="" />
+                    </div>                    
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight widthInput">
+                        <input id="CONTATO_EMAIL" name="CONTATO_EMAIL" class="input-gray-big wide round4" type="text" placeholder="E-mail/Contato" value="" />
+                    </div>                    
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="CONTATO_FONE_FIXO" name="CONTATO_FONE_FIXO" class="input-gray-big wide round4" type="text" placeholder="Telefone fixo" value="" />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="CONTATO_FONE_CEL" name="CONTATO_FONE_CEL" class="input-gray-big wide round4" type="text" placeholder="Celular" value="" />
+                    </div>
+                </div>                  
+                <div class="clearfix"></div> 
+                
+                <label><h4>Dados da empresa:</h4></label>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="EMPRESA" name="EMPRESA" class="input-gray-big wide round4" type="text" placeholder="Razão social" value="" />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="NOME_COMERCIAL" name="NOME_COMERCIAL" class="input-gray-big wide round4" type="text" placeholder="Nome Comercial" value="" />
+                    </div>
+                </div>  
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="SITE" name="SITE" class="input-gray-big wide round4" type="text" placeholder="http://sitedaempresa.com.br" value="" />
+                    </div>
+                </div> 
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="FONE_PABX" name="FONE_PABX" class="input-gray-big wide round4" type="text" placeholder="Telefone/PABX" value="" />
+                    </div>
+                </div>   
+                <label><h4>Dados de acesso (Usuário e senha):</h4></label>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="LOGIN" name="LOGIN" class="input-gray-big wide round4" type="text" placeholder="Usuário" value="" />
+                    </div>
+                </div>
+                <div class="clearfix"></div> 
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="PASSWD" name="PASSWD" class="input-gray-big wide round4" type="text" placeholder="Senha" value="" />
+                    </div>
+                </div>                
+                <div class="clearfix"></div>
+                <div>
+                    <div class="floatLeft alignRight" style="width:362px;">
+                        <input id="PASSWD_CONF" name="PASSWD_CONF" class="input-gray-big wide round4" type="text" placeholder="Confirmar Senha" value="" />
+                    </div>
+                </div>     
+                <div class="clearfix"></div>   
+                <div id='aceitoPoliticas' class="floatLeft">
+                    <div class="floatLeft" style='margin-right:10px'>
+                        <input type="checkbox" checked="checked" id="ACEITO_POLITICAS" name="ACEITO_POLITICAS" value="1" />                  
+                    </div>                    
+                    <div class="floatLeft" style='color:#000'>Sim, aceito a <a href=''>Política de Privacidade e os Termos de Uso</a>.</div>
+                </div>
+                <div class="clearfix"></div>                
+                <div class="floatLeft alignRight" style="width:362px"><input type="submit" class="green" value="Criar minha conta" /></div>
+                <div class="clearfix"></div>
+            </div> 
+            <div class="clearfix"></div>
+        </div>    
+    </form>  
+</div>

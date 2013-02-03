@@ -34,5 +34,9 @@
                 $objView->render($layoutName);            
             
         }
+        
+        function actionCompare(){
+            
+        }
     }
 ?>
