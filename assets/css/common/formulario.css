@@ -189,3 +189,25 @@ a.tnbutton:hover {
     vertical-align: middle;
     color: #585B55;
 }
+
+.validation_ok {
+    background: url("../../images/icons/validation_ok.png") no-repeat scroll left center transparent;
+    color: #4C8600;
+    display: block;
+    line-height: 31px;
+    padding: 0 0 0 30px;
+}
+
+.validation_error {
+    background: url("../../images/validation_err.png") no-repeat scroll left center transparent;
+    color: #B94141;
+    display: block;
+    line-height: 31px;
+    padding: 0 0 0 30px;
+}
+
+.validation_suggest {
+    display: block;
+    line-height: 31px;
+    vertical-align: middle;
+}
