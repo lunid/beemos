@@ -11,13 +11,53 @@ acordo com sua necessidade.
 -->
 <root>   
     <redirect perfil='FORM'>        
-        <module>site</module>
+        <module>app</module>
         <controller>login</controller>
         <action></action>         
     </redirect>    
-    <redirect perfil='BEEMOS'>        
-        <module>site</module>
-        <controller>app_beemos</controller>
+    <redirect perfil='FORM_ALUNO'>        
+        <module>app</module>
+        <controller>acessoaluno</controller>
         <action></action>         
+    </redirect>    
+    <redirect perfil='FORM_ALUNO_CADASTRO'>        
+        <module>acessoaluno</module>
+        <controller>cadastro</controller>
+        <action></action>         
+    </redirect>    
+    <redirect perfil='FORM_EXPERIMENTE'>        
+        <module>app</module>
+        <controller>experimente</controller>
+        <action></action>         
+    </redirect>    
+    <redirect perfil='LOGOUT'>        
+        <module>app</module>
+        <controller>login</controller>
+        <action></action>        
+    </redirect>
+    <redirect perfil='VISITANTE'>
+        <module>professor</module>
+        <controller></controller>
+        <action></action>
+    </redirect>
+    <redirect perfil='PROF'>
+        <module>professor</module>
+        <controller></controller>
+        <action></action>
+    </redirect>
+    <redirect perfil='PROF_ESC'>
+        <module>professor</module>
+        <controller></controller>
+        <action></action>
+    </redirect>
+    <redirect perfil='ESC'>
+        <module>escola</module>
+        <controller></controller>
+        <action></action>
+    </redirect>
+    <redirect perfil='ALUNO'>
+        <module>aluno</module>
+        <controller></controller>
+        <action></action>
     </redirect>        
 </root>

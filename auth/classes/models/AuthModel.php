@@ -1,26 +1,14 @@
 <?php
     namespace auth\classes\models;
     
-    use \sys\classes\security\Password;
     use \sys\classes\mvc\Model;  
-    use \auth\classes\helpers\Usuario;    
-    use \auth\classes\helpers\Error;    
+    use \auth\classes\helpers\Error;
+    use \common\classes\helpers\Usuario;  
     use \common\db_tables as TB;
-    use \common\classes\models\UsuariosModel;    
+    use \common\classes\models\UsuariosModel;
+    use \sys\classes\security\Password;   
     
-    class AuthModel extends Model {        
-        
-        /**
-         * Verifica se a senha atual é senha de administrador.
-         *          
-         * @param string $passwdMd5
-         * @return boolean
-         */
-        function passwdAdmin($passwdMd5){
-            $passwdAdmin = FALSE;
-            
-            return $passwdAdmin;
-        }
+    class AuthModel extends Model {                
         
         /**
          * Carrega um usuário através da HASH cadastrada no Banco
@@ -29,18 +17,11 @@
          * @return boolean|stdClass
          */
         function carregarUsuarioHash($hash){
-            $tbUser = new TB\User();
+            $tbUser = new TB\VwUser();
             $tbUser->setLimit(1);
             $rs = $tbUser->findAll("HASH = '{$hash}'");
-            
-            //Retorn FALSE se não encontrar HASH
-            if($rs->count() <= 0) return false;
-            
-            //Senão retorna dados do usuário
-            $arrFields  = $rs->getRs();
-            $objUser    = new Usuario($arrFields[0]);            
-
-            return $objUser;
+            $objUsuario = $this->getObjUsuario($rs);       
+            return $objUsuario;
         }
         
         /**
@@ -48,32 +29,54 @@
          * 
          * @param string $user
          * @param string $passwdMd5 Senha criptografada com MD5 
-         * @param boolena $admin Se TRUE significa que o acesso atual foi feito com senha administrativa
          * @return User
          */
-        function authAcesso($user,$passwdMd5,$admin=FALSE){
+        function authAcesso($user,$passwdMd5){
                                         
             \Auth::logout();
             $objUsuario = FALSE;
             if (strlen($user) > 0 && strlen($passwdMd5) > 0) {
-                //Verifica no DB se o acesso é válido.
-                $tbUser = new TB\VwUser();
-                $tbUser->setLimit(1);
-                //$rs = $tbUser->findAll("(EMAIL = '{$user}' OR LOGIN = '{$user}') AND PASSWD = '{$passwdMd5}'");
-                $rs         = $tbUser->findAll("(EMAIL = '{$user}' OR LOGIN = '{$user}')");
-                $numItens   = $rs->count();
-                if($numItens == 0)return FALSE;                
+                $where = "(EMAIL = '{$user}' OR LOGIN = '{$user}') AND PASSWD = '{$passwdMd5}'";
                 
-                $arrFields  = $rs->getRs();
-               
-                $objUsuario    = new Usuario($arrFields[0]);                  
+                //Verifica se a senha é administrativa
+                $acessoAdmin    = $this->authAcessoAdmin($passwdMd5);
+                if ($acessoAdmin) {
+                    //O usuário entrou com senha administrativa. Localiza os dados da conta solicitada sem checar senha.
+                    $where = "(EMAIL = '{$user}' OR LOGIN = '{$user}')";
+                }
+                                
+                //Verifica no DB se o acesso é válido.    
+                $tbUser = new TB\VwUser();                
+                $tbUser->setLimit(1);
+                $rs = $tbUser->findAll($where);
+                $objUsuario = $this->getObjUsuario($rs);                 
             }
             return $objUsuario;
         } 
         
-        function authAcessoAdmin($user,$passwd){
-                       
-        }
+        /**
+         * Verifica se o acesso atual é feito com senha administrativa, checando também se o horário de acesso é permitido.
+         * 
+         * @param type $passwdMd5
+         * @return boolean
+         */
+        public function authAcessoAdmin($passwdMd5){
+            $tbUser = new TB\UserAdmin();
+            $tbUser->setLimit(1);
+            $hrAtual    = date('H:i:s');
+            $rs         = $tbUser->findAll("PASSWD = '{$passwdMd5}' AND '{$hrAtual}' >= EXPED_HR_INI AND '{$hrAtual}' <= EXPED_HR_FIM");    
+            return $this->getObjUsuario($rs);                                 
+        }        
+        
+        private function getObjUsuario($rs=array()){
+            $objUsuario = FALSE;
+            $numItens   = $rs->count();
+            if($numItens > 0) {
+                $arrFields      = $rs->getRs();               
+                $objUsuario     = new Usuario($arrFields[0]);                                   
+            }
+            return $objUsuario;
+        }    
                
         function authAcessoForHash(){
             

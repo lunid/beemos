@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <domainsAuthToken>
+        <url id='LIST_AUTH'>
+            http://dev.interbits,http://dev.interbits.com,http://dev.interbits.com,http://dev.superproweb.com.br,https://superprofessorweb.websiteseguro.com
+        </url>
+    </domainsAuthToken>
+</root>
