@@ -36,3 +36,20 @@ input[type="text"],
 input[type="password"] {
    none;
 }
+
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+.clear {
+    clear: both;
+}

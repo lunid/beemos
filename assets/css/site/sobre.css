@@ -1,0 +1,22 @@
+#colMenuLeft {
+    width:160px;
+    height:300px;
+    margin-left:30px;    
+    background: url("../../images/common/text-block-bg.png") no-repeat scroll right 0 transparent;
+    min-height: 100px;
+    padding: 40px 25px 0 0;
+}
+
+#colMenuLeft ul li a {
+    font-size:12px;   
+}
+
+#colRight {
+    padding-left:50px;
+    width:600px;
+}
+
+#colRight h4 {
+    margin-top:30px;
+    margin-bottom:30px;
+}
