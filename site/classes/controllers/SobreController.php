@@ -15,7 +15,7 @@
                 $objView->TITLE     = 'Supervip - Sobre Nós';
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
 
-                $listCss    = 'site.sobre';
+                $listCss    = 'site.common,site.sobre';
                 $listJs     = '';
                 $listCssInc = '';
                 $listJsInc  = '';
