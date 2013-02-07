@@ -6,12 +6,28 @@
     
     class Sobre extends mvc\ExceptionController {
         
-        private function setPageContent($objViewPartPage){            
-            $objViewPart    = mvc\MvcFactory::getViewPart('sobre_tpl');
-            $objViewPart->MENU_VERTICAL = $this->setMenuVertical();
-            $objViewPart->CONTENT       = $objViewPartPage->render();
-            $bodyContent                = $objViewPart->render('tpl');            
-            return $objViewPart;
+        private function setPageContent($objViewPartPage,$layoutName){         
+            //Cria uma viewPart com o arquivo template para o item "Sobre Nós":
+            $objViewPart                = mvc\MvcFactory::getViewPart('tpl_sobre');
+            $objViewPart->MENU_VERTICAL = $this->setMenuVertical();//Coloca conteúdo na coluna da esquerda (menu vertical)
+            $objViewPart->CONTENT       = $objViewPartPage->render();//Coloca conteúdo na coluna da direita (maior)
+            
+            //Gera a página atual a partir da viewPart:
+            $objView                    = mvc\MvcFactory::getView();
+            $objView->TITLE             = 'Supervip - Sobre nós';
+            $objView->MENU_MAIN         = Menu::main(__CLASS__);            
+            
+            $objView->setLayout($objViewPart);
+            
+            $listCss    = 'site.common,site.sobre';
+            $listJs     = '';
+            $listCssInc = '';
+            $listJsInc  = '';
+            $listPlugin = '';
+
+            $objView->setCss($listCss);            
+           
+            $objView->render($layoutName);      
         }
         
         private function setMenuVertical(){
@@ -30,32 +46,11 @@
         }
         
         public function actionIndex(){               
-                $bodyHtmlName   = 'sobre';
-                $objView        = mvc\MvcFactory::getView();
-                $objViewPart    = mvc\MvcFactory::getViewPart($bodyHtmlName);                                             
-
-                $objView->setLayout($objViewPart);
-                $objView->TITLE     = 'Supervip - Central de Ajuda';
-                $objView->MENU_MAIN = Menu::main(__CLASS__);
-                
-                $listCss    = 'site.common,site.sobre';
-                $listJs     = '';
-                $listCssInc = '';
-                $listJsInc  = '';
-                $listPlugin = '';
-                
-               
-                $objView->setCss($listCss);
-                
-                /*
-                $objView->setJs($listJs);
-                $objView->setCssInc($listCssInc);
-                $objView->setJsInc($listJsInc);
-                $objView->setPlugin($listPlugin);
-                */             
-                $layoutName = 'sobre';
-                $objView->render($layoutName);            
+            $bodyHtmlName   = 'sobre';
+            $objView        = mvc\MvcFactory::getView();
+            $objViewPart    = mvc\MvcFactory::getViewPart($bodyHtmlName);                                             
             
+            $this->setPageContent($objViewPart,$bodyHtmlName);                              
         }
         
         public function actionPolitica(){

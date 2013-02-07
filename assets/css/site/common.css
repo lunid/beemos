@@ -883,13 +883,16 @@ hr {
     background-color: #000;
 }
 
+.contentGray {
+    color:#000;
+}
+
 .contentGray .inner-shadow:after {
     bottom: -10px;
-    color:#000;
     height:300px;
 }
 
-.contentGray .inner-shadow:before, #bodyContent.contentGray .inner-shadow:after {
+.contentGray .inner-shadow:before, .contentGray .inner-shadow:after {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     content: " ";
     height: 10px;
