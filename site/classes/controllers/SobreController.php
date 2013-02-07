@@ -6,17 +6,12 @@
     
     class Sobre extends mvc\ExceptionController {
         
-        private function setPageContent($objViewPartPage){
-            $objView        = mvc\MvcFactory::getView();
+        private function setPageContent($objViewPartPage){            
             $objViewPart    = mvc\MvcFactory::getViewPart('sobre_tpl');
             $objViewPart->MENU_VERTICAL = $this->setMenuVertical();
             $objViewPart->CONTENT       = $objViewPartPage->render();
             $bodyContent                = $objViewPart->render('tpl');            
-            
-            $objView->setContent($bodyContent);                
-            $objView->TITLE     = 'Supervip - Sobre Nós';                
-            $objView->MENU_MAIN = Menu::main(__CLASS__);
-            return $objView;
+            return $objViewPart;
         }
         
         private function setMenuVertical(){
@@ -37,10 +32,12 @@
         public function actionIndex(){               
                 $bodyHtmlName   = 'sobre';
                 $objView        = mvc\MvcFactory::getView();
-                $objViewPart    = mvc\MvcFactory::getViewPart($bodyHtmlName);                               
-                $objViewTpl     = $this->setPageContent($objViewPart);
+                $objViewPart    = mvc\MvcFactory::getViewPart($bodyHtmlName);                                             
+
+                $objView->setLayout($objViewPart);
+                $objView->TITLE     = 'Supervip - Central de Ajuda';
+                $objView->MENU_MAIN = Menu::main(__CLASS__);
                 
-                $objView->BODY  = $objViewTpl->render();
                 $listCss    = 'site.common,site.sobre';
                 $listJs     = '';
                 $listCssInc = '';
