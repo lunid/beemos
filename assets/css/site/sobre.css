@@ -12,11 +12,41 @@
 }
 
 #colRight {
-    padding-left:50px;
-    width:600px;
+    padding-left:0px;
+    width:744px;
 }
 
 #colRight h4 {
     margin-top:30px;
     margin-bottom:30px;
+}
+
+.contentPage {
+    padding:50px;
+    color:#000;
+}
+
+.contentBloq, .contentBloq div {
+    padding:0px;
+    font-size:14px;
+    color:#000;
+    margin-top:15px;
+}
+
+.contentBloq ul li {
+    color: #000;
+}
+
+.titulo {    
+    font-weight: normal;
+    line-height: 1.1666em;    
+    color: #333333;  
+    font: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif; background-color: transparent; color: #333; -webkit-font-smoothing: antialiased;
+    font-size: 1.9142em;
+}
+
+.titulo sup {
+    font-size:10px;
+    color:#000; 
+    vertical-align:top;
 }

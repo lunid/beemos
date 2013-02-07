@@ -30,16 +30,17 @@
             $objView->render($layoutName);      
         }
         
-        private function setMenuVertical(){
+        private function setMenuVertical($page='sobre'){
             $arrMenu = array(
-                array('link'=>'sobre/','text'=>'Apresentação'),
-                array('link'=>'sobre/politica/','text'=>'Política de Privacidade'),
-                array('link'=>'sobre/contato/','text'=>'Entre em contato'),
-                array('link'=>'sobre/trabalheconosco/','text'=>'Trabalhe conosco')
+                array('link'=>'sobre/','page'=>'sobre','text'=>'Apresentação'),
+                array('link'=>'sobre/politica/','page'=>'politica','text'=>'Política de Privacidade'),
+                array('link'=>'sobre/contato/','page'=>'contato','text'=>'Entre em contato'),
+                array('link'=>'sobre/trabalheconosco/','page'=>'cv','text'=>'Trabalhe conosco')
             );
             $menu = '<ul class="alt">';
             foreach($arrMenu as $arrItem) {
-                $menu .= "<li><a href='{$arrItem['link']}'>{$arrItem['text']}</a></li>";
+                $sel = ($arrItem['page'] == $page)?"class='active'":'';
+                $menu .= "<li><a href='{$arrItem['link']}' {$sel}>{$arrItem['text']}</a></li>";
             }                
             $menu .= '</ul>';            
             return $menu;

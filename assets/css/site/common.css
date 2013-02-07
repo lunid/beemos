@@ -851,6 +851,11 @@ hr {
     margin: 0;
 }
 
+#menuVertical ul li a.active {
+    color: #006e9c;
+    font-size:15px;
+}
+
 #submenu_hz {
     text-align:center;
     padding:15px;
@@ -885,14 +890,19 @@ hr {
 
 .contentGray {
     color:#000;
+    background-color: #FFF;
+    background: none repeat scroll 0 0 #F5F5F5;
+    overflow: hidden;
+    padding-bottom: 0;
+    padding-top: 0;    
 }
 
 .contentGray .inner-shadow:after {
-    bottom: -10px;
-    height:300px;
+    bottom: -10px;    
 }
 
 .contentGray .inner-shadow:before, .contentGray .inner-shadow:after {
+    border:1px solid #666;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     content: " ";
     height: 10px;
