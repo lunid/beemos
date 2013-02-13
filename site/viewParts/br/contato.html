@@ -1,0 +1,46 @@
+<form accept-charset="UTF-8" action="/site/identificacao/cadastro/" method="post">
+    <div id="formGray" class="smartbox left boxForm floatLeft"> 
+        <label><h4>Dados de contato:</h4></label>
+        <div>
+            <div class="floatLeft alignLeft widthInput">
+                <input id="CONTATO_NOME" name="CONTATO_NOME" class="input-gray-big wide round4" type="text" placeholder="Seu nome" value="" />
+            </div> 
+            <div class="floatRight alignLeft" style="width:330px;">
+                <span class="validation_suggest" style="display:block" step1msg="login">What's your e-mail address?</span>
+                <span class="validation_error" style="display:block" step1msg="login">Your e-mail is required.</span>
+            </div>            
+        </div>        
+        <div>
+            <div class="floatLeft alignLeft widthInput">
+                <input id="CONTATO_EMAIL" name="CONTATO_EMAIL" class="input-gray-big wide round4" type="text" placeholder="Seu e-mail" value="" />
+            </div>                    
+        </div>
+        <div>
+            <div class="floatLeft alignLeft widthInput">
+                <input id="CONTATO_EMAIL" name="CONTATO_FONE" class="input-gray-big wide round4" type="text" placeholder="Seu telefone de contato" value="" />
+            </div>                    
+        </div>        
+        <div class="clearfix"></div>
+        <label><h4>Sua dúvida/mensagem:</h4></label>
+        <div>
+            <div class="floatLeft alignLeft widthInput">
+                <select class="input-gray-big wide round4">
+                    <option>Categoria...</option>
+                </select>
+            </div>                    
+        </div>  
+        <div>
+            <div class="floatLeft alignRight widthInput">
+                <input id="ASSUNTO" name="ASSUNTO" class="input-gray-big wide round4" type="text" placeholder="Assunto" value="" />
+            </div>                    
+        </div> 
+         <div>
+            <div class="floatLeft alignRight widthInput">
+                <textarea maxlength="500" cols="30" rows="4"></textarea>
+            </div>                    
+        </div>        
+        <div class="clearfix"></div>                
+            <div class="floatLeft alignRight" style="width:362px"><input type="submit" class="green" value="Criar minha conta" /></div>
+        <div class="clearfix"></div>        
+    </div>
+</form>

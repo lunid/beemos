@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Recursos para formulários (validação de erros, máscaras, mensagens etc).
+    </descricao>
+    <config>
+        <include id='js'>js/form</include>    
+        <include id='css'>css/form</include>           
+    </config>
+</root>
