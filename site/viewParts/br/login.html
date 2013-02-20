@@ -9,12 +9,15 @@
     {MSG_ERR}
     <form accept-charset="UTF-8" action="/auth/login/processAuth/" method="post">
         <div id="formGray" class="smartbox round5 left boxForm">            
-            <div class="floatLeft">             
+            <div class="">             
                 <div>
                     <div class="floatLeft alignRight widthInput">
                         <input id="step1Regloginfield" class="input-gray-big wide round4" type="text" placeholder="E-mail" value="" name="login">
                     </div>                    
                 </div>
+                <div class="floatRight alignLeft" style="width:270px;">
+                    <span class="validation_suggest" style="display:block" step1msg="login">What's your e-mail address?</span>
+                </div>                
                 <div class="clearfix"></div>
                 <div>
                     <div class="floatLeft alignRight" style="width:362px;">

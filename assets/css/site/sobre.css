@@ -26,11 +26,39 @@
     color:#000;
 }
 
-.contentBloq, .contentBloq div {
+.contentPage ol {
+    margin:0px;
+}
+.contentPage ol li.title {
+    color: #009AC7;;
+    font-family: 'MuseoSans500Regular',Arial,sans-serif; 
+    font-size:24px;
+    list-style-position: inside;
+    line-height: 30px;
+    margin-top: 30px;    
+}
+
+.contentBloq, .contentBloq div, div p, address {
     padding:0px;
     font-size:14px;
     color:#000;
     margin-top:15px;
+}
+
+div p {
+    color:#000;
+    margin-bottom:15px;
+}
+
+ul li {
+    font-size:14px;
+    color:#000;  
+    margin-left:20px;
+}
+
+ul.list {
+   list-style: disc;
+   list-style-type: disc;
 }
 
 .contentBloq ul li {
@@ -49,4 +77,33 @@
     font-size:10px;
     color:#000; 
     vertical-align:top;
+}
+
+#politicaUltimoUpd {
+    color:#666;
+    font-size:14px;
+}
+
+address {
+    font-style: normal;
+}
+
+sup {
+    vertical-align: text-top;
+    margin-left:5px;
+    font-size:14px;
+}
+
+.boxForm {
+    margin: 0px;
+}
+
+.boxForm select, .boxForm textarea {
+    color:#000;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+.input-gray-big.wide {
+    width: 363px;
 }
