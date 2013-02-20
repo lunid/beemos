@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Recursos de interface utilizados no painel de controle do MVC.
+        É altamente recomendável manter este plugin.        
+        Versão : 1.0        
+    </descricao>
+    <config>
+        <include id='jsInc'>js.panel</include>    
+        <include id='cssInc'>css.panel</include>           
+    </config>
+</root>

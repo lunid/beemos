@@ -1,0 +1,44 @@
+<div id="col_12">
+    <form id="formNovoModulo" action="/panel/controllers/novo/" method="POST">
+        <h2>Painel MVC</h2>
+        <h5>Criar novo módulo</h5>
+        <div>
+            <label for="MODULO">Nome da pasta a ser usada para o módulo atual:</label><br/>
+            <div class="txtExplicativo">
+                PS: Não é permitido acentuação e letras maiúsculas. Para nome composto use o "_" como separador.<br/>
+                Exemplos: loja_virtual, relatorios, informacao.
+            </div>
+            <input type="text" id="MODULO" style="width:200px" maxlength="20" />        
+        </div>
+        <br/>
+        <div><a href="#" onclick="addNovoController(1)">Adicionar Controller ao módulo atual</a></div>
+        <div id="blqController_1">
+            <fieldset>
+                <div class="txtExplicativo">
+                    Defina o nome do Controller com inicial maiúscula e o restante em minúscula.
+                </div>
+                <legend>Novo Controller</legend>
+                <label for="blqController">Nome do Controller</label><input type="text" id="controller_1" size="20" name="CONTROLLER" value="" /> <span class='prefixoSufixo'>Controller.php</span>
+                <div id='actions'>
+                    Actions do controller atual: <a href="#" onclick="addNovaAction(1)" class='linkDel'>Nova action...</a>
+                    <br/><br/>
+                    <div class="txtExplicativo">
+                        PS: Não é permitido acentuação e letras maiúsculas.<br/>
+                        Ao entrar com uma nova action, o prefixo "action" será concatenado com o nome informado.<br/>
+                        Por padrão utilize iniciais maiúsculas, tanto para iniciar o nome da action quanto para separar nomes compostos. <br/>
+                        Por exemplo, ao informar: "NovoCadastro" o método criado será actionNovoCadastro(), "usuario", o método criado será actionUsuario().                    
+                    </div>                
+                    <div id='blqAction_1'>
+                        <p>
+                            <label for="blqAction">Nome da action:</label> 
+                            <span class='prefixoSufixo'>action</span>
+                            <input type="text" id="action_1" size="30" width='200px' name="ACTION" value="" /> 
+                            <span class='prefixoSufixo'>( ) {...}</span>
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+        </div>    
+        <div><input type="submit" value="Criar novo módulo" /></div>
+    </form>
+</div>    
