@@ -5,5 +5,6 @@ $(document).ready(function() {
     fldNome.add( Validate.Presence, { failureMessage: "Campo obrigatório." } );   
     fldEmail.add( Validate.Presence, { failureMessage: "Campo obrigatório." } );   
     fldEmail.add(Validate.Email, { failureMessage: "E-mail incorreto."});
-       
+    
+    celularMask('CONTATO_FONE_CEL');
 });
