@@ -1,5 +1,5 @@
 .boxForm {
-    width:600px; 
+    width:630px; 
     padding:0px; 
     margin:0px; 
 }
@@ -7,7 +7,7 @@
 
 #col_right {
     text-align:left;
-    width: 250px;
+    width: 220px;
     margin-top: 20px;
     margin-left:20px;
     margin-right:20px;
@@ -27,7 +27,7 @@ h3 {
     margin-left:22px;
 }
 
-label {
+label, .fields {
     margin-left:20px;
 }
 

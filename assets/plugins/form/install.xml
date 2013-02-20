@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <data>20/02/2013</data>
+    <descricao>
+        Recursos de validação de fommulário.
+        Inclui um framework de terceiro chamado LiveValidation (http://livevalidation.com);           
+        Versão : 1.0        
+    </descricao>
+    <config>
+        <include id='js'>js._LiveValidation_min</include>    
+        <include id='cssInc'>css.LiveValidationCustom</include>           
+    </config>
+</root>

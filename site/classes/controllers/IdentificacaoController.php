@@ -30,18 +30,12 @@
                 $listCss    = 'common.formulario,site.identificacao';
                 $listJs     = 'site.identificacao';
                 $listCssInc = '';
-                $listJsInc  = '';
-                $listPlugin = '';
-                
+                $listJsInc  = '';                                
                
                 $objView->setCss($listCss);
-                
-                /*
                 $objView->setJs($listJs);
-                $objView->setCssInc($listCssInc);
-                $objView->setJsInc($listJsInc);
-                $objView->setPlugin($listPlugin);
-                */             
+                $objView->setPlugin('form');
+                             
                 $layoutName = $bodyHtmlName;
                 $objView->render($layoutName);              
         }
