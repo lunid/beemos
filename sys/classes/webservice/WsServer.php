@@ -5,6 +5,7 @@ use \sys\classes\util\Component;
 
 class WsServer {
         private $wsInterfaceClass; //Classe a ser consumida no webservice.
+        private $local = "api"; //Local que está utilizando WSDL
         private $arrIgnoredMethods; //Métodos de $class que NÃO devem ser consumidos no webservice.
         
         
@@ -19,6 +20,10 @@ class WsServer {
         
         protected function setWsInterfaceClass($wsInterfaceClass){
             $this->wsInterfaceClass = $wsInterfaceClass;
+        }
+        
+        protected function setLocal($local){
+            $this->local = $local;
         }
         
         protected function setArrIgnoredMethods($arrIgnoredMethods){
@@ -50,30 +55,42 @@ class WsServer {
                 $wsInterfaceClass   =  $this->wsInterfaceClass;
                 $objSoap            = $this->getSoap();
                 
+                //Inicia WSDL da Classe
                 $objSoap->wsdlGenerate($wsInterfaceClass);
-                                                
                 
                 //Trata caminhos de inclusão                
-                $path                   = preg_replace("/(api)(.*)/", "", __DIR__);
-          
-                list($realPath,$uri)    = explode('\sys',$path);                
-                $pathController         = $realPath."\api\classes\controllers\UsuariosController.php";                
-                $pathController         = $realPath."\api\classes\controllers\TesteController.php";                
-                $pathServer             = $path."\WsServer.php";
-                                
-                $objSoap->addFile($pathController, $wsInterfaceClass);
-                //$objSoap->addFile($pathServer, $thisClassName);       
-                
-                //Ignora métodos da classe Server, mantendo apenas os globais
-                $objSoap->addIgnore($wsInterfaceClass, "__construct");    
-                //$objSoap->addIgnore($thisClassName, "__construct");                
-                //$objSoap->addIgnore($thisClassName, "actionIndex");
-                //$objSoap->addIgnore($thisClassName, "xmlException");
-                //$objSoap->addIgnore($thisClassName, "actionWsdl");
-                //$objSoap->addIgnore($thisClassName, "getXmlField");
-                
-                //Exibe WSDL
-                $objSoap->showWsdl();
+                $pathController = preg_replace("/(sys)(.*)/", "", __DIR__) . $this->local . "\classes\controllers\\" . $wsInterfaceClass . "Controller.php";
+                $pathWsServer   = __DIR__ . "\WsServer.php";
+
+                if(file_exists($pathController)){
+                    //Adiciona Arquivo ao WSDL
+                    $objSoap->addFile($pathWsServer, "WsServer");
+                    $objSoap->addFile($pathController, $wsInterfaceClass);
+                    
+                    //Ignora métodos da classe Enviada
+                    $objSoap->addIgnore($wsInterfaceClass, "__construct");
+                    
+                    //Verifica array de métodos para serem ifnorados
+                    if(is_array($this->arrIgnoredMethods) && sizeof($this->arrIgnoredMethods)){
+                        //Caso existam métodos, o loop ignora os mesmos
+                        foreach($this->arrIgnoredMethods as $method){
+                            $objSoap->addIgnore($wsInterfaceClass, $method);
+                        }
+                    }
+                    
+                    //Ignora métodos da classe WebService
+                    $objSoap->addIgnore("WsServer", "__construct");                
+                    $objSoap->addIgnore("WsServer", "actionIndex");
+                    $objSoap->addIgnore("WsServer", "xmlException");
+                    $objSoap->addIgnore("WsServer", "actionWsdl");
+                    $objSoap->addIgnore("WsServer", "getXmlField");
+                    $objSoap->addIgnore("WsServer", "setArrIgnoredMethods");
+                    $objSoap->addIgnore("WsServer", "setLocal");
+                    $objSoap->addIgnore("WsServer", "setWsInterfaceClass");
+                    
+                    //Exibe WSDL
+                    $objSoap->showWsdl();
+                }
             }catch(Exception $e){
                 throw $e;
             }

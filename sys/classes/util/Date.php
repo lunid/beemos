@@ -33,8 +33,57 @@
             }
         }
         
+        public static function traduzirMes($mes){
+            $mes = (int)$mes;
+            
+            switch($mes){
+                case 1:
+                    return 'Janeiro';
+                    break;
+                case 2:
+                    return 'Fevereiro';
+                    break;
+                case 3:
+                    return 'Março';
+                    break;
+                case 4:
+                    return 'Abril';
+                    break;
+                case 5:
+                    return 'Maio';
+                    break;
+                case 6:
+                    return 'Junho';
+                    break;
+                case 7:
+                    return 'Julho';
+                    break;
+                case 8:
+                    return 'Agosto';
+                    break;
+                case 9:
+                    return 'Setembro';
+                    break;
+                case 10:
+                    return 'Outubro';
+                    break;
+                case 11:
+                    return 'Novembro';
+                    break;
+                case 12:
+                    return 'Dezembro';
+                    break;
+                default:
+                    return "Mês Inválido {$mes}";
+                    break;
+            }
+        }
+        
         public static function dateDiff($dateFrom, $dateTo){
             $ret            = new \stdClass();
+            $ret->days      = false;
+            $ret->hours     = false;
+            $ret->minutes   = false;
             $ret->status    = false;
             
             $from = self::isValidDate($dateFrom);
@@ -55,12 +104,12 @@
             return $ret;
         }
 
-        private static function isValidDate($sDate = "2008-11-10 00:00:00"){
+        public static function isValidDate($sDate = "2008-11-10 00:00:00"){
             $dateString = explode(" ", $sDate);
             $dateParts  = isset($dateString[0]) ? explode("-", $dateString[0]) : false;
             $dateParts2 = isset($dateString[1]) ? explode(":", $dateString[1]) : false;
             
-            if($dateParts){
+            if($dateParts && count($dateParts) == 3){
                 if(!checkdate($dateParts[0], $dateParts[1], $dateParts[2])){  
                     $ret['month']   = isset($dateParts[1]) ? $dateParts[1] : 0;
                     $ret['day']     = isset($dateParts[2]) ? $dateParts[2] : 0;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="Auth.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="130002401241460000" remote="130003273800000000" />
-<file name="Password.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="129999646153965000" remote="130003273800000000" />
-<file name="Token.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="130002306719495645" remote="130003273800000000" />
+<file name="Auth.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="130048070692949000" remote="130048070400000000" Dst="2" />
+<file name="Hash.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="130041121345669000" remote="130041283200000000" Dst="2" />
+<file name="Password.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="130041121345679000" remote="130041283200000000" Dst="2" />
+<file name="Token.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="130044776171822000" remote="130044789600000000" Dst="2" />
 </dwsync>

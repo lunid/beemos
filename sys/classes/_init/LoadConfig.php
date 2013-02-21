@@ -56,7 +56,7 @@
                     
                     //CARREGA AS CONFIGURAÇÕES GERAIS DA APLICAÇÃO:
                     //========================================================== 
-                    $arrId = array('modules','rootFolder','baseUrlHttp','baseUrlHttps','folderSys','folderViews','defaultModule','langs','defaultLang');
+                    $arrId = array('modules','magicModules','rootFolder','baseUrlHttp','baseUrlHttps','folderSys','folderViews','defaultModule','langs','defaultLang');
                     $this->loadConfigId($objXml->app->config,$arrId);                        
 
                     //CARREGA AS CONFIGURAÇÕES DE ASSETS:

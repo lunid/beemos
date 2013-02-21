@@ -42,6 +42,7 @@
 	 * @var string
 	 */
 	private $token = null;
+        private $tokenLength = 0;
 
 	/**
 	 * Guarda o código de erro identificado pelo método Check().
@@ -70,6 +71,10 @@
 		$this->tokenSet();
 	}
         
+        function getTokenLength(){
+            return $this->tokenLength;
+        }
+        
 	/**
 	 * Cria um token
 	 *
@@ -90,9 +95,9 @@
 	 * 
          * @return string
 	 */
-	function tokenGen($length=0) {
+	function tokenGen($length=32) {
 		// Hashes a randomized UniqId.
-                $uId    = uniqid(rand(), true);
+                $uId    = uniqid(rand(), true);                
                 $str    = $uId.date('dmYHis');
 		$hash   = sha1($str);
                 $tam    = strlen($hash);
@@ -100,9 +105,10 @@
                 
                 if ($length > 0 && $length < $tam) {
                     //Retorna apenas uma string randômnica com tamanho $length.
+                    $this->tokenLength  = $length;
                     
                     // Seleciona um número randômico entre 1 e 32 (40-8)                    
-                    $n = rand(1, 32);
+                    $n = rand(1, $length);
 
                     // Gera o token retornando uma parte do hash com 8 caracteres, iniciando do número randômico $n                 
                     $token = substr($hash, $n, $length);

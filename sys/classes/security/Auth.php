@@ -6,9 +6,11 @@
  * @author Supervip
  */
 use \sys\classes\util\Request;
+use \auth\classes\helpers\Error;
 
 class Auth {
 
+    const SESSION_USER      = 'sessionUser';
     const SESSION_USER_ID   = 'sessionUserId';
     const SESSION_ID        = 'sessionId';
     const SESSION_MESSAGE   = 'sessionAuthMessage';
@@ -17,8 +19,7 @@ class Auth {
     * Destrói a autenticação do usuário logado. 
     */
     public static function logout(){
-        unset($_SESSION[self::SESSION_USER_ID]);
-        unset($_SESSION[self::SESSION_ID]);   
+        self::unsetUsuario();  
     }      
     
     /**
@@ -26,12 +27,10 @@ class Auth {
      * 
      * @return boolean 
      */
-    public static function checkAuth($redirect=''){                 
-        $userId     = (int)(isset($_SESSION[self::SESSION_USER_ID]))?$_SESSION[self::SESSION_USER_ID]:0;
-        $sessionId  = (isset($_SESSION[self::SESSION_ID]))?$_SESSION[self::SESSION_ID]:'';
-        $out        = FALSE;
-       
-        if ($userId > 0 && strlen($sessionId) > 0) {
+    public static function checkAuth($redirect=''){  
+        $objUsuario = self::getUsuario();        
+        $out        = FALSE;       
+        if (is_object($objUsuario)) {
             $out = TRUE;//Session ativa
         } elseif(strlen($redirect) > 0) {
             header('Location:'.$redirect);
@@ -40,16 +39,64 @@ class Auth {
         return $out;        
     }
     
-    
-    /*
-     * Inicializa uma sessão para um usuário autenticado.
+    /**
+     * Checa a permissão do usuário em acessar a área solicitada
      * 
-     * @param integer $userId ID autonumber do registro do usuário.
+     * @param array $arrUserPerfil Perfil ou Perfis a serem validados. Ex: array( 'ESC', 'PRO', 'ALUNO' );
+     * @param string $redirect Local onde será enviado o usuário caso não tenha permissão
+     * @return boolean
      */
-    public static function initSession($userId){
-        $_SESSION[self::SESSION_USER_ID]    = (int)$userId;
-        $_SESSION[self::SESSION_ID]         = md5(uniqid(rand(),1));  
+    public static function checarPermissao($arrUserPerfil, $redirect='/app/login'){    
+        $user = self::getUsuario();
+        
+        //Verifica sessão 
+        if(!$user){
+            //\Auth::setMessage(Error::eLogin('EXPIRED_SESSION'));
+            \Auth::setMessage("Sessão expirada. Efetue o login para continuar!");
+            header('Location: ' . $redirect);
+            die();
+        }
+        
+        //Valida perfil
+        if(array_search($user->CODIGO_PERFIL, $arrUserPerfil) === false){
+            //\Auth::setMessage(Error::eLogin('DANIED_ACCESS'));
+            \Auth::setMessage("Desculpe, você não tem permissão para acessar esta área");
+            header('Location: ' . $redirect);
+            die();
+        }
+        
+        return true;      
     }
+   
+    /**
+     * Persiste em sessão o objeto do Usuário logado.
+     * 
+     * @param Usuario $objUsuario
+     */
+    public static function persistUsuario($objUsuario){
+        if ($objUsuario instanceof common\classes\helpers\Usuario) $_SESSION[self::SESSION_USER] = serialize($objUsuario);
+    }
+    
+ /**
+     * Recupera o objeto Usuario guardado em sessão.
+     * 
+     * @return Usuario | NULL
+     */
+    public static function getUsuario(){
+        $objUsuario = NULL;
+        if (isset($_SESSION[self::SESSION_USER])) {
+            $objUsuarioRecup = unserialize($_SESSION[self::SESSION_USER]);
+             if ($objUsuarioRecup instanceof common\classes\helpers\Usuario) {
+                 $objUsuario = $objUsuarioRecup;
+             }
+        }
+        return $objUsuario;
+    }    
+    
+    public static function unsetUsuario(){
+        if (isset($_SESSION[self::SESSION_USER])) unset($_SESSION[self::SESSION_USER]);
+    }
+    
     
     /**
      * Persiste uma mensagem capturada no processo de autenticação do usuário.

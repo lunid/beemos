@@ -1,6 +1,6 @@
 <?php
     
-    namespace sys\classes\util;  
+    namespace sys\classes\performance;  
     
     /**
      * Classe usada para fazer o cache de objetos e strings no servidor.

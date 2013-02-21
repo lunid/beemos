@@ -3,6 +3,7 @@
 namespace sys\classes\mvc;
 use \sys\classes\util\Dic;
 use \sys\classes\util\Component;
+use \sys\classes\performance\Compress;
 
 class Header {
 
@@ -240,7 +241,7 @@ class Header {
             $outFileMin = self::getNameFileMin($extension);               
             $this->verifRecriarArquivo($outFileMin);
             
-            if (!file_exists($outFileMin)){                
+            if (!file_exists($outFileMin)){                               
                 foreach($arrMemo as $file){
                     //O arquivo minify ainda não existe. Deve ser criado.
                     //Concatena o conteúdo de cada arquivo do $arrMemo e após o loop gera o arquivo _min.
@@ -365,7 +366,8 @@ class Header {
             $arrTag[] = $this->setTag($file,$extension);                  
         }        
         return $arrTag;
-    }        
+    }  
+    
     
     /**
      * Gera um arquivo compactado a partir dos dados recebidos em $arrParams.
@@ -373,23 +375,15 @@ class Header {
      * @param type $arrParams Array associativo [string|extension|fileNameMin] com os dados do arquivo a ser compactado.
      * @return string Retorna o nome do arquivo compactado caso a operação tenha ocorrido com sucesso.
      * @throws Exception Caso algum erro tenha ocorrido ao executar YuiCompressor.
-     */
-    private function geraMinify($arrParams){
-
-        $out = FALSE;
+     */    
+    private function geraMinify($arrParams) {
+        $objCompress    = new Compress($arrParams);
+        $bytes          = $objCompress->minify();
+        $out            = ($bytes > 0)?$arrParams['fileNameMin']:FALSE;
         
-        if (!is_array($arrParams)) $arrParams = array();            
-                
-        try {             
-            if (Component::yuiCompressor($arrParams)){                                                        
-                //Arquivo compactado com sucesso. Faz a inclusão do novo arquivo.
-                $out = $arrParams['fileNameMin'];      
-            }  
-        } catch(\Exception $e) {
-            throw $e;
-        }     
         return $out;
     }
+        
  
     /**
      * Gera as tags de inclusão para arquivos externos de javascript e CSS.

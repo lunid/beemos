@@ -1,27 +1,16 @@
 $(document).ready(function() {
-    try {
-        var msgRequired     = "Campo obrigatório!";
 
-        var fldNome = new LiveValidation('CONTATO_NOME',{validMessage: 'Obrigado!', onlyOnSubmit: true });
-        fldNome.add( Validate.Presence, { failureMessage: msgRequired } );  
-        fldNome.add( Validate.Length,{minimum: 4, maximum: 40,tooShortMessage:"Por favor, informe o nome completo."});
+        vldField('CONTATO_NOME',true,'STRING','onBlur');
+        vldField('CONTATO_EMAIL',true,'EMAIL','onBlur');
+        vldField('SITE',true,'STRING','onBlur');
         
-        var fldEmail = new LiveValidation('CONTATO_EMAIL',{validMessage: 'Obrigado!', onlyOnBlur: true });
-        fldEmail.add( Validate.Presence, { failureMessage: msgRequired } );   
-        fldEmail.add(Validate.Email, { failureMessage: "E-mail incorreto."} );
+        //Telefones:
+        vldField('CONTATO_FONE_FIXO',true,'FONE','onBlur');
+        vldField('FONE_PABX',true,'FONE','onBlur');  
         
-        var fldRazaoSocial  = new LiveValidation('RAZAO_SOCIAL',{validMessage: 'Obrigado!', onlyOnBlur: true });
-        fldRazaoSocial.add( Validate.Presence, { failureMessage: msgRequired } );  
-               
-        var fldFoneContato  = new LiveValidation('CONTATO_FONE_FIXO',{onValid: function(){return},onlyOnBlur: true });
-        fldFoneContato.add( Validate.Presence, { failureMessage: msgRequired } );  
-                
-        var fldFonePabx     = new LiveValidation('FONE_PABX',{onValid: function(){return},onlyOnBlur: true });
-        fldFonePabx.add( Validate.Presence, { failureMessage: msgRequired } );              
-    } catch(e){
-        alert(e.message);
-    }
-    $('#CONTATO_FONE_FIXO').mask("(99) 9999-9999");
-    $('#FONE_PABX').mask("(99) 9999-9999");
-    $('#CONTATO_CELULAR').mask("(99) 9999-9999?9");
+        vldField('LOGIN',true,'LOGIN','onBlur');
+        vldField('PASSWD',true,'PASSWORD','onBlur');
+        
+        
 });
+

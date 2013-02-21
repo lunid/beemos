@@ -28,7 +28,7 @@
  * @author Supervip
  */
 namespace sys\classes\util;
-//use \sys\classes\util\Dic;
+use \sys\classes\performance\Cache;
 
 class Component {
     

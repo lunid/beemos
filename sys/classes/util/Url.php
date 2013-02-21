@@ -1,8 +1,47 @@
 <?php 
     
     use sys\classes\util\Dic;
-    
-    class Url {
+    require_once('sys/classes/util/Xml.php');  
+    class Url extends sys\classes\util\Xml {
+          
+        private $nodesUrl = NULL;
+        
+        /**
+         * Ao instanciar um objeto da classe atual é possível informar um arquivo XML
+         * que contém as URLs utilizadas no projeto.
+         * 
+         * Por padrão, o arquivo urls.xml fica na raíz do projeto.
+         * Veja exemplo desse arquivo na pasta modelo/
+         * 
+         * Exemplo de uso:
+         * <code>
+         *      $objUrl = new \Url();
+         *      $objUrl->common();                        
+         *      $dominioHttp =  $objUrl->DOMINIO_HTTP;
+         * </code>
+         * 
+         * @param string $pathXml Path de um arquivo XML, caso queira informar outro diferente de urls.xml.
+         */
+        function __construct($pathXml='/urls.xml'){
+            $msgErr = '';
+            $urlXml = self::physicalPath($pathXml);
+            if (file_exists($urlXml)) {                   
+                $arrPath        = pathinfo($urlXml);                
+                $extension      = $arrPath['extension'];
+                if ($extension == 'xml') {                    
+                    $objXml = self::loadXml($urlXml);  
+                    if (is_object($objXml)) {
+                        $this->objXml = $objXml;
+                        $this->loadVars($objXml);
+                    } else {                
+                        $msgErr = 'Impossível ler o arquivo '.$pathXml;                                            
+                    }
+                } else {
+                   $msgErr = 'O arquivo informado parece não ser um arquivo XML';                                                                 
+                }
+            } 
+            //if (strlen($msgErr) > 0) echo $msgErr;
+        }
         /**
          * Recebe um array associativo que será convertido em URL no formato
          * rootFolder/modulo/controller/action/...onde rootFolder é lido do arquivo config.xml.
@@ -143,6 +182,37 @@
             $folderLib      = \LoadConfig::folderLib();
             $folderComps    = \LoadConfig::folderComps();       
             $classPath      = "{$folderSys}/common/{$folderComps}/{$folderComponent}/classes/Lib{$class}.php";
+        }
+        
+        
+        /**
+         * Carrega um nó (mesmo nome do atributo $method) do arquivo XML lido no construtor e deixa as tags url como variáveis,
+         * podendo ser consultadas a partir de seus ids, via método mágico __get().
+         *          
+         * @param string $method Deve ser o mesmo nome da tag que agrupa uma ou mais tags <url..> no XML lido.
+         */
+        function __call($method,$params){
+            $objXml = $this->objXml;
+            if (is_object($objXml)) {
+                $this->nodesUrl = $objXml->$method->url;
+            } else {
+                echo 'Um objeto XML obrigatório não foi localizado.';
+            }            
+        }
+        
+        /**
+         * Método mágico usado para acessar os valores do nó carregado na chamada de __call().
+         * 
+         * @param string $id Nome da tag solicitada.
+         * @return string
+         */
+        function __get($id){
+            $value      = '';
+            $nodesUrl   = $this->nodesUrl;
+            if (!is_null($nodesUrl)) {
+                $value = self::valueForAttrib($nodesUrl,'id',$id); 
+            }            
+            return $value;
         }
     }
 ?>

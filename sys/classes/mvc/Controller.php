@@ -5,7 +5,7 @@
  * @abstract
  */
     namespace sys\classes\mvc;
-    use \sys\classes\util\Cache;
+    use \sys\classes\performance\Cache;
     
     abstract class Controller {
         

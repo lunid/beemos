@@ -73,20 +73,28 @@
             
             $module         = \Application::getModule();
             $fileException  = $module.'/dic/e'.$class.'.xml';
-            if (!file_exists($fileException)) $fileException = 'sys/dic/e'.$class.'.xml';
+            if (!file_exists(\Url::physicalPath($fileException))) $fileException = '/sys/dic/e'.$class.'.xml';
+            if (!file_exists(\Url::physicalPath($fileException))) $fileException = '/sys/dic/exception.xml';
             
             $method = __CLASS__.'\\'.__FUNCTION__."()";//Monta uma string ref. ao método atual. Usado para mostrar erro do método setErr()
             
             $xml = $fileException;
-            if (!file_exists($fileException)) {
+                        
+            if (!file_exists(\Url::physicalPath($fileException))) {
                 //Verifica na pasta sys
                 $fileException  = str_replace($module.'/','sys/',$fileException);
                 $xml            = (!file_exists($fileException))?'sys/dic/exception.xml':$fileException;
             }            
             
-            if (file_exists($xml)){
+            $xml = \Url::physicalPath($xml);
+            
+            if (file_exists($xml)){                
                 $strXml     = file_get_contents($xml);
+
                 $objXml     = @simplexml_load_string($strXml);
+                
+                if ($objXml === FALSE) return false;
+                
                 $arrNodes   = $objXml->$class->$func;//object se for um único nó <msg..>, array se for maior que um.
                 
                 if (is_object($objXml) && (is_object($arrNodes) || is_array($arrNodes))){
@@ -95,19 +103,19 @@
                         if (count($msgNodes->msg) > 1){ 
                             //Existe mais de uma mensagem (<msg...>) para a $class->$func atual.
                             foreach($msgNodes as $msgNode) {
-                                $atrib = $msgNode->attributes();
+                                $atrib = $msgNode->attributes();                                
                                 if ($atrib == strtoupper($codMsg)) {
                                     $msg = $msgNode;
-                                    break;
+                                    break 2;
                                 }
                             }
                         } else {
                             //Existe um único nó <msg...> para a $class->$func atual.
-                            $atrib  = $msgNodes->msg->attributes();                            
+                            $atrib  = $msgNodes->msg->attributes();                               
                             $msg    = ($atrib == $codMsg)?$msgNodes->msg:'Erro desconhecido';
                         }                                                
-                    } 
-                    $msg    = htmlentities(utf8_decode($msg));
+                    }                        
+                    $msg    = utf8_decode($msg);
                     $msg    = '<b>'.$class.'/'.$func."()</b>:<br/>".$msg;
                 } else {
                     $msgErr = "Não foi possível carregar um objeto XML para $class->$func->$codMsg.";

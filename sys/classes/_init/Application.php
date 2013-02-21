@@ -15,7 +15,7 @@
     require_once('sys/classes/util/DI.php');
     require_once('sys/classes/util/Dic.php');
     require_once('sys/classes/security/Token.php');
-    require_once('sys/classes/security/Auth.php');    
+    require_once('sys/classes/security/Auth.php');      
     
     use sys\classes\util\DI;
     use sys\classes\mvc as MVC;
@@ -57,8 +57,7 @@
             //Faz a leitura dos parâmetros em config.xml na raíz do site
             $objLoadConfig  = new LoadConfig();            
             $objLoadConfig->loadConfigXml('config.xml');
-            
-            
+                        
             $arrPartsUrl    = self::processaUrl(); 
             $module         = $arrPartsUrl['module'];
             $controller     = $arrPartsUrl['controller'];
@@ -118,9 +117,16 @@
                 //A URL pode conter partes que representam o módulo, controller e action
                 $lang           = LoadConfig::langs();//Idiomas aceitos pelo sistema
                 $modules        = LoadConfig::modules();
+                
                 $arrLangs       = explode(',',$lang); 
-                $arrModules     = explode(',',$modules);
+                
+                $arrModulesDefault  = array('panel');//Módulos que não precisam constar no config.xml.
+                $arrModules         = explode(',',$modules);
+                $arrModules         = array_merge($arrModules,$arrModulesDefault);
+                
                 $controllerPart = $pathParts[0];
+                
+                $controllerPart = self::mapMagicModule($controllerPart);
                 
                 //Verifica se a primeira parte da URL é um idioma
                 $keyLang        = FALSE; 
@@ -157,6 +163,47 @@
             $arrPartsUrl['action']       = $action;
             return $arrPartsUrl;
         }  
+        
+        /**
+         * Faz o mapeamento do controller informado para um nome diferente, 
+         * caso o nome do controller informado esteja na lista magicModules de config.xml.
+         * 
+         * @param string $controller
+         * @return string Nome do $controller altedo com o prefixo.
+         */
+        private static function mapMagicModule($controller=''){
+            if (strlen($controller) > 0) {
+                $magicModules   = LoadConfig::magicModules();
+                if (strlen($magicModules) > 0) {
+                    //Há configurações de módulos mágicos para o projeto atual.
+                    $arrMagicModules = explode(';',$magicModules);
+                    
+                    if (is_array($arrMagicModules)) {
+                        //Há uma ou mais listas de mósulos mapeados.
+                        foreach($arrMagicModules as $groupMagicModules) {                        
+                            /* Formato de $groupMagicModules:
+                             * prefixo:modulo1,modulo2,modulo3...
+                             * 
+                             * EXEMPLO:
+                             * app_:aluno,professor,escola;dev_:ambiente1,ambiente2
+                             * 
+                             * Neste caso, há dois mapeamentos separados por ponto-e-vírgula.
+                             * Caso a URL servidor.com.br/aluno/ seja informada, o sistema deverá buscar o controller app_aluno.
+                             * 
+                             */                            
+                            @list($prefixo,$listModules) = explode(':',$groupMagicModules);                         
+                            $key = strpos($listModules,$controller);
+                            if ($key !== false) {
+                                //O controller atual refere-se a um módulo mapeado.
+                                $controller = $prefixo.$controller;
+                                break;
+                            }                        
+                        }
+                    }
+                }
+            }
+            return $controller;
+        }
         
         /**
          * Define o nome da pasta, a partir da raíz do ambiente web, onde se localiza a aplicação.
@@ -248,7 +295,7 @@
             try {                
                 $cfgFolderViews     = LoadConfig::folderViews();               
                 $cfgFolderTemplate  = LoadConfig::folderTemplate();
-                $pathTplFolder  = $module.'/'.$cfgFolderViews.'/'.self::getLanguage().'/'.$cfgFolderTemplate.'/'; 
+                $pathTplFolder      = $module.'/'.$cfgFolderViews.'/'.self::getLanguage().'/'.$cfgFolderTemplate.'/'; 
                 self::vldTemplate($pathTplFolder);
             } catch(\Exception $e) {
                 die('LoadConfig->loadVars(): '.$e->getMessage());

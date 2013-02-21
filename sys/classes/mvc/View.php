@@ -38,7 +38,7 @@
          * Exemplo:
          * $objView->setTemplate('novoModelo.html');
          * 
-         * @param string $fileTpl Deve conter um nome ou path de um arquivo contendo a extensão (htm ou html)
+         * @param string $fileTpl Deve conter um nome ou path de um arquivo. A extensão (htm ou html) é obrigatória.
          */
         function setTemplate($fileTpl=''){
             $pathTpl = '';
@@ -47,13 +47,27 @@
                 if (file_exists($physicalTplPath)) {
                     $pathTpl = $fileTpl;
                 } else {
-                    $folderTpl          = \LoadConfig::folderTemplate();                  
-                    $pathTpl            = $folderTpl.'/'.$fileTpl;                     
-                    $pathTpl            = str_replace('//', '/', $pathTpl);                            
+                    $objModule  = MvcFactory::getModule();
+                    $pathTpl    = $objModule->tplLangFile($fileTpl);  
+                    //$folderTpl          = \LoadConfig::folderTemplate();                  
+                    //$pathTpl            = $folderTpl.'/'.$fileTpl;                     
+                    //$pathTpl            = str_replace('//', '/', $pathTpl);                            
                 }
             }
             
             $this->pathTpl  = $pathTpl;
+        }
+        
+        /**
+         * Define um template que está localizado na pasta common (comuns) do projeto.
+         * 
+         * @see setTemplate()
+         * @param string $fileTpl Nome do arquivo template. A extensão é obrigatória.
+         */
+        function setTemplateCommon($fileTpl=''){                        
+            $objModule  = MvcFactory::getModule('/common');
+            $pathTpl    = $objModule->tplLangFile($fileTpl);  
+            $this->setTemplate($pathTpl);
         }
                 
         /**
@@ -65,7 +79,7 @@
          */
         private function getTemplate(){
             $pathTpl        = $this->pathTpl;
-            if (strlen($pathTpl) == 0 || 1==1) {
+            if (strlen($pathTpl) == 0) {
                 if (!$this->createNewTemplate()) {
                     $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_CREATE_TEMPLATE'); 
                     $msgErr = str_replace('{PATH_TPL}',$pathTemplate,$msgErr);
@@ -239,7 +253,7 @@
                 
                 $this->getObjHeader();//Inicializa um objeto Header
                 
-                $pathTpl                        = $this->getTemplate();                  
+                $pathTpl                        = $this->getTemplate();    
                 $objViewTpl                     = MvcFactory::getViewPart($pathTpl);
                 $objViewTpl->BODY               = $objViewPart->render();                               
                 $this->bodyContent              = $objViewTpl->render();
