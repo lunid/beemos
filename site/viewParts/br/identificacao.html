@@ -21,17 +21,17 @@
                 
                 <label><h4>Dados da empresa:</h4></label>
                 <div class="fields">
-                        <input id="RAZAO_SOCIAL" name="RAZAO_SOCIAL" class="input-gray-big wide round4 required" type="text" placeholder="Razão social" value="" />
-                        <input id="NOME_COMERCIAL" name="NOME_COMERCIAL" class="input-gray-big wide round4 required" type="text" placeholder="Nome Comercial" value="" />
-                        <input id="SITE" name="SITE" class="input-gray-big wide round4 required" type="text" placeholder="http://sitedaempresa.com.br" value="" />
-                        <input id="FONE_PABX" name="FONE_PABX" class="input-gray-big wide round4 telefone required" type="text" placeholder="Telefone/PABX" value="" />
+                        <input id="RAZAO_SOCIAL" name="RAZAO_SOCIAL" class="required" type="text" placeholder="Razão social" value="" />
+                        <input id="NOME_COMERCIAL" name="NOME_COMERCIAL" class="required" type="text" placeholder="Nome Comercial" value="" />
+                        <input id="SITE" name="SITE" class="required" type="text" placeholder="http://sitedaempresa.com.br" value="" />
+                        <input id="FONE_PABX" name="FONE_PABX" class="telefone required" type="text" placeholder="Telefone/PABX" value="" />
                 </div>   
                 
                 <label><h4>Dados de acesso (Usuário e senha):</h4></label>
                 <div class="fields">
-                    <input id="LOGIN" name="LOGIN" class="input-gray-big wide round4 login required" type="text" placeholder="Usuário" maxlength="40" value="" onKeyPress="return login(event);" />
-                    <input id="PASSWORD" name="PASSWORD" class="input-gray-big wide round4 required" type="password" placeholder="Senha" maxlength="15" value="" onKeyPress="return password(event);"" />
-                    <input id="PASSWORD_CONF" name="PASSWORD_CONF" class="input-gray-big wide round4 required" type="password" maxlength="15" placeholder="Confirmar Senha" value="" />
+                    <input id="LOGIN" name="LOGIN" class="login required" type="text" placeholder="Usuário" maxlength="40" value="" />
+                    <input id="PASSWORD" name="PASSWORD" class="required" type="password" placeholder="Senha" maxlength="15" value="" />
+                    <input id="PASSWORD_CONF" name="PASSWORD_CONF" class="required" type="password" maxlength="15" placeholder="Confirmar Senha" value="" />
                 </div>    
                 
                 <div class="clearfix"></div>   

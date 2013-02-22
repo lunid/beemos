@@ -27,7 +27,7 @@
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
                 $objView->MSG_ERR   = $msgErr;
                 
-                $listCss    = 'common.formulario,site.identificacao';
+                $listCss    = 'site.identificacao';
                 $listJs     = 'site.identificacao';
                 $listCssInc = '';
                 $listJsInc  = '';                                
