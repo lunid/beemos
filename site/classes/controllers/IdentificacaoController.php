@@ -23,7 +23,7 @@
                 }
 
                 $objView->setLayout($objViewPart);
-                $objView->TITLE     = 'Supervip - Identifique-se';
+                $objView->TITLE     = 'Identifique-se';
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
                 $objView->MSG_ERR   = $msgErr;
                 

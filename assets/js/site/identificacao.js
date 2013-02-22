@@ -1,16 +1,15 @@
 $(document).ready(function() {
 
-        vldField('CONTATO_NOME',true,'STRING','onBlur');
-        vldField('CONTATO_EMAIL',true,'EMAIL','onBlur');
-        vldField('SITE',true,'STRING','onBlur');
+        vldField('CONTATO_NOME','STRING','onBlur');
+        vldField('CONTATO_EMAIL','EMAIL','onBlur');
+        vldField('SITE','STRING','onBlur');
         
         //Telefones:
-        vldField('CONTATO_FONE_FIXO',true,'FONE','onBlur');
-        vldField('FONE_PABX',true,'FONE','onBlur');  
+        vldField('CONTATO_FONE_FIXO','FONE','onBlur');
+        vldField('FONE_PABX','FONE','onBlur');  
         
-        vldField('LOGIN',true,'LOGIN','onBlur');
-        vldField('PASSWD',true,'PASSWORD','onBlur');
-        
-        
+        vldField('LOGIN','LOGIN','onBlur');
+        vldField('PASSWORD','PASSWORD','onBlur');
+
 });
 

@@ -7,6 +7,5 @@ $(document).ready(function() {
     $('.date_time').mask('99/99/9999 00:00:00');
     $('.celular').mask("(99) 9999-9999?9");
     $('.telefone').mask("(99) 9999-9999");        
-    $('.cep').mask('99999-999');
-    $('.login').mask('***************');
+    $('.cep').mask('99999-999');           
 });

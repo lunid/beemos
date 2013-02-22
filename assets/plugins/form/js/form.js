@@ -1,16 +1,25 @@
-function vldField(field,required,type,evt){
+$(document).ready(function() {
+    //Caso os campos PASSWD e PASSWD_CONF existam, faz a comparação do campo de confirmação com o campo PASSWD
+    if (document.getElementById('PASSWORD') != null && document.getElementById('PASSWORD_CONF') != null) {  
+        vldField('PASSWORD_CONF','PASSWORD_CONF','onBlur');        
+    }
+});
+
+function vldField(field,type,evt){
     var msgRequired = "Campo obrigatório!";
     if (document.getElementById(field)!= null) {
         try {
             //Define em qual evento a validação deve ser disparada:
+            var required = $('#'+field).hasClass("required");//Verifica se o campo é obrigatório.
+            
             if (evt == 'onSubmit') {
-                if (type == 'FONE') {
+                if (type == 'FONE' || type == 'PASSWORD_CONF') {
                     var fld = new LiveValidation(field,{onValid: function(){return},onlyOnSubmit: true });   
                 } else {            
                     var fld = new LiveValidation(field,{validMessage: 'Obrigado!', onlyOnSubmit: true });
                 }
             } else if (evt == 'onBlur') {
-                if (type == 'FONE') {
+                if (type == 'FONE' || type == 'PASSWORD_CONF') {
                     var fld = new LiveValidation(field,{onValid: function(){return},onlyOnBlur: true });   
                 } else {
                     var fld = new LiveValidation(field,{validMessage: 'Obrigado!', onlyOnBlur: true });
@@ -29,6 +38,8 @@ function vldField(field,required,type,evt){
                 fld.add( Validate.Length,{minimum: 10, maximum: 30,tooShortMessage:"O login deve ter no mínimo 10 caracteres."});                                
             } else if (type == 'PASSWORD') {
                 fld.add( Validate.Length,{minimum: 8, maximum: 15,tooShortMessage:"A senha deve ter no mínimo 8 caracteres."});                                
+            } else if (type == 'PASSWORD_CONF') {
+                fld.add( Validate.Confirmation, { match: 'PASSWORD' , failureMessage: "A senha não combina." } );
             }
         } catch(e) {
             alert(e.message);
