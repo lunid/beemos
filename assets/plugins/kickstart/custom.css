@@ -9,7 +9,7 @@ input {
     padding: 5px 0;
     text-indent: 5px;
     vertical-align: middle;
-    width: 300px;   
+    width: 340px;   
     color:#000;
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
@@ -56,4 +56,11 @@ input[type="password"] {
 
 strong, b {
     background: none;
+}
+
+sup {
+    vertical-align: top;
+    margi-left:5px;
+    font-size:'80%';
+    color:#FFF;
 }

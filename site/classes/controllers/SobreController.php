@@ -26,7 +26,7 @@
             
             $objView->setLayout($objViewPart);
             
-            $listCss    = 'common.formulario,site.common,site.sobre';
+            $listCss    = 'site.common,site.sobre';
             $listJs     = '';
             $listCssInc = '';
             $listJsInc  = '';
@@ -73,6 +73,16 @@
             
             $this->setPageContent($objViewPart,$bodyHtmlName);                      
         }   
+        
+        public function actionTermosDeUso(){
+            $bodyHtmlName           = 'termosdeuso';
+            $objView                = mvc\MvcFactory::getView();
+            $objViewPart            = mvc\MvcFactory::getViewPart($bodyHtmlName);                                             
+            $this->tituloPage       = 'Termos de uso';
+            $this->subtituloPage    = 'Informações importantes sobre seus direitos legais, recursos e obrigações';
+            
+            $this->setPageContent($objViewPart,$bodyHtmlName);                                  
+        }
 
         public function actionContato(){
             $bodyHtmlName           = 'contato';
