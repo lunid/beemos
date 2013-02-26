@@ -15,7 +15,7 @@
                 $objView->TITLE     = 'Supervip - Planos & Preços';
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
 
-                $listCss    = 'site.planosEprecos2';
+                $listCss    = 'site.planosEprecos';
                 $listJs     = '';
                 $listCssInc = '';
                 $listJsInc  = '';
