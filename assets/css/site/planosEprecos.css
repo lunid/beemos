@@ -15,12 +15,12 @@
   border-bottom-color:#E1E1E1;
   border-bottom-style:solid;
   border-bottom-width:1px;
-  padding:15px 10px;
+  padding:0px;
   vertical-align:top;
 }
 
  tr.tree-column th {
-  width:33%;
+  width:20%;
 }
 
 .grid tr {
@@ -46,6 +46,16 @@ th td , .grid th p em {
     border-bottom: 1px solid #E1E1E1;
     font-size: 16px;
     padding:6px;
+}
+
+.grid th.plano{
+    font-size:24px;
+    font-weight:normal;
+    line-height:1.2;
+    margin:0;
+    color:#fff;
+    text-align:center;
+    font-family:proxima-nova-1, proxima-nova-2, Helvetica, Arial, sans-serif;
 }
 
 .grid th span.th-heading {
