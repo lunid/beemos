@@ -17,11 +17,3 @@ $(document).ready(function() {
         });
     }
 });
-
-function testRegex(e,regex){
-    var key;
-    if (e.keyCode) key = e.keyCode;
-    else if (e.which) key = e.which;    
-    if (regex.test(String.fromCharCode(key)) || key == 32) return false;   
-    return true;    
-}

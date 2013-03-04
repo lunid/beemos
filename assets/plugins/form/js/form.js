@@ -51,3 +51,14 @@ function vldField(field,type,evt){
         alert('O campo '+field+' não existe.');        
     }    
 }
+
+function testRegex(e,regex){
+    var key;
+    if (e.keyCode) key = e.keyCode;
+    else if (e.which) key = e.which;    
+    
+    if (key != 8 && key != 46) {
+        if (regex.test(String.fromCharCode(key)) || key == 32) return false;   
+    }
+    return true;    
+}
