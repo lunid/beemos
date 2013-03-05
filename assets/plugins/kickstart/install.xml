@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <descricao>
-        Componente para Dicas de formulário
+       Framework de CSS. 
+       Instalação em 02/03/2013
+       Site: http://www.99lime.com/elements/
     </descricao>
     <config>
         <include id='js'>js.prettify</include>

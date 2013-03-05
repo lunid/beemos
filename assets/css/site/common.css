@@ -550,6 +550,15 @@ body{
     color: #BFFF00;
 }
 
+#footerCopy {
+    margin-top:10px;
+}
+
+#footerCopy div h5 {
+    font-size:12px;
+    color:#666;
+}
+
 #footerCopy a {
     color: #8C8C8C;
 }
@@ -557,6 +566,27 @@ body{
 #footerCopy a:hover {
     color: #BFFF00;
 }
+
+#footerNewsletter {
+   padding-top:10px;
+    height:130px;
+    background: url("../../images/site/bg_footer_newsletter.png") repeat-x;        
+}
+
+#footerTextoNewsletter {
+    color:#ccc;    
+    font-size:17px;    
+    text-shadow: 0px -1px 0px #000;
+    display: block;
+    padding:15px;
+}
+
+#footerNewsletterField {
+    width:475px;
+    margin-left:262px;
+    margin-right:220px;
+}
+
 #btnInicio {
     padding-top:15px;
     height:40px;
