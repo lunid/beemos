@@ -469,8 +469,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8fc400', end
 	LAYOUT
 -----------------------------------*/
 
-* {
-    line-height: 20px;
+* {    
     color:#E6E7E8;    
     vertical-align: baseline;
 }
@@ -799,6 +798,7 @@ hr {
     float: right;
     padding-top: 25px;
     width: 770px;    
+    line-height: 20px;
 }
 
 #navVerticalContainer {    
