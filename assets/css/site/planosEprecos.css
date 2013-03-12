@@ -186,3 +186,21 @@ ul {
     margin-bottom: 10px;
     font-style: italic;
 }
+
+.icon_sim{
+    background-image: url("../../images/common/icons/validation_ok.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;   
+    width: 18px;
+    height: 16px;
+    margin-left:70px;
+}
+
+.icon_nao{
+    background-image: url("../../images/common/icons/icon_x.gif");
+    background-position: center bottom;
+    background-repeat: no-repeat;   
+    width: 9px;
+    height: 8px;
+    margin-left:75px;
+}
