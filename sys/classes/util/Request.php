@@ -47,11 +47,11 @@
                             break;
                         case 'STRING':
                             //Verifica se $value é uma string
-                            $value = (string)$value;                                                        
+                            $value = trim((string)$value);                                                        
                             break;
                         case 'NUMBER':
                             //Verifica se $value é numérica (pode ser float ou integer)
-                            $value = (int)$value;                                
+                            $value = trim((int)$value);                                
                             break;
                         case 'OBJECT':
                             if (!is_object($value)) $value = $valorDefault;

@@ -15,10 +15,11 @@
         * @see prod
         */
         public static function test(){ 
-            $objConnInfo = new ConnInfo();        
-            $objConnInfo->setDb('interbits1');
-            $objConnInfo->setUser('interbits1');
-            $objConnInfo->setPasswd('my230812');
+            $objConnInfo = new ConnInfo();  
+            $objConnInfo->setHost('mysql09.supervip.com.br');
+            $objConnInfo->setDb('supervip27');
+            $objConnInfo->setUser('supervip27');
+            $objConnInfo->setPasswd('senha3040');
             return $objConnInfo;                 
         }
 

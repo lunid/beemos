@@ -1,7 +1,7 @@
 <?php
 
 namespace sys\classes\db;
-use \sys\classes\util\Cache;
+use \sys\classes\performance\Cache;
 use \sys\classes\util\Request;
 use \sys\classes\util\Dic;
 
@@ -37,24 +37,31 @@ abstract class ORM {
      * @return string
      */
     private $arrColumns;   
-    private $prefixoTable          = 'SPRO_';
+    private $prefixoTable          = 'SVIP_';
+    private $arrRequiredFields     = array();
     private $arrKey                = array(); //Array que guarda a chave primária da tabela
     private $arrUnique             = array();
-    private $colAutoNum; //Coluna autoNumber
+    protected $colAutoNum; //Coluna autoNumber
     private $tableName;
     private $arrCols               = array(); //Guarda um array associativo cujo índice é o nome de cada coluna.
     private $arrParams             = array(); //Array utilizado para fazer insert/update na tabela.
     private $id                    = 0;//ID do registro quando for ação de UPDATE ou DELETE
-    private $row                   = array();//Array associativo que guarda os dados de um registro
-    private $where                 = NULL;
+    private $row                   = array();//Array associativo que guarda os dados de um registro    
     protected $alias               = '';//Variável de suporte ao criar JOIN
-    protected $orderBy             = NULL;
-    private $limit                 = ''; //Quando definido, guarda o intervalo de LIMIT no formato $posIni,$posFim
+    
+    
     protected static $results      = array();//Guarda o resultado de uma consulta do tipo SELECT 
     protected $joinWhere           = '';//Variável auxiliar para criação de JOIN   
     private $arrObjJoin            = array();//Array dos objetos Table usados no JOIN
     protected $fieldsJoin          = '';//String com campos usados no JOIN (a vírgula deve ser o separador de cada campo)
-    private static $debug          = FALSE;//Se TRUE, imprime as strings SQL com echo
+    private static $debug           = FALSE;//Se TRUE, imprime as strings SQL com echo
+    
+    private $selectListCols         = '';
+    private $where                  = NULL;
+    protected $orderBy              = NULL;
+    private $groupBy                = '';
+    private $having                 = '';
+    private $limit                  = ''; //Quando definido, guarda o intervalo de LIMIT no formato $posIni,$posFim
     
     /**
      * Construtor da classe.
@@ -79,14 +86,14 @@ abstract class ORM {
      * Ao ativá-la as consultas SQL serão impressas na tela.
      * 
      */
-    protected static function debugOn(){
+    function debugOn(){
         self::$debug = TRUE;
     }
     
     /**
      * Desativa a opção de debug. 
      */
-    protected static function debugOff(){
+    function debugOff(){
         self::$debug = FALSE;
     }
     
@@ -115,7 +122,14 @@ abstract class ORM {
                 $null                       = $col['Null'];//NO | YES
                 $key                        = $col['Key'];//Ex: PRI (chave primária) | UNI (campo único) | MUL (chave composta)
                 $extra                      = $col['Extra'];//Ex: auto_increment
-                $this->arrCols[$colName]    = $colName.'/'.$type.'/'.$null.'/'.$key.'/'.$extra;
+                $default                    = $col['Default'];//Valor default caso o campo não aceite null
+                
+                $this->arrCols[$colName]    = $colName.'/'.$type.'/'.$null.'/'.$key.'/'.$extra.'/'.$default;
+                
+                if ($null == 'NO' && strlen($default) == 0 && $extra != 'auto_increment') {
+                    $this->arrRequiredFields[] = $colName;
+                }
+                
                 if ($key == 'PRI') {
                     $this->arrKey[] = $colName;                   
                 } elseif ($key == 'UNI') {
@@ -123,8 +137,8 @@ abstract class ORM {
                 }
                 if ($extra == 'auto_increment') $this->colAutoNum = $colName;
             }
-        }        
-    }
+        }                
+    }    
     
     /**
      * Faz a leitura das colunas da tabela atual.
@@ -260,6 +274,7 @@ abstract class ORM {
                     $out        = call_user_func_array('\DB::queryFirstField', $argsFunc);                 
                 case 'INSERT_UPDATE':                    
                     //Retorna o ID do registro cadastrado/alterado.
+                    $this->vldRequiredBeforeInsert();
                     \DB::insertUpdate($table,$arrParams); 
                     $out = $id = (int)\DB::insertId();
                     break;
@@ -274,12 +289,37 @@ abstract class ORM {
             $msgErr     = "Erro mySql: " . $e->getMessage() . "<br>\n";
             $msgErr     .= "SQL Query: " . $e->getQuery() . "<br>\n"; // INSERT INTO accounts...            
         }
-        
-        if (self::$debug) echo \DB::getQuery();
+                
         \DB::$error_handler = 'meekrodb_error_handler';
         \DB::$throw_exception_on_error = false;
         if (strlen($msgErr) > 0) throw new \Exception( $msgErr );        
         return $out;
+    }
+    
+    /**
+     * Verifica se um campo obrigatório e sem valor default foi informado vazio.
+     * Método de suporte para INSERT/UPDATE.
+     * 
+     * @return void
+     * @throws \Exception Retorna uma exceção.     
+     */
+    private function vldRequiredBeforeInsert(){
+         $arrRequiredFields = $this->arrRequiredFields;//Campos obrigátorios sem valor default.
+         $arrParams         = $this->arrParams;
+         if (is_array($arrRequiredFields) && count($arrRequiredFields) > 0) {
+             $arrListErr = array();
+             foreach($arrRequiredFields as $field) {
+                 //Checa o valor do campo obrigatório atual no array dos parâmetros informados.
+                 $value = (isset($arrParams[$field]))?$arrParams[$field]:'';
+                 if (strlen($value) == 0) $arrListErr[] = $field;
+             }
+             
+             if (count($arrListErr) > 0) {
+                $fields = 'verifique campos NOT NULL no DB';
+                $fields = join(', ',$arrListErr);
+                throw new \Exception( 'Um ou mais campos obrigatórios não foram informados ('.$fields.').' );        
+             }             
+         }             
     }
     
     /**
@@ -296,18 +336,21 @@ abstract class ORM {
      *  }
      * </code>
      * 
-     * @param string $sql Obrigatório.
+     * @param string $sql. Obrigatório.
      * @return mixed[] | FALSE <br>
      * Retorna um array bidimensional com os registros encontrados, 
      * ou FALSE caso nenhum registro tenha sido localizado.
      * 
      * @throws \Exception [SQL_NULL] Caso o parâmetro $sql seja nulo ou vazio.
      */    
-    public static function query($sql){
+    public static function query($sql){        
         if (is_null($sql) || strlen($sql) == 0) {
             $msgErr = Dic::loadMsg(__CLASS__,NULL,__NAMESPACE__,'SQL_NULL');  
         } else {      
-            if (self::$debug) echo $sql.'</br></br>';
+            if (self::$debug) {
+                echo $sql.'</br></br>';
+                die();
+            }
             $results    = self::$results = \DB::query($sql);//Retorna um array bidimensional
             return $results;            
         }
@@ -315,6 +358,39 @@ abstract class ORM {
         if (strlen($msgErr) > 0) throw new \Exception( $msgErr ); 
         return FALSE;
     } 
+    
+    /**
+     * O mesmo que query(). 
+     * Método de suporte para o método select().
+     * 
+     * @return mixed[]
+     */
+    function execute(){        
+        $sql        = '';
+        $listCols   = $this->selectListCols;
+        if (strlen($listCols) > 0) {
+            $table      = $this->getTable();
+            $sql        = "SELECT {$listCols} FROM {$table}";
+
+            $where      = $this->where;
+            if (strlen($where) > 0) $sql .= " WHERE {$where}";              
+
+            $groupBy    = $this->groupBy;                                
+            if (strlen($groupBy) > 0) $sql .= " GROUP BY {$groupBy}";
+
+            $having     = $this->having;
+            if (strlen($having) > 0) $sql .= " HAVING {$having}";
+
+            $orderBy    = $this->orderBy;                
+            if (strlen($orderBy) > 0) $sql .= " ORDER BY {$orderBy}";  
+            
+            $limit      = $this->limit;
+            if (strlen($limit) > 0) $sql .= " LIMIT {$limit}";
+        }
+             
+        $resultset = (strlen($sql) > 0)?$this->query($sql):array();
+        return $resultset;
+    }
     
     public static function queryOneCol($sql){
         $out        = '';
@@ -352,6 +428,25 @@ abstract class ORM {
     }
     
     /**
+     * O mesmo que setOrderBy(), porém usado como suporte do método select().
+     * Exemplo:
+     * <code>
+     *  $table->select('colA,colB,colC')
+     *  ->where('1=1')
+     *  ->orderBy('colA DESC')
+     *  ->execute();    
+     * </code>
+     * 
+     * @param string $orderBy
+     * @return void
+     */
+    function orderBy($orderBy){
+        if (strlen($orderBy) > 0) $this->setOrderBy($orderBy);
+        return $this;
+    }            
+      
+    
+    /**
      * Define o limite de registros de uma consulta.
      * 
      * Exemplo 1:<br>
@@ -386,6 +481,23 @@ abstract class ORM {
             $this->limit = $posIni.','.$posFim;
         }        
     }
+    
+    /**
+     * O mesmo que setLimit(), porém recebe uma string ao invés de parâmetro numérico.
+     * Método de suporte à instruções SELECT no formato:
+     * <code>
+     *  $table->select('colA,colB,colC')
+     *  ->where('1=1')
+     *  ->limit('10')
+     *  ->execute();     
+     * </code>
+     * @param type $limit
+     */
+    function limit($limit){
+        $limit = (string)$limit;        
+        if (strlen($limit) > 0) $this->limit = "{$limit}";
+        return $this;
+    }    
     
     /**
      * Concatena as propriedades $orderBy e $limit à string $sql informada.
@@ -436,7 +548,7 @@ abstract class ORM {
      * </code>
      * 
      * @param string $where Opcional. Pode conter uma cláusula WHERE (ex: CAMPO1 = VALOR1 AND CAMPO2 = VALOR2)
-     * @return object[]
+     * @return Resultset $rsObj
      */    
     function findAll($where=''){
         if (strlen($where) == 0) $where = '1=1';
@@ -464,13 +576,17 @@ abstract class ORM {
     private function getObj($row){                   
         $class = get_class($this);//Guarda o nome qualificado da classe atual (incluindo namespace)         
         if (is_array($row) && strlen($class) > 0){ 
-            $obj        = new $class;
-            $colAutoNum = $this->colAutoNum;//Coluna AutoNumber da tabela atual
-            $id         = (int)$row[$colAutoNum];//ID AutoNumber do registro atual           
-            if ($id > 0 && is_object($obj)) {
-                $obj->findAutoNum($id);  
-                return $obj;
+            //if (count($row) != count($row, COUNT_RECURSIVE)) {
+                //Array multidimensional. Converte para unidimensional
+                //$row = $row[0];                
+            //}
+            
+            $objDados = new \stdClass();
+            foreach($row as $key=>$value) {
+                $objDados->$key = $value;
             }
+            
+            return $objDados;
         } else {
             return false;
         }        
@@ -912,14 +1028,36 @@ abstract class ORM {
         //Verifica se o campo de chave primária foi fornecido.
         $arrParams    = $this->arrParams;  
         $results      = self::$results;
-        if (is_array($results) && count($results) > 0){
-            //O objeto atual possui vários registros. Ação não permitida.         
+        if (is_array($results) && count($results) > 0 && !is_array($arrParams)){
+            //O objeto atual possui vários registros. Ação não permitida. 
             $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_UPD_EM_LOTE');   
             throw new \Exception( $msgErr );            
         } else {
             if (!is_array($arrParams) || count($arrParams) == 0) return FALSE;
             //INSERT/UPDATE  
             return $this->insertUpdate();
+        }
+    }
+    
+    /**
+     * Recebe um array onde cada índice com seu respectivo valor representa uma coluna da tabela.
+     * 
+     * EXEMPLO:
+     * Novo cadastro a partir dos dados contidos em arrValues.
+     * 
+     * <code>
+     *  $arrValues = array('NOME'=>'Maria da Silva','EMAIL'=>'maria@server.com','IDADE'=>24);
+     *  $objTb = new Cliente();
+     *  $objTb->setValues($arrValues);
+     *  $objTb->save();
+     * </code>
+     * 
+     * @param mixed[] $arrValues Array unidimensional associativo.
+     * @return void
+     */
+    function setValues($arrValues){
+        foreach($arrValues as $name=>$value){
+            $this->$name = $value;
         }
     }
     
@@ -966,6 +1104,22 @@ abstract class ORM {
         }
         return $param;
     }
+    
+    /**
+     * O mesmo que setWhere(), porém usado como suporte do método select().
+     * Exemplo:
+     * <code>
+     *  $table->select('colA,colB,colC')
+     *  ->where('1=1')
+     *  ->execute();     
+     * </code>
+     * @param string $where
+     */
+    function where($where='1=1'){
+        if (strlen($where) > 0) $this->where = $where;
+        return $this;
+    }        
+        
     
     /**
      * Faz um JOIN padrão entre duas tabelas.
@@ -1027,27 +1181,9 @@ abstract class ORM {
             $this->arrObjJoin   = array();
             $this->arrObjJoin[] = $objTableA;
             $this->arrObjJoin[] = $objTableB;    
-                        
-            if (is_array($fieldMap)){
-                //O JOIN deve ser feito entre dois campos ou mais (Ex: a.FIELD1 = b.FIELD1 AND a.FIELD2 = b.FIELD2...)
-                $arrFieldsMap = array(); //Guarda o mapeamento dos campos entre as duas tabelas.
-                foreach($fieldMap as $map){
-                    //Cada item do array deve estar no formato campoA=campoB
-                    $map    = str_replace(' ','',$map);//Retira espaço em branco
-                    $arrMap = explode('=',$map);
-                    if (count($arrMap) != 2){
-                        //O mapeamento do índice atual não está no formato correto.
-                        $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_MAP_FIELDS');   
-                        throw new \Exception( $msgErr );                          
-                    }
-                    $fieldMapItem   = $aliasA.'.'.$map;
-                    $fieldMapItem   = str_replace('=','='.$aliasB.'.',$fieldMapItem);
-                    $arrFieldsMap[] = $fieldMapItem;
-                }
-                $fieldsMap = join($arrFieldsMap,' AND ');
-            }else{
-                $fieldsMap = "{$aliasA}.{$fieldMap} = {$aliasB}.{$fieldMap}";
-            }
+                    
+            //Monta relação entre campos do JOIN (ON)
+            $fieldsMap = $this->prepareFieldMapJoin($fieldMap, $aliasA, $aliasB);            
             
             $this->joinWhere    = "({$tableA} AS {$aliasA} {$type} JOIN {$tableB} AS {$aliasB} ON {$fieldsMap})";              
         } else {
@@ -1055,28 +1191,6 @@ abstract class ORM {
             $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_JOIN_PARAM');   
             throw new \Exception( $msgErr );            
         }
-    }
-    
-    /**
-     * Alternativa para chamar o método joinFrom() para criar 'INNER JOIN'.
-     * 
-     * @param object $objTableA. Obrigatório.
-     * @param object $objTableB. Obrigatório.
-     * @param string $fieldMap. Obrigatório. 
-     */
-    protected function innerJoinFrom($objTableA,$objTableB,$fieldMap){
-       $this->joinFrom($objTableA,$objTableB,$fieldMap,'INNER'); 
-    }
-    
-    /**
-     * Alternativa para chamar o método joinFrom() para criar 'OUTER JOIN'.
-     * 
-     * @param object $objTableA. Obrigatório.
-     * @param object $objTableB. Obrigatório.
-     * @param string $fieldMap. Obrigatório. 
-     */    
-    protected function outerJoinFrom($objTableA,$objTableB,$fieldMap){
-        $this->joinFrom($objTableA,$objTableB,$fieldMap,'OUTER'); 
     }
     
     /**
@@ -1122,13 +1236,54 @@ abstract class ORM {
             $aliasB             = $objTableB->getAlias();    
             $this->arrObjJoin[] = $objTableA;
             $this->arrObjJoin[] = $objTableB;
-            $this->joinWhere    = "({$joinWhere} {$type} JOIN {$tableA} AS {$aliasA} ON {$aliasA}.{$field} = {$aliasB}.{$field})";            
+            
+            //Monta relação entre campos do JOIN (ON)
+            $fieldsMap = $this->prepareFieldMapJoin($field, $aliasA, $aliasB);
+            
+            $this->joinWhere    = "({$joinWhere} {$type} JOIN {$tableA} AS {$aliasA} ON {$fieldsMap})";            
         }       
+    }
+    
+    /**
+     * Monta a string correta para ser utilizada no ON de um Join
+     * 
+     * @param mixed $field String ou Array com campos para ON
+     * @param string $aliasA Alias da tabela A
+     * @param string $aliasB Alias da tabela B
+     * 
+     * @return string
+     * 
+     * @throws \Exception
+     */
+    private function prepareFieldMapJoin($field, $aliasA, $aliasB){
+        if (is_array($field)){
+            //O JOIN deve ser feito entre dois campos ou mais (Ex: a.FIELD1 = b.FIELD1 AND a.FIELD2 = b.FIELD2...)
+            $arrFieldsMap = array(); //Guarda o mapeamento dos campos entre as duas tabelas.
+            foreach($field as $map){
+                //Cada item do array deve estar no formato campoA=campoB
+                $map    = str_replace(' ','',$map);//Retira espaço em branco
+                $arrMap = explode('=',$map);
+                if (count($arrMap) != 2){
+                    //O mapeamento do índice atual não está no formato correto.
+                    $msgErr = Dic::loadMsg(__CLASS__,__METHOD__,__NAMESPACE__,'ERR_MAP_FIELDS');   
+                    throw new \Exception( $msgErr );                          
+                }
+                $fieldMapItem   = $aliasA.'.'.$map;
+                $fieldMapItem   = str_replace('=','='.$aliasB.'.',$fieldMapItem);
+                $arrFieldsMap[] = $fieldMapItem;
+            }
+            $fieldsMap = join($arrFieldsMap,' AND ');
+        }else{
+            $fieldsMap = "{$aliasA}.{$field} = {$aliasB}.{$field}";
+        }
+        
+        return $fieldsMap;
     }
     
     protected function setJoin($where=''){
         $joinWhere      = $this->joinWhere;//String formada no método joinFrom()
         $arrObjJoin     = $this->arrObjJoin;
+        $groupBy        = $this->groupBy;
         $arrStrFields   = array();
         $fields         = '*';
         
@@ -1150,10 +1305,33 @@ abstract class ORM {
         
         $sql       = "SELECT $fields FROM ".$joinWhere;
         if (strlen($where) > 0) $sql .= " WHERE 1=1 AND {$where}";
+        if (strlen($groupBy) > 0) $sql .= " GROUP BY {$groupBy} ";
         $sql       = $this->concatOrderByLimit($sql); 
         return self::query($sql);//Cada registro é um objeto stdClass         
     }
-
+    
+    /**
+     * Alternativa para chamar o método joinFrom() para criar 'INNER JOIN'.
+     * 
+     * @param object $objTableA. Obrigatório.
+     * @param object $objTableB. Obrigatório.
+     * @param string $fieldMap. Obrigatório. 
+     */
+    protected function innerJoinFrom($objTableA,$objTableB,$fieldMap){
+       $this->joinFrom($objTableA,$objTableB,$fieldMap,'INNER'); 
+    }
+    
+    /**
+     * Alternativa para chamar o método joinFrom() para criar 'OUTER JOIN'.
+     * 
+     * @param object $objTableA. Obrigatório.
+     * @param object $objTableB. Obrigatório.
+     * @param string $fieldMap. Obrigatório. 
+     */    
+    protected function outerJoinFrom($objTableA,$objTableB,$fieldMap){
+        $this->joinFrom($objTableA,$objTableB,$fieldMap,'OUTER'); 
+    }
+    
     /** 
      * Método auxiliar de toJson(), toArray() e toString.
      * Converte os dados do objeto atual no formato solicitado (ARRAY | JSON | STRING).
@@ -1235,6 +1413,31 @@ abstract class ORM {
             $this->row[$var]        = $value;
         }        
     } 
+    
+    /**
+     * Informa/guarda a lista de colunas que deve ser retornada em uma instrução SELECT.
+     * 
+     * @param string $listCols Exemplo: colA, colB, colC, DATE_FORMAT(DATE(DATA_REGISTRO),'%d/%m/%Y') AS DATA_BR...
+     * @return void
+     */
+    function select($listCols='*'){
+        if (strlen($listCols) > 0) $this->selectListCols = $listCols;
+        return $this;
+    }
+    
+    function groupBy($groupBy){
+        $groupBy = str_replace('GROUP BY', '', $groupBy);
+        $groupBy = str_replace('group by', '', $groupBy);
+        if (strlen($groupBy) > 0) $this->groupBy = $groupBy;
+        return $this;
+    }
+    
+    function having($having){
+        $having = str_replace('HAVING', '', $having);
+        $having = str_replace('HAVING', '', $having);
+        if (strlen($having) > 0) $this->having = $having;
+        return $this;        
+    }
     
     /**
      * @ignore     

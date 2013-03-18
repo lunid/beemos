@@ -15,12 +15,15 @@ class Conn {
      * <code>
      *  Conn::init();
      * </code>
+     * 
+     * @params string $conn O nome de uma conexão (método existente em ConnConfig)
+     * @return void
      */
-    public static function init(){
+    public static function init($conn=''){
        if (!defined('APPLICATION_ENV')) die('Impossível efetuar conexão como DB. Ambiente não definido.');
         
        $arrConn    = NULL;
-       $ambiente   = APPLICATION_ENV;                
+       $ambiente   = (strlen($conn) > 0)?$conn:APPLICATION_ENV;                
         
        $objConn    = ConnConfig::$ambiente();       
        self::setConn($objConn);

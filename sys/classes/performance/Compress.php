@@ -34,8 +34,9 @@ class Compress {
             $strCompressed  = $script;
             
             if ($extension == 'css') {
-                //$strCompressed = CssMinify::minify($script);
-            } elseif ($extension == 'js') {                
+                $strCompressed = CssMinify::minify($script);
+            } elseif ($extension == 'js') {
+                //$strCompressed = JsMinify::minify($script);
                 try {
                     //$strCompressed = JsMin::minify($script);
                 } catch(\Exception $e) {

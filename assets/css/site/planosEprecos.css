@@ -15,7 +15,7 @@
     float: left;
     padding: 0 0 10px;
     width: 100%;
-    margin-left:30px;
+    margin-left:20px;
 }
 
 .preco-price {
@@ -33,9 +33,9 @@
 }
 
 .first-col {
-    width: 23%;
+    width: 26%;
     float: left;
-    margin-top:176px;
+    margin-top:45px;    
 }
 .preco-column, .preco-column-last-child, .preco-column-first-child {
     background-color: #333333;
@@ -120,7 +120,7 @@ h5 {
 
 .preco-feature {
     background-color: #FFFFFF;
-    padding: 0 8%;
+    padding: 0px;
     text-align: center;    
 }
 
@@ -139,6 +139,7 @@ ul {
     font-family: Tahoma,Geneva,sans-serif;
     margin: 0;
     padding: 10px 8px;
+    height: 20px;   
 }
 
 .preco-feature li:last-child {
@@ -193,7 +194,7 @@ ul {
     background-repeat: no-repeat;   
     width: 18px;
     height: 16px;
-    margin-left:70px;
+    margin-left:90px;
 }
 
 .icon_nao{
@@ -202,5 +203,19 @@ ul {
     background-repeat: no-repeat;   
     width: 9px;
     height: 8px;
-    margin-left:75px;
+    margin-left:95px;
+}
+
+.rowGray {
+    background-color: #F8F8F8;
+}
+
+.question_mark {
+    background-image: url("../../images/common/icons/question_mark.png");
+    background-repeat: no-repeat;   
+    width:20px;
+    height:15px;
+    margin-left:10px;
+    display:inline-block;
+    cursor:pointer;
 }

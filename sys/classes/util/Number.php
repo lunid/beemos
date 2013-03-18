@@ -33,11 +33,15 @@
         }
         
         public static function formatTel($number){
-            if(strlen($number) > 10){
-                return "(" . substr($number, 0, 2) . ") " . substr($number, 2, 5) . "-" . substr($number, 7);
-            }else{
-                return "(" . substr($number, 0, 2) . ") " . substr($number, 2, 4) . "-" . substr($number, 6);
+            if((int)$number > 0){
+                if(strlen($number) > 10){
+                    return "(" . substr($number, 0, 2) . ") " . substr($number, 2, 5) . "-" . substr($number, 7);
+                }else if(strlen($number) == 10){
+                    return "(" . substr($number, 0, 2) . ") " . substr($number, 2, 4) . "-" . substr($number, 6);
+                }
             }
+            
+            return $number;
         }
     }
 

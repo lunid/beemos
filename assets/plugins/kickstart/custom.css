@@ -68,3 +68,7 @@ sup {
 li {
     color: #000;
 }
+
+ul.tabs li a {
+    font-size:1.2em;
+}

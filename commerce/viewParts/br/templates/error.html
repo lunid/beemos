@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- Basic Page Needs
+  ================================================== -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{TITLE}</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Mobile Specific Metas
+  ================================================== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <style>
+            html {
+              font: message-box;
+              font-size: 100%;
+              background-color: hsl(0,0%,90%);
+              color: #000;
+              height: 100%;
+            }
+            
+            .spacer {             
+              height:150px;
+            }
+
+            #topSection {
+              text-align: center;
+            }            
+            
+            body {
+              margin: 0;
+              display: -moz-box;
+              -moz-box-orient: vertical;
+              width: 100%;
+              height: 100%;
+              background-image: url(chrome://browser/content/abouthome/noise.png),
+                                -moz-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.4));
+            }
+        </style>
+        
+        <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <!-- top -->   
+    <div class="spacer"></div>
+    <div id='topSection'>
+     {BODY}
+    </div>
+    <!-- fim top -->  
+</body>
+</html>

@@ -107,11 +107,8 @@
                     //Retorna apenas uma string randômnica com tamanho $length.
                     $this->tokenLength  = $length;
                     
-                    // Seleciona um número randômico entre 1 e 32 (40-8)                    
-                    $n = rand(1, $length);
-
                     // Gera o token retornando uma parte do hash com 8 caracteres, iniciando do número randômico $n                 
-                    $token = substr($hash, $n, $length);
+                    $token = substr($hash, 0, $length);
                 }
 		return $token;
 	}

@@ -28,5 +28,5 @@
                 return utf8_encode($this->mixed_to_latin1($text));
             }
             
-	}//Fim da classe
+	}
 ?>

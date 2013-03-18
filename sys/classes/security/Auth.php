@@ -29,7 +29,8 @@ class Auth {
      */
     public static function checkAuth($redirect=''){  
         $objUsuario = self::getUsuario();        
-        $out        = FALSE;       
+        $out        = FALSE;   
+
         if (is_object($objUsuario)) {
             $out = TRUE;//Session ativa
         } elseif(strlen($redirect) > 0) {
@@ -48,7 +49,7 @@ class Auth {
      */
     public static function checarPermissao($arrUserPerfil, $redirect='/app/login'){    
         $user = self::getUsuario();
-        
+
         //Verifica sessão 
         if(!$user){
             //\Auth::setMessage(Error::eLogin('EXPIRED_SESSION'));
@@ -125,6 +126,23 @@ class Auth {
     public static function getMessage(){
         $message = Request::session(self::SESSION_MESSAGE);       
         return $message;
+    }
+    
+    /**
+     * Verifica se o usuário logado esta usando uma senha Administrativa ou não
+     * 
+     * @return boolean
+     */
+    public static function checarUserAdmin(){
+        //Recupera user da Sessão
+        $objUser = self::getUsuario();
+        
+        //Se não estiver logado = FALSE
+        if(is_null($objUser)){
+            return FALSE;
+        }
+        
+        return $objUser->getAcessoAdmin();
     }
 }
 

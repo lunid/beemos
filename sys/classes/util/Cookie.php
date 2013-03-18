@@ -23,5 +23,24 @@
                 $view->CHECK_MEMORIA = "checked='checked'";
             }
         }
+        
+        /**
+         * Verifica se já existe um Cookie criado para controle do Tooltip de Micro Conteúdo
+         * do mecanismo de listas e caso não exista cria o mesmo.
+         * 
+         * Além de cria o JS para ser incorporado no HTML de Lista
+         * 
+         * @return string Js com variável de controle para o HTML
+         */
+        public static function verTooltipConteudo(){
+            if(isset($_COOKIE['tooltip_conteudo'])){
+                $js = "var verCookieTooltipConteudo = false;";
+            }else{
+                setcookie("tooltip_conteudo", "1", time()+60*60*24*30, "/");
+                $js = "var verCookieTooltipConteudo = true;";
+            }
+            
+            return $js;
+        }
     }
 ?>

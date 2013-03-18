@@ -84,14 +84,12 @@
          * @param string $uri Exemplo: app/phtml/table.phtml
          * @return string
          */
-        public static function physicalPath($uri){
-            $path = $uri;
-            if (strlen($uri) > 0) {
-                $root           = $_SERVER['DOCUMENT_ROOT'];
-                
-                $path           = $root.'/'.self::getRootFolder().$uri;
-                $path           = str_replace('//','/',$path);
-            }
+        public static function physicalPath($uri=''){
+            $path           = $uri;
+            $root           = $_SERVER['DOCUMENT_ROOT'];
+
+            $path           = $root.'/'.self::getRootFolder().$uri;
+            $path           = str_replace('//','/',$path);
             return $path;
         }
         

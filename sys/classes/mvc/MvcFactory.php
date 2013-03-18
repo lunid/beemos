@@ -9,7 +9,7 @@
         }
         
         public static function getViewPart($pathViewHtml=''){
-            return new Viewpart($pathViewHtml);
+            return new ViewPart($pathViewHtml);
         }
         
         public static function getModule($module=''){
