@@ -2,13 +2,15 @@
     use \sys\classes\webservice\WsServer;
     use \api\classes\Util;
     use \api\classes\Security;
-    use \common\classes\models\UsuariosModel;   
+    use \common\classes\models\UsuariosModel;
+    use \app_escola\classes\models\EscolaModel;
+    use \common\classes\helpers\Usuario;
     
     class Usuarios extends WsServer {
         
         public function __construct() {
             try{      
-                $this->setWsInterfaceClass(__CLASS__);                
+                $this->setWsInterfaceClass(__CLASS__);   
             }catch(Exception $e){
                 die(utf8_decode("<b>Erro Fatal:</b> " . $e->getMessage() . " - Entre em contato com suporte!"));
             }
@@ -35,7 +37,7 @@
 
                         //Campos utilizados
                         $token      = $this->getXmlField($params, 'token');
-                        $idUsuario = $this->getXmlField($params, 'id_usuario');
+                        $idUsuario  = $this->getXmlField($params, 'id_usuario');
                         
                         if(!isset($token) || $token == null || $token == ""){
                             $erro   = 4;
@@ -49,7 +51,7 @@
                                 $msg    = $ret->msg;
                             }else{
                                 //Valida envio do id_usuario
-                                if($idUsuario <= 0 || $idUsuario == $ret->ID_CLIENTE){
+                                if($idUsuario <= 0 || $idUsuario == $ret->ID_USER){
                                     if($idUsuario <= 0){
                                         $erro   = 91;
                                         $msg    = "ID_USUARIO inválido ou nulo!";
@@ -62,11 +64,11 @@
                                     $mdUsuarios = new UsuariosModel();
                                     
                                     //Valida se o usuário é dependente do usuário logado
-                                    if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
+                                    if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_USER)){
                                         $erro   = 83;
                                         $msg    = "Usuário não é seu dependente ou não existe!";
                                     }else{
-                                        $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_CLIENTE, 'EXCLUIR');
+                                        $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_USER, 'EXCLUIR');
 
                                         //VErifica se o status foi atualizado
                                         if(!$rs->status){
@@ -152,7 +154,7 @@
                                 
                                 //Valida campos
                                 if($nome != null && $nome != ''){
-                                    $update['NOME_PRINCIPAL'] = $nome;
+                                    $update['NOME'] = $nome;
                                 }
 
                                 if($email != null && $email != ''){
@@ -177,6 +179,13 @@
                                     $erro   = 23;
                                     $msg    = "Pelo menos um parâmetro opcional deve ser informado!";
                                 }else{
+                                    //Carrega Prefixo da escola
+                                    $mdEscola   = new EscolaModel();
+                                    $rsPrefixo  = $mdEscola->carregarPrefixoEscola($ret->ID_USER);
+
+                                    //Prepara login com prefixo
+                                    $login = $rsPrefixo->prefixo . "_" . strtolower(str_replace($rsPrefixo->prefixo, "", $login));
+                                    
                                     //Instância do Model Usuarios
                                     $mdUsuarios = new UsuariosModel();
 
@@ -201,14 +210,14 @@
                                         if(!$ver_login){
                                             $erro   = 25;
                                             $msg    = "Este login já existe!";
-                                        }else if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
+                                        }else if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_USER)){
                                             //Valida a dependência do cliente que vai ser alterado com a MATRIZ logada no WS
                                             $erro   = 28;
                                             $msg    = "Este cliente não pertence a sua matriz!";
                                         }else{
                                             //Se o ID_CLIENTE estiver difinido (através da autenticação HTTP) o usuário é atualizado
-                                            if($ret->ID_CLIENTE > 0){
-                                                $id = $mdUsuarios->atualizarUsuario($idUsuario, $ret->ID_CLIENTE, $update);
+                                            if($ret->ID_USER > 0){
+                                                $id = $mdUsuarios->atualizarUsuario($idUsuario, $ret->ID_USER, $update);
                                                 
                                                 if($id < 0){
                                                     $erro   = 27;
@@ -287,13 +296,13 @@
                          }else{
                              //Autentica usuário e token
                              $ret = $this->authenticate($token);
-
+                             
                              if(!$ret->status){
                                  $erro   = $ret->erro;
                                  $msg    = $ret->msg;
                              }else{
                                  //Valida envio do id_usuario
-                                 if($idUsuario <= 0 || $idUsuario == $ret->ID_CLIENTE){
+                                 if($idUsuario <= 0 || $idUsuario == $ret->ID_USER){
                                      if($idUsuario <= 0){
                                          $erro   = 71;
                                          $msg    = "ID_USUARIO inválido ou nulo!";
@@ -304,13 +313,13 @@
                                  }else{
                                      //Model de Usuários
                                      $mdUsuarios = new UsuariosModel();
-
+                                     
                                      //Valida se o usuário é dependente do usuário logado
-                                     if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
+                                     if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_USER)){
                                          $erro   = 73;
                                          $msg    = "Usuário não é dependente de sua matriz!";
                                      }else{
-                                         $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_CLIENTE, 'BLOQ');
+                                         $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_USER, 'BLOQ');
 
                                          //VErifica se o status foi atualizado
                                          if(!$rs->status){
@@ -387,7 +396,7 @@
                                 $msg    = $ret->msg;
                             }else{
                                 //Valida envio do id_usuario
-                                if($idUsuario <= 0 || $idUsuario == $ret->ID_CLIENTE){
+                                if($idUsuario <= 0 || $idUsuario == $ret->ID_USER){
                                     if($idUsuario <= 0){
                                         $erro   = 81;
                                         $msg    = "ID_USUARIO inválido ou nulo!";
@@ -400,11 +409,11 @@
                                     $mdUsuarios = new UsuariosModel();
 
                                     //Valida se o usuário é dependente do usuário logado
-                                    if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
+                                    if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_USER)){
                                         $erro   = 83;
                                         $msg    = "Usuário não é dependente de sua matriz!";
                                     }else{
-                                        $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_CLIENTE, 'DESBLOQ');
+                                        $rs = $mdUsuarios->atualizarStatusUsuario($idUsuario, $ret->ID_USER, 'DESBLOQ');
 
                                         //VErifica se o status foi atualizado
                                         if(!$rs->status){
@@ -493,29 +502,29 @@
                                     preg_match("/emailLIKE(.*?)&/", $filtro, $flt_email); if(sizeof($flt_email) == 0){ preg_match("/emailLIKE(.*)$/", $filtro, $flt_email); }
 
                                     if(sizeof($flt_id_usuario) > 0){
-                                        $where .= " AND C.ID_CLIENTE = " . ((int)$flt_id_usuario[1]) . " ";
+                                        $where .= " AND U.ID_USER = " . ((int)$flt_id_usuario[1]) . " ";
                                     }
 
                                     if(sizeof($flt_nome) > 0){
                                         $nome   = str_replace("&", "", $flt_nome[1]);
-                                        $where  .= " AND C.NOME_PRINCIPAL LIKE '" . (mysql_escape_string($nome)) . "' ";
+                                        $where  .= " AND U.NOME LIKE '%" . (mysql_escape_string($nome)) . "%' ";
                                     }
 
                                     if(sizeof($flt_email) > 0){
                                         $email  = str_replace("&", "", $flt_email[1]);
-                                        $where  .= " AND C.EMAIL LIKE '" . (mysql_escape_string($email)) . "' ";
+                                        $where  .= " AND U.EMAIL LIKE '%" . (mysql_escape_string($email)) . "%' ";
                                     }
 
                                     $ver_filtro = true;
                                 }
 
                                 if($dataIni != null){
-                                    $where  .= " AND DATE(C.DATA_REGISTRO) >= '" . (mysql_escape_string($dataIni)) . "' ";
+                                    $where  .= " AND DATE(U.DATA_REGISTRO) >= '" . (mysql_escape_string($dataIni)) . "' ";
                                     $ver_filtro = true;
                                 }
 
                                 if($dataFim != null){
-                                    $where  .= " AND DATE(C.DATA_REGISTRO) <= '" . (mysql_escape_string($dataFim)) . "' ";
+                                    $where  .= " AND DATE(U.DATA_REGISTRO) <= '" . (mysql_escape_string($dataFim)) . "' ";
                                     $ver_filtro = true;
                                 }
 
@@ -526,7 +535,7 @@
                                 }else{
                                     //Model Usuários
                                     $mdUsuarios = new UsuariosModel();
-                                    $rs         = $mdUsuarios->listarUsuarios($ret->ID_CLIENTE, $where);
+                                    $rs         = $mdUsuarios->listarUsuarios($ret->ID_USER, $where);
                                     
                                     //Verifica se houve retorno 
                                     if(!$rs->status){
@@ -536,14 +545,25 @@
                                         $dados = "<dados>";
 
                                         foreach($rs->usuarios as $usuario){
-                                            $rs_saldo = $mdUsuarios->calcularSaldo($usuario['ID_CLIENTE'], $ret->ID_CLIENTE);
+                                            //Carrega saldo do Usuário
+                                            $userTmp    = new Usuario();
+                                            $userTmp->carregarUsuarioId($usuario['ID_USER']);
+                                            $rsSaldo    = $userTmp->calcSaldo();
 
+                                            if($usuario['EXCLUIDO_EM'] != NULL && $usuario['EXCLUIDO_EM'] != "0000-00-00 00:00:00"){
+                                                $status = "Excluido";
+                                            }else if($usuario['BLOQUEADO_EM'] != NULL && $usuario['BLOQUEADO_EM'] != "0000-00-00 00:00:00"){
+                                                $status = "Bloqueado";
+                                            }else{
+                                                $status = "Ativo";
+                                            }
+                                            
                                             $dados .= "<usuario>";
                                                 $dados .= "<id_usuario>";
-                                                    $dados .= $usuario['ID_CLIENTE'];
+                                                    $dados .= $usuario['ID_USER'];
                                                 $dados .= "</id_usuario>";
                                                 $dados .= "<nome>";
-                                                    $dados .= utf8_encode($usuario['NOME_PRINCIPAL']);
+                                                    $dados .= utf8_encode($usuario['NOME']);
                                                 $dados .= "</nome>";
                                                 $dados .= "<email>";
                                                     $dados .= utf8_encode($usuario['EMAIL']);
@@ -552,13 +572,13 @@
                                                     $dados .= utf8_encode($usuario['LOGIN']);
                                                 $dados .= "</login>";
                                                 $dados .= "<status>";
-                                                    $dados .= utf8_encode($usuario['DEL'] == 1 ? 'Excluído' : $usuario['BLOQ'] == 1 ? 'Bloqueado' : 'Ativo');
+                                                    $dados .= utf8_encode($status);
                                                 $dados .= "</status>";
                                                 $dados .= "<dataRegistro>";
                                                     $dados .= Util::formataData($usuario['DATA_REGISTRO'], 'DD/MM/AAAA HH:MM:SS');
                                                 $dados .= "</dataRegistro>";
                                                 $dados .= "<saldo>";
-                                                    $dados .= $rs_saldo->saldo;
+                                                    $dados .= $rsSaldo->saldo;
                                                 $dados .= "</saldo>";
                                                 $dados .= "<consumo>";
                                                     $dados .= (int)$usuario['CONSUMO'];
@@ -657,6 +677,13 @@
                                     $erro   = 15;
                                     $msg    = "O campo senha é obrigatório!";
                                 }else{
+                                    //Carrega Prefixo da escola
+                                    $mdEscola   = new EscolaModel();
+                                    $rsPrefixo  = $mdEscola->carregarPrefixoEscola($ret->ID_USER);
+
+                                    //Prepara login com prefixo
+                                    $login = $rsPrefixo->prefixo . "_" . strtolower(str_replace($rsPrefixo->prefixo, "", $login));
+                                    
                                     //Model de Usuários
                                     $mdUsuarios = new UsuariosModel();
                                     
@@ -664,30 +691,31 @@
                                     $rs = $mdUsuarios->consultarUsuarioMatriz($email);
 
                                     if($rs->status){
+                                        //Armazena dados do usuário
                                         $cliente = $rs->usuario;;
-
+                                        
                                         //Se for um cliente existente da MATRIZ e estiver INATIVO, o mesmo será ativado
-                                        if($ret->ID_CLIENTE == $cliente->ID_MATRIZ && $cliente->DEL == 1){
+                                        if($ret->ID_USER == $cliente->ID_MATRIZ && ($cliente->EXCLUIDO_EM !== NULL && $cliente->EXCLUIDO_EM !== '0000-00-00 00:00:00')){
                                             //Valida login
                                             if(!$mdUsuarios->validarLoginUsuario($login, $cliente->ID_CLIENTE)){
                                                 $erro   = 17;
                                                 $msg    = "Este login já existe!";
                                             }else{
                                                 $arrCampos = array(
-                                                    'NOME_PRINCIPAL'    => $nome,
+                                                    'NOME'              => $nome,
                                                     'LOGIN'             => $login,
                                                     'PASSWD'            => $senha,
-                                                    'ID_MATRIZ'         => $ret->ID_CLIENTE,
-                                                    'ID_FILIAL'         => $ret->ID_CLIENTE,
+                                                    'ID_MATRIZ'         => $ret->ID_USER,
                                                     'HASH'              => Security::geraHashId(),
-                                                    'DEL'               => 0,
-                                                    'BLOQ'              => 0
+                                                    'EXCLUIDO_EM'       => '0000-00-00 00:00:00',
+                                                    'BLOQUEADO_EM'      => '0000-00-00 00:00:00',
+                                                    'ID_USER_PERFIL'    => 3
                                                 );
                                                 
-                                                $mdUsuarios->atualizarUsuario($cliente->ID_CLIENTE, $ret->ID_CLIENTE, $arrCampos);
+                                                $mdUsuarios->atualizarUsuario($cliente->ID_USER, $ret->ID_USER, $arrCampos);
                                                                                                 
                                                 $dados  = "<dados>";
-                                                $dados .= "<id_usuario>{$cliente->ID_CLIENTE}</id_usuario>";
+                                                $dados .= "<id_usuario>{$cliente->ID_USER}</id_usuario>";
                                                 $dados .= "</dados>";
                                             }
                                         }else{
@@ -701,20 +729,19 @@
                                             $msg    = "Este login já existe!";
                                         }else{
                                             //Se o ID_CLIENTE estiver difinido (através da autenticação HTTP) o usuário é cadastrado
-                                            if($ret->ID_CLIENTE > 0){
+                                            if($ret->ID_USER > 0){
                                                 $arrCampos = array(
-                                                    'NOME_PRINCIPAL'    => $nome,
+                                                    'NOME'              => $nome,
                                                     'EMAIL'             => $email,
                                                     'LOGIN'             => $login,
                                                     'PASSWD'            => $senha,
-                                                    'ID_MATRIZ'         => $ret->ID_CLIENTE,
-                                                    'ID_FILIAL'         => $ret->ID_CLIENTE,
+                                                    'ID_MATRIZ'         => $ret->ID_USER,
                                                     'HASH'              => Security::geraHashId(),
-                                                    'ID_AUTH_PERFIL'    => 0,
+                                                    'ID_USER_PERFIL'    => 3,
                                                     'DATA_REGISTRO'     => date('Y-m-d H:i:s')
                                                 );
                                                 
-                                                $id = $mdUsuarios->cadastrarUsuario($ret->ID_CLIENTE, $arrCampos);
+                                                $id = $mdUsuarios->cadastrarUsuario($ret->ID_USER, $arrCampos);
 
                                                 if($id <= 0){
                                                     $erro   = 19;
@@ -765,5 +792,7 @@
                 //return new soap_fault("Server", null, $e->getMessage());
             }
         }
+        
+        
     }
 ?>

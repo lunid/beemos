@@ -1,18 +1,14 @@
 <?php
-    use \api\classes\Server;
+    use \sys\classes\webservice\WsServer;
     use \api\classes\models\CreditosModel;
     use \common\classes\models\UsuariosModel;
+    use \app_escola\classes\models\EscolaModel;
+    use \common\classes\helpers\Usuario;
     
-    class Creditos extends Server {
+    class Creditos extends WsServer {
         public function __construct() {
-            try{
-                //Métodos a serem ignorados no WSDL
-                $ignoredMetodos = array(
-                    "__construct"
-                );
-                
-                //Inicia o ServerSoap
-                parent::__construct(__CLASS__, $ignoredMetodos);
+            try{      
+                $this->setWsInterfaceClass(__CLASS__);   
             }catch(Exception $e){
                 die(utf8_decode("<b>Erro Fatal:</b> " . $e->getMessage() . " - Entre em contato com suporte!"));
             }
@@ -53,13 +49,13 @@
                                 $msg    = $ret->msg;
                             }else{
                                 //Se não for enviado um id_usuario a consulta será feita para o usuário logado
-                                $idUsuario = $idUsuario == null || $idUsuario == 0 ? $ret->ID_CLIENTE : $idUsuario;
+                                $idUsuario = $idUsuario == null || $idUsuario == 0 ? $ret->ID_USER : $idUsuario;
                                 
                                 //Model de Usuários
                                 $mdUsuarios = new UsuariosModel();
                                 
                                 //Calculo de saldo do usuário
-                                $rs_saldo = $mdUsuarios->calcularSaldo($idUsuario, $ret->ID_CLIENTE);
+                                $rs_saldo = $mdUsuarios->calcularSaldo($idUsuario, $ret->ID_USER);
 
                                 //Verifica erros com saldo
                                 if(!$rs_saldo->status){
@@ -127,7 +123,7 @@
 
                         //Campos utilizados
                         $token      = $this->getXmlField($params, 'token');
-                        $idUsuario   = $this->getXmlField($params, 'id_usuario');
+                        $idUsuario  = $this->getXmlField($params, 'id_usuario');
                         $credito    = (int)$this->getXmlField($params, 'credito');
 
                         if(!isset($token) || $token == null || $token == ""){
@@ -142,7 +138,7 @@
                                 $msg    = $ret->msg;
                             }else{
                                 //Valida envio do id_usuario
-                                if($idUsuario <= 0 || $idUsuario == $ret->ID_CLIENTE){
+                                if($idUsuario <= 0 || $idUsuario == $ret->ID_USER){
                                     if($idUsuario <= 0){
                                         $erro   = 56;
                                         $msg    = "ID_USUARIO inválido ou nulo!";
@@ -155,12 +151,14 @@
                                     $mdUsuarios = new UsuariosModel();
 
                                     //Valida se o usuário é dependente do usuário logado
-                                    if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
+                                    if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_USER)){
                                         $erro   = 51;
                                         $msg    = "Usuário não é seu dependente ou não existe!";
                                     }else{
                                         //Verifica saldo da escola
-                                        $rs_saldo = $mdUsuarios->calcularSaldo($ret->ID_CLIENTE);
+                                        $userEscola = new Usuario();
+                                        $userEscola->carregarUsuarioId($ret->ID_USER);
+                                        $rs_saldo   = $userEscola->calcSaldo();
                                         
                                         //Verifica erros com saldo
                                         if(!$rs_saldo->status){
@@ -176,41 +174,14 @@
                                             $erro   = 54;
                                             $msg    = "A quantidade de créditos é maior do que seu saldo atual!";
                                         }else{
-                                            //Model de Créditos
-                                            $mdCreditos = new CreditosModel();
+                                            //Model de Escolas
+                                            $mdEscola   = new EscolaModel();
+                                            $rsOperacao = $mdEscola->operacaoCredito($ret->ID_USER, $idUsuario, 1, $credito);
                                             
-                                            //Consulta de vencimento
-                                            $rsOperacaoMatriz = $mdCreditos->consultarUltimaOperacao($ret->ID_CLIENTE);
-                                            
-                                            //Caso não seja encontrado o vencimento é retornado um erro
-                                            if(!$rsOperacaoMatriz->status){
-                                                $erro   = 55;
-                                                $msg    = "Vencimento da Matriz não identificado!";
-                                            }else{
-                                                //Busca a ultima operação do cliente
-                                                $rsOperacaoCliente = $mdCreditos->consultarUltimaOperacao($idUsuario);
-
-                                                //Se não for encontrado nenhum saldo anterior, é inserido um saldo novo
-                                                if(!$rsOperacaoCliente->status){
-                                                    $idRegAnterior  = 0;
-                                                    $saldoAnt       = 0;
-                                                    $saldoFinal     = $credito;
-                                                }else{
-                                                    $idRegAnterior  = $rsOperacaoCliente->ID_CREDITO_CONSOLIDADO;
-                                                    $saldoAnt       = $rsOperacaoCliente->SALDO_FINAL;
-                                                    $saldoFinal     = $rsOperacaoCliente->SALDO_FINAL + $credito;
-                                                }
-
-                                                //Insere créditos na Tabela
-                                                $mdCreditos->inserirCredito(
-                                                    $idUsuario, 
-                                                    $idRegAnterior, 
-                                                    $saldoAnt, 
-                                                    $credito, 
-                                                    $saldoFinal, 
-                                                    $rsOperacaoMatriz->operacao->VENCIMENTO
-                                                );
-                                            } //Valida vencimento
+                                            if(!$rsOperacao->status){
+                                                $erro   = 7;
+                                                $msg    = $rsOperacao->msg;
+                                            }
                                         } //Validações para inserção
                                     } //Verifica dependencia do usuário
                                 } //Valida envio de id_usuario
@@ -285,7 +256,7 @@
                                $msg    = $ret->msg;
                            }else{
                                //Valida envio do id_usuario
-                               if($idUsuario <= 0 || $idUsuario == $ret->ID_CLIENTE){
+                               if($idUsuario <= 0 || $idUsuario == $ret->ID_USER){
                                    if($idUsuario <= 0){
                                        $erro   = 61;
                                        $msg    = "ID_USUARIO inválido ou nulo!";
@@ -298,12 +269,14 @@
                                    $mdUsuarios = new UsuariosModel();
                                    
                                    //Valida se o usuário é dependente do usuário logado
-                                   if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_CLIENTE)){
-                                       $erro   = 63;
-                                       $msg    = "Usuário não é seu dependente ou não existe!";
+                                   if(!$mdUsuarios->validarUsuarioMatriz($idUsuario, $ret->ID_USER)){
+                                        $erro   = 63;
+                                        $msg    = "Usuário não é seu dependente ou não existe!";
                                    }else{
                                        //Verifica saldo da escola
-                                       $rs_saldo = $mdUsuarios->calcularSaldo($idUsuario, $ret->ID_CLIENTE);
+                                       $userEscola = new Usuario();
+                                       $userEscola->carregarUsuarioId($ret->ID_USER);
+                                       $rs_saldo   = $userEscola->calcSaldo();
                                        
                                        //Verifica erros com saldo
                                        if(!$rs_saldo->status){
@@ -319,41 +292,14 @@
                                            $erro   = 66;
                                            $msg    = "A quantidade de créditos para é maior do que o saldo atual do usuário!";
                                        }else{
-                                           //Model de Creditos
-                                           $mdCreditos = new CreditosModel();
-                                           
-                                           //Busca vencimento da Matriz
-                                           $rsOperacaoMatriz = $mdCreditos->consultarUltimaOperacao($ret->ID_CLIENTE);
-
-                                           //Caso não seja encontrado o vencimento é retornado um erro
-                                           if(!$rsOperacaoMatriz->status){
-                                               $erro   = 67;
-                                               $msg    = "Vencimento da Matriz não identificado!";
-                                           }else{
-                                               //Busca a ultima operação do cliente
-                                               $rsOperacaoCliente = $mdCreditos->consultarUltimaOperacao($idUsuario);
-
-                                               //Se não for encontrado nenhum saldo anterior, é retornado um erro
-                                               if(!$rsOperacaoCliente->status){
-                                                   $erro   = 68;
-                                                   $msg    = "Saldo anterior não identificado!";
-                                               }else{
-                                                   //Armazena dados da última operação como objeto
-                                                   $idRegAnterior    = $rsOperacaoCliente->operacao->ID_CREDITO_CONSOLIDADO;
-                                                   $saldoAnt          = $rsOperacaoCliente->operacao->SALDO_FINAL;
-                                                   $saldoFinal        = $rsOperacaoCliente->operacao->SALDO_FINAL - $estorno;
-                                                   
-                                                   //Executa Insert de Estorno
-                                                   $mdCreditos->inserirEstorno(
-                                                        $idUsuario, 
-                                                        $idRegAnterior, 
-                                                        $saldoAnt, 
-                                                        $estorno, 
-                                                        $saldoFinal, 
-                                                        $rsOperacaoMatriz->operacao->VENCIMENTO
-                                                   );
-                                               }
-                                           } //Valida vencimento
+                                           //Model de Escolas
+                                           $mdEscola   = new EscolaModel();
+                                           $rsOperacao = $mdEscola->operacaoCredito($ret->ID_USER, $idUsuario, 2, $estorno);
+                                            
+                                           if(!$rsOperacao->status){
+                                               $erro   = 7;
+                                               $msg    = $rsOperacao->msg;
+                                           }
                                        } //Validações para inserção
                                    } //Verifica dependencia do usuário
                                } //Valida envio de id_usuario

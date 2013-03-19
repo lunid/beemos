@@ -3,25 +3,15 @@
     
     class Soap extends Wsdl{
         private $server; //Aramazena SoapServer       
+        private $class; //Classe me utilização do serviço
         
         /**
-         * Constrói um SoapServer baseado em uma classe Controller (/api)
-         * @param string $class Nome do Controller
-         * @throws Exception
+         * Seta o nome da classe a ser utilizada com métodos de serviço
+         * 
+         * @param string $name Nome da classe
          */
-        public function __construct($class = null){
-            try{
-                //Verifica o envio do nome de serviço
-                if(is_null($class)){
-                    throw new \Exception("Nome do serviço WS não definido no construtor de SOAP");
-                }
-                
-                //Trata o vamos de class
-                $this->class = trim(strtolower((string)$class));
-                                
-            }catch(Exception $e){
-                throw $e;
-            }
+        public function setClass($name){
+            $this->class = $name;
         }
         
         /**
@@ -31,10 +21,13 @@
          */
         public function index(){
             try{
+                //Carrega configurações do XML
+                $this->loadConfig("server");
+                
                 //Inicia serviço SoapServer
                 $this->server = new \SoapServer(null, 
                     array(
-                        'uri'       => $this->uri,
+                        'uri'       => $this->wsdl,
                         'encoding'  => 'utf-8'
                     )
                 );

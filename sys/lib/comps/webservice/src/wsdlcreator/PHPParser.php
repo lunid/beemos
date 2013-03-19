@@ -303,6 +303,7 @@ class PHPParser {
 	 * @param string $file
 	 */
 	public function addFile ($file) {
+                $file = str_replace('\\','/',$file);
 		if (file_exists($file)) {
 			$this->files[] = $file;
 		} else {

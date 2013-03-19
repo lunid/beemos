@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #boxTituloPage {
-    background-color: #66ABD8;
+    background-image: url("../../images/site/bg_title_pattern.png");
     height: 125px;
     color:#fff;        
     text-align:left;       

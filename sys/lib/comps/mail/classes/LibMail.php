@@ -294,7 +294,8 @@ class Mail extends LibComponent {
     /**
      * Utiliza o conteúdo do arquivo informado como corpo da mensagem no formato HTML.
      *      
-     * @param string $filename Nome do arquivo que contém o corpo da mensagem.        
+     * @param string $filename Nome do arquivo que contém o corpo da mensagem. 
+     * @param $arrParams Array usado para trocar o marcador do HTML com o respectivo valor, cujo índice coincide com esse marcador.
      * @return void
      * @throws \Exception Se o parâmetro $pathFile estiver vazio.
      * @throws \Exception Se o arquivo informado não existir.     
@@ -391,11 +392,9 @@ class Mail extends LibComponent {
         $mail               = $this->objMailer;
         $mail->Subject      = $this->subject;
         $arrFrom            = $this->getFrom();
-        $mail->SetFrom($arrFrom['email'], $arrFrom['name']);
-                      
+        $mail->SetFrom($arrFrom['email'], $arrFrom['name']);                              
         
-        
-	if (APPLICATION_ENV == 'test' || APPLICATION_ENV == 'prod') {
+	if (APPLICATION_ENV == 'test' || APPLICATION_ENV == 'dev') {
             //O WAMP e MAMP não possuem por padrão a biblioteca sendmail.
             //Por isso não está ativo em ambiente de  desenvolvimento (local).
             $mail->IsSendmail();          

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <descricao>
+        Tooltip para interface Web usando jquery.Requer jquery 1.72 ou superior.
+        http://jquerytools.org/download/
+        Gratuito
+    </descricao>
+    <config>
+        <include id='jsInc'>js.jquery_tools_min</include>      
+        <include id='cssInc'>css.tooltip</include>            
+    </config>
+</root>

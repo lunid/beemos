@@ -1,18 +1,12 @@
 <?php
-    use \api\classes\Server;
+    use \sys\classes\webservice\WsServer;
     use \api\classes\Util;
     use \api\classes\models\RelatoriosModel;
     
-    class Relatorios extends Server {
+    class Relatorios extends WsServer {
         public function __construct() {
-            try{
-                //Métodos a serem ignorados no WSDL
-                $ignoredMetodos = array(
-                    "__construct"
-                );
-                
-                //Inicia o ServerSoap
-                parent::__construct(__CLASS__, $ignoredMetodos);
+            try{      
+                $this->setWsInterfaceClass(__CLASS__);   
             }catch(Exception $e){
                 die(utf8_decode("<b>Erro Fatal:</b> " . $e->getMessage() . " - Entre em contato com suporte!"));
             }
@@ -68,7 +62,7 @@
                                 $arrWhere['DATA_REGISTRO']  = " BETWEEN '$dataIni' AND '$dataFim' ";
                                 
                                 //Executa SQL
-                                $rs = $mdRelatorios->consultarPedidosMatriz($ret->ID_CLIENTE, $arrWhere);
+                                $rs = $mdRelatorios->consultarPedidosMatriz($ret->ID_USER, $arrWhere);
 
                                 //Valida se houve retorno
                                 if(!$rs->status){
@@ -191,7 +185,7 @@
                                     $arrWhere['DATE(DATA_REGISTRO)']    = " BETWEEN '$dtInicio' AND '$dtFim' ";
 
                                     //Executa SQL
-                                    $rs = $mdRelatorios->consultarPedidosMatriz($ret->ID_CLIENTE, $arrWhere);
+                                    $rs = $mdRelatorios->consultarPedidosMatriz($ret->ID_USER, $arrWhere);
                                     
                                     //Verifica retorno
                                     if($rs->status){
@@ -220,7 +214,7 @@
                                                 $arrWhere['CC.DATA_REGISTRO'] = " BETWEEN '{$tmpDataRegistro}' AND '{$nextDataRegistro}' ";
                                             }else{
                                                 //Verifica se existe um pedido maior que o atual (sem estar no Array Result)
-                                                $rsData = $mdRelatorios->consultarPedidoSuperior($ret->ID_CLIENTE, $tmpDataRegistro);
+                                                $rsData = $mdRelatorios->consultarPedidoSuperior($ret->ID_USER, $tmpDataRegistro);
                                                 
                                                 //Caso encontre uma data maior, a mesma será a data limite
                                                 if($rsData->status){
@@ -239,7 +233,7 @@
                                                 $dados .= "<dataVencimento>" . Util::formataData($tmpVencimento) . "</dataVencimento>";
                                                 $dados .= "<dataRegistro>" . Util::formataData($tmpDataRegistro, 'DD/MM/AAAA HH:MM:SS') . "</dataRegistro>";
                                                 
-                                                $rsLancamentos = $mdRelatorios->consultarLancamentosMatriz($ret->ID_CLIENTE, $arrWhere);
+                                                $rsLancamentos = $mdRelatorios->consultarLancamentosMatriz($ret->ID_USER, $arrWhere);
                                                 
                                                 if($rsLancamentos->status){
                                                     $dados .= "<lancamentos>";

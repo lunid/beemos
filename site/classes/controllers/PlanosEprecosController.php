@@ -35,11 +35,11 @@
 
             $objView->setCss($listCss);
             $objView->setJs($listJs);
+            $objView->setPlugin('jquery_tools_tooltip');
             /*
             $objView->setJs($listJs);
             $objView->setCssInc($listCssInc);
-            $objView->setJsInc($listJsInc);
-            $objView->setPlugin($listPlugin);
+            $objView->setJsInc($listJsInc);            
             */             
             $layoutName = 'planosEprecos';
             $objView->render($layoutName);            
@@ -51,13 +51,13 @@
             $i          = 0;
             
             $arrRecursos = array(
-                'Custo de instalação',
-                'Integração c/ cartões e bancos',
-                'Transações/mês',
-                'Custo por transação excedente',
-                'Envio de faturas on-line',
-                'Agendamento de faturas',
-                'Usuários'
+                'Custo de instalação:Taxa de configuração e instalação dos serviços contratados.',
+                'Integração c/ cartões e bancos:Gateway de pagamento para integração rápida com Cielo, Redecard, e bancos (débito e boleto).',
+                'Transações/mês:Número de transações/mês sem custo adicional.',
+                'Custo por transação excedente:Valor por transação excedente no mês. O limite depende do seu plano (veja Transações/mês)',
+                'Envio de faturas on-line:Recurso que permite o envio de faturas on-line para seus clientes.',
+                'Agendamento de faturas:Permite organizar e agendar o envio de faturas on-line. Ideal para cobranças periódicas.',
+                'Usuários:Número de usuários de sua equipe que podem usar os recursos com sua permissão'
              );
             
             //O índice de $arrCols deve coincidir com o do respectivo recurso em $arrRecursos.
@@ -103,8 +103,9 @@
                 //Nenhum array com informações de plano foi informado.
                 //Monta a coluna ref. aos recursos de cada plano.
                 foreach($arrRecursos as $item){ 
+                    list($label,$title) = explode(':',$item);
                     $rowGray    = ($i%2 == 0)?'':'rowGray';
-                    $htmlItens .= "<li class='left {$rowGray}'>{$item}<span class='question_mark' title=''></span></li>";
+                    $htmlItens .= "<li class='left {$rowGray}'>{$label}<span class='question_mark' title='{$title}'></span></li>";
                     $i++;
                 }
             }

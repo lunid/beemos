@@ -5,7 +5,6 @@
  * @author Interbits
  */
 use \sys\lib\classes\LibComponent;
-use \sys\classes\util\Dic;
 use \sys\lib\comps\webservice\classes\Soap;
 
 class Webservice extends LibComponent {
