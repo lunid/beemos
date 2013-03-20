@@ -21,7 +21,7 @@ function vldField(field,type,evt){
                     var fld = new LiveValidation(field,{validMessage: 'Obrigado!', onlyOnSubmit: true });
                 }
             } else if (evt == 'onBlur') {
-                if (type == 'FONE' || type == 'PASSWORD_CONF') {
+                if (type == 'FONE' || type == 'PASSWORD_CONF' || type == 'CAD_NEWSLETTER') {
                     var fld = new LiveValidation(field,{onValid: function(){return},onlyOnBlur: true });   
                 } else {
                     var fld = new LiveValidation(field,{validMessage: 'Obrigado!', onlyOnBlur: true });
@@ -32,7 +32,7 @@ function vldField(field,type,evt){
             if (required == true) fld.add( Validate.Presence, { failureMessage: msgRequired } ); 
 
             //Faz validações específicas para cada tipo:
-            if (type == 'EMAIL') {
+            if (type == 'EMAIL' || type == 'CAD_NEWSLETTER') {
                 fld.add(Validate.Email, { failureMessage: "E-mail incorreto."} );
             } else if (type == 'STRING') {
                 fld.add( Validate.Length,{minimum: 4, maximum: 40,tooShortMessage:"O valor informado é muito curto."});                                

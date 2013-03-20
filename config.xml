@@ -27,7 +27,7 @@
         <include id='css'></include>
         <include id='cssInc'></include>
         <include id='js'>util.form,util.dictionary</include>
-        <include id='jsInc'></include>
+        <include id='jsInc'>common.google_analytics</include>
         <include id='plugins'>jquery</include>
     </header>
     <email>        
