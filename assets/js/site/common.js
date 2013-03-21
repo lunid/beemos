@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    vldField('NEWSLETTER','CAD_NEWSLETTER','onBlur');
+    if (document.getElementById('NEWSLETTER') != null) {
+        vldField('NEWSLETTER','CAD_NEWSLETTER','onBlur');
+    }
     //Rollover de imagens:
     $("img.rollover").hover(function(){
         $(this).stop().animate({"opacity": ".5"}, "fast").attr('src', this.src.replace("_off","_on")).animate({"opacity": "1"}, "fast");
