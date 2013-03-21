@@ -11,14 +11,14 @@
             
                 if (isset($_SESSION['NEWSLETTER_OK'])) {
                     unset($_SESSION['NEWSLETTER_OK']);
-                    header('Location:/site/');
-                    die();
+                    //header('Location:/site/');
+                    //die();
                 }
                 
                 $email  = Request::post('NEWSLETTER','STRING');
                 $msgOut = 'Uma mensagem de confirmação foi enviada para seu e-mail.';
                                 
-                if (strlen($email) > 0) {
+                if (strlen($email) > 0 && 1==0) {
                     //Faz o cadastro do novo e-mail.
                     $objTb = new TB\Newsletter();
                     $objTb->EMAIL           = $email;
@@ -26,6 +26,10 @@
                     $idNewsletter           = (int)$objTb->save();
                     
                     //Envia mensagem com link de validação do e-mail
+                    $msgHtml = "
+                        
+                    ";
+                    
                     $objMail = Component::mail(); 
                     $objMail->addAddress($email);
                     $objMail->setCco('claudio@supervip.com.br');
