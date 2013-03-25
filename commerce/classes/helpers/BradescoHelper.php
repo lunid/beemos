@@ -47,8 +47,8 @@
             $this->orderId      = $orderId;//alfanumérico
 
             if ($this->ambiente == 'TEST') {
-                $cc             = '1234567';
-                $agencia        = '0001';
+                $cc             = '1234567';//TESTE: Valor não se altera independentemente do cliente
+                $agencia        = '0001';//TESTE: Valor não se altera independentemente do cliente
                 $loja           = $objCfg->LOJA_TEST;                
             }                        
             

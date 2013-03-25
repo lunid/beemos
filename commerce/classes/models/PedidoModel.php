@@ -82,7 +82,6 @@
         
         function saveNumeroTituloBoleto(){
             $tbUser     = new TB\EcommTitulo();       
-            $tbUser->
         }
         
         function getObjDados(){
