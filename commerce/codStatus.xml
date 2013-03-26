@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Guarda códigos de status com suas respectivas mensagens
+    intervalos de código:
+    1 a 10: Erros comuns
+    11 a 20: erros BRADESCO
+    21 a 30: erros Cielo
+-->
+
+<root>
+    <!-- ERROS COMUNS (1 A 10) -->
+    <status id='ERR_HASH'>
+        <codigo>1</codigo>
+        <msg>Usuário não localizado.</msg>
+    </status> 
+    <status id='PEDIDO_NOT_FOUND'>
+        <codigo>2</codigo>
+        <msg>Pedido não localizado.</msg>
+    </status>     
+    <!-- ERROS BRADESCO (11 A 20) -->
+    <status id='ERR_ORDER_ID'>
+        <codigo>11</codigo>
+        <msg>O parâmetro orderid não foi informado.</msg>
+    </status>        
+    <status id='ERR_URL_BOLETO'>
+        <codigo>12</codigo>
+        <msg>Não foi possível gerar a URL do boleto solicitado.</msg>
+    </status> 
+    <status id='ERR_OBJ_BRADESCO'>
+        <codigo>13</codigo>
+        <msg>Erro ao iniciar processamento Bradesco. Objeto obrigatório não iniciado corretamente.</msg>
+    </status>                       
+</root>

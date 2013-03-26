@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BEGIN_ORDER_DESCRIPTION> 
+<orderid>=({ORDER_ID})
+{ITENS_PEDIDO}
+{VALOR_ADICIONAL}
+<END_ORDER_DESCRIPTION> 
+<BEGIN_BOLETO_DESCRIPTION> 
+<CEDENTE>=({CEDENTE}) 
+<BANCO>=(237) 
+<NUMEROAGENCIA>=({NUMEROAGENCIA}) 
+<NUMEROCONTA>=({NUMEROCONTA}) 
+<ASSINATURA>=({ASSINATURA}) 
+<DATAEMISSAO>=({DATAEMISSAO}) <!-- dd/mm/aaaa -->
+<DATAPROCESSAMENTO>=({DATAPROCESSAMENTO}) <!-- Utilizar a mesma data informada em DATAEMISSAO -->
+<DATAVENCIMENTO>=({DATAVENCIMENTO}) <!-- dd/mm/aaaa --> 
+<NOMESACADO>=({NOMESACADO}) 
+<ENDERECOSACADO>=({ENDERECOSACADO}) 
+<CIDADESACADO>=({CIDADESACADO}) 
+<UFSACADO>=({UFSACADO}) 
+<CEPSACADO>=({CEPSACADO}) <!-- Utilizar apenas números. Não usar separadores --> 
+<CPFSACADO>=({CPFSACADO}) <!-- Utilizar apenas números. Não usar separadores --> 
+<NUMEROPEDIDO>=({NUMEROPEDIDO}) <!-- Valor numérico de até 9 dígitos. Deve ser único. -->  
+<VALORDOCUMENTOFORMATADO>=({VALORDOCUMENTOFORMATADO}) <!-- Valor formatado. Ex: R$30,50 --> 
+<SHOPPINGID>=({SHOPPING_ID}) 
+<NUMDOC>=({NUMDOC})  <!-- Opcional. Geralmente é o mesmo valor de NUMEROPEDIDO. Se informado, deve conter até 9 dígitos  --> 
+<CARTEIRA>=({CARTEIRA}) <!-- Opcional. O padrão é '25'. Alterar apenas se houver negociação com o banco  -->  
+<ANONOSSONUMERO>=({ANONOSSONUMERO}) <!-- Opcional. É necessário negociar a alteração desse campo com o banco. Valor default é 97 -->
+<CIP>=({CIP}) <!-- Opcional. Regra a ser usada para pagamento de boleto com cheque. Valor default é 865 -->
+
+<!-- 
+    Instruções :
+    Total de 12 linhas, sendo cada uma limitada a um total de 60 caracteres alfanuméricos. 
+    Pode conter caracteres especiais.
+    Se pelo menos uma instrução for informada, esta terá prioridade sobre as instruções 
+    cadastradas no painel do gerenciador do Bradesco.
+-->
+{INSTRUCAO}
