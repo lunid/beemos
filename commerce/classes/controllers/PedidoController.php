@@ -37,26 +37,33 @@ class Pedido extends IndexController {
      */
     function actionNovo(){       
         
-        $arrDadosSac    = array(
-            'NOME_SAC'=>"Claudio João da Costa Aguiar D'ávila",
-            'EMAIL_SAC'=>'claudio@supervip.com.br',
-            'ENDERECO_SAC'=>'Rua Maestro Cardim, 1218 - apto 71 - Bela vista',
-            'CIDADE_SAC'=>'São Paulo',
-            'UF_SAC'=>'sp',
-            'CPF_CNPJ_SAC'=>'04067415000133'
+        $arrDados    = array(
+            'NUM_PEDIDO'    => '12347',
+            'NOME_SAC'      => "Claudio João da Costa Aguiar D'ávila",
+            'EMAIL_SAC'     => 'claudio@supervip.com.br',
+            'ENDERECO_SAC'  => 'Rua Maestro Cardim, 1218 - apto 71 - Bela vista',
+            'CIDADE_SAC'    => 'São Paulo',
+            'UF_SAC'        => 'sp',
+            'CPF_CNPJ_SAC'  => '04067415000133',           
+            'VALOR_FRETE'   => 34.43
         );
         
-        $objPedido      = new commerce\Pedido($arrDadosSac);
+        $objPedido      = new commerce\Pedido($arrDados);   
+        $objPedido->getTotalPedido();
+        $objPedido->saveSacadoOn();
+        //$objPedido->debugOn();
         
         //Criação dos itens do pedido:
-        $objPlanoA      = new commerce\ItemPedido('Plano 400',297.5,3);
+        $objPlanoA      = new commerce\ItemPedido('Plano 400',297.5,3,'ASS','Natal 2013');
+        $objPlanoA->saveItemOn();
+        
         $objPlanoB      = new commerce\ItemPedido('Plano 800',396);
         $objPlanoC      = new commerce\ItemPedido('Plano 1800',412.543);
         
         //Incluir itens ao pedido atual:
-        $objPedido->addItem($objPlanoA);
-        $objPedido->addItem($objPlanoB);
-        $objPedido->addItem($objPlanoC);
+        $objPedido->addItemPedido($objPlanoA);
+        $objPedido->addItemPedido($objPlanoB);
+        $objPedido->addItemPedido($objPlanoC);
 
         $response = $objPedido->send();
         echo 'OK: '.$response;   

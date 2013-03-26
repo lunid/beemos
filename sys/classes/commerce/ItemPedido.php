@@ -8,7 +8,9 @@ class ItemPedido {
     private $quantidade = 1;    
     private $precoUnit  = 0;
     private $unidade    = 'CX';
-    private $precoUnitSemFormat; //Preço unitário sem formatação. Ex.: 123,40 ficará 12340, 2345 ficará 234500, 65,3 ficará 6530
+    private $campanha   = '';
+    private $saveItem   = FALSE;//TRUE = grava o registro atual no servidor remoto.
+    private $precoUnitSemFormat; //Preço unitário sem formatação. Ex.: 123,40 ficará 12340, 2345 ficará 234500, 65,3 ficará 6530    
     
     /**
      * Inicializa um objeto com descrição, preço unitário e quantidade.
@@ -18,13 +20,29 @@ class ItemPedido {
      * @param float $precoUnit
      * @param integer $qtde
      */
-    function __construct($descricao,$precoUnit=0,$qtde=1,$unidade='CX'){
+    function __construct($descricao,$precoUnit=0,$qtde=1,$unidade='CX',$campanha=''){
         $this->setDescricao($descricao);
         $this->quantidade = (int)$qtde;
         $this->setUnidade($unidade);
+        $this->setCampanha($campanha);
         if ($precoUnit > 0) {
             $this->precoUnitEn($precoUnit);
         }
+    }
+    
+    /**
+     * Salva o produto atual no servidor remoto.
+     * Este recurso pode ser útil caso queira gerar um novo pedido que inclui o produto atual
+     * a partir do painel de controle.
+     * 
+     * @return void
+     */
+    public function saveItemOn(){
+        $this->saveItem = true;
+    }    
+    
+    public function getSaveItem(){
+        return $this->saveItem;
     }
     
     function setUnidade($unidade){
@@ -37,6 +55,22 @@ class ItemPedido {
     
     function getUnidade(){
         return $this->unidade;
+    }
+
+    /**
+     * Informa o nome da campanha relacionada à compra do produto/serviço atual (opcional).     
+     * 
+     * @param string $campanha String alfanumérica de até 20 caracteres.
+     * @return void
+     */
+    function setCampanha($campanha){
+        if (strlen($campanha) > 0) {
+             $this->campanha = $campanha;                
+        }
+    }
+    
+    function getCampanha() {
+        return $this->campanha;
     }
     
     /**
