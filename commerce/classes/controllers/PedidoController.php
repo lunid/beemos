@@ -3,8 +3,10 @@
 use \commerce\classes\models\PedidoModel;
 use \sys\classes\util\Request;   
 use \sys\classes\mvc as mvc; 
+use \sys\classes\util as util;
 use \sys\classes\commerce as commerce;
 use \commerce\classes\controllers\IndexController;
+use \auth\classes\models\AuthModel;
 
 class Pedido extends IndexController {
    
@@ -71,9 +73,35 @@ class Pedido extends IndexController {
     }
     
     function actionRequest(){
-        $uid            = Request::post('uid', 'STRING'); 
+        $msgErr         = '';
+        $hashAssinatura = Request::post('uid', 'STRING'); 
         $xmlNovoPedido  = Request::post('xmlNovoPedido', 'STRING');
-        echo 'RECEBIDO: '.$uid.' XML: '.$xmlNovoPedido;
+        if (strlen($hashAssinatura) == 40) {
+            //Localiza o registro no DB
+            $objAuthModel   = new AuthModel();
+            $objAuth        = $objAuthModel->loadHashAssinatura($hashAssinatura);
+            if ($objAuth !== FALSE) {
+                $bloqEm = $objAuth->BLOQ_EM;                
+                if (util\Date::isValidDateTime($bloqEm)) {
+                    //O usuário está bloqueado.
+                    $msgErr = "A assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.";
+                } else {
+                    //Assinatura ativa
+                    if (strlen($xmlNovoPedido) > 0) {
+                        //Faz a validação do XML recebido.
+                        
+                    } else {
+                        $msgErr = "O parâmetro obrigatório xmlNovoPedido não foi informado.";
+                    }
+                }
+            } else {
+                $msgErr = "Usuário não localizado.";
+            }
+        } else {
+            $msgErr = "O parâmetro uid ({$hash}) parece estar incorreto.";
+        }
+        
+        if (strlen($msgErr) > 0) die($msgErr);        
     }
     
     function actionLoad(){

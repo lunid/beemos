@@ -573,13 +573,12 @@ abstract class ORM {
      * @param mixed[] $row Obrigatório.
      * @return Object | FALSE Retorna um objeto da classe atual, ou FALSE caso o parâmetro não seja um array.
      */        
-    private function getObj($row){                   
-        $class = get_class($this);//Guarda o nome qualificado da classe atual (incluindo namespace)         
-        if (is_array($row) && strlen($class) > 0){ 
-            //if (count($row) != count($row, COUNT_RECURSIVE)) {
+    function getObj($row){                              
+        if (is_array($row)){ 
+            if (count($row) != count($row, COUNT_RECURSIVE)) {
                 //Array multidimensional. Converte para unidimensional
-                //$row = $row[0];                
-            //}
+                $row = $row[0];                
+            }
             
             $objDados = new \stdClass();
             foreach($row as $key=>$value) {

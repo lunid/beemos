@@ -11,17 +11,19 @@
     class AuthModel extends Model {                
         
         /**
-         * Carrega um usuário através da HASH cadastrada no Banco
+         * Carrega um usuário através da HASH cadastrada no DB
          * 
          * @param string $hash
          * @return boolean|stdClass
          */
-        function carregarUsuarioHash($hash){
-            $tbUser = new TB\VwUser();
-            $tbUser->setLimit(1);
-            $rs = $tbUser->findAll("HASH = '{$hash}'");
-            $objUsuario = $this->getObjUsuario($rs);       
-            return $objUsuario;
+        function loadHashAssinatura($hash){
+            $objDados   = FALSE;
+            $tbUser     = new TB\VwUsuario();
+            $result     = $tbUser->select('*')->where("HASH_ASSINATURA='{$hash}'")->execute();
+            if (count($result) == 1) {
+                $objDados = $tbUser->getObj($result);
+            }
+            return $objDados;
         }
         
         /**

@@ -372,7 +372,7 @@ class Pedido {
         $xmlNovoPedido  = $this->getXml(); 
         if ($this->debug) die($xmlNovoPedido);//O debug foi acionado: interrompe o envio e imprime o XML a ser enviado.
         
-        $uid            = 'b98af3c46666cb58b73677859074e116';
+        $uid            = 'c3130175fa9617f59f51841f38c06e029482918a';
         $request	= "xmlNovoPedido=".$xmlNovoPedido."&uid=".$uid;
         $objCurl 	= new Curl($this->_urlSend);
         
