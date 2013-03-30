@@ -89,7 +89,7 @@ class Pedido extends IndexController {
                     //Assinatura ativa
                     if (strlen($xmlNovoPedido) > 0) {
                         //Faz a validação do XML recebido.
-                        
+                        echo $xmlNovoPedido;
                     } else {
                         $msgErr = "O parâmetro obrigatório xmlNovoPedido não foi informado.";
                     }
