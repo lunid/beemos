@@ -1,0 +1,25 @@
+DELIMITER $$
+
+DROP TRIGGER /*!50032 IF EXISTS */ `insert_assinatura`$$
+
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `insert_assinatura` AFTER INSERT ON `SVIP_ASSINATURA` 
+    FOR EACH ROW BEGIN
+        INSERT INTO 
+                SVIP_ASSINATURA_CONFIG
+                (
+                        ID_ASSINATURA,
+                        AMBIENTE,				
+                        DATA_REGISTRO
+                )
+        VALUES
+                (
+                        NEW.ID_ASSINATURA,
+                        'TEST',
+                        NOW()
+                );			
+END;
+$$
+
+DELIMITER ;

@@ -2,6 +2,7 @@
 
 namespace commerce\classes\helpers;
 use \sys\classes\util\Xml;
+use \commerce\classes\models\NumPedidoModel;
 
 class XmlRequestHelper extends Xml {
     
@@ -11,10 +12,19 @@ class XmlRequestHelper extends Xml {
     private $arrMsgErr          = array();
     private $stringXmlRequest   = '';
     private $numPedido          = 0;
-    
+    private $objDadosPedido     = NULL;//Objeto stdClass();
+    private $arrObjItensPedido  = NULL;//Array de objetos;
             
     function __construct($stringXmlRequest){
         $this->stringXmlRequest = $stringXmlRequest;
+    }
+    
+    function getObjDadosPedido(){
+        return $this->objDadosPedido;
+    }
+    
+    function getArrObjItensPedido(){
+        return $this->arrObjItensPedido;
     }
     
     function addParam($name,$value){
@@ -48,9 +58,17 @@ class XmlRequestHelper extends Xml {
         return $listParamsNotInfo;
     }   
     
+    /**
+     * Verifica se todos os nós recebidos na string XML são válidos.
+     * Faz a validação dos dados do pedido e também do(s) item(ns) do pedido.
+     *      
+     * @return boolean
+     * @throws \Exception Caso algum erro de validação seja encontrado.
+     */
     function vldXmlNovoPedido(){
         $stringXmlRequest   = $this->stringXmlRequest;
         $msgErr             = array();
+        $out                = FALSE;
         
         if (strlen($stringXmlRequest) > 0) {                  
             $objXml = simplexml_load_string($stringXmlRequest);  
@@ -58,8 +76,19 @@ class XmlRequestHelper extends Xml {
                 $nodePedido = $objXml->PEDIDO->PARAM;
                 $nodeItens  = $objXml->PEDIDO->ITEM;//Pode ter um ou mais itens   
                 
-                $msgErr     = $this->vldPedidoNode($nodePedido,$msgErr);
-                $msgErr     = $this->vldItemNode($nodeItens,$msgErr);
+                $msgErr             = $this->vldPedidoNode($nodePedido,$msgErr);
+                $msgErr             = $this->vldItemNode($nodeItens,$msgErr);
+                
+                $objDadosPedido     = $this->objDadosPedido;
+                $arrObjItensPedido  = $this->arrObjItensPedido;
+                
+                if (is_object($objDadosPedido) && count($arrObjItensPedido) >= 1) {
+                    //Todos os dados foram validados com sucesso.
+                    //Guarda os valores no DB.
+                    
+                    $out = TRUE;
+                }
+                
             } else {                
                 $msgErr[] = 'Impossível ler o arquivo '.$pathXml;                                            
             }            
@@ -69,6 +98,7 @@ class XmlRequestHelper extends Xml {
             $stringErr = join('; ',$msgErr);
             throw new \Exception($stringErr);
         }
+        return $out;
     }
     
     /**
@@ -93,66 +123,71 @@ class XmlRequestHelper extends Xml {
             'SAVE_SAC:integer:0'
         );        
         
-        if (!is_null($node)) {                    
-            foreach($arrParams as $item) {
+        if (!is_null($node)) {  
+            $objDadosPedido = new \stdClass();
+            foreach($arrParams as $item) {                
                 list($param,$type,$required) = explode(':',$item);
-                $value = self::valueForAttrib($node,'id',$param);
-                if ($type == 'integer') {
-                    $value = (int)$value;
-                    if ($param == 'NUM_PEDIDO' && $value == 0) {
-                        //Um valor de NUM_PEDIDO não foi informado, localiza o próximo NUM_PEDIDO no DB.                                
-                        $this->getProxNumPedido();
-                    } elseif ($required == 1 && $value <= 0) {
-                        $msgErr[] = "O PARAM{{$param}} obrigatório não foi informado ou é menor igual a zero";
+                $err    = '';
+                $value  = self::valueForAttrib($node,'id',$param);
+                if ($type == 'integer') {                    
+                    if ($param == 'NUM_PEDIDO' && strlen($value) > 0 && (int)$value == 0) {
+                        //Valida o valor informado ou então localiza o próximo NUM_PEDIDO no DB.                                
+                        $err = "O PARAM{{$param}} = {$value} informado não é válido. Informe um valor numérico para {$param}.";
+                    } elseif ($required == 1 && (int)$value <= 0) {
+                        $err = "O PARAM{{$param}} obrigatório não foi informado ou é menor igual a zero";
                     }
+                    $value = (int)$value;                    
                 } elseif ($type == 'float') {
                     $value = (float)$value;                                                    
-                    if ($required == 1 && $value <= 0) $msgErr[] = "O PARAM{{$param}}= {$value} obrigatório não foi informado ou é menor igual a zero";
+                    if ($required == 1 && $value <= 0) $err = "O PARAM{{$param}}= {$value} obrigatório não foi informado ou é menor igual a zero";
                 } elseif ($type == 'email') {
                     //Validação de e-mail:     
                     if (strlen($value) > 0) {
                         if(!filter_var($value, FILTER_VALIDATE_EMAIL)){ 
-                            $msgErr[] = "O PARAM{{$param}} = '{$value}' não parece ser um e-mail válido";
+                            $err = "O PARAM{{$param}} = '{$value}' não parece ser um e-mail válido";
                         }
                     } elseif ($required == 1) {
-                        $msgErr[] = "O PARAM{{$param}} é obrigatório e não foi informado";
+                        $err = "O PARAM{{$param}} é obrigatório e não foi informado";
                     }
                 } 
+                if (strlen($err) > 0) {
+                    //Há um erro de validação.
+                    $msgErr[] = $err;
+                } else {
+                    //Valor validado com sucesso.
+                    $objDadosPedido->$param = ($type == 'email' || $type == 'string')?(string)$value:$value;
+                }
             }
         } 
+        if (count($msgErr) == 0) $this->objDadosPedido = $objDadosPedido;//Não houve erros. Guarda o objeto de dados do pedido.
         return $msgErr;
-    }
-    
-    /**
-     * Localiza o próximo NUM_PEDIDO do usuário atual.
-     * 
-     * @return integer
-     */
-    private function getProxNumPedido(){
-        
-    }
+    }        
     
     private function vldItemNode($nodeItens,$msgErr=array()){
         //Formato de cada índice de arrParams:
         //PARAM:tipoValor:obrigatorio
         $arrParams = array(
+            'CATEGORIA:string:0',
             'DESCRICAO:string:1',
             'QUANTIDADE:string:0',
             'PRECO_UNIT:float:0',
             'CAMPANHA:string:0',
             'SUBTOTAL:float:0',            
-            'SAVE_ITEM:integer:0'
+            'SAVE:integer:0'
         );         
 
+        $arrObjItens = array();
+        
         if (is_object($nodeItens)) {
-            $i          = 1;              
+            $i = 1;              
             foreach($nodeItens as $nodeItem) {
                 //Um ou mais nós ITEM:
                 $node           = $nodeItem->PARAM;
                 $subtotal       = 0;
                 $quantidade     = 1;
                 $precoUnit      = 0;
-
+                $objItem        = new \stdClass();
+                
                 foreach($arrParams as $item) {
                     //Atributos PARAM do nó atual
                     list($param,$type,$required) = explode(':',$item);
@@ -174,18 +209,28 @@ class XmlRequestHelper extends Xml {
                             //O preço unitário foi informado.
                             $precoUnit = $value;
                         }
-                    }                    
+                    } else {
+                        $value = (string)$value;
+                    }
+                                        
+                    $objItem->$param = $value;
+                }
+                                    
+                //Calcula o subtotal do item atual, caso não tenha sido informado.
+                if ($subtotal == 0) {                        
+                    $subtotal           = $quantidade*$precoUnit;
+                    $objItem->SUBOTOTAL = $subtotal;
                 }
                 
-                if ($subtotal == 0) {
-                    //O valor de subtotal deve ser calculado:
-                    $subtotal = $quantidade*$precoUnit;
-                }
+                $arrObjItens[] = $objItem;
+                
                 $i++;
             }
         } else {
             $msgErr[] = "Pedido sem itens. Pelo menos um item deve ser informado.";
         }
+        
+        if (count($msgErr) == 0) $this->arrObjItensPedido = $arrObjItens;
         return $msgErr;
     }
 }

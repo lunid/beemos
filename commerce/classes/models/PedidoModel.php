@@ -26,9 +26,15 @@
             return $out;
         }
         
+        /**
+         * Retorna os dados do pedido solicitado.
+         * 
+         * @param integer $numPedido
+         * @return \stdClass
+         */
         function dadosPedido($numPedido){
             $objDados = NULL;
-            if ((int)$numPedido) {
+            if ((int)$numPedido > 0) {
                 $tbEcommPedido = new TB\EcommPedido();     
                 $fields        = 'ID_CLIENTE,NOME_CLIENTE,FORMA_PGTO,ID_MEIO_PGTO,PARCELAS,VALOR_TOTAL,VALOR_PARCELA,ID_STATUS_LOJA,CUPOM,';
                 $fields        .= 'MSG_BANCO,VISA_TID,AMEX_NUM_CAPTURA,COD_BANCO,COD_AUTH,COD_RET,EMAIL_ENV_CLI,DATA_VENC_BOLETO,DATA_REGISTRO'; 
@@ -37,8 +43,9 @@
                 ->execute();
             }
             if (count($row) > 0) {
-                $objDados = new \stdClass();
-                foreach($row[0] as $key=>$value) {
+                $objDados   = new \stdClass();
+                $result     = $row[0];
+                foreach($result as $key=>$value) {
                     $objDados->$key = $value;
                 }
                 $this->arrDadosPedido = $row[0];

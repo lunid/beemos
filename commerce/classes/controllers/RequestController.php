@@ -3,6 +3,7 @@
 use \sys\classes\util as util;
 use \commerce\classes\controllers\IndexController;
 use \commerce\classes\helpers\XmlRequestHelper;
+use \commerce\classes\models\PedidoModel;
 use \auth\classes\models\AuthModel;
 
 class Request extends IndexController {
@@ -22,13 +23,19 @@ class Request extends IndexController {
                     //O usuário está bloqueado.
                     $msgErr = "A assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.";
                 } else {
-                    //Assinatura ativa
+                    //A assinatura está ativa
                     if (strlen($xmlNovoPedido) > 0) {
                         //Faz a validação do XML recebido.
                         try {
                             $objXmlRequest = new XmlRequestHelper($xmlNovoPedido);                            
-                            $objXmlRequest->vldXmlNovoPedido();
-                            
+                            if ($objXmlRequest->vldXmlNovoPedido() === TRUE){
+                                //Validação Ok. Todos os dados informados estão corretos. 
+                                //Grava no DB
+                                $objDadosPedido     = $objXmlRequest->getObjDadosPedido();
+                                $arrObjItensPedido  = $objXmlRequest->getArrObjItensPedido();
+                                print_r($objDadosPedido);
+                                print_r($arrObjItensPedido);
+                            }
                        } catch(Exception $e) {
                            $msgErr = $e->getMessage();
                        }
@@ -40,7 +47,7 @@ class Request extends IndexController {
                 $msgErr = "Usuário não localizado.";
             }
         } else {
-            $msgErr = "O parâmetro uid ({$hash}) parece estar incorreto.";
+            $msgErr = "O parâmetro uid ({$hashAssinatura}) parece estar incorreto.";
         }
         
         if (strlen($msgErr) > 0) die($msgErr);        
