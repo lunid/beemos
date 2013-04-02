@@ -4,10 +4,12 @@ use \sys\classes\util as util;
 use \commerce\classes\controllers\IndexController;
 use \commerce\classes\helpers\XmlRequestHelper;
 use \commerce\classes\models\PedidoModel;
+use \commerce\classes\models\NumPedidoModel;
 use \auth\classes\models\AuthModel;
 
 class Request extends IndexController {
-   
+    
+    private $objAuth;
   
     function actionIndex(){
         $msgErr         = '';
@@ -18,7 +20,8 @@ class Request extends IndexController {
             $objAuthModel   = new AuthModel();
             $objAuth        = $objAuthModel->loadHashAssinatura($hashAssinatura);
             if ($objAuth !== FALSE) {
-                $bloqEm = $objAuth->BLOQ_EM;                
+                $this->objAuth  = $objAuth;
+                $bloqEm         = $objAuth->BLOQ_EM;                 
                 if (util\Date::isValidDateTime($bloqEm)) {
                     //O usuário está bloqueado.
                     $msgErr = "A assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.";
@@ -33,6 +36,12 @@ class Request extends IndexController {
                                 //Grava no DB
                                 $objDadosPedido     = $objXmlRequest->getObjDadosPedido();
                                 $arrObjItensPedido  = $objXmlRequest->getArrObjItensPedido();
+                                
+                                $numPedido = $objDadosPedido->NUM_PEDIDO;
+                                if ($numPedido == 0) {
+                                    //Gera um NUM_PEDIDO automático
+                                    $numPedido = $this->getProxNumPedido();
+                                }
                                 print_r($objDadosPedido);
                                 print_r($arrObjItensPedido);
                             }
@@ -52,6 +61,33 @@ class Request extends IndexController {
         
         if (strlen($msgErr) > 0) die($msgErr);        
     }    
+    
+    /**
+     * Localiza o próximo NUM_PEDIDO disponível.
+     * Caso seja o primeiro pedido o NUM_PEDIDO inicial será usado.
+     * 
+     * @return integer
+     */
+    function getProxNumPedido(){
+        $objAuth        = $this->objAuth;
+        $idAssinatura   = (isset($objAuth->ID_ASSINATURA))?$objAuth->ID_ASSINATURA:0;
+        
+        if ($idAssinatura > 0) { 
+            $ambiente           = $objAuth->AMBIENTE;//TEST ou PROD
+            $objNumPedidoModel  = new NumPedidoModel();
+            $numPedidoIni       = $objAuth->NUM_PEDIDO_INI;
+            
+            if ($ambiente == 'PROD') {
+                $proxNumPedido = $objNumPedidoModel->getProxNumPedido($idAssinatura);
+            } else {
+                $proxNumPedido = $objNumPedidoModel->getProxNumPedidoTest($idAssinatura);
+            }
+            
+        } else {
+            $msgErr = "O objeto de autenticação para a assinatura atual não é válido. Entre em contato com o suporte.";
+            throw new \Exception($msgErr);
+        }            
+    }
 }
 
 ?>

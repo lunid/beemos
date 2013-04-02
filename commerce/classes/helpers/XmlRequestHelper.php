@@ -84,8 +84,6 @@ class XmlRequestHelper extends Xml {
                 
                 if (is_object($objDadosPedido) && count($arrObjItensPedido) >= 1) {
                     //Todos os dados foram validados com sucesso.
-                    //Guarda os valores no DB.
-                    
                     $out = TRUE;
                 }
                 
