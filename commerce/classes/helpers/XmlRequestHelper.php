@@ -61,7 +61,11 @@ class XmlRequestHelper extends Xml {
     /**
      * Verifica se todos os nós recebidos na string XML são válidos.
      * Faz a validação dos dados do pedido e também do(s) item(ns) do pedido.
-     *      
+     * Se o XML for validado com sucesso, gera o valor de duas propriedades, como segue:
+     * 
+     *  - $objDadosPedido, guarda dados do pedido atual em propriedades de mesmo nome.
+     *  - $arrObjItensPedido, array onde cada índice contém um objeto referente a um item do pedido
+     * 
      * @return boolean
      * @throws \Exception Caso algum erro de validação seja encontrado.
      */
@@ -166,6 +170,8 @@ class XmlRequestHelper extends Xml {
         //PARAM:tipoValor:obrigatorio
         $arrParams = array(
             'CATEGORIA:string:0',
+            'CODIGO:string:1',
+            'UNIDADE:string:1',
             'DESCRICAO:string:1',
             'QUANTIDADE:string:0',
             'PRECO_UNIT:float:0',

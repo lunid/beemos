@@ -11,6 +11,13 @@
         private $arrDadosPedido = NULL;
         private $arrItensPedido;
         private $arrDadosSacado;
+        private $idAssinatura;
+        private $ambiente;//PROD ou TEST        
+               
+        function setAssinaturaEAmbiente($idAssinatura,$ambiente){            
+            $this->idAssinatura = (int)$idAssinatura;
+            $this->ambiente     = $ambiente;
+        }
         
         public function loadPedido($numPedido){
             $out = FALSE;
@@ -27,84 +34,88 @@
         }
         
         /**
-         * Retorna os dados do pedido solicitado.
+         * Salva um novo registro de pedido.
+         * 
+         * @param stdClass $objDadosPedido
+         * @return integer
+         */
+        function savePedido($objDadosPedido) {
+            $idNumPedido    = 0;
+            $idAssinatura   = $this->idAssinatura;
+            
+            if ($idAssinatura > 0) {
+                $tbNumPedido = $this->getTbNumPedido();
+                $arrVars     = get_object_vars($objDadosPedido);
+                
+                foreach($arrVars as $key=>$value){
+                    if ($key == 'SAVE_SAC') continue;
+                    //echo "$key = $value<br>";
+                    $tbNumPedido->$key = $value;                
+                }
+                
+                $tbNumPedido->ID_ASSINATURA = $idAssinatura;
+                $tbNumPedido->DATA_REGISTRO = date('Y-m-d H:i:s');                
+                $idNumPedido = $tbNumPedido->save();
+            } else {
+                $msgErr = "Impossível salvar o pedido solicitado. O identificador da assinatura não é válido. Por favor, entre em contato com o suporte.";
+                throw new \Exception($msgErr);                
+            }
+            return $idNumPedido;
+        }
+        
+        /**
+         * Exclui os itens do pedido informado.
          * 
          * @param integer $numPedido
-         * @return \stdClass
+         * @return integer Retorna o total de itens excluídos.
          */
-        function dadosPedido($numPedido){
-            $objDados = NULL;
-            if ((int)$numPedido > 0) {
-                $tbEcommPedido = new TB\EcommPedido();     
-                $fields        = 'ID_CLIENTE,NOME_CLIENTE,FORMA_PGTO,ID_MEIO_PGTO,PARCELAS,VALOR_TOTAL,VALOR_PARCELA,ID_STATUS_LOJA,CUPOM,';
-                $fields        .= 'MSG_BANCO,VISA_TID,AMEX_NUM_CAPTURA,COD_BANCO,COD_AUTH,COD_RET,EMAIL_ENV_CLI,DATA_VENC_BOLETO,DATA_REGISTRO'; 
-                $row = $tbEcommPedido->select($fields)
-                ->where("NUM_PEDIDO = {$numPedido}")
-                ->execute();
+        function delItens($numPedido){
+            $numDel         = 0;
+            $idAssinatura   = (int)$this->idAssinatura;
+            
+            if ($numPedido > 0 && $idAssinatura > 0) {
+                $tbItemPedido   = $this->getTbItemPedido();
+                $arrWhere       = array("NUM_PEDIDO=%i AND ID_ASSINATURA=%i",$numPedido,$idAssinatura);
+                $numDel         = $tbItemPedido->delete($arrWhere);
             }
-            if (count($row) > 0) {
-                $objDados   = new \stdClass();
-                $result     = $row[0];
-                foreach($result as $key=>$value) {
-                    $objDados->$key = $value;
-                }
-                $this->arrDadosPedido = $row[0];
-            }
-            return $objDados;
+            return $numDel;
         }
         
-        function itensPedido($numPedido) {
-            $row = array();
-            if ((int)$numPedido) {
-                $tbEcommItemPedido  = new TB\EcommPedido();     
-                $fields = "DESCR_PRODUTO,1 AS QUANTIDADE, 'CDTS' AS UNIDADE, VALOR_TOTAL AS VALOR, CREDITOS,VALIDADE_CREDITOS";
-                $row    = $tbEcommItemPedido->select($fields)
-                ->where("NUM_PEDIDO = {$numPedido}")
-                ->execute();
-            }
-            return $row;            
-        }   
-        
-        function dadosSacado($idUser){
-            $row = array();
-            if ((int)$idUser) {
-                $fields     = "ID_USER,PF_PJ,CPF_CNPJ,COD_POSTAL,LOGRADOURO,NUMERO,COMPLEMENTO,BAIRRO,CIDADE,UF,NOME,EMAIL";
-                $tbUser     = new TB\VwUserCadastro();                    
-                $row        = $tbUser->select($fields)
-                ->where("ID_USER = {$idUser}")
-                ->execute();
+        function saveItemPedido($idPedido,$numPedido,$objItemPedido){
+            $idItemPedido = 0;
+            if ($idPedido > 0 && (int)$numPedido > 0 && is_object($objItemPedido)) {
+                $tbItemPedido   = $this->getTbItemPedido();
+                $arrVars        = get_object_vars($objItemPedido);
                 
-                if (count($row) == 0) {
-                    //Verifica na tabela de Clientes
-                    $fields     = "ID_CLIENTE AS ID_USER,PF_PJ,CPF_CNPJ,COD_POSTAL,LOGRADOURO,NUMERO,COMPLEMENTO,BAIRRO,CIDADE,UF,NOME_PRINCIPAL AS NOME,EMAIL";
-                    $tbCliente  = new TB\Cliente();                        
-                    $row        = $tbCliente->select($fields)
-                    ->where("ID_CLIENTE = {$idUser}")
-                    ->execute();                                        
+                foreach($arrVars as $key=>$value){
+                    if ($key == 'SAVE') continue;
+                    //echo "$key = $value<br>";
+                    $tbItemPedido->$key = $value;                
                 }
-                if (count($row) > 0) $row = $row[0];
+                
+                $tbItemPedido->ID_ASSINATURA    = $this->idAssinatura;
+                $tbItemPedido->ID_ECOMM_PEDIDO  = $idPedido;
+                $tbItemPedido->NUM_PEDIDO       = $numPedido;
+                $tbItemPedido->DATA_REGISTRO    = date('Y-m-d H:i:s');  
+                
+                $idItemPedido = $tbItemPedido->save();                
+            } else {
+                $msgErr = "Impossível salvar o item solicitado para o pedido atual. Um ou mais parâmetros obrigatórios não foram informados.";
+                throw new \Exception($msgErr);                   
             }
-            return $row;               
+            return $idItemPedido;
         }
         
-        function saveNumeroTituloBoleto(){
-            $tbUser     = new TB\EcommTitulo();       
+        private function getTbNumPedido(){           
+            $tbNumPedido = new TB\EcommPedido();
+            if ($this->ambiente == 'TEST') $tbNumPedido = new TB\TestEcommPedido();
+            return $tbNumPedido;
         }
-        
-        function getObjDados(){
-            return $this->objDadosPedido;
-        }
-        
-        function getArrDados(){
-            return $this->arrDadosPedido;
-        }
-        
-        function getItens(){
-            return $this->arrItensPedido;
-        }
-
-        function getDadosSacado(){
-            return $this->arrDadosSacado;
+             
+        private function getTbItemPedido(){           
+            $tbNumPedido = new TB\EcommItemPedido();
+            if ($this->ambiente == 'TEST') $tbNumPedido = new TB\TestEcommItemPedido();
+            return $tbNumPedido;
         }        
     }
 
