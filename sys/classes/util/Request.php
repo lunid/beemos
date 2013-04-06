@@ -50,6 +50,7 @@
                             $value = trim((string)$value);                                                        
                             break;
                         case 'NUMBER':
+                        case 'INTEGER':
                             //Verifica se $value é numérica (pode ser float ou integer)
                             $value = trim((int)$value);                                
                             break;

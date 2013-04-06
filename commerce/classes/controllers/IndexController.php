@@ -166,6 +166,15 @@
             }
             
             return $objPedido;
-        }                
+        }   
+        
+        private function getObjXmlResponseHelper(){
+            $objXmlResponseHelper = $this->objXmlResponseHelper;
+            if ($objXmlResponseHelper == NULL) {
+                $objXmlResponseHelper = new XmlResponseHelper();
+                if (is_object(objXmlResponseHelper)) $this->objXmlResponseHelper = objXmlResponseHelper;
+            }
+            return objXmlResponseHelper;
+        }        
     }
 ?>

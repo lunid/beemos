@@ -3,6 +3,7 @@
 use \sys\classes\util as util;
 use \commerce\classes\controllers\IndexController;
 use \commerce\classes\helpers\XmlRequestHelper;
+use \commerce\classes\helpers\ErrorMessageHelper;
 use \commerce\classes\models\PedidoModel;
 use \commerce\classes\models\NumPedidoModel;
 use \auth\classes\models\AuthModel;
@@ -10,88 +11,139 @@ use \auth\classes\models\AuthModel;
 class Request extends IndexController {
     
     private $objAuth;
-    private $objPedidoModel     = NULL;
-    private $objNumPedidoModel  = NULL;
+    private $objPedidoModel         = NULL;
+    private $objNumPedidoModel      = NULL;
+    private $objXmlResponseHelper   = NULL;
+
     
+    /**
+     * Recebe a requisição do cliente e valida os parâmetros obrigatórios 'action' e 'uid'.
+     * A partir de 'uid' verifica se a assinatura está ativa.
+     * Se nenhum erro for encontrado executa o método informado em 'action' e imprime a resposta no formato XML.
+     * 
+     * @return void
+     */
     function actionIndex(){
         $msgErr         = '';
-        $hashAssinatura = util\Request::post('uid', 'STRING'); 
-        $xmlNovoPedido  = util\Request::post('xmlNovoPedido', 'STRING');
-        if (strlen($hashAssinatura) == 40) {
-            //Localiza o registro no DB
-            $objAuthModel   = new AuthModel();
-            $objAuth        = $objAuthModel->loadHashAssinatura($hashAssinatura);
-            if ($objAuth !== FALSE) {
-                $this->objAuth      = $objAuth;
-                $objNumPedidoModel  = $this->getObjNumPedidoModel();//Deve ser chamado após definir $objAuth;      
-                $bloqEm             = $objAuth->BLOQ_EM;                 
-                
-                if (util\Date::isValidDateTime($bloqEm)) {
-                    //O usuário está bloqueado.
-                    $msgErr = "[COD/ERR: REQ-3] A assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.";
-                } elseif (is_object($objNumPedidoModel)) {
-                    //A assinatura está ativa   
-          
-                    if (strlen($xmlNovoPedido) > 0) {
-                        //Faz a validação do XML recebido.
-                        try {
-                            $objXmlRequest = new XmlRequestHelper($xmlNovoPedido);                            
-                            if ($objXmlRequest->vldXmlNovoPedido() === TRUE){
-                                //Validação Ok. Todos os dados informados estão corretos. 
-                                //Grava no DB
-                                $objDadosPedido     = $objXmlRequest->getObjDadosPedido();
-                                $arrObjItensPedido  = $objXmlRequest->getArrObjItensPedido();
-                                
-                                $numPedido = (int)$objDadosPedido->NUM_PEDIDO;
-                                
-                                if ($numPedido == 0) {
-                                    //Gera um NUM_PEDIDO automático
-                                    $numPedido = $this->getProxNumPedido();
-                                }
-                                
-                    
-                                if ($numPedido !== FALSE) {
-                                    //Tudo ok. Grava o novo pedido.
-                                    $objNumPedidoModel->saveNumPedido($numPedido);
-                                    
-                                    $objDadosPedido->NUM_PEDIDO = $numPedido;
+        $response       = '';
+        $msgErr         = '';
+        $action         = util\Request::post('action', 'STRING');
+        $hashAssinatura = util\Request::post('uid', 'STRING');                      
 
-                                    //Salva os dados do novo pedido
-                                    $commit = $this->saveNovoPedido($objDadosPedido,$arrObjItensPedido);                                        
-                                    if ($commit) {
-                                        //Pedido cadastrado com sucesso.
-
-                                    } else {
-                                        $msgErr = "[COD/ERR: REQ-6] Não foi possível concluir o cadastro do novo pedido. Por favor, entre em contato com o suporte.";
-                                    }
-                                } else {
-                                    $msgErr = "[COD/ERR: REQ-5] Impossível identificar um número de pedido válido. Entre em contato com o suporte.";
-                                }                                                                
-                            }
-                       } catch(Exception $e) {
-                           $msgErr = $e->getMessage();
-                       }
-                    } else {
-                        $msgErr = "[COD/ERR: REQ-7] Um objeto obrigatório necessário para o processo solicitado não foi gerado com sucesso.";
+        //Faz a validação da action informada:
+        $method = 'action'.ucfirst($action);
+        if (strlen($action) > 0 && method_exists($this,$method)){
+            //O método informado existe na classe atual
+            if (strlen($hashAssinatura) == 40) {
+                $objAuthModel   = new AuthModel();
+                $objAuth        = $objAuthModel->loadHashAssinatura($hashAssinatura);
+                if ($objAuth !== FALSE) {
+                    $bloqEm = $objAuth->BLOQ_EM;                                 
+                    if (util\Date::isValidDateTime($bloqEm)) {
+                        //O usuário está bloqueado.
+                        ErrorMessageHelper::index('USER_BLOQ');                                         
+                    } else {                        
+                        $this->objAuth  = $objAuth;
+                        $response       = $this->$method();
                     }
                 } else {
-                    $msgErr = "[COD/ERR: REQ-4] O parâmetro obrigatório xmlNovoPedido não foi informado.";
+                    ErrorMessageHelper::index('USER_NOT_EXISTS');                       
                 }
             } else {
-                $msgErr = "[COD/ERR: REQ-2] Usuário não localizado.";
+                $arrReplace['HASH_ASSINATURA'] = $hashAssinatura;
+                ErrorMessageHelper::index('ERR_HASH_ASS',$arrReplace);                
+            }           
+            
+        } elseif (strlen($action) > 0) {
+            //A action informada não existe.
+            $arrReplace['ACTION_NAME'] = $action;
+            ErrorMessageHelper::index('ERR_ACTION_NOT_EXISTS',$arrReplace);   
+        } else {  
+            //o parâmetro $action é obrigatório e não foi informado.
+            ErrorMessageHelper::index('ERR_ACTION_NOT_INFO',$arrReplace);             
+        }
+        echo $response;
+    }        
+    
+    /**
+     * Localiza os dados do pedido informado.
+     * 
+     * @return FALSE | XML Retorna FALSE caso o pedido não seja localizado, ou então, o XML com dados do pedido.
+     */
+    private function actionGetDadosPedido(){
+        $msgErr     = '';
+        $response   = '';
+        $numPedido  = (int)util\Request::post('xmlNovoPedido', 'NUMBER');  
+        if ($numPedido > 0) {
+            
+        } else {
+            $msgErr = "[COD/ERR: REQ-1] O parâmetro numPedido não foi informado ou não é um valor válido.";
+        }
+        if (strlen($msgErr) > 0) die($msgErr); 
+        return $response;        
+    }
+    
+    private function actionSavePedido(){  
+        $msgErr         = '';
+        $response       = '';
+        $xmlNovoPedido  = util\Request::post('xmlNovoPedido', 'STRING');       
+        $objNumPedidoModel  = $this->getObjNumPedidoModel();//Deve ser chamado após definir $objAuth;      
+        if (is_object($objNumPedidoModel)) {        
+            if (strlen($xmlNovoPedido) > 0) {
+                //Faz a validação do XML recebido.
+                try {
+                    $objXmlRequest = new XmlRequestHelper($xmlNovoPedido);                            
+                    if ($objXmlRequest->vldXmlNovoPedido() === TRUE){
+                        //Validação Ok. Todos os dados informados estão corretos. 
+                        //Grava no DB
+                        $objDadosPedido     = $objXmlRequest->getObjDadosPedido();
+                        $arrObjItensPedido  = $objXmlRequest->getArrObjItensPedido();
+
+                        $numPedido = (int)$objDadosPedido->NUM_PEDIDO;
+
+                        if ($numPedido == 0) {
+                            //Gera um NUM_PEDIDO automático
+                            $numPedido = $this->getProxNumPedido();
+                        }
+
+
+                        if ($numPedido !== FALSE) {
+                            //Tudo ok. Grava o novo pedido.
+                            $objNumPedidoModel->saveNumPedido($numPedido);
+
+                            $objDadosPedido->NUM_PEDIDO = $numPedido;
+
+                            //Salva os dados do novo pedido
+                            $commit = $this->saveNovoPedido($objDadosPedido,$arrObjItensPedido);                                        
+                            if ($commit) {
+                                //Pedido cadastrado com sucesso.
+                                $response = 'Tudo certo';
+                            } else {
+                                $msgErr = "[COD/ERR: REQ-14] Não foi possível concluir o cadastro do novo pedido. Por favor, entre em contato com o suporte.";
+                            }
+                        } else {
+                            $msgErr = "[COD/ERR: REQ-13] Impossível identificar um número de pedido válido. Entre em contato com o suporte.";
+                        }                                                                
+                    }
+               } catch(Exception $e) {
+                   $msgErr = $e->getMessage();
+               }
+            } else {
+                $msgErr = "[COD/ERR: REQ-12] Um objeto obrigatório necessário para o processo solicitado não foi gerado com sucesso.";
             }
         } else {
-            $msgErr = "[COD/ERR: REQ-1] O parâmetro uid ({$hashAssinatura}) parece estar incorreto.";
+            $msgErr = "[COD/ERR: REQ-11] O parâmetro obrigatório xmlNovoPedido não foi informado.";
         }
         
-        if (strlen($msgErr) > 0) die($msgErr);        
+        if (strlen($msgErr) > 0) die($msgErr);   
+        return $response;
     }    
     
-    function getObjNumPedidoModel(){
+    private function getObjNumPedidoModel(){
         return $this->singletonModel('\commerce\classes\models\NumPedidoModel', 'objNumPedidoModel');             
     }
     
-    function getObjPedidoModel(){
+    private function getObjPedidoModel(){
         return $this->singletonModel('\commerce\classes\models\PedidoModel', 'objPedidoModel');        
     }
     
@@ -118,7 +170,7 @@ class Request extends IndexController {
      * @param stdClass $objDadosPedido
      * @param type $arrObjItensPedido
      */
-    function saveNovoPedido($objDadosPedido,$arrObjItensPedido){
+    private function saveNovoPedido($objDadosPedido,$arrObjItensPedido){
         $objPedidoModel = $this->getObjPedidoModel();                          
         if (is_object($objPedidoModel) && $objDadosPedido instanceof \stdClass && is_array($arrObjItensPedido)) {         
             
@@ -156,7 +208,7 @@ class Request extends IndexController {
      * 
      * @return integer
      */
-    function getProxNumPedido(){
+    private function getProxNumPedido(){
         $objNumPedidoModel  = $this->getObjNumPedidoModel();        
         $proxNumPedido      = FALSE;
         
@@ -185,6 +237,10 @@ class Request extends IndexController {
         }
         return $proxNumPedido;
     }
+    
+    function actionError($exception){                                         
+        
+    }    
 }
 
 ?>
