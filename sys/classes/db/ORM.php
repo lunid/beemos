@@ -37,7 +37,7 @@ abstract class ORM {
      * @return string
      */
     private $arrColumns;   
-    private $prefixoTable          = 'SVIP_';
+    private $prefixoTable          = 'SPRO_';
     private $arrRequiredFields     = array();
     private $arrKey                = array(); //Array que guarda a chave primária da tabela
     private $arrUnique             = array();
@@ -75,6 +75,7 @@ abstract class ORM {
      * @param integer $id Opcional.
      */
     function __construct($id=0){
+        $this->arrParams = array();
         $this->init();
         if ((int)$id > 0) $this->findAutoNum($id);
     }
@@ -161,6 +162,10 @@ abstract class ORM {
        return $results;
     } 
     
+    function getColumns(){
+        return $this->arrColumns;
+    }
+    
     /**
      * Retorna o alias da tabela. Método auxiliar de setJoin().
      * 
@@ -240,8 +245,17 @@ abstract class ORM {
             if (is_string($stmt)) $msgErr = str_replace('{ACTION}',$stmt,$msgErr);            
         }
         
-        \DB::$error_handler             = false;
+        \DB::debugMode(false);
+        if (self::$debug) {
+            //Ativa o debug da biblioteca meekrodb.
+            \DB::debugMode();
+        }
+        
+        \DB::$error_handler             = true;
         \DB::$throw_exception_on_error  = true;   
+        
+        $ObjError = new ErrorDb();
+        \DB::$error_handler = array($ObjError, 'error_handler');
         
         try {
             switch(strtoupper($stmt)){
@@ -289,8 +303,7 @@ abstract class ORM {
             $msgErr     = "Erro mySql: " . $e->getMessage() . "<br>\n";
             $msgErr     .= "SQL Query: " . $e->getQuery() . "<br>\n"; // INSERT INTO accounts...            
         }
-                
-        \DB::$error_handler = 'meekrodb_error_handler';
+        
         \DB::$throw_exception_on_error = false;
         if (strlen($msgErr) > 0) throw new \Exception( $msgErr );        
         return $out;
@@ -317,7 +330,7 @@ abstract class ORM {
              if (count($arrListErr) > 0) {
                 $fields = 'verifique campos NOT NULL no DB';
                 $fields = join(', ',$arrListErr);
-                throw new \Exception( 'Um ou mais campos obrigatórios não foram informados ('.$fields.').' );        
+                throw new \Exception( 'ORM->vldRequiredBeforeInsert() Um ou mais campos obrigatórios não foram informados ('.$fields.').' );        
              }             
          }             
     }
@@ -469,17 +482,19 @@ abstract class ORM {
      * Retorna dados iniciando na posição 50 até 100.
      * <code>
      * $obj = new Cliente();
-     * $obj->setLimit(100,50);//Deve retornar 50 registros iniciando na posição 50.
+     * $obj->setLimit(100,50);//Deve retornar 100 registros iniciando na posição 50.
      * </code>
      * 
      * @param integer $posFim Posição final
      * @param integer $posIni Posição inicial
      * @return void
      */
-    function setLimit($posFim,$posIni=1){
-        if ($posFim > 1){
+    function setLimit($posFim,$posIni=0){
+        if ($posIni >= 0 && $posFim >= 1){
             $this->limit = $posIni.','.$posFim;
-        }        
+        } elseif ($posFim >= 1) {
+            $this->limit = $posIni;
+        }       
     }
     
     /**
@@ -573,12 +588,13 @@ abstract class ORM {
      * @param mixed[] $row Obrigatório.
      * @return Object | FALSE Retorna um objeto da classe atual, ou FALSE caso o parâmetro não seja um array.
      */        
-    function getObj($row){                              
-        if (is_array($row)){ 
-            if (count($row) != count($row, COUNT_RECURSIVE)) {
+    private function getObj($row){                   
+        $class = get_class($this);//Guarda o nome qualificado da classe atual (incluindo namespace)         
+        if (is_array($row) && strlen($class) > 0){ 
+            //if (count($row) != count($row, COUNT_RECURSIVE)) {
                 //Array multidimensional. Converte para unidimensional
-                $row = $row[0];                
-            }
+                //$row = $row[0];                
+            //}
             
             $objDados = new \stdClass();
             foreach($row as $key=>$value) {
@@ -1412,6 +1428,10 @@ abstract class ORM {
             $this->row[$var]        = $value;
         }        
     } 
+    
+    function getParams(){
+        return $this->arrParams;
+    }
     
     /**
      * Informa/guarda a lista de colunas que deve ser retornada em uma instrução SELECT.
