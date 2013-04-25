@@ -7,6 +7,12 @@
     
     class PlanosEprecos extends mvc\ExceptionController {
         
+        /**
+         * Monta a página de planos contendo os recursos de cada plano.
+         * IMPORTANTE: o botão Assinar de cada plano encontra-se no arquivo html.
+         * 
+         * @return void
+         */        
         public function actionIndex(){
             $bodyHtmlName   = 'planosEprecos';
             $objViewPart    = mvc\MvcFactory::getViewPart($bodyHtmlName);                               
@@ -42,14 +48,27 @@
             $objView->setJsInc($listJsInc);            
             */             
             $layoutName = 'planosEprecos';
-            $objView->render($layoutName);            
-            
+            $objView->render($layoutName);                        
         } 
         
+        /**
+         * Monta o HTML de um plano de vendas específico, de acordo com o layout 
+         * da página de Planos. 
+         * 
+         * Cada plano é mostrado em uma coluna, contendo
+         * preço e recursos do plano.
+         * 
+         * @param mixed[] $arrInfoPlano Dados do plano lidos do DB.
+         * @return string HTML que monta a coluna do plano.
+         */
         private function setHtmlPlano($arrInfoPlano=NULL){
             $htmlItens  = '';
             $i          = 0;
             
+            /*
+             * Texto para cada recurso do plano atual.
+             * O índice de arrRecursos deve coincidir com o índice de arrCols.
+             */
             $arrRecursos = array(
                 'Custo de instalação:Taxa de configuração e instalação dos serviços contratados.',
                 'Integração c/ cartões e bancos:Gateway de pagamento para integração rápida com Cielo, Redecard, e bancos (débito e boleto).',
@@ -57,6 +76,7 @@
                 'Custo por transação excedente:Valor por transação excedente no mês. O limite depende do seu plano (veja Transações/mês)',
                 'Envio de faturas on-line:Recurso que permite o envio de faturas on-line para seus clientes.',
                 'Agendamento de faturas:Permite organizar e agendar o envio de faturas on-line. Ideal para cobranças periódicas.',
+                'Histórico de vendas (meses):Período armazenado para consulta. Permite consultar e extrair relatórios das vendas desse período.',
                 'Usuários:Número de usuários de sua equipe que podem usar os recursos com sua permissão'
              );
             
@@ -68,6 +88,7 @@
                 'VALOR_TRANSACAO_EXCEDENTE:FLOAT',
                 'ENVIO_FATURA_ONLINE:BIT',
                 'AGENDAMENTO_ENVIO_FATURA:BIT',
+                'HISTORICO_VENDAS_MESES:INT',
                 'NUM_USUARIOS:INT'                
             );
             

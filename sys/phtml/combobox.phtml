@@ -8,6 +8,6 @@
         foreach($options as $option){ 
             $option = array_values($option);
     ?>
-        <option value="<?=$option[0]?>" <? if(array_search($option[0],$arrSelect) !== FALSE) { ?> selected="selected" <? } ?>><?=$option[1]?></option>
-    <? } ?>
+        <option value="<?=$option[0]?>" <?php if(array_search($option[0],$arrSelect) !== FALSE) { ?> selected="selected" <? } ?>><?=$option[1]?></option>
+    <?php } ?>
 </select>

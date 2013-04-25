@@ -37,7 +37,7 @@ abstract class ORM {
      * @return string
      */
     private $arrColumns;   
-    private $prefixoTable          = 'SPRO_';
+    private $prefixoTable          = 'SVIP_';
     private $arrRequiredFields     = array();
     private $arrKey                = array(); //Array que guarda a chave primária da tabela
     private $arrUnique             = array();
