@@ -41,17 +41,14 @@
          * @param string $fileTpl Deve conter um nome ou path de um arquivo. A extensão (htm ou html) é obrigatória.
          */
         function setTemplate($fileTpl=''){
-            $pathTpl = '';
+            $pathTpl = '';            
             if (strlen($fileTpl) > 0) {
-                $physicalTplPath    = \Url::physicalPath($fileTpl);
+                $physicalTplPath    = \Url::physicalPath($fileTpl);                
                 if (file_exists($physicalTplPath)) {
                     $pathTpl = $fileTpl;
                 } else {
                     $objModule  = MvcFactory::getModule();
-                    $pathTpl    = $objModule->tplLangFile($fileTpl);  
-                    //$folderTpl          = \LoadConfig::folderTemplate();                  
-                    //$pathTpl            = $folderTpl.'/'.$fileTpl;                     
-                    //$pathTpl            = str_replace('//', '/', $pathTpl);                            
+                    $pathTpl    = APPLICATION_PATH.$objModule->tplLangFile($fileTpl);                              
                 }
             }
             

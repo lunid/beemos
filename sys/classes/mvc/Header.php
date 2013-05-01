@@ -399,6 +399,7 @@ class Header {
             $rootFolder     = \LoadConfig::rootFolder();                     
             $pathFile       = ((strlen($rootFolder) > 0)? "/{$rootFolder}" : '').'/'.\Url::relativeUrl($file);       
             $pathFile       = str_replace('//','/',$pathFile);
+            $pathFile       = APPLICATION_PATH.$pathFile;
             
             if ($cssJsExtension == self::EXT_JS) {
                 $inc = "<script type='text/javascript' src='".$pathFile."'></script>".chr(13);

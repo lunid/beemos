@@ -60,18 +60,23 @@ class Compress {
      */
     private function writeCache($strCompressed){
         $bytes          = 0;
-        $cacheFilename  = $this->cacheFileName;
+        $cacheFilename  =  \Application::setRootProject($this->cacheFileName);
         $arrPath        = pathinfo($cacheFilename);
         $dirname        = @$arrPath['dirname'];
-        
+       
         //Verifica se o diretório já existe. Se ainda não existe deve ser criado.
         if (strlen($dirname) > 0 && !is_dir($dirname)) {
+            $arrDirName         = explode('/',$dirname);
+            array_pop($arrDirName);//Retira o último elemento do array
+            $rootDirName        = implode('/',$arrDirName);
+            chmod($rootDirName, 777);
+            
             $dirCreated = mkdir($dirname);
             if (!$dirCreated) {
                 die('Impossível criar o diretório '.$dirname.'. Verifica se há permissão na pasta atual.');
             }
         }
-        
+
         if (strlen($cacheFilename) > 0) {
             $f = fopen($cacheFilename, "w");        
             flock($f, LOCK_EX);//Trava o arquivo para gravar o conteúdo

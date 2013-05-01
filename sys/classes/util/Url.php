@@ -90,6 +90,7 @@
 
             $path           = $root.'/'.self::getRootFolder().$uri;
             $path           = str_replace('//','/',$path);
+            $path           = str_replace('//','/',$path); //2x
             return $path;
         }
         

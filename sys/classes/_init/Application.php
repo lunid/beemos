@@ -213,8 +213,25 @@
          */
         public static function folder($folder) {
             //Define o path do diretório da aplicação:
-            defined('APPLICATION_PATH') 
-                || define ('APPLICATION_PATH', realpath(dirname(__FILE__).'/../'.$folder));
+            if (!defined('APPLICATION_PATH')) {
+                $root = $folder;
+                if (strlen($folder) > 0 && $folder != '/') $root = "/{$folder}/";
+                define ('APPLICATION_PATH', $root);
+            }            
+        }
+        
+        /**
+         * Faz a correção de uma URL para refletir o endereço correto a partir 
+         * da pasta ROOT do projeto.
+         * 
+         * Considera como root padrão a pasta public_html.
+         * 
+         * @param $url
+         * @return string Url com o contéudo de APPLICATION_PATH inserido após public_html/
+         */
+        public static function setRootProject($url){
+            $uri = str_replace('public_html/','public_html'.APPLICATION_PATH,$url);
+            return $uri;
         }
         
         /**
@@ -380,9 +397,7 @@
             $urlInc = str_replace("\\", "/" , $class . '.php');                           
             
             if (isset($class) && file_exists($urlInc)){          
-                require_once($urlInc);  
-                //$obj = DI::loadMapXml($class);
-                //die();            
+                require_once($urlInc);            
             } else {                          
                die(" Classe $class não encontrada");
             }                      

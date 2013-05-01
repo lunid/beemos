@@ -942,3 +942,16 @@ hr {
     width: 1120px;
     z-index: 1;
 }
+
+#barraBtnInicio {
+    width:960px;
+    height:40px;
+    padding-left:429px;
+    margin-top:50px;
+}
+
+#barraBtnInicio #btnInicio {
+    width:102px;
+    height:40px;
+    background: url("../../images/site/btn_inicio.jpg") no-repeat scroll 0 0px transparent;     
+}

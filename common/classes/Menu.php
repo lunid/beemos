@@ -18,7 +18,7 @@
                 $link       = $arrItem['link'];
                 $text       = $arrItem['text'];
                 $class      = (strtoupper($controller) == strtoupper($activeController))?"class='active'":'';
-                $nav        .= "<li><a href='/{$link}' {$class}>{$text}</a></li>";
+                $nav        .= "<li><a href='".APPLICATION_PATH.$link."' {$class}>{$text}</a></li>";
             }
             $nav .= "</ul>";
             return $nav;

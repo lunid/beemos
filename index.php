@@ -3,7 +3,7 @@
     $chmod  = substr(sprintf('%o', fileperms($path)), -4);
     
     if($chmod != '0777'){
-        ini_set("session.save_path", "session");
+        //ini_set("session.save_path", "session");
     }
     
     session_start();
@@ -16,11 +16,11 @@
     ini_set('display_errors', true);     
           
     include('sys/classes/_init/Application.php');
-     
+    
     try {
-        Application::folder('beemos');
+        Application::folder('dev');
         
-        /*
+        /**
          * Define o ambiente atual.
          * Esta ação é importante porque habilita/desabilita recursos exclusivos de cada ambiente.
          * Por exemplo, no ambiente de desenvolvimento, por padrão, todos os logs e avisos estão ativados.

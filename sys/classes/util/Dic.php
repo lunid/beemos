@@ -72,9 +72,10 @@
             $func           = ($func == NULL)?'default':self::getNameItem($func,$ns.'\\'.$class.'::');
             
             $module         = \Application::getModule();
-            $fileException  = $module.'/dic/e'.$class.'.xml';
-            if (!file_exists(\Url::physicalPath($fileException))) $fileException = '/sys/dic/e'.$class.'.xml';
-            if (!file_exists(\Url::physicalPath($fileException))) $fileException = '/sys/dic/exception.xml';
+     
+            $fileException  = APPLICATION_PATH.'/'.$module.'/dic/e'.$class.'.xml';
+            if (!file_exists(\Url::physicalPath($fileException))) $fileException = APPLICATION_PATH.'/sys/dic/e'.$class.'.xml';
+            if (!file_exists(\Url::physicalPath($fileException))) $fileException =  APPLICATION_PATH.'/sys/dic/exception.xml';
             
             $method = __CLASS__.'\\'.__FUNCTION__."()";//Monta uma string ref. ao método atual. Usado para mostrar erro do método setErr()
             
@@ -83,7 +84,7 @@
             if (!file_exists(\Url::physicalPath($fileException))) {
                 //Verifica na pasta sys
                 $fileException  = str_replace($module.'/','sys/',$fileException);
-                $xml            = (!file_exists($fileException))?'sys/dic/exception.xml':$fileException;
+                $xml            = (!file_exists($fileException))?APPLICATION_PATH.'sys/dic/exception.xml':$fileException;
             }            
             
             $xml = \Url::physicalPath($xml);

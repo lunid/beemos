@@ -18,6 +18,7 @@
                 $this->layoutName   = (is_array($arrParts) && $numParts > 1)?$arrParts[$numParts-1]:$pathViewHtml; 
 
                 $physicalTplPath    = \Url::physicalPath($pathViewHtml);
+
                 if (!file_exists($physicalTplPath)){         
                     //O path informado não é qualificado. Deve-se montar a URL do template e verificar se o arquivo existe.
                     //Coloca a extensão no nome do arquivo, caso não tenha sido informada.                
@@ -30,18 +31,21 @@
                     $module             = \Application::getModule();
              
                     if (strlen($lang) > 0) $lang = $lang.'/';
-                    $viewFile       = $module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template no módulo atual    
-                    $viewFileCommon = 'common/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template na pasta common   
-
-                    try {                    
-                       if (file_exists($viewFile)){
+                    //$viewFile       = $module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template no módulo atual    
+                    $viewFile       = APPLICATION_PATH.$module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template no módulo atual    
+                    $viewFileCommon = APPLICATION_PATH.'common/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template na pasta common   
+                   
+                    try {          
+                       $urlViewFile         = \Url::physicalPath($viewFile);
+                        $urlViewFileCommon  = \Url::physicalPath($viewFileCommon);
+                       if (file_exists($urlViewFile)){
                            //Arquivo existe.
-                           $this->setBodyContent($viewFile);    
-                       } elseif (File::exists($viewFileCommon)){                        
+                           $this->setBodyContent($urlViewFile);    
+                       } elseif (File::exists($viewFileCommon)){     
                            $this->setBodyContent($viewFileCommon); 
                        }
                    } catch(\Exception $e){
-                       $this->showErr('Erro ao instanciar a view solicitada -> '.$viewFile,$e);                    
+                       $this->showErr('Erro ao instanciar a viewPart solicitada -> '.$viewFile,$e);                    
                    }                     
                 } else {
                     //O arquivo do path informado existe. Guarda o conteúdo do arquivo.
