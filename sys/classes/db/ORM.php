@@ -167,6 +167,114 @@ abstract class ORM {
     }
     
     /**
+     * Retorna todas as views do DB atual.
+     * 
+     * @return string[]
+     */
+    public static function loadViews(){
+        $sql        = "SHOW FULL TABLES WHERE table_type='view'";
+        $results    = \DB::query($sql); 
+        return $results;
+    }   
+    
+    /**
+     * Retorna o SQL de uma tabela ou view.
+     * 
+     * @param string $tableName Pode ser uma TABLE ou uma VIEW.    
+     * @return FALSE | string
+     */
+    public static function getSqlFromTable($tableName){        
+        $sql    = "SHOW FULL TABLES LIKE '{$tableName}'";        
+        $result = \DB::query($sql);
+        if (is_array($result) && count($result) == 1) { 
+            //O objeto solicitado existe no DB
+            $type       = $result[0]['Table_type'];//Verifica o tipo: pode ser VIEW ou TABLE            
+            $scriptSql  = self::getScriptCreateTableOrView($tableName, $type);            
+        } else {
+           return FALSE;
+        }                
+        return $scriptSql;
+    }
+    
+    /**
+     * Retorna a string SQL para criação de um objeto do tipo TABLE ou VIEW já existente no DB.
+     * Método de suporte para self::getSqlFromTable();
+     * 
+     * @param string $tableOrViewName Nome da tabela ou View que será usada para a geração do script.
+     * @param string $type Pode ser TABLE ou VIEW
+     * @return string Script Sql que permite criar o objeto informado em $tableOrViewName;
+     * @throws \Exception Caso o comando SHOW CREATE retorne vazio ou array com mais de 1 índice.
+     */
+    private static function getScriptCreateTableOrView($tableOrViewName,$type){
+        $scriptSql      = '';        
+        $type           = strtoupper($type);
+        if ($type != 'VIEW') $type = 'TABLE';
+        
+        $sql            = "SHOW CREATE {$type} {$tableOrViewName}";
+        $resultCreate   = \DB::query($sql);
+        
+        if (is_array($resultCreate) && count($resultCreate) == 1) {
+            //O SQL foi executado com sucesso. Localiza o script SQL para a criação da VIEW
+            $row        = array_values($resultCreate[0]);
+            $scriptSql  = $row[1]; 
+            if ($type == 'VIEW') {
+                //Retira o comando DEFINER no início do script
+                $arrView = explode('SQL SECURITY DEFINER',$scriptSql);
+                if (!is_array($arrView) || count($arrView) != 2) $arrView = explode('SQL SECURITY INVOKER',$scriptSql);
+                
+                if (is_array($arrView) && count($arrView) == 2) {
+                    $scriptSql = 'CREATE OR REPLACE '.$arrView[1];//Cria a view caso ela não exista.
+                }
+            }
+        } else {
+            throw new \Exception('O comando SHOW CREATE '.$type.' retornou vazio para '.$tableName);
+        }     
+        return $scriptSql;
+    }
+    
+    
+    /**
+     * Retorna todas as triggers do DB atual.
+     * 
+     * @return string[]
+     */
+    public static function loadTriggers(){
+        $sql        = "SHOW TRIGGERS";
+        $results    = \DB::query($sql); 
+        return $results;
+    } 
+    
+    /**
+     * Gera o sql de uma trigger, sem o parâmetro DEFINER no início do script.
+     * IMPORTANTE: o DB não pode ter duas triggers com mesmo nome.
+     * 
+     * @param string $triggerName Nome da trigger.
+     * @return string
+     */
+    public static function getSqlFromTrigger($triggerName){
+        $scriptSql      = '';  
+        $sql            = "SHOW CREATE TRIGGER {$triggerName}";
+        $resultCreate   = \DB::query($sql);     
+        if (is_array($resultCreate) && count($resultCreate) == 1) {
+            //O SQL foi executado com sucesso. Localiza o script SQL para a criação da TRIGGER
+            //Retira o comando DEFINER no início do script
+            $scriptSql  = $row['Sql Original Statement'];   
+            if (strlen($scriptSql) > 0) {
+                $arrTrigger = explode('TRIGGER',$scriptSql);                
+
+                if (is_array($arrTrigger) && count($arrTrigger) == 2) {
+                    $scriptSql = 'CREATE TRIGGER '.$arrTrigger[1];//Cria a trigger.
+                }            
+            } else {
+                throw new \Exception('A string da TRIGGER '.$triggerName.' parece estar vazia.');
+            }
+        } else {
+             throw new \Exception('O comando SHOW CREATE TRIGGER retornou vazio para '.$triggerName);
+        }
+        return $scriptSql;
+    }
+    
+    /**
      * Retorna o alias da tabela. Método auxiliar de setJoin().
      * 
      * Caso o atributo $alias não esteja definido, retorna o nome da tabela.
