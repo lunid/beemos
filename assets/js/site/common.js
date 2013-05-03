@@ -10,10 +10,17 @@ $(document).ready(function() {
     });
     
     /**
-     * Torna clicável a div com a class 'click'
+     * Torna clicável a div com a class 'click'.
+     * Acrescenta o pointeiro do mouse 'pointer' e redireciona o usuário para o link contido
+     * na tag A, dentro da div.
      */
     $(".btnClick").click(function() {
-       href_ = $("a").attr("href");
-       alert(href_);
-    });
+       objTagA  = $(this).find('a');
+       href_    = objTagA.attr("href");
+       target_  = objTagA.attr("target");
+
+       if (href_ != 'undefined' || href_.length > 0) {
+           window.location.href = href_;
+       }
+    }).css("cursor","pointer");
 });

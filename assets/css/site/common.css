@@ -958,7 +958,6 @@ hr {
 
 #btnLogin {
     width:71px;
-    height:39px;
-    cursor: pointer;
+    height:39px;    
     background: url("../../images/site/btn_login_off.jpg") no-repeat scroll 0 0px transparent;
 }
