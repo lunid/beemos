@@ -15,7 +15,7 @@
                  */
                 $objView            = mvc\MvcFactory::getView();
                 $objView->setLayout($objViewPart);
-                $objView->TITLE     = 'Supervip';
+                $objView->TITLE     = 'Teste';
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
 
                 $listCss    = 'site.home';
@@ -26,13 +26,7 @@
                 
                
                 $objView->setCss($listCss);
-                
-                /*
-                $objView->setJs($listJs);
-                $objView->setCssInc($listCssInc);
-                $objView->setJsInc($listJsInc);
-                $objView->setPlugin($listPlugin);
-                */             
+                            
                 $layoutName = 'index';
                 $objView->render($layoutName);
         }                

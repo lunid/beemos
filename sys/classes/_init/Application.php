@@ -391,7 +391,7 @@
         */             
         public static function loadClass($class){   
             //Tratamento para utilização do Hybridauth.
-            if($class == 'FacebookApiException') return false; 
+            if($class == 'FacebookApiException' || $class == 'mysqli') return false; 
            
             
             $urlInc = str_replace("\\", "/" , $class . '.php');                           

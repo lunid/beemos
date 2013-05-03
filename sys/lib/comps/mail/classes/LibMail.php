@@ -196,7 +196,8 @@ class Mail extends LibComponent {
      * @throws \Exception Se o e-mail informado não for uma conta de e-mail válida.
      */
     private function vldEmail($method,$email,$name=''){
-        $arrEmail = NULL;
+        $email      = trim($email);
+        $arrEmail   = NULL;
         if (strlen($email) == 0) {
            $arrVars = array('EMAIL'=>$email,'METHOD'=>$method);
            $this->Exception(__METHOD__,'ERR_EMAIL_IS_EMPTY',$arrVars);              
@@ -341,7 +342,7 @@ class Mail extends LibComponent {
             $message    = str_replace("{BODY}",$body,$tpl);
 
             foreach($arrLabels as $key=>$value){
-                $message = str_replace("{{$key}}",utf8_decode($value),$message);
+                $message = str_replace("{{$key}}",$value,$message);
             }
         } else {
             
@@ -349,7 +350,7 @@ class Mail extends LibComponent {
         
         if (strlen($message) > 0) {
             $this->AltBody = 'Para visualizar essa mensagem é necessário usar um programa de e-mail compatível com HTML.';
-            $this->objMailer->MsgHTML($message);
+            $this->objMailer->MsgHTML(utf8_decode($message));
             $this->message = $message; 
         } else {
             
@@ -374,7 +375,7 @@ class Mail extends LibComponent {
      * @param string $subject 
      */
     function setSubject($subject){
-        if (strlen($subject) > 0) $this->subject = $subject;
+        if (strlen($subject) > 0) $this->subject = utf8_decode($subject);
     }
        
     /**

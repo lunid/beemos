@@ -955,3 +955,10 @@ hr {
     height:40px;
     background: url("../../images/site/btn_inicio.jpg") no-repeat scroll 0 0px transparent;     
 }
+
+#btnLogin {
+    width:71px;
+    height:39px;
+    cursor: pointer;
+    background: url("../../images/site/btn_login_off.jpg") no-repeat scroll 0 0px transparent;
+}
