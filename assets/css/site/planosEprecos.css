@@ -2,6 +2,10 @@
     background-color: #F8F8F8;
 }
 
+.tab-content {
+    padding:0px;
+}
+
 [class*="column"] + [class*="column"]:last-child {
     float: right;
 }
@@ -13,7 +17,8 @@
 
 .preco-wrapper {
     float: left;
-    padding: 0px;
+    padding: 20px;
+    padding-bottom: 0px;
     width: 100%;
     margin-left:20px;
 }
@@ -245,14 +250,23 @@ ul.tabs li.current, ul.tabs li.current a:hover {
     margin: 0 0 0.5em;
 }
 
+.divisor_shadow {
+    background-image: url("../../images/common/divisor_hr_shadow.jpg");  
+    background-repeat: no-repeat;  
+    height:68px; 
+    color:#FF0000;
+    clear: both;
+}
+
 #textoBeneficios .column .inner {
   padding:20px;
 }
 
 #textoPlanoGratuito {
     font-size:14px;
+    padding:20px;
     padding-top:30px;
-    margin-left:15px;
+    margin-left:40px;
     color:#444;
     background-image: url("../../images/site/bg_info_trial.png");  
     background-repeat: no-repeat;   

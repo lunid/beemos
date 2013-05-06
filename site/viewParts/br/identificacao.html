@@ -2,30 +2,39 @@
     <div id="boxTituloPage">
         <div id="tituloPage">
             <h1>Identifique-se</h1>
-            <h3>Nova assinatura</h3>
+            <h3>Nova assinatura / Plano {PLANO}</h3>
         </div>
     </div>    
       
-    {MSG_ERR}
-    <form accept-charset="UTF-8" action="" method="post">
+    <div id='resultForm'>{MSG_ERR}</div>
+    <form accept-charset="UTF-8" action="novo/" method="post" onsubmit="return false;" id="formIdentificacao">
+        <input type='hidden' name='ID_PLANO' id='ID_PLANO' value ='{ID_PLANO}' />
+        
         <div id="formGray" class="smartbox left boxForm floatLeft">            
             <div class="floatLeft">    
                 <label><h4>Dados de contato:</h4></label>
                 <div class="fields">
-                        <input id="CONTATO_NOME" name="CONTATO_NOME" class="input-gray-big wide round4 required" type="text" placeholder="Nome completo" value="" />                 
-                        <input id="CONTATO_EMAIL" name="CONTATO_EMAIL" class="input-gray-big wide round4 required" type="text" placeholder="E-mail/Contato" value="" />                 
-                        <input id="CONTATO_FONE_FIXO" name="CONTATO_FONE_FIXO" class="input-gray-big wide round4 telefone required" type="text" placeholder="Telefone fixo" value="" />          
+                        <div id='btnTopFacebook'>
+                            <a class="blueButton" href="javascript:void(0);" onclick="javascript:openWinFacebook();">
+                                <span class="blueButtonText">login com o Facebook</span>
+                            </a>
+                        </div>                    
+                        <input id="CONTATO_NOME" name="CONTATO_NOME" class="input-gray-big wide round4 " type="text" placeholder="Nome completo" value="" />                 
+                        <input id="CONTATO_EMAIL" name="CONTATO_EMAIL" class="input-gray-big wide round4 " type="text" placeholder="E-mail/Contato" value="" />                 
+                        <input id="CONTATO_FONE_FIXO" name="CONTATO_FONE_FIXO" class="input-gray-big wide round4 telefone " type="text" placeholder="Telefone fixo" value="" />          
                         <input id="CONTATO_CELULAR" name="CONTATO_CELULAR" class="input-gray-big wide round4 celular" type="text" placeholder="Celular (opcional)" value="" />
                 </div>                  
                 <div class="clearfix"></div> 
                 
+                <!--
                 <label><h4>Dados da empresa:</h4></label>
                 <div class="fields">
-                        <input id="RAZAO_SOCIAL" name="RAZAO_SOCIAL" class="required" type="text" placeholder="Razão social" value="" />
-                        <input id="NOME_COMERCIAL" name="NOME_COMERCIAL" class="required" type="text" placeholder="Nome Comercial" value="" />
-                        <input id="SITE" name="SITE" class="required" type="text" placeholder="http://sitedaempresa.com.br" value="" />
-                        <input id="FONE_PABX" name="FONE_PABX" class="telefone required" type="text" placeholder="Telefone/PABX" value="" />
+                        <input id="RAZAO_SOCIAL" name="RAZAO_SOCIAL" class="" type="text" placeholder="Razão social" value="" />
+                        <input id="NOME_COMERCIAL" name="NOME_COMERCIAL" class="" type="text" placeholder="Nome Comercial" value="" />
+                        <input id="SITE" name="SITE" class="" type="text" placeholder="http://sitedaempresa.com.br" value="" />
+                        <input id="FONE_PABX" name="FONE_PABX" class="telefone " type="text" placeholder="Telefone/PABX" value="" />
                 </div>   
+                -->
                 
                 <label><h4>Dados de acesso (Usuário e senha):</h4></label>
                 <div class="fields">

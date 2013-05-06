@@ -5,11 +5,12 @@
     
     class Identificacao extends mvc\ExceptionController {
         
-        function actionIndex(){
+        protected function actionForm($idPlano,$plano){
                 $bodyHtmlName   = 'identificacao';
                 $objViewPart    = mvc\MvcFactory::getViewPart($bodyHtmlName);                               
                 $objView        = mvc\MvcFactory::getView();
                 $authMsgErr     = \Auth::getMessage();
+                
                 //Mensagem de erro Auth
                 if(strlen($authMsgErr) > 0){
                     $msgErr = "<div id='msgErr' class='boxForm notice error'>
@@ -24,11 +25,13 @@
 
                 $objView->setLayout($objViewPart);
                 $objView->TITLE     = 'Identifique-se';
+                 $objView->ID_PLANO = $idPlano; //Básico, Profissional ou Corporativo
+                $objView->PLANO     = $plano; //Básico, Profissional ou Corporativo
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
                 $objView->MSG_ERR   = $msgErr;
                 
-                $listCss    = 'site.identificacao';
-                $listJs     = 'site.identificacao';
+                $listCss    = 'site.identificacao,common.Facebook';
+                $listJs     = 'site.identificacao,common.Facebook';
                 $listCssInc = '';
                 $listJsInc  = '';                                
                
@@ -41,7 +44,9 @@
         }
         
         function actionNovo(){
-            
+            //Novo cadastro
+            $login = Request::post('LOGIN');
+            echo $login;
         }
         
         function actionNovoCadastroConf(){

@@ -7,7 +7,7 @@
         Versão : 1.0        
     </descricao>
     <config>
-        <include id='js'>js._LiveValidation_min,js.mask,js.form,js.loginPasswd</include>    
+        <include id='js'>js.jquery_events,js._LiveValidation_min,js.mask,js.form,js.loginPasswd</include>    
         <include id='cssInc'>css.LiveValidationCustom,css.custom</include>           
     </config>
 </root>

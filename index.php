@@ -18,7 +18,8 @@
     include('sys/classes/_init/Application.php');
     
     try {
-        Application::folder('');
+        
+        Application::folder('dev');
         
         /**
          * Define o ambiente atual.
