@@ -2,7 +2,7 @@
 <root>
     <component>mail</component>
     <descricao>
-        Componente para envio de mensagens eletrônicas (email e SMS).
+        Componente usado para validar uma requisição de autenticação com o Facebook.
     </descricao>
     <params>
         <param id='address' type='string' list='' required='1'>Extensão do arquivo gerado para guardar o conteúdo compactado.</param>

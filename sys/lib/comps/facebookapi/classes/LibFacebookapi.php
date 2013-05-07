@@ -14,7 +14,7 @@ class Facebookapi extends LibComponent {
     //Define configurações da classe
     private $config;
     
-    private $redirectUrl = "http://dev.superproweb.com.br";
+    private $redirectUrl = "http://dev.supervip.com.br";
     
     public function init(){	
         try{
@@ -22,13 +22,9 @@ class Facebookapi extends LibComponent {
             $rootComps = Url::pathRootComps('facebookapi');
             require_once($rootComps.'src/facebook/src/facebook.php'); 
             
-            //Ambiente de teste
-            //$appId  = '514528098573528';
-            //$secret = '42b8ed58d8523ac43a7c40a4c4b42a4d';
-            
             //Ambiente de produção
-            $appId  = '597519426928589';
-            $secret = 'c97ab4835e7f7bcfc8e8825e91b79c94';
+            $appId  = '331964393598999';
+            $secret = '3041e86bcf50a3d808a7065ef57a8d9f';
             
             $this->config = array(
                 'appId'         => $appId,

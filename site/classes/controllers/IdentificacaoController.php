@@ -30,15 +30,16 @@
                 $objView->MENU_MAIN = Menu::main(__CLASS__);
                 $objView->MSG_ERR   = $msgErr;
                 
-                $listCss    = 'site.identificacao,common.Facebook';
-                $listJs     = 'site.identificacao,common.Facebook';
+                $listCss    = 'site.identificacao';
+                $listJs     = 'site.identificacao';
                 $listCssInc = '';
                 $listJsInc  = '';                                
                
                 $objView->setCss($listCss);
                 $objView->setJs($listJs);
                 $objView->setPlugin('form');
-                             
+                $objView->setPlugin('facebook');
+                
                 $layoutName = $bodyHtmlName;
                 $objView->render($layoutName);              
         }

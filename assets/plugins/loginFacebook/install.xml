@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <data>07/05/2013</data>
+    <descricao>
+        Login com rede social.
+        Permite efetuar logon com Facebook e Google.
+        Versão : 1.0        
+    </descricao>
+    <config>
+        <include id='js'>js.facebook</include>    
+        <include id='css'>css.facebook</include>           
+    </config>
+</root>
