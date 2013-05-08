@@ -50,12 +50,6 @@ div p {
     margin-bottom:15px;
 }
 
-ul li {
-    font-size:14px;
-    color:#000;  
-    margin-left:20px;
-}
-
 ul.list {
    list-style: disc;
    list-style-type: disc;
@@ -63,6 +57,8 @@ ul.list {
 
 .contentBloq ul li {
     color: #000;
+    font-size:14px;   
+    margin-left:20px;    
 }
 
 .titulo {    
