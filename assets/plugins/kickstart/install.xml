@@ -5,8 +5,7 @@
        Instalação em 02/03/2013
        Site: http://www.99lime.com/elements/
     </descricao>
-    <config>
-        <include id='js'>js.prettify</include>
+    <config>      
         <include id='jsInc'>js.kickstart</include>
         <include id='cssInc'>css.kickstart</include>
         <include id='css'>custom</include>

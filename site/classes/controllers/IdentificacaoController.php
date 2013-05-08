@@ -38,7 +38,7 @@
                 $objView->setCss($listCss);
                 $objView->setJs($listJs);
                 $objView->setPlugin('form');
-                $objView->setPlugin('facebook');
+                $objView->setPlugin('loginSocial');
                 
                 $layoutName = $bodyHtmlName;
                 $objView->render($layoutName);              

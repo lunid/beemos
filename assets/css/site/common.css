@@ -961,3 +961,50 @@ hr {
     height:39px;    
     background: url("../../images/site/btn_login_off.jpg") no-repeat scroll 0 0px transparent;
 }
+
+
+.row-fluid:after {
+    clear: both;
+}
+.row-fluid:before, .row-fluid:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.row-fluid:after {
+    clear: both;
+}
+.row-fluid:before, .row-fluid:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.row-fluid:before, .row-fluid:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.row-fluid:before, .row-fluid:after {
+    content: "";
+    display: table;
+    line-height: 0;
+}
+.row-fluid {
+    width: 100%;
+    clear:both;
+}
+.seperator {
+    margin-top: 16px;
+}
+
+.seperator span {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #000;
+}
+
+hr {
+    border-color:#AAAAAA;
+}

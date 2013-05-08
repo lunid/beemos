@@ -19,7 +19,7 @@
     
     try {
         
-        Application::folder('dev');
+        Application::folder('');
         
         /**
          * Define o ambiente atual.

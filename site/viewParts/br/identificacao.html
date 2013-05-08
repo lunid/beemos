@@ -11,18 +11,37 @@
         <input type='hidden' name='ID_PLANO' id='ID_PLANO' value ='{ID_PLANO}' />
         
         <div id="formGray" class="smartbox left boxForm floatLeft">            
-            <div class="floatLeft">    
-                <label><h4>Dados de contato:</h4></label>
+            <div class="floatLeft">                    
                 <div class="fields">
-                        <div id='btnTopFacebook'>
-                            <a class="blueButton" href="javascript:void(0);" onclick="javascript:openWinFacebook();">
-                                <span class="blueButtonText">login com o Facebook</span>
+                        <!-- Botões de conexão via rede social -->                        
+                        <div class="col_5">
+                            <a href="javascript:void(0);" onclick="javascript:openWinFacebook();" class="connect-btn facebook">
+                               <i class="icon-facebook icon-2x"></i>
+                                Conectar com Facebook 
                             </a>
-                        </div>                    
-                        <input id="CONTATO_NOME" name="CONTATO_NOME" class="input-gray-big wide round4 " type="text" placeholder="Nome completo" value="" />                 
-                        <input id="CONTATO_EMAIL" name="CONTATO_EMAIL" class="input-gray-big wide round4 " type="text" placeholder="E-mail/Contato" value="" />                 
-                        <input id="CONTATO_FONE_FIXO" name="CONTATO_FONE_FIXO" class="input-gray-big wide round4 telefone " type="text" placeholder="Telefone fixo" value="" />          
-                        <input id="CONTATO_CELULAR" name="CONTATO_CELULAR" class="input-gray-big wide round4 celular" type="text" placeholder="Celular (opcional)" value="" />
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col_5">
+                            <a href="javascript:void(0);" class="connect-btn google" onclick="javascript:openWinGoogle();">
+                                <i class="icon-google-plus icon-2x"></i>
+                                Conectar com Google
+                            </a>
+                        </div>                     
+                        <!-- Fim de Botões de conexão via rede social -->
+                        
+                        <div class="row-fluid seperator">
+                            <div class="col_5"><hr></div>
+                            <div class="col_2"><span>OU</span></div>
+                            <div class="col_5"><hr></div>
+                        </div>
+                    
+                        <div>
+                            <h6>Dados de contato:</h6>
+                            <input id="CONTATO_NOME" name="CONTATO_NOME" class="input-gray-big wide round4 " type="text" placeholder="Nome completo" value="" />                 
+                            <input id="CONTATO_EMAIL" name="CONTATO_EMAIL" class="input-gray-big wide round4 " type="text" placeholder="E-mail/Contato" value="" />                 
+                            <input id="CONTATO_FONE_FIXO" name="CONTATO_FONE_FIXO" class="input-gray-big wide round4 telefone " type="text" placeholder="Telefone fixo" value="" />          
+                            <input id="CONTATO_CELULAR" name="CONTATO_CELULAR" class="input-gray-big wide round4 celular" type="text" placeholder="Celular (opcional)" value="" />
+                        </div>
                 </div>                  
                 <div class="clearfix"></div> 
                 
@@ -35,9 +54,9 @@
                         <input id="FONE_PABX" name="FONE_PABX" class="telefone " type="text" placeholder="Telefone/PABX" value="" />
                 </div>   
                 -->
-                
-                <label><h4>Dados de acesso (Usuário e senha):</h4></label>
+                <div style="margin:40px"></div>               
                 <div class="fields">
+                     <h6>Dados de acesso (Usuário e senha):</h6>
                     <input id="LOGIN" name="LOGIN" class="login required" type="text" placeholder="Usuário" maxlength="40" value="" />
                     <input id="PASSWORD" name="PASSWORD" class="required" type="password" placeholder="Senha" maxlength="15" value="" />
                     <input id="PASSWORD_CONF" name="PASSWORD_CONF" class="required" type="password" maxlength="15" placeholder="Confirmar Senha" value="" />
