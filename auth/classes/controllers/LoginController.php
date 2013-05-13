@@ -132,63 +132,11 @@
             $this->redirect($codigoPerfil);    
         }
         
-        /**
-         * Recebe dados de acesso (login, senha e token) e faz a autenticação de um aluno.
-         */
-       function actionProcessAuthAluno(){
-            $codigoPerfil   = '';
-            $user           = util\Request::post('user');
-            $passwd         = util\Request::post('passwd'); 
-            $codLista       = util\Request::post('codLista'); 
-            $memorizar      = util\Request::post('memorizar', 'NUMBER');
-
-            if($memorizar == 1){
-                //Cookie de email - 30 dias
-                setcookie("interbits_login", $user, time()+60*60*24*30, "/", "dev.superproweb.com.br");
-            }                       
-
-            //Verifica se o token é válido.
-            $objTk = new Token(1);
-            if ($objTk->Check()) {
-               //Token válido.
-               if (strlen($user) > 0 && strlen($passwd) > 0) {
-                    $objAuthModel   = new AuthModel(); 
-                    $passwdMd5      = md5($passwd);
-                    $admin          = $objAuthModel->passwdAdmin($passwdMd5);
-                    $objUsuario     = $objAuthModel->authAcesso($user,$passwdMd5,$admin);
-
-                    if ($objUsuario !== FALSE) {
-                        $codigoPerfil = $objUsuario->CODIGO_PERFIL;
-                        if($codigoPerfil != 'ALUNO'){
-                            //Autenticação falhou.      
-                            $msgErr = Error::eLogin('LOGIN_ALUNO');    
-                            \Auth::setMessage($msgErr);
-                        }else{
-                            if($codLista != "") $_SESSION['COD_LISTA'] = $codLista;                                
-                            $codigoPerfil = $this->initLogon($objUsuario);                                     
-                        }   
-                    } else {
-                        //Autenticação falhou.      
-                        $msgErr = Error::eLogin('LOGIN');    
-                        \Auth::setMessage($msgErr);
-                    }
-               } else {
-                    $msgErr = Error::eLogin('PARAMS_REQUIRED');   
-                    \Auth::setMessage($msgErr);
-               }
-            } else {
-                $msgErr = Error::eLogin('TOKEN');  
-                \Auth::setMessage($msgErr);
-            }  
-                
-            if (strlen($codigoPerfil) == 0) $codigoPerfil = 'FORM_ALUNO';
-            $this->redirect($codigoPerfil);          
-        }
         
         /**
          * Efetua o Login com uma conta do facebook
          */
-        function actionFacebook(){
+        function actionFb(){
             //Biblioteca Facebbook
             /* @var $fbLib Facebookapi */
             $codigoPerfil   = '';
