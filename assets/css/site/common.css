@@ -46,10 +46,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #boxTituloPage {
-    background-image: url("../../images/site/bg_title_pattern.png");
-    height: 125px;
-    color:#fff;        
+    height: 125px;      
     text-align:left;       
+    background-image: url("../../images/common/bg_page_title.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;       
+    color: #FFFFFF;
+    font-family: 'Just Another Hand',cursive;
+    margin-bottom: 20px;
+    padding: 0;
+    position: relative;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  
 }
 
 #tituloPage {

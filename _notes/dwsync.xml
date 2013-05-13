@@ -6,7 +6,7 @@
 <file name="example.htaccess" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="129969330469570000" remote="130003278000000000" Dst="-1" />
 <file name="index.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="130003284982545000" remote="130003284600000000" Dst="-1" />
 <file name="phpinfo.php" server="ftp.superprofessorweb.com.br/public_html/interbits/" local="129993641353075000" remote="130003278000000000" Dst="-1" />
-<file name="index.php" server="ftp.supervip.com.br/public_html/dev/" local="130118222285636025" remote="130118221800000000" Dst="1" />
+<file name="index.php" server="ftp.supervip.com.br/public_html/dev/" local="130124857912611098" remote="130126631400000000" Dst="1" />
 <file name="config.xml" server="ftp.supervip.com.br/public_html/dev/" local="130112811019885799" remote="130118218800000000" Dst="1" />
 <file name="php.ini" server="ftp.supervip.com.br" local="130119050404295830" remote="130102146000000000" Dst="1" />
 </dwsync>
