@@ -246,20 +246,25 @@ ul.tabs li.current, ul.tabs li.current a:hover {
     text-decoration: none;
 }
 
+#textoBeneficios {
+    margin-top:40px;
+}
+
 #textoBeneficios h3 {
     margin: 0 0 0.5em;
 }
 
 .divisor_shadow {
-    background-image: url("../../images/common/divisor_hr_shadow.jpg");  
+    background-image: url("../../images/common/divisor_hr_shadow_light.jpg");  
     background-repeat: no-repeat;  
     height:68px; 
     color:#FF0000;
     clear: both;
 }
 
-#textoBeneficios .column .inner {
+#textoBeneficios .column {
   padding:20px;
+  
 }
 
 #textoPlanoGratuito {

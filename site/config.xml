@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>    
     <header>
-        <include id='css'>common.cadNewsletterError</include>
+        <include id='css'>common.fonts,common.cadNewsletterError</include>
         <include id='cssInc'>site.common</include>
         <include id='js'>site.common,util.dictionary,util.form</include>
         <include id='jsInc'></include>

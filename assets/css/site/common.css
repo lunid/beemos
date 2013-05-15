@@ -7,8 +7,10 @@
 /*---------------------------------
 	IMPORTS
 -----------------------------------*/
+/*
 @import url(http://fonts.googleapis.com/css?family=Arimo:400,700);
 @import url(http://fonts.googleapis.com/css?family=Oswald);
+
 
 @font-face {
 	font-family: 'MuseoSans500Regular';
@@ -31,18 +33,34 @@
 	font-weight: normal;
 	font-style: normal;
 	}
-        
+*/
 /*---------------------------------
 	Correções do KS
 -----------------------------------*/
 
+body, p {
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;    
+   font-weight: 300;
+}
+
+b {
+   font-family: "TeXGyreHerosCnBold", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;       
+}
+p {
+    color:#000;
+}
+
+p, ul, ol, blockquote, pre, td, th, label, dt, dd {
+  font-size:0.8rem;
+  line-height:1.28571rem;
+  margin-bottom:1.28571rem;
+}
+
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'MuseoSans500Regular',Arial,sans-serif;
+    font-family:'TeXGyreHerosCnRegular', Helvetica, Arial, sans-serif;
     font-weight: normal;
-    line-height: 1.2em;
-    margin: 0 0 1.5em;
-    text-shadow: 0 1px 0 #FFFFFF;
-    color: #00303F;
+    line-height: 1.2em;   
+    color:#000;
 }
 
 #boxTituloPage {
@@ -52,8 +70,7 @@ h1, h2, h3, h4, h5, h6 {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;       
-    color: #FFFFFF;
-    font-family: 'Just Another Hand',cursive;
+    color: #FFFFFF;   
     margin-bottom: 20px;
     padding: 0;
     position: relative;
@@ -61,14 +78,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #tituloPage {
-    padding-top: 30px;
+    padding-top: 18px;
     padding-left:50px;  
 }
 
 #tituloPage h1 {
+  color:#FFFFFF;
+  font-family:'TeXGyreHerosCnRegular', Helvetica, Arial, sans-serif;
+  letter-spacing:0.04px;
+  font-size:24px;
+  font-style:normal;
+  font-variant:normal;
+  font-weight:normal;
+  line-height:20px;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+
+#tituloPagex h1x {
     font-family: 'Oswald',sans-serif;
-    font-size: 30px;
-    line-height: 1em;
+    font-size: 30px;    
     margin: 0;
     margin-bottom: 10px;
     padding: 0;
@@ -89,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #titulo h1 {
-    font-family: 'Oswald',sans-serif;
+    /*font-family: 'Oswald',sans-serif;*/
     font-size: 30px;
     line-height: 1em;
     margin: 0;
@@ -185,7 +214,7 @@ a, a:visited {
     color: #B2B200;
 }
 
-a: hover{
+a:hover{
     color: #1D6DC1;
 }
 
