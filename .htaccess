@@ -1,9 +1,16 @@
+AddHandler php53-script .php .php5 .php53 .pht .phtm .phtml
+suPHP_ConfigPath /home/supervip2/
+
 RewriteEngine on
 
 # RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^assets/(css|js|images/plugins)/(.*)?$ /dev/assets/$1/$2/$3/$4 [L,QSA,R=301]
 
 RewriteCond %{SCRIPT_FILENAME} !-f
-#RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-d
 
 ## Se o acesso for feito informando o módulo, desmembra e guarda na variável MODULE
 RewriteRule ^(.*)$ index.php?PG=$1&%{QUERY_STRING} [NC,L]

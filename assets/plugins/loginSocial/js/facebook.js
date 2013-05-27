@@ -16,6 +16,6 @@ $(document).ready(function() {
  */
 function openWinFacebook() {
     var appId       = '331964393598999';
-    var redirect    = "http://dev.supervip.com.br/auth/login/facebook";
+    var redirect    = "http://www.supervip.com.br/dev/auth/login/fb";
     window.location.href = "https://www.facebook.com/dialog/oauth?client_id="+appId+"&redirect_uri="+redirect+"&scope=email";
 }

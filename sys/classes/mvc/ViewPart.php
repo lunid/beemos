@@ -32,16 +32,16 @@
              
                     if (strlen($lang) > 0) $lang = $lang.'/';
                     //$viewFile       = $module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template no módulo atual    
-                    $viewFile       = APPLICATION_PATH.$module.'/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template no módulo atual    
-                    $viewFileCommon = APPLICATION_PATH.'common/'.$folderViews.'/'.$lang.$pathViewHtml.$extHtml;//URL do arquivo template na pasta common   
+                    $viewFile       = APPLICATION_PATH.$module.'/'.$folderViews.'/'.$lang.'templates/'.$this->layoutName.$extHtml;//URL do arquivo template no módulo atual    
+                    $viewFileCommon = APPLICATION_PATH.'common/'.$folderViews.'/'.$lang.'templates/'.$this->layoutName.$extHtml;//URL do arquivo template na pasta common   
                    
                     try {          
                        $urlViewFile         = \Url::physicalPath($viewFile);
-                        $urlViewFileCommon  = \Url::physicalPath($viewFileCommon);
+                       $urlViewFileCommon  = \Url::physicalPath($viewFileCommon);
                        if (file_exists($urlViewFile)){
                            //Arquivo existe.
                            $this->setBodyContent($urlViewFile);    
-                       } elseif (File::exists($viewFileCommon)){     
+                       } elseif (File::exists($urlViewFileCommon)){     
                            $this->setBodyContent($viewFileCommon); 
                        }
                    } catch(\Exception $e){
@@ -57,7 +57,7 @@
         }
         
         private function setBodyContent($viewFile){
-            $this->bodyContent  = file_get_contents($viewFile);
+            $this->bodyContent  = file_get_contents(\Url::physicalPath($viewFile));
             $this->viewFile     = $viewFile;                 
         }
         

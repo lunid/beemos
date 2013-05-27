@@ -142,32 +142,28 @@
             $codigoPerfil   = '';
             $fbLib          = util\Component::facebookapi();
             $fbCode         = util\Request::get("code");
-            
-            //Redirecionamento
-            //$objRedirect    = new util\Redirect('auth/redirect.xml');
-            //$redirect       = $objRedirect->FORM;
-                
+                       
             //Verifica o retorno do Código de segurança do FB
             if($fbCode != "" && $fbCode != null){
                 //Gera um Token de Acesso aos serviços FB
                 $token_url  = "https://graph.facebook.com/oauth/access_token?client_id=".$fbLib->getAppId()."&redirect_uri=".$fbLib->getRedirectUrl()."&client_secret=".$fbLib->getSecretId()."&code=".$fbCode;
-                $response   = @file_get_contents($token_url);
-                
+                $response   = $this->urlGetContents($token_url);
+              
                 //Verifica a geração do token
                 if($response){
                     $params     = null;
                     parse_str($response, $params);
-                    
+
                     //Busca dados do usuário no Facebook
                     $user = $fbLib->getUser($params['access_token']);
-
+                   
                     if(isset($user) && is_array($user)){
                         $_SESSION['fb_user'] = $user;
                         
                         //Busca Usuário em nossa Base
                         $objAuthModel   = new AuthModel(); 
                         $ret            = $objAuthModel->buscarUserFacebook($user);
-                        
+       
                         if($ret->status){
                             $objUsuario     = $objAuthModel->authAcesso($ret->user->EMAIL, $ret->user->PASSWD);
                             $codigoPerfil   = $this->initLogon($objUsuario);                              
@@ -190,6 +186,25 @@
             //Redireciona usuário
             $this->redirect($codigoPerfil);           
         }
+        
+        function urlGetContents ($url) {
+            if (!function_exists('curl_init')){ 
+                die('CURL não está instalado!');
+            }
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $output     = curl_exec($ch);
+            $httpCode   = curl_getinfo($ch, CURLINFO_HTTP_CODE); //get the code of request
+            
+            curl_close($ch);
+
+            if($httpCode == 400) 
+               return FALSE;
+            if($httpCode == 200) //is ok?
+               return $output;
+        }        
         
         /**
          * Efetua o logoff do usuário

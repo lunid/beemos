@@ -14,7 +14,7 @@ class Facebookapi extends LibComponent {
     //Define configurações da classe
     private $config;
     
-    private $redirectUrl = "http://dev.supervip.com.br";
+    private $redirectUrl = "http://www.supervip.com.br";
     
     public function init(){	
         try{
@@ -47,11 +47,11 @@ class Facebookapi extends LibComponent {
     }
     
     public function getRedirectUrl(){
-        return $this->redirectUrl . '/auth/login/facebook';
+        return $this->redirectUrl . '/dev/auth/login/fb';
     }
     
     public function getRedirectUrlCadastro(){
-        return $this->redirectUrl . '/auth/cadastro/facebook';
+        return $this->redirectUrl . '/dev/auth/cadastro/fb';
     }
     
     public function getUser($access_token){
