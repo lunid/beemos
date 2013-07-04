@@ -33,8 +33,10 @@
                     $objMail = Component::mail(); 
                     $objMail->addAddress($email);
                     $objMail->setCco('claudio@supervip.com.br');
-                    $objMail->setSubject("Supervip: Por favor, confirme seu e-mail.");                    
-                    $objMail->setHtml(utf8_decode("É necessário confirmar sua conta de e-mail."));                    
+                    $objMail->setSubject("Supervip: Confirmação ativa de cadastro");                    
+                    $objMail->smtpDebugOn();
+                    $objMail->setTextPlain('É necessário confirmar sua conta de e-mail.');
+                    //$objMail->setHtml(utf8_decode("É necessário confirmar sua conta de e-mail."));                    
                                         
                     if($objMail->send()){
                         //Grava a flag que indica o envio da mensagem de confirmação.

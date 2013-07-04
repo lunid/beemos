@@ -592,9 +592,8 @@ th, td {
     text-align: left;
 }
 
-.rodape_col h4 {
-    font-family: 'Oswald',sans-serif;
-    font-size: 16px;
+.rodape_col h4 {    
+    font-size: 14px;
     line-height: 1em;
     margin: 0;
     margin-bottom: 20px;

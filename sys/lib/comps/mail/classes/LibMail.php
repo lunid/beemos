@@ -355,7 +355,16 @@ class Mail extends LibComponent {
         } else {
             
         }
-    }    
+    }  
+    
+    function setTextPlain($mailBodyTextFile){
+        $mail              = $this->objMailer;
+        $mail->IsHTML(false);
+        
+        $mail->ContentType  = 'text/plain';         
+        $mail->Body         = $mailBodyTextFile; 
+        $this->objMailer    = $mail;
+    }
     
     /**
      * Imprime a mensagem a ser enviada por e-mail.
@@ -392,23 +401,30 @@ class Mail extends LibComponent {
         $confirmReadingTo   = $this->confirmReadingTo;
         $mail               = $this->objMailer;
         $mail->Subject      = $this->subject;
-        $arrFrom            = $this->getFrom();
-        $mail->SetFrom($arrFrom['email'], $arrFrom['name']);                              
         
-	if (APPLICATION_ENV == 'test' || APPLICATION_ENV == 'dev') {
+	if (1==0 && (APPLICATION_ENV == 'test' || APPLICATION_ENV == 'dev')) {
             //O WAMP e MAMP não possuem por padrão a biblioteca sendmail.
             //Por isso não está ativo em ambiente de  desenvolvimento (local).
+            $arrFrom  = $this->getFrom();
+            $mail->SetFrom($arrFrom['email'], $arrFrom['name']);                                                  
             $mail->IsSendmail();          
         }
         
         if (is_array($arrSmtpConfig)) {
-            //Um servidor de SMTP foi definido.        
-            $mail->IsSMTP();
+            //Um servidor de SMTP foi definido.             
+           
+            //O remetente deve ser o mesmo username do SMTP:            
+            $mail->SetFrom($arrSmtpConfig['username'], 'SuperPro Web');      
+
+            $mail->IsSMTP();            
             $mail->SMTPAuth = $arrSmtpConfig['auth'];
             $mail->Host     = $arrSmtpConfig['host'];
             $mail->Port     = $arrSmtpConfig['port'];
             $mail->Username = $arrSmtpConfig['username'];
             $mail->Password = $arrSmtpConfig['password'];
+            
+            //$arrFrom['email']   = $arrSmtpConfig['username'];
+            //$arrFrom['name']    = $arrSmtpConfig['SuperPro Web'];
             if ($this->smtpDebug) $mail->SMTPDebug  = 2;            
         }
         
@@ -461,7 +477,7 @@ class Mail extends LibComponent {
      * @throws \Exception Se um remetente não foi informado.
      */
     function getFrom(){
-        $emailFrom = $this->emailFrom;
+        $emailFrom = $this->emailFrom;        
         $nameFrom  = $this->nameFrom;
         if (strlen($emailFrom) == 0) {
             $emailFrom   = trim(\LoadConfig::emailFrom());        
