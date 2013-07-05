@@ -16,7 +16,7 @@ class XmlRequestHelper extends Xml {
     private $arrObjItensPedido  = NULL;//Array de objetos;
             
     function __construct($stringXmlRequest){
-        $this->stringXmlRequest = $stringXmlRequest;
+        $this->stringXmlRequest = trim($stringXmlRequest);
     }
     
     function getObjDadosPedido(){
@@ -74,8 +74,8 @@ class XmlRequestHelper extends Xml {
         $msgErr             = array();
         $out                = FALSE;
         
-        if (strlen($stringXmlRequest) > 0) {                  
-            $objXml = simplexml_load_string($stringXmlRequest);  
+        if (strlen($stringXmlRequest) > 0) { 
+            $objXml = simplexml_load_string(utf8_encode($stringXmlRequest));  
             if (is_object($objXml)) {
                 $nodePedido = $objXml->PEDIDO->PARAM;
                 $nodeItens  = $objXml->PEDIDO->ITEM;//Pode ter um ou mais itens   
@@ -92,7 +92,7 @@ class XmlRequestHelper extends Xml {
                 }
                 
             } else {                
-                $msgErr[] = 'Impossível ler o arquivo '.$pathXml;                                            
+                $msgErr[] = 'Erro ao carregar o XML '.$stringXmlRequest;                                            
             }            
         }
         

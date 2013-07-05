@@ -17,13 +17,13 @@
          * @return boolean|stdClass
          */
         function loadHashAssinatura($hash){
-            $objDados   = FALSE;
+            $objUser    = FALSE;
             $tbUser     = new TB\VwUsuario();
             $result     = $tbUser->select('*')->where("HASH_ASSINATURA='{$hash}'")->execute();
             if (count($result) == 1) {
-                $objDados = $tbUser->getObj($result);
+                $objUser = $tbUser->getObj($result);                
             }
-            return $objDados;
+            return $objUser;
         }
         
         /**

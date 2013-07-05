@@ -37,6 +37,7 @@ class Request extends IndexController {
             if (strlen($hashAssinatura) == 40) {
                 $objAuthModel   = new AuthModel();
                 $objAuth        = $objAuthModel->loadHashAssinatura($hashAssinatura);
+                
                 if ($objAuth !== FALSE) {
                     $bloqEm = $objAuth->BLOQ_EM;                                 
                     if (util\Date::isValidDateTime($bloqEm)) {
@@ -125,7 +126,7 @@ class Request extends IndexController {
                             $msgErr = "[COD/ERR: REQ-13] Impossível identificar um número de pedido válido. Entre em contato com o suporte.";
                         }                                                                
                     }
-               } catch(Exception $e) {
+               } catch(\Exception $e) {
                    $msgErr = $e->getMessage();
                }
             } else {
@@ -176,12 +177,12 @@ class Request extends IndexController {
             
             $numPedido      = $objDadosPedido->NUM_PEDIDO;
             $idPedido       = $objPedidoModel->savePedido($objDadosPedido);
-            
+    
             if ($idPedido > 0) {
                 //Pedido gravado com sucesso. Grava os itens do pedido.
                 $objPedidoModel->delItens($numPedido);//Exclui itens do pedido atual, caso esteja sendo sobrescrito.
                 foreach($arrObjItensPedido as $objItem){
-                    $idItemPedido = (int)$objPedidoModel->saveItemPedido($idPedido,$numPedido,$objItem);
+                    $idItemPedido = (int)$objPedidoModel->saveItemPedido($idPedido,$numPedido,$objItem);                    
                     if ($idItemPedido == 0) {
                         $objPedidoModel->delPedido($idPedido);//Exclui o pedido cadastrado
                         $msgErr = "[COD/ERR: REQ-21] Erro ao salvar um item do pedido {$numPedido}. Por favor, entre em contato com o suporte.";

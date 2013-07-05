@@ -679,10 +679,11 @@ abstract class ORM {
         $sql                = $this->concatOrderByLimit($sql);  
         $results            = self::query($sql);//Cada registro é um objeto
         $arrObj             = array();
-        
+
         if (is_array($results) && count($results) > 0) {
             //Converte cada registro em objeto da classe atual
             $this->row  = array();//Zera a linha de um único registro caso esteja preenchida.
+            
             $arrObj     = array_map(array($this, 'getObj'), $results);                       
         }        
         $rsObj = new Resultset($arrObj);  
@@ -696,16 +697,16 @@ abstract class ORM {
      * @param mixed[] $row Obrigatório.
      * @return Object | FALSE Retorna um objeto da classe atual, ou FALSE caso o parâmetro não seja um array.
      */        
-    private function getObj($row){                   
+     function getObj($row){                   
         $class = get_class($this);//Guarda o nome qualificado da classe atual (incluindo namespace)         
         if (is_array($row) && strlen($class) > 0){ 
-            //if (count($row) != count($row, COUNT_RECURSIVE)) {
+            if (count($row) != count($row, COUNT_RECURSIVE)) {
                 //Array multidimensional. Converte para unidimensional
-                //$row = $row[0];                
-            //}
+                $row = $row[0];                
+            }
             
             $objDados = new \stdClass();
-            foreach($row as $key=>$value) {
+            foreach($row as $key=>$value) {                
                 $objDados->$key = $value;
             }
             
@@ -777,6 +778,7 @@ abstract class ORM {
             $args['SQL']            = "SELECT * FROM ".$this->tableName." WHERE ".$this->colAutoNum."=%i";
             $args['WHERE_VALUES']   = $id;
             $row                    = $this->exec('FIRST_ROW',$args);
+            
             if (is_array($row) && count($row) > 0) {
                 $this->row = $this->arrParams = $out = $row;
             } else {
