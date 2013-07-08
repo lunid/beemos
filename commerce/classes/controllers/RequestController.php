@@ -184,6 +184,7 @@ class Request extends IndexController {
      * 
      * @param stdClass $objDadosPedido
      * @param type $arrObjItensPedido
+     * @return boolean
      */
     private function saveNovoPedido($objDadosPedido,$arrObjItensPedido){
         $objPedidoModel = $this->getObjPedidoModel();                          
