@@ -12,7 +12,8 @@ class ErrorMessageHelper {
             case 'index':
                 $i = 1;
                 $arrErr['USER_NOT_EXISTS']          = array($i++,'Usuário não localizado.');
-                $arrErr['USER_BLOQ']                = array($i++,'A assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.');
+                $arrErr['USER_BLOQ']                = array($i++,'A conta referente à assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.');
+                $arrErr['ASSINATURA_BLOQ']          = array($i++,'A assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.');
                 $arrErr['ERR_ACTION_NOT_EXISTS']    = array($i++,'O parâmetro action "{ACTION_NAME}" não é válido.');
                 $arrErr['ERR_ACTION_NOT_INFO']      = array($i++,'O parâmetro action não foi informado.');                
                 $arrErr['ERR_HASH_ASS']             = array($i++,'O parâmetro uid ({HASH_ASSINATURA}) parece estar incorreto.');

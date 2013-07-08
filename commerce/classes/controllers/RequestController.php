@@ -39,10 +39,14 @@ class Request extends IndexController {
                 $objAuth        = $objAuthModel->loadHashAssinatura($hashAssinatura);
                 
                 if ($objAuth !== FALSE) {
-                    $bloqEm = $objAuth->BLOQ_EM;                                 
-                    if (util\Date::isValidDateTime($bloqEm)) {
+                    $bloqUsuarioEm      = $objAuth->BLOQ_USUARIO_EM;                                 
+                    $bloqAssinaturaEm   = $objAuth->BLOQ_ASSINATURA_EM;                                 
+                    if (util\Date::isValidDateTime($bloqUsuarioEm)) {
                         //O usuário está bloqueado.
-                        ErrorMessageHelper::index('USER_BLOQ');                                         
+                        ErrorMessageHelper::index('USER_BLOQ');    
+                    } elseif (util\Date::isValidDateTime($bloqUsuarioEm)) {
+                        //A assinatura do usuário está bloqueada
+                        ErrorMessageHelper::index('ASSINATURA_BLOQ');    
                     } else {                        
                         $this->objAuth  = $objAuth;
                         $response       = $this->$method();
@@ -148,12 +152,22 @@ class Request extends IndexController {
         return $this->singletonModel('\commerce\classes\models\PedidoModel', 'objPedidoModel');        
     }
     
+    /**
+     * Retorna uma instância do objeto solicitado (parâmetro $class).
+     * Cria o objeto caso ainda não exista.
+     * 
+     * Método de suporte aos métodos getObjNumPedidoModel() e getObjPedidoModel().
+     * 
+     * @param string $class Nome da classe que identifica o objeto solicitado.
+     * @param string $param Nome da variável que guarda o objeto solicitado.
+     * @return \Class Objeto instância do parâmetro $class
+     */
     private function singletonModel($class,$param){
         $obj = $this->$param;
         if (!is_object($obj)) {
             $objAuth        = $this->objAuth;
             $idAssinatura   = (isset($objAuth->ID_ASSINATURA))?$objAuth->ID_ASSINATURA:0;   
-            $ambiente       = $objAuth->AMBIENTE;//TEST ou PROD
+            $ambiente       = $objAuth->AMBIENTE_ATIVO;//TEST ou PROD
             if ($idAssinatura > 0) {
                 $obj = new $class; 
                 $obj->setAssinaturaEAmbiente($idAssinatura,$ambiente);            
