@@ -13,11 +13,13 @@
             'CIDADE_SAC:setCidadeSac',
             'UF_SAC:setUfSac',
             'CPF_CNPJ_SAC:setCpfCnpjSac',
-            'CAMPANHA:setCampanha',
-            'OBS:setObs'
+            'CAMPANHA:setCampanha',            
+            'OBS:setObs',
+            'FORMA_PGTO:setFormaPgto'
         );
 
         private $arrParams          = array();
+        private $objFormaPgto       = NULL;
         private $arrItemPedido      = array(); //Array de objetos do tipo ItemPedido.
         private $valorTotalDoPedido = 0;
         private $valorFrete         = 0;
@@ -56,65 +58,6 @@
 
         public function debugOff(){
             $this->debug = FALSE;
-        }
-        
-        public function pgtoBltBradesco(){
-            $this->setFormaPgto('BLT_BRADESCO');
-        }
-        
-        public function pgtoBltItau(){
-            $this->setFormaPgto('BLT_ITAU');
-        }        
-        
-        public function pgtoBltBb(){
-            $this->setFormaPgto('BLT_BB');
-        }        
-        
-        /**
-         * Define o pagamento com cartão de crédito via operadora CIELO.
-         * 
-         * @param string $cc Número do cartão, sem separadores.
-         * @param integer $validade Validade do cartão no formato yyyymm
-         * @param integer $codSeg Código de segurança do cartão
-         */
-        public function pgtoCielo($cc,$validade,$codSeg){
-            $this->setFormaPgto('CIELO');
-        }        
-        
-        public function pgtoRedecard(){
-            $this->setFormaPgto('REDECARD');
-        }
-        
-        /**
-         * Define o pagamento com cartão de crédito via operadora AMEX.
-         * 
-         * @param string $cc Número do cartão, sem separadores.
-         * @param integer $validade Validade do cartão no formato yyyymm
-         * @param integer $codSeg Código de segurança do cartão
-         */        
-        public function pgtoAmex(){
-            $this->setFormaPgto('AMEX');
-        }               
-
-        public function setFormaPgto($formaPgto){
-            $key          = FALSE;
-            $arrFormaPgto = array('BLT_BRADESCO','BLT_ITAU','BLT_BB','CIELO','REDECARD','AMEX');
-            if (strlen($formaPgto) > 0) {
-                $formaPgto = strtoupper($formaPgto);//Converte para caixa alta (maiúsculas).
-                $key = array_search($arrFormaPgto, $formaPgto);
-                if ($key !== FALSE) {
-                    $this->addParam('FORMA_PGTO',$formaPgto);
-                }
-            }
-            
-            if ($key === FALSE) {
-                $msgErr = 'A forma de pagamento '.$formaPgto.' não é válida.';
-                throw new \Exception($msgErr);                
-            }
-        }
-        
-        public function setCartaoDeCredito($cc,$validade,$codSeg){
-            
         }
         
         /**
@@ -186,6 +129,10 @@
          */
         public function addItemPedido($objItemPedido){
             if (is_object($objItemPedido)) $this->arrItemPedido[] = $objItemPedido;
+        }
+        
+        public function addFormaPgto($objFormaPgto){
+            if (is_object($objFormaPgto)) $this->objFormaPgto = $objFormaPgto;
         }
 
         /**
@@ -358,6 +305,19 @@
                throw new Exception($msgErr);
            }
         }
+        
+        /**
+         * Método que imprime o XML de envio para o servidor remoto.
+         * Use-o para checar o XML a ser enviado, antes da chamada do método send().
+         * 
+         * @return void
+         */
+        function printXml(){
+            header("Content-type: text/xml; charset=ISO-8859-1");
+            echo '<?xml version="1.0" encoding="ISO-8859-1" ?>';
+            echo $this->getXml();
+            die();
+        }
 
         /**
          * Gera a string XML que será enviada ao gateway de pagamento.
@@ -368,7 +328,8 @@
             $xml            = '<ROOT>';
             $arrParams      = $this->arrParams;
             $arrItemPedido  = $this->arrItemPedido;
-
+            $arrParamsPgto  = $this->arrParamsPgto;
+            
             if (is_array($arrParams) && count($arrParams) > 0) {
                 $xml .= "<PEDIDO>";
 
@@ -455,7 +416,7 @@
         }
 
         /**
-         * Grava um novo pedido no servidor.
+         * Grava um novo pedido no servidor remoto.
          * 
          * @param string $uid
          * @return TRUE|string Caso um erro ocorra retornará mensagem de erro, ou então TRUE.
@@ -465,8 +426,9 @@
             $xmlNovoPedido  = $this->getXml();         
             if (strlen($xmlNovoPedido) > 0) {
                 $params         = "xmlNovoPedido=".$xmlNovoPedido;
-                $response       = $this->send('savePedido',$params,$uid);
-                if (is_bool($response)) $response = (bool)$response;//Converte para um valor booleano
+                $xmlResponse    = $this->send('savePedido',$params,$uid);
+                echo $xmlResponse;
+                //if (is_bool($response)) $response = (bool)$response;//Converte para um valor booleano
             } else {
                 $msgErr = "Impossível salvar o pedido. A string XML contendo os dados do pedido está vazia.";
                 throw new Exception($msgErr);
@@ -477,8 +439,11 @@
         /**
          * Gera a string XML de envio e faz a conexão com o gateway.
          *  
+         * @param $action Nome do método a ser executado no servidor remoto.
+         * @param $params Parâmetro(s) enviado(s) ao servidor remoto. 
+         * Por exemplo, xmlNovoPedido contendo o XML para o cadastro de novo pedido.
          * @param $uid Contém o identificador da assinatura que deseja consultar.
-         * @return string Resposta do gateway.
+         * @return string Resposta do gateway no formato XML.
          * @throws Exception Caso um erro ocorra na comunicação entre o servidor local e o gateway.
          */
         private function send($action,$params,$uid=''){    
@@ -499,9 +464,9 @@
             $objCurl->createCurl();
             $errNo = $objCurl->getErro();
             if ($errNo == 0){
-                $response = $objCurl->getResponse();
+                $xmlResponse = $objCurl->getResponse();
                 //@todo Tratar a resposta do servidor (permitir apenas resposta esperada para eliminar mensagens de erros inesperados).
-                return $response;
+                return $xmlResponse;
             } else {
                 $err    = $objCurl->getOutput();
                 $msgErr = "Pedido->send() Erro ao se comunicar com o gateway: {$err}";
