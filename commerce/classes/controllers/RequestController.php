@@ -100,29 +100,30 @@ class Request extends IndexController {
                     $objXmlRequest = new XmlRequestHelper($xmlNovoPedido);                            
                     if ($objXmlRequest->vldXmlNovoPedido() === TRUE){
                         //Validação Ok. Todos os dados informados estão corretos. 
-                        //Grava no DB
+                        //Grava no DB                        
                         $objDadosPedido     = $objXmlRequest->getObjDadosPedido();
                         $arrObjItensPedido  = $objXmlRequest->getArrObjItensPedido();
 
                         $numPedido = (int)$objDadosPedido->NUM_PEDIDO;
-
+                        
                         if ($numPedido == 0) {
                             //Gera um NUM_PEDIDO automático
                             $numPedido = $this->getProxNumPedido();
                         }
-
-
+                        
                         if ($numPedido !== FALSE) {
-                            //Tudo ok. Grava o novo pedido.
+                            //Tudo ok. Grava o novo pedido na tabela de relacionamento de NUM_PEDIDO X ASSINATURA.
                             $objNumPedidoModel->saveNumPedido($numPedido);
 
                             $objDadosPedido->NUM_PEDIDO = $numPedido;
-
-                            //Salva os dados do novo pedido
+                            
+                            //Salva os dados do novo pedido                           
                             $commit = $this->saveNovoPedido($objDadosPedido,$arrObjItensPedido);                                        
                             if ($commit) {
                                 //Pedido cadastrado com sucesso.
-                                $response = 'Tudo certo';
+                                echo 'foi...';
+                                $formaPgto = $objDadosPedido->FORMA_PGTO;                               
+                                $response = '...'.$formaPgto;
                             } else {
                                 $msgErr = "[COD/ERR: REQ-14] Não foi possível concluir o cadastro do novo pedido. Por favor, entre em contato com o suporte.";
                             }
@@ -196,7 +197,7 @@ class Request extends IndexController {
             if ($idPedido > 0) {
                 //Pedido gravado com sucesso. Grava os itens do pedido.
                 $objPedidoModel->delItens($numPedido);//Exclui itens do pedido atual, caso esteja sendo sobrescrito.
-                foreach($arrObjItensPedido as $objItem){
+                foreach($arrObjItensPedido as $objItem){                    
                     $idItemPedido = (int)$objPedidoModel->saveItemPedido($idPedido,$numPedido,$objItem);                    
                     if ($idItemPedido == 0) {
                         $objPedidoModel->delPedido($idPedido);//Exclui o pedido cadastrado

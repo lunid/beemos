@@ -87,7 +87,7 @@ class XmlRequestHelper extends Xml {
                 $arrObjItensPedido  = $this->arrObjItensPedido;
                 
                 if (is_object($objDadosPedido) && count($arrObjItensPedido) >= 1) {
-                    //Todos os dados foram validados com sucesso.
+                    //Todos os dados foram validados com sucesso.                    
                     $out = TRUE;
                 }
                 
