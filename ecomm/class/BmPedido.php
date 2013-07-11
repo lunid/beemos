@@ -1,5 +1,5 @@
 <?php
-    class BmPedido {
+    class BmPedido extends BmXml implements BmXmlInterface {
 
         //Lista de parâmetros permitidos ao criar um novo pedido
         private $arrLibParams = array(
@@ -19,7 +19,7 @@
         );
 
         private $arrParams          = array();
-        private $objFormaPgto       = NULL;
+        private $objCheckout        = NULL;
         private $arrItemPedido      = array(); //Array de objetos do tipo ItemPedido.
         private $valorTotalDoPedido = 0;
         private $valorFrete         = 0;
@@ -306,17 +306,13 @@
            }
         }
         
-        /**
-         * Método que imprime o XML de envio para o servidor remoto.
-         * Use-o para checar o XML a ser enviado, antes da chamada do método send().
-         * 
-         * @return void
-         */
-        function printXml(){
-            header("Content-type: text/xml; charset=ISO-8859-1");
-            echo '<?xml version="1.0" encoding="ISO-8859-1" ?>';
-            echo $this->getXml();
-            die();
+        function checkout($objCheckout){
+            if (is_object($objCheckout)){
+                $this->objCheckout = $objCheckout;
+            } else {
+               $msgErr = 'BmPedido->checkout(): O parâmetro informado não é um objeto válido.';
+               throw new Exception($msgErr);                
+            }
         }
 
         /**
@@ -328,7 +324,7 @@
             $xml            = '<ROOT>';
             $arrParams      = $this->arrParams;
             $arrItemPedido  = $this->arrItemPedido;
-            $arrParamsPgto  = $this->arrParamsPgto;
+            $objCheckout    = $this->objCheckout;
             
             if (is_array($arrParams) && count($arrParams) > 0) {
                 $xml .= "<PEDIDO>";
@@ -367,7 +363,13 @@
                                 ".$this->setTagXml('SUBTOTAL', $subtotal)."
                                 ".$this->setTagXml('SAVE', $persistItem)."    
                         </ITEM>";
-                    }                
+                    } 
+                    
+                    $xml .= "<CHECKOUT>";
+                    if (is_object($objCheckout)) {
+                        $xml .= $objCheckout->getXml();
+                    }
+                    $xml .= "</CHECKOUT>";
                 } else {
                     $msgErr = 'Pedido->getXml() Nenhum produto foi adicionado ao pedido.';
                     throw new Exception($msgErr);
@@ -382,21 +384,10 @@
 
             return $xml;
         }
-
-        /**
-         * Método auxiliar de getXml(), retira caracteres não permitidos antes de criar 
-         * a tag PARAM com seu respectivo valor.
-         * 
-         * @param string $tag
-         * @param mixed $value
-         * @return string Tag que será usada para compor o XML de envio.
-         */
-        private function setTagXml($tag,$value){
-            $value  = str_replace('"', '', $value);
-            $value  = str_replace('<', '', $value);
-            $value  = str_replace('>', '', $value);
-            $tagXml = "<PARAM id='{$tag}'>{$value}</PARAM>";
-            return $tagXml;
+        
+        function printXml(){
+            $xml = $this->getXml();
+            $this->headerXml($xml);
         }
 
         /**

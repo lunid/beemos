@@ -22,8 +22,9 @@ class BmFormaPgto {
     }
     
     private function setBoleto($banco){
-        $key  = FALSE;
+        $key  = FALSE;        
         if (strlen($banco) > 0) {
+            $banco = 'BLT_'.$banco;
             $banco = strtoupper($banco);//Converte para caixa alta (maiúsculas).
             $key = array_search($banco, $this->arrFormaPgto);
             if ($key !== FALSE) {
@@ -32,8 +33,8 @@ class BmFormaPgto {
         }
 
         if ($key === FALSE) {
-            $msgErr = 'A forma de pagamento '.$formaPgto.' não é válida.';
-            throw new \Exception($msgErr);                
+            $msgErr = 'A forma de pagamento '.$banco.' não é válida.';
+            throw new Exception($msgErr);                
         }        
     }
 
@@ -44,13 +45,17 @@ class BmFormaPgto {
     /**
     * Define o pagamento com cartão de crédito via operadora CIELO.
     * 
-    * @param string $cc Número do cartão, sem separadores.
+    * @param string $cc Número do cartão, sem separadores (16 posições).
     * @param integer $validade Validade do cartão no formato yyyymm
     * @param integer $codSeg Código de segurança do cartão
     * @param $parcelas Número de parcelas
     */
     function setCielo($cc,$validade,$codSeg,$parcelas){
-        $this->setCc('CIELO', $cc, $validade, $codSeg,$parcelas);      
+        if (strlen($cc) == 16) {
+            $this->setCc('CIELO', $cc, $validade, $codSeg,$parcelas);      
+        } else {
+            
+        }
     }
     
     function setRedecard($cc,$validade,$codSeg,$parcelas) {

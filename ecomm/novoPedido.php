@@ -1,6 +1,10 @@
 <?php
 
     include('class/Curl.php');
+    include('class/BmXml.php');
+    include('class/BmXmlInterface.php');
+    include('class/BmFormaPgto.php');
+    include('class/BmBoleto.php');
     include('class/BmPedido.php');
     include('class/BmItemPedido.php');
     
@@ -18,14 +22,18 @@
     $objPedido      = new BmPedido($arrDados);//Valida e armazena os dados contidos em $arrDados;
     
     //Define a forma de pagamento
-    $objFormaPgto   = new BmFormaPgto();
-    $objFormaPgto->setBltBradesco();
-    $objPedido->addFormaPgto($objFormaPgto);
-    
+    try {
+        $objBoleto = new BmBoleto();
+        $objBoleto->Bradesco();
+        $objBoleto->setDiasVencimento(10);        
+    } catch (Exception $e) {
+        die($e->getMessage());
+    }
     //$objPedido->debugOn();
     
     $objPedido->getTotalPedido();
     $objPedido->persistSacadoOn();
+    $objPedido->checkout($objBoleto);
     
     //Incluir itens/produtos ao pedido:
     $objItemA = new BmItemPedido('Assinatura/superpro','PL400','Plano 400',297.5,3,'ASS','Natal 2013');
@@ -38,7 +46,7 @@
     $objPedido->addItemPedido($objItemA);
     $objPedido->addItemPedido($objItemB);
     $objPedido->addItemPedido($objItemC);
-    //$objPedido->printXml();
+    $objPedido->printXml();
     
     try {
         $response = $objPedido->savePedido();
