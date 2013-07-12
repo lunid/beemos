@@ -5,6 +5,7 @@
     include('class/BmXmlInterface.php');
     include('class/BmFormaPgto.php');
     include('class/BmBoleto.php');
+    include('class/BmCartaoDeCredito.php');
     include('class/BmPedido.php');
     include('class/BmItemPedido.php');
     
@@ -23,9 +24,25 @@
     
     //Define a forma de pagamento
     try {
-        $objBoleto = new BmBoleto();
-        $objBoleto->Bradesco();
-        $objBoleto->setDiasVencimento(10);        
+        $cartao = 0;
+        if ($cartao == 1) {
+            $objMeioPgto = new BmCartaoDeCredito();
+            /*            
+            $objMeioPgto->setBandeira('visa');
+            $objMeioPgto->setNumCc('1236543956798756');
+            $objMeioPgto->setCodSeg(132);
+            $objMeioPgto->setValidadeCc(201509);
+            $objMeioPgto->setConvenio('redecard');             
+             */
+            
+            $objMeioPgto->setCc('visa', '1236543956798756', 123, 201408); 
+            $objMeioPgto->setParcelas(6);
+            $objMeioPgto->capturaOn();
+        } else {
+            $objMeioPgto = new BmBoleto();
+            $objMeioPgto->Bradesco();
+            $objMeioPgto->setDiasVencimento(10);        
+        }
     } catch (Exception $e) {
         die($e->getMessage());
     }
@@ -33,7 +50,7 @@
     
     $objPedido->getTotalPedido();
     $objPedido->persistSacadoOn();
-    $objPedido->checkout($objBoleto);
+    $objPedido->checkout($objMeioPgto);
     
     //Incluir itens/produtos ao pedido:
     $objItemA = new BmItemPedido('Assinatura/superpro','PL400','Plano 400',297.5,3,'ASS','Natal 2013');
@@ -41,14 +58,13 @@
 
     $objItemB  = new BmItemPedido('Assinatura/superpro','PL800','Plano 800',396);
     $objItemC  = new BmItemPedido('Assinatura/superpro','PL1800','Plano 1800',412.543,5);
-
-    //Incluir itens ao pedido atual:
-    $objPedido->addItemPedido($objItemA);
-    $objPedido->addItemPedido($objItemB);
-    $objPedido->addItemPedido($objItemC);
-    $objPedido->printXml();
     
     try {
+        //Incluir itens ao pedido atual:
+        $objPedido->addItemPedido($objItemA);
+        $objPedido->addItemPedido($objItemB);
+        $objPedido->addItemPedido($objItemC);
+        $objPedido->printXml();        
         $response = $objPedido->savePedido();
         if ($response == TRUE) {
             
