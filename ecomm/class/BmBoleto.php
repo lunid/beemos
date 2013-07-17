@@ -1,11 +1,12 @@
 <?php
 
-class BmBoleto extends BmXml implements BmXmlInterface {
+class BmBoleto extends BmXml {
     
     private $banco;//Opcional
     private $dataVencimento;//Opcional
     private $arrBancos  = array('BRADESCO','BB','ITAU','SANTANDER');    
     private $meioPgto   = 'BOLETO';
+    protected $save     = NULL;//Opção não utilizada nessa classe
     /**
      * Permite inicializar o objeto informando o banco emissor e o vencimento do boleto.
      * 
@@ -16,8 +17,8 @@ class BmBoleto extends BmXml implements BmXmlInterface {
         $banco      = trim($banco);
         $vencDate   = trim($vencDate);
         
-        if (strlen($banco) > 0) $this->setBanco($banco);
-        if (strlen($vencDate) > 0) $this->setDataVencimento($vencDate);
+        $this->setBanco($banco);
+        $this->setDataVencimento($vencDate);
     }
     
     /**
@@ -70,13 +71,15 @@ class BmBoleto extends BmXml implements BmXmlInterface {
             $key = array_search($banco_, $this->arrBancos);
             if ($key !== FALSE) {
                 $this->banco = $banco_;
-            }            
+            }
+            
+            if ($key === FALSE) {
+                $msgErr = 'O banco '.$banco.', informado como emissor do boleto, não é válido.';
+                throw new Exception($msgErr);                
+            }             
         }
+        $this->addParamXml('BANCO',$this->banco);
 
-        if ($key === FALSE) {
-            $msgErr = 'O banco '.$banco.', informado como emissor do boleto, não é válido.';
-            throw new Exception($msgErr);                
-        } 
         return $banco_;        
     }
     
@@ -112,18 +115,21 @@ class BmBoleto extends BmXml implements BmXmlInterface {
                 $diff =($dateVenc - $dateNow)/(3600*24); //Retorna a diferença em número de dias
                 
                 if ($diff >= 0) {
-                    $this->dataVencimento = $vencDate;
+                    //Data válida
+                    $this->dataVencimento = $vencDate;                    
                 } else {
                     $msgErr = 'Erro ao definir a data de vencimento do boleto: A data '.$vencDate.' é menor que a data atual.';  
                 }
             } else {
                 $msgErr = 'Erro ao definir a data de vencimento do boleto: A data '.$vencDate.' não está no formato yyyy-mm-dd ou não é válida.';            
             }
-        } else {
+        } elseif (strlen($vencDate) > 0) {
+            //A data foi informada mas está errada
             $msgErr = 'Erro ao definir a data de vencimento do boleto: A data '.$vencDate.' não possui a quantidade de caracteres esperada.';  
         }
         
         if (strlen($msgErr) > 0) throw new Exception($msgErr);                   
+        $this->addParamXml('VENCIMENTO',$this->dataVencimento);
     }
     
     /**
@@ -145,7 +151,7 @@ class BmBoleto extends BmXml implements BmXmlInterface {
         return $this->dataVencimento;       
     }
     
-    function getXml(){
+    function getXmlx(){
      $xml = "
      <BOLETO>
         ".$this->setTagXml('BANCO', $this->getBanco())."
@@ -154,9 +160,9 @@ class BmBoleto extends BmXml implements BmXmlInterface {
      return $xml;
     }
     
-    function printXml(){
-        $xml = $this->getXml();
-        $this->headerXml($xml);
+    public function getXml(){                     
+        $xml = "<BOLETO>".$this->getTagParams()."</BOLETO>";        
+        return $xml;
     }
 
 }

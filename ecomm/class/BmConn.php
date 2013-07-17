@@ -14,6 +14,16 @@ class BmConn {
     function __construct($uid='') {
         if (strlen($uid) > 0) $this->uid = $uid;
     }
+    
+    private function getUid(){
+        $uid = trim($this->uid);
+        if (strlen($uid) < 32) {
+            $msgErr = "BmConn->getUid(): O identificador da assinatura, parâmetro \$uid = '{$uid}' parece 
+            não ter sido informado ou está incorreto. Verifique a quantidade de caracteres.";
+            throw new Exception($msgErr);                
+        }
+        return $uid;
+    }
 
     /**
      * Ativa o debug antes do envio dos dados para o servidor remoto, via chamada do método send().
@@ -41,19 +51,47 @@ class BmConn {
         return $this->strXml;
     }    
     
+    /**
+     * Redireciona a chamada de um método para o servidor remoto.
+     * 
+     * EXEMPLO 1 - chamada do método savePedido com um array de parâmetros:
+     * <code>
+     *      
+     *      $objConn = new BmConn();
+     *      $strXml = "String XML...";
+     *      $objConn->addParamXml($strXml);
+     * 
+     *      $arrParams['numPedido'] = 12345;
+     *      $arrParams['sonda']     = 'BOLETO';
+     *      $responseXml            = $objConn->savePedido($arrParams); 
+     * </code>
+     * 
+     * EXEMPLO 2 - chamada do método loadPedido com um único parâmetro (número do pedido):
+     * <code>           
+     *      $objConn = new BmConn();
+     *      $strXml = "String XML...";
+     *      $objConn->addParamXml($strXml);     
+     *      $responseXml = $objConn->loadPedido(12345); 
+     * </code>
+     *     
+     * @param type $action
+     * @param type $args
+     * @return string Retorna uma string XML com a resposta da chamada do método
+     */
     function __call($action,$args){        
-        $this->send($action,$args);
+        return $this->send($action,$args);
     }    
        
     
     /**
      * Gera a string XML de envio e faz a conexão com o gateway.
-     *  
-     * @param $action Nome do método a ser executado no servidor remoto.
-     * @param $params Parâmetros adicionais enviados ao servidor remoto. 
-     * Por exemplo, xmlNovoPedido contendo o XML para o cadastro de novo pedido.
+     * Método chamado a partir do método mágico __call().
      * 
-     * @param $uid Contém o identificador da assinatura que deseja consultar.
+     * @see __call()     
+     * @param $action Nome do método a ser executado no servidor remoto.
+     * @param $args Parâmetros adicionais enviados ao servidor remoto. 
+     * Por exemplo, pode ser um único valor em $args[0], ou então um array de valores em $args[0].
+     * 
      * @return string Resposta do gateway no formato XML.
      * @throws Exception Caso um erro ocorra na comunicação entre o servidor local e o gateway.
      */    
@@ -61,32 +99,36 @@ class BmConn {
         if(!extension_loaded("curl")) {
             die('Biblioteca Curl não instalada. <br/>Esta biblioteca é obrigatória para a comunicação com o servidor.');
         }
-
-        //$params = "strXml=".$this->getStrXml();  
-        $params = '';        
+       
+        $uid        = $this->getUid();       
+        $request    = "action={$action}&uid={$uid}";
+        
+        //Concatena parâmetros adicionais à string $params, no formato querystring (name1=value1&name2=value2&...)
         if (!empty($args)){ 
             $vars = $args[0];
             if (is_array($vars)) { 
-                foreach($vars as $var=>$value) {
-                    $arrParams[] = "$var=$value";
+                //Um array associativo contendo parâmetros adicionais foi informado.
+                foreach($vars as $name=>$value) {
+                    $value       = str_replace('&','E',$value);//Retira o '&', se houver.
+                    $arrParams[] = "$name=$value";
                 }
-                $params .= "&".join('&',$arrParams);               
+                $request .= "&".join('&',$arrParams);               
             } else {
-                $params .= "&variable=".$vars;
+                //Uma única variável foi informada.
+                //Envia ao servidor remoto com o nome de 'variable'
+                $request .= "&variable=".$vars;
             }
-        }
-        echo $params;
-        //print_r($args);
-        die();
-        $uid    = $this->uid;
+        }  
+        
+        $request .= "&strXml=".$this->getStrXml();
         
         if ($this->debug) {
             //O debug foi acionado: interrompe o envio e imprime os parâmetros que serão enviados.
-            echo "Método Pedido->send(): <br/>action: {$action}<br/>uid: {$uid}<br/>params: {$params}";
+            $arrParamsDebug = explode('&',$request);
+            print_r($arrParamsDebug);
             die();
         }
-        
-        $request	= "action={$action}&uid={$uid}&".$params;
+
         $objCurl 	= new Curl($this->_urlSend);
 
         $objCurl->setPost($request);

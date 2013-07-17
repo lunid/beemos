@@ -1,6 +1,6 @@
 <?php
 
-class BmItemPedido {
+class BmItemPedido extends BmXml {
     
     private $categoria      = '';
     private $codigo         = '';
@@ -9,7 +9,6 @@ class BmItemPedido {
     private $precoUnit      = 0;
     private $unidade        = 'CX';
     private $campanha       = '';
-    private $saveItem       = FALSE;//TRUE = grava o registro atual no servidor remoto.
     private $precoUnitSemFormat; //Preço unitário sem formatação. Ex.: 123,40 ficará 12340, 2345 ficará 234500, 65,3 ficará 6530    
     
     /**
@@ -34,6 +33,7 @@ class BmItemPedido {
     
     function setCategoria($value){
         if (strlen($value) > 0) $this->categoria = $value;
+        $this->addParamXml('CATEGORIA',$this->categoria);        
     }
         
     function getCategoria(){
@@ -49,6 +49,7 @@ class BmItemPedido {
     function setCodigo($codigo){
         if (strlen($codigo) > 0 && ctype_alnum($codigo)) {
             $this->codigo = $codigo;
+            $this->addParamXml('CODIGO',$this->codigo);
         } else {
             throw new \Exception('ItemPedido->setCodigo(): o código informado "'.$codigo.'" não é válido ou está vazio. O código é obrigatório e deve conter até 20 caracteres alfanuméricos.');
         }        
@@ -62,28 +63,10 @@ class BmItemPedido {
         return $codigo;
     }
     
-    /**
-     * Indica que o produto atual deve ser persistido (salvo) no servidor remoto.
-     * Este recurso pode ser útil caso queira gerar um novo pedido que inclui 
-     * o produto atual, a artir do painel de controle.
-     * 
-     * @return void
-     */
-    public function persistItemOn(){
-        $this->saveItem = true;
-    }    
-    
-    public function persistItemOff(){
-        $this->saveItem = false;
-    }    
-    
-    public function getPersistItem(){
-        return $this->saveItem;
-    }
-    
     function setUnidade($unidade){
         if (strlen($unidade) <= 3 && ctype_alpha($unidade)) {
-            $this->unidade = $unidade;
+            $this->unidade = $unidade;            
+            $this->addParamXml('UNIDADE',$unidade);
         } else {
             throw new \Exception('ItemPedido->setUnidade(): a unidade informada '.$unidade.' não é válida. A unidade deve conter apenas letras e no máximo 3 catacteres.');
         }
@@ -91,7 +74,7 @@ class BmItemPedido {
     
     function getUnidade(){
         $unidade = $this->unidade;
-        if (strlen($unidade) == 0) $unidade = 'CX';
+        if (strlen($unidade) == 0) $unidade = 'CX';        
         return $unidade;
     }
 
@@ -105,6 +88,7 @@ class BmItemPedido {
         if (strlen($campanha) > 0) {
              $this->campanha = $campanha;                
         }
+        $this->addParamXml('CAMPANHA',$this->campanha);
     }
     
     function getCampanha() {
@@ -119,6 +103,7 @@ class BmItemPedido {
         if (strlen($descricao) > 0) {            
             $this->descricao = $descricao;
         }
+        $this->addParamXml('DESCRICAO',$this->descricao);
     }
     
     function getDescricao(){
@@ -142,6 +127,7 @@ class BmItemPedido {
         if (ctype_alpha($unid)) {
             $this->quantidade = (int)$qtde;
             $this->setUnidade($unidade);
+            $this->addParamXml('QUANTIDADE',$this->quantidade);
         } else {
             throw new \Exception('A unidade '.$unid.' informada em ItemPedido->setQuantidade() não é válida. O parâmetro unid deve conter apenas letras.');
         }
@@ -187,6 +173,9 @@ class BmItemPedido {
             $precoUnitSemFormat             = $this->convertNumberDec2NumberInt($precoUnit, $decPoint, $thousandsSep); 
             $this->precoUnitSemFormat       = $precoUnitSemFormat;
             $this->precoUnit                = number_format($precoUnit,2,'.','');
+           
+            $this->addParamXml('PRECO_UNIT',$this->precoUnit);
+            
         } else {
             throw new \Exception('ItemPedido->setPrecoUnit(): O preço unitário informado não é um valor válido.');
         }
@@ -224,7 +213,7 @@ class BmItemPedido {
     /**
      * Calcula o subtotal do produto atual multiplicando a quantidade pelo valor unitário.
      * 
-     * @return flaot Retorna o subtotal do produto atual.
+     * @return float Retorna o subtotal do produto atual.
      */
     function calcSubtotal(){
         $quantidade    = (int)$this->quantidade;
@@ -238,12 +227,38 @@ class BmItemPedido {
         //Formata a saída com duas casas decimais:
         $subtotal = number_format($subtotal,2,'.','');
         
+        $this->addParamXml('SUBTOTAL',$subtotal);
+        
         return $subtotal;
     }
     
     function setPrecoPromo($precoDe,$precoPor){
         
     }
+    
+    public function getXml(){             
+        try {
+            $xml            = '';
+            $xmlParams      = ''; 
+            $arrParamsXml   = $this->getParamsXml();
+            if (is_array($arrParamsXml)) {
+                foreach($arrParamsXml as $param => $value) {
+                    if (strlen($param) > 0) {
+                        $xmlParams .= $this->getTagXml($param, $value);
+                    }
+                }
+            }            
+            
+            $save = ($this->save) ? 1 : 0;
+            $xml = "
+            <ITEM save='{$save}'>
+                {$xmlParams}
+            </ITEM>";
+        } catch (Exception $e) {
+            throw $e;
+        }
+        return $xml;
+    }                    
 }
 
 ?>

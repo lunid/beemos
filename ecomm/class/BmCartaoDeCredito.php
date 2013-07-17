@@ -246,7 +246,7 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
             $xml = "
             <CARTAO>
                ".$this->setTagXml('CONVENIO', $this->getConvenio())."
-               ".$this->setTagXml('CC', $this->getBandeira())." 
+               ".$this->setTagXml('BANDEIRA', $this->getBandeira())." 
                ".$this->setTagXml('CC', $this->getNumCc())."       
                ".$this->setTagXml('COD_SEG', $this->getCodSeg())." 
                ".$this->setTagXml('VALIDADE', $this->getValidade())." 

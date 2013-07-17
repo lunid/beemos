@@ -14,7 +14,7 @@ class Request extends IndexController {
     private $objPedidoModel         = NULL;
     private $objNumPedidoModel      = NULL;
     private $objXmlResponseHelper   = NULL;
-
+    private $strXml                 = '';
     
     /**
      * Recebe a requisição do cliente e valida os parâmetros obrigatórios 'action' e 'uid'.
@@ -29,7 +29,8 @@ class Request extends IndexController {
         $msgErr         = '';
         $action         = util\Request::post('action', 'STRING');
         $hashAssinatura = util\Request::post('uid', 'STRING');                      
-
+        $strXml         = util\Request::post('strXml', 'STRING');   
+        
         //Faz a validação da action informada:
         $method = 'action'.ucfirst($action);
         if (strlen($action) > 0 && method_exists($this,$method)){
@@ -44,10 +45,11 @@ class Request extends IndexController {
                     if (util\Date::isValidDateTime($bloqUsuarioEm)) {
                         //O usuário está bloqueado.
                         ErrorMessageHelper::index('USER_BLOQ');    
-                    } elseif (util\Date::isValidDateTime($bloqUsuarioEm)) {
+                    } elseif (util\Date::isValidDateTime($bloqAssinaturaEm)) {
                         //A assinatura do usuário está bloqueada
                         ErrorMessageHelper::index('ASSINATURA_BLOQ');    
-                    } else {                        
+                    } else {                 
+                        if (strlen($strXml) > 0) $this->strXml = $strXml;
                         $this->objAuth  = $objAuth;
                         $response       = $this->$method();
                     }
@@ -89,10 +91,11 @@ class Request extends IndexController {
     }
     
     private function actionSavePedido(){  
-        $msgErr         = '';
-        $response       = '';
-        $xmlNovoPedido  = util\Request::post('xmlNovoPedido', 'STRING');       
-        $objNumPedidoModel  = $this->getObjNumPedidoModel();//Deve ser chamado após definir $objAuth;      
+        $msgErr             = '';
+        $response           = '';
+        $xmlNovoPedido      = $this->strXml;       
+        $objNumPedidoModel  = $this->getObjNumPedidoModel();//Deve ser chamado após definir $objAuth;    
+        
         if (is_object($objNumPedidoModel)) {        
             if (strlen($xmlNovoPedido) > 0) {
                 //Faz a validação do XML recebido.

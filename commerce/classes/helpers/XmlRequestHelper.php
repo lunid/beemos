@@ -77,11 +77,15 @@ class XmlRequestHelper extends Xml {
         if (strlen($stringXmlRequest) > 0) { 
             $objXml = simplexml_load_string(utf8_encode($stringXmlRequest));  
             if (is_object($objXml)) {
-                $nodePedido = $objXml->PEDIDO->PARAM;
-                $nodeItens  = $objXml->PEDIDO->ITEM;//Pode ter um ou mais itens   
+                $nodePedido         = $objXml->PEDIDO->PARAM;
+                $nodeItens          = $objXml->PEDIDO->ITEM;//Pode ter um ou mais itens   
+                $nodeCheckoutBlt    = $objXml->CHECKOUT->BOLETO->PARAM;
+                $nodeCheckoutCc     = $objXml->CHECKOUT->CARTAO->PARAM;
                 
                 $msgErr             = $this->vldPedidoNode($nodePedido,$msgErr);
                 $msgErr             = $this->vldItemNode($nodeItens,$msgErr);
+                $msgErr             = $this->vldCheckoutBlt($nodeCheckoutBlt,$msgErr);
+                $msgErr             = $this->vldCheckoutCc($nodeCheckoutCc,$msgErr);
                 
                 $objDadosPedido     = $this->objDadosPedido;
                 $arrObjItensPedido  = $this->arrObjItensPedido;
@@ -236,6 +240,81 @@ class XmlRequestHelper extends Xml {
         
         if (count($msgErr) == 0) $this->arrObjItensPedido = $arrObjItens;
         return $msgErr;
+    }
+    
+    private function vldCheckoutBlt($nodes,$msgErr=array()){
+        
+        $msgErr     = array();
+        $objDados   = new \stdClass();
+        
+        //Formato de cada índice de arrParams:
+        //PARAM:tipoValor:obrigatorio
+        $arrStrParams = array(
+            'BANCO:string:0',
+            'VENCIMENTO:date:0'
+        );  
+        
+        $arrProcess = $this->vldNodeParams($arrStrParams, $nodes);
+        $objParams  = $arrProcess['OBJ_PARAMS'];
+        $arrErr     = $arrProcess['ARR_MSG_ERR'];
+        return $msgErr;        
+    }
+    
+    private function vldCheckoutCc($node,$msgErr=array()){
+        //Formato de cada índice de arrParams:
+        //PARAM:tipoValor:obrigatorio
+        $arrParams = array(
+            'CONVENIO:string:0',
+            'BANDEIRA:string:1',
+            'CC:string:1',
+            'COD_SEG:integer:1',
+            'VALIDADE:integer:1',
+            'PARCELAS:integer:0',
+            'CAPTURA:integer:0'
+        );           
+    }
+    
+    private function vldNodeParams($arrStrParams,$nodes){
+        $objDados   = new \stdClass();
+        $msgErr[]   = array();
+        
+        if (is_object($nodes)) {
+            $i = 1;              
+            foreach($nodes as $node) {
+                //Um ou mais nós:
+                $node  = $node->PARAM;
+         
+                foreach($arrStrParams as $strParams) {
+                    //Atributos PARAM do nó atual
+                    $err = '';
+                    list($param,$type,$required) = explode(':',$strParams);
+                    $value = self::valueForAttrib($node,'id',$param);  
+                    if ($required == 1 && strlen($value) == 0) {
+                        //Parâmetro obrigatório.
+                        $msgErr[] = "O PARAM{{$param}} do item {$i} é obrigatório e não foi informado";
+                        continue 2;//Vai para o próximo nó ITEM.
+                    } elseif ($required == 0 && strlen($value) > 0) {
+                        if ($type == 'date' && strlen($value) == 10) {
+                            @list($y,$m,$d) = @explode('-',$value);
+                            if (!@checkdate($m,$d,$y)){                        
+                                $err = "O PARAM{{$param}} não parece ser uma data válida";
+                            }                    
+                        }                        
+                    }                                          
+                    
+                    if (strlen($err) > 0) {
+                        //Há um erro de validação.
+                        $msgErr[] = $err;
+                    } else {
+                        $objDados->$param = $value;        
+                    }
+                }
+            }
+        }
+        
+        $arrOut['OBJ_PARAMS']   = $objDados;
+        $arrOut['ARR_MSG_ERR']  = $msgErr;
+        return $arrOut;
     }
 }
 
