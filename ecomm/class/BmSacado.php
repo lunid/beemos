@@ -125,7 +125,7 @@ class BmSacado extends BmXml {
                 $this->cpfCnpj = $valueChar;                
             } else {
                 $msgErr = 'Pedido->setCpfCnpjSac() O CPF/CNPJ informado ('.$value.') parece ser inválido.';
-                throw new Exception($msgErr);
+                throw new \Exception($msgErr);
             }       
             $this->addParamXml('CPF_CNPJ',$this->cpfCnpj);
         }

@@ -36,7 +36,7 @@ class BmBoleto extends BmXml {
             
         } else {
             $msgErr = 'Erro ao solicitar link para emissão do boleto: O número do pedido informado é inválido.';
-            throw new Exception($msgErr);               
+            throw new \Exception($msgErr);               
         }
         return $pathEmissaoBoleto;
     }
@@ -75,7 +75,7 @@ class BmBoleto extends BmXml {
             
             if ($key === FALSE) {
                 $msgErr = 'O banco '.$banco.', informado como emissor do boleto, não é válido.';
-                throw new Exception($msgErr);                
+                throw new \Exception($msgErr);                
             }             
         }
         $this->addParamXml('BANCO',$this->banco);
@@ -128,7 +128,7 @@ class BmBoleto extends BmXml {
             $msgErr = 'Erro ao definir a data de vencimento do boleto: A data '.$vencDate.' não possui a quantidade de caracteres esperada.';  
         }
         
-        if (strlen($msgErr) > 0) throw new Exception($msgErr);                   
+        if (strlen($msgErr) > 0) throw new \Exception($msgErr);                   
         $this->addParamXml('VENCIMENTO',$this->dataVencimento);
     }
     

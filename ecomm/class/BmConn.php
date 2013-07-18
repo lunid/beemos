@@ -20,7 +20,7 @@ class BmConn {
         if (strlen($uid) < 32) {
             $msgErr = "BmConn->getUid(): O identificador da assinatura, parâmetro \$uid = '{$uid}' parece 
             não ter sido informado ou está incorreto. Verifique a quantidade de caracteres.";
-            throw new Exception($msgErr);                
+            throw new \Exception($msgErr);                
         }
         return $uid;
     }
@@ -141,7 +141,7 @@ class BmConn {
         } else {
             $err    = $objCurl->getOutput();
             $msgErr = "BmConn->send(): Erro ao na conexão com o gateway: {$err}";
-            throw new Exception($msgErr);                
+            throw new \Exception($msgErr);                
         }
     }
 }

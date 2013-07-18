@@ -103,7 +103,7 @@ abstract class BmXml implements BmXmlInterface {
             try {
                 $xml = $this->getXml();
                 $this->headerXml($xml);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 throw $e;
             }
         }

@@ -2,33 +2,47 @@
 
 class BmItemPedido extends BmXml {
     
-    private $categoria      = '';
-    private $codigo         = '';
+    private $categoria      = ''; //[Optional]
+    private $codigo         = ''; 
     private $descricao      = '';
     private $quantidade     = 1;    
-    private $precoUnit      = 0;
-    private $unidade        = 'CX';
-    private $campanha       = '';
-    private $precoUnitSemFormat; //Preço unitário sem formatação. Ex.: 123,40 ficará 12340, 2345 ficará 234500, 65,3 ficará 6530    
+    private $preco          = 0;
+    private $precoPromo     = 0; //[Optional]
+    private $unidade        = 'CX';//[Optional]
+    private $campanha       = '';//[Optional]
+    
+    private $precoSemFormat; //Preço normal do item sem formatação. Ex.: 123,40 ficará 12340, 2345 ficará 234500, 65,3 ficará 6530    
+    private $precoPromoSemFormat; //Preço promocional do item sem formatação.  
     
     /**
      * Inicializa um objeto com descrição, preço unitário e quantidade.
      * Ao informar o preço unitário, o padrão usado será o ponto '.' como separador decimal, sem separador de milhar.
      * 
+     * @param string $cat Categoria
+     * @param string $codigo Código do produto
      * @param string $descricao
-     * @param float $precoUnit
-     * @param integer $qtde
+     * @param float $preco Preço normal do produto/serviço
+     * @param float $precoPromo Preço promocional do produto/serviço
+     * @param integer $qtde Quantidade
+     * @param string $unidade Unidade de medida do produto
+     * @param string $campanha Nome/código da campanha vigente, se houver
      */
-    function __construct($cat='',$codigo,$descricao,$precoUnit=0,$qtde=1,$unidade='CX',$campanha=''){
+    function __construct($cat='',$codigo,$descricao,$preco=0,$precoPromo=0,$qtde=1,$unidade='CX',$campanha=''){
         $this->setCategoria($cat);
         $this->setCodigo($codigo);
         $this->setDescricao($descricao);
-        $this->quantidade = (int)$qtde;
+        $this->setQuantidade($qtde);
         $this->setUnidade($unidade);
         $this->setCampanha($campanha);
-        if ($precoUnit > 0) {
-            $this->precoUnitEn($precoUnit);
-        }
+        if ($preco > 0) $this->setPreco($preco);
+        if ($precoPromo > 0) $this->setPrecoPromo($precoPromo);
+    }
+    
+    function setQuantidade($quantidade){
+        $quantidade = (int)$quantidade;
+        if ($quantidade == 0) $quantidade = 1;
+        $this->quantidade = $quantidade;
+        $this->addParamXml('QUANTIDADE',$this->quantidade);
     }
     
     function setCategoria($value){
@@ -63,10 +77,17 @@ class BmItemPedido extends BmXml {
         return $codigo;
     }
     
-    function setUnidade($unidade){
-        if (strlen($unidade) <= 3 && ctype_alpha($unidade)) {
-            $this->unidade = $unidade;            
-            $this->addParamXml('UNIDADE',$unidade);
+    /**
+     * Define a unidade de medida para o atual.
+     * Por exemplo, 'CX' para caixa, 'ASS' para assinatura etc.
+     * 
+     * @param string $unidade Código com até 3 letras 
+     * @throws \Exception Caso o código informado seja inválido
+     */
+    function setUnidade($codUnidade){
+        if (strlen($codUnidade) >= 1 && strlen($codUnidade) <= 3 && ctype_alpha($codUnidade)) {
+            $this->unidade = $codUnidade;            
+            $this->addParamXml('UNIDADE',$codUnidade);
         } else {
             throw new \Exception('ItemPedido->setUnidade(): a unidade informada '.$unidade.' não é válida. A unidade deve conter apenas letras e no máximo 3 catacteres.');
         }
@@ -114,81 +135,73 @@ class BmItemPedido extends BmXml {
         return $descricao;        
     }
     
-    /**
-     * Informa a quantidade de um produto e qual a sua unidade de medida.
-     * 
-     * @param integer $qtde Valor inteiro que indica a quantidade do item.
-     * @param string $unid Unidade de medida do produto. É permitido utilizar no máximo 3 letras para indicar a unidade.
-     * Por exemplo, "CX" para caixa, "PC" para pacote, "UN"
-     * 
-     * @throws \Exception
-     */
-    function setQuantidade($qtde=1,$unidade='CX'){
-        if (ctype_alpha($unid)) {
-            $this->quantidade = (int)$qtde;
-            $this->setUnidade($unidade);
-            $this->addParamXml('QUANTIDADE',$this->quantidade);
-        } else {
-            throw new \Exception('A unidade '.$unid.' informada em ItemPedido->setQuantidade() não é válida. O parâmetro unid deve conter apenas letras.');
-        }
-    }
-    
     function getQuantidade(){
         $quantidade = (int)$this->quantidade;
         if ($quantidade == 0) $quantidade = 1;
         return $quantidade;
     }
-    
+
     /**
-     * Informa o preço unitário do produto no formato 9999.99 (notação inglesa).
-     * 
-     * @param float $precoUnit Valor decimal no formato americano (usa ponto como separador decimal)
+     * Informa o preço normal do item atual.
+     *      
+     * @param float $preco Preço normal como valor decimal
+     * @return void
      */
-    function precoUnitEn($precoUnit){
-        $precoUnit = str_replace(',','',$precoUnit);
-        $this->setPrecoUnit($precoUnit,'.','');
-    }
-    
+    function setPreco($preco){
+        $this->setPrecoUnit($preco,'PRECO');
+    }      
+        
     /**
-     * Informa o preço unitário do produto no formato 9999,99.
-     * 
-     * @param float $precoUnit Valor decimal no formato brasileiro (usa vírgula como separador decimal)
-     * @param string $thousandsSep Caractere separador de milhar.
-     */    
-    function precoUnitBr($precoUnit) {
-        $precoUnit = str_replace('.','',$precoUnit);        
-        $this->setPrecoUnit($precoUnit,',','');
-    }
+     * Informa o preço promocional do item atual.
+     *      
+     * @param float $preco Preço promocional como valor decimal
+     * @return void
+     */
+    function setPrecoPromo($preco){
+        $this->setPrecoUnit($preco,'PRECO_PROMO');
+    }    
     
     /**
      * Informa o preço unitário do produto.
      *      
-     * @param float $precoUnit Preço como valor decimal
-     * @param string $decPoint Separador decimal usado no $precoUnit informado.
-     * @param string $thousandsSep Separador de milhar usado no $precoUnit informado.
+     * @param float $preco Preço como valor decimal
+     * @param string $tagName Tag Xml que será enviada ao servidor remoto.
      * @return void
      */
-    private function setPrecoUnit($precoUnit,$decPoint,$thousandsSep){
-        if (is_numeric($precoUnit)) {
-            $precoUnitSemFormat             = $this->convertNumberDec2NumberInt($precoUnit, $decPoint, $thousandsSep); 
-            $this->precoUnitSemFormat       = $precoUnitSemFormat;
-            $this->precoUnit                = number_format($precoUnit,2,'.','');
-           
-            $this->addParamXml('PRECO_UNIT',$this->precoUnit);
+    private function setPrecoUnit($preco,$tagName){
+        if (is_numeric($preco)) {
+            $varPreco               = 'preco';
+            $varPrecoSemFormat      = 'precoSemFormat';
+            if ($tagName == 'PRECO_PROMO') {
+                $varPreco            = 'precoPromo';
+                $varPrecoSemFormat   = 'precoPromoSemFormat';                
+            }
             
+            $precoSemFormat             = $this->convertNumberDec2NumberInt($preco, '.', ''); 
+            $this->$varPrecoSemFormat   = $precoSemFormat;
+            $this->$varPreco            = number_format($preco,2,'.','');
+           
+            $this->addParamXml($tagName,$this->$varPreco);            
         } else {
-            throw new \Exception('ItemPedido->setPrecoUnit(): O preço unitário informado não é um valor válido.');
+            throw new \Exception('ItemPedido->setPrecoUnit(): O preço informado não é um valor válido.');
         }
     }
     
-    function getPrecoUnit(){
-        return $this->precoUnit;
+    function getPreco(){
+        return $this->preco;
     }
     
-    function getPrecoUnitSemFormat(){
-        return $this->precoUnitSemFormat;
+    function getPrecoPromo(){
+        return $this->precoPromo;
+    }    
+    
+    function getPrecoSemFormat(){
+        return $this->precoSemFormat;
     }
     
+    function getPrecoPromoSemFormat(){
+        return $this->precoPromoSemFormat;
+    }    
     /**
      * Recebe um valor no formato 9.999,99, ou 9999.99, ou ainda 9999,99, e converte 
      * para um valor inteiro, sem separadores, onde os dois últimos caracteres representam 
@@ -211,13 +224,16 @@ class BmItemPedido extends BmXml {
     }
     
     /**
-     * Calcula o subtotal do produto atual multiplicando a quantidade pelo valor unitário.
+     * Calcula o subtotal do item atual multiplicando a quantidade pelo valor unitário.
+     * Caso o item esteja com preço promocional este será usado como valor unitário.
      * 
      * @return float Retorna o subtotal do produto atual.
      */
     function calcSubtotal(){
-        $quantidade    = (int)$this->quantidade;
-        $precoUnit     = $this->precoUnitSemFormat;
+        $quantidade    = (int)$this->quantidade;        
+        $preco         = $this->getPrecoSemFormat();
+        $precoPromo    = $this->getPrecoPromoSemFormat();
+        $precoUnit     = ($precoPromo > 0) ? $precoPromo : $preco;
         $subtotal      = $precoUnit;
         
         if ($quantidade > 1) {
@@ -232,16 +248,13 @@ class BmItemPedido extends BmXml {
         return $subtotal;
     }
     
-    function setPrecoPromo($precoDe,$precoPor){
-        
-    }
-    
     public function getXml(){             
         try {
             $xml            = '';
             $xmlParams      = ''; 
             $arrParamsXml   = $this->getParamsXml();
             if (is_array($arrParamsXml)) {
+                $this->calcSubtotal();
                 foreach($arrParamsXml as $param => $value) {
                     if (strlen($param) > 0) {
                         $xmlParams .= $this->getTagXml($param, $value);
@@ -254,7 +267,7 @@ class BmItemPedido extends BmXml {
             <ITEM save='{$save}'>
                 {$xmlParams}
             </ITEM>";
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
         return $xml;

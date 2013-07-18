@@ -1,7 +1,7 @@
 <?php
 
 
-class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
+class BmCartaoDeCredito  extends BmXml {
     
     private $bandeiraCc     = ''; //visa | mastercard | diners | discover | elo | amex
     private $arrBandeiraCc  = array('visa','mastercard','diners','discover','elo','amex');
@@ -14,8 +14,12 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
     private $codSeg;//3..4 dígitos
     private $validadeCc; //yyyymm    
     
-    public function __construct() {
-        
+    public function __construct($bandeiraCc='',$cc='',$codSeg=0,$validade='',$numParcelas=1,$convenio='') {
+        if (strlen($bandeiraCc) > 0 || strlen($cc) > 0) {
+            $this->setCc($bandeiraCc, $cc, $codSeg, $validade); 
+        }
+        $this->setParcelas($numParcelas);
+        $this->setConvenio($convenio);
     }
     
     public function capturaOn(){
@@ -46,9 +50,10 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
                 $strConvenios = join(', ', $this->arrConveniosCc);
                 $msgErr = "Erro nos dados do cartão de crédito: O convênio informado '".$convenio."' não é válido. ";
                 $msgErr .= 'Os valores permitidos são '.$strConvenios.'.';
-                throw new Exception($msgErr);                  
+                throw new \Exception($msgErr);                  
             }
         }
+        $this->addParamXml('CONVENIO',$this->convenio);
     }
     
     /**
@@ -70,12 +75,12 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
             $this->setNumCc($cc);
             $this->setCodSeg($codSeg);
             $this->setValidadeCc($validadeCc);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
         
         if (strlen($msgErr) > 0) {
-            throw new Exception($msgErr);    
+            throw new \Exception($msgErr);    
         }
     }    
     
@@ -94,12 +99,13 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
             $key = array_search($bandeiraCc, $this->arrBandeiraCc);
             if ($key !== FALSE) {
                 $this->bandeiraCc = $bandeiraCc;
+                $this->addParamXml('BANDEIRA',$this->bandeiraCc);
             }            
         }
 
         if ($key === FALSE) {
             $msgErr = 'Erro nos dados do cartão de crédito: A bandeira informada '.$bandeiraCc.' não é válida.';
-            throw new Exception($msgErr);                
+            throw new \Exception($msgErr);                
         } 
         return $bandeiraCc;
     }
@@ -122,14 +128,15 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
             } else {
                 //Cartão Ok
                 $msgErr = '';
-                $this->cc = $cc;                
+                $this->cc = $cc; 
+                $this->addParamXml('CC',$this->cc);
             }
         } else {
             $msgErr = 'Erro nos dados do cartão de crédito: O número do cartão possui caracteres não numéricos ou não foi informado.'; 
         }
         
         if (strlen($msgErr) > 0) {
-            throw new Exception($msgErr); 
+            throw new \Exception($msgErr); 
             return FALSE;
         }
         return $cc;
@@ -149,9 +156,10 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
         $limCodSeg  = ($bandeira == 'amex') ? 4 : 3;            
         if (strlen($codSeg) !== $limCodSeg) {
             $msgErr = 'Erro nos dados do cartão de crédito: O código de segurança parece estar incorreto.';
-            throw new Exception($msgErr);            
+            throw new \Exception($msgErr);            
         } else {
             $this->codSeg = $codSeg;
+            $this->addParamXml('COD_SEG',$this->codSeg);
         }         
         return $codSeg;
     }    
@@ -180,6 +188,7 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
             if ($diff >= 0) {
                 //Cartão dentro da validade.
                 $this->validadeCc = $validadeCc;
+                $this->addParamXml('VALIDADE',$this->validadeCc);
             } else {
                 $msgErr = 'Erro na validade do cartão de crédito: Cartão parece estar vencido.';
             }           
@@ -188,7 +197,7 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
         }
         
         if (strlen($msgErr) > 0) {
-            throw new Exception($msgErr);    
+            throw new \Exception($msgErr);    
         }  
         return $validadeCc;
     }
@@ -198,9 +207,10 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
         $numParcelas_ = (int)$numParcelas;
         if ($numParcelas_ >= 1 && $numParcelas_ <= 60) {
             $this->numParcelas = $numParcelas_;
+            $this->addParamXml('PARCELAS',$this->numParcelas);
         } else {
             $msgErr = "O número de parcelas informado '{$numParcelas}' não é válido. Informe um valor numérico >= 1 e <= 60 (o número máximo de parcelas permitidas depende do contrato com seu convênio).";
-            throw new Exception($msgErr); 
+            throw new \Exception($msgErr); 
         }
     }  
     
@@ -240,29 +250,11 @@ class BmCartaoDeCredito  extends BmXml implements BmXmlInterface {
         $bandeiraCc = $this->setBandeira($this->bandeiraCc);
         return $bandeiraCc;
     }
-    
-    public function getXml(){     
-        try {
-            $xml = "
-            <CARTAO>
-               ".$this->setTagXml('CONVENIO', $this->getConvenio())."
-               ".$this->setTagXml('BANDEIRA', $this->getBandeira())." 
-               ".$this->setTagXml('CC', $this->getNumCc())."       
-               ".$this->setTagXml('COD_SEG', $this->getCodSeg())." 
-               ".$this->setTagXml('VALIDADE', $this->getValidade())." 
-               ".$this->setTagXml('PARCELAS', $this->getParcelas())." 
-               ".$this->setTagXml('CAPTURA', $this->getCaptura())." 
-            </CARTAO>";
-        } catch (Exception $e) {
-            throw $e;
-        }
+
+    public function getXml(){                     
+        $xml = "<CARTAO>".$this->getTagParams()."</CARTAO>";        
         return $xml;
-    }
-    
-    public function printXml(){
-        $xml = $this->getXml();
-        $this->headerXml($xml);
-    }    
+    }   
 }
 
 ?>

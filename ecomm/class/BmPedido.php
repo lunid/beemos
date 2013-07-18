@@ -2,29 +2,13 @@
     include('BmConn.php');
     class BmPedido extends BmXml {
 
-        //Lista de parâmetros permitidos ao criar um novo pedido
-        private $arrLibParams = array(
-            'NUM_PEDIDO:setNumPedido',
-            'VALOR_COMPRA:setValorCompra',                
-            'VALOR_TOTAL:setTotalPedido',
-            'VALOR_FRETE:setFrete',
-            'NOME_SAC:setNomeSac',
-            'EMAIL_SAC:setEmailSac',
-            'ENDERECO_SAC:setEnderecoSac',
-            'CIDADE_SAC:setCidadeSac',
-            'UF_SAC:setUfSac',
-            'CPF_CNPJ_SAC:setCpfCnpjSac',
-            'CAMPANHA:setCampanha',            
-            'OBS:setObs',
-            'FORMA_PGTO:setFormaPgto'
-        );
-
         private $arrParams          = array();
         private $xmlParamsSacado    = '';
         private $xmlParamsMeioPgto  = '';        
         private $arrObjItemPedido   = array(); //Array de objetos do tipo ItemPedido.
-        private $valorTotalDoPedido = 0;
-        private $valorFrete         = 0;              
+        private $valorTotalDoPedido = 0;//Valor decimal
+        private $valorDesconto      = 0;//Valor decimal
+        private $valorFrete         = 0;//Valor decimal
         private $saveSacado = FALSE;//Grava os dados do sacado no servidor remoto.        
 
         /**
@@ -111,13 +95,26 @@
                 throw new \Exception($msgErr);
             }
         }
+        
+        public function setDesconto($value){
+            if (is_numeric($value)) {
+               $valueDec               = number_format($value, 2, '.', '');
+               $this->valorDesconto    = $valueDec;
+
+               $this->addParamXml('VALOR_DESC',$valueDec);
+            } else {
+                $msgErr = "Pedido->setDesconto() O valor informado {$value} não é um valor válido.";
+                throw new \Exception($msgErr);
+            }            
+        }
 
         public function getTotalPedido(){
             $valorTotalDoPedido = $this->valorTotalDoPedido;
             if ($valorTotalDoPedido == 0) {
                 //Um valor explícito não foi informado. Calcula o total do pedido           
                 $subtotalItens      = 0;
-                $frete              = $this->valorFrete;
+                $frete              = (float)$this->valorFrete;
+                $valorDesc          = (float)$this->valorDesconto;
                 $arrObjItemPedido   = $this->arrObjItemPedido;
                 if (is_array($arrObjItemPedido)) {
                     foreach($arrObjItemPedido as $objItemPedido){
@@ -127,7 +124,14 @@
                 }
 
                 $valorTotalDoPedido = $subtotalItens+$frete;
+                if ($valorDesc <= $valorTotalDoPedido) {
+                    $valorTotalDoPedido -= $valorDesc;
+                } else {
+                    $msgErr = "Pedido->getTotalPedido() O desconto de {$value} é maior que o valor total do pedido de {$valorTotalDoPedido}.";
+                    throw new \Exception($msgErr);                    
+                }
             }
+            $this->addParamXml('VALOR_TOTAL',$valorTotalDoPedido);
             return $valorTotalDoPedido;
         }
 
@@ -158,8 +162,8 @@
          */
         function getXml(){
             
-            $arrParams          = $this->arrParams;
-            $arrObjItemPedido   = $this->arrObjItemPedido;
+            $this->getTotalPedido();   
+            $arrObjItemPedido   = $this->arrObjItemPedido;            
             $valoresAdic        = $this->getTagParams();
    
             $xml  = '<ROOT>';
@@ -167,8 +171,7 @@
             $xml .= $this->xmlParamsSacado;
             $xml .= $this->xmlParamsMeioPgto;                
 
-            $totalPedido = $this->getTotalPedido();
-            //$xml        .= $this->setTagXml('TOTAL_PEDIDO', $totalPedido);
+                    
 
             if (is_array($arrObjItemPedido)) {   
                 //Inclui os itens do pedido:
@@ -177,7 +180,7 @@
                 } 
             } else {
                 $msgErr = 'Pedido->getXml() Nenhum produto foi adicionado ao pedido. É necessário incluir pelo menos um produto ao novo pedido.';
-                throw new Exception($msgErr);
+                throw new \Exception($msgErr);
             }
             $xml .= "<VALORES_ADIC>{$valoresAdic}</VALORES_ADIC>";
             $xml .= "</PEDIDO>";
@@ -224,7 +227,7 @@
                 //if (is_bool($response)) $response = (bool)$response;//Converte para um valor booleano
             } else {
                 $msgErr = "Impossível salvar o pedido. A string XML contendo os dados do pedido está vazia.";
-                throw new Exception($msgErr);
+                throw new \Exception($msgErr);
             }
             return $response;
         }
