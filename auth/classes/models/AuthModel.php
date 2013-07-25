@@ -2,7 +2,7 @@
     namespace auth\classes\models;
     
     use \sys\classes\mvc\Model;  
-    use \auth\classes\helpers\Error;
+    use \auth\classes\helpers\ErrorHelper;
     use \common\classes\helpers\Usuario;  
     use \common\db_tables as TB;
     use \common\classes\models\UsuariosModel;
@@ -95,7 +95,7 @@
             $ret            = new \stdClass();
             $ret->status    = false;
             $ret->user      = false;
-            $ret->msg       = Error::eLogin("FALHA_PADRAO");
+            $ret->msg       = ErrorHelper::eLogin("FALHA_PADRAO");
             
             //Tabela SPRO_USER
             $tbUser = new TB\User();

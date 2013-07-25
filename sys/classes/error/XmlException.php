@@ -56,30 +56,30 @@
          */
         function findFileXmlError($nameFileXml){
             //Verifica se o arquivo XML existe na pasta dic/ do módulo de origem.
-            $fileExists = FALSE;
+            $fileExists         = FALSE;
+            $physicalPathXml    = \Url::physicalPath(APPLICATION_PATH.$nameFileXml.'.xml');
+            $physicalPathXml    = str_replace('//','/',$physicalPathXml);
 
-            //Caso contrário carrega modulo sendo usado pelo usuário
-            $module = \Application::getModule();
-            
-            $physicalPathXml = $this->getPhysicalPathXml($nameFileXml,$module);           
-           
             if (!file_exists($physicalPathXml)) {
-                //Arquivo não existe no módulo de origem. Verifica se existe no módulo sys.
-                $module             = \LoadConfig::folderSys();
-                $physicalPathXml    = $this->getPhysicalPathXml($nameFileXml,$module);        
-            }
-           
-            if (!file_exists($physicalPathXml)) {
-                //Arquivo não existe no módulo sys. Verifica se existe no módulo common.
-                $module             = \LoadConfig::folderSys();
-                $physicalPathXml    = $this->getPhysicalPathXml($nameFileXml,"common");        
+                //O nome de arquivo informado não é um nome qualificado. 
+                //Verificar se o arquivo encontra-se nos módulos principais.                   
+                $moduloOrig     = \Application::getModule();//Módulo onde ocorreu a chamada do script
+                $moduloSys      = \LoadConfig::folderSys();                
+                $arrModulos     = array($moduloOrig,$moduloSys,'common');
+                
+                foreach($arrModulos as $modulo) {
+                    $physicalPathXml = $this->getPhysicalPathXml($nameFileXml,$modulo); 
+                    if (file_exists($physicalPathXml)) {
+                        //Encontrou o arquivo xml no módulo atual.
+                        break;
+                    }
+                }              
             }
             
             if (file_exists($physicalPathXml)) {
                 $this->_physicalPathXml = $physicalPathXml;
                 $fileExists             = TRUE;
-            }           
-            
+            }               
             return $fileExists;
         }      
         

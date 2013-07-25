@@ -3,7 +3,7 @@
     use \sys\classes\mvc as Mvc;    
     use \sys\classes\security\Token;    
     use \auth\classes\models\AuthModel;
-    use \auth\classes\helpers\Error;
+    use \auth\classes\helpers\ErrorHelper;
     use \sys\classes\util;
     
     class Cadastro extends Mvc\ExceptionController {
@@ -57,21 +57,21 @@
                         \Auth::unsetMessage();//Limpa mensagens de erro que por ventura tenham ocorrido em tentativas anteriores.
                         
                         if($ret->status){
-                            \Auth::setMessage(Error::eLogin('FB_USER_EXISTS'));
+                            \Auth::setMessage(ErrorHelper::eLogin('FB_USER_EXISTS'));
                         }else{
                             //Inicia sessão
                             $_SESSION['fb_user_cadastro'] = $user;
                         }
                     }else{
-                        $msgErr = Error::eLogin('FB_USER');   
+                        $msgErr = ErrorHelper::eLogin('FB_USER');   
                         \Auth::setMessage($msgErr);
                     }
                 }else{
-                    $msgErr = Error::eLogin('FB_TOKEN');   
+                    $msgErr = ErrorHelper::eLogin('FB_TOKEN');   
                     \Auth::setMessage($msgErr);
                 }
             }else{
-                $msgErr = Error::eLogin('FB_CODE');   
+                $msgErr = ErrorHelper::eLogin('FB_CODE');   
                 \Auth::setMessage($msgErr);
             }
             
@@ -127,15 +127,15 @@
                         $redirect = $objRedirect->$perfil;
                     } else {
                         //Autenticação falhou.      
-                        $msgErr = Error::eLogin('LOGIN');    
+                        $msgErr = ErrorHelper::eLogin('LOGIN');    
                         \Auth::setMessage($msgErr);
                     }
                } else {
-                    $msgErr = Error::eLogin('PARAMS_REQUIRED');   
+                    $msgErr = ErrorHelper::eLogin('PARAMS_REQUIRED');   
                     \Auth::setMessage($msgErr);
                }
             } else {
-                $msgErr = Error::eLogin('TOKEN');  
+                $msgErr = ErrorHelper::eLogin('TOKEN');  
                 \Auth::setMessage($msgErr);
             }      
             Header('Location: /'.$redirect);  

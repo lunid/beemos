@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
     <errors>
-        <error id='USER_NOT_EXISTS'>Usuário não localizado.</error>
-        <error id='USER_NOT_EXISTS'>Usuário não localizado.</error>
-        <error id='USER_BLOQ'>A conta referente à assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.</error>
-        <error id='ASSINATURA_BLOQ'>A assinatura informada está suspensa. Entre em contato com a Supervip para reativar o serviço.</error>
-        <error id='ERR_ACTION_NOT_EXISTS'>O parâmetro action "{ACTION_NAME}" não é válido.</error>
-        <error id='ERR_ACTION_NOT_INFO'>O parâmetro action não foi informado.</error>
-        <error id='ERR_HASH_ASS'>O parâmetro uid ({HASH_ASSINATURA}) parece estar incorreto.</error>
+        <error id='ERR_PARAMS'>
+            Um ou mais parâmetros obrigatórios não foram informados. 
+            Verifique os parâmetros uid (chave da assinatura) e action antes de realizar nova requisição ao servidor.
+        </error>    
+        <error id='ERR_ACTION_NOT_EXISTS'>O parâmetro action "{ACTION_NAME}" não é válido.</error>        
     </errors>
 </root>

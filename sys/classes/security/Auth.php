@@ -6,7 +6,7 @@
  * @author Supervip
  */
 use \sys\classes\util\Request;
-use \auth\classes\helpers\Error;
+use \auth\classes\helpers\ErrorHelper;
 
 class Auth {
 

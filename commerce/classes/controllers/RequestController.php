@@ -3,7 +3,7 @@
 use \sys\classes\util as util;
 use \commerce\classes\controllers\IndexController;
 use \commerce\classes\helpers as helpers;
-//use \commerce\classes\helpers\XmlRequestHelper;
+use \commerce\classes\helpers\XmlRequestHelper;
 //use \commerce\classes\helpers\ErrorMessageHelper;
 use \commerce\classes\models\PedidoModel;
 use \commerce\classes\models\NumPedidoModel;
@@ -19,39 +19,42 @@ class Request extends IndexController {
     
     /**
      * Recebe a requisição do cliente e valida os parâmetros obrigatórios 'action' e 'uid'.
-     * A partir de 'uid' verifica se a assinatura está ativa.
+     * A partir de 'uid' (chave da assinatura) verifica se a assinatura está ativa.
      * Se nenhum erro for encontrado executa o método informado em 'action' e imprime a resposta no formato XML.
      * 
      * @return void
+     * 
+     * @throws Exception Caso um ou mais parâmetros obrigatórios não tenham sido informados.
+     * @throws Exception Caso a action informada não exista.
      */
     function actionIndex(){
         $msgErr         = '';
         $response       = '';
         $action         = util\Request::post('action', 'STRING');
         $hashAssinatura = util\Request::post('uid', 'STRING');                      
-        $strXml         = util\Request::post('strXml', 'STRING');   
-        $variable       = util\Request::post('variable', 'STRING');   
-        $hashAssinatura = 'sdfds';
+        $this->strXml   = util\Request::post('strXml', 'STRING'); //Opcional   
+        $variable       = util\Request::post('variable', 'STRING'); //Opcional 
+        $action         = '';
         try {
+            if (strlen($hashAssinatura) == 0 || strlen($action) == 0) {
+                $message = helpers\ErrorHelper::eRequest('ERR_PARAMS');  
+                throw new \Exception($message);
+            }
+            
             //Faz a validação da action informada:            
             $objAssinatura = new Assinatura($hashAssinatura);
-            if ($objAssinatura->getIdAssinatura() > 0) {
-                if ($objAssinatura->assinaturaValida()) {
-                        $method = 'action'.ucfirst($action);
-                        if (strlen($action) > 0 && method_exists($this,$method)) {                    
-                            $response = $this->$method();
-                        } else {
-                            //A action informada não existe. 
-                            $arrParams['ACTION_NAME'] = $action;
-                            $response = helpers\Error::eRequest('ERR_ACTION_NOT_EXISTS',$arrParams);                             
-                        }                  
+            
+            if ($objAssinatura->assinaturaValida()) {
+                $method = 'action'.ucfirst($action);
+                if (strlen($action) > 0 && method_exists($this,$method)) {                    
+                    $response = $this->$method($objAssinatura);
                 } else {
-                    $response = $objAssinatura->getStatus();
-                } 
-            } else {
-                $arrParams['HASH_ASSINATURA'] = $hashAssinatura;
-                $response = helpers\Error::eRequest('ERR_HASH_ASS',$arrParams);  
+                    //A action informada não existe. 
+                    $arrErrParams['ACTION_NAME'] = $action;
+                    $response = helpers\ErrorHelper::eRequest('ERR_ACTION_NOT_EXISTS',$arrErrParams);                             
+                }                  
             }
+            
             echo $response;
             die();
 
@@ -59,7 +62,7 @@ class Request extends IndexController {
             echo $e->getMessage();
             die();
         }
-    }        
+    }      
     
     /**
      * Localiza os dados do pedido informado.
@@ -79,7 +82,7 @@ class Request extends IndexController {
         return $response;        
     }
     
-    private function actionSavePedido(){  
+    private function actionSavePedido($objAssinatura){  
         $msgErr             = '';
         $response           = '';
         $xmlNovoPedido      = $this->strXml;       

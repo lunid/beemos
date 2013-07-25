@@ -2,7 +2,7 @@
 
     namespace commerce\classes\models;
     use \sys\classes\mvc\Model;  
-    use \auth\classes\helpers\Error;
+    use \auth\classes\helpers\ErrorHelper;
     use \common\db_tables as TB;    
     
     class PedidoModel extends Model {   

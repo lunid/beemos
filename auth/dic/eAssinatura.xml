@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root>
+    <errors>
+        <error id='ERR_ASS_NOT_EXISTS'>Não existe uma assinatura válida para a chave '{HASH_ASSINATURA}'. Nenhum registro foi localizado.</error> 
+        <error id='ERR_HASH_ASS'>
+            A chave da assinatura '{HASH_ASSINATURA}' não foi informada corretamente. 
+            Pode ser que a quantidade de caracteres esteja incorreta, ou então a chave possui caracteres inválidos.
+            A chave da assinatura deve conter entre 32 e 64 caracteres alfanuméricos.
+        </error>        
+        <error id='VLD_ID_ASS'>Impossível verificar o bloqueio da assinatura, pois nenhum registro foi encontrado.</error>  
+        <error id='VLD_BLOQ_USER'>A conta do usuário informado está bloqueada.</error>              
+        <error id='VLD_BLOQ_ASS'>A assinatura informada está bloqueada.</error>                       
+    </errors>        
+</root>

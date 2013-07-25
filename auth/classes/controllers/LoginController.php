@@ -3,7 +3,7 @@
     use \sys\classes\mvc as Mvc;    
     use \sys\classes\security\Token;    
     use \auth\classes\models\AuthModel;
-    use \auth\classes\helpers\Error;
+    use \auth\classes\helpers\ErrorHelper;
     use \sys\classes\util as util;
     
     class Login extends Mvc\ExceptionController {
@@ -122,11 +122,11 @@
 
                     $codigoPerfil   = $this->initLogon($objUsuario);
                } else {
-                    $msgErr = Error::eLogin('PARAMS_REQUIRED');   
+                    $msgErr = ErrorHelper::eLogin('PARAMS_REQUIRED');   
                     \Auth::setMessage($msgErr);
                }
             } else {
-                $msgErr = Error::eLogin('TOKEN');  
+                $msgErr = ErrorHelper::eLogin('TOKEN');  
                 \Auth::setMessage($msgErr);
             }      
             $this->redirect($codigoPerfil);    
@@ -171,15 +171,15 @@
                             \Auth::setMessage($ret->msg);
                         }
                     }else{
-                        $msgErr = Error::eLogin('FB_USER');   
+                        $msgErr = ErrorHelper::eLogin('FB_USER');   
                         \Auth::setMessage($msgErr);
                     }
                 }else{
-                    $msgErr = Error::eLogin('FB_TOKEN');   
+                    $msgErr = ErrorHelper::eLogin('FB_TOKEN');   
                     \Auth::setMessage($msgErr);
                 }
             }else{
-                $msgErr = Error::eLogin('FB_CODE');   
+                $msgErr = ErrorHelper::eLogin('FB_CODE');   
                 \Auth::setMessage($msgErr);
             }
             
@@ -240,11 +240,11 @@
                     $objUsuario     = $objAuthModel->carregarUsuarioHash($hash);                    
                     $codigoPerfil   = $this->initLogon($objUsuario);
                } else {
-                    $msgErr = Error::eLogin('PARAMS_REQUIRED');   
+                    $msgErr = ErrorHelper::eLogin('PARAMS_REQUIRED');   
                     \Auth::setMessage($msgErr);
                }
             } else {
-                $msgErr = Error::eLogin('TOKEN');  
+                $msgErr = ErrorHelper::eLogin('TOKEN');  
                 \Auth::setMessage($msgErr);
             }      
             $this->redirect($codigoPerfil);        
@@ -264,7 +264,7 @@
                 $codigoPerfil   = $objUsuario->CODIGO_PERFIL;                    
             } else {
                 //Autenticação falhou.      
-                $msgErr = Error::eLogin('LOGIN');    
+                $msgErr = ErrorHelper::eLogin('LOGIN');    
                 \Auth::setMessage($msgErr);                
             }            
             return $codigoPerfil;

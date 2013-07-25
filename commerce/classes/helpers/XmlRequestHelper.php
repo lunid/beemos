@@ -6,7 +6,7 @@ use \commerce\classes\models\NumPedidoModel;
 
 class XmlRequestHelper extends Xml {
     
-    static  $arrParamsReq       = array('BANDEIRA','NUM_CARTAO','COD_SEGURANCA','VALOR_COMPRA','VLD_MES','VLD_ANO','PARCELAS','NUM_PEDIDO');//Parâmetros obrigatórios
+    static  $arrParamsReq       = array('NOME','BANDEIRA','NUM_CARTAO','COD_SEGURANCA','VALOR_COMPRA','VLD_MES','VLD_ANO','PARCELAS','NUM_PEDIDO');//Parâmetros obrigatórios
     static  $arrParamsOpt       = array('CAPTURA_AUTO');//Parâmetros Opcionais
     private $arrParams          = array();
     private $arrMsgErr          = array();
@@ -78,14 +78,16 @@ class XmlRequestHelper extends Xml {
             $objXml = simplexml_load_string(utf8_encode($stringXmlRequest));  
             if (is_object($objXml)) {
                 $nodePedido         = $objXml->PEDIDO->PARAM;
-                $nodeItens          = $objXml->PEDIDO->ITEM;//Pode ter um ou mais itens   
-                $nodeCheckoutBlt    = $objXml->CHECKOUT->BOLETO->PARAM;
-                $nodeCheckoutCc     = $objXml->CHECKOUT->CARTAO->PARAM;
+                $nodeSacado         = $objXml->PEDIDO->SACADO->PARAM;
+                $nodeItens          = $objXml->PEDIDO->ITENS->ITEM;//Pode ter um ou mais itens   
+                $nodeCheckoutCc     = $objXml->PEDIDO->CHECKOUT->CARTAO->PARAM;
+                $nodeCheckoutBlt    = $objXml->PEDIDO->CHECKOUT->BOLETO->PARAM;
                 
-                $msgErr             = $this->vldPedidoNode($nodePedido,$msgErr);
+                //$msgErr             = $this->vldPedidoNode($nodePedido,$msgErr);
+                $msgErr             = $this->vldSacadoNode($nodeSacado,$msgErr);
                 $msgErr             = $this->vldItemNode($nodeItens,$msgErr);
-                $msgErr             = $this->vldCheckoutBlt($nodeCheckoutBlt,$msgErr);
                 $msgErr             = $this->vldCheckoutCc($nodeCheckoutCc,$msgErr);
+                $msgErr             = $this->vldCheckoutBlt($nodeCheckoutBlt,$msgErr);                
                 
                 $objDadosPedido     = $this->objDadosPedido;
                 $arrObjItensPedido  = $this->arrObjItensPedido;
@@ -108,31 +110,28 @@ class XmlRequestHelper extends Xml {
     }
     
     /**
-     * Recebe um nó XML <PEDIDO> e faz a validação das tags PARAM.
+     * Recebe um nó XML <PEDIDO> e faz a validação das tags PARAM para dados do Sacado.
      * 
      * @param object $node
      * @return string[]
      */
-    private function vldPedidoNode($node,$msgErr=array()){  
+    private function vldSacadoNode($node,$msgErr=array()){  
         //Formato de cada índice de arrParams:
-        //PARAM:tipoValor:obrigatorio        
+        //PARAM:tipoValor:obrigatorio:length      
         $arrParams = array(
-            'NUM_PEDIDO:integer:0',
-            'NOME_SAC:string:1',
-            'EMAIL_SAC:email:0',
-            'ENDERECO_SAC:string:0',
-            'CIDADE_SAC:string:0',
-            'UF_SAC:string:0',
-            'CPF_CNPJ_SAC:string:0',
-            'VALOR_FRETE:float:0',
-            'TOTAL_PEDIDO:float:0',
-            'SAVE_SAC:integer:0'
+            'NUM_PEDIDO:integer:0:0',
+            'NOME:string:1:100',
+            'EMAIL:email:0:100',
+            'ENDERECO:string:0:120',
+            'CIDADE:string:0:100',
+            'UF:string:0:2',
+            'CPF_CNPJ:string:0:20',
         );        
         
         if (!is_null($node)) {  
             $objDadosPedido = new \stdClass();
             foreach($arrParams as $item) {                
-                list($param,$type,$required) = explode(':',$item);
+                list($param,$type,$required,$length) = explode(':',$item);
                 $err    = '';
                 $value  = self::valueForAttrib($node,'id',$param);
                 if ($type == 'integer') {                    
