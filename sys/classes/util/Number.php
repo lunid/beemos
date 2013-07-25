@@ -28,8 +28,14 @@
          * @param int $number Número do CNPJ sem formatação
          * @return type
          */
-        public static function formatCNPJ($number){
-            return substr($number, 0, 2) . "." . substr($number, 2, 3) . "." . substr($number, 5, 3) . "/" . substr($number, 8, 4) . "-" . substr($number, 12, 2);
+        public static function formatCPF_CNPJ($number){
+            if(strlen($number) == 11){
+                return substr($number, 0, 3) . "." . substr($number, 3, 3) . "." . substr($number, 6, 3) . "-" . substr($number, 9);
+            }else if(strlen($number) > 11){
+                return substr($number, 0, 2) . "." . substr($number, 2, 3) . "." . substr($number, 5, 3) . "/" . substr($number, 8, 4) . "-" . substr($number, 12, 2);
+            }else{
+                return $number;
+            }
         }
         
         public static function formatTel($number){

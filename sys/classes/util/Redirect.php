@@ -15,6 +15,7 @@
          */
         function __construct($xmlFile='redirect.xml'){           
             //Verifica o arquivo informado, concatenado no $rootFolder, existe.            
+            $xmlFile            = APPLICATION_PATH.$xmlFile;
             $physicalPathXml    = \Url::physicalPath($xmlFile);
            
             if (!file_exists($physicalPathXml)) {

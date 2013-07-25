@@ -8,7 +8,7 @@
     include('class/BmPedido.php');
     include('class/BmItemPedido.php');
     
-    $nomeSac    = "Claudio João da Costa Aguiar D'ávila";
+    $nomeSac    = "Claudio Joï¿½o da Costa Aguiar D'ï¿½vila";
     $emailSac   = "claudio@supervip.com.br";
     $objSacado  = new BmSacado($nomeSac,$emailSac);
     
@@ -19,7 +19,7 @@
         $objPedido->addSacado($objSacado);   
         
         if ($cartao == 1) {
-            //Pagamento com cartão
+            //Pagamento com cartï¿½o
             $objMeioPgto = new BmCartaoDeCredito('visa','1236543956798756',123,201308,7,'REDECARD');
             
             //FORMA 1:
@@ -59,7 +59,7 @@
         $objPedido->setFrete(327.43);
         //$objPedido->setTotalPedido(5000);
         $objPedido->setDesconto(350.23);
-        $objPedido->printXml();          
+        //$objPedido->printXml();          
         $response = $objPedido->save();
         if ($response == TRUE) {
             

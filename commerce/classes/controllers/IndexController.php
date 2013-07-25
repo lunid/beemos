@@ -8,7 +8,7 @@
     use \sys\classes\util\Request;   
     use \sys\classes\mvc as mvc; 
     use \commerce\classes\helpers as helpers;
-    
+   
     class IndexController extends mvc\ExceptionController {
         
         private $format         = 'XML';//Pode ser XML, JSON ou TEXT.
@@ -31,7 +31,7 @@
          * @return \stdClass
          */
         protected function getDadosCfg(){
-            $hash       = Request::post('uid');//HASH que identifica o usuário que solicitou a requisição.
+            $hash       = Request::post('uid');//HASH que identifica a assinatura.
             $hash       = 'b98af3c46666cb58b73677859074e116';
             
             $format     = strtoupper(Request::all('format','STRING'));
@@ -175,6 +175,6 @@
                 if (is_object(objXmlResponseHelper)) $this->objXmlResponseHelper = objXmlResponseHelper;
             }
             return objXmlResponseHelper;
-        }        
+        }                 
     }
 ?>

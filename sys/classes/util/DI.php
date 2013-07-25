@@ -14,7 +14,7 @@
      * @link http://krasimirtsonev.com/blog/article/Dependency-Injection-in-PHP-example-how-to-DI-create-your-own-dependency-injection-container
      *     
      */
-    require_once('sys/classes/util/Xml.php');  
+    require_once(PATH_PROJECT . 'sys/classes/util/Xml.php');  
     
     class DI extends \sys\classes\util\Xml {
     

@@ -1,28 +1,28 @@
 <?php
     
-    require_once('sys/classes/db/Meekrodb_2_1.php');
-    require_once('sys/classes/db/IConnInfo.php');
-    require_once('sys/classes/db/ConnInfo.php');
-    require_once('sys/classes/db/ConnConfig.php');
-    require_once('sys/classes/db/Conn.php');
-    require_once('sys/classes/db/ORM.php');
-    require_once('sys/classes/db/Table.php');
-    require_once('sys/classes/mvc/Controller.php');
-    require_once('sys/classes/mvc/Model.php'); 
-    require_once('sys/classes/mvc/Module.php');      
-    require_once('sys/classes/_init/LoadConfig.php');
-    require_once('sys/classes/util/Url.php');  
-    require_once('sys/classes/util/DI.php');
-    require_once('sys/classes/util/Dic.php');
-    require_once('sys/classes/security/Token.php');
-    require_once('sys/classes/security/Auth.php');      
-    
+    require_once(PATH_PROJECT . 'sys/classes/db/Meekrodb_2_2.php');
+    require_once(PATH_PROJECT . 'sys/classes/db/IConnInfo.php');
+    require_once(PATH_PROJECT . 'sys/classes/db/ConnInfo.php');
+    require_once(PATH_PROJECT . 'sys/classes/db/ConnConfig.php');
+    require_once(PATH_PROJECT . 'sys/classes/db/Conn.php');
+    require_once(PATH_PROJECT . 'sys/classes/db/ORM.php');
+    require_once(PATH_PROJECT . 'sys/classes/db/Table.php');
+    require_once(PATH_PROJECT . 'sys/classes/mvc/Controller.php');
+    require_once(PATH_PROJECT . 'sys/classes/mvc/Model.php'); 
+    require_once(PATH_PROJECT . 'sys/classes/mvc/Module.php');      
+    require_once(PATH_PROJECT . 'sys/classes/_init/LoadConfig.php');
+    require_once(PATH_PROJECT . 'sys/classes/util/Url.php');  
+    require_once(PATH_PROJECT . 'sys/classes/util/DI.php');
+    require_once(PATH_PROJECT . 'sys/classes/util/Dic.php');
+    require_once(PATH_PROJECT . 'sys/classes/util/Session.php');
+    require_once(PATH_PROJECT . 'sys/classes/security/Token.php');
+    require_once(PATH_PROJECT . 'sys/classes/security/Auth.php');         
+
     use sys\classes\util\DI;
     use sys\classes\mvc as MVC;
     use sys\classes\util as UTIL;
     
     class Application {
-        
         /**
          * Classe de inicialização da aplicação.
          * 
@@ -53,19 +53,27 @@
        *  
        */          
         public static function setup(){                       
-        
+            
             //Faz a leitura dos parâmetros em config.xml na raíz do site
+            $module         = '';
             $objLoadConfig  = new LoadConfig();            
-            $objLoadConfig->loadConfigXml('config.xml');
+            $objLoadConfig->loadConfigXml(PATH_PROJECT . 'config.xml');
                         
-            $arrPartsUrl    = self::processaUrl(); 
+            $arrPartsUrl    = self::processaUrl();
+
             $module         = $arrPartsUrl['module'];
             $controller     = $arrPartsUrl['controller'];
             $action         = $arrPartsUrl['action'];            
-            $method         = 'action'.ucfirst($action);                                                                                    
-            
+            $method         = 'action'.ucfirst($action);
+
+            //Verifica se o módulo carregado é diferente de teste para limpar sessão
+            $arrTesteCarregado = Session::getTesteCarregado();
+            if($arrTesteCarregado !== FALSE && $module != "app_teste"){
+                Session::unsetTesteCarregado();
+            }
+
             //Faz a leitura dos parâmetros em config.xml do módulo atual
-            $configModule   = $module.'/config.xml';
+            $configModule   = PATH_PROJECT . $module.'/config.xml';
             $objLoadConfig->loadConfigXml($configModule);                                             
 
             /*
@@ -78,16 +86,23 @@
             spl_autoload_register('self::loadClass');	                           
             
             //Faz o include do Controller atual
-            $urlFileController = $module . '/classes/controllers/'.ucfirst($controller).'Controller.php';
+            $urlFileController = PATH_PROJECT . $module . '/classes/controllers/'.ucfirst($controller).'Controller.php';
             if (!file_exists($urlFileController)) {
-                $msgErr = 'Arquivo de inclusão '.$urlFileController.' não localizado, ou então o módulo solicitado não foi informado no item \'modules\' do arquivo global config.xml';
-                throw new \Exception( $msgErr );  
+                if(TESTES === FALSE){
+                    $msgErr = 'Arquivo de inclusão '.$urlFileController.' não localizado, ou então o módulo solicitado não foi informado no item \'modules\' do arquivo global config.xml';
+                    throw new \Exception( $msgErr );  
+                }else{
+                    $urlFileController = PATH_PROJECT . $module . '/classes/models/'.ucfirst($controller).'.php';
+                    if(!file_exists($urlFileController)){
+                        $msgErr = 'Arquivo de inclusão '.$urlFileController.' não localizado, ou então o módulo solicitado não foi informado no item \'modules\' do arquivo global config.xml';
+                    }
+                }
+            }else{
+                require_once($urlFileController);
             }
-                
-            require_once($urlFileController);                    
-                        
+
             $objController  = new $controller;
-            if (!method_exists($objController,$method)) die('Método '.$controller.'Controller->'.$method.'() não existe.');
+            if (!method_exists($objController,$method)) throw new \Exception ('Método '.$controller.'Controller->'.$method.'() não existe.');
             if (method_exists($objController, 'before')) {
                 try {
                     $objController->before();//Executa o método before(), caso esteja implementado.
@@ -95,19 +110,21 @@
                     echo $e->getMessage();
                 }
             }
-                 
+
             try {
                 $objController->$method();//Executa o Controller->method()            
             } catch(\Exception $e) {          
-                $objController->actionError($e);
+                //$objController->actionError($e);
+                throw $e;
             }
+
         }
         
         private static function processaUrl(){
             $arrPartsUrl    = array();
             $module         = LoadConfig::defaultModule(); 
             $params         = (isset($_GET['PG']))?$_GET['PG']:''; 
-                                    
+            
             $pathParts      = explode('/',$params);            
             $controller     = 'index';
             $language       = LoadConfig::defaultLang();            
@@ -120,7 +137,7 @@
                 
                 $arrLangs       = explode(',',$lang); 
                 
-                $arrModulesDefault  = array('panel');//Módulos que não precisam constar no config.xml.
+                $arrModulesDefault  = array('panel','commerce','test');//Módulos que não precisam constar no config.xml.
                 $arrModules         = explode(',',$modules);
                 $arrModules         = array_merge($arrModules,$arrModulesDefault);
                 
@@ -217,21 +234,7 @@
                 $root = $folder;
                 if (strlen($folder) > 0 && $folder != '/') $root = "/{$folder}/";
                 define ('APPLICATION_PATH', $root);
-            }            
-        }
-        
-        /**
-         * Faz a correção de uma URL para refletir o endereço correto a partir 
-         * da pasta ROOT do projeto.
-         * 
-         * Considera como root padrão a pasta public_html.
-         * 
-         * @param $url
-         * @return string Url com o contéudo de APPLICATION_PATH inserido após public_html/
-         */
-        public static function setRootProject($url){
-            $uri = str_replace('public_html/','public_html'.APPLICATION_PATH,$url);
-            return $uri;
+            }  
         }
         
         /**
@@ -333,13 +336,13 @@
             if (!file_exists($pathFileTplDefault)) {
                 //Arquivo template não existe                
                 if (!is_dir($pathTplFolder)) {
-                    //Diretório de templates ainda não existe. Tenta criá-lo.
+                    //Diretório de templates ainda não existe. Tenta criá-lo.                    
                     if (!mkdir($pathTplFolder, 0, true)) {
                         $msgErr = 'A tentativa de criar a pasta de templates em '.$pathTplFolder.' falhou.';
                         throw new \Exception( $msgErr );                           
-                    }                  
+                    }                   
                 }   
-
+                \LoadConfig::
                 $date               = date('d/m/Y H:i:s'); 
                 $pathFileTplDefault = str_replace('//','/',$pathFileTplDefault);
                 $open               = fopen($pathFileTplDefault, "a+");
@@ -391,16 +394,53 @@
         */             
         public static function loadClass($class){   
             //Tratamento para utilização do Hybridauth.
-            if($class == 'FacebookApiException' || $class == 'mysqli') return false; 
-           
+            if($class == 'FacebookApiException') return false; 
             
             $urlInc = str_replace("\\", "/" , $class . '.php');                           
-            
+            $urlInc = PATH_PROJECT . $urlInc;
+           
             if (isset($class) && file_exists($urlInc)){          
-                require_once($urlInc);            
-            } else {                          
-               die(" Classe $class não encontrada");
+                require_once($urlInc);  
+                //$obj = DI::loadMapXml($class);
+                //die();            
+            } else {      
+                throw new \Exception("Classe $class não encontrada ({$urlInc})");
             }                      
-        }                
+        }     
+        
+        /**
+         * Verifica se o ambiente atual é o ambiente de produção.
+         * 
+         * @return boolean
+         */
+        public static function checkAmbienteDeProducao(){
+            $dominioAtual       = $_SERVER['SERVER_NAME'];//Domínio do ambiente atual
+            $dominioProd        = LoadConfig::baseUrlHttp();//Domínio de produção
+            $key                = strpos($dominioAtual, $dominioProd);
+            $ambienteDeProducao = FALSE;
+            
+            if ($key !== FALSE) {
+                //O usuário está no domínio de produção
+                $ambienteDeProducao = TRUE;
+            }
+            return $ambienteDeProducao;
+        }
+        
+        /**
+         * Faz o redirecionamento para a home do ambiente de produção caso a origem do
+         * acesso seja no domínio de produção.
+         * Muito útil para páginas que possuem uma interface para os ambientes de desenvolvimento, teste e homologação,
+         * porém devem acessar outra página (versão mais antiga) no ambiente de produção.
+         * 
+         * @return void
+         */
+        public static function redirect2Prod(){            
+            if (self::checkAmbienteDeProducao()) {
+                //O usuário está no domínio de produção. Faz o redirecionamento para a URL 
+                //de $dominioProd
+                header('Location:'.$dominioProd);
+                die();
+            }
+        }
     }
 ?>

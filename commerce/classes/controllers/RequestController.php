@@ -2,11 +2,12 @@
     
 use \sys\classes\util as util;
 use \commerce\classes\controllers\IndexController;
-use \commerce\classes\helpers\XmlRequestHelper;
-use \commerce\classes\helpers\ErrorMessageHelper;
+use \commerce\classes\helpers as helpers;
+//use \commerce\classes\helpers\XmlRequestHelper;
+//use \commerce\classes\helpers\ErrorMessageHelper;
 use \commerce\classes\models\PedidoModel;
 use \commerce\classes\models\NumPedidoModel;
-use \auth\classes\models\AuthModel;
+use \auth\classes\helpers\Assinatura;
 
 class Request extends IndexController {
     
@@ -26,50 +27,38 @@ class Request extends IndexController {
     function actionIndex(){
         $msgErr         = '';
         $response       = '';
-        $msgErr         = '';
         $action         = util\Request::post('action', 'STRING');
         $hashAssinatura = util\Request::post('uid', 'STRING');                      
         $strXml         = util\Request::post('strXml', 'STRING');   
-        
-        //Faz a validação da action informada:
-        $method = 'action'.ucfirst($action);
-        if (strlen($action) > 0 && method_exists($this,$method)){
-            //O método informado existe na classe atual
-            if (strlen($hashAssinatura) == 40) {
-                $objAuthModel   = new AuthModel();
-                $objAuth        = $objAuthModel->loadHashAssinatura($hashAssinatura);
-                
-                if ($objAuth !== FALSE) {
-                    $bloqUsuarioEm      = $objAuth->BLOQ_USUARIO_EM;                                 
-                    $bloqAssinaturaEm   = $objAuth->BLOQ_ASSINATURA_EM;                                 
-                    if (util\Date::isValidDateTime($bloqUsuarioEm)) {
-                        //O usuário está bloqueado.
-                        ErrorMessageHelper::index('USER_BLOQ');    
-                    } elseif (util\Date::isValidDateTime($bloqAssinaturaEm)) {
-                        //A assinatura do usuário está bloqueada
-                        ErrorMessageHelper::index('ASSINATURA_BLOQ');    
-                    } else {                 
-                        if (strlen($strXml) > 0) $this->strXml = $strXml;
-                        $this->objAuth  = $objAuth;
-                        $response       = $this->$method();
-                    }
+        $variable       = util\Request::post('variable', 'STRING');   
+        $hashAssinatura = 'sdfds';
+        try {
+            //Faz a validação da action informada:            
+            $objAssinatura = new Assinatura($hashAssinatura);
+            if ($objAssinatura->getIdAssinatura() > 0) {
+                if ($objAssinatura->assinaturaValida()) {
+                        $method = 'action'.ucfirst($action);
+                        if (strlen($action) > 0 && method_exists($this,$method)) {                    
+                            $response = $this->$method();
+                        } else {
+                            //A action informada não existe. 
+                            $arrParams['ACTION_NAME'] = $action;
+                            $response = helpers\Error::eRequest('ERR_ACTION_NOT_EXISTS',$arrParams);                             
+                        }                  
                 } else {
-                    ErrorMessageHelper::index('USER_NOT_EXISTS');                       
-                }
+                    $response = $objAssinatura->getStatus();
+                } 
             } else {
-                $arrReplace['HASH_ASSINATURA'] = $hashAssinatura;
-                ErrorMessageHelper::index('ERR_HASH_ASS',$arrReplace);                
-            }           
-            
-        } elseif (strlen($action) > 0) {
-            //A action informada não existe.
-            $arrReplace['ACTION_NAME'] = $action;
-            ErrorMessageHelper::index('ERR_ACTION_NOT_EXISTS',$arrReplace);   
-        } else {  
-            //o parâmetro $action é obrigatório e não foi informado.
-            ErrorMessageHelper::index('ERR_ACTION_NOT_INFO',$arrReplace);             
+                $arrParams['HASH_ASSINATURA'] = $hashAssinatura;
+                $response = helpers\Error::eRequest('ERR_HASH_ASS',$arrParams);  
+            }
+            echo $response;
+            die();
+
+        } catch (\Exception $e) { 
+            echo $e->getMessage();
+            die();
         }
-        echo $response;
     }        
     
     /**
@@ -147,6 +136,23 @@ class Request extends IndexController {
         if (strlen($msgErr) > 0) die($msgErr);   
         return $response;
     }    
+    
+    private function loadStringXml(){
+        $strXml = $this->strXml;
+        if (strlen($strXml) > 0) {
+            try {
+                $objXmlRequest = new XmlRequestHelper($strXml);   
+                if ($objXmlRequest->vldXmlNovoPedido() === TRUE){
+                    
+                }
+            } catch (\Exception $e) {
+                
+            }
+        } else {
+            $msgErr = '';
+            throw new \Exception($msgErr);
+        }        
+    }
     
     private function getObjNumPedidoModel(){
         return $this->singletonModel('\commerce\classes\models\NumPedidoModel', 'objNumPedidoModel');             

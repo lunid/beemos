@@ -1,7 +1,7 @@
 <?php 
     
     use sys\classes\util\Dic;
-    require_once('sys/classes/util/Xml.php');  
+    require_once(PATH_PROJECT . 'sys/classes/util/Xml.php');  
     class Url extends sys\classes\util\Xml {
           
         private $nodesUrl = NULL;
@@ -23,8 +23,11 @@
          * @param string $pathXml Path de um arquivo XML, caso queira informar outro diferente de urls.xml.
          */
         function __construct($pathXml='/urls.xml'){
-            $msgErr = '';
+            $msgErr     = '';
+            $pathXml    = APPLICATION_PATH.$pathXml;
+            
             $urlXml = self::physicalPath($pathXml);
+   
             if (file_exists($urlXml)) {                   
                 $arrPath        = pathinfo($urlXml);                
                 $extension      = $arrPath['extension'];
@@ -40,7 +43,7 @@
                    $msgErr = 'O arquivo informado parece não ser um arquivo XML';                                                                 
                 }
             } 
-            //if (strlen($msgErr) > 0) echo $msgErr;
+            if (strlen($msgErr) > 0) echo $msgErr;
         }
         /**
          * Recebe um array associativo que será convertido em URL no formato
@@ -85,12 +88,21 @@
          * @return string
          */
         public static function physicalPath($uri=''){
-            $path           = $uri;
-            $root           = $_SERVER['DOCUMENT_ROOT'];
-
-            $path           = $root.'/'.self::getRootFolder().$uri;
-            $path           = str_replace('//','/',$path);
-            $path           = str_replace('//','/',$path); //2x
+            $uri  = str_replace('//','/',$uri);
+            $path = $uri;
+            
+            $root = $_SERVER['DOCUMENT_ROOT'] == "" && PATH_PROJECT != "" ? PATH_PROJECT : $_SERVER['DOCUMENT_ROOT'];
+            $root = str_replace('//','/',$root);
+            
+            //Trata ultimo caractere de root
+            if(substr($root, -1) == "/"){
+                $root = substr($root, 0, strlen($root)-1);
+            }
+            
+            $path = $root.'/'.self::getRootFolder().$uri;
+            $path = str_replace('//','/',$path);
+            $path = str_replace('\/','/',$path);
+            
             return $path;
         }
         
@@ -191,8 +203,8 @@
          * @param string $method Deve ser o mesmo nome da tag que agrupa uma ou mais tags <url..> no XML lido.
          */
         function __call($method,$params){
-            $objXml = $this->objXml;
-            if (is_object($objXml)) {
+            $objXml = $this->objXml;            
+            if (is_object($objXml)) {                
                 $this->nodesUrl = $objXml->$method->url;
             } else {
                 echo 'Um objeto XML obrigatório não foi localizado.';
@@ -212,6 +224,15 @@
                 $value = self::valueForAttrib($nodesUrl,'id',$id); 
             }            
             return $value;
+        }
+        
+        public static function __callstatic($name,$args){
+            $paramId    = (isset($args[0]))?$args[0]:'';
+            $objUrl     = new \Url();
+            $paramValue = $objUrl->
+                    $name(); 
+            print_r($paramValue);
+            return $paramValue;            
         }
     }
 ?>

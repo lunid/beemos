@@ -133,7 +133,7 @@
                 foreach($node->attributes() as $name => $value){                       
                     if ($name == $atribName && $value == $atribValue) return $node;                    
                 }                
-            }
+            }           
         }
         
         public static function getNode($arrNodes,$node){            

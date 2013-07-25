@@ -5,7 +5,7 @@
         
     /**
      * Classe usada para tratar mensagens de erro.
-     * Crie uma classe moduloAtual/classes/helpers/Error extendendo a classe atual para fazer uso dos recursos contidos aqui.
+     * Crie uma classe moduloAtual/classes/helpers/Error estendendo a classe atual para fazer uso dos recursos contidos aqui.
      * 
      * EXEMPLO 1:
      * Exemplo de uso, considerando uma classe Error que extende a classe atual.

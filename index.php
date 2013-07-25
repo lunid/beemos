@@ -14,7 +14,7 @@
     }
     
     ini_set('display_errors', true);     
-          
+    define("PATH_PROJECT", '');      
     include('sys/classes/_init/Application.php');
     
     try {

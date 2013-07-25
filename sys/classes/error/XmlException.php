@@ -31,14 +31,15 @@
          * @throws \Exception Caso o arquivo XML solicitado não seja localizado.
          */
         public static function getErrorString($nameFileXml,$codErr,$arrParams=array()){
-            $objXmlException = new XmlException();
+            $objXmlException = new XmlException();          
+            
             if ($objXmlException->findFileXmlError($nameFileXml)){
                 $msgErr = $objXmlException->$codErr;
                 if (is_array($arrParams) && count($arrParams) > 0) {
                     foreach($arrParams as $key=>$value) {
                         $msgErr = str_replace("{{$key}}",$value,$msgErr);
                     }
-                }
+                }                
                 return $msgErr;
             } else {                 
                 $msgErr = __METHOD__.'() Arquivo '.$nameFileXml.' não localizado.';
@@ -55,20 +56,30 @@
          */
         function findFileXmlError($nameFileXml){
             //Verifica se o arquivo XML existe na pasta dic/ do módulo de origem.
-            $fileExists         = FALSE;
-            $module             = \Application::getModule();
-            $physicalPathXml    = $this->getPhysicalPathXml($nameFileXml,$module);           
+            $fileExists = FALSE;
+
+            //Caso contrário carrega modulo sendo usado pelo usuário
+            $module = \Application::getModule();
             
+            $physicalPathXml = $this->getPhysicalPathXml($nameFileXml,$module);           
+           
             if (!file_exists($physicalPathXml)) {
                 //Arquivo não existe no módulo de origem. Verifica se existe no módulo sys.
                 $module             = \LoadConfig::folderSys();
                 $physicalPathXml    = $this->getPhysicalPathXml($nameFileXml,$module);        
+            }
+           
+            if (!file_exists($physicalPathXml)) {
+                //Arquivo não existe no módulo sys. Verifica se existe no módulo common.
+                $module             = \LoadConfig::folderSys();
+                $physicalPathXml    = $this->getPhysicalPathXml($nameFileXml,"common");        
             }
             
             if (file_exists($physicalPathXml)) {
                 $this->_physicalPathXml = $physicalPathXml;
                 $fileExists             = TRUE;
             }           
+            
             return $fileExists;
         }      
         
@@ -83,9 +94,10 @@
          * @param string $module Nome do módulo onde o arquivo XML deve existir.
          * @return string
          */
-        private function getPhysicalPathXml($nameFileXml,$module){
+        private function getPhysicalPathXml($nameFileXml,$module){           
             $nameFileXml        = str_replace('.xml','',$nameFileXml);
-            $pathXml            = '/'.$module.'/dic/'.$nameFileXml.'.xml';
+            $pathXml            = APPLICATION_PATH.$module.'/dic/'.$nameFileXml.'.xml';
+            $pathXml            = str_replace('//','/',$pathXml);
             $physicalPathXml    = \Url::physicalPath($pathXml);  
             
             return $physicalPathXml;

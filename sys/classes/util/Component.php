@@ -84,6 +84,13 @@ class Component {
      */
     private static function factory($folder,$args=array()){
                 
+        /*
+         * Retorna o path da classe padrão do componente solicitado.
+         * Por exemplo, se $folder = 'webservice' a URL será:         
+         * {$folderSys}/{$folderLib}/{$folderComps}/{$folderComponent}/classes/Lib{$class}.php
+         * 
+         * As pastas que compõe a URL estão configuradas em config.xml.
+         */
         $classPath = \Url::getUrlLibInitComponent($folder);
      
         if (file_exists($classPath)){
