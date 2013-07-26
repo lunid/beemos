@@ -105,8 +105,7 @@
                  if($this->authentication == 1){
                    curl_setopt($s, CURLOPT_USERPWD, $this->auth_name.':'.$this->auth_pass);
                  }
-
-
+                 
                  if($this->_post){
                          curl_setopt($s,CURLOPT_CAINFO, getcwd()."/ca/-.websiteseguro.com.crt");		
                          curl_setopt($s,CURLOPT_POST,true);

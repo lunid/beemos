@@ -169,15 +169,17 @@
             $xml  = '<ROOT>';
             $xml .= "<PEDIDO>";
             $xml .= $this->xmlParamsSacado;
-            $xml .= $this->xmlParamsMeioPgto;                
+            $xml .= "<CHECKOUT>".$this->xmlParamsMeioPgto."</CHECKOUT>";                
 
                     
 
             if (is_array($arrObjItemPedido)) {   
                 //Inclui os itens do pedido:
+                $xml .= "<ITENS>";
                 foreach ($arrObjItemPedido as $objItemPedido){
                     $xml .= $objItemPedido->getXml();
-                } 
+                }
+                $xml .= "</ITENS>";
             } else {
                 $msgErr = 'Pedido->getXml() Nenhum produto foi adicionado ao pedido. É necessário incluir pelo menos um produto ao novo pedido.';
                 throw new \Exception($msgErr);
@@ -220,9 +222,8 @@
                 $objConn->debugOff();
                 if ($this->debug) $objConn->debugOn();
                 $objConn->addParamXml($strXml);
-                $objConn->savePedido();                
-                
-                $xmlResponse = $objConn->send();
+                $xmlResponse = $objConn->savePedido();                
+ 
                 echo $xmlResponse;
                 //if (is_bool($response)) $response = (bool)$response;//Converte para um valor booleano
             } else {
