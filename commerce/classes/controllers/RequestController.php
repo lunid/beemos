@@ -15,7 +15,7 @@ class Request extends IndexController {
     private $objPedidoModel         = NULL;
     private $objNumPedidoModel      = NULL;
     private $objXmlResponseHelper   = NULL;
-    private $strXml                 = '';
+    private $objXmlRequest          = NULL;
     
     /**
      * Recebe a requisição do cliente e valida os parâmetros obrigatórios 'action' e 'uid'.
@@ -32,10 +32,11 @@ class Request extends IndexController {
         $response       = '';
         $action         = util\Request::post('action', 'STRING');
         $hashAssinatura = util\Request::post('uid', 'STRING');                      
-        $this->strXml   = util\Request::post('strXml', 'STRING'); //Opcional   
+        $strXmlRequest  = util\Request::post('strXml', 'STRING'); //Opcional   
         $variable       = util\Request::post('variable', 'STRING'); //Opcional 
-        $action         = '';
+        
         try {
+            $this->setStrXml($strXmlRequest);
             if (strlen($hashAssinatura) == 0 || strlen($action) == 0) {
                 $message = helpers\ErrorHelper::eRequest('ERR_PARAMS');  
                 throw new \Exception($message);
@@ -64,28 +65,45 @@ class Request extends IndexController {
         }
     }      
     
-    /**
-     * Localiza os dados do pedido informado.
-     * 
-     * @return FALSE | XML Retorna FALSE caso o pedido não seja localizado, ou então, o XML com dados do pedido.
-     */
-    private function actionGetDadosPedido(){
-        $msgErr     = '';
-        $response   = '';
-        $numPedido  = (int)util\Request::post('xmlNovoPedido', 'NUMBER');  
-        if ($numPedido > 0) {
-            
-        } else {
-            $msgErr = "[COD/ERR: REQ-1] O parâmetro numPedido não foi informado ou não é um valor válido.";
+    private function setStrXml($strXmlRequest){
+        if (strlen($strXmlRequest) > 0) { 
+            try {
+                $objXmlRequest = simplexml_load_string(utf8_encode($strXmlRequest));  
+                if (is_object($objXmlRequest)) { 
+                   $this->objXmlRequest = $objXmlRequest; 
+                } else {                
+                    $msgErr = 'Erro ao carregar o XML '.$strXmlRequest; 
+                    throw new \Exception($msgErr);
+                }  
+            } catch (\Exception $e) {
+                throw $e;
+            }
         }
-        if (strlen($msgErr) > 0) die($msgErr); 
-        return $response;        
     }
     
     private function actionSavePedido($objAssinatura){  
         $msgErr             = '';
         $response           = '';
-        $xmlNovoPedido      = $this->strXml;       
+        $objXmlRequest      = $this->objXmlRequest;       
+        
+        if (!is_object($objXmlRequest)) {
+            throw new \Exception('Objeto de dados XML não localizado.');
+        }
+        
+        try {
+            //Valida os dados recebidos via XML:
+            $objXmlCfg          = new helpers\XmlCfg($objXmlRequest->PEDIDO->CFG);
+            $objXmlSacado       = new helpers\XmlSacado($objXmlRequest->PEDIDO->SACADO->PARAM);
+            $objXmlItens        = new helpers\XmlItens($objXmlRequest->PEDIDO->ITENS->ITEM);//Pode ter um ou mais itens   
+            $objXmlCheckoutCc   = new helpers\XmlSacado($objXmlRequest->PEDIDO->CHECKOUT->CARTAO->PARAM);
+            $objXmlCheckoutBlt  = new helpers\XmlSacado($objXmlRequest->PEDIDO->CHECKOUT->BOLETO->PARAM);
+            
+            //echo $objXmlCfg->getNumPedido();
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+        
+        die();
         $objNumPedidoModel  = $this->getObjNumPedidoModel();//Deve ser chamado após definir $objAuth;    
         
         if (is_object($objNumPedidoModel)) {        
@@ -140,30 +158,6 @@ class Request extends IndexController {
         return $response;
     }    
     
-    private function loadStringXml(){
-        $strXml = $this->strXml;
-        if (strlen($strXml) > 0) {
-            try {
-                $objXmlRequest = new XmlRequestHelper($strXml);   
-                if ($objXmlRequest->vldXmlNovoPedido() === TRUE){
-                    
-                }
-            } catch (\Exception $e) {
-                
-            }
-        } else {
-            $msgErr = '';
-            throw new \Exception($msgErr);
-        }        
-    }
-    
-    private function getObjNumPedidoModel(){
-        return $this->singletonModel('\commerce\classes\models\NumPedidoModel', 'objNumPedidoModel');             
-    }
-    
-    private function getObjPedidoModel(){
-        return $this->singletonModel('\commerce\classes\models\PedidoModel', 'objPedidoModel');        
-    }
     
     /**
      * Retorna uma instância do objeto solicitado (parâmetro $class).

@@ -10,13 +10,57 @@ class XmlRequestHelper extends Xml {
     static  $arrParamsOpt       = array('CAPTURA_AUTO');//Parâmetros Opcionais
     private $arrParams          = array();
     private $arrMsgErr          = array();
-    private $stringXmlRequest   = '';
+    private $strXmlRequest      = '';
     private $numPedido          = 0;
     private $objDadosPedido     = NULL;//Objeto stdClass();
     private $arrObjItensPedido  = NULL;//Array de objetos;
             
-    function __construct($stringXmlRequest){
-        $this->stringXmlRequest = trim($stringXmlRequest);
+    function __construct($strXmlRequest){
+        $this->strXmlRequest = trim($strXmlRequest);
+        $this->vldXml();
+    }
+    
+    private function vldXml(){
+        $strXmlRequest = $this->strXmlRequest;
+        if (strlen($strXmlRequest) > 0) { 
+            try {
+                $objXml = simplexml_load_string(utf8_encode($strXmlRequest));  
+                if (is_object($objXml)) {
+                    $nodeCfg            = $objXml->PEDIDO->CFG;
+                    $nodeSacado         = $objXml->PEDIDO->SACADO->PARAM;
+                    $nodeItens          = $objXml->PEDIDO->ITENS->ITEM;//Pode ter um ou mais itens   
+                    $nodeCheckoutCc     = $objXml->PEDIDO->CHECKOUT->CARTAO->PARAM;
+                    $nodeCheckoutBlt    = $objXml->PEDIDO->CHECKOUT->BOLETO->PARAM;
+
+                    $objXmlSacado       = new XmlSacado($nodeSacado);
+                    $objXmlCfg          = new XmlCfg($nodeCfg);
+                    echo $objXmlCfg->NUM_PEDIDO;
+                    die();
+                    //$msgErr             = $this->vldPedidoNode($nodePedido,$msgErr);
+                    $msgErr             = $this->vldSacadoNode($nodeSacado,$msgErr);
+                    $msgErr             = $this->vldItemNode($nodeItens,$msgErr);
+                    $msgErr             = $this->vldCheckoutCc($nodeCheckoutCc,$msgErr);
+                    $msgErr             = $this->vldCheckoutBlt($nodeCheckoutBlt,$msgErr);                
+
+                    $objDadosPedido     = $this->objDadosPedido;
+                    $arrObjItensPedido  = $this->arrObjItensPedido;
+
+                    if (is_object($objDadosPedido) && count($arrObjItensPedido) >= 1) {
+                        //Todos os dados foram validados com sucesso.                    
+                        $out = TRUE;
+                    }
+
+                } else {                
+                    $msgErr[] = 'Erro ao carregar o XML '.$stringXmlRequest;                                            
+                }  
+            } catch (\Exception $e) {
+                throw $e;
+            }
+        }
+    }
+    
+    function vldSacadoNode($node){
+        $value  = self::valueForAttrib($node,'id','NUM_PEDIDO');
     }
     
     function getObjDadosPedido(){
@@ -115,7 +159,7 @@ class XmlRequestHelper extends Xml {
      * @param object $node
      * @return string[]
      */
-    private function vldSacadoNode($node,$msgErr=array()){  
+    private function vldSacadoNodeOld($node,$msgErr=array()){  
         //Formato de cada índice de arrParams:
         //PARAM:tipoValor:obrigatorio:length      
         $arrParams = array(
