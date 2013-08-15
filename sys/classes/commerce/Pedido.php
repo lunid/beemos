@@ -40,6 +40,33 @@ class Pedido {
         $this->loadArrDados($arrDados);
     }
     
+    function setConfig(){
+        
+    }
+    
+    function setSacado(){
+        
+    }
+    
+    function setItens(){
+        
+    }
+    
+    function setCheckoutCc(){
+        
+    }
+    
+    function setCheckoutBlt(){
+        
+    }
+    
+    private function checkObjXmlValidation($objXmlValidation){
+        if (is_object($objXmlValidation)) {
+            return TRUE;
+        }
+        return FALSE;     
+    }
+    
     public function debugOn(){
         $this->debug = TRUE;
     }

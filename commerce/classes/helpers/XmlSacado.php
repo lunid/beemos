@@ -1,5 +1,6 @@
 <?php
 namespace commerce\classes\helpers;
+use \sys\classes\commerce\XmlValidation;
 
 class XmlSacado extends XmlValidation {
     protected $nodeName     = 'SACADO';//Nome do nó XML que contém as dados para a classe atual.

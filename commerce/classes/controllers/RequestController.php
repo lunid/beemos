@@ -1,11 +1,12 @@
 <?php
     
 use \sys\classes\util as util;
+use \sys\classes\commerce\Pedido;
 use \commerce\classes\controllers\IndexController;
 use \commerce\classes\helpers as helpers;
 use \commerce\classes\helpers\XmlRequestHelper;
 //use \commerce\classes\helpers\ErrorMessageHelper;
-use \commerce\classes\models\PedidoModel;
+//use \commerce\classes\models\PedidoModel;
 use \commerce\classes\models\NumPedidoModel;
 use \auth\classes\helpers\Assinatura;
 
@@ -20,7 +21,7 @@ class Request extends IndexController {
     /**
      * Recebe a requisição do cliente e valida os parâmetros obrigatórios 'action' e 'uid'.
      * A partir de 'uid' (chave da assinatura) verifica se a assinatura está ativa.
-     * Se nenhum erro for encontrado executa o método informado em 'action' e imprime a resposta no formato XML.
+     * Se nenhum erro for encontrado executa o método informado em 'action' e imprime o retorno no formato XML.
      * 
      * @return void
      * 
@@ -36,7 +37,13 @@ class Request extends IndexController {
         $variable       = util\Request::post('variable', 'STRING'); //Opcional 
         
         try {
+            /*
+             * Recebe a string XML e gera um objeto simplexml_load_string 
+             * a ser usado em outros métodos do Controller atual 
+             * a partir da variável objXmlRequest.
+             */
             $this->setStrXml($strXmlRequest);
+            
             if (strlen($hashAssinatura) == 0 || strlen($action) == 0) {
                 $message = helpers\ErrorHelper::eRequest('ERR_PARAMS');  
                 throw new \Exception($message);
@@ -65,6 +72,15 @@ class Request extends IndexController {
         }
     }      
     
+    /**
+     * Recebe uma string XML e converte em objeto.
+     * Método de suporte ao método actionIndex.
+     * 
+     * @param string $strXmlRequest Xml de requisição
+     * @return void
+     * 
+     * @throws \Exception A string informada não é um XML válido.     
+     */
     private function setStrXml($strXmlRequest){
         if (strlen($strXmlRequest) > 0) { 
             try {
@@ -81,6 +97,16 @@ class Request extends IndexController {
         }
     }
     
+    /**
+     * Cria um novo pedido com os dados recebidos via XML.
+     * Faz a validação dos dados recebidos, a partir 
+     * do objeto já carregado em objXmlRequest, e persiste os dados do novo pedido.
+     * 
+     * @param Assinatura $objAssinatura
+     * @return string
+     * 
+     * @throws \Exception Caso um objeto XML (objXmlRequest) não seja válido.
+     */
     private function actionSavePedido($objAssinatura){  
         $msgErr             = '';
         $response           = '';
@@ -91,12 +117,20 @@ class Request extends IndexController {
         }
         
         try {
-            //Valida os dados recebidos via XML:
+            //Valida os dados recebidos via XML e guarda-os em um objeto do tipo XmlValidation:
             $objXmlCfg          = new helpers\XmlCfg($objXmlRequest->PEDIDO->CFG);
             $objXmlSacado       = new helpers\XmlSacado($objXmlRequest->PEDIDO->SACADO->PARAM);
             $objXmlItens        = new helpers\XmlItens($objXmlRequest->PEDIDO->ITENS->ITEM);//Pode ter um ou mais itens   
             $objXmlCheckoutCc   = new helpers\XmlSacado($objXmlRequest->PEDIDO->CHECKOUT->CARTAO->PARAM);
             $objXmlCheckoutBlt  = new helpers\XmlSacado($objXmlRequest->PEDIDO->CHECKOUT->BOLETO->PARAM);
+            
+            $objPedido          = new Pedido();
+            
+            $objPedido->setConfig($objXmlCfg);
+            $objPedido->setSacado($objXmlSacado);
+            $objPedido->setItens($objXmlItens);
+            $objPedido->setChecoutCc($objXmlCheckoutCc);
+            $objPedido->setCheckoutBlt($objXmlCheckoutBlt);
             
             //echo $objXmlCfg->getNumPedido();
         } catch (\Exception $e) {

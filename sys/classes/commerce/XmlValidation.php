@@ -1,5 +1,5 @@
 <?php
-namespace commerce\classes\helpers;
+namespace sys\classes\commerce;
 use \sys\classes\util\Xml;
 /**
  * Classe utilizada para validar os campos recebidos do XML.

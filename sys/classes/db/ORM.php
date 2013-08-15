@@ -36,8 +36,9 @@ abstract class ORM {
      * @param string $className Nome da classe
      * @return string
      */
+    static $objConn                = NULL;
     private $arrColumns;   
-    private $prefixoTable          = 'SVIP_';
+    private $prefixoTable          = 'SPRO_';
     private $arrRequiredFields     = array();
     private $arrKey                = array(); //Array que guarda a chave primária da tabela
     private $arrUnique             = array();
@@ -80,6 +81,18 @@ abstract class ORM {
         if ((int)$id > 0) $this->findAutoNum($id);
     }
     
+    public static function getConn(){
+        /**
+         * Mudamos a validação da instância pois quem deve controlar a conexão
+         * é o Meekrodb - Precisamos avaliar isso.
+         * 
+         * Marcelo Pacheco
+         */
+        $objConn        = new \MeekroDB();
+        self::$objConn  = $objConn;
+        return $objConn;
+    }
+    
     /**
      * Ativa a opção de debug (IMPORTANTE: não execute essa opção em ambiente de produção).
      * 
@@ -113,7 +126,7 @@ abstract class ORM {
      *  
      */
     private function init(){
-        $this->getTable();
+        $this->getTable();        
         $results    = $this->loadColumns();
         self::$results = null;
         if (is_array($results)) {
@@ -148,14 +161,14 @@ abstract class ORM {
      *
      * @return mixed[] Array multidimensional com dados de cada coluna da tabela.     
      */    
-    private function loadColumns(){
+    private function loadColumns(){        
         $tableName              = $this->getTable();
         $varCache               = 'COLS_'.$tableName;
         $results                = Request::session($varCache,'ARRAY');
         if (count($results) == 0 || 1==1) {
-            //$out        = Cache::getVarMemCache($varCache);        
+            //$out                  = Cache::getVarMemCache($varCache);        
             $sql                    = 'SHOW COLUMNS FROM '.$tableName;
-            $results                = \DB::query($sql);        
+            $results                = self::query($sql);        
             $_SESSION[$varCache]    = $results;
         }
        $this->arrColumns = $results;
@@ -171,9 +184,9 @@ abstract class ORM {
      * 
      * @return string[]
      */
-    public static function loadViews(){
+    public static function loadViews(){        
         $sql        = "SHOW FULL TABLES WHERE table_type='view'";
-        $results    = \DB::query($sql); 
+        $results    = self::query($sql); 
         return $results;
     }   
     
@@ -183,9 +196,9 @@ abstract class ORM {
      * @param string $tableName Pode ser uma TABLE ou uma VIEW.    
      * @return FALSE | string
      */
-    public static function getSqlFromTable($tableName){        
-        $sql    = "SHOW FULL TABLES LIKE '{$tableName}'";        
-        $result = \DB::query($sql);
+    public static function getSqlFromTable($tableName){           
+        $sql        = "SHOW FULL TABLES LIKE '{$tableName}'";        
+        $result     = self::query($sql);
         if (is_array($result) && count($result) == 1) { 
             //O objeto solicitado existe no DB
             $type       = $result[0]['Table_type'];//Verifica o tipo: pode ser VIEW ou TABLE            
@@ -211,7 +224,7 @@ abstract class ORM {
         if ($type != 'VIEW') $type = 'TABLE';
         
         $sql            = "SHOW CREATE {$type} {$tableOrViewName}";
-        $resultCreate   = \DB::query($sql);
+        $resultCreate   = self::query($sql);
         
         if (is_array($resultCreate) && count($resultCreate) == 1) {
             //O SQL foi executado com sucesso. Localiza o script SQL para a criação da VIEW
@@ -238,9 +251,9 @@ abstract class ORM {
      * 
      * @return string[]
      */
-    public static function loadTriggers(){
+    public static function loadTriggers(){        
         $sql        = "SHOW TRIGGERS";
-        $results    = \DB::query($sql); 
+        $results    = self::query($sql); 
         return $results;
     } 
     
@@ -254,7 +267,7 @@ abstract class ORM {
     public static function getSqlFromTrigger($triggerName){
         $scriptSql      = '';  
         $sql            = "SHOW CREATE TRIGGER {$triggerName}";
-        $resultCreate   = \DB::query($sql);     
+        $resultCreate   = self::query($sql);     
         if (is_array($resultCreate) && count($resultCreate) == 1) {
             //O SQL foi executado com sucesso. Localiza o script SQL para a criação da TRIGGER
             //Retira o comando DEFINER no início do script
@@ -320,6 +333,7 @@ abstract class ORM {
      * @throws \Exception [ARGS_NULL] Se argumentos informados forem inválidos para a ação solicitada (parâmetro $stmt).
      */    
     private function exec($stmt='SELECT',$args=NULL){
+        $objConn    = self::getConn();
         $table      = $this->getTable();
         $arrParams  = $this->arrParams;
         $argsFunc   = NULL;
@@ -353,52 +367,52 @@ abstract class ORM {
             if (is_string($stmt)) $msgErr = str_replace('{ACTION}',$stmt,$msgErr);            
         }
         
-        \DB::debugMode(false);
+        $objConn->debugMode(false);
         if (self::$debug) {
             //Ativa o debug da biblioteca meekrodb.
-            \DB::debugMode();
+            $objConn->debugMode();
         }
         
-        \DB::$error_handler             = true;
-        \DB::$throw_exception_on_error  = true;   
+        $objConn->error_handler             = true;
+        $objConn->throw_exception_on_error  = true;   
         
         $ObjError = new ErrorDb();
-        \DB::$error_handler = array($ObjError, 'error_handler');
+        $objConn->error_handler = array($ObjError, 'error_handler');
         
         try {
             switch(strtoupper($stmt)){
                 case 'INSERT':                
-                    \DB::insert($table,$arrParams); 
-                    $out = $id = (int)\DB::insertId();
+                    $objConn->insert($table,$arrParams); 
+                    $out = $id = (int)$objConn->insertId();
                     if ($id == 0) $msgErr = Dic::loadMsg(__CLASS__,'insert',__NAMESPACE__,'ID_ZERO');  
                     break;
                 case 'UPDATE':
                     if (strlen($msgErr) == 0){
-                        call_user_func_array('DB::update', $argsFunc);
-                        $out = \DB::affectedRows();
+                        call_user_func_array(array($objConn, 'update'), $argsFunc);
+                        $out = $objConn->affectedRows();
                     }
                     break;
                 case 'DELETE':
                     //Faz a exclusão do registro. Retorna o total de linhas afetadas.
                     if (strlen($msgErr) == 0){
-                        call_user_func_array('\DB::delete', $argsFunc);
-                        $out = \DB::affectedRows();
+                        call_user_func_array(array($objConn, 'delete'), $argsFunc);
+                        $out = $objConn->affectedRows();
                     }
                     break;
                 case 'FIRST_ROW':
                     //Retorna um array associativo unidimensional com os dados do registro solicitado.
                     $argsFunc       = array($sql,$whereValues);  
-                    $out            = call_user_func_array('\DB::queryFirstRow', $argsFunc);
+                    $out            = call_user_func_array(array($objConn, 'queryFirstRow'), $argsFunc);
                     break;                
                 case 'FIRST_FIELD':
                     //Retorna o valor de um campo único. Exemplo: Count(*).
                     $argsFunc   = array($sql,$whereValues);
-                    $out        = call_user_func_array('\DB::queryFirstField', $argsFunc);                 
+                    $out        = call_user_func_array(array($objConn, 'queryFirstField'), $argsFunc);                 
                 case 'INSERT_UPDATE':                    
                     //Retorna o ID do registro cadastrado/alterado.
                     $this->vldRequiredBeforeInsert();
-                    \DB::insertUpdate($table,$arrParams); 
-                    $out = $id = (int)\DB::insertId();
+                    $objConn->insertUpdate($table,$arrParams); 
+                    $out = $id = (int)$objConn->insertId();
                     break;
                 default:
                     //SELECT: retorna um array bidimensional com todos os registros localizados no SELECT.
@@ -412,7 +426,7 @@ abstract class ORM {
             $msgErr     .= "SQL Query: " . $e->getQuery() . "<br>\n"; // INSERT INTO accounts...            
         }
         
-        \DB::$throw_exception_on_error = false;
+        $objConn->throw_exception_on_error = false;
         if (strlen($msgErr) > 0) throw new \Exception( $msgErr );        
         return $out;
     }
@@ -464,7 +478,8 @@ abstract class ORM {
      * 
      * @throws \Exception [SQL_NULL] Caso o parâmetro $sql seja nulo ou vazio.
      */    
-    public static function query($sql){        
+    public static function query($sql){    
+        $objConn = self::getConn();
         if (is_null($sql) || strlen($sql) == 0) {
             $msgErr = Dic::loadMsg(__CLASS__,NULL,__NAMESPACE__,'SQL_NULL');  
         } else {      
@@ -472,7 +487,7 @@ abstract class ORM {
                 echo $sql.'</br></br>';
                 die();
             }
-            $results    = self::$results = \DB::query($sql);//Retorna um array bidimensional
+            $results    = self::$results = $objConn->query($sql);//Retorna um array bidimensional
             return $results;            
         }
         
@@ -697,16 +712,16 @@ abstract class ORM {
      * @param mixed[] $row Obrigatório.
      * @return Object | FALSE Retorna um objeto da classe atual, ou FALSE caso o parâmetro não seja um array.
      */        
-     function getObj($row){                   
+    private function getObj($row){                   
         $class = get_class($this);//Guarda o nome qualificado da classe atual (incluindo namespace)         
         if (is_array($row) && strlen($class) > 0){ 
-            if (count($row) != count($row, COUNT_RECURSIVE)) {
+            //if (count($row) != count($row, COUNT_RECURSIVE)) {
                 //Array multidimensional. Converte para unidimensional
-                $row = $row[0];                
-            }
+                //$row = $row[0];                
+            //}
             
             $objDados = new \stdClass();
-            foreach($row as $key=>$value) {                
+            foreach($row as $key=>$value) {
                 $objDados->$key = $value;
             }
             
@@ -1106,7 +1121,8 @@ abstract class ORM {
      * return string[] Retorna um array unidimensional com as tabelas do DB atual.
      */
     private function loadTables(){
-        $arrTables  = \DB::tableList();
+        $objConn    = self::getConn();
+        $arrTables  = $objConn->tableList();
         //foreach ($arrTables as $table) echo "Table Name: $table\n";
         return $arrTables;
     }
@@ -1239,6 +1255,8 @@ abstract class ORM {
      *  ->execute();     
      * </code>
      * @param string $where
+     * 
+     * @return ORM
      */
     function where($where='1=1'){
         if (strlen($where) > 0) $this->where = $where;
@@ -1415,12 +1433,14 @@ abstract class ORM {
         foreach($arrObjJoin as $obj){
             $alias      = $obj->getAlias();
             $fieldsJoin = $obj->fieldsJoin;
-            if (strlen($fieldsJoin) == 0) $fieldsJoin = '*';
-            
-            //Coloca o alias nos campos informados em $fieldsJoin.
-            $strFields      = $alias.'.'.$fieldsJoin;
-            $strFields      = str_replace(',',','.$alias.'.',$strFields);
-            $arrStrFields[] = $strFields;
+            if($fieldsJoin !== null){
+                if (strlen($fieldsJoin) == 0) $fieldsJoin = '*';
+                
+                //Coloca o alias nos campos informados em $fieldsJoin.
+                $strFields      = $alias.'.'.$fieldsJoin;
+                $strFields      = str_replace(',',','.$alias.'.',$strFields);
+                $arrStrFields[] = $strFields;
+            }
         }
         
         if (count($arrStrFields) > 0) {
@@ -1508,6 +1528,11 @@ abstract class ORM {
     }
     
     /**
+     * Permite definir o valor de uma coluna da tabela, classe filha da classe atual.
+     * 
+     * @param $var Nome da coluna/variável
+     * @param $value Valor da coluna/variável
+     * @throws Exception Caso a variável informada não exista na tabela
      * @ignore     
      */    
     function __set($var,$value){
@@ -1547,7 +1572,7 @@ abstract class ORM {
      * Informa/guarda a lista de colunas que deve ser retornada em uma instrução SELECT.
      * 
      * @param string $listCols Exemplo: colA, colB, colC, DATE_FORMAT(DATE(DATA_REGISTRO),'%d/%m/%Y') AS DATA_BR...
-     * @return void
+     * @return ORM
      */
     function select($listCols='*'){
         if (strlen($listCols) > 0) $this->selectListCols = $listCols;

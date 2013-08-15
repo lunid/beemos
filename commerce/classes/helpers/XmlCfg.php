@@ -1,5 +1,6 @@
 <?php
 namespace commerce\classes\helpers;
+use \sys\classes\commerce\XmlValidation;
 
 class XmlCfg extends XmlValidation {
     protected $nodeName     = 'CFG';//Nome do nó XML que contém as dados para a classe atual.
