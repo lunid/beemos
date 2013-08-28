@@ -4,7 +4,7 @@
 namespace sys\classes\commerce;
 use \sys\classes\util\Curl;
 
-class Pedido {
+class Fatura {
     
     //Lista de parâmetros permitidos ao criar um novo pedido
     private $arrLibParams = array(
@@ -38,25 +38,41 @@ class Pedido {
     
     function __construct($arrDados=array()){
         $this->loadArrDados($arrDados);
+    }    
+    
+    private function checkObjXml($obj){
+        if (is_object($obj) && $obj instanceof XmlValidation) {
+            return $obj;
+        } else {
+            throw new \Exception("Fatura: o objeto informado em {$param} não é válido.");
+        }
     }
     
-    function setConfig(){
+    function setConfig($obj){
+        try {
+            $obj        = $this->checkObjXml($obj,__FUNCTION__);
+            $numFatura  = $obj->getNumFatura();
+            if ($numFatura == 0) {
+                /*
+                 * Um número de fatura não foi informado. Localiza o próximo número de fatura
+                 * disponível para o convêncio atual.
+                 */
+                
+            }
+        } catch (\Exception $e) {
+            throw new $e;
+        }
+    }
+    
+    function setSacado($obj){
         
     }
     
-    function setSacado(){
+    function setItens($obj){
         
     }
     
-    function setItens(){
-        
-    }
-    
-    function setCheckoutCc(){
-        
-    }
-    
-    function setCheckoutBlt(){
+    function setCheckout($objCc, $objBlt){
         
     }
     

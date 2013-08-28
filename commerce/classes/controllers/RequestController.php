@@ -1,9 +1,9 @@
 <?php
     
 use \sys\classes\util as util;
-use \sys\classes\commerce\Pedido;
+use \sys\classes\commerce\Fatura;
 use \commerce\classes\controllers\IndexController;
-use \commerce\classes\helpers as helpers;
+use \commerce\classes\helpers;
 use \commerce\classes\helpers\XmlRequestHelper;
 //use \commerce\classes\helpers\ErrorMessageHelper;
 //use \commerce\classes\models\PedidoModel;
@@ -107,7 +107,7 @@ class Request extends IndexController {
      * 
      * @throws \Exception Caso um objeto XML (objXmlRequest) não seja válido.
      */
-    private function actionSavePedido($objAssinatura){  
+    private function actionNovaFatura($objAssinatura){  
         $msgErr             = '';
         $response           = '';
         $objXmlRequest      = $this->objXmlRequest;       
@@ -118,19 +118,22 @@ class Request extends IndexController {
         
         try {
             //Valida os dados recebidos via XML e guarda-os em um objeto do tipo XmlValidation:
-            $objXmlCfg          = new helpers\XmlCfg($objXmlRequest->PEDIDO->CFG);
-            $objXmlSacado       = new helpers\XmlSacado($objXmlRequest->PEDIDO->SACADO->PARAM);
-            $objXmlItens        = new helpers\XmlItens($objXmlRequest->PEDIDO->ITENS->ITEM);//Pode ter um ou mais itens   
-            $objXmlCheckoutCc   = new helpers\XmlSacado($objXmlRequest->PEDIDO->CHECKOUT->CARTAO->PARAM);
-            $objXmlCheckoutBlt  = new helpers\XmlSacado($objXmlRequest->PEDIDO->CHECKOUT->BOLETO->PARAM);
+            $faturaNode      = $objXmlRequest->FATURA;
+            $objCfg          = new helpers\XmlCfg($faturaNode->CFG->PARAM);
+            $objSacado       = new helpers\XmlSacado($faturaNode->SACADO->PARAM);
+            $objItens        = new helpers\XmlItens($faturaNode->ITENS->ITEM);//Pode ter um ou mais itens   
+            $objCheckoutCc   = new helpers\XmlCheckoutCc($faturaNode->CHECKOUT->CARTAO->PARAM);
+            $objCheckoutBlt  = new helpers\XmlCheckoutBlt($faturaNode->CHECKOUT->BOLETO->PARAM);            
             
-            $objPedido          = new Pedido();
+            echo $objCfg->getNumFatura();
+            die();
             
-            $objPedido->setConfig($objXmlCfg);
-            $objPedido->setSacado($objXmlSacado);
-            $objPedido->setItens($objXmlItens);
-            $objPedido->setChecoutCc($objXmlCheckoutCc);
-            $objPedido->setCheckoutBlt($objXmlCheckoutBlt);
+            $objFatura = new Fatura();
+            
+            $objFatura->setConfig($objCfg);
+            $objFatura->setSacado($objSacado);
+            $objFatura->setItens($objItens);
+            $objFatura->setCheckout($objCheckoutCc,$objCheckoutBlt);
             
             //echo $objXmlCfg->getNumPedido();
         } catch (\Exception $e) {

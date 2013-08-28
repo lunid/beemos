@@ -17,7 +17,7 @@
         private $msgStatus      = 'Operação executada com sucesso.';
         private $objCfg         = NULL;    
         private $response       = NULL;
-        protected $objPedido    = NULL;
+        protected $objFatura    = NULL;
 
         /**
          * Localiza via HASH os dados com as configurações de e-commerce do usuário informado.
@@ -149,12 +149,12 @@
             return $string;
         }        
         
-        protected function loadPedido($numPedido){                                    
-            $objInfoPedido  = NULL;
-            $objPedido      = new helpers\PedidoHelper($numPedido);   
-            if (is_object($objPedido)) {
-                if (is_object($objPedido->getObjInfo())) {
-                    $this->objPedido    = $objPedido;
+        protected function loadFatura($numFatura){                                    
+            $objInfoFatura  = NULL;
+            $objFatura      = new helpers\FaturaHelper($numFatura);   
+            if (is_object($objFatura)) {
+                if (is_object($objFatura->getObjInfo())) {
+                    $this->objFatura    = $objFatura;
                 } else {
                     
                 }                
