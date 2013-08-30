@@ -1,9 +1,8 @@
 <?php
 
-namespace commerce\classes\helpers;
-use \sys\classes\commerce\XmlValidation;
+namespace common\classes\helpers\commerce;
 
-class XmlCheckoutBlt extends XmlValidation {
+class XmlCheckoutBltHelper extends XmlValidationHelper {
    protected $nodeName     = 'BOLETO';//Nome do nó XML que contém as dados para a classe atual.
    
 

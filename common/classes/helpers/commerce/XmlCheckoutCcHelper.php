@@ -1,9 +1,8 @@
 <?php
 
-namespace commerce\classes\helpers;
-use \sys\classes\commerce\XmlValidation;
+namespace common\classes\helpers\commerce;
 
-class XmlCheckoutCc extends XmlValidation {
+class XmlCheckoutCcHelper extends XmlValidationHelper {
     protected $nodeName     = 'CARTAO';//Nome do nó XML que contém as dados para a classe atual.    
     
     protected $arrVldParams = array(            

@@ -1,9 +1,8 @@
 <?php
 
-namespace commerce\classes\helpers;
-use \sys\classes\commerce\XmlValidation;
+namespace common\classes\helpers\commerce;
 
-class XmlItens extends XmlValidation {
+class XmlItensHelper extends XmlValidationHelper {
    protected $nodeName     = 'ITEM';//Nome do nó XML que contém as dados para a classe atual.
    private $arrObjItem     = array();
    protected $arrVldParams = array(            

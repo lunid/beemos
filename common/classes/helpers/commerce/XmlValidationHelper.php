@@ -1,5 +1,5 @@
 <?php
-namespace sys\classes\commerce;
+namespace common\classes\helpers\commerce;
 use \sys\classes\util\Xml;
 /**
  * Classe utilizada para validar os campos recebidos do XML.
@@ -52,7 +52,7 @@ use \sys\classes\util\Xml;
  * 
  * @author Claudio
  */
-abstract class XmlValidation extends Xml {
+abstract class XmlValidationHelper extends Xml {
     protected $nodeName     = 'Undefined';
     private $nodeXml        = NULL;
     private $objDados       = NULL; //Guarda um objeto stdClass contendo dados de um nó XML lido.
@@ -194,12 +194,44 @@ abstract class XmlValidation extends Xml {
         if (strlen($msgErr) > 0 && $msgErr != $errDefault) throw new \Exception($msgErr);
         return $paramValue;      
     }
+    
+    function checkParams($checkParam='',$checkValue=''){
+        $arrVldParams = $this->arrVldParams;
+        if (is_array($arrVldParams)) {
+            $break = FALSE;
+            foreach($arrVldParams as $strItem) {
+                try {                    
+                    list($param,$type,$required,$length) = explode(':',$strItem);
+                    if (strlen($checkParam) > 0) {
+                        //Um parâmetro cujo valor deve ser checado foi informado
+                        if ($param == $checkParam) {
+                            $paramValue = $checkValue; //Valor a ser checado
+                            $break      = TRUE;
+                        }
+                    } else {
+                        //Checar todos os parâmetros do objeto atual
+                        $paramValue = $this->$param;
+                    }
+                    
+                    $this->vldField($param, $paramValue, $required, $length, $type); 
+                    if ($break) break;
+                } catch(\Exception $e) {
+                    $msgErr = "checkParams: ".$e->getMessage();                    
+                    throw new \Exception($msgErr);
+                }
+            }                            
+        }
+        return TRUE;
+    }
        
     function __get($var){
         $value      = '';
         $objDados   = $this->objDados;        
         if (is_object($objDados)) {            
             if (isset($objDados->$var)) $value = $objDados->$var;
+            if (strlen($value) == 0) {
+                $this->checkParams($var,$value);
+            }
         }
         return $value;
     }

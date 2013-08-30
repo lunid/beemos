@@ -1,6 +1,6 @@
 <?php
 
-namespace commerce\classes\helpers;
+namespace common\classes\helpers\commerce;
 
 class XmlResponseHelper {
     

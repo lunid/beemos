@@ -1,6 +1,6 @@
 <?php
 
-namespace commerce\classes\helpers;
+namespace common\classes\helpers\commerce;
 use \sys\classes\util\Xml;
 use \commerce\classes\models\NumPedidoModel;
 

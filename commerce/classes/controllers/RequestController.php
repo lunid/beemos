@@ -1,13 +1,14 @@
 <?php
     
 use \sys\classes\util as util;
-use \sys\classes\commerce\Fatura;
 use \commerce\classes\controllers\IndexController;
 use \commerce\classes\helpers;
-use \commerce\classes\helpers\XmlRequestHelper;
+use \common\classes\helpers\commerce as helpersEcomm;
+use \common\classes\Fatura;
+//use \commerce\classes\helpers\XmlRequestHelper;
 //use \commerce\classes\helpers\ErrorMessageHelper;
 //use \commerce\classes\models\PedidoModel;
-use \commerce\classes\models\NumPedidoModel;
+//use \commerce\classes\models\NumPedidoModel;
 use \auth\classes\helpers\Assinatura;
 
 class Request extends IndexController {
@@ -119,17 +120,16 @@ class Request extends IndexController {
         try {
             //Valida os dados recebidos via XML e guarda-os em um objeto do tipo XmlValidation:
             $faturaNode      = $objXmlRequest->FATURA;
-            $objCfg          = new helpers\XmlCfg($faturaNode->CFG->PARAM);
-            $objSacado       = new helpers\XmlSacado($faturaNode->SACADO->PARAM);
-            $objItens        = new helpers\XmlItens($faturaNode->ITENS->ITEM);//Pode ter um ou mais itens   
-            $objCheckoutCc   = new helpers\XmlCheckoutCc($faturaNode->CHECKOUT->CARTAO->PARAM);
-            $objCheckoutBlt  = new helpers\XmlCheckoutBlt($faturaNode->CHECKOUT->BOLETO->PARAM);            
+            $objCfg          = new helpersEcomm\XmlCfgHelper($faturaNode->CFG->PARAM);
+            $objSacado       = new helpersEcomm\XmlSacadoHelper($faturaNode->SACADO->PARAM);
+            $objItens        = new helpersEcomm\XmlItensHelper($faturaNode->ITENS->ITEM);//Pode ter um ou mais itens   
+            $objCheckoutCc   = new helpersEcomm\XmlCheckoutCcHelper($faturaNode->CHECKOUT->CARTAO->PARAM);
+            $objCheckoutBlt  = new helpersEcomm\XmlCheckoutBltHelper($faturaNode->CHECKOUT->BOLETO->PARAM);            
             
-            echo $objCfg->getNumFatura();
+            $objFatura = new Fatura($objAssinatura);
+            $objFatura->nova($objCfg,$objSacado,$objItens);
+            
             die();
-            
-            $objFatura = new Fatura();
-            
             $objFatura->setConfig($objCfg);
             $objFatura->setSacado($objSacado);
             $objFatura->setItens($objItens);
